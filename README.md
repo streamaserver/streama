@@ -38,5 +38,13 @@ The player is html5-based and has only really been tested in chrome so far.
 
 One of the most important things to me was to make managing shows, movies and episodes as easy and fun as possible. For this I made heavy use of the API from (theMovieDatabase.org)[https://www.themoviedb.org/], which auto-fills the episodes, shows and movies with useful information and great images, so that you, the user, will have hardly any work. 
 
+For instance, creating a new Tv-Show and the episodes for the first season looks something like this: 
 
+![Streama Creating Show](http://i.imgur.com/TLptKdp.gif)
+
+
+And uploading video-files for each episode is as easy as drag-and-drop! 
+
+
+![Streama Uploading Episode](http://i.imgur.com/StgES0S.gif)
 
