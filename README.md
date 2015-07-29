@@ -32,6 +32,9 @@ The Streama-Player is (heavily) inspired by netflix, so you get all the good stu
 Later down the road I will add a feature to add subtitles and switch between video-files (for instance for different quality uploads). 
 The player is html5-based and has only really been tested in chrome so far.
 
+I am especially proud of the Episode-Browser, which aims to function just like on netflix. By default, the season is selected, that the current video-file is a part of. The user gets an overview over which other episodes there are in the season, how many seasons there are, and, as an added feature, the user sees all the added episodes, even if no video-files are added to them (thus greyed out).
+
+![Streama Episode Browser](http://i.imgur.com/MLE6TpH.gif)
 
 ### The Admin-Panel
 ![Streama Admin](http://new.tinygrab.com/d9072ef56484ebb444cc2fc7bc11f18e9f1706f68f.png)
