@@ -1,21 +1,6 @@
 # streama
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal netflix for just such a purpose! 
 
-## The technical Details
-This application is web-based and is programmed with [Grails 2.4.4](https://grails.org/) and Mysql. For Login & User-Handling [SpringSecurity](http://projects.spring.io/spring-security/) is used. The player is completely html5-based, meaning there are limitations as to which file-types can be played. 
-
-As an API for all the movies and shows I used the awesome API from theMovieDatabase. 
-![theMovieDatabase](https://d3a8mw37cqal2z.cloudfront.net/images/header_v2.png)
-
-##### getting started
-All you need is a server (preferably ubuntu) with the following configurations:
-- tomcat7
-- mysql
-- a mysql database called "streama" (default config uses username "root" and no password)
-- a folder under /data/streama that is owned by tomcat7 (this is where all the files will be stored)
-
-Once the application is runnning the default user has "admin" both as username and password. 
-
 ## The Application
 
 ### Dashboard
@@ -52,6 +37,22 @@ And uploading video-files for each episode is as easy as drag-and-drop!
 
 
 ![Streama Uploading Episode](http://i.imgur.com/StgES0S.gif)
+
+
+## The technical Details
+This application is web-based and is programmed with [Grails 2.4.4](https://grails.org/) and Mysql. For Login & User-Handling [SpringSecurity](http://projects.spring.io/spring-security/) is used. The player is completely html5-based, meaning there are limitations as to which file-types can be played. 
+
+As an API for all the movies and shows I used the awesome API from theMovieDatabase. 
+![theMovieDatabase](https://d3a8mw37cqal2z.cloudfront.net/images/header_v2.png)
+
+##### getting started
+All you need is a server (preferably ubuntu) with the following configurations:
+- tomcat7
+- mysql
+- a mysql database called "streama" (default config uses username "root" and no password)
+- a folder under /data/streama that is owned by tomcat7 (this is where all the files will be stored)
+
+Once the application is runnning the default user has "admin" both as username and password. 
 
 
 ## Work-in-progress
