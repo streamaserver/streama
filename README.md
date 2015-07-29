@@ -14,6 +14,7 @@ All you need is a server (preferably ubuntu) with the following configurations:
 - a mysql database called "streama" (default config uses username "root" and no password)
 - a folder under /data/streama that is owned by tomcat7 (this is where all the files will be stored)
 
+Once the application is runnning the default user has "admin" both as username and password. 
 
 ## The Application
 
@@ -57,3 +58,9 @@ And uploading video-files for each episode is as easy as drag-and-drop!
 Lastly, I would like to mention that this project is extremely work-in-progress. Just today I was using it and noticed that it would be nice if the browser remembered the latest volume-setting. 
 I will be adding new features and bugfixes often and quickly, but this is first and foremost a hobby project, so the time that I can spend on it is limited. If you want to contibute, feel free! I will be honored by each and every pull-request :) 
 
+
+#### Todo-List
+These are the features that I will be working on in the near future: 
+- Video-conversion via Quartz for multiple html5-compatible formats
+- Functionality to add subtitles while viewing
+- Functionality to switch between multiple video-files (for instance for different video-quality)
