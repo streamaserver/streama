@@ -1,0 +1,64 @@
+
+<form class="form-horizontal">
+  <div class="modal-body">
+    <legend>New Show</legend>
+
+    <div class="form-group">
+      <div class="col-sm-12 typeahead-wrapper">
+        <input type="text" class="form-control name-input" ng-model="tvShow.name" placeholder="Show Name" typeahead-loading="loading"
+               typeahead="show.name for show in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="typeahead--tvShow.htm">
+        <div class="spinner" ng-show="loading">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div ng-show="tvShow.overview">
+      <div class="form-group row-slim">
+        <div class="col-sm-2">
+          <label>Release Date</label>
+          <input type="text" class="form-control input-sm" ng-model="tvShow.first_air_date" placeholder="2003-01-23"/>
+        </div>
+        <div class="col-sm-2">
+          <label>IMDB ID</label>
+          <input type="text" class="form-control input-sm" ng-model="tvShow.imdb_id" placeholder="tt0383126"/>
+        </div>
+        <div class="col-sm-2">
+          <label>API ID</label>
+          <input type="text" class="form-control input-sm" ng-disabled="addManually" ng-model="tvShow.apiId" placeholder="API ID"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating</label>
+          <input type="text" class="form-control input-sm" ng-model="tvShow.vote_average" placeholder="Rating"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating Count</label>
+          <input type="text" class="form-control input-sm" ng-model="tvShow.vote_count" placeholder="Rating Count"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label>Overview</label>
+          <textarea class="form-control" cols="30" rows="4" ng-model="tvShow.overview" placeholder="Overview"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-6">
+          <label>Image</label>
+          <br/>
+          <img src="https://image.tmdb.org/t/p/w300/{{tvShow.backdrop_path}}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer" ng-show="tvShow.overview">
+    <button class="btn btn-success" ng-click="saveShow(tvShow)">Save Show</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+
+</form>

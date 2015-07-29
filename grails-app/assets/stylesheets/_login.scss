@@ -1,0 +1,38 @@
+#login {
+  margin: 15px 0px;
+  padding: 0px;
+  text-align: center;
+}
+
+#login .inner {
+  max-width: 540px;
+  width: 100%;
+  padding-bottom: 6px;
+  margin: 60px auto;
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+
+  .fheader {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+    padding: 10px 20px;
+    color: $primary;
+    font-size: 18px;
+  }
+
+  .cssform {
+    padding: 16px;
+    @include clearfix;
+  }
+  
+  input[type="text"],
+  input[type="password"]{
+    padding-left: 10px;
+  }
+}
+
+
+#login .inner .login_message {
+  padding: 6px 25px 20px 25px;
+  color: #c33;
+}

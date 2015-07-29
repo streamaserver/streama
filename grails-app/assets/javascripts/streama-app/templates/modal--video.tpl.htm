@@ -1,0 +1,75 @@
+<form class="form-horizontal">
+
+  <div class="modal-body">
+    <legend>
+      Episode
+    </legend>
+
+    <div class="form-group">
+      <div class="col-sm-12 typeahead-wrapper" ng-if="!addManually">
+        <input type="text" class="form-control name-input" ng-model="episode.name" placeholder="Episode Name" typeahead-loading="loading"
+               typeahead="episode.episodename for episode in search($viewValue)" typeahead-on-select="selectEpisode($item)"
+               typeahead-template-url="typeahead--episode.htm">
+        <div class="spinner" ng-show="loading">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </div>
+      <div class="col-sm-12" ng-if="addManually">
+        <input type="text" class="form-control" ng-model="episode.name" placeholder="Episode Name">
+      </div>
+    </div>
+    
+    <div ng-show="episode.episode_number || addManually">
+      <div class="form-group row-slim">
+        <div class="col-sm-2">
+          <label>Episode Number</label>
+          <input type="text" class="form-control input-sm" ng-model="episode.episode_number" placeholder="Episode Number"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Season Number</label>
+          <input type="text" class="form-control input-sm" ng-model="episode.season_number" placeholder="Season Number"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Episode String</label>
+          <input type="text" class="form-control input-sm" ng-model="episode.episodeString" placeholder="s01e01"/>
+        </div>
+        <div class="col-sm-2">
+          <label>First Aired</label>
+          <input type="text" class="form-control input-sm" ng-model="episode.air_date" placeholder="2003-01-23"/>
+        </div>
+        <div class="col-sm-2">
+          <label>API ID</label>
+          <input type="text" class="form-control input-sm" ng-disabled="addManually" ng-model="episode.apiId" placeholder="API ID"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating</label>
+          <input type="text" class="form-control input-sm" ng-disabled="addManually" ng-model="episode.vote_average" placeholder="Rating"/>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label>Overview</label>
+          <textarea class="form-control" cols="30" rows="4" ng-model="episode.overview" placeholder="Overview"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-6">
+          <label>Image</label>
+          <br/>
+          <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w500/{{episode.still_path}}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer" ng-if="episode.episode_number">
+    <button class="btn btn-danger pull-left" ng-if="episode.id" ng-click="deleteVideo(episode)">Delete Episode</button>
+    <button class="btn btn-success" ng-click="saveEpisode(episode)">Save</button>
+    <button class="btn" ng-click="cancel()">Cancel</button>
+  </div>
+</form>

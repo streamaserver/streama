@@ -1,0 +1,34 @@
+<div class="media-list-item episode-wrapper" ng-class="{'no-files': !episode.files.length, 'uploading': uploadStatus.percentage != null}"
+     ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)" 
+     ng-if="!episode.deleted">
+  
+  <div class="upload-overlay" ng-class="{'visible': uploadStatus.percentage != null}">
+    <span class="hint" ng-show="uploadStatus.percentage == null">Upload File</span>
+    <span class="percentage" ng-show="uploadStatus.percentage != null">{{uploadStatus.percentage}} %</span>
+  </div>
+  
+  <span class="label label-danger pull-right" ng-show="!episode.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
+
+
+  <h3 class="media-episode-string">
+    <span ng-show="episode.episodeString">{{episode.episodeString}}</span>
+    <span ng-show="!episode.episodeString">s{{episode.season_number | padnumber:2}}e{{episode.episode_number | padnumber:2}}</span>
+  </h3>
+  <h3 class="media-title">{{episode.name}}</h3>
+  <div class="media-item" >
+    <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.still_path}}"/>
+    <div ng-if="!episode.still_path" class="fallback-image"></div>
+    <a ng-show="episode.files.length" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
+  </div>
+
+  <div class="button-wrapper">
+    <button ng-click="editEpisode(episode)" class="btn btn-secondary btn-xs">Edit</button>
+    
+      <button class="btn btn-secondary btn-xs" ng-show="episode.files.length"
+            popover-template="'popover--files.htm'" popover-title="Added Files">Attached Files</button>
+    
+      <button class="btn btn-success btn-xs pull-right" ng-click="openFileBrowser()" ng-show="!episode.files.length">Browse for File</button>
+  </div>
+  
+
+</div>

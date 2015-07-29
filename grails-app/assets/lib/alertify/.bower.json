@@ -1,0 +1,17 @@
+{
+  "name": "alertify",
+  "version": "0.3.10",
+  "main": "./alertify.min.js",
+  "dependencies": {},
+  "homepage": "https://github.com/fabien-d/alertify.js-shim",
+  "_release": "0.3.10",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.10",
+    "commit": "8a7d2e15b75b51c28ff62bfeb3e5914f614dc955"
+  },
+  "_source": "git://github.com/fabien-d/alertify.js-shim.git",
+  "_target": "~0.3.10",
+  "_originalSource": "alertify",
+  "_direct": true
+}

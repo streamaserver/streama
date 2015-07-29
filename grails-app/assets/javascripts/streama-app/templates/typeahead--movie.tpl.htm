@@ -1,0 +1,5 @@
+<a>
+  <img ng-if="match.model.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{match.model.poster_path}}" width="60px"/> &nbsp;
+  <span bind-html-unsafe="match.model.title | typeaheadHighlight:query"></span>
+  <span style="opacity: .5;">({{match.model.release_date.substring(0, 4)}})</span>
+</a>

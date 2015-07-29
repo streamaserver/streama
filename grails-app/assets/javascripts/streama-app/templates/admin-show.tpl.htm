@@ -1,0 +1,89 @@
+<ul class="breadcrumb">
+  <li><a ui-sref="admin.shows">Shows</a></li>
+  <li class="active">{{show.name}}</li>
+</ul>
+
+<div class="clearfix">
+  <h1 class="pull-left">
+    {{show.name}}
+
+    <div class="spinner" ng-show="loading">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+  </h1>
+  
+  <button class="btn btn-danger btn-sm pull-right" ng-click="deleteShow()">
+    Delete show
+  </button>
+</div>
+
+<hr/>
+
+<div class="row">
+  <div class="col-md-8">
+
+    <div class="row">
+      <div class="col-sm-2">
+        <label>Release Date</label>
+        <p class="data-display">{{show.first_air_date}}</p>
+      </div>
+      <div class="col-sm-2">
+        <label>IMDB Link</label>
+        <p class="data-display"><a href="http://www.imdb.com/title/{{show.imdb_id}}">{{show.name}}</a></p>
+      </div>
+      <div class="col-sm-2">
+        <label>Rating</label>
+        <p class="data-display">{{show.vote_average}}</p>
+      </div>
+      <div class="col-sm-2">
+        <label>Rating Count</label>
+        <p class="data-display">{{show.vote_count}}</p>
+      </div>
+      <div class="col-sm-2">
+        <label>API ID</label>
+        <p class="data-display">{{show.apiId}}</p>
+      </div>
+    </div>
+
+    <br/>
+
+
+    <div class="row">
+      <div class="col-sm-12">
+        <label>Overview</label>
+        <p class="data-display">{{show.overview}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <img ng-src="https://image.tmdb.org/t/p/w500/{{show.backdrop_path}}"/>
+  </div>
+</div>
+
+
+
+
+
+<hr/>
+<br/><br/>
+<button class="btn btn-primary" ng-click="addNewEpisode()">Add New Episode Manually</button>
+<button class="btn btn-primary" ng-click="fetchAllEpisodesForSeason()">Fetch all Episode for Season</button>
+
+<div ng-if="!seasons" class="data-display">No Episodes yet</div>
+
+<div ng-repeat="(season, episodes) in seasons | orderBy:'season'" ng-if="!episode.deleted" class="season-wrapper">
+  <h3 class="uppercase">Season {{season}}</h3>
+
+  <div class="media-list">
+    <admin-episode episode="episode" ng-repeat="episode in episodes | orderBy:'episode_number'" ></admin-episode>
+  </div>
+</div>
+
+<br/>
+<br/>
+<br/>
+
+

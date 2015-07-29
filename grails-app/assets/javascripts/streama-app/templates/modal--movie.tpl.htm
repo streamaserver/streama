@@ -1,0 +1,71 @@
+<form class="form-horizontal">
+
+  <div class="modal-body">
+    <legend>
+      Movie
+      <button class="btn btn-default pull-right btn-sm" type="button" ng-click="toggleAddManually()" ng-show="!addManually">Add Manually</button>
+      <button class="btn btn-success pull-right btn-sm" type="button" ng-click="toggleAddManually()" ng-show="addManually">Add Automatically</button>
+    </legend>
+
+    <div class="form-group">
+      <div class="col-sm-12 typeahead-wrapper" ng-if="!addManually">
+        <input type="text" class="form-control name-input" ng-model="movie.title" placeholder="Movie Name" typeahead-loading="loading"
+               typeahead="item.title for item in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="typeahead--movie.htm">
+        <div class="spinner" ng-show="loading">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </div>
+      <div class="col-sm-12" ng-if="addManually">
+        <input type="text" class="form-control" ng-model="movie.title" placeholder="Movie Name">
+      </div>
+    </div>
+
+    <div ng-show="movie.release_date || movie.id || addManually">
+      <div class="form-group row-slim">
+        <div class="col-sm-2">
+          <label>Release Date</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.release_date" placeholder="2003-01-23"/>
+        </div>
+        <div class="col-sm-2">
+          <label>IMDB ID</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.imdb_id" placeholder="tt0383126"/>
+        </div>
+        <div class="col-sm-2">
+          <label>API ID</label>
+          <input type="text" class="form-control input-sm" ng-disabled="addManually" ng-model="movie.apiId" placeholder="API ID"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.vote_average" placeholder="Rating"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating Count</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.vote_count" placeholder="Rating Count"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label>Overview</label>
+          <textarea class="form-control" cols="30" rows="4" ng-model="movie.overview" placeholder="Overview"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-6">
+          <label>Image</label>
+          <br/>
+          <img src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer" ng-if="movie.release_date || movie.id">
+    <button class="btn btn-danger pull-left" ng-if="episode.id" ng-click="deleteMovie(movie)">Delete Episode</button>
+    <button class="btn btn-success" ng-click="saveMovie(movie)">Save</button>
+    <button class="btn" ng-click="cancel()">Cancel</button>
+  </div>
+</form>

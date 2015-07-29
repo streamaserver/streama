@@ -1,0 +1,19 @@
+.modal-dialog{
+  .modal-header{
+    border-color: rgba(255, 255, 255, 0.25);
+    
+    h3{
+      margin: 0;     
+    }    
+  }  
+  
+  .modal-body{
+    max-height: 600px;
+    overflow: auto;
+  }
+  
+  .modal-footer{
+    border-color: rgba(255, 255, 255, 0.25);
+    padding: 9px 14px;
+  }
+}

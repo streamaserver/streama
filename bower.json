@@ -1,0 +1,16 @@
+{
+  "name": "streama",
+  "version": "1.0.0",
+  "authors": [
+    "dularion <antonia.hulha@systaro.de>"
+  ],
+  "description": "Video-Streaming for private use",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

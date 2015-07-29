@@ -1,0 +1,43 @@
+.btn{
+  @include btn(gray);
+
+  &.btn-xss{
+    padding: 2px 4px;
+    line-height: 1em;
+    font-size: 10px;
+  }
+
+  &.btn-xxs{
+    padding: 0px 1px;
+    line-height: 1em;
+    font-size: 10px;
+  }
+}
+
+.btn-primary{
+  @include btn(darken($primary, 35%));
+  text-shadow:  1px 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.btn-success{
+  @include btn($success);
+}
+
+.btn-danger{
+  @include btn($danger);
+}
+
+.btn-dark{
+  @include btn(#111);
+}
+.btn-secondary{
+  @include btn(desaturate(darken($primary, 55%), 10%));
+}
+
+
+.color-success{
+  color: lighten($success, 10%);
+}
+.color-danger{
+  color: $danger;
+}

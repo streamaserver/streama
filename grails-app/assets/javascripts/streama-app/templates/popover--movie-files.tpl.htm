@@ -1,0 +1,22 @@
+<div class="files-wrapper" ng-show="movie.files.length">
+  <div class="file-wrapper" ng-repeat="file in movie.files" ng-if="!file.deleted && file.extension != '.srt'">
+    <div class="file-name">
+      {{file.originalFilename}} <strong>{{file.extension}}</strong> &nbsp;
+      <button ng-click="removeFile(file)" class="btn btn-danger btn-xxs"><i class="ion-close"></i></button>
+    </div>
+  </div>
+</div>
+
+
+<div class="files-wrapper" ng-show="movie.subtitles.length">
+  <hr/>
+
+  
+  <h4>Added Subtitles</h4>
+  <div class="file-wrapper" ng-repeat="file in movie.subtitles" ng-if="!file.deleted && file.extension == '.srt'">
+    <div class="file-name">
+      {{file.originalFilename}} <strong>{{file.extension}}</strong> &nbsp;
+      <button ng-click="removeFile(file)" class="btn btn-danger btn-xxs"><i class="ion-close"></i></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,131 @@
+/**
+* Bootstrap 3 Look and Feel
+* Based on Alertify Bootstrap theme.
+* @author İsmail Demirbilek
+* http://github.com/dbtek/alertify-bootstrap-3
+*/
+
+.alertify {
+	background: #FFF;
+	border: 1px solid #8E8E8E; /* browsers that don't support rgba */
+	border: 1px solid rgba(0,0,0,.3);
+	border-radius: 6px;
+	box-shadow: 0 3px 7px rgba(0,0,0,.3);
+	-webkit-background-clip: padding;     /* Safari 4? Chrome 6? */
+	-moz-background-clip: padding;     /* Firefox 3.6 */
+	background-clip: padding-box; /* Firefox 4, Safari 5, Opera 10, IE 9 */
+}
+.alertify-dialog {
+	padding: 0;
+}
+.alertify-inner {
+	text-align: left;
+	margin-top: 15px;
+}
+.alertify-message {
+	padding: 15px;
+	margin: 0;
+}
+.alertify-text-wrapper {
+	padding: 0 15px;
+}
+.alertify-text {
+	color: #555;
+	border-radius: 4px;
+	padding: 8px;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+.alertify-text:focus {
+	border-color: rgba(82,168,236,.8);
+	outline: 0;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+}
+
+.alertify-buttons {
+	margin: 0px 15px;
+	padding: 14px 0px 15px;
+	border-top: 1px solid #DDD;
+	border-radius: 0 0 6px 6px;
+	box-shadow: inset 0 1px 0 #FFF;
+	text-align: right;
+}
+.alertify-button,
+.alertify-button:hover,
+.alertify-button:focus,
+.alertify-button:active {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.428571429;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.alertify-button:focus {
+	outline: none;
+	box-shadow: 0 0 5px #2B72D5;
+}
+.alertify-button:active {
+	position: relative;
+	box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+}
+.alertify-button-cancel,
+.alertify-button-cancel:hover,
+.alertify-button-cancel:focus,
+.alertify-button-cancel:active {
+	color: #fff;
+	background-color: #d9534f;
+	border-color: #d43f3a;
+}
+.alertify-button-cancel:hover,
+.alertify-button-cancel:focus,
+.alertify-button-cancel:active {
+	color: #ffffff;
+	background-color: #d2322d;
+	border-color: #ac2925;
+}
+.alertify-button-ok,
+.alertify-button-ok:hover,
+.alertify-button-ok:focus,
+.alertify-button-ok:active {
+	color: #fff;
+	background-color: #5cb85c;
+	border-color: #4cae4c;
+}
+.alertify-button-ok:hover,
+.alertify-button-ok:focus,
+.alertify-button-ok:active {
+	color: #ffffff;
+	background-color: #47a447;
+	border-color: #398439;
+}
+
+.alertify-log {
+	background: #3276b1;
+	padding: 15px 14px 15px;
+	border-radius: 4px;
+	color: #D9EDF7;
+	border: 1px solid #285e8e;
+}
+.alertify-log-error {
+	color: #ecf0f1;
+	background: #e74c3c;
+	border: 1px solid #c0392b;
+}
+.alertify-log-success {
+	color: #ecf0f1;
+	background: #27ae60;
+	border: 1px solid #2ecc71;
+}

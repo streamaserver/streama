@@ -1,0 +1,95 @@
+.player-wrapper{
+  @include flexbox;
+  @include align-items(center);
+
+  background: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0; 
+  bottom: 0;
+
+  video {
+    width: 100%;
+    max-height: 100%;
+  }
+
+  .overlay{
+    @include vendor-property('transition', 'opacity .5s');
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 9;
+
+
+    opacity: 0;
+    @include vendor-property('transition', 'opacity 0.3s');
+
+    &.visible{
+      opacity: 1;
+    }
+  }
+
+
+
+  .player-back{ 
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    box-shadow: 0 0 0 2px white;
+    border-radius: 100%;
+    width: 1.5em;
+    line-height: 1.5em;
+    text-align: center;
+    font-size: 26px;
+    z-index: 10;
+
+    opacity: 0;
+    @include vendor-property('transition', 'opacity 0.3s');
+
+    &.visible{
+      opacity: 1;
+    }
+  }
+  
+  .video-info{
+    position: absolute;
+    max-width: 600px;
+    top: 20%;
+    left: 10%;
+    right: 100px;
+    
+    p{
+      color: #999;
+      margin: 0;
+    }
+    h1{
+      margin: 0;
+      margin-bottom: 10px;
+    }
+    
+    h3{
+      margin: 0;
+      font-size: 20px;
+      margin-bottom: 10px;
+      font-weight: 300;
+    }
+  }
+  
+  .spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    
+    >div{
+      background: $primary;
+      width: 20px;
+      height: 20px;
+      margin-right: 12px; 
+    }
+  }
+}

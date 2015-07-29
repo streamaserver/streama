@@ -1,0 +1,25 @@
+<div class="modal-body">
+  <form class="form-horizontal">
+    <legend>
+      Add File
+      <div class="spinner" ng-show="loading">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </legend>
+
+    <video ng-repeat="file in video.files" src="{{file.src}}"></video>
+
+    <button ng-model="file"  class="btn btn-primary btn-block btn-lg"
+            ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)" ngf-select>
+      Drop or Select Attachment <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
+    </button>
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-success" ng-click="saveShow(newShow)">Save File</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,0 +1,19 @@
+<div class="admin">
+  <div class="nav">
+    <ul>
+      <li ng-class="{'active': (isCurrentState('admin.shows') || isCurrentState('admin.show'))}">
+        <a ui-sref="admin.shows">TV Shows</a>
+      </li>
+      <li ng-class="{'active': isCurrentState('admin.movies')}">
+        <a ui-sref="admin.movies">Movies</a>
+      </li>
+      <li ng-class="{'active': isCurrentState('admin.users')}">
+        <a ui-sref="admin.users">Users</a>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="admin-content">
+    <ui-view/>
+  </div>
+</div>

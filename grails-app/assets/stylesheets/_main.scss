@@ -1,0 +1,51 @@
+body{
+  background-color: #25292B;
+  color: white;
+  font-weight: 300;
+}
+
+h1,h2,h3,h4,h5,h6{
+  color: white;
+}
+
+.logo{
+  font-family: 'Pacifico', cursive;
+  font-size: 29px;
+  color: $primary;
+  float: left;
+  i{
+    font-size: 0.85em;
+  }
+}
+
+header.main{
+  @include clearfix; 
+  background: rgba(0, 0, 0, 0.15);
+  padding: 5px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+  
+  .navigation{
+    float: right; 
+    padding: 0; 
+    margin: 0;
+    
+    li{
+      list-style: none;
+      display: inline-block;      
+      
+      a{
+        color: white;
+        padding: 11px 6px;
+        display: block;
+      }
+    }
+  }
+}
+
+.content{
+}
+
+
+hr{
+  border-color: rgba(255, 255, 255, 0.08);
+}

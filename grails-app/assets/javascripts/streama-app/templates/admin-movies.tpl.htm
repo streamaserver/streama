@@ -1,0 +1,25 @@
+<button class="btn btn-primary pull-right btn-lg" ng-click="openMovieModal()">Create new Movie</button>
+
+<h1>Movies</h1>
+
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<hr/>
+
+<div class="media-list">
+  <div class="media-list-item" ng-repeat="movie in movies" ui-sref="admin.movie({movieId: movie.id})">
+    <div class="media-item" >
+      <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
+    </div>
+    <h3 class="media-title">{{movie.title}}</h3>
+    <div class="media-meta">Release: {{movie.release_date}} | <i class="ion-ios-star"></i> {{movie.vote_average}}</div>
+
+    <span class="label label-danger" ng-show="!movie.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
+
+  </div>
+</div>
+

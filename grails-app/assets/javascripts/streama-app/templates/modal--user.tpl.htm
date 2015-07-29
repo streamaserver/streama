@@ -1,0 +1,35 @@
+<div class="modal-body">
+  <form class="form-horizontal">
+    <legend>
+      Invite User
+      <div class="spinner" ng-show="loading">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </legend>
+
+    <div ng-class="{'has-error has-feedback': error, 'has-success has-feedback': valid}">
+      <label class="control-label" ng-show="error">{{error}}</label>
+      <div class="form-group" >
+        <div class="col-sm-12">
+          <input type="email" class="form-control" ng-model="user.username" placeholder="E-Mail-Address" ng-model-options="{updateOn: 'blur'}" ng-change="checkAvailability(user.username)">
+          <span class="glyphicon ion-close form-control-feedback" ng-show="error" aria-hidden="true"></span>
+          <span class="glyphicon ion-checkmark form-control-feedback" ng-show="valid" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label> <input type="checkbox" ng-model="user.enabled"/> &nbsp; Enabled (user can log in and view videos)</label>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-success" ng-disabled="!valid && !user.id" ng-click="saveAndInviteUser(user)">Save & Invite User</button>
+  <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

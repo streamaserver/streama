@@ -1,0 +1,26 @@
+<button class="btn btn-primary pull-right btn-lg" ng-click="openShowModal()">Create new Show</button>
+
+<h1>Shows</h1>
+
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+
+<hr/>
+
+<div class="media-list">
+  <div class="media-list-item" ng-repeat="show in shows" ui-sref="admin.show({showId: show.id})">
+    <div class="media-item" >
+      <img ng-src="https://image.tmdb.org/t/p/w300/{{show.backdrop_path}}"/>
+    </div>
+    <h3 class="media-title">{{show.name}}</h3>
+    <div class="media-meta">{{show.first_air_date}} | <i class="ion-ios-star"></i>{{show.vote_average}} </div>
+
+    <h3 class="media-episode-string">{{show.episodesWithFiles.length}} Episodes</h3>
+  </div>
+</div>
+
+

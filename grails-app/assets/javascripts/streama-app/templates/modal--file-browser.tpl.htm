@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h3>File Browser</h3>
+
+  <div class="spinner" ng-show="loading">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+</div>
+<div class="modal-body">
+
+  <input class="form-control input-sm" type="text" ng-model="search" placeholder="Search..."/>
+
+  <br/>
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="file in files | filter:search">
+      {{file.originalFilename}}
+      <button class="btn pull-right btn-success btn-xss" ng-click="chooseFile(file)">choose</button>
+    </li>
+  </ul>
+  
+
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-sm" ng-click="cancel()">Cancel</button>
+</div>

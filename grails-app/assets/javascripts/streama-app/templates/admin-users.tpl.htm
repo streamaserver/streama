@@ -1,0 +1,44 @@
+<button class="btn btn-primary pull-right btn-lg" ng-click="openUserModal()">Invite User</button>
+
+<h1>Users</h1>
+
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<hr/>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>Username</td>
+    <td>dateCreated</td>
+    <td>enabled</td>
+    <td>invitation sent</td>
+    <td>roles</td>
+    <td></td>
+  </tr>
+  </thead>
+  <tr ng-repeat="user in users">
+    <td>{{user.username}}</td>
+    <td>{{user.dateCreated | date:'short'}}</td>
+    <td>
+      <i class="ion-checkmark color-success" ng-show="user.enabled"></i>
+      <i class="ion-close color-danger" ng-show="!user.enabled"></i>
+    </td>
+
+    <td>
+      <i class="ion-checkmark color-success" ng-show="user.invitationSent"></i>
+      <i class="ion-close color-danger" ng-show="!user.invitationSent"></i>
+    </td>
+
+    <td> <span ng-repeat="role in user.authorities">{{role.authority}}</span></td>
+    
+    <td>
+      <button class="btn btn-xs btn-primary" ng-click="openUserModal(user)">edit</button>
+      <button class="btn btn-xs btn-success" ng-if="!isAdmin(user)" ng-click="makeUserAdmin(user)">make admin</button>
+    </td>
+  </tr>
+</table>
