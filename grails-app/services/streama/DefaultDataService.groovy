@@ -33,4 +33,26 @@ class DefaultDataService {
       }
     }
   }
+
+
+  def createDefaultSettings(){
+    def settings = [
+        [
+            settingsKey: 'Upload Directory',
+            value: '/data/streama',
+            description: 'This setting provides the application with your desired upload-path for all files.',
+        ],
+        [
+            settingsKey: 'TheMovieDB API key',
+            description: 'This API-key is required by the application to fetch all the nice Movie/Episode/Show data for you. Get one for free at https://www.themoviedb.org/',
+        ],
+    ]
+
+    settings.each{ settingData ->
+      if(!Settings.findBySettingsKey(settingData.settingsKey)){
+        def setting = new Settings(settingData)
+        setting.save flush: true, failOnError: true
+      }
+    }
+  }
 }
