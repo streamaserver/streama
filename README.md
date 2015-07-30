@@ -54,8 +54,10 @@ All you need is a server (preferably ubuntu) with the following configurations:
   - if you prefer different settings, adjust `/grails-app/conf/DataSource.groovy`
 - a folder called "streama" that is located in /data that is owned by tomcat7 (this is where all the files will be stored)
 
+
 Once the application is runnning the default user has "admin" both as username and password. 
 
+**Mails**
 By default the plugin assumes an unsecured mail server configured at localhost on port 25. In order to get emails to work with something else, look into [Grails mail plugin](http://grails.org/plugins/mail).
 
 
