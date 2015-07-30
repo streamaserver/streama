@@ -34,7 +34,7 @@ These are the features that I will be working on in the near future:
 ### Dashboard
 ![Streama Dashboard](http://new.tinygrab.com/d9072ef564654c6e245c442e9c7d95facd4b738538.png)
 
-On the dashboard a user can see his recently watched Tv-shows and Movies and their progress (he can continue where he left off) as well start new shows and movies that he hasn't yet seen. The "Continue Watching" Feature works by periodically updating the database (only while watching, of course!) with info about the currently watched Video and how far it has been seen.
+On the dashboard a user can see his recently watched Tv-shows and Movies and their progress (they can continue where they left off) as well start new shows and movies that they haven't yet seen. The "Continue Watching" Feature works by periodically updating the database (only while watching, of course!) with info about the currently watched Video and how far it has been seen.
 
 If a Movie or Episode does not contain any video-files, it won't show up in the dashboard.
 
