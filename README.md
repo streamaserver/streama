@@ -57,7 +57,7 @@ As an API for all the movies and shows I used the awesome API from theMovieDatab
 
 
 ### For develpoment setup: 
-[Setup-Streama-on-Ubuntu-14.04](Setup-App-on-Ubuntu-14.04)
+[Setup Streama on Ubuntu-14.04](https://github.com/dularion/streama/wiki/Setup-App-on-Ubuntu-14.04)
 
 You need the following
 - java
