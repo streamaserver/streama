@@ -1,6 +1,10 @@
 # streama
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal netflix for just such a purpose! 
 
+##### getting started
+Super simple setup: 
+- on a windows, run grailsw.bat run-war
+- on a unix-system, run ./grailsw run-war
 
 ## The Application
 
@@ -49,15 +53,18 @@ This application is web-based and is programmed with [Grails 2.4.4](https://grai
 As an API for all the movies and shows I used the awesome API from theMovieDatabase. 
 ![theMovieDatabase](https://d3a8mw37cqal2z.cloudfront.net/images/header_v2.png)
 
-##### getting started
-All you need is a server (preferably ubuntu) with the following configurations:
-- tomcat7 & java
+
+
+### For develpoment setup: 
+You need the following
+- java
 - mysql
 - a mysql database called "streama" (default config uses username "root" and no password)
   - if you prefer different settings, adjust `/grails-app/conf/DataSource.groovy`
 - a folder called "streama" that is located in /data that is owned by tomcat7 (this is where all the files will be stored) 
   - if you prefer a different location, you can change that in `/grails-app/conf/Config.groovy` line `155`
 - you need to register for an API-key over at [theMovieDb.org](https://www.themoviedb.org/documentation/api) and enter it in `/grails-app/conf/Config.groovy` line `157`. For testing out the app you may use my key that is hardcoded in there, but if you plan on using it, please get your own key, or the guys at theMovieDb.org will get angry with me :P
+- And your preferred IDE to run it all. I like IntelliJ for grails-projects.
 
 
 Once the application is runnning the default user has "admin" both as username and password. 
