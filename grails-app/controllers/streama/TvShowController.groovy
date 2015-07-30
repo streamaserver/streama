@@ -65,40 +65,4 @@ class TvShowController {
 
         render status: NO_CONTENT
     }
-
-    @Transactional
-    def fetchAndCreateAllEpisodes(TvShow tvShowInstance) {
-
-        if (tvShowInstance == null) {
-            render status: NOT_FOUND
-            return
-        }
-
-        def episodes = thetvdbService.fetchEpisodesForShow(tvShowInstance.seriesid)
-        def savedEpisodes = []
-        
-        episodes.each{ episode ->
-            def episodeString = "s" + episode.seasonnumber.padLeft(2, '0') + "e" + episode.episodenumber.padLeft(2, '0')
-            def existingEpisode = Video.findByTypeAndShowAndEpisodeString('Episode', tvShowInstance, episodeString)
-            if(!existingEpisode){
-                def video = new Video()         
-                video.properties = episode
-                if(episode.filename){
-                    video.image = thetvdbService.BASE_PATH_GRAPHICS + episode.filename
-                }
-                video.episodeString = episodeString
-                video.name = episode.episodename
-                video.episodeId = episode.id
-                video.show = tvShowInstance
-                video.type = 'Episode'
-
-                video.save failOnError: true
-                savedEpisodes.add(video)
-            }else{
-                savedEpisodes.add(existingEpisode)
-            } 
-        }
-
-        respond savedEpisodes
-    }
 }
