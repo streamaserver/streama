@@ -9,6 +9,16 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 
 The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can just use the frontend components and add your own REST-API for handling all the data :) 
 
+#### Roadmap
+This app is not nearly close to completion. 
+These are the features that I will be working on in the near future: 
+- folder-crawling to dicover files as an alternative to uploading them manually
+- Synchronized watching between 2 or more browsers (synchronized play/pause etc)
+- Video-conversion via ffmpeg through a cron-job for multiple html5-compatible formats
+- Functionality to add subtitles while viewing
+- Functionality to switch between multiple video-files (for instance for different video-quality)
+- (Maybe porting it over to NodeJS)
+
 ## The Application
 
 ### Dashboard
@@ -86,9 +96,4 @@ I will be adding new features and bugfixes often and quickly, but this is first 
 
 Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
 
-#### Todo-List
-These are the features that I will be working on in the near future: 
-- 
-- Video-conversion via ffmpeg through a cron-job for multiple html5-compatible formats
-- Functionality to add subtitles while viewing
-- Functionality to switch between multiple video-files (for instance for different video-quality)
+
