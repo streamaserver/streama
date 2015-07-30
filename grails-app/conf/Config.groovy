@@ -64,15 +64,6 @@ grails.gorm.default.constraints = {
 }
 
 
-grails.mail.host = "smtp.strato.de"
-grails.mail.port = 465
-grails.mail.username = "test@systaro.com"
-grails.mail.password = "planetQuak3"
-grails.mail.props = ["mail.smtp.auth"                  : "true",
-                     "mail.smtp.socketFactory.port"    : "465",
-                     "mail.smtp.socketFactory.class"   : "javax.net.ssl.SSLSocketFactory",
-                     "mail.smtp.socketFactory.fallback": "false"]
-
 grails.mail.default.from = "Streama <info@streama.com>"
 
 
