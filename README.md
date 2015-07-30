@@ -5,6 +5,7 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 Super simple setup: 
 - on a windows, run grailsw.bat run-war
 - on a unix-system, run ./grailsw run-war
+- navigate to http://localhost:8080/streama
 
 ## The Application
 
