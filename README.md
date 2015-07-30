@@ -17,6 +17,8 @@ These are the features that I will be working on in the near future:
 - Video-conversion via ffmpeg through a cron-job for multiple html5-compatible formats
 - Functionality to add subtitles while viewing
 - Functionality to switch between multiple video-files (for instance for different video-quality)
+- Chromecast Support
+- Better iOS Support
 - (Maybe porting it over to NodeJS)
 
 ## The Application
