@@ -56,6 +56,10 @@ All you need is a server (preferably ubuntu) with the following configurations:
 
 Once the application is runnning the default user has "admin" both as username and password. 
 
+By default the plugin assumes an unsecured mail server configured at localhost on port 25. In order to get emails to work with something else, look into [Grails mail plugin](http://grails.org/plugins/mail).
+
+
+
 
 ## Work-in-progress
 Lastly, I would like to mention that this project is extremely work-in-progress. Just today I was using it and noticed that it would be nice if the browser remembered the latest volume-setting. 
