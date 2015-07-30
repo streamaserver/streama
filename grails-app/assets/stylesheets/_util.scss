@@ -148,3 +148,9 @@ label{
   background-color: #292C2F;
   font-size: 12px;
 }
+
+.dropdown-menu{
+  z-index: 9999;
+  max-height: 500px;
+  overflow: auto;
+}
