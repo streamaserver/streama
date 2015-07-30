@@ -12,7 +12,7 @@ The application uses Grails for the REST-API, and AngularJS for the frontend. If
 #### Roadmap
 This app is not nearly close to completion. 
 These are the features that I will be working on in the near future: 
-- folder-crawling to dicover files as an alternative to uploading them manually
+- folder-crawling to discover files as an alternative to uploading them manually
 - Synchronized watching between 2 or more browsers (synchronized play/pause etc)
 - Video-conversion via ffmpeg through a cron-job for multiple html5-compatible formats
 - Functionality to add subtitles while viewing
