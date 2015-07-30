@@ -154,7 +154,7 @@ streama {
   storage {
     path = "/data/streama" 
   }
-  thetvdb = "2D08531BD9DE5B1C"
+  themoviedbAPI = "e1584c7cc0072947d4776de6df7b8822"
 }
 
 grails.databinding.dateFormats = ["yyyy-MM-dd'T'hh:mm:ss.SSS'Z'"]
