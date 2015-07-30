@@ -81,11 +81,14 @@ class UserController {
             
             log.debug("invitation email sent to $userInstance.username")
             
-            sendMail {
-                to userInstance.username
-                subject "You have been invited!"
-                body( view:"/mail/userInvite", model: [user: userInstance])
-            }
+            try{
+                sendMail {
+                    to userInstance.username
+                    subject "You have been invited!"
+                    body( view:"/mail/userInvite", model: [user: userInstance])
+                }
+            }catch (Exception e){}
+
 
             userInstance.invitationSent = true
         }
