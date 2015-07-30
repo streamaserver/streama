@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.controller('playerCtrl', [
-	'$scope', 'apiService', '$stateParams', '$timeout', '$rootScope', '$state', '$interval', '$sce',
-	function ($scope, apiService, $stateParams, $timeout, $rootScope, $state, $interval, $sce) {
+	'$scope', 'apiService', '$stateParams', '$timeout', '$rootScope', '$state', '$interval', '$sce', 'socketService',
+	function ($scope, apiService, $stateParams, $timeout, $rootScope, $state, $interval, $sce, socketService) {
 		$scope.loading = true;
 		var video = $('#video')[0];
 		var controlDisplayTimeout;
@@ -44,7 +44,28 @@ streamaApp.controller('playerCtrl', [
 		$scope.toggleSelectEpisodes = function (episodes) {
 			$scope.selectedEpisodes = episodes;
 		};
+		
+		//$scope.createNewPlayerSession = function () {
+		//	alertify.confirm('By creating a new session you will be redirected back to this player, but this time you will ' +
+		//	'have a unique session ID in the url. Share this with your friends to have a syncronized watching experience with them!', function (confirmed) {
+		//		if(confirmed){
+		//			$stateParams.sessionId = socketService.getUUID();
+		//			$state.go($state.current, $stateParams, {reload: true});
+		//		}
+		//	});
+		//};
+		
+		
+		if($stateParams.sessionId){
+			socketService.registerPlayerSessonListener();
 
+			$scope.$on('playerSession', function (e, data) {
+				console.log('%c playerSession', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
+			});
+		}
+
+		
+		
 		Mousetrap.bind('space', function() {
 			if($scope.playing){
 				$scope.pause();
@@ -140,6 +161,10 @@ streamaApp.controller('playerCtrl', [
 				apiService.viewingStatus.save(params);
 			}, 5000);
 			
+			
+			if($stateParams.sessionId){
+				apiService.websocket.triggerPlayerAction($stateParams.sessionId, 'play');
+			}
 		};
 
 

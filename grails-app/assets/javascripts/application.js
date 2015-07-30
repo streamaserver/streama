@@ -6,6 +6,7 @@
 // to create separate JavaScript files as needed.
 //
 //= require jquery
+//= require spring-websocket
 //= require angular/angular.js
 //= require angular-ui-router/release/angular-ui-router.js
 //= require angular-sanitize/angular-sanitize.js

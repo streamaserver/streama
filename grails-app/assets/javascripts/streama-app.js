@@ -15,7 +15,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			controller: 'dashCtrl'
 		})
 		.state('player', {
-			url: '/player/:videoId?currentTime',
+			url: '/player/:videoId?currentTime?sessionId',
 			templateUrl: 'player.htm',
 			controller: 'playerCtrl'
 		})

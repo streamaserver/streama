@@ -138,6 +138,12 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			seasonForShow: function (params) {
 				return $http.get(urlBase + 'theMovieDb/seasonForShow.json', {params: params});
 			}
+		},
+		
+		websocket: {
+			triggerPlayerAction: function (socketSessionId, playerAction) {
+				return $http.get(urlBase + 'websocket/triggerPlayerAction.json', {params: {socketSessionId: socketSessionId, playerAction: playerAction}});
+			}
 		}
 	};
 }]);
