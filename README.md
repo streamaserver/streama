@@ -39,6 +39,9 @@ And uploading video-files for each episode is as easy as drag-and-drop!
 
 ![Streama Uploading Episode](http://i.imgur.com/StgES0S.gif)
 
+### The Users
+![Streama User Management](http://new.tinygrab.com/d9072ef564717c22dde948c726144b1b707a607adc.png)
+Users can be invited and managed in the admin-panel. By default, they are non-admins, meaning they can only view videos, not create them. You can make them admins with the press of a button. Since there is a user-administration in place, I plan on expaning on this a lot! I want to add a feature, where users can add and administer something like playlists. So there is a lot of potential to make this even better! 
 
 ## The technical Details
 This application is web-based and is programmed with [Grails 2.4.4](https://grails.org/) and Mysql. For Login & User-Handling [SpringSecurity](http://projects.spring.io/spring-security/) is used. The player is completely html5-based, meaning there are limitations as to which file-types can be played. 
@@ -73,6 +76,7 @@ Btw, if you have any issues getting started, let me know. I will gladly help out
 
 #### Todo-List
 These are the features that I will be working on in the near future: 
-- Video-conversion via Quartz for multiple html5-compatible formats
+- 
+- Video-conversion via ffmpeg through a cron-job for multiple html5-compatible formats
 - Functionality to add subtitles while viewing
 - Functionality to switch between multiple video-files (for instance for different video-quality)
