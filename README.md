@@ -54,6 +54,8 @@ All you need is a server (preferably ubuntu) with the following configurations:
   - if you prefer different settings, adjust `/grails-app/conf/DataSource.groovy`
 - a folder called "streama" that is located in /data that is owned by tomcat7 (this is where all the files will be stored) 
   - if you prefer a different location, you can change that in `/grails-app/conf/Config.groovy` line `155`
+  - you need to register for an API-key over at [theMovieDb.org](https://www.themoviedb.org/documentation/api) and enter it in `/grails-app/conf/Config.groovy` line `157`. For testing out the app you may use my key that is hardcoded in there, but if you plan on using it, please get your own key, or the guys at theMovieDb.org will get angry with me :P 
+  - 
 
 
 Once the application is runnning the default user has "admin" both as username and password. 
