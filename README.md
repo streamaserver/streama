@@ -100,3 +100,9 @@ I will be adding new features and bugfixes often and quickly, but this is first 
 Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
 
 
+
+## License
+
+Streama is distributed under the terms of the MIT license.
+
+See [LICENSE.md](https://github.com/davidmartel/streama/blob/master/LICENSE.md) for details.
