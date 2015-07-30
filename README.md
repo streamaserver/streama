@@ -10,6 +10,8 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 
 The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can just use the frontend components and add your own REST-API for handling all the data :) 
 
+For supported video-codecs, please refer to [HTML5 Video Browser Support](https://en.wikipedia.org/wiki/HTML5_video#Browser_support). I will add video-conversion soon, but right now there is no conversion, so you have to rely on what your browser can handle. A quick and easy test is to open a new empty browser-tab and drag&drop your video file in. If it shows up in a player, then its a compatible format. if it downloads, its incompatible. But again, will hopefully add conversion, soon. And btw, Chrome supports most formats afaik. 
+
 Note: you need to register for an API-key over at theMovieDb.org and enter it in /grails-app/conf/Config.groovy line 157. For testing out the app you may use my key that is hardcoded in there, but if you plan on using it, please get your own key, or the guys at theMovieDb.org will get angry with me :P
 
 #### Roadmap
