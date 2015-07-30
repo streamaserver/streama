@@ -6,6 +6,7 @@ streamaApp.factory('socketService', ['$rootScope', 'apiService', '$timeout', fun
 
   return {
     subscription: null,
+    browserSocketUUID: null,
     
     getUUID: function() {
       function s4() {
@@ -21,16 +22,19 @@ streamaApp.factory('socketService', ['$rootScope', 'apiService', '$timeout', fun
       var that = this;
 
       var urlBase = $('base').attr('href');
-
+      
       var socket = new SockJS(urlBase + 'stomp');
       var client = Stomp.over(socket);
 
 
       client.connect({}, function() {
         that.subscription = client.subscribe("/topic/playerSession/" + projectSessionId, function(data) {
-          $rootScope.$broadcast('playerSession', data);
+          $rootScope.$broadcast('playerSession', JSON.parse(data.body.toString()));
         });
       });
+
+      this.browserSocketUUID = this.getUUID();
+      $rootScope.browserSocketUUID = this.browserSocketUUID;
     },
 
     unsubscribe: function () {

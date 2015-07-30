@@ -55,9 +55,25 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-	//$httpProvider.interceptors.push('httpInterceptor');
+	$httpProvider.interceptors.push('httpInterceptor');
 
-}]);
+}])
+
+	.factory('httpInterceptor', ['$rootScope', '$q', function ($rootScope, $q) {
+		return {
+			request: function (config) {
+				config.params = config.params || {};
+				config.params.browserSocketUUID = $rootScope.browserSocketUUID;
+				return config || $q.when(config);
+			},
+			response: function (response) {
+				return response || $q.when(response);
+			},
+			responseError: function (response) {
+				return $q.reject(response);
+			}
+		};
+	}]);
 
 
 streamaApp.run(['$rootScope', '$state', function ($rootScope, $state) {

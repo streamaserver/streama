@@ -13,6 +13,7 @@ class WebsocketController {
     def socketMessage = [:]
     String socketSessionId = params.socketSessionId
     socketMessage.playerAction = params.playerAction
+    socketMessage.browserSocketUUID = params.browserSocketUUID
 
 
     brokerMessagingTemplate.convertAndSend "/topic/playerSession/" + socketSessionId, socketMessage;

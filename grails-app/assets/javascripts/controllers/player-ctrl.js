@@ -45,22 +45,29 @@ streamaApp.controller('playerCtrl', [
 			$scope.selectedEpisodes = episodes;
 		};
 		
-		//$scope.createNewPlayerSession = function () {
-		//	alertify.confirm('By creating a new session you will be redirected back to this player, but this time you will ' +
-		//	'have a unique session ID in the url. Share this with your friends to have a syncronized watching experience with them!', function (confirmed) {
-		//		if(confirmed){
-		//			$stateParams.sessionId = socketService.getUUID();
-		//			$state.go($state.current, $stateParams, {reload: true});
-		//		}
-		//	});
-		//};
+		$scope.createNewPlayerSession = function () {
+			alertify.confirm('By creating a new session you will be redirected back to this player, but this time you will ' +
+			'have a unique session ID in the url. Share this with your friends to have a syncronized watching experience with them!', function (confirmed) {
+				if(confirmed){
+					$stateParams.sessionId = socketService.getUUID();
+					$state.go($state.current, $stateParams, {reload: true});
+				}
+			});
+		};
 		
 		
 		if($stateParams.sessionId){
-			socketService.registerPlayerSessonListener();
+			socketService.registerPlayerSessonListener($stateParams.sessionId);
 
 			$scope.$on('playerSession', function (e, data) {
-				console.log('%c playerSession', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
+				if(data.browserSocketUUID != socketService.browserSocketUUID){
+					if(data.playerAction == 'play'){
+						$scope.play(true);
+					}else if(data.playerAction == 'pause'){
+						$scope.pause(true);
+					}
+				}
+
 			});
 		}
 
@@ -148,7 +155,7 @@ streamaApp.controller('playerCtrl', [
 			$state.go('player', {videoId: $scope.video.nextEpisode.id});
 		};
 
-		$scope.play = function () {
+		$scope.play = function (excludeSocket) {
 			video.play();
 			$scope.playing = true;
 
@@ -162,17 +169,22 @@ streamaApp.controller('playerCtrl', [
 			}, 5000);
 			
 			
-			if($stateParams.sessionId){
+			if($stateParams.sessionId && !excludeSocket){
 				apiService.websocket.triggerPlayerAction($stateParams.sessionId, 'play');
 			}
 		};
 
 
-		$scope.pause = function () {
+		$scope.pause = function (excludeSocket) {
 			video.pause();
 			$scope.playing = false;
 			$interval.cancel(viewingStatusSaveInterval);
 			$interval.cancel(timeCheckInterval);
+
+			
+			if($stateParams.sessionId && !excludeSocket){
+				apiService.websocket.triggerPlayerAction($stateParams.sessionId, 'pause');
+			}
 		};
 		
 		$scope.getStyleProgress = function (attribute) { 

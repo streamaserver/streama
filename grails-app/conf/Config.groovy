@@ -157,12 +157,18 @@ streama {
   themoviedbAPI = "e1584c7cc0072947d4776de6df7b8822"
 }
 
-grails.databinding.dateFormats = ["yyyy-MM-dd'T'hh:mm:ss.SSS'Z'"]
+grails.databinding.dateFormats = [
+    "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", // javascript format in json
+    "yyyy-MM-dd HH:mm:ss.S",
+    "yyyy-MM-dd'T'hh:mm:ss'Z'"
+]
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'streama.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'streama.UserRole'
 grails.plugin.springsecurity.authority.className = 'streama.Role'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/user/loginTarget'
+
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                              ['IS_AUTHENTICATED_REMEMBERED'],
 	'/index':                         ['IS_AUTHENTICATED_REMEMBERED'],
@@ -172,11 +178,14 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/video/**':                      ['IS_AUTHENTICATED_REMEMBERED'],
 	'/viewingStatus/**':              ['IS_AUTHENTICATED_REMEMBERED'],
 	'/user/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/thetvdb/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
+	'/thetvdb/**':                    ['IS_AUTHENTICATED_REMEMBERED'],
 	'/theMovieDb/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
 	'/file/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
 	'/movie/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
 	'/episode/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
+	'/appSettings/**':                  ['IS_AUTHENTICATED_REMEMBERED'],
+	'/stomp/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
+	'/websocket/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
 
   '/invite/**':                        ['permitAll'],
 	'/assets/**':                     ['permitAll'],
