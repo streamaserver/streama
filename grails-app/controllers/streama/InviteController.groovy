@@ -13,7 +13,7 @@ class InviteController {
         User user = User.findByUuid(uuid)
         
         if(!uuid || !user || !password || !passwordRepeat || password != passwordRepeat || password.size() <= 5){
-            return;            
+            redirect(action: 'index')
         }
 
         user.password = password
