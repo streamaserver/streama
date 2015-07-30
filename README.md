@@ -1,7 +1,7 @@
 # streama
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal netflix for just such a purpose! 
 
-#### Super simple setup (Java required): 
+#### Super simple setup (Java 1.7.x required): 
 - you need a mysql db called "streama" (username `root`, no password). To change this, see below. 
 - you need the following directory: `/data/streama` (for windows,that this directory should be on your C: drive)
 - run the app: on a windows, run `grailsw.bat run-war`, on a unix-system, run `./grailsw run-war`
