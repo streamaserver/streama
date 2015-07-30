@@ -52,7 +52,8 @@ All you need is a server (preferably ubuntu) with the following configurations:
 - mysql
 - a mysql database called "streama" (default config uses username "root" and no password)
   - if you prefer different settings, adjust `/grails-app/conf/DataSource.groovy`
-- a folder called "streama" that is located in /data that is owned by tomcat7 (this is where all the files will be stored)
+- a folder called "streama" that is located in /data that is owned by tomcat7 (this is where all the files will be stored) 
+  - if you prefer a different location, you can change that in `/grails-app/conf/Config.groovy` line `155`
 
 
 Once the application is runnning the default user has "admin" both as username and password. 
