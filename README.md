@@ -48,7 +48,7 @@ As an API for all the movies and shows I used the awesome API from theMovieDatab
 
 ##### getting started
 All you need is a server (preferably ubuntu) with the following configurations:
-- tomcat7
+- tomcat7 & java
 - mysql
 - a mysql database called "streama" (default config uses username "root" and no password)
   - if you prefer different settings, adjust `/grails-app/conf/DataSource.groovy`
