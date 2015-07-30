@@ -112,6 +112,11 @@ label {
   background-color: #292C2F;
   font-size: 12px; }
 
+.dropdown-menu {
+  z-index: 9999;
+  max-height: 500px;
+  overflow: auto; }
+
 .btn {
   background: gray;
   border-color: #787878;
@@ -319,7 +324,7 @@ hr {
   .media-progress-wrapper .media-progress {
     margin-top: 5px;
     height: 3px;
-    background-color: #1D1D1D; }
+    background-color: #333; }
   .media-progress-wrapper .progress-inner {
     height: 3px;
     background-color: #b0ddef; }
