@@ -22,9 +22,6 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			list: function () {
 				return $http.get(urlBase + 'tvShow.json');
 			},
-			fetchAndCreateAllEpisodes: function (id) {
-				return $http.get(urlBase + 'tvShow/fetchAndCreateAllEpisodes.json', {params: {id: id}});
-			},
 			episodesForTvShow: function (id) {
 				return $http.get(urlBase + 'tvShow/episodesForTvShow.json', {params: {id: id}});
 			}
@@ -115,19 +112,6 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			delete: function (id) {
 				return $http.get(urlBase + 'viewingStatus/delete.json', {params: {id: id}});
 			}
-		},
-
-
-		thetvdb: {
-			fetchByName: function (type, name) {
-				return $http.get(urlBase + 'thetvdb/fetchByName.json', {params: {type: type, name: name}});
-			},
-			fetchById: function (type, id) {
-				return $http.get(urlBase + 'thetvdb/fetchById.json', {params: {type: type, id: id}});
-			},
-			searchEpisodes: function (query, showId) {
-				return $http.get(urlBase + 'thetvdb/searchEpisodes.json', {params: {query: query, showId: showId}});
-			},
 		},
 
 
