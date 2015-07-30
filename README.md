@@ -16,7 +16,8 @@ Note: you need to register for an API-key over at theMovieDb.org and enter it in
 This app is not nearly close to completion. 
 These are the features that I will be working on in the near future: 
 - folder-crawling to discover files as an alternative to uploading them manually
-- Synchronized watching between 2 or more browsers (synchronized play/pause etc)
+- ~~Synchronized watching between 2 or more browsers (synchronized play/pause etc)~~ 
+  - Added it now :) 
 - Video-conversion via ffmpeg through a cron-job for multiple html5-compatible formats
 - Functionality to add subtitles while viewing
 - Functionality to switch between multiple video-files (for instance for different video-quality)
