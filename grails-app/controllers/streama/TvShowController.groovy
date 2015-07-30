@@ -22,7 +22,6 @@ class TvShowController {
     @Transactional
     def save() {
         def data = request.JSON
-        data.fanart = thetvdbService.BASE_PATH_GRAPHICS + data.fanart
         
         if (data == null) {
             render status: NOT_FOUND
