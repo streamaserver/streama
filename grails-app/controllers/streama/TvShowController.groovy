@@ -8,8 +8,6 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class TvShowController {
 
-    def thetvdbService
-
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST",  delete: "DELETE"]
 
