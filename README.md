@@ -9,6 +9,8 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 
 The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can just use the frontend components and add your own REST-API for handling all the data :) 
 
+Note: you need to register for an API-key over at theMovieDb.org and enter it in /grails-app/conf/Config.groovy line 157. For testing out the app you may use my key that is hardcoded in there, but if you plan on using it, please get your own key, or the guys at theMovieDb.org will get angry with me :P
+
 #### Roadmap
 This app is not nearly close to completion. 
 These are the features that I will be working on in the near future: 
@@ -80,7 +82,6 @@ You need the following
   - if you prefer different settings, adjust `/grails-app/conf/DataSource.groovy`
 - a folder called "streama" that is located in /data that is owned by tomcat7 (this is where all the files will be stored) 
   - if you prefer a different location, you can change that in `/grails-app/conf/Config.groovy` line `155`
-- you need to register for an API-key over at [theMovieDb.org](https://www.themoviedb.org/documentation/api) and enter it in `/grails-app/conf/Config.groovy` line `157`. For testing out the app you may use my key that is hardcoded in there, but if you plan on using it, please get your own key, or the guys at theMovieDb.org will get angry with me :P
 - And your preferred IDE to run it all. I like IntelliJ for grails-projects.
 
 
