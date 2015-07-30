@@ -23,6 +23,6 @@ class TvShow {
 
     static constraints = {
         name nullable: false
-        overview sqlType:"text"
+        overview size: 1..5000
     }
 }

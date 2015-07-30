@@ -19,8 +19,8 @@ class Video {
 
 
   static constraints = {
-    overview sqlType:"text"
-
+    overview size: 1..5000
+    
     dateCreated nullable: true
     lastUpdated nullable: true
   }
