@@ -10,13 +10,9 @@ class WebsocketController {
 
   
   def triggerPlayerAction() {
-    def socketMessage = [:]
     String socketSessionId = params.socketSessionId
-    socketMessage.playerAction = params.playerAction
-    socketMessage.browserSocketUUID = params.browserSocketUUID
 
-
-    brokerMessagingTemplate.convertAndSend "/topic/playerSession/" + socketSessionId, socketMessage;
+    brokerMessagingTemplate.convertAndSend "/topic/playerSession/" + socketSessionId, params;
 
     render status: OK
   }
