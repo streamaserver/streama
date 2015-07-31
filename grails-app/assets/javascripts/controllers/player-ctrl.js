@@ -14,7 +14,7 @@ streamaApp.controller('playerCtrl', [
 
 		apiService.video.get($stateParams.videoId).success(function (data) {
 			$scope.video = data;
-			 
+
 			if(data.show){
 				apiService.tvShow.episodesForTvShow(data.show.id).success(function (episodes) {
 					$scope.groupedEpisodes = _.groupBy(episodes, 'season_number');
@@ -26,7 +26,18 @@ streamaApp.controller('playerCtrl', [
 				$scope.loading = false;
 				$scope.play();
 				$scope.videoDuration = video.duration;
-				
+
+        if(!video.duration){
+          alertify.alert('There seems to be a problem adding the video-file to the player. This is most likely due to a codec-problem. ' +
+          'Try converting it to a compatible HTML5 codec, remove the currently attacked file and re-add it.', function () {
+            if($scope.video.show){
+              $state.go('admin.show', {showId: $scope.video.show.id})
+            }else{
+              $state.go('admin.movie', {movieId: $scope.video.id})
+            }
+          });
+        }
+
 				if($stateParams.currentTime){
 					$scope.currentTime = $stateParams.currentTime;
 				}
@@ -39,12 +50,12 @@ streamaApp.controller('playerCtrl', [
 			}, 3000);
 		});
 
-		
-		
+
+
 		$scope.toggleSelectEpisodes = function (episodes) {
 			$scope.selectedEpisodes = episodes;
 		};
-		
+
 		$scope.createNewPlayerSession = function () {
 			alertify.confirm('By creating a new session you will be redirected back to this player, but this time you will ' +
 			'have a unique session ID in the url. Share this with your friends to have a syncronized watching experience with them!', function (confirmed) {
@@ -54,8 +65,8 @@ streamaApp.controller('playerCtrl', [
 				}
 			});
 		};
-		
-		
+
+
 		if($stateParams.sessionId){
 			socketService.registerPlayerSessonListener($stateParams.sessionId);
 
@@ -75,8 +86,8 @@ streamaApp.controller('playerCtrl', [
 			});
 		}
 
-		
-		
+
+
 		Mousetrap.bind('space', function() {
 			if($scope.playing){
 				$scope.pause();
@@ -88,7 +99,7 @@ streamaApp.controller('playerCtrl', [
 		$scope.trustSrc = function(src) {
 			return $sce.trustAsResourceUrl(src);
 		};
-		
+
 		//$scope.controlsVisible = true;
 		$scope.showControls = function () {
 			$timeout.cancel(controlDisplayTimeout);
@@ -108,15 +119,15 @@ streamaApp.controller('playerCtrl', [
 					}, 5000);
 			}, 3000);
 		};
-		
+
 		$scope.playerVolumeToggle = function () {
 			if($scope.volumeLevel == 0){
-				$scope.volumeLevel = 6;	
+				$scope.volumeLevel = 6;
 			}else{
 				$scope.volumeLevel = 0;
 			}
 		};
-		
+
 		$scope.scrubberOptions = {
 			orientation: 'horizontal',
 			min: 0,
@@ -133,9 +144,9 @@ streamaApp.controller('playerCtrl', [
 				apiService.viewingStatus.save(params);
 			}
 		};
-		
+
 		$scope.volumeScrubberOptions = {
-			orientation: 'vertical', 
+			orientation: 'vertical',
 			range: 'min',
 			change: function (e, slider) {
 				var volume = slider.value / 10;
@@ -169,10 +180,13 @@ streamaApp.controller('playerCtrl', [
 
 			viewingStatusSaveInterval = $interval(function() {
 				var params = {videoId: $scope.video.id, currentTime: $scope.currentTime, runtime: $scope.videoDuration};
-				apiService.viewingStatus.save(params);
+
+        if(params.runtime && params.videoId){
+          apiService.viewingStatus.save(params);
+        }
 			}, 5000);
-			
-			
+
+
 			if($stateParams.sessionId && !excludeSocket){
 				apiService.websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'play', currentPlayerTime: video.currentTime});
 			}
@@ -185,22 +199,22 @@ streamaApp.controller('playerCtrl', [
 			$interval.cancel(viewingStatusSaveInterval);
 			$interval.cancel(timeCheckInterval);
 
-			
+
 			if($stateParams.sessionId && !excludeSocket){
 				apiService.websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'pause', currentPlayerTime: video.currentTime});
 			}
 		};
-		
-		$scope.getStyleProgress = function (attribute) { 
+
+		$scope.getStyleProgress = function (attribute) {
 			var percentage = video.currentTime /  video.duration * 100;
 			var returnObj = {};
 			returnObj[attribute] = percentage+'%';
 			return returnObj;
 		};
-		
+
 		$scope.fullScreen = function () {
 			$scope.isFullScreen = !$scope.isFullScreen;
-			
+
 			if($scope.isFullScreen){
 				var docElm = document.documentElement;
 				if (docElm.requestFullscreen) {
@@ -214,9 +228,9 @@ streamaApp.controller('playerCtrl', [
 				}
 				else if (docElm.msRequestFullscreen) {
 					docElm.msRequestFullscreen();
-				}				
+				}
 			}
-			
+
 			else{
 				if (document.exitFullscreen) {
 					document.exitFullscreen();
@@ -248,6 +262,6 @@ streamaApp.controller('playerCtrl', [
 				destroyPlayer();
 			}
 		});
-		
-		
+
+
 }]);
