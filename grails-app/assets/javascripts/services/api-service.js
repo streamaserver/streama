@@ -125,8 +125,8 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 		},
 		
 		websocket: {
-			triggerPlayerAction: function (socketSessionId, playerAction) {
-				return $http.get(urlBase + 'websocket/triggerPlayerAction.json', {params: {socketSessionId: socketSessionId, playerAction: playerAction}});
+			triggerPlayerAction: function (params) {
+				return $http.get(urlBase + 'websocket/triggerPlayerAction.json', {params: params});
 			}
 		}
 	};

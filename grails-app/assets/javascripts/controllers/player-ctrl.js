@@ -60,11 +60,15 @@ streamaApp.controller('playerCtrl', [
 			socketService.registerPlayerSessonListener($stateParams.sessionId);
 
 			$scope.$on('playerSession', function (e, data) {
+				console.log('%c playerSessionSocket', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
 				if(data.browserSocketUUID != socketService.browserSocketUUID){
 					if(data.playerAction == 'play'){
 						$scope.play(true);
 					}else if(data.playerAction == 'pause'){
 						$scope.pause(true);
+						if(video.currentTime+1.5 > data.currentPlayerTime || video.currentTime-1.5 < data.currentPlayerTime){
+							video.currentTime = data.currentPlayerTime;
+						}
 					}
 				}
 
@@ -170,7 +174,7 @@ streamaApp.controller('playerCtrl', [
 			
 			
 			if($stateParams.sessionId && !excludeSocket){
-				apiService.websocket.triggerPlayerAction($stateParams.sessionId, 'play');
+				apiService.websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'play', currentPlayerTime: video.currentTime});
 			}
 		};
 
@@ -183,7 +187,7 @@ streamaApp.controller('playerCtrl', [
 
 			
 			if($stateParams.sessionId && !excludeSocket){
-				apiService.websocket.triggerPlayerAction($stateParams.sessionId, 'pause');
+				apiService.websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'pause', currentPlayerTime: video.currentTime});
 			}
 		};
 		

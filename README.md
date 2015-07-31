@@ -1,7 +1,9 @@
 # streama
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal netflix for just such a purpose! 
 
-#### Super simple setup (Java 1.7.x required): 
+
+#### Super simple setup: 
+- you need [JDK7](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
 - you need a mysql db called "streama" (username `root`, no password). To change this, see below. 
 - you need the following directory: `/data/streama` (for windows,that this directory should be on your C: drive)
 - run the app: on a windows, run `grailsw.bat run-war`, on a unix-system, run `./grailsw run-war`
@@ -10,26 +12,22 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 
 The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can just use the frontend components and add your own REST-API for handling all the data :) 
 
-Note: you need to register for an API-key over at theMovieDb.org and enter it in /grails-app/conf/Config.groovy line 157. For testing out the app you may use my key that is hardcoded in there, but if you plan on using it, please get your own key, or the guys at theMovieDb.org will get angry with me :P
+###### Video Codecs
+For supported video-codecs, please refer to [HTML5 Video Browser Support](https://en.wikipedia.org/wiki/HTML5_video#Browser_support). I will add video-conversion soon, but right now there is no conversion, so you have to rely on what your browser can handle. A quick and easy test is to open a new empty browser-tab and drag&drop your video file in. If it shows up in a player, then its a compatible format. if it downloads, its incompatible. But again, will hopefully add conversion, soon. And btw, Chrome supports most formats afaik. 
+
+###### API key
+You need to register for an API-key over at theMovieDb.org and enter it in /grails-app/conf/Config.groovy line 157. For testing out the app you may use my key that is hardcoded in there, but if you plan on using it, please get your own key, or the guys at theMovieDb.org will get angry with me :P
 
 #### Roadmap
 This app is not nearly close to completion. 
-These are the features that I will be working on in the near future: 
-- folder-crawling to discover files as an alternative to uploading them manually
-- Synchronized watching between 2 or more browsers (synchronized play/pause etc)
-- Video-conversion via ffmpeg through a cron-job for multiple html5-compatible formats
-- Functionality to add subtitles while viewing
-- Functionality to switch between multiple video-files (for instance for different video-quality)
-- Chromecast Support
-- Better iOS Support
-- (Maybe porting it over to NodeJS)
+These [enhancement-issues](https://github.com/dularion/streama/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement) are the features that I will be working on in the near future.
 
 ## The Application
 
 ### Dashboard
 ![Streama Dashboard](http://new.tinygrab.com/d9072ef564654c6e245c442e9c7d95facd4b738538.png)
 
-On the dashboard a user can see his recently watched Tv-shows and Movies and their progress (he can continue where he left off) as well start new shows and movies that he hasn't yet seen. The "Continue Watching" Feature works by periodically updating the database (only while watching, of course!) with info about the currently watched Video and how far it has been seen.
+On the dashboard a user can see his recently watched Tv-shows and Movies and their progress (they can continue where they left off) as well start new shows and movies that they haven't yet seen. The "Continue Watching" Feature works by periodically updating the database (only while watching, of course!) with info about the currently watched Video and how far it has been seen.
 
 If a Movie or Episode does not contain any video-files, it won't show up in the dashboard.
 
@@ -99,6 +97,10 @@ Lastly, I would like to mention that this project is extremely work-in-progress.
 I will be adding new features and bugfixes often and quickly, but this is first and foremost a hobby project, so the time that I can spend on it is limited. If you want to contibute, feel free! I will be honored by each and every pull-request :) 
 
 Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
+
+## Known issues
+- When streaming a video, an exception occurs `getOutputStream() has already been called for this response` because springSecurity applies a filter that adds more data to the outputStream, even though I already added all the data and closed it. This error is merely cosmetic, and does not influence the video streaming. But I will want to get this fixed. 
+- There is no video-conversion currently, meaning you are reliant upon html5 browser compatibilities. But I will implement server-side conversion soon! 
 
 
 ## License
