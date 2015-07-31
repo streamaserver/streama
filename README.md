@@ -47,7 +47,7 @@ I am especially proud of the Episode-Browser, which aims to function just like o
 ### The Admin-Panel
 ![Streama Admin](http://new.tinygrab.com/d9072ef56484ebb444cc2fc7bc11f18e9f1706f68f.png)
 
-One of the most important things to me was to make managing shows, movies and episodes as easy and fun as possible. For this I made heavy use of the API from (theMovieDatabase.org)[https://www.themoviedb.org/], which auto-fills the episodes, shows and movies with useful information and great images, so that you, the user, will have hardly any work. 
+One of the most important things to me was to make managing shows, movies and episodes as easy and fun as possible. For this I made heavy use of the API from [theMovieDatabase.org](https://www.themoviedb.org/), which auto-fills the episodes, shows and movies with useful information and great images, so that you, the user, will have hardly any work. 
 
 For instance, creating a new Tv-Show and the episodes for the first season looks something like this: 
 
