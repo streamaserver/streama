@@ -17,7 +17,7 @@
 }
 
 .modal-content{
-  background-color: #3E4346;  
+  background-color: #3E4346;
 }
 
 legend{
@@ -45,17 +45,17 @@ label{
   }
 }
 
-.form-control{ 
+.form-control{
   background-color: rgba(255, 255, 255, 0.12);
   color: white;
-  
+
   &[disabled]{
     background-color: rgba(255, 255, 255, 0.12);
     opacity: 0.5;
   }
 }
 
- 
+
 [ui-sref],
 [ng-click]{
   cursor: pointer;
@@ -63,7 +63,7 @@ label{
 
 .typeahead-wrapper{
   position: relative;
-  
+
   .spinner{
     position: absolute;
     top: 11px;
@@ -106,14 +106,14 @@ label{
   background: #DDD;
 }
 
-.table-striped{ 
+.table-striped{
   background-color: #4C4C4C;
-  
+
   thead{
     background: darken($primary, 30%);
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 13px;     
+    font-size: 13px;
   }
 }
 
@@ -153,4 +153,10 @@ label{
   z-index: 9999;
   max-height: 500px;
   overflow: auto;
+}
+
+.input-xs{
+  padding: 0 8px;
+  height: 2em;
+  font-size: 13px;
 }

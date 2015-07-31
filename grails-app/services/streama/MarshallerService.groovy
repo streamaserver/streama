@@ -1,13 +1,15 @@
 package streama
 
+
 import grails.converters.JSON
 import grails.transaction.Transactional
 import org.codehaus.groovy.grails.web.converters.configuration.DefaultConverterConfiguration
 
 @Transactional
 class MarshallerService {
-    
+
     def springSecurityService
+    def settingsService
 
     def init() {
 
@@ -20,6 +22,10 @@ class MarshallerService {
             returnArray['enabled'] = user.enabled
             returnArray['dateCreated'] = user.dateCreated
             returnArray['invitationSent'] = user.invitationSent
+
+            if(user.invitationSent && user.uuid){
+              returnArray['invitationLink'] = settingsService.baseUrl +  "/invite?uuid=${user?.uuid}"
+            }
 
             return returnArray;
         }
@@ -40,7 +46,7 @@ class MarshallerService {
 
             return returnArray;
         }
-        
+
         JSON.registerObjectMarshaller(Movie){ Movie movie ->
             def returnArray = [:]
 
@@ -80,7 +86,7 @@ class MarshallerService {
             returnArray['subtitles'] = video.files.findAll{it.extension == '.srt'}
 
             returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(video, springSecurityService.currentUser)
-            
+
             if(video instanceof Episode){
                 returnArray['show'] = video.show
                 returnArray['episodeString'] = video.episodeString

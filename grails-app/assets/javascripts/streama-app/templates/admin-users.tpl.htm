@@ -16,7 +16,7 @@
     <td>Username</td>
     <td>dateCreated</td>
     <td>enabled</td>
-    <td>invitation sent</td>
+    <td>invitation link</td>
     <td>roles</td>
     <td></td>
   </tr>
@@ -30,12 +30,11 @@
     </td>
 
     <td>
-      <i class="ion-checkmark color-success" ng-show="user.invitationSent"></i>
-      <i class="ion-close color-danger" ng-show="!user.invitationSent"></i>
+      <input ng-if="user.invitationLink" class="form-control input-xs" type="text" ng-model="user.invitationLink"/>
     </td>
 
     <td> <span ng-repeat="role in user.authorities">{{role.authority}}</span></td>
-    
+
     <td>
       <button class="btn btn-xs btn-primary" ng-click="openUserModal(user)">edit</button>
       <button class="btn btn-xs btn-success" ng-if="!isAdmin(user)" ng-click="makeUserAdmin(user)">make admin</button>
