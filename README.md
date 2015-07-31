@@ -106,7 +106,7 @@ I will be adding new features and bugfixes often and quickly, but this is first 
 Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
 
 ## Known issues
-- When streaming a video, an exception occurs because springSecurity applies a filter that adds more data to the outputStream, even though I already added all the data and closed it. This error is merely cosmetic, and does not influence the video streaming. But I will want to get this fixed. 
+- When streaming a video, an exception occurs `getOutputStream() has already been called for this response` because springSecurity applies a filter that adds more data to the outputStream, even though I already added all the data and closed it. This error is merely cosmetic, and does not influence the video streaming. But I will want to get this fixed. 
 - There is no video-conversion currently, meaning you are reliant upon html5 browser compatibilities. But I will implement server-side conversion soon! 
 
 
