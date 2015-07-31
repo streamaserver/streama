@@ -1,5 +1,5 @@
 class BootStrap {
-    
+
     def marshallerService
     def defaultDataService
 
@@ -7,6 +7,7 @@ class BootStrap {
         marshallerService.init()
         defaultDataService.createDefaultRoles()
         defaultDataService.createDefaultUsers()
+        defaultDataService.createDefaultSettings()
     }
     def destroy = {
     }

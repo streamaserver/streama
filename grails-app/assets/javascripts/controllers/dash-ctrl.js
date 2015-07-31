@@ -1,18 +1,28 @@
 'use strict';
 
-streamaApp.controller('dashCtrl', ['$scope', 'apiService', function ($scope, apiService) {
+streamaApp.controller('dashCtrl', ['$scope', 'apiService', '$state', function ($scope, apiService, $state) {
 	$scope.loading = true;
-	
-	apiService.video.dash()
-		.success(function (data) {
-			$scope.episodes = data.firstEpisodes;
-			$scope.continueWatching = data.continueWatching;
-			$scope.movies = data.movies;
-			$scope.loading = false;
-		})
-		.error(function () {
-			alertify('A server error occured.');
-			$scope.loading = false;
-		});
+
+  apiService.settings.list().success(function (data) {
+    var TheMovieDbAPI = _.find(data, {settingsKey: 'TheMovieDB API key'});
+
+    if(!TheMovieDbAPI.value){
+      alertify.alert('You need to fill out some required base-settings. You will be redirected to the settings page now.', function () {
+        $state.go('admin.settings');
+      });
+    }else{
+      apiService.video.dash()
+        .success(function (data) {
+          $scope.episodes = data.firstEpisodes;
+          $scope.continueWatching = data.continueWatching;
+          $scope.movies = data.movies;
+          $scope.loading = false;
+        })
+        .error(function () {
+          alertify('A server error occured.');
+          $scope.loading = false;
+        });
+    }
+  });
 
 }]);

@@ -21,7 +21,11 @@ streamaApp.factory('uploadService', ['$http', 'Upload', '$location', function ($
 							uploadStatus.percentage = progressPercentage;
 						})
 
-						.success(callback || angular.noop);
+						.success(callback || angular.noop)
+						.error(function (err) {
+              console.log('%c err', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', arguments);
+              alertify.error(err)
+            });
 
 				}
 			}

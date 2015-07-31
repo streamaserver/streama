@@ -11,6 +11,9 @@ class UploadService {
   def grailsApplication
   def grailsLinkGenerator
 
+  def getStoragePath(){
+    return Settings.findBySettingsKey('Upload Directory')?.value
+  }
 
   def upload(DefaultMultipartHttpServletRequest request) {
 
@@ -23,7 +26,7 @@ class UploadService {
     }
     java.io.File targetFile = new java.io.File(this.dir.uploadDir,sha256Hex+extension)
     rawFile.transferTo(targetFile)
-    
+
     File file = createFileFromUpload(sha256Hex, rawFile, extension)
     return file
   }
@@ -42,7 +45,7 @@ class UploadService {
   }
 
   def getDir() {
-    def imagePath =  grailsApplication.config.streama["storage"].path
+    def imagePath = storagePath
     def uploadDir = new java.io.File(imagePath + '/upload')
     if (!uploadDir.exists()){
       uploadDir.mkdirs()
@@ -53,7 +56,7 @@ class UploadService {
   }
 
     String getPathWithoutExtension(String sha256Hex){
-      def uploadDir = new java.io.File(grailsApplication.config.streama["storage"].path + '/upload')
+      def uploadDir = new java.io.File(storagePath + '/upload')
       return "$uploadDir/$sha256Hex"
     }
 
@@ -69,6 +72,6 @@ class UploadService {
     return grailsLinkGenerator.serverBaseURL  + "/file/serve/" + file.sha256Hex + file.extension
 
   }
-    
-    
+
+
 }

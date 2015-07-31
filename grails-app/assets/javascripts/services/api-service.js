@@ -7,8 +7,8 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 		currentUser: function () {
 			return $http.get(urlBase + 'user/current.json');
 		},
-		
-		
+
+
 		tvShow: {
 			get: function (id) {
 				return $http.get(urlBase + 'tvShow/show.json', {params: {id: id}});
@@ -89,7 +89,7 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 				return $http.get(urlBase + 'episode.json', {params: params});
 			}
 		},
-		
+
 		movie: {
 			get: function (id) {
 				return $http.get(urlBase + 'movie/show.json', {params: {id: id}});
@@ -115,6 +115,19 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 		},
 
 
+    settings: {
+			list: function () {
+				return $http.get(urlBase + 'settings.json');
+			},
+			updateMultiple: function (data) {
+				return $http.post(urlBase + 'settings/updateMultiple.json', data);
+			},
+      validateSettings: function (data) {
+				return $http.post(urlBase + 'settings/validateSettings.json', data);
+			}
+		},
+
+
 		theMovieDb: {
 			search: function (type, name) {
 				return $http.get(urlBase + 'theMovieDb/search.json', {params: {type: type, name: name}});
@@ -123,7 +136,7 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 				return $http.get(urlBase + 'theMovieDb/seasonForShow.json', {params: params});
 			}
 		},
-		
+
 		websocket: {
 			triggerPlayerAction: function (params) {
 				return $http.get(urlBase + 'websocket/triggerPlayerAction.json', {params: params});

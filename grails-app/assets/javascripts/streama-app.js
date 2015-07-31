@@ -39,6 +39,11 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			templateUrl: 'admin-users.htm',
 			controller: 'adminUsersCtrl'
 		})
+		.state('admin.settings', {
+			url: '/settings',
+			templateUrl: 'admin-settings.htm',
+			controller: 'adminSettingsCtrl'
+		})
 		.state('admin.shows', {
 			url: '/shows',
 			templateUrl: 'admin-shows.htm',
@@ -70,6 +75,11 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 				return response || $q.when(response);
 			},
 			responseError: function (response) {
+
+        if(response.status != 404){
+          alertify.error('A system error occurred');
+        }
+
 				return $q.reject(response);
 			}
 		};

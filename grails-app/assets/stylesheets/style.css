@@ -4245,3 +4245,12 @@ body.mdx-active #mdx-control-view {
 .modal-dialog .modal-footer {
   border-color: rgba(255, 255, 255, 0.25);
   padding: 9px 14px; }
+
+.settings-form:after {
+  content: "";
+  display: table;
+  clear: both; }
+.settings-form .settings-description {
+  margin-top: 7px;
+  opacity: 0.8;
+  margin-bottom: 30px; }

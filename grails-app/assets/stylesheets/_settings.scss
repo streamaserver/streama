@@ -1,0 +1,9 @@
+.settings-form{
+  @include clearfix;
+
+  .settings-description{
+    margin-top: 7px;
+    opacity: 0.8;
+    margin-bottom: 30px;
+  }
+}

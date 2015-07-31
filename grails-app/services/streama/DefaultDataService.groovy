@@ -23,7 +23,7 @@ class DefaultDataService {
             role: Role.findByAuthority("ROLE_ADMIN")
         ]
     ]
-    
+
     users.each{ userData ->
       if(!User.findByUsername(userData.username)){
         def user = new User(username: userData.username, password: userData.password, enabled: userData.enabled)
@@ -39,8 +39,7 @@ class DefaultDataService {
     def settings = [
         [
             settingsKey: 'Upload Directory',
-            value: '/data/streama',
-            description: 'This setting provides the application with your desired upload-path for all files.',
+            description: 'This setting provides the application with your desired upload-path for all files. The default so far has been /data/streama',
         ],
         [
             settingsKey: 'TheMovieDB API key',

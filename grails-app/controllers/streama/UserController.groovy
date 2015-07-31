@@ -6,7 +6,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class UserController {
-    
+
     def validationService
     def springSecurityService
 
@@ -54,11 +54,11 @@ class UserController {
     def checkAvailability() {
         def username = params.username
         def result = [:]
-        
+
         if(User.findByUsername(username)){
             result.error = "User with that E-Mail-Address already exists."
         }
-        
+
         respond result
     }
 
@@ -78,9 +78,9 @@ class UserController {
 
         if(!userInstance.invitationSent && userInstance.enabled){
             userInstance.uuid = randomUUID() as String
-            
+
             log.debug("invitation email sent to $userInstance.username")
-            
+
             try{
                 sendMail {
                     to userInstance.username
@@ -98,25 +98,29 @@ class UserController {
         respond userInstance, [status: CREATED]
     }
 
+  
     @Transactional
     def makeUserAdmin(User userInstance) {
-        
+
         User currentUser = springSecurityService.currentUser
-        
+
         if (userInstance == null) {
             render status: NOT_FOUND
             return
         }
-              
+
         Role adminRole = Role.findByAuthority("ROLE_ADMIN")
-        
+
         if(!currentUser.authorities?.contains(adminRole)){
             render status: UNAUTHORIZED
-            return 
+            return
         }
 
         UserRole.create(userInstance, adminRole, true)
 
         respond userInstance, [status: OK]
     }
+
 }
+
+

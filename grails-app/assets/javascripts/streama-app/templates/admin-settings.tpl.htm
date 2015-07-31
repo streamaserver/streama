@@ -1,0 +1,40 @@
+<h1>
+  Settings
+
+  <div class="spinner" ng-show="loading">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+</h1>
+
+
+
+<hr/>
+
+<form name="settings-form" class="settings-form">
+  <div class="form-group row-slim" ng-repeat="setting in settings">
+    <div class="col-sm-3">
+      <label class="control-label">{{setting.settingsKey}}</label>
+    </div>
+    <div class="col-sm-7" ng-class="{'has-error has-feedback': setting.invalid, 'has-success has-feedback': setting.valid}">
+      <input required type="text" class="form-control" ng-model="setting.value" placeholder="{{setting.settingsKey}}" ng-change="changeValue(setting)">
+
+      <span class="glyphicon ion-close form-control-feedback" ng-show="setting.invalid" aria-hidden="true"></span>
+      <span class="glyphicon ion-checkmark form-control-feedback" ng-show="setting.valid" aria-hidden="true"></span>
+
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-success btn-block" ng-click="validateSettings(setting)" ng-show="!setting.valid && setting.dirty">validate</button>
+    </div>
+    <div class="col-sm-7 col-sm-offset-3">
+      <p class="settings-description" ng-bind-html="setting.description"></p>
+    </div>
+  </div>
+</form>
+
+
+<hr/>
+
+<button class="btn btn-primary" ng-click="updateMultipleSettings(settings)" ng-disabled="anySettingsInvalid()">Save Settings</button>
+

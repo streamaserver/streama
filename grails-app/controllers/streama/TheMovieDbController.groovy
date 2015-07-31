@@ -3,18 +3,18 @@ package streama
 import groovy.json.JsonSlurper
 
 class TheMovieDbController {
-  
+
   def theMovieDbService
 
   def search() {
     String type = params.type
     String name = params.name
-    
+
     def query = URLEncoder.encode(name, "UTF-8")
-    
+
     def JsonContent = new URL(theMovieDbService.BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + theMovieDbService.API_KEY).text
     def json = new JsonSlurper().parseText(JsonContent)
-    
+
     respond json?.results
   }
 
@@ -28,7 +28,7 @@ class TheMovieDbController {
 
     def episodes = json?.episodes
     def result = []
-    
+
     episodes?.each{ episodeData ->
       Episode episode = new Episode(episodeData)
       episode.show = tvShow
@@ -36,10 +36,10 @@ class TheMovieDbController {
 
       result.add(episode)
     }
-    
+
     respond result
-    
+
   }
-  
-  
+
+
 }
