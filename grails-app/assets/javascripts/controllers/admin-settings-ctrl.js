@@ -30,7 +30,7 @@ streamaApp.controller('adminSettingsCtrl', ['$scope', 'apiService', '$sce', func
 
     apiService.settings.validateSettings(settings)
       .success(function (data) {
-        alertify.success(data.message);
+        alertify.success(data.message || 'validation successful');
         settings.valid = true;
         $scope.loading = false;
       })

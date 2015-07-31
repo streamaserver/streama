@@ -1,5 +1,5 @@
 
-<%@ page contentType="text/html"%>
+<%@ page import="streama.Settings" contentType="text/html"%>
 
 <html>
 <head>
@@ -199,7 +199,7 @@
                 <tr>
                   <td class="padding">
                     <p>
-                      <a href="<g:createLink uri="/invite?uuid=${user?.uuid}" absolute="true" />" class="btn-primary">Set Password & Enjoy</a>
+                      <a href="${streama.Settings.findBySettingsKey('Base URL')?.value}/invite?uuid=${user?.uuid}" class="btn-primary">Set Password & Enjoy</a>
                   </td>
                 </tr>
               </table>

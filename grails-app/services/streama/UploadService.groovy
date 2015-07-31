@@ -10,6 +10,7 @@ class UploadService {
 
   def grailsApplication
   def grailsLinkGenerator
+  def settingsService
 
   def getStoragePath(){
     return Settings.findBySettingsKey('Upload Directory')?.value
@@ -68,9 +69,7 @@ class UploadService {
   }
 
   def getFileSrc(File file){
-    def serverURL = grailsApplication.metadata['grails.serverURL']
-    return grailsLinkGenerator.serverBaseURL  + "/file/serve/" + file.sha256Hex + file.extension
-
+    return settingsService.baseUrl  + "/file/serve/" + file.sha256Hex + file.extension
   }
 
 
