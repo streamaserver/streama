@@ -1,8 +1,8 @@
 <div class="player-wrapper" ng-mousemove="showControls()" ng-mouseleave="delayHideControls()">
 
   <i class="ion-android-arrow-back player-back" ng-class="{'visible': controlsVisible}" ng-click="backToDash()"></i>
-  
-  
+
+
   <div class="overlay" ng-class="{'visible': overlayVisible}">
     <div class="video-info">
       <p>You're watching</p>
@@ -26,19 +26,20 @@
 
 
   <div class="player-controls-wrapper player-active no-select" ng-class="{'visible': controlsVisible}" ng-show="!loading">
-    
+
     <div class="slider-ui-wrapper" ng-show="!volumeOpen">
       <div class="player-ui-slider" ui-slider="scrubberOptions" min="0" max="{{videoDuration}}" ng-model="currentTime"></div>
       <div class="time-display">
         <strong ng-show="currentTime">{{currentTime | secondsToDateTime | date:'mm:ss'}}</strong>
-        {{videoDuration | secondsToDateTime | date:'mm:ss'}}
+        <span ng-if="videoDuration >= 3600">{{videoDuration | secondsToDateTime | date:'hh:mm:ss'}}</span>
+        <span ng-if="videoDuration < 3600">{{videoDuration | secondsToDateTime | date:'mm:ss'}}</span>
       </div>
     </div>
-    
+
     <section class="player-control-bar no-select">
-      
+
       <div class="player-control-button player-play-pause play ion-play" ng-show="!playing" ng-click="play()"></div>
-      
+
       <div class="player-control-button player-play-pause play ion-pause" ng-show="playing" ng-click="pause()"></div>
 
       <div class="volume-control player-control-button volume" ng-mouseleave="volumeOpen = false" ng-mouseenter="volumeOpen = true">
@@ -57,18 +58,18 @@
           </div>
         </div>
       </div>
-      
-      
+
+
       <div class="player-status" ng-if="video.show">
         <span class="player-status-main-title">{{video.show.name}}</span>
         <span>{{video.episodeString}}</span>
         <span>{{video.name}}</span>
       </div>
-      
+
       <div class="player-status" ng-if="!video.show">
         <span class="player-status-main-title">{{video.title}}</span>
       </div>
-      
+
       <div class="player-control-button player-next-episode ion-ios-skipforward" ng-if="video.nextEpisode" ng-click="nextEpisode()"></div>
 
       <div class="player-control-button player-episode-selector" ng-if="video.show">
@@ -86,7 +87,7 @@
                 </ul>
               </div>
             </div>
-            
+
             <div class="episode-selector-slider" ng-class="{'slide-left': selectedEpisodes}">
               <div class="season-list-container">
                 <h2 class="seasons-title" ng-click="toggleSelectEpisodes()">
@@ -101,13 +102,13 @@
                       <span class="episode-name">{{episode.name}}</span>
                       <span class="episode-play" ng-if="episode.files.length" ui-sref="player({videoId: episode.id})"><i class="ion-play"></i></span>
                     </div>
-                    
+
                     <div class="extra-episode-info" ng-show="visible || (episode.episode_number == video.episode_number && episode.season_number == video.season_number)">
                       <div class="image-wrapper">
                         <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w92/{{episode.still_path}}"/>
                         <div ng-if="!episode.still_path" class="fallback-image"></div>
                       </div>
-                      
+
                       <p>{{episode.overview}}</p>
                     </div>
                   </li>
