@@ -13,6 +13,7 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can just use the frontend components and add your own REST-API for handling all the data :) 
 
 
+### Breaking Changes
 See [Change Log](https://github.com/dularion/streama/blob/master/CHANGELOG.md) for recent breaking changes! 
 
 ###### Video Codecs
