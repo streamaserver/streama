@@ -2,8 +2,6 @@
 
 streamaApp.controller('adminSettingsCtrl', ['$scope', 'apiService', '$sce', function ($scope, apiService, $sce) {
 
-  $scope.loading = true;
-
   apiService.settings.list().success(function (data) {
     $scope.settings = data;
 
