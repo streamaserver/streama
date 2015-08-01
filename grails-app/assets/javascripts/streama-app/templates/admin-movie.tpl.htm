@@ -5,70 +5,82 @@
 
 <div class="clearfix">
   <h1 class="pull-left">
-    {{movie.title}} &nbsp; 
-    
-    <a ng-show="movie.files.length" class="ion-android-arrow-dropright-circle" ui-sref="player({videoId: movie.id})"></a>
+    {{movie.title}} &nbsp;
 
-    <div class="spinner" ng-show="loading">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
-    </div>
+    <a ng-show="movie.files.length" class="ion-android-arrow-dropright-circle" ui-sref="player({videoId: movie.id})"></a>
   </h1>
-  
-  <button class="btn btn-danger btn-sm pull-right" ng-click="delete()">
-    Delete movie
-  </button>
-  
+
+
+  <div class="spinner big" ng-show="loading">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+
+  <div class="btn-group pull-right">
+    <button class="btn btn-secondary btn-sm " ng-click="openMovieModal()">
+      Edit movie
+    </button>
+    <button class="btn btn-danger btn-sm " ng-click="delete()">
+      Delete movie
+    </button>
+  </div>
+
 </div>
 
 <button class="btn btn-success btn-xs" ng-show="movie.files.length" popover-placement="right"
         popover-template="'popover--movie-files.htm'" popover-title="Added Files">Browse Files</button>
 
 <hr/>
+<div class="movie-content" ng-show="movie.title">
 
-<div class="row">
-  <div class="col-md-8">
+  <div class="row">
+    <div class="col-md-8">
 
-    <div class="row">
-      <div class="col-sm-2">
-        <label>Release Date</label>
-        <p class="data-display">{{movie.release_date}}</p>
+      <div class="row">
+        <div class="col-sm-2">
+          <label>Release Date</label>
+          <p class="data-display">{{movie.release_date}}</p>
+        </div>
+        <div class="col-sm-2">
+          <label>IMDB Link</label>
+          <p class="data-display"><a href="http://www.imdb.com/title/{{movie.imdb_id}}">{{movie.title}}</a></p>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating</label>
+          <p class="data-display">{{movie.vote_average}}</p>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating Count</label>
+          <p class="data-display">{{movie.vote_count}}</p>
+        </div>
       </div>
-      <div class="col-sm-2">
-        <label>Rating</label>
-        <p class="data-display">{{movie.vote_average}}</p>
+
+      <br/>
+
+
+      <div class="row">
+        <div class="col-sm-12">
+          <label>Overview</label>
+          <p class="data-display">{{movie.overview}}</p>
+        </div>
       </div>
-      <div class="col-sm-2">
-        <label>Rating Count</label>
-        <p class="data-display">{{movie.vote_count}}</p>
-      </div>
+
     </div>
 
-    <br/>
-
-
-    <div class="row">
-      <div class="col-sm-12">
-        <label>Overview</label>
-        <p class="data-display">{{movie.overview}}</p>
-      </div>
+    <div class="col-sm-4">
+      <img ng-src="https://image.tmdb.org/t/p/w500/{{movie.backdrop_path}}"/>
     </div>
-    
   </div>
 
-  <div class="col-sm-4">
-    <img ng-src="https://image.tmdb.org/t/p/w500/{{movie.backdrop_path}}"/>
-  </div>
+
+  <hr/>
+
+  <span class="label label-danger" ng-show="!movie.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
+  <br/>
+  <br/>
+  <button ng-model="file"  class="btn btn-primary btn-block btn-lg" ng-show="!movie.files.length"
+          ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)" ngf-select>
+    Drop or Select Attachment <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
+  </button>
 </div>
-
-
-<hr/>
-
-<span class="label label-danger" ng-show="!movie.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
-<br/>
-<br/>
-<button ng-model="file"  class="btn btn-primary btn-block btn-lg" ng-show="!movie.files.length"
-        ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)" ngf-select>
-  Drop or Select Attachment <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
-</button>

@@ -81,6 +81,7 @@ class MarshallerService {
             returnArray['vote_count'] = video.vote_count
             returnArray['popularity'] = video.popularity
             returnArray['original_language'] = video.original_language
+            returnArray['apiId'] = video.apiId
 
             returnArray['files'] = video.files.findAll{it.extension != '.srt'}
             returnArray['subtitles'] = video.files.findAll{it.extension == '.srt'}
@@ -160,6 +161,35 @@ class MarshallerService {
                 returnArray['user'] = viewingStatus.user
                 returnArray['currentPlayTime'] = viewingStatus.currentPlayTime
                 returnArray['runtime'] = viewingStatus.runtime
+
+                return returnArray;
+            }
+        }
+
+
+        JSON.createNamedConfig('fullMovie') { DefaultConverterConfiguration<JSON> cfg ->
+            cfg.registerObjectMarshaller(Movie) { Movie  movie ->
+                def returnArray = [:]
+
+              returnArray['id'] = movie.id
+              returnArray['dateCreated'] = movie.dateCreated
+              returnArray['lastUpdated'] = movie.lastUpdated
+              returnArray['overview'] = movie.overview
+              returnArray['imdb_id'] = movie.imdb_id
+              returnArray['vote_average'] = movie.vote_average
+              returnArray['vote_count'] = movie.vote_count
+              returnArray['popularity'] = movie.popularity
+              returnArray['original_language'] = movie.original_language
+              returnArray['apiId'] = movie.apiId
+
+              returnArray['title'] = movie.title
+              returnArray['release_date'] = movie.release_date
+              returnArray['backdrop_path'] = movie.backdrop_path
+              returnArray['poster_path'] = movie.poster_path
+
+
+              returnArray['files'] = movie.files.findAll{it.extension != '.srt'}
+              returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt'}
 
                 return returnArray;
             }

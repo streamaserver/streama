@@ -2,6 +2,8 @@ package streama
 
 class Movie extends Video{
 
+  transient theMovieDbService
+
 
   String title
   String release_date
@@ -10,6 +12,10 @@ class Movie extends Video{
   String poster_path
 
   static constraints = {
+  }
+
+  def getFullMovieMeta(){
+    theMovieDbService.getFullMovieMeta(this.apiId)
   }
 
 }

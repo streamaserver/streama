@@ -34,7 +34,7 @@
         </div>
         <div class="col-sm-2">
           <label>API ID</label>
-          <input type="text" class="form-control input-sm" ng-disabled="addManually" ng-model="movie.apiId" placeholder="API ID"/>
+          <input type="text" class="form-control input-sm" disabled ng-model="movie.apiId" placeholder="API ID"/>
         </div>
         <div class="col-sm-2">
           <label>Rating</label>
@@ -57,7 +57,7 @@
         <div class="col-sm-6">
           <label>Image</label>
           <br/>
-          <img src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
+          <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
         </div>
       </div>
     </div>
