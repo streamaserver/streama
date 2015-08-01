@@ -180,6 +180,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/stomp/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
 	'/websocket/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
 	'/settings/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
+	'/bulk/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
 
   '/invite/**':                        ['permitAll'],
 	'/assets/**':                     ['permitAll'],
