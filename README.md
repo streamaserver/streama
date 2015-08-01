@@ -32,6 +32,7 @@ When you first run the application, you will be redirected to the settings page.
 Once you made adjustments to any of the settings, make sure to validate the value before saving. 
 - For the API-Key, the validation checks against theMovieDb.org to see if you've entered a valid API-key. 
 - For the upload directory, the application checks if it has read/write permissions for it. 
+
 ![Streama Settings Validation](http://i.imgur.com/oEMXLPk.gif)
 
 ### The Dashboard
