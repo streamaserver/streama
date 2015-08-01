@@ -1,0 +1,11 @@
+# relevant docs:
+# - http://docs.travis-ci.com/user/languages/groovy/
+# - http://blog.freeside.co/2013/02/26/grails-builds-on-travis-ci/
+
+language: groovy
+
+jdk:
+- oraclejdk7
+
+script: ./grailsw refresh-dependencies
+     && ./grailsw compile
