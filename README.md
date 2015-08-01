@@ -75,25 +75,11 @@ As an API for all the movies and shows I used the awesome API from theMovieDatab
 
 
 
-### The Development Setup: 
-[Setup Streama on Ubuntu-14.04](https://github.com/dularion/streama/wiki/Setup-App-on-Ubuntu-14.04)
+### Setup on a remote Server: 
+Please refer to [Setup Streama on Ubuntu-14.04](https://github.com/dularion/streama/wiki/Setup-App-on-Ubuntu-14.04)
 
-You need the following
-- Java
-- MySQL
-- A MySQL database called "streama" (default config uses username "root" and no password)
-  - If you prefer different settings, adjust `/grails-app/conf/DataSource.groovy`
-- A folder called "streama" that is located in /data that is owned by tomcat7 (this is where all the files will be stored) 
-  - if you prefer a different location, you can change that in `/grails-app/conf/Config.groovy` line `155`
-- Your preferred IDE to run it all. I like IntelliJ for grails-projects.
-
-
-Once the application is running the default user's admin credentials are "admin" for both the username and password. 
-
-**E-mail**
-By default the plugin assumes an unsecured mail server configured at localhost on port 25. In order to get emails to work with something else, look into [Grails mail plugin](http://grails.org/plugins/mail).
-
-
+### Development Setup: 
+Coming Soon
 
 
 ## Work-in-Progress
