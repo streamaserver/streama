@@ -12,14 +12,11 @@ See [Change Log](https://github.com/dularion/streama/blob/master/CHANGELOG.md) f
 - navigate to [http://localhost:8080/streama](http://localhost:8080/streama)
 - login using "admin" as both e-mail and password
 
-The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can just use the frontend components and add your own REST-API for handling all the data :) 
+The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can also just use the frontend components and add your own REST-API for handling all the data :) 
 
 
 ###### Video Codecs
 For supported video-codecs, please refer to [HTML5 Video Browser Support](https://en.wikipedia.org/wiki/HTML5_video#Browser_support). I will add video-conversion soon, but right now there is no conversion, so you have to rely on what your browser can handle. A quick and easy test is to open a new empty browser-tab and drag&drop your video file in. If it shows up in a player, then it's a compatible format. If it downloads, it's incompatible. But again, conversion will hopefully be added soon. And btw, Chrome supports most formats afaik. 
-
-###### API Key
-You need to register for an API-key over at theMovieDb.org and enter it in /grails-app/conf/Config.groovy line 157. For testing out the app you may use my key that is hardcoded in there, but if you plan on using it, please get your own key, or the guys at theMovieDb.org will get angry with me :P
 
 #### Roadmap
 This app is still being developed. 
@@ -27,7 +24,17 @@ These [enhancement-issues](https://github.com/dularion/streama/issues?q=is%3Aope
 
 ## The Application
 
-### Dashboard
+### Settings
+![Streama Settings](http://i.imgur.com/BKMf5xx.png)
+
+When you first run the application, you will be redirected to the settings page. Here you enter your desired upload directory for the video files, your [theMovieDb.org API key](https://www.themoviedb.org/documentation/api) and a different base url if so desired (useful for remote hosting). 
+
+Once you made adjustments to any of the settings, make sure to validate the value before saving. 
+- For the API-Key, the validation checks against theMovieDb.org to see if you've entered a valid API-key. 
+- For the upload directory, the application checks if it has read/write permissions for it. 
+![Streama Settings Validation](http://i.imgur.com/oEMXLPk.gif)
+
+### The Dashboard
 ![Streama Dashboard](http://new.tinygrab.com/d9072ef564654c6e245c442e9c7d95facd4b738538.png)
 
 On the dashboard a user can see their recently watched Tv-shows and Movies and their progress (they can continue where they left off) as well start new shows and movies that they haven't yet seen. The "Continue Watching" Feature works by periodically updating the database (only while watching, of course!) with info about the currently watched Video and how far it has been seen.
