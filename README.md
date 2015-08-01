@@ -5,8 +5,8 @@ The application uses Grails for the REST-API, and AngularJS for the frontend. If
 
 
 #### Super Simple Setup
-Please refer to [Local Streama Setup](https://github.com/dularion/streama/wiki/Local-Streama-Setup)
-
+- For local setup, please refer to [Local Streama Setup](https://github.com/dularion/streama/wiki/Local-Streama-Setup)
+- For remote setup, please refer to [Setup Streama on Ubuntu 14.04](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
 
 #### Breaking Changes
 Please refer to [Change Log](https://github.com/dularion/streama/blob/master/CHANGELOG.md)
