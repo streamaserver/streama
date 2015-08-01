@@ -1,6 +1,6 @@
 
 
-streamaApp.controller('adminUsersCtrl', ['$scope', 'apiService', 'modalService', function ($scope, apiService, modalService) {
+streamaApp.controller('adminUsersCtrl', ['$scope', 'apiService', 'modalService', '$rootScope', function ($scope, apiService, modalService, $rootScope) {
 	$scope.loading = true;
 
 	apiService.user.list().success(function (data) {
@@ -13,7 +13,13 @@ streamaApp.controller('adminUsersCtrl', ['$scope', 'apiService', 'modalService',
 		modalService.userModal(user, function (data) {
 			if(!_.find($scope.users, {id: data.id})){
 				$scope.users.push(data);
-			}
+			}else{
+        if(data.id != $rootScope.currentUser.id){
+          alertify.alert('If you made any changes to the roles, please make sure to inform the user that he has to log out of the application and log back in for the changes to take effect.');
+        }else{
+          alertify.alert('If you made any changes to the roles, please log out of the application and log back in for the changes to take effect.');
+        }
+      }
 		});
 	};
 
