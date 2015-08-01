@@ -160,3 +160,26 @@ label{
   height: 2em;
   font-size: 13px;
 }
+
+
+.movie-dragover-upload{
+  position: relative;
+
+  &:before {
+    content: "Drop File here";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+
+    background-color: rgba(desaturate(darken($primary, 25%),20%), 0.7);
+    border: 2px dashed $primary;
+
+    font-size: 54px;
+    text-align: center;
+    line-height: 450px;
+    font-weight: 500;
+  }
+}

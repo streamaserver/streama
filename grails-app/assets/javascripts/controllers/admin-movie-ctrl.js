@@ -26,6 +26,29 @@ streamaApp.controller('adminMovieCtrl', [
 			})
 		};
 
+
+		$scope.addSimilarMovieToStreama = function(movie){
+      alertify.set({
+        buttonReverse: true,
+        labels: {
+          ok     : "Yes",
+          cancel : "Cancel"
+        } });
+
+			alertify.confirm("Do you want to add \""+ movie.title +"\" to the Streama library?", function (confirmed) {
+				if(confirmed){
+
+          var apiId = movie.id;
+          delete movie.id;
+          movie.apiId = apiId;
+
+          apiService.movie.save(movie).success(function (data) {
+            $state.go('admin.movie', {movieId: data.id});
+          });
+				}
+			})
+		};
+
 		$scope.uploadStatus = {};
 
 		$scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + $stateParams.movieId, function (data) {

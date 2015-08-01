@@ -14,6 +14,11 @@ class Movie extends Video{
   static constraints = {
   }
 
+
+  def getSimilarMovies(){
+    theMovieDbService.getSimilarMovies(this.apiId)
+  }
+
   def getFullMovieMeta(){
     theMovieDbService.getFullMovieMeta(this.apiId)
   }

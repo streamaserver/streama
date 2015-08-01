@@ -3,36 +3,41 @@
   <li class="active">{{movie.title}}</li>
 </ul>
 
-<div class="clearfix">
-  <h1 class="pull-left">
-    {{movie.title}} &nbsp;
-
-    <a ng-show="movie.files.length" class="ion-android-arrow-dropright-circle" ui-sref="player({videoId: movie.id})"></a>
-  </h1>
 
 
-  <div class="spinner big" ng-show="loading">
-    <div class="bounce1"></div>
-    <div class="bounce2"></div>
-    <div class="bounce3"></div>
-  </div>
-
-  <div class="btn-group pull-right">
-    <button class="btn btn-secondary btn-sm " ng-click="openMovieModal()">
-      Edit movie
-    </button>
-    <button class="btn btn-danger btn-sm " ng-click="delete()">
-      Delete movie
-    </button>
-  </div>
-
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
 </div>
 
-<button class="btn btn-success btn-xs" ng-show="movie.files.length" popover-placement="right"
-        popover-template="'popover--movie-files.htm'" popover-title="Added Files">Browse Files</button>
+<div class="movie-content" ng-show="movie.title"
+     ngf-drop ngf-drag-over-class="movie-dragover-upload" ngf-change="upload($files)">
 
-<hr/>
-<div class="movie-content" ng-show="movie.title">
+  <div class="clearfix">
+
+    <div class="btn-group pull-right">
+      <button class="btn btn-secondary btn-sm " ng-click="openMovieModal()">
+        Edit movie
+      </button>
+      <button class="btn btn-danger btn-sm " ng-click="delete()">
+        Delete movie
+      </button>
+    </div>
+
+    <h1>
+      {{movie.title}} &nbsp;
+      <a ng-show="movie.files.length" class="ion-android-arrow-dropright-circle" ui-sref="player({videoId: movie.id})"></a>
+    </h1>
+
+    <span class="label label-danger" ng-show="!movie.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
+
+  </div>
+
+  <button class="btn btn-success btn-xs" ng-show="movie.files.length" popover-placement="right"
+          popover-template="'popover--movie-files.htm'" popover-title="Added Files">Browse Files</button>
+
+  <hr/>
 
   <div class="row">
     <div class="col-md-8">
@@ -75,12 +80,30 @@
 
 
   <hr/>
-
-  <span class="label label-danger" ng-show="!movie.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
   <br/>
   <br/>
   <button ng-model="file"  class="btn btn-primary btn-block btn-lg" ng-show="!movie.files.length"
-          ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)" ngf-select>
-    Drop or Select Attachment <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
+          ngf-change="upload($files)" ngf-select>
+    Drop or Select Video File <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
   </button>
+</div>
+
+<br/>
+<hr/>
+
+<div ng-show="movie.similarMovies">
+  <h3>Similar Movies</h3>
+  <h5>Suggested by TheMovieDb.org</h5>
+  <div class="media-list similar-media">
+    <div class="media-list-item" ng-repeat="movie in movie.similarMovies.results">
+      <div class="hover-overlay">
+        <button class="btn btn-primary btn-sm" ng-click="addSimilarMovieToStreama(movie)">Add To Streama</button>
+      </div>
+      <div class="media-item" >
+        <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
+      </div>
+      <div class="media-meta">Release: {{movie.release_date.substring(0, 4)}} | <i class="ion-ios-star"></i> {{movie.vote_average}}</div>
+    </div>
+  </div>
+
 </div>

@@ -128,6 +128,13 @@
   flex-direction: $val;
 }
 
+@mixin flex-center-all(){
+  @include flexbox;
+  @include align-items(center);
+  @include justify-content(center);
+  @include align-content(center);
+}
+
 @mixin btn($background: #333, $color: white){
   background: $background;
   border-color: darken($background, 3%);

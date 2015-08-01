@@ -190,6 +190,7 @@ class MarshallerService {
 
               returnArray['files'] = movie.files.findAll{it.extension != '.srt'}
               returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt'}
+              returnArray['similarMovies'] = movie.similarMovies
 
                 return returnArray;
             }
