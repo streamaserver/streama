@@ -3,6 +3,7 @@ package streama
 class Role {
 
 	String authority
+	String displayName
 
 	static mapping = {
 		cache true

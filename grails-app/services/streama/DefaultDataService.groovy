@@ -6,11 +6,16 @@ import grails.transaction.Transactional
 class DefaultDataService {
 
   def createDefaultRoles(){
-    if (Role.count > 0) {
-      return;
-    }
+    def roles = [
+      [authority: "ROLE_ADMIN", displayName: "Admin"],
+      [authority: "ROLE_CONTENT_MANAGER", displayName: "ContentManager"],
+    ]
 
-    new Role(authority:"ROLE_ADMIN").save(failOnError: true)
+    roles.each { role ->
+      def roleInstance = Role.findOrCreateByAuthority(role.authority)
+      roleInstance.properties = role
+      roleInstance.save flush: true, failOnError: true
+    }
   }
 
 
