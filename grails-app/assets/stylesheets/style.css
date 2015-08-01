@@ -4240,6 +4240,22 @@ body.mdx-active #mdx-control-view {
     font-weight: 300;
     text-align: center; }
 
+.message-wrapper {
+  max-width: 700px;
+  margin: 70px auto;
+  width: 100%;
+  text-align: center; }
+  .message-wrapper h1 {
+    margin-top: 0;
+    color: #06ad82;
+    font-size: 48px;
+    font-weight: 300; }
+  .message-wrapper h2, .message-wrapper h3 {
+    font-weight: 100; }
+  .message-wrapper i {
+    font-size: 100px;
+    color: #06ad82; }
+
 .modal-dialog .modal-header {
   border-color: rgba(255, 255, 255, 0.25); }
   .modal-dialog .modal-header h3 {
