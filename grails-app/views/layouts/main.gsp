@@ -21,8 +21,11 @@
 			<div class="logo"><i class="ion-play"></i> Streama</div>
 
 			<ul class="navigation">
-				<sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_CONTENT_MANAGER">
+				<sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
 					<li><a ui-sref="admin.shows">Admin</a></li>
+				</sec:ifAnyGranted>
+				<sec:ifAnyGranted roles="ROLE_ADMIN">
+					<li><a ui-sref="admin.users">Admin</a></li>
 				</sec:ifAnyGranted>
 
 				<sec:ifLoggedIn>
