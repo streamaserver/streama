@@ -25,7 +25,7 @@ These [enhancement-issues](https://github.com/dularion/streama/issues?q=is%3Aope
 ## The Application
 
 ### Settings
-![Streama Settings](http://i.imgur.com/BKMf5xx.png)
+![Streama Settings Validation](http://i.imgur.com/oEMXLPk.gif)
 
 When you first run the application, you will be redirected to the settings page. Here you enter your desired upload directory for the video files, your [theMovieDb.org API key](https://www.themoviedb.org/documentation/api) and a different base url if so desired (useful for remote hosting). 
 
@@ -33,7 +33,6 @@ Once you made adjustments to any of the settings, make sure to validate the valu
 - For the API-Key, the validation checks against theMovieDb.org to see if you've entered a valid API-key. 
 - For the upload directory, the application checks if it has read/write permissions for it. 
 
-![Streama Settings Validation](http://i.imgur.com/oEMXLPk.gif)
 
 ### The Dashboard
 ![Streama Dashboard](http://new.tinygrab.com/d9072ef564654c6e245c442e9c7d95facd4b738538.png)
