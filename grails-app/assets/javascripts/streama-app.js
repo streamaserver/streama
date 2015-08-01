@@ -12,7 +12,17 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 		.state('dash', {
 			url: '/',
 			templateUrl: 'dash.htm',
-			controller: 'dashCtrl'
+			controller: 'dashCtrl',
+      resolve: {
+        currentUser: function (apiService, $rootScope) {
+          return apiService.currentUser().success(function (data) {
+            if (data) {
+              $rootScope.currentUser = data;
+              return data;
+            }
+          });
+        }
+      }
 		})
 		.state('player', {
 			url: '/player/:videoId?currentTime?sessionId',
@@ -22,7 +32,19 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 		.state('admin', {
 			url: '/admin',
 			templateUrl: 'admin.htm',
-			controller: 'adminCtrl'
+			controller: 'adminCtrl',
+      resolve: {
+        currentUser: function (apiService, $state, $rootScope) {
+          return apiService.currentUser().success(function (data) {
+            if (data && data.authorities.length) {
+              $rootScope.currentUser = data;
+              return data;
+            } else {
+              $state.go('dash');
+            }
+          });
+        }
+      }
 		})
 		.state('admin.movies', {
 			url: '/movies',
@@ -37,12 +59,36 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 		.state('admin.users', {
 			url: '/users',
 			templateUrl: 'admin-users.htm',
-			controller: 'adminUsersCtrl'
+			controller: 'adminUsersCtrl',
+      resolve: {
+        currentUser: function (apiService, $state, $rootScope) {
+          return apiService.currentUser().success(function (data) {
+            if (data && data.isAdmin) {
+              $rootScope.currentUser = data;
+              return data;
+            } else {
+              $state.go('dash');
+            }
+          });
+        }
+      }
 		})
 		.state('admin.settings', {
 			url: '/settings',
 			templateUrl: 'admin-settings.htm',
-			controller: 'adminSettingsCtrl'
+			controller: 'adminSettingsCtrl',
+      resolve: {
+        currentUser: function (apiService, $state, $rootScope) {
+          return apiService.currentUser().success(function (data) {
+            if (data.isAdmin) {
+              $rootScope.currentUser = data;
+              return data;
+            } else {
+              $state.go('dash');
+            }
+          });
+        }
+      }
 		})
 		.state('admin.shows', {
 			url: '/shows',
@@ -76,9 +122,13 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			},
 			responseError: function (response) {
 
-        if(response.status != 404 && response.status != 401){
+        if(response.status == 403){
+          alertify.error('You do not have the rights to carry out this action.');
+        }
+        else if(response.status != 404 && response.status != 401){
           alertify.error('A system error occurred');
         }
+
 
 				return $q.reject(response);
 			}

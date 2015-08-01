@@ -166,31 +166,35 @@ grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/user/loginTarge
 
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	'/':                              ['IS_AUTHENTICATED_REMEMBERED'],
-	'/index':                         ['IS_AUTHENTICATED_REMEMBERED'],
-	'/index.gsp':                     ['IS_AUTHENTICATED_REMEMBERED'],
+	'/':                                ['IS_AUTHENTICATED_REMEMBERED'],
+	'/index':                           ['IS_AUTHENTICATED_REMEMBERED'],
+	'/index.gsp':                       ['IS_AUTHENTICATED_REMEMBERED'],
 
-	'/tvShow/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/video/**':                      ['IS_AUTHENTICATED_REMEMBERED'],
-	'/viewingStatus/**':              ['IS_AUTHENTICATED_REMEMBERED'],
-	'/user/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/thetvdb/**':                    ['IS_AUTHENTICATED_REMEMBERED'],
-	'/theMovieDb/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/file/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/movie/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/episode/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/appSettings/**':                  ['IS_AUTHENTICATED_REMEMBERED'],
-	'/stomp/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/websocket/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/settings/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
-	'/bulk/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
+	'/viewingStatus/**':                ['IS_AUTHENTICATED_REMEMBERED'],
+	'/file/**':                         ['IS_AUTHENTICATED_REMEMBERED'],
+	'/stomp/**':                        ['IS_AUTHENTICATED_REMEMBERED'],
+	'/websocket/**':                    ['IS_AUTHENTICATED_REMEMBERED'],
+	'/video/dash':                      ['IS_AUTHENTICATED_REMEMBERED'],
+	'/video/show':                      ['IS_AUTHENTICATED_REMEMBERED'],
+	'/tvShow/episodesForTvShow':        ['IS_AUTHENTICATED_REMEMBERED'],
 
-  '/user/current':                        ['permitAll'],
-  '/invite/**':                        ['permitAll'],
-	'/assets/**':                     ['permitAll'],
-	'/**/js/**':                      ['permitAll'],
-	'/**/css/**':                     ['permitAll'],
-	'/**/images/**':                  ['permitAll'],
-	'/**/favicon.ico':                ['permitAll']
+  '/tvShow/**':                       ['ROLE_CONTENT_MANAGER'],
+  '/video/**':                        ['ROLE_CONTENT_MANAGER'],
+  '/theMovieDb/**':                   ['ROLE_CONTENT_MANAGER'],
+  '/movie/**':                        ['ROLE_CONTENT_MANAGER'],
+  '/episode/**':                      ['ROLE_CONTENT_MANAGER'],
+
+	'/user/**':                         ['ROLE_ADMIN'],
+	'/settings/**':                     ['ROLE_ADMIN'],
+  '/bulk/**':                         ['ROLE_ADMIN'],
+
+
+  '/user/current':                    ['permitAll'],
+  '/invite/**':                       ['permitAll'],
+	'/assets/**':                       ['permitAll'],
+	'/**/js/**':                        ['permitAll'],
+	'/**/css/**':                       ['permitAll'],
+	'/**/images/**':                    ['permitAll'],
+	'/**/favicon.ico':                  ['permitAll']
 ]
 

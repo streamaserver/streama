@@ -22,6 +22,8 @@ class MarshallerService {
             returnArray['enabled'] = user.enabled
             returnArray['dateCreated'] = user.dateCreated
             returnArray['invitationSent'] = user.invitationSent
+            returnArray['isAdmin'] = (user.authorities.find{it.authority == 'ROLE_ADMIN'} ? true : false)
+            returnArray['isContentManager'] = (user.authorities.find{it.authority == 'ROLE_CONTENT_MANAGER'} ? true : false)
 
             if(user.invitationSent && user.uuid){
               returnArray['invitationLink'] = settingsService.baseUrl +  "/invite?uuid=${user?.uuid}"
