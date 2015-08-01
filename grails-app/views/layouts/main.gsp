@@ -25,7 +25,9 @@
 					<li><a ui-sref="admin.shows">Admin</a></li>
 				</sec:ifAnyGranted>
 				<sec:ifAnyGranted roles="ROLE_ADMIN">
-					<li><a ui-sref="admin.users">Admin</a></li>
+          <sec:ifNotGranted roles="ROLE_CONTENT_MANAGER">
+            <li><a ui-sref="admin.users">Admin</a></li>
+          </sec:ifNotGranted>
 				</sec:ifAnyGranted>
 
 				<sec:ifLoggedIn>
