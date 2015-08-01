@@ -274,7 +274,9 @@ hr {
     margin: 0 -12px; }
 
 .media-item {
-  position: relative; }
+  position: relative;
+  height: 158px;
+  overflow: hidden; }
   .media-item img {
     width: 100%;
     height: auto; }
