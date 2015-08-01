@@ -1,12 +1,12 @@
 <div class="media-list-item episode-wrapper" ng-class="{'no-files': !episode.files.length, 'uploading': uploadStatus.percentage != null}"
-     ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)" 
+     ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)"
      ng-if="!episode.deleted">
-  
+
   <div class="upload-overlay" ng-class="{'visible': uploadStatus.percentage != null}">
     <span class="hint" ng-show="uploadStatus.percentage == null">Upload File</span>
     <span class="percentage" ng-show="uploadStatus.percentage != null">{{uploadStatus.percentage}} %</span>
   </div>
-  
+
   <span class="label label-danger pull-right" ng-show="!episode.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
 
 
@@ -23,12 +23,12 @@
 
   <div class="button-wrapper">
     <button ng-click="editEpisode(episode)" class="btn btn-secondary btn-xs">Edit</button>
-    
-      <button class="btn btn-secondary btn-xs" ng-show="episode.files.length"
-            popover-template="'popover--files.htm'" popover-title="Added Files">Attached Files</button>
-    
-      <button class="btn btn-success btn-xs pull-right" ng-click="openFileBrowser()" ng-show="!episode.files.length">Browse for File</button>
+
+      <button class="btn btn-secondary btn-xs"
+            popover-template="'popover--files.htm'" popover-title="Added Files" popover-append-to-body="true">Attached Files</button>
+
+      <!--<button class="btn btn-success btn-xs pull-right" ng-click="openFileBrowser()" ng-show="!episode.files.length">Browse for File</button>-->
   </div>
-  
+
 
 </div>
