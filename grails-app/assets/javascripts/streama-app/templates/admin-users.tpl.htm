@@ -35,8 +35,9 @@
 
     <td> <span class="comma-separatad" ng-repeat="role in user.authorities">{{role.displayName}}</span></td>
 
-    <td style="width: 1px;">
+    <td style="width: 110px;">
       <button class="btn btn-xs btn-primary" ng-click="openUserModal(user)">edit</button>
+      <button class="btn btn-xs btn-danger" ng-click="delete(user)">delete</button>
     </td>
   </tr>
 </table>

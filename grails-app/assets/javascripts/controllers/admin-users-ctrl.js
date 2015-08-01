@@ -17,11 +17,11 @@ streamaApp.controller('adminUsersCtrl', ['$scope', 'apiService', 'modalService',
 		});
 	};
 
-	$scope.makeUserAdmin = function (user) {
-		alertify.confirm('Are you sure you want to make ' + user.username + ' admin?', function (confirmed) {
+	$scope.delete = function (user) {
+		alertify.confirm('Are you sure you want to delete ' + user.username + '?', function (confirmed) {
 			if(confirmed){
-				apiService.user.makeUserAdmin(user).success(function (data) {
-					user.authorities = data.authorities;
+				apiService.user.delete(user.id).success(function (data) {
+          _.remove($scope.users, {id: user.id})
 				});
 			}
 		})
