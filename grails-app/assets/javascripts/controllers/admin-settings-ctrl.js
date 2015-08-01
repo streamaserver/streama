@@ -18,9 +18,6 @@ streamaApp.controller('adminSettingsCtrl', ['$scope', 'apiService', '$sce', func
       .success(function () {
         window.location.reload();
       })
-      .error(function () {
-        alertify.error('There was an error saving your settings. Please refer to the server-log.');
-      });
   };
 
 
