@@ -83,7 +83,7 @@ class UserController {
         }
 
 
-        if(!userInstance.invitationSent && userInstance.enabled && !userInstance.username == "admin"){
+        if(!userInstance.invitationSent && userInstance.enabled && userInstance.username != "admin"){
             userInstance.uuid = randomUUID() as String
 
             log.debug("invitation email sent to $userInstance.username")
