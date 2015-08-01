@@ -8,7 +8,7 @@ class DefaultDataService {
   def createDefaultRoles(){
     def roles = [
       [authority: "ROLE_ADMIN", displayName: "Admin"],
-      [authority: "ROLE_CONTENT_MANAGER", displayName: "ContentManager"],
+      [authority: "ROLE_CONTENT_MANAGER", displayName: "Content Manager"],
     ]
 
     roles.each { role ->
