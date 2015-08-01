@@ -14,14 +14,16 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			templateUrl: 'dash.htm',
 			controller: 'dashCtrl',
       resolve: {
-        currentUser: function (apiService, $rootScope) {
+        currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
           return apiService.currentUser().success(function (data) {
             if (data) {
               $rootScope.currentUser = data;
               return data;
+            }else{
+              console.log("error");
             }
           });
-        }
+        }]
       }
 		})
 		.state('player', {
@@ -34,7 +36,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			templateUrl: 'admin.htm',
 			controller: 'adminCtrl',
       resolve: {
-        currentUser: function (apiService, $state, $rootScope) {
+        currentUser: ['apiService', '$rootScope', '$state', function (apiService, $rootScope, $state) {
           return apiService.currentUser().success(function (data) {
             if (data && data.authorities.length) {
               $rootScope.currentUser = data;
@@ -43,7 +45,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
               $state.go('dash');
             }
           });
-        }
+        }]
       }
 		})
 		.state('admin.movies', {
@@ -61,7 +63,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			templateUrl: 'admin-users.htm',
 			controller: 'adminUsersCtrl',
       resolve: {
-        currentUser: function (apiService, $state, $rootScope) {
+        currentUser: ['apiService', '$rootScope', '$state', function (apiService, $rootScope, $state) {
           return apiService.currentUser().success(function (data) {
             if (data && data.isAdmin) {
               $rootScope.currentUser = data;
@@ -70,7 +72,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
               $state.go('dash');
             }
           });
-        }
+        }]
       }
 		})
 		.state('admin.settings', {
@@ -78,7 +80,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			templateUrl: 'admin-settings.htm',
 			controller: 'adminSettingsCtrl',
       resolve: {
-        currentUser: function (apiService, $state, $rootScope) {
+        currentUser: ['apiService', '$rootScope', '$state', function (apiService, $rootScope, $state) {
           return apiService.currentUser().success(function (data) {
             if (data.isAdmin) {
               $rootScope.currentUser = data;
@@ -87,7 +89,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
               $state.go('dash');
             }
           });
-        }
+        }]
       }
 		})
 		.state('admin.shows', {
