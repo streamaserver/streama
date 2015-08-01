@@ -63,11 +63,18 @@ class UserController {
     }
 
     @Transactional
-    def saveAndInviteUser(User userInstance) {
+    def saveAndInviteUser() {
+
+        def data = request.JSON
+
+        User userInstance = User.findOrCreateById(data.id)
+
         if (userInstance == null) {
             render status: NOT_FOUND
             return
         }
+
+        userInstance.properties = data
 
         userInstance.validate()
         if (userInstance.hasErrors()) {
@@ -76,7 +83,7 @@ class UserController {
         }
 
 
-        if(!userInstance.invitationSent && userInstance.enabled){
+        if(!userInstance.invitationSent && userInstance.enabled && !userInstance.username == "admin"){
             userInstance.uuid = randomUUID() as String
 
             log.debug("invitation email sent to $userInstance.username")
@@ -95,6 +102,14 @@ class UserController {
 
 
         userInstance.save flush:true
+
+        UserRole.removeAll(userInstance)
+
+        data.authorities?.each{ roleJson ->
+          Role role = Role.get(roleJson.id)
+          UserRole.create(userInstance, role)
+        }
+
         respond userInstance, [status: CREATED]
     }
 
@@ -124,6 +139,10 @@ class UserController {
 
         respond userInstance, [status: OK]
     }
+
+  def availableRoles(){
+    respond Role.list()
+  }
 
   def loginTarget(){
     redirect(uri: '/')

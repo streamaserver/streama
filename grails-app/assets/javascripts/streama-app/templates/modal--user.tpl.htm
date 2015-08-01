@@ -1,7 +1,7 @@
 <div class="modal-body">
   <form class="form-horizontal">
     <legend>
-      Invite User
+      User
       <div class="spinner" ng-show="loading">
         <div class="bounce1"></div>
         <div class="bounce2"></div>
@@ -12,7 +12,10 @@
     <div ng-class="{'has-error has-feedback': error, 'has-success has-feedback': valid}">
       <label class="control-label" ng-show="error">{{error}}</label>
       <div class="form-group" >
-        <div class="col-sm-12">
+        <div class="col-sm-3">
+          <label class="control-label">E-Mail-Address</label>
+        </div>
+        <div class="col-sm-8">
           <input type="email" class="form-control" ng-model="user.username" placeholder="E-Mail-Address" ng-model-options="{updateOn: 'blur'}" ng-change="checkAvailability(user.username)">
           <span class="glyphicon ion-close form-control-feedback" ng-show="error" aria-hidden="true"></span>
           <span class="glyphicon ion-checkmark form-control-feedback" ng-show="valid" aria-hidden="true"></span>
@@ -20,16 +23,25 @@
       </div>
     </div>
 
-    
+
     <div class="form-group">
-      <div class="col-sm-12">
+      <div class="col-sm-8 col-sm-offset-3">
         <label> <input type="checkbox" ng-model="user.enabled"/> &nbsp; Enabled (user can log in and view videos)</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3">
+        <label class="control-label">Roles</label>
+      </div>
+      <div class="col-sm-8">
+        <select class="form-control" multiple ng-options="role as role.displayName for role in roles track by role.id" ng-model="user.authorities"></select>
       </div>
     </div>
   </form>
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-success" ng-disabled="!valid && !user.id" ng-click="saveAndInviteUser(user)">Save & Invite User</button>
+  <button ng-if="!user.id" class="btn btn-success" ng-disabled="!valid && !user.id" ng-click="saveAndInviteUser(user)">Save & Invite User</button>
+  <button ng-if="user.id" class="btn btn-success" ng-click="saveAndInviteUser(user)">Save User</button>
   <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>

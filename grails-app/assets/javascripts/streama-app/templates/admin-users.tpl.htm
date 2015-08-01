@@ -35,9 +35,8 @@
 
     <td> <span class="comma-separatad" ng-repeat="role in user.authorities">{{role.displayName}}</span></td>
 
-    <td>
+    <td style="width: 1px;">
       <button class="btn btn-xs btn-primary" ng-click="openUserModal(user)">edit</button>
-      <button class="btn btn-xs btn-success" ng-if="!isAdmin(user)" ng-click="makeUserAdmin(user)">make admin</button>
     </td>
   </tr>
 </table>

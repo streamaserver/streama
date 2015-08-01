@@ -45,6 +45,9 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			},
 			makeUserAdmin: function (user) {
 				return $http.get(urlBase + 'user/makeUserAdmin.json', {params: {id: user.id}});
+			},
+      availableRoles: function () {
+				return $http.get(urlBase + 'user/availableRoles.json');
 			}
 		},
 

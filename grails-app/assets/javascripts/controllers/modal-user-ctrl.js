@@ -3,18 +3,22 @@
 streamaApp.controller('modalUserCtrl', [
 	'$scope', '$modalInstance', 'apiService', 'user',
 	function ($scope, $modalInstance, apiService, user) {
-		
+
 		$scope.user = user;
 		$scope.loading = false;
-		
+
+		apiService.user.availableRoles().success(function (data) {
+      $scope.roles = data;
+    });
+
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
 		};
-			
+
 		$scope.checkAvailability = function (username) {
 			$scope.error = null;
 			$scope.valid = false;
-			
+
 			if(username){
 				apiService.user.checkAvailability(username).success(function (data) {
 					if(data.error){
@@ -25,16 +29,22 @@ streamaApp.controller('modalUserCtrl', [
 				});
 			}
 		};
-	
+
+    $scope.toggleSelection = function (value, array) {
+      if(array.indexOf(value) > -1){
+        array.splice(array.indexOf(value), 1);
+      }else{
+        array.push(value);
+      }
+    };
+
+
 		$scope.saveAndInviteUser = function (user) {
 			$scope.loading = true;
-			
+
 			var dateObj = angular.copy(user);
-			
-			delete dateObj.dateCreated;
-			delete dateObj.lastUpdated;
 			apiService.user.saveAndInviteUser(dateObj)
-				
+
 				.success(function (data) {
 					$modalInstance.close(data);
 					$scope.loading = false;
@@ -44,5 +54,5 @@ streamaApp.controller('modalUserCtrl', [
 					alertify.error('There was an error saving the user.');
 				});
 		};
-		
+
 }]);
