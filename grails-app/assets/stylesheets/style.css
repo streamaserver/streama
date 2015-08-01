@@ -1,4 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Pacifico);
 .flex-row {
   display: -webkit-box;
   display: -moz-box;
@@ -228,10 +227,9 @@ h1, h2, h3, h4, h5, h6 {
   color: white; }
 
 .logo {
-  font-family: 'Pacifico', cursive;
-  font-size: 29px;
-  color: #b0ddef;
-  float: left; }
+  float: left;
+  width: 130px;
+  padding: 6px 0; }
   .logo i {
     font-size: 0.85em; }
 

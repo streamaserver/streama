@@ -9,30 +9,29 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .logo{
-  font-family: 'Pacifico', cursive;
-  font-size: 29px;
-  color: $primary;
   float: left;
+  width: 130px;
+  padding: 6px 0;
   i{
     font-size: 0.85em;
   }
 }
 
 header.main{
-  @include clearfix; 
+  @include clearfix;
   background: rgba(0, 0, 0, 0.15);
   padding: 5px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.11);
-  
+
   .navigation{
-    float: right; 
-    padding: 0; 
+    float: right;
+    padding: 0;
     margin: 0;
-    
+
     li{
       list-style: none;
-      display: inline-block;      
-      
+      display: inline-block;
+
       a{
         color: white;
         padding: 11px 6px;

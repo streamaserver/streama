@@ -18,7 +18,9 @@
 	<body>
 
 		<header class="main" ng-if="!isCurrentState('player')">
-			<div class="logo"><i class="ion-play"></i> Streama</div>
+			<a class="logo" ui-sref="dash">
+        <asset:image src="logo.png"></asset:image>
+      </a>
 
 			<ul class="navigation">
 				<sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
