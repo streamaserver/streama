@@ -8,6 +8,7 @@ class User {
 
 	Date dateCreated
 	Date lastUpdated
+  boolean deleted = false
 
 	String username
 	String password
@@ -40,7 +41,7 @@ class User {
 		if(!password){
 			password = randomUUID() as String
 		}
-		
+
 		encodePassword()
 	}
 

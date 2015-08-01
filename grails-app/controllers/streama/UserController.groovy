@@ -13,9 +13,8 @@ class UserController {
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond User.list(params), [status: OK]
+    def index() {
+        respond User.findAllByDeletedNotEqual(true), [status: OK]
     }
 
     @Transactional
@@ -47,7 +46,11 @@ class UserController {
             return
         }
 
-        userInstance.delete flush:true
+        userInstance.deleted = true
+        userInstance.accountExpired = true
+
+        userInstance.save flush: true, failOnError: true
+
         render status: NO_CONTENT
     }
 
