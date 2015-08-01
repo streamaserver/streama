@@ -183,3 +183,15 @@ label{
     font-weight: 500;
   }
 }
+
+
+.comma-separatad{
+  &:after{
+    content: ", "
+  }
+  &:last-child{
+    &:after{
+      display: none;
+    }
+  }
+}

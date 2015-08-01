@@ -139,6 +139,11 @@ label {
     line-height: 450px;
     font-weight: 500; }
 
+.comma-separatad:after {
+  content: ", "; }
+.comma-separatad:last-child:after {
+  display: none; }
+
 .btn {
   background: gray;
   border-color: #787878;

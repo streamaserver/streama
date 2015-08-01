@@ -33,7 +33,7 @@
       <input ng-if="user.invitationLink" class="form-control input-xs" type="text" ng-model="user.invitationLink"/>
     </td>
 
-    <td> <span ng-repeat="role in user.authorities">{{role.displayName}}</span></td>
+    <td> <span class="comma-separatad" ng-repeat="role in user.authorities">{{role.displayName}}</span></td>
 
     <td>
       <button class="btn btn-xs btn-primary" ng-click="openUserModal(user)">edit</button>
