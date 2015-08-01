@@ -1,12 +1,12 @@
 'use strict';
 
 streamaApp.controller('modalTvShowCtrl', [
-	'$scope', '$modalInstance', 'apiService', '$http', 
-	function ($scope, $modalInstance, apiService, $http) {
-		
-		
+	'$scope', '$modalInstance', 'apiService', 'tvShow',
+	function ($scope, $modalInstance, apiService, tvShow) {
+
+
 	$scope.loading = false;
-	$scope.tvShow = {};
+	$scope.tvShow = tvShow || {};
 
 	$scope.saveShow = function (video) {
 		apiService.tvShow.save(video).success(function (data) {
@@ -33,7 +33,7 @@ streamaApp.controller('modalTvShowCtrl', [
 		$('.name-input').focus();
 	}, 200);
 
-	
+
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
 	};

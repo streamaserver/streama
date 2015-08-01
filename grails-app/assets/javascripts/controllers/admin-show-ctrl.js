@@ -4,11 +4,17 @@ streamaApp.controller('adminShowCtrl', ['$scope', 'apiService', '$stateParams', 
 
 	apiService.tvShow.get($stateParams.showId).success(function (data) {
 		$scope.show = data;
-		
+
 		apiService.episode.list({showId: $stateParams.showId}).success(function (data) {
 			$scope.seasons = _.groupBy(data, 'season_number');
 		});
 	});
+
+  $scope.openShowModal = function () {
+    modalService.tvShowModal($scope.show, function (data) {
+      angular.merge($scope.show, data);
+    });
+  };
 
 
 	$scope.addNewEpisode = function(){

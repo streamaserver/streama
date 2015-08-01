@@ -8,58 +8,64 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class TvShowController {
 
-    static responseFormats = ['json', 'xml']
-    static allowedMethods = [save: "POST",  delete: "DELETE"]
+  def theMovieDbService
 
-    def index() {
-        JSON.use('fullShow'){
-            respond TvShow.findAllByDeletedNotEqual(true), [status: OK]
-        }
+  static responseFormats = ['json', 'xml']
+  static allowedMethods = [save: "POST", delete: "DELETE"]
+
+  def index() {
+    JSON.use('fullShow') {
+      respond TvShow.findAllByDeletedNotEqual(true), [status: OK]
+    }
+  }
+
+  @Transactional
+  def save() {
+    def data = request.JSON
+
+    if (data == null) {
+      render status: NOT_FOUND
+      return
     }
 
-    @Transactional
-    def save() {
-        def data = request.JSON
-        
-        if (data == null) {
-            render status: NOT_FOUND
-            return
-        }
-        
-        TvShow tvShowInstance = new TvShow()
-        tvShowInstance.properties = data
+    TvShow tvShowInstance = TvShow.findOrCreateById(data.id)
+    tvShowInstance.properties = data
 
-        tvShowInstance.validate()
-        if (tvShowInstance.hasErrors()) {
-            render status: NOT_ACCEPTABLE
-            return
-        }
-
-        tvShowInstance.save flush:true
-        respond tvShowInstance, [status: CREATED]
-    }
-    
-    def show(TvShow tvShowInstance){
-        JSON.use('fullShow'){
-            respond tvShowInstance, [status: OK]
-        }
+    if(!tvShowInstance.imdb_id){
+      tvShowInstance.imdb_id = theMovieDbService.getImdbIdForShow(tvShowInstance.apiId)
     }
 
-    def episodesForTvShow(TvShow tvShowInstance){
-        respond Episode.findAllByShow(tvShowInstance), [status: OK]
+    tvShowInstance.validate()
+    if (tvShowInstance.hasErrors()) {
+      render status: NOT_ACCEPTABLE
+      return
     }
 
-    @Transactional
-    def delete(TvShow tvShowInstance) {
+    tvShowInstance.save flush: true
+    respond tvShowInstance, [status: CREATED]
+  }
 
-        if (tvShowInstance == null) {
-            render status: NOT_FOUND
-            return
-        }
-        
-        tvShowInstance.deleted = true
-        tvShowInstance.save flush: true, failOnError: true
-
-        render status: NO_CONTENT
+  def show(TvShow tvShowInstance) {
+    JSON.use('fullShow') {
+      respond tvShowInstance, [status: OK]
     }
+  }
+
+  def episodesForTvShow(TvShow tvShowInstance) {
+    respond Episode.findAllByShow(tvShowInstance), [status: OK]
+  }
+
+  @Transactional
+  def delete(TvShow tvShowInstance) {
+
+    if (tvShowInstance == null) {
+      render status: NOT_FOUND
+      return
+    }
+
+    tvShowInstance.deleted = true
+    tvShowInstance.save flush: true, failOnError: true
+
+    render status: NO_CONTENT
+  }
 }

@@ -138,6 +138,7 @@ class MarshallerService {
                 returnArray['original_language'] = tvShow.original_language
                 returnArray['vote_average'] = tvShow.vote_average
                 returnArray['vote_count'] = tvShow.vote_count
+                returnArray['imdb_id'] = tvShow.imdb_id
                 returnArray['popularity'] = tvShow.popularity
                 returnArray['episodesWithFiles'] = tvShow.episodes.findAll{it.files}
                 returnArray['episodes'] = tvShow.episodes
