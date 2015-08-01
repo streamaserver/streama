@@ -25,7 +25,7 @@ class DefaultDataService {
             username: 'admin',
             password: 'admin',
             enabled: true,
-            role: Role.findByAuthority("ROLE_ADMIN")
+            roles: [Role.findByAuthority("ROLE_ADMIN"), Role.findByAuthority("ROLE_CONTENT_MANAGER")]
         ]
     ]
 
@@ -34,7 +34,9 @@ class DefaultDataService {
         def user = new User(username: userData.username, password: userData.password, enabled: userData.enabled)
         user.save flush: true, failOnError: true
 
-        UserRole.create(user, userData.role, true)
+        userData.roles?.each{ role ->
+          UserRole.create(user, role)
+        }
       }
     }
   }
