@@ -42,14 +42,14 @@ streamaApp.directive('adminEpisode', [
 				alertify.confirm('Are you sure you want to remove the file "'+file.originalFilename+'"?', function (confirmed) {
 					if(confirmed){
 						apiService.video.removeFile($scope.episode.id, file.id).success(function () {
-							file.deleted = true;
+              _.remove($scope.episode.files, {id: file.id});
 						});
 					}
 				});
 			};
-			
-			
-			
+
+
+
 			$scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + $scope.episode.id, function (data) {
 				$scope.uploadStatus.percentage = null;
 				$scope.episode.files = $scope.episode.files || [];
