@@ -4,7 +4,7 @@
 - Added another role, "Content Manager" and improved overall security. Now the following role-schema applies:
   - Users with the role **Admin** can edit Users & Settings. 
   - Users with the role **Content Manager** can edit content. 
-  - Users with **both rules** have full rights.
+  - Users with **both roles** have full rights.
 
 
 ## [[0.0.2]](https://github.com/dularion/streama/commit/68cf2fb474226399e1558c3f1088aff6a49c7328) - 2015-07-31
