@@ -2,28 +2,35 @@ package streama
 
 class TvShow {
 
-    Boolean deleted = false
-    Date dateCreated
-    Date lastUpdated
+  transient theMovieDbService
 
-    String name
-    String overview
-    String apiId
 
-    String backdrop_path
-    String poster_path
-    String first_air_date
-    String original_language
-    String imdb_id
+  Boolean deleted = false
+  Date dateCreated
+  Date lastUpdated
 
-    Double vote_average
-    Integer vote_count
-    Double popularity
+  String name
+  String overview
+  String apiId
 
-    static hasMany = [episodes: Episode]
+  String backdrop_path
+  String poster_path
+  String first_air_date
+  String original_language
+  String imdb_id
 
-    static constraints = {
-        name nullable: false
-        overview size: 1..5000
-    }
+  Double vote_average
+  Integer vote_count
+  Double popularity
+
+  static hasMany = [episodes: Episode]
+
+  static constraints = {
+      name nullable: false
+      overview size: 1..5000
+  }
+
+  def getExternalLinks(){
+    theMovieDbService.getExternalLinks(this.apiId)
+  }
 }

@@ -32,7 +32,7 @@ class TvShowController {
     tvShowInstance.properties = data
 
     if(!tvShowInstance.imdb_id){
-      tvShowInstance.imdb_id = theMovieDbService.getImdbIdForShow(tvShowInstance.apiId)
+      tvShowInstance.imdb_id = tvShowInstance.externalLinks?.imdb_id
     }
 
     tvShowInstance.validate()

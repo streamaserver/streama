@@ -18,18 +18,14 @@ class TheMovieDbService {
     return new JsonSlurper().parseText(JsonContent)
   }
 
-  
-  def getImdbIdForShow(showId){
-    def JsonContent = new URL(BASE_URL + "/tv/$showId/external_ids?api_key=$API_KEY").text
-    def json =  new JsonSlurper().parseText(JsonContent)
 
-    return json["imdb_id"]
+  def getExternalLinks(showId){
+    def JsonContent = new URL(BASE_URL + "/tv/$showId/external_ids?api_key=$API_KEY").text
+    return new JsonSlurper().parseText(JsonContent)
   }
 
   def getFullMovieMeta(movieId){
     def JsonContent = new URL(BASE_URL + "/movie/$movieId?api_key=$API_KEY").text
-    def json =  new JsonSlurper().parseText(JsonContent)
-
-    return json
+    return new JsonSlurper().parseText(JsonContent)
   }
 }
