@@ -76,7 +76,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			},
 			responseError: function (response) {
 
-        if(response.status != 404){
+        if(response.status != 404 && response.status != 401){
           alertify.error('A system error occurred');
         }
 
@@ -86,8 +86,12 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 	}]);
 
 
-streamaApp.run(['$rootScope', '$state', function ($rootScope, $state) {
+streamaApp.run(['$rootScope', '$state', 'apiService', function ($rootScope, $state, apiService) {
 	$rootScope.isCurrentState = function (stateName) {
 		return ($state.current.name == stateName);
 	};
+
+  apiService.currentUser().success(function (data) {
+    $rootScope.currentUser = data;
+  });
 }]);

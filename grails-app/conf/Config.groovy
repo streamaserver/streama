@@ -161,6 +161,9 @@ grails.databinding.dateFormats = [
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'streama.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'streama.UserRole'
 grails.plugin.springsecurity.authority.className = 'streama.Role'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/user/loginTarget'
+
+
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                              ['IS_AUTHENTICATED_REMEMBERED'],
@@ -182,6 +185,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/settings/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
 	'/bulk/**':                       ['IS_AUTHENTICATED_REMEMBERED'],
 
+  '/user/current':                        ['permitAll'],
   '/invite/**':                        ['permitAll'],
 	'/assets/**':                     ['permitAll'],
 	'/**/js/**':                      ['permitAll'],

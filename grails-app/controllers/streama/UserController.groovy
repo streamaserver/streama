@@ -98,7 +98,11 @@ class UserController {
         respond userInstance, [status: CREATED]
     }
 
-  
+
+    def current(){
+      respond springSecurityService.currentUser, [status: OK]
+    }
+
     @Transactional
     def makeUserAdmin(User userInstance) {
 
@@ -120,6 +124,10 @@ class UserController {
 
         respond userInstance, [status: OK]
     }
+
+  def loginTarget(){
+    redirect(uri: '/')
+  }
 
 }
 

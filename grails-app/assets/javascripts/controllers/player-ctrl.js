@@ -30,11 +30,16 @@ streamaApp.controller('playerCtrl', [
         if(!video.duration){
           alertify.alert('There seems to be a problem adding the video-file to the player. This is most likely due to a codec-problem. ' +
           'Try converting it to a compatible HTML5 codec, remove the currently attacked file and re-add it. If the codecs are fine, check the error log of the server.', function () {
-            if($scope.video.show){
-              $state.go('admin.show', {showId: $scope.video.show.id})
+            if($rootScope.currentUser.authorities.length){
+              if($scope.video.show){
+                $state.go('admin.show', {showId: $scope.video.show.id});
+              }else{
+                $state.go('admin.movie', {movieId: $scope.video.id});
+              }
             }else{
-              $state.go('admin.movie', {movieId: $scope.video.id})
+              $state.go('dash');
             }
+
           });
         }
 
