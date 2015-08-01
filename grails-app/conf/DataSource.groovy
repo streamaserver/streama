@@ -16,6 +16,12 @@ hibernate {
 
 // environment specific settings
 environments {
+    test {
+        dataSource {
+          dbCreate = "update"
+          url = "jdbc:h2:mem:testDb:MVCC=TRUE;LOCK_TIMEOUT=10000"
+        }
+    }
     development {
         dataSource {
           dbCreate = "update"
@@ -38,7 +44,7 @@ environments {
           url = "jdbc:mysql://localhost:3306/streama"
           username = "root"
           password = ""
-          
+
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true
