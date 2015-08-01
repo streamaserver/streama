@@ -68,15 +68,11 @@ Uploading video-files for each episode is as easy as drag-and-drop!
 Users can be invited and managed in the admin-panel. By default, they are non-admins, meaning they can only view videos, not create them. You can make them admins with the press of a button. Since there is user-administration in place, I plan on expanding on this a lot! Another feature I want to add is the ability for users to add and administer some form of playlists. There is a lot of potential to make this even better! 
 
 ## The Technical Details
-This application is web-based and is programmed with [Grails 2.4.4](https://grails.org/) and MySQL. For login & user-handling [SpringSecurity](http://projects.spring.io/spring-security/) is used. The player is completely html5-based, meaning there are limitations as to which file-types can be played at the moment. 
+This application is web-based and is programmed with [Grails 2.4.4](https://grails.org/) and MySQL. For login & user-handling [SpringSecurity](http://projects.spring.io/spring-security/) is used. For the most part, Grails is only there to generate REST-endpoints for the frontend. For all the front-end components, [AngularJS](https://angularjs.org/) is used. The player is completely html5-based, meaning there are limitations as to which file-types can be played at the moment. 
 
 As an API for all the movies and shows I used the awesome API from theMovieDatabase. 
 ![theMovieDatabase](https://d3a8mw37cqal2z.cloudfront.net/images/header_v2.png)
 
-
-
-### Setup on a remote Server: 
-Please refer to [Setup Streama on Ubuntu-14.04](https://github.com/dularion/streama/wiki/Setup-App-on-Ubuntu-14.04)
 
 ### Development Setup: 
 Coming Soon
