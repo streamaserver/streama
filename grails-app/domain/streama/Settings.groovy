@@ -1,10 +1,11 @@
 package streama
 
 class Settings {
-    
+
     String settingsKey
     String value
     String description
+    Boolean required
 
     static constraints = {
         settingsKey nullable: false

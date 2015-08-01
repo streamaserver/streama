@@ -15,10 +15,10 @@
 <form name="settings-form" class="settings-form">
   <div class="form-group row-slim" ng-repeat="setting in settings">
     <div class="col-sm-3">
-      <label class="control-label">{{setting.settingsKey}}</label>
+      <label class="control-label">{{setting.settingsKey}} <span ng-if="setting.required">*</span></label>
     </div>
     <div class="col-sm-7" ng-class="{'has-error has-feedback': setting.invalid, 'has-success has-feedback': setting.valid}">
-      <input required type="text" class="form-control" ng-model="setting.value" placeholder="{{setting.settingsKey}}" ng-change="changeValue(setting)">
+      <input ng-required="setting.required" type="text" class="form-control" ng-model="setting.value" placeholder="{{setting.settingsKey}}" ng-change="changeValue(setting)">
 
       <span class="glyphicon ion-close form-control-feedback" ng-show="setting.invalid" aria-hidden="true"></span>
       <span class="glyphicon ion-checkmark form-control-feedback" ng-show="setting.valid" aria-hidden="true"></span>

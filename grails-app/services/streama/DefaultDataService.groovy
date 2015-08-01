@@ -41,15 +41,18 @@ class DefaultDataService {
             settingsKey: 'Upload Directory',
             description: 'This setting provides the application with your desired upload-path for all files. ' +
               'The default so far has been /data/streama. Remember: if you change this path, copy all the files (that were previously added) into the new directory.',
+            required: true
         ],
         [
             settingsKey: 'TheMovieDB API key',
             description: 'This API-key is required by the application to fetch all the nice Movie/Episode/Show data for you. Get one for free at https://www.themoviedb.org/',
+            required: true
         ],
         [
             settingsKey: 'Base URL',
             value: 'http://localhost:8080/streama',
             description: 'The Base-URL is used for the videos and the link in the invitation-email.',
+            required: true
         ],
     ]
 
