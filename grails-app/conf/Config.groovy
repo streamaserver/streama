@@ -116,16 +116,6 @@ grails {
 }
 
 
-environments {
-  development {
-    grails.serverURL = "http://localhost:8080/streama"
-  }
-  production {
-    grails.serverURL = "https://h2465311.stratoserver.net"
-  }
-}
-
-
 // log4j configuration
 log4j.main = {
     // Example of changing the log pattern for the default console appender:
@@ -158,7 +148,7 @@ grails.databinding.dateFormats = [
 ]
 
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'streama.User'
+grails.plugin.emospringsecurity.userLookup.userDomainClassName = 'streama.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'streama.UserRole'
 grails.plugin.springsecurity.authority.className = 'streama.Role'
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/user/loginTarget'
