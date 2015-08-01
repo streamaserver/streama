@@ -4,17 +4,18 @@ streamaApp.controller('dashCtrl', ['$scope', 'apiService', '$state', '$rootScope
 	$scope.loading = true;
 
 
-  if($rootScope.currentUser.isAdmin){
-    apiService.settings.list().success(function (data) {
-      var TheMovieDbAPI = _.find(data, {settingsKey: 'TheMovieDB API key'});
 
-      if(!TheMovieDbAPI.value){
-        alertify.alert('You need to fill out some required base-settings. You will be redirected to the settings page now.', function () {
-          $state.go('admin.settings');
-        });
-      }
-    });
-  }
+  apiService.settings.list().success(function (data) {
+    var TheMovieDbAPI = _.find(data, {settingsKey: 'TheMovieDB API key'});
+
+    if(!TheMovieDbAPI.value){
+      alertify.alert('You need to fill out some required base-settings. You will be redirected to the settings page now.', function () {
+        $state.go('admin.settings');
+      });
+    }
+  });
+
+  //if($rootScope.currentUser.isAdmin){ }
 
 
   apiService.video.dash()
