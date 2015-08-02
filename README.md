@@ -11,7 +11,6 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
   - [Settings](#settings)
   - [The Dashboard](#the-dashboard)
   - [The Player](#the-player)
-    - [The Episode Browser](#the-episode-browser)
   - [The Admin-Panel](#the-admin-panel)
   - [The Users](#the-users) 
 - [Technical Details](#technical-details)
