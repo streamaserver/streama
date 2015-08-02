@@ -12,15 +12,19 @@ class User {
 
 	String username
 	String password
+
 	boolean enabled = false
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
 	boolean invitationSent = false
-
 	String uuid
 
+  String fullName
+
 	static transients = ['springSecurityService']
+
+  static hasMany = [favoriteGenres: Genre]
 
 	static constraints = {
 		username blank: false, unique: true
