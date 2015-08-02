@@ -90,9 +90,8 @@ class UserController {
     if (!userInstance.invitationSent && userInstance.enabled && userInstance.username != "admin") {
       userInstance.uuid = randomUUID() as String
 
-      log.debug("invitation email sent to $userInstance.username")
-
       try {
+        log.debug("invitation email sent to $userInstance.username")
         sendMail {
           to userInstance.username
           subject "You have been invited!"
