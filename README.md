@@ -25,6 +25,7 @@ The application uses Grails for the REST-API, and AngularJS for the frontend. If
 ## Getting Started
 - For local setup, please refer to [Local Streama Setup](https://github.com/dularion/streama/wiki/Local-Streama-Setup)
 - For remote setup, please refer to [Setup Streama on Ubuntu 14.04](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
+- For developers, please refer to [Setup Streama for development](https://github.com/dularion/streama/wiki/Set-Up-Streama-for-Development)
 
 
 # The Application
@@ -95,7 +96,6 @@ At this point I would like to mention that this project is still very much a wor
 Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
 
 # Known Issues
-- When streaming a video, an exception occurs `getOutputStream() has already been called for this response` because springSecurity applies a filter that adds more data to the outputStream, even though I already added all the data and closed it. This error is merely cosmetic, and does not influence the video streaming. I still want to get this fixed. 
 - There is no video-conversion currently, meaning you are reliant upon html5 browser compatibilities. I will implement server-side conversion soon which will enable this functionality.
 
 
