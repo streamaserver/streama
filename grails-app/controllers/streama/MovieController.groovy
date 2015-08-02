@@ -11,9 +11,8 @@ class MovieController {
   static responseFormats = ['json', 'xml']
   static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-  def index(Integer max) {
-    params.max = Math.min(max ?: 10, 100)
-    respond Movie.list(params), [status: OK]
+  def index() {
+    respond Movie.list(), [status: OK]
   }
 
   @Transactional
