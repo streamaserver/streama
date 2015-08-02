@@ -367,7 +367,6 @@ hr {
   .episode-wrapper.no-files {
     opacity: 0.5; }
   .episode-wrapper .upload-overlay {
-    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -375,24 +374,46 @@ hr {
     bottom: 0;
     background-color: rgba(92, 166, 195, 0.7);
     z-index: 9;
-    border: 2px dashed #b0ddef; }
+    border: 2px dashed #b0ddef;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-content: center;
+    align-content: center;
+    display: none; }
     .episode-wrapper .upload-overlay .hint,
-    .episode-wrapper .upload-overlay .percentage {
-      position: absolute;
+    .episode-wrapper .upload-overlay .percentage,
+    .episode-wrapper .upload-overlay .processing {
       text-transform: uppercase;
       color: white;
       font-weight: 600;
       font-size: 27px;
       text-align: center;
-      top: 50%;
-      left: 0;
-      right: 0;
-      margin-top: -0.7em;
       text-shadow: 0 1px 5px rgba(0, 0, 0, 0.49); }
+      .episode-wrapper .upload-overlay .hint .spinner > div,
+      .episode-wrapper .upload-overlay .percentage .spinner > div,
+      .episode-wrapper .upload-overlay .processing .spinner > div {
+        background-color: white; }
+      .episode-wrapper .upload-overlay .hint .converting,
+      .episode-wrapper .upload-overlay .percentage .converting,
+      .episode-wrapper .upload-overlay .processing .converting {
+        display: block; }
   .episode-wrapper.dragover-upload, .episode-wrapper.uploading {
     opacity: 1; }
     .episode-wrapper.dragover-upload .upload-overlay, .episode-wrapper.uploading .upload-overlay {
-      display: block; }
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex; }
   .episode-wrapper .media-title {
     height: 44px;
     overflow: hidden; }
