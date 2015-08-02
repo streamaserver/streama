@@ -34,6 +34,7 @@
 
 				<sec:ifLoggedIn>
 					<li><a ui-sref="dash">Dashboard</a></li>
+					<li><a ui-sref="profile">Profile</a></li>
 					<li><g:link uri="/j_spring_security_logout">Logout</g:link></li>
 				</sec:ifLoggedIn>
 			</ul>
