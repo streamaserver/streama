@@ -30,6 +30,7 @@ streamaApp.controller('profileCtrl', ['$scope', 'apiService', '$rootScope', func
       .success(function (data) {
         $scope.loading = false;
         $rootScope.currentUser = data;
+        alertify.success('Your profile was successfully saved.');
       })
       .error(function () {
         $scope.loading = false;
