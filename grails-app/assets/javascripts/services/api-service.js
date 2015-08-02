@@ -43,11 +43,14 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			saveAndInviteUser: function (user) {
 				return $http.post(urlBase + 'user/saveAndInviteUser.json', user);
 			},
-			makeUserAdmin: function (user) {
-				return $http.get(urlBase + 'user/makeUserAdmin.json', {params: {id: user.id}});
+      saveProfile: function (user) {
+				return $http.post(urlBase + 'user/saveProfile.json', user);
 			},
       availableRoles: function () {
 				return $http.get(urlBase + 'user/availableRoles.json');
+			},
+      changePassword: function (data) {
+				return $http.post(urlBase + 'user/changePassword.json', data);
 			}
 		},
 
@@ -137,6 +140,9 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			},
 			seasonForShow: function (params) {
 				return $http.get(urlBase + 'theMovieDb/seasonForShow.json', {params: params});
+			},
+      availableGenres: function (params) {
+				return $http.get(urlBase + 'theMovieDb/availableGenres.json');
 			}
 		},
 

@@ -19,8 +19,21 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
             if (data) {
               $rootScope.currentUser = data;
               return data;
-            }else{
-              console.log("error");
+            }
+          });
+        }]
+      }
+		})
+		.state('profile', {
+			url: '/profile',
+			templateUrl: 'profile.htm',
+			controller: 'profileCtrl',
+      resolve: {
+        currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
+          return apiService.currentUser().success(function (data) {
+            if (data) {
+              $rootScope.currentUser = data;
+              return data;
             }
           });
         }]
@@ -127,7 +140,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
         if(response.status == 403){
           alertify.error('You do not have the rights to carry out this action.');
         }
-        else if(response.status != 404 && response.status != 401){
+        else if(response.status != 404 && response.status != 401 && response.status != 406){
           alertify.error('A system error occurred');
         }
 
