@@ -17,7 +17,7 @@
           </div>
           <div class="col-sm-9" ng-class="{'has-success has-feedback': valid}">
             <input type="password" class="form-control" name="password" ng-model="password" placeholder="Password (min. 6 Characters)" ng-change="valid = (password == passwordRepeat && password.length > 5)">
-            <span class="glyphicon ion-checkmark form-control-feedback" ng-show="valid" aria-hidden="true"></span>
+            <span class="ion-checkmark form-control-feedback" ng-show="valid" aria-hidden="true"></span>
           </div>
         </div>
 
@@ -27,7 +27,7 @@
           </div>
           <div class="col-sm-9" ng-class="{'has-success has-feedback': valid}">
             <input type="password" class="form-control" name="passwordRepeat" ng-model="passwordRepeat" placeholder="Repeat Password " ng-change="valid = (password == passwordRepeat && password.length > 5)">
-            <span class="glyphicon ion-checkmark form-control-feedback" ng-show="valid" aria-hidden="true"></span>
+            <span class="ion-checkmark form-control-feedback" ng-show="valid" aria-hidden="true"></span>
           </div>
         </div>
 
