@@ -91,12 +91,12 @@ class UserController {
       userInstance.uuid = randomUUID() as String
 
       try {
-        log.debug("invitation email sent to $userInstance.username")
         sendMail {
           to userInstance.username
           subject "You have been invited!"
           body(view: "/mail/userInvite", model: [user: userInstance])
         }
+        log.debug("invitation email sent to $userInstance.username")
       } catch (Exception e) {
       }
 
