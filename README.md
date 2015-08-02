@@ -96,7 +96,7 @@ At this point I would like to mention that this project is still very much a wor
 Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
 
 # Known Issues
-- There is no video-conversion currently, meaning you are reliant upon html5 browser compatibilities. I will implement server-side conversion soon which will enable this functionality.
+- There is no video-conversion currently, meaning you are reliant upon html5 browser compatibilities. I will implement server-side conversion soon which will enable this functionality. See this issue: https://github.com/dularion/streama/issues/17
 
 
 # License
