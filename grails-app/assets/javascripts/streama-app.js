@@ -42,7 +42,17 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 		.state('player', {
 			url: '/player/:videoId?currentTime?sessionId',
 			templateUrl: 'player.htm',
-			controller: 'playerCtrl'
+			controller: 'playerCtrl',
+      resolve: {
+        currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
+          return apiService.currentUser().success(function (data) {
+            if (data) {
+              $rootScope.currentUser = data;
+              return data;
+            }
+          });
+        }]
+      }
 		})
 		.state('admin', {
 			url: '/admin',
@@ -155,8 +165,4 @@ streamaApp.run(['$rootScope', '$state', 'apiService', function ($rootScope, $sta
 	$rootScope.isCurrentState = function (stateName) {
 		return ($state.current.name == stateName);
 	};
-
-  apiService.currentUser().success(function (data) {
-    $rootScope.currentUser = data;
-  });
 }]);
