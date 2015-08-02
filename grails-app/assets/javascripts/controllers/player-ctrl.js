@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.controller('playerCtrl', [
-	'$scope', 'apiService', '$stateParams', '$timeout', '$rootScope', '$state', '$interval', '$sce', 'socketService',
-	function ($scope, apiService, $stateParams, $timeout, $rootScope, $state, $interval, $sce, socketService) {
+	'$scope', 'apiService', '$stateParams', '$timeout', '$rootScope', '$state', '$interval', '$sce', 'socketService', 'localStorageService',
+	function ($scope, apiService, $stateParams, $timeout, $rootScope, $state, $interval, $sce, socketService, localStorageService) {
 		$scope.loading = true;
 		var video = $('#video')[0];
 		var controlDisplayTimeout;
@@ -10,7 +10,7 @@ streamaApp.controller('playerCtrl', [
 		var timeCheckInterval;
 		var viewingStatusSaveInterval;
 
-		$scope.volumeLevel = 5;
+		$scope.volumeLevel = localStorageService.get('volumeLevel') || 5;
 
 		apiService.video.get($stateParams.videoId).success(function (data) {
 			$scope.video = data;
@@ -55,8 +55,6 @@ streamaApp.controller('playerCtrl', [
 			}, 3000);
 		});
 
-
-
 		$scope.toggleSelectEpisodes = function (episodes) {
 			$scope.selectedEpisodes = episodes;
 		};
@@ -90,8 +88,6 @@ streamaApp.controller('playerCtrl', [
 
 			});
 		}
-
-
 
 		Mousetrap.bind('space', function() {
 			if($scope.playing){
@@ -156,10 +152,12 @@ streamaApp.controller('playerCtrl', [
 			change: function (e, slider) {
 				var volume = slider.value / 10;
 				video.volume = volume;
+        localStorageService.set('volumeLevel', $scope.volumeLevel);
 			},
 			slide: function (e, slider) {
 				var volume = slider.value / 10;
 				video.volume = volume;
+        localStorageService.set('volumeLevel', $scope.volumeLevel);
 			}
 		};
 
