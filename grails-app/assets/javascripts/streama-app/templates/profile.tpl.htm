@@ -1,0 +1,97 @@
+<div class="profile">
+  <div class="profile-heading">
+    <h1>
+      <i class="ion-ios-arrow-thin-left" ng-if="changePasswordIsActive" ng-click="toggleChangePassword()"></i> Profile
+
+      <div class="spinner" ng-show="loading">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </h1>
+
+    <hr/>
+  </div>
+
+  <div class="profile-inner" ng-class="{'password-active': changePasswordIsActive}">
+    <form class="form-horizontal">
+
+      <div class="form-group" >
+        <div class="col-sm-3">
+          <label class="control-label">E-Mail-Address</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="email" class="form-control" disabled ng-model="user.username" placeholder="E-Mail-Address">
+        </div>
+      </div>
+
+      <div class="form-group" >
+        <div class="col-sm-3">
+          <label class="control-label">Full Name</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" ng-model="user.fullName" placeholder="Full Name">
+        </div>
+      </div>
+
+
+      <div class="form-group" ng-show="availableGenres.length">
+        <div class="col-sm-3">
+          <label class="control-label">Favorite Genres</label>
+        </div>
+        <div class="col-sm-9">
+          <ul class="genre-list">
+            <li class="genre-tag" ng-class="{'active': isGenreSelected(genre)}" ng-repeat="genre in availableGenres" ng-click="toggleSelectGenre(genre)">
+              {{genre.name}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="btn-group pull-right">
+        <button class="btn btn-primary" ng-click="saveProfile()">Save Profile</button>
+        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()">Change Password</button>
+      </div>
+
+    </form>
+
+
+    <form class="form-horizontal password-form">
+      <div class="form-group" >
+        <div class="col-sm-3">
+          <label class="control-label">Old Password</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" ng-model="passwordData.oldPassword" placeholder="Old Password">
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-success has-feedback': !passwordsInvalid}">
+        <div class="col-sm-3">
+          <label class="control-label">New Password</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" ng-model="passwordData.newPassword" placeholder="New Password  (min. 6 Characters)" ng-change="validatePasswords()">
+          <span class="ion-checkmark form-control-feedback" ng-show="!passwordsInvalid" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-success has-feedback': !passwordsInvalid}">
+        <div class="col-sm-3">
+          <label class="control-label">Repeat Password</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" ng-model="passwordData.repeatPassword" placeholder="Repeat Password" ng-change="validatePasswords()">
+          <span class="ion-checkmark form-control-feedback" ng-show="!passwordsInvalid" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-secondary" ng-disabled="passwordsInvalid" ng-click="saveNewPassword()">Set New Password</button>
+      </div>
+    </form>
+  </div>
+
+</div>

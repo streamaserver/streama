@@ -4335,3 +4335,54 @@ body.mdx-active #mdx-control-view {
   margin-top: 7px;
   opacity: 0.8;
   margin-bottom: 30px; }
+
+.profile {
+  padding: 20px;
+  position: relative;
+  overflow: hidden; }
+
+.profile-heading {
+  max-width: 1000px;
+  margin: 0 auto; }
+
+.profile-inner {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  -moz-transition: transform .5s;
+  -webkit-transition: transform .5s;
+  -o-transition: transform .5s;
+  -ms-transition: transform .5s;
+  transition: transform .5s; }
+  .profile-inner.password-active {
+    -moz-transform: translate3d(-150%, 0, 0);
+    -webkit-transform: translate3d(-150%, 0, 0);
+    -o-transform: translate3d(-150%, 0, 0);
+    -ms-transform: translate3d(-150%, 0, 0);
+    transform: translate3d(-150%, 0, 0); }
+
+.password-form {
+  -moz-transform: translate3d(150%, 0, 0);
+  -webkit-transform: translate3d(150%, 0, 0);
+  -o-transform: translate3d(150%, 0, 0);
+  -ms-transform: translate3d(150%, 0, 0);
+  transform: translate3d(150%, 0, 0);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+.genre-list {
+  margin: 0;
+  padding: 0; }
+
+.genre-tag {
+  float: left;
+  list-style: none;
+  padding: 6px 9px;
+  background-color: #3F4244;
+  margin-right: 8px;
+  margin-bottom: 8px; }
+  .genre-tag.active {
+    background: #2898c5; }

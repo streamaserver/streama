@@ -1,0 +1,31 @@
+.profile {
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-heading{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.profile-inner{
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  @include vendor-property('transition', 'transform .5s');
+
+  &.password-active{
+    @include vendor-property('transform', 'translate3d(-150%, 0, 0)');
+  }
+}
+
+
+.password-form{
+  @include vendor-property('transform', 'translate3d(150%, 0, 0)');
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

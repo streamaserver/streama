@@ -1,0 +1,17 @@
+.genre-list{
+  margin: 0;
+  padding: 0;
+}
+
+.genre-tag{
+  float: left;
+  list-style: none;
+  padding: 6px 9px;
+  background-color: #3F4244;
+  margin-right: 8px;
+  margin-bottom: 8px;
+
+  &.active{
+    background: darken($primary, 35%);
+  }
+}
