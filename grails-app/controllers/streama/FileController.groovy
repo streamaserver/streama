@@ -71,7 +71,7 @@ class FileController {
       }
       fis.close()
     }catch(Exception io){
-      log.error("catch for outputStream exception")
+//      log.error("catch for outputStream exception")
     }
 
   }
