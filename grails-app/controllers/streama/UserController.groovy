@@ -9,6 +9,7 @@ class UserController {
 
   def validationService
   def springSecurityService
+  def passwordEncoder
 
   static responseFormats = ['json', 'xml']
   static allowedMethods = [save: "POST", delete: "DELETE"]
@@ -123,25 +124,69 @@ class UserController {
   }
 
   @Transactional
-  def makeUserAdmin(User userInstance) {
-
+  def saveProfile() {
+    def userData = request.JSON
     User currentUser = springSecurityService.currentUser
 
-    if (userInstance == null) {
+    if (userData == null) {
       render status: NOT_FOUND
       return
     }
 
-    Role adminRole = Role.findByAuthority("ROLE_ADMIN")
-
-    if (!currentUser.authorities?.contains(adminRole)) {
+    if (userData.id != currentUser.id) {
       render status: UNAUTHORIZED
       return
     }
 
-    UserRole.create(userInstance, adminRole, true)
+    userData.favoriteGenres?.collect{
+      Genre.findOrCreateByApiId(it.apiId)
+    }
 
-    respond userInstance, [status: OK]
+    bindData(currentUser, userData, [exclude: ['username', 'password']])
+
+    currentUser.save failOnError: true, flush: true
+
+    respond currentUser, [status: OK]
+  }
+
+
+  @Transactional
+  def changePassword() {
+    def passwordData = request.JSON
+    User currentUser = springSecurityService.currentUser
+    def result = [:]
+
+    if (passwordData == null || !currentUser || !passwordData.oldPassword || !passwordData.newPassword || !passwordData.repeatPassword) {
+      result.message = "You have some missing Data. Please check the form again and re-submit."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
+    if(!passwordEncoder.isPasswordValid(currentUser.password, passwordData.oldPassword, null)){
+      result.message = "The old password does not match with your current password. Please try again."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
+    if(passwordData.newPassword != passwordData.repeatPassword){
+      result.message = "Your new passwords do not match. Please try again."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
+    if(passwordData.newPassword.size() < 6){
+      result.message = "Your new passwords needs to contain at least 6 characters."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
+    currentUser.password = passwordData.newPassword
+    currentUser.save failOnError: true
+    respond currentUser, status: ACCEPTED
   }
 
   def availableRoles() {
