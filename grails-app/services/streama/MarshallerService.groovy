@@ -145,8 +145,8 @@ class MarshallerService {
                 returnArray['vote_count'] = tvShow.vote_count
                 returnArray['imdb_id'] = tvShow.imdb_id
                 returnArray['popularity'] = tvShow.popularity
-                returnArray['episodesWithFiles'] = tvShow.episodes.findAll{it.files}
-                returnArray['episodes'] = tvShow.episodes
+                returnArray['episodesWithFilesCount'] = tvShow.episodes.findAll{it.files}.size()
+                returnArray['episodesCount'] = tvShow.episodes.size()
 
                 return returnArray;
             }
