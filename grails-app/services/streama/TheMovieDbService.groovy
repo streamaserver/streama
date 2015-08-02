@@ -30,6 +30,30 @@ class TheMovieDbService {
     return new JsonSlurper().parseText(JsonContent)
   }
 
+  def getMovieGenres(){
+    def JsonContent = new URL(BASE_URL + "/genre/movie/list?api_key=$API_KEY").text
+    def genres =  new JsonSlurper().parseText(JsonContent).genres
+
+    genres?.each{ genre ->
+      genre["apiId"] = genre.id
+      genre.id = null
+    }
+
+    return genres
+  }
+
+  def getTvGenres(){
+    def JsonContent = new URL(BASE_URL + "/genre/tv/list?api_key=$API_KEY").text
+    def genres =  new JsonSlurper().parseText(JsonContent).genres
+
+    genres?.each{ genre ->
+      genre["apiId"] = genre.id
+      genre.id = null
+    }
+
+    return genres
+  }
+
   def getFullMovieMeta(movieId){
     def JsonContent = new URL(BASE_URL + "/movie/$movieId?api_key=$API_KEY").text
     return new JsonSlurper().parseText(JsonContent)

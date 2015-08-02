@@ -42,4 +42,9 @@ class TheMovieDbController {
   }
 
 
+  def availableGenres(){
+    HashSet genres = theMovieDbService.movieGenres + theMovieDbService.tvGenres
+    respond genres
+  }
+
 }
