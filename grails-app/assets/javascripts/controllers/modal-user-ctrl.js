@@ -4,7 +4,7 @@ streamaApp.controller('modalUserCtrl', [
 	'$scope', '$modalInstance', 'apiService', 'user',
 	function ($scope, $modalInstance, apiService, user) {
 
-		$scope.user = user;
+		$scope.user = angular.copy(user);
 		$scope.loading = false;
 
 		apiService.user.availableRoles().success(function (data) {

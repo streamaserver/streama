@@ -14,6 +14,10 @@ streamaApp.controller('adminUsersCtrl', ['$scope', 'apiService', 'modalService',
 			if(!_.find($scope.users, {id: data.id})){
 				$scope.users.push(data);
 			}else{
+
+        var index = $scope.users.indexOf(user);
+        $scope.users[index] = data;
+
         if(data.id != $rootScope.currentUser.id){
           alertify.alert('If you made any changes to the roles, please make sure to inform the user that he has to log out of the application and log back in for the changes to take effect.');
         }else{
