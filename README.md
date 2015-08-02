@@ -4,7 +4,6 @@
 
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal netflix for just such a purpose! 
 
-The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can also just use the frontend components and add your own REST-API for handling all the data :) 
 
 ## Table of contents:
 - [Getting Started](#getting-started)
@@ -81,6 +80,8 @@ Users can be invited and managed in the admin-panel. By default, they are non-ad
 
 # Technical Details
 This application is web-based and is programmed with [Grails 2.4.4](https://grails.org/) and MySQL. For login & user-handling [SpringSecurity](http://projects.spring.io/spring-security/) is used. For the most part, Grails is only there to generate REST-endpoints for the frontend. For all the front-end components, [AngularJS](https://angularjs.org/) is used. The player is completely html5-based, meaning there are limitations as to which file-types can be played at the moment. 
+
+The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can also just use the frontend components and add your own REST-API for handling all the data :) 
 
 As an API for all the movies and shows I used the awesome API from theMovieDatabase. 
 ![theMovieDatabase](https://d3a8mw37cqal2z.cloudfront.net/images/header_v2.png)
