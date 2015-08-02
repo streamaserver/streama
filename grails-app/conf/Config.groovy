@@ -136,6 +136,7 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 
+//  debug 'org.springframework.security'
   debug "grails.app"
 }
 
@@ -152,6 +153,11 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'streama.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'streama.UserRole'
 grails.plugin.springsecurity.authority.className = 'streama.Role'
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/user/loginTarget'
+//
+//grails.plugin.springsecurity.useSecurityEventListener = true
+//grails.plugin.springsecurity.onAbstractAuthenticationFailureEvent = { e, appCtx ->
+//  println "\nERROR auth failed for user $e.authentication.name: $e.exception.message\n"
+//}
 
 
 
