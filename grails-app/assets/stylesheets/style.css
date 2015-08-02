@@ -768,14 +768,16 @@ hr {
     opacity: 1; }
 
 #player-menu-volume {
+  padding: 1px 10px;
   position: absolute;
-  bottom: 57px;
+  bottom: 56px;
   font-size: 17px;
-  background-color: #272727;
-  border-radius: 9px 9px 0 0;
-  left: 0;
-  right: 0;
-  box-shadow: 0 -1px 7px rgba(0, 0, 0, 0.66); }
+  left: -10px;
+  right: -10px; }
+  #player-menu-volume .volume-menu-content {
+    background-color: #272727;
+    border-radius: 9px 9px 0 0;
+    box-shadow: 0 -1px 7px rgba(0, 0, 0, 0.66); }
 
 .player-wrapper .player-controls-wrapper > section {
   width: 100%;
