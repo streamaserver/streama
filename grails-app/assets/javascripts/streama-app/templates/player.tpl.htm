@@ -129,8 +129,5 @@
     </section>
   </div>
 
-  <video id="video">
-    <source src="{{trustSrc(video.files[0].src)}}" type="{{video.files[0].contentType}}">
-    Your browser does not support the video element.
-  </video>
+  <video id="video" src="{{trustSrc(video.files[0].src)}}"></video>
 </div>
