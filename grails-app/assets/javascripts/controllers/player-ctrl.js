@@ -9,6 +9,7 @@ streamaApp.controller('playerCtrl', [
 		var overlayTimeout;
 		var timeCheckInterval;
 		var viewingStatusSaveInterval;
+		$scope.initialPlay = false;
 
 		$scope.volumeLevel = localStorageService.get('volumeLevel') || 5;
 
@@ -22,14 +23,38 @@ streamaApp.controller('playerCtrl', [
 				});
 			}
 
-			$timeout(function () {
-				$scope.loading = false;
-				$scope.play();
-				$scope.videoDuration = video.duration;
+      video.oncanplay = function() {
+        if($scope.initialPlay){
+          return;
+        }
+        $scope.initialPlay = true;
+        $scope.loading = false;
+        $scope.play();
+        $scope.videoDuration = video.duration;
 
+        if($stateParams.currentTime){
+          $scope.currentTime = $stateParams.currentTime;
+        }
+        else if(data.viewedStatus){
+          $scope.currentTime = data.viewedStatus.currentPlayTime;
+        }else{
+          $scope.currentTime = 0;
+        }
+        video.currentTime = $scope.currentTime;
+      };
+
+      video.onwaiting = function() {
+        $scope.loading = true;
+      };
+
+      video.onplaying = function() {
+        $scope.loading = false;
+      };
+
+      $timeout(function () {
         if(!video.duration){
           alertify.alert('There seems to be a problem adding the video-file to the player. This is most likely due to a codec-problem. ' +
-          'Try converting it to a compatible HTML5 codec, remove the currently attached file and re-add it. If the codecs are fine, check the error log of the server.', function () {
+            'Try converting it to a compatible HTML5 codec, remove the currently attached file and re-add it. If the codecs are fine, check the error log of the server.', function () {
             if($rootScope.currentUser.authorities.length){
               if($scope.video.show){
                 $state.go('admin.show', {showId: $scope.video.show.id});
@@ -42,17 +67,7 @@ streamaApp.controller('playerCtrl', [
 
           });
         }
-
-				if($stateParams.currentTime){
-					$scope.currentTime = $stateParams.currentTime;
-				}
-				else if(data.viewedStatus){
-					$scope.currentTime = data.viewedStatus.currentPlayTime;
-				}else{
-					$scope.currentTime = 0;
-				}
-				video.currentTime = $scope.currentTime;
-			}, 3000);
+      }, 5000);
 		});
 
 		$scope.toggleSelectEpisodes = function (episodes) {
