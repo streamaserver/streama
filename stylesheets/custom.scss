@@ -1,0 +1,37 @@
+@import "mixins";
+
+.logo{
+  width: 400px;
+}
+
+body{
+  background-color: #151719;
+  color: white;
+  font-weight: 300;
+  font-family: 'Lato', sans-serif;
+  background-image: url("../img/bg.png");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+
+}
+
+.page-header {
+  background: none;
+}
+
+
+.main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
+  color: #ADDAEC;
+}
+
+a{
+  color: #ADDAEC;
+}
+
+
+.feature-wrapper{
+  @include clearfix;
+  .feature-box{
+    float: left;
+  }
+}
