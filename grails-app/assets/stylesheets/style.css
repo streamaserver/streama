@@ -277,7 +277,17 @@ hr {
   overflow: hidden; }
   .media-item img {
     width: 100%;
-    height: auto; }
+    height: auto;
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    -moz-transition: transform .3s;
+    -webkit-transition: transform .3s;
+    -o-transition: transform .3s;
+    -ms-transition: transform .3s;
+    transition: transform .3s; }
   .media-item .play-text {
     position: absolute;
     top: 0;
@@ -319,6 +329,12 @@ hr {
   .media-item:hover .play-icon,
   .media-item:hover .play-text {
     opacity: 1; }
+  .media-item:hover img {
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2); }
 
 .media-episode-string {
   font-size: 14px;
