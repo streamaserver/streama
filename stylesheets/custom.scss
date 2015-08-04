@@ -1,4 +1,9 @@
+@import "icomoon/style.css";
+@import "variables";
 @import "mixins";
+@import "bootstrap";
+
+
 
 .logo{
   width: 400px;
@@ -17,21 +22,166 @@ body{
 
 .page-header {
   background: none;
+  text-align: center;
+  border: none;
 }
+
+.project-tagline{
+  font-size: 20px;
+  margin-bottom: 2rem;
+  font-weight: normal;
+  opacity: 0.7;
+}
+
+.main-content {
+  max-width: 1288px;
+  padding: 2rem 6rem;
+  margin: 0 auto;
+  font-size: 16px;
+}
+
 
 
 .main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
-  color: #ADDAEC;
+  color: $primary;
 }
 
 a{
-  color: #ADDAEC;
+  color: $primary;
+
+  &:hover{
+    color: white;
+  }
+}
+
+h2.content-heading{
+  text-align: center;
+  font-size: 30px;
+  text-transform: uppercase;
+  word-spacing: .2em;
+  font-weight: 600;
+  margin-bottom: 50px;
+  margin-top: 70px;
+  padding-top: 70px;
 }
 
 
+hr{
+  margin: 60px 0;
+  opacity: 0.3;
+}
+
 .feature-wrapper{
   @include clearfix;
+
   .feature-box{
     float: left;
+    width: 282px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background: #101113;
+    padding: 15px;
+    text-align: center;
+    min-height: 245px;
+    @include vendor-property('transition', 'background .4s');
+
+    .feature-icon{
+      font-size: 50px;
+      margin-top: 7px;
+      display: inline-block;
+      border: 1px solid rgba(white, .25);
+      padding: 20px;
+      color: white;
+      border-radius: 100%;
+      @include vendor-property('transition', 'background .4s, color .4s');
+    }
+
+    .feature-title{
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: rgba(white, .75);
+      margin: 20px 0 0;
+      line-height: 1.4em;
+    }
+
+    .feature-description{
+      font-size: 14px;
+      color: rgba(white, .5);
+      font-weight: 300;
+      margin: 10px 0 10px;
+      line-height: 1.4em;
+    }
+
+    &.coming-soon{
+      opacity: 0.6;
+    }
+
+
+    &:hover{
+      background: $secondary;
+      text-decoration: none;
+
+      .feature-icon{
+        color: $secondary;
+        background: white;
+        box-shadow: 1px 1px 3px rgba(black, .5);
+      }
+
+
+      .feature-title{
+        text-shadow: 1px 1px 3px rgba(black, .5);
+        color: rgba(white, 1);
+      }
+
+      .feature-description{
+        text-shadow: 1px 1px 3px rgba(black, .5);
+        color: rgba(white, .75);
+      }
+    }
   }
+}
+
+
+.btn {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+.github-button{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+
+
+.param-name{
+  font-weight: bold;
+  width: 190px;
+  display: inline-block;
+}
+
+.param-description{
+  font-size: 0.85em;
+}
+
+
+pre,
+code{
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #999;
+  border: none;
+}
+
+
+img{
+  max-width: 100%;
 }

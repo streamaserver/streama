@@ -1,3 +1,45 @@
+@import url(icomoon/style.css);
+.nav-tabs {
+  font-size: 16px;
+  border-color: #555;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex; }
+  .nav-tabs > li {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    text-align: center;
+    margin-bottom: 0px; }
+    .nav-tabs > li a {
+      color: white;
+      border: none;
+      border-radius: 0;
+      font-size: 18px; }
+      .nav-tabs > li a span {
+        position: relative;
+        top: 2px; }
+      .nav-tabs > li a:hover, .nav-tabs > li a:focus {
+        background: #101113; }
+    .nav-tabs > li.active a, .nav-tabs > li.active a:hover, .nav-tabs > li.active a:focus {
+      background: #3e7d96;
+      border: none;
+      color: white; }
+    .nav-tabs > li img {
+      height: 55px;
+      margin-right: 15px;
+      margin-left: -25px; }
+
+.tab-pane {
+  max-width: 900px;
+  font-size: 16px;
+  padding: 30px 0;
+  font-weight: 100; }
+
 .logo {
   width: 400px; }
 
@@ -11,17 +53,133 @@ body {
   background-repeat: no-repeat; }
 
 .page-header {
-  background: none; }
+  background: none;
+  text-align: center;
+  border: none; }
+
+.project-tagline {
+  font-size: 20px;
+  margin-bottom: 2rem;
+  font-weight: normal;
+  opacity: 0.7; }
+
+.main-content {
+  max-width: 1288px;
+  padding: 2rem 6rem;
+  margin: 0 auto;
+  font-size: 16px; }
 
 .main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
-  color: #ADDAEC; }
+  color: #8bb7c9; }
 
 a {
-  color: #ADDAEC; }
+  color: #8bb7c9; }
+  a:hover {
+    color: white; }
+
+h2.content-heading {
+  text-align: center;
+  font-size: 30px;
+  text-transform: uppercase;
+  word-spacing: .2em;
+  font-weight: 600;
+  margin-bottom: 50px;
+  margin-top: 70px;
+  padding-top: 70px; }
+
+hr {
+  margin: 60px 0;
+  opacity: 0.3; }
 
 .feature-wrapper:after {
   content: "";
   display: table;
   clear: both; }
 .feature-wrapper .feature-box {
-  float: left; }
+  float: left;
+  width: 282px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background: #101113;
+  padding: 15px;
+  text-align: center;
+  min-height: 245px;
+  -moz-transition: background .4s;
+  -webkit-transition: background .4s;
+  -o-transition: background .4s;
+  -ms-transition: background .4s;
+  transition: background .4s; }
+  .feature-wrapper .feature-box .feature-icon {
+    font-size: 50px;
+    margin-top: 7px;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 20px;
+    color: white;
+    border-radius: 100%;
+    -moz-transition: background .4s, color .4s;
+    -webkit-transition: background .4s, color .4s;
+    -o-transition: background .4s, color .4s;
+    -ms-transition: background .4s, color .4s;
+    transition: background .4s, color .4s; }
+  .feature-wrapper .feature-box .feature-title {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 20px 0 0;
+    line-height: 1.4em; }
+  .feature-wrapper .feature-box .feature-description {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 300;
+    margin: 10px 0 10px;
+    line-height: 1.4em; }
+  .feature-wrapper .feature-box.coming-soon {
+    opacity: 0.6; }
+  .feature-wrapper .feature-box:hover {
+    background: #3e7d96;
+    text-decoration: none; }
+    .feature-wrapper .feature-box:hover .feature-icon {
+      color: #3e7d96;
+      background: white;
+      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); }
+    .feature-wrapper .feature-box:hover .feature-title {
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      color: white; }
+    .feature-wrapper .feature-box:hover .feature-description {
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      color: rgba(255, 255, 255, 0.75); }
+
+.btn {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
+
+.github-button {
+  position: absolute;
+  top: 20px;
+  right: 20px; }
+
+.param-name {
+  font-weight: bold;
+  width: 190px;
+  display: inline-block; }
+
+.param-description {
+  font-size: 0.85em; }
+
+pre,
+code {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #999;
+  border: none; }
+
+img {
+  max-width: 100%; }

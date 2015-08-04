@@ -5,32 +5,727 @@
   <title>Streama by dularion</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-  <link href='http://fonts.googleapis.com/css?family=Lato:300,700' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Lato:100,300,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css" media="screen">
+
   <link rel="stylesheet" type="text/css" href="stylesheets/custom.css" media="screen">
 </head>
 <body>
 <section class="page-header">
+
+  <a href="https://github.com/dularion/streama" class="btn github-button">View on GitHub</a>
+
   <h1 class="project-name"><img class="logo" src="img/logo2.png" alt=""/></h1>
 
-  <h2 class="project-tagline">Host your own Streaming Application anywhere you like!</h2>
-  <a href="https://github.com/dularion/streama" class="btn">View on GitHub</a>
-  <a href="https://github.com/dularion/streama/zipball/master" class="btn">Download Docker Image</a>
-  <a href="https://github.com/dularion/streama/tarball/master" class="btn">Download .tar.gz</a>
+  <h2 class="project-tagline">Host your own Streaming Application with your media library.</h2>
 </section>
 
 <section class="main-content">
-  <h2>Features</h2>
+
+  <hr/>
+
+  <h2 class="content-heading" style="margin-top: -60px;">Demo Access</h2>
+  <p class="text-center">If you would like to view a Streama-Demo, please visit <a href="http://46.101.209.74:8080/">the demo-website</a>.</p>
+  <p class="text-center">username: demo@streama.com <br/>
+  password: demo@streama.com</p>
+
+  <br/>
+  <p class="text-center">Please note that all content on the demo-website will be reset every hour on the hour, so all the changes you make are non-permanent.</p>
+
+
+  <hr/>
+
+  <h2 class="content-heading">Feature List</h2>
 
   <div class="feature-wrapper">
-    <div class="feature-box"></div>
-    <div class="feature-box"></div>
-    <div class="feature-box"></div>
-    <div class="feature-box"></div>
+    <a class="feature-box" href="#easy-setup">
+      <i class="feature-icon icon-magic-wand"></i>
+
+      <h3 class="feature-title">Easy Setup</h3>
+      <h4 class="feature-description">...whether you choose docker or vanilla, local or remote.</h4>
+    </a>
+
+    <a class="feature-box" href="#media-upload">
+      <i class="feature-icon icon-cloud-upload"></i>
+
+      <h3 class="feature-title">Media Management</h3>
+      <h4 class="feature-description">Easy drag-and-drop to upload your media to streama!</h4>
+    </a>
+
+    <a class="feature-box" href="#live-sync">
+      <i class="feature-icon icon-sync"></i>
+
+      <h3 class="feature-title">Live Sync Watching</h3>
+      <h4 class="feature-description">Watch with your loved ones remotely, with sync for play/pause and scrubbing.</h4>
+    </a>
+
+    <a class="feature-box" href="#vide-player">
+      <i class="feature-icon icon-presentation"></i>
+
+      <h3 class="feature-title">Beautiful Video Player</h3>
+      <h4 class="feature-description">With an episode and season browser.</h4>
+    </a>
+
+    <a class="feature-box" href="#multi-user">
+      <i class="feature-icon icon-users2"></i>
+
+      <h3 class="feature-title">Multi-User Capable</h3>
+      <h4 class="feature-description">Create accounts for anyone you like and grant them specific privileges.</h4>
+    </a>
+
+    <a class="feature-box" href="#continue-watching">
+      <i class="feature-icon icon-clock3"></i>
+
+      <h3 class="feature-title">Continue Watching</h3>
+      <h4 class="feature-description">The system remembers where you left off last time!</h4>
+    </a>
+
+    <a class="feature-box" href="#related-content">
+      <i class="feature-icon icon-icons2"></i>
+
+      <h3 class="feature-title">Related Movies & Shows</h3>
+      <h4 class="feature-description">The system detects similar movies and shows for you to add.</h4>
+    </a>
+
+    <a class="feature-box" href="#open-source">
+      <i class="feature-icon icon-code"></i>
+
+      <h3 class="feature-title">Open Source</h3>
+      <h4 class="feature-description">Use, change and distribute the code as much as you want!</h4>
+    </a>
+
+    <div class="feature-box coming-soon">
+      <i class="feature-icon icon-dna"></i>
+
+      <h3 class="feature-title">Video Conversion</h3>
+      <h4 class="feature-description">Coming soon...</h4>
+    </div>
+    <div class="feature-box coming-soon">
+      <i class="feature-icon icon-folder-search"></i>
+
+      <h3 class="feature-title">File Browser</h3>
+      <h4 class="feature-description">Coming soon...</h4>
+    </div>
+    <div class="feature-box coming-soon">
+      <i class="feature-icon icon-files"></i>
+
+      <h3 class="feature-title">Media crawler</h3>
+      <h4 class="feature-description">Coming soon...</h4>
+    </div>
+    <div class="feature-box coming-soon">
+      <i class="feature-icon icon-cast"></i>
+
+      <h3 class="feature-title">Chromecast supoort</h3>
+      <h4 class="feature-description">Coming soon...</h4>
+    </div>
   </div>
 
+
+  <hr/>
+
+  <h2 class="content-heading" id="easy-setup">Easy Setup</h2>
+
+  <div id="easy-setup-tabs">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#local" aria-controls="local" role="tab" data-toggle="tab">
+          <img src="img/java-logo.png" alt=""/>
+          <span>Local Vanilla-Setup</span>
+        </a>
+      </li>
+      <li role="presentation">
+        <a href="#vServer" aria-controls="vServer" role="tab" data-toggle="tab">
+          <img src="img/ubuntu-logo.png" alt=""/>
+          <span>vServer Vanilla-Setup</span>
+        </a>
+      </li>
+      <li role="presentation">
+        <a href="#docker" aria-controls="docker" role="tab" data-toggle="tab">
+          <img src="img/docker-logo.png" alt=""/>
+          <span>Setup with Docker</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="local">
+        <div class="markdown-body">
+          <h3>
+            <a id="user-content-step-1---jdk" class="anchor" href="#step-1---jdk" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Step 1 - JDK</h3>
+
+          <ul>
+            <li>If you don't have it already, go ahead and download a copy of <a
+                href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">JDK7
+              (Oracle)</a>
+            </li>
+            <li>install JDK as usual, make sure to let JDK add new variables to your system</li>
+            <li>After install, open up your command line and make sure the following outputs look correct:
+
+              <ul>
+                <li>
+                  <code>java -version</code> - this should be something like 1.7.0_79
+                </li>
+                <li>
+                  <code>echo $JAVA_HOME</code> - this should be something like <em>/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home</em>
+                  or <em>/usr/lib/jvm/java-8-oracle</em>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <br/>
+
+          <h3>
+            <a id="user-content-step-2---clone-the-git-repo" class="anchor" href="#step-2---clone-the-git-repo"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 2 - Clone the git repo</h3>
+
+          <ul>
+            <li>In your command line, or your favorite Git Application, clone this repo to your desired location. <code>git
+              clone git@github.com:dularion/streama.git</code>.
+
+              <ul>
+                <li>Note: This location will most likely differ from the Upload Directory of your video-files, so you
+                  don't have to keep that in mind while choosing the repo-location.
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <br/>
+
+          <h3>
+            <a id="user-content-step-3---mysql-database" class="anchor" href="#step-3---mysql-database"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 3 - MySQL Database</h3>
+
+          <ul>
+            <li>if you don't have a local installation of MySQL, install one. It could also be useful to have a way to
+              browse your databases in a convenient way, for instance with phpMyAdmin. To get all in one, i recommend <a
+                  href="https://www.apachefriends.org/index.html">XAMPP</a>
+            </li>
+            <li>once your MySQL is up and running, create a database called "streama". via command line, this would be
+              <code>mysql&gt; CREATE DATABASE streama;</code>
+            </li>
+            <li>the application assumes the following login-credentials for the database: <code>username root, no
+              password</code>. If you want to change this, find and edit the information in <code>/grails-app/conf/DataSource.groovy</code>.
+            </li>
+          </ul>
+
+          <br/>
+
+          <h3>
+            <a id="user-content-step-4---upload-directory" class="anchor" href="#step-4---upload-directory"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4 - Upload Directory</h3>
+
+          <ul>
+            <li>Somewhere on your machine, create a directory where the application will store the uploaded video files.
+              You can choose any directory.
+            </li>
+          </ul>
+
+          <br/>
+
+          <h3>
+            <a id="user-content-step-5---run-the-application" class="anchor" href="#step-5---run-the-application"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 5 - Run the application</h3>
+
+          <ul>
+            <li>open your command line tool</li>
+            <li>navigate to the directory of the repo. for instance <code>cd /projects/streama</code>
+            </li>
+            <li>on Windows, run <code>grailsw.bat run-war</code>
+            </li>
+            <li>on a unix-system (Ubuntu, Mac, etc), run <code>./grailsw run-war</code>
+            </li>
+            <li>This command will download the local version of grails and run the app under
+              http://localhost:8080/streama
+            </li>
+          </ul>
+
+          <br/>
+
+          <h3>
+            <a id="user-content-step-6---base-settings" class="anchor" href="#step-6---base-settings"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 6 - Base Settings</h3>
+
+          <ul>
+            <li>the first thing you will see when opening the URL is a login screen. Use username <code>admin</code> and
+              password <code>admin</code> to log in.
+            </li>
+            <li>You will then be redirected to the Settings page
+
+              <ul>
+                <li>enter the Upload Directory that you created in step 4 &amp; verify if the application has access by
+                  pressing the "verify" button
+                </li>
+                <li>enter your API-Key for theMovieDb.org &amp; verify</li>
+              </ul>
+            </li>
+          </ul>
+
+          <p>If Everything worked out all right, you are now ready to use the application! </p>
+
+
+          <br/>
+          <br/>
+
+          <h3>
+            <a id="user-content-troubleshooting" class="anchor" href="#troubleshooting" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Troubleshooting</h3>
+
+          <h4>
+            <a id="user-content-upload-directory" class="anchor" href="#upload-directory" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Upload Directory</h4>
+
+          <ul>
+            <li>if the application cannot verify your Upload Directory, make sure you have the right permissions for the
+              folder. If the app is running in a different user, make sure to add read/write permissions for the group
+              or even all on the folder, through something like this <code>chmod g+rw your/directory</code> or <code>chmod
+                ga+rw your/directory</code>
+            </li>
+          </ul>
+
+          <h4>
+            <a id="user-content-startup-problems" class="anchor" href="#startup-problems" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Startup problems</h4>
+
+          <ul>
+            <li>if your application throws errors on startup and won't deploy, make sure that your
+              <code>$JAVA_HOME</code> is set correctly. It needs to point to your installation of JDK not JRE, and it
+              needs to be version 1.7.x, not 1.6.x or 1.8.x.
+            </li>
+            <li>Make sure your MySQL is running and that the application can access it with the credentials above</li>
+          </ul>
+
+          <h4>
+            <a id="user-content-video-playback" class="anchor" href="#video-playback" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Video Playback</h4>
+
+          <ul>
+            <li>if your videos won't play, make sure that they are HTML5 compatible. I will add video-conversion soon,
+              but right now there is no conversion, so you have to rely on what your browser can handle. A quick and
+              easy test is to open a new empty browser-tab and drag&amp;drop your video file in. If it shows up in a
+              player, then it's a compatible format. If it downloads, it's incompatible. Also, of all browsers, Chrome
+              supports most of the HTML5 formats as far as I know.
+            </li>
+          </ul>
+
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="vServer">
+        <div class="markdown-body">
+          <h3>
+            <a id="user-content-update-server" class="anchor" href="#update-server" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Step 1 - Update Server</h3>
+
+<pre><code>apt-get update
+apt-get upgrade
+reboot
+</code></pre>
+
+          <p>reconnect afterward</p>
+          <br/>
+
+          <h3>
+            <a id="user-content-setup-tomcat-and-mysql" class="anchor" href="#setup-tomcat-and-mysql"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 2 - Setup Tomcat and MySQL</h3>
+
+<pre><code>apt-get install tomcat7
+apt-get install mysql-server
+mysql&gt; CREATE DATABASE streama;
+</code></pre>
+
+          <ul>
+            <li><p>For installing tomcat, this tutorial is fantastic: <a
+                href="https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-7-on-ubuntu-14-04-via-apt-get">Tomcat7
+              on Ubuntu 14.04</a></p></li>
+            <li><p>For installing mysql, this tutorial may be partly helpful: <a
+                href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-14-04">LAMP
+              on Ubuntu 14.04</a></p></li>
+          </ul>
+
+          <p>By default the application assumes a db-login of username "root", no password. If you wish to change this,
+            edit the settings in the production-section of <code>grails-app/conf/DataSource.groovy</code></p>
+          <br/>
+
+          <p>Also, make sure to give the tomcat a good amount of ram, I recommend at least the following settings:</p>
+
+<pre>sudo nano /etc/default/tomcat7
+JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xmx1024m -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC"
+</pre>
+
+
+          <br/>
+
+          <h3>
+            <a id="user-content-install-mail-server-optional" class="anchor" href="#install-mail-server-optional"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 3 - Install Mail Server (optional)
+          </h3>
+
+          <p>By default the application assumes the default mail server configured at localhost on port 25. You install
+            simply by using</p>
+
+
+
+<pre><code>apt-get install sendmail
+</code></pre>
+
+          <p>In order to get emails to work with something else, look into <a href="http://grails.org/plugins/mail">Grails
+            mail plugin</a>.</p>
+          <br/>
+
+          <h3>
+            <a id="user-content-create-upload-directory" class="anchor" href="#create-upload-directory"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4 - Create Upload Directory</h3>
+
+          <p>it is recommended that you choose an upload-directory outside of the application, so that no one can access
+            without permission. Let's assume you choose to place it in root under /data/streama</p>
+
+<pre><code>mkdir /data
+mkdir /data/streama
+chown tomcat7:tomcat7 /data/streama
+</code></pre>
+          <br/>
+
+          <h3>
+            <a id="user-content-compile-the-streama-rootwar" class="anchor" href="#compile-the-streama-rootwar"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 5 - Compile the Streama ROOT.war
+          </h3>
+
+          <p>This can be done either on your local machine or on the remote server</p>
+
+<pre><code>sudo apt-get install default-jdk
+cd /wherever/you/want/to/put/streama
+git clone git@github.com:dularion/streama.git
+cd streama
+./grailsw war ROOT.war -Dgrails.env=production
+</code></pre>
+
+          <br/>
+
+
+          <h3>
+            <a id="user-content-deploy-to-tomcat" class="anchor" href="#deploy-to-tomcat" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Step 6 - Deploy to Tomcat</h3>
+
+          <p>on your remote server, stop tomcat7 &amp; remove old tomcat7 ROOT</p>
+
+<pre><code>service tomcat7 stop
+rm -R /var/lib/tomcat7/webapps/ROOT
+</code></pre>
+
+          <br/>
+
+          <h5>
+            <a id="user-content-rootwar-is-on-local-machine" class="anchor" href="#rootwar-is-on-local-machine"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>ROOT.war is on local machine</h5>
+
+          <p>If you built the ROOT.war on your remote server, run</p>
+
+<pre><code>cp ROOT.war /var/lib/tomcat7/webapps
+</code></pre>
+
+          <br/>
+
+          <h5>
+            <a id="user-content-rootwar-is-on-remote-machine" class="anchor" href="#rootwar-is-on-remote-machine"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>ROOT.war is on remote machine</h5>
+
+          <p>If you built the ROOT.war on your local machine, run</p>
+
+<pre><code>rsync -avzhP ROOT.war username@your-remote-server:/var/lib/tomcat7/webapps/
+</code></pre>
+
+
+          <br/>
+
+          <h3>
+            <a id="user-content-start-application" class="anchor" href="#start-application" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Step 7 - Start Application</h3>
+
+<pre><code>service tomcat7 start
+tail -f /var/log/tomcat7/catalina.out -n99
+</code></pre>
+
+          <p>after successful deployment, the last line should read <code>INFORMATION: Server startup in X ms</code></p>
+
+          <p>If everything worked out all right, you should now be able to access the application on <code>http://your-remote-server:8080</code>
+
+
+            <br/>
+            <br/>
+
+
+          <h1>
+            <a id="user-content-extras" class="anchor" href="#extras" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Extras</h1>
+
+          <ul>
+            <li>If you have iptables running, make sure to add port 8080 to the Allowed list.</li>
+            <li>If you want to add SSL to the application, you can either use nginx or the native functionality in
+              tomcat. <a href="https://github.com/rhulha">rhulha</a> wrote a comprehensive tutorial for this: <a
+                  href="https://github.com/dularion/streama/wiki/SSL-tutorial-for-ubuntu-and-www.startssl.com">https://github.com/dularion/streama/wiki/SSL-tutorial-for-ubuntu-and-www.startssl.com</a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="docker">
+
+        <h3>Build Docker-Image from Source (optional)</h3>
+
+        <p>Dependencies: git, oraclejdk7</p>
+<pre>
+git clone git@github.com:dularion/streama.git
+cd streama
+make
+</pre>
+
+        <br/>
+
+        <h3>Run Docker Image</h3>
+
+        <p>Dependencies: docker, MySQL</p>
+        <pre>docker run -d -name=“streama” -p 8080:8080 -p 4000:4000 -v /data:/data -e “MYSQL_HOST=mysqlhost” -e “MYSQL_PORT=3306” -e “MYSQL_DB=streama” -e “MYSQL_USER=streama” -e “MYSQL_PASSWORD=streama” whatever/streama</pre>
+        <p>Parameters</p>
+        <ul>
+          <li>
+            <span class="param-name">-d</span>
+            <span class="param-description">run as daemon</span>
+          </li>
+          <li>
+            <span class="param-name">MYSQL_HOST</span>
+            <span class="param-description">default: mysql</span>
+          </li>
+          <li>
+            <span class="param-name">MYSQL_PORT</span>
+            <span class="param-description">default: 3306</span>
+          </li>
+          <li>
+            <span class="param-name">MYSQL_DB</span>
+            <span class="param-description">default: streama</span>
+          </li>
+          <li>
+            <span class="param-name">MYSQL_USER</span>
+            <span class="param-description">default: streama</span>
+          </li>
+          <li>
+            <span class="param-name">MYSQL_PASSWORD</span>
+            <span class="param-description">default: streama</span>
+          </li>
+          <li>
+            <span class="param-name">whatever/streama</span>
+            <span class="param-description">That is the name of the docker image, both on docker-hub and if you build it from source</span>
+          </li>
+        </ul>
+
+        <br/>
+        <br/>
+
+        <h4>Run Docker Image & Linked MySQL-Container</h4>
+
+        <p>Dependencies: docker</p>
+        <pre>docker run --rm -it --name="streama" -p 8055:8080 -p 4000:4000 --link mysql:mysql -e “MYSQL_HOST=mysqlhost” -e “MYSQL_port=3306” -e “MYSQL_DB=streama” -e “MYSQL_USER=streama” -e “MYSQL_PASSWORD=streama” whatever/streama</pre>
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <hr/>
+
+  <h2 class="content-heading" id="media-upload">Media Upload</h2>
+
+  <div><h3><a id="user-content-the-admin-panel" class="anchor" href="#the-admin-panel" aria-hidden="true"><span
+      class="octicon octicon-link"></span></a>The Admin-Panel</h3>
+
+    <p><img
+        src="https://camo.githubusercontent.com/001ee4aa97c25f1d1d149d9536c1df7630900d80/687474703a2f2f6e65772e74696e79677261622e636f6d2f6439303732656635363438346562623434346363326663376263313166313865396631373036663638662e706e67"
+        alt="Streama Admin" data-canonical-src="http://new.tinygrab.com/d9072ef56484ebb444cc2fc7bc11f18e9f1706f68f.png"
+        style="max-width:100%;"></p>
+
+    <br/><br/>
+
+    <p>One of the most important things to me was to make managing shows, movies, and episodes as easy and fun as
+      possible. For this I made heavy use of the API from <a href="https://www.themoviedb.org/">theMovieDatabase.org</a>,
+      which auto-fills the episodes, shows and movies with useful information and great images. This eases the user's
+      role in adding content.</p>
+
+    <p>For example, creating a new TV-show and the episodes for the first season looks something like this:</p>
+
+    <p><img
+        src="https://camo.githubusercontent.com/768d685ccbc08049ef682a638f0315dc9724cefb/687474703a2f2f692e696d6775722e636f6d2f544c70744b64702e676966"
+        alt="Streama Creating Show" data-canonical-src="http://i.imgur.com/TLptKdp.gif" style="max-width:100%;"></p>
+    <br/><br/>
+
+    <p>Uploading video-files for each episode is as easy as drag-and-drop!</p>
+
+    <p><img
+        src="https://camo.githubusercontent.com/145132cd9b795b946d23bbefa67799b5c5069548/687474703a2f2f692e696d6775722e636f6d2f537467455330532e676966"
+        alt="Streama Uploading Episode" data-canonical-src="http://i.imgur.com/StgES0S.gif" style="max-width:100%;">
+    </p></div>
+
+
+  <hr/>
+
+  <h2 class="content-heading" id="live-sync">Live Sync Watching</h2>
+
+  <img src="http://i.imgur.com/ISPeD8A.gif" alt=""/>
+
+
+  <hr/>
+
+  <h2 class="content-heading" id="vide-player">Video Player</h2>
+
+  <div><h3><a id="user-content-the-player" class="anchor" href="#the-player" aria-hidden="true"><span
+      class="octicon octicon-link"></span></a>The Player</h3>
+
+    <p>The Streama-Player is (heavily) inspired by Netflix, so you get all the good stuff from there. For Shows, there
+      is a "next episode" button and a handy episode/season browser. There are also the basics: volume-control,
+      play/pause, and fullscreen.
+      Later down the road I will add a feature to add subtitles and switch between video-files (for instance for
+      different quality uploads).
+      The player is HTML5-based and has only really been tested in Chrome so far.</p>
+    <br/>
+
+    <p><a
+        href="https://camo.githubusercontent.com/336b99ec097244930508a410b837bd8dcc679006/687474703a2f2f6e65772e74696e79677261622e636f6d2f6439303732656635363430376535643161633430666162303430616564633339386139616262333630392e706e67"
+        target="_blank"><img
+        src="https://camo.githubusercontent.com/336b99ec097244930508a410b837bd8dcc679006/687474703a2f2f6e65772e74696e79677261622e636f6d2f6439303732656635363430376535643161633430666162303430616564633339386139616262333630392e706e67"
+        alt="Streama Player" data-canonical-src="http://new.tinygrab.com/d9072ef56407e5d1ac40fab040aedc398a9abb3609.png"
+        style="max-width:100%;"></a></p>
+
+
+    <br/>
+    <h4><a
+        id="user-content-the-episode-browser" class="anchor" href="#the-episode-browser" aria-hidden="true"><span
+        class="octicon octicon-link"></span></a>The Episode Browser</h4>
+
+    <p>I am especially proud of the Episode-Browser, which aims to function just like on Netflix. By default, the
+      current video-file's season is selected. The user gets an overview of which other episodes there are in the
+      season, how many seasons there are, and, as an added feature, the user sees all the added episodes, even if no
+      video-files are added to them (thus greyed out).</p>
+
+    <br/>
+
+    <p><a
+        href="https://camo.githubusercontent.com/00a595202bc8ccf047154c41a76b3b77617ddf39/687474703a2f2f692e696d6775722e636f6d2f4d4c45365470482e676966"
+        target="_blank"><img
+        src="https://camo.githubusercontent.com/00a595202bc8ccf047154c41a76b3b77617ddf39/687474703a2f2f692e696d6775722e636f6d2f4d4c45365470482e676966"
+        alt="Streama Episode Browser" data-canonical-src="http://i.imgur.com/MLE6TpH.gif" style="max-width:100%;"></a>
+    </p></div>
+
+
+  <hr/>
+
+  <h2 class="content-heading" id="multi-user">Multi-User Capable</h2>
+
+  <p>Users can be invited and managed in the admin-panel. By default, they have no role, meaning they can only view
+    videos. As admins, they can manage the server settings and invite other users. As content-managers, they can create
+    and upload content. Thus, users with both roles, have full.</p>
+
+  <img
+      src="https://camo.githubusercontent.com/98438f22b65e99abe539712dcc1fa8232b59268a/687474703a2f2f6e65772e74696e79677261622e636f6d2f6439303732656635363437313763323264646539343863373236313434623162373037613630376164632e706e67"
+      alt=""/>
+
+  <br/>
+  <br/>
+
+  <p>Once a user is invited and has access to the application, they can edit their Profile. Here, they can set a full
+    name, change their password and even set some favorite genres. At present these the genres are not used for
+    anything, but this can pave the way for automatic playlists such as "recommended to you".</p>
+
+  <br/>
+  <img src="http://i.imgur.com/9jeKz8E.png" alt=""/>
+
+
+  <hr/>
+
+  <h2 class="content-heading" id="continue-watching">Continue Watching</h2>
+
+  <p>If you are watching a show with many episodes, or stop a movie somewhere in the middle, it is really useful to be
+    able to come back at a later point and find links to the show/movie that you lead you directly where you left off!
+    Streama periodically saves your viewing status while you watch any type of content, and it is smart enough to
+    differentiate between a single movie and a show containing multiple episode (where it only always saves the latest
+    entry)</p>
+
+  <br/>
+
+  <div class="text-center">
+    <img src="http://i.imgur.com/C2YkQ9R.png" alt=""/>
+  </div>
+
+
+  <hr/>
+
+  <h2 class="content-heading" id="related-content">Related Movies & Shows</h2>
+
+  <p>Sometimes you add a movie to streama because you anticipate that you will feel like watching it soon. In such a
+    case,
+    it can be useful if you also get some suggestions regarding similar movies that you also might want to add. Streama
+    makes this especially easy for you, as you can simply click on a suggested movie to create it, and then you can add
+    your video file to it at a later point if you wish. </p>
+  <br/>
+  <br/>
+  <img src="http://i.imgur.com/d2e2Yfb.gif" alt=""/>
+
+
+  <hr/>
+
+  <h2 class="content-heading" id="open-source">Open Source</h2>
+
+  <p>This project is completely open source for anyone who wishes to use, share or contribute to it.
+    It is published under the MIT License. You can find a link to the license <a
+        href="https://github.com/dularion/streama/blob/master/LICENSE.md">here</a>.</p>
+
+
+  <hr/>
+
+  <h2 class="content-heading">Copyright Notification</h2>
+
+
+  <p>Streama does not permit copyright infringing activities and infringement of intellectual property rights on its
+    demo-website, and will remove all Content if properly notified that such content infringes on another's intellectual
+    property rights. Streama reserves the right also to block a specific IP-address from accessing the demo-website, if they are determined to be a
+    repeat infringer.</p>
+
+  <p>If you believe that your work has been copied in a way that constitutes copyright infringement, please provide
+    Streama with the written information specified below:</p>
+
+  <ul>
+    <li>physical or electronic signature of the person authorized to act on behalf of the owner of the copyright
+      interest that is allegedly infringed;
+    </li>
+    <li>description of all of the copyrighted works that you claim has been infringed upon;
+    </li>
+    <li>description of where the material that you claim is infringing is located on the Streama demo-website, including,
+      a URL of the specific location of the infringing material;
+    </li>
+    <li>Information sufficient to allow us to contact you including, at a minimum, your address, telephone number, and
+      e-mail address;
+    </li>
+    <li>statement by you that you have a good-faith belief that the disputed use is not authorized by the copyright
+      owner, its agent, or the law; and
+    </li>
+    <li>statement by you, made under penalty of perjury, that the above information in your notice is accurate and that
+      you are the copyright owner or authorized to act on the copyright owner’s behalf.
+    </li>
+  </ul>
+
+  <p>To submit a Copyright Notification, please write an email to <a href="mailto:dularion@gmail.com">this address</a>.</p>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
 </section>
+
 
 <script type="text/javascript">
   var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -43,6 +738,9 @@
   } catch (err) {
   }
 </script>
+
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
 </body>
 </html>
