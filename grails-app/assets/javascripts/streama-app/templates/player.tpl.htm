@@ -25,12 +25,15 @@
 
 
 
-  <div class="player-controls-wrapper player-active no-select" ng-class="{'visible': controlsVisible}" ng-show="!loading">
+  <div class="player-controls-wrapper player-active no-select" ng-class="{'visible': controlsVisible}" ng-hide="loading && !initialPlay">
 
     <div class="slider-ui-wrapper" ng-show="!volumeOpen">
       <div class="player-ui-slider" ui-slider="scrubberOptions" min="0" max="{{videoDuration}}" ng-model="currentTime"></div>
       <div class="time-display">
-        <strong ng-show="currentTime">{{currentTime | secondsToDateTime | date:'mm:ss'}}</strong>
+        <strong ng-show="currentTime">
+          <span ng-if="currentTime >= 3600">{{currentTime | secondsToDateTime | date:'hh:mm:ss'}}</span>
+          <span ng-if="currentTime < 3600">{{currentTime | secondsToDateTime | date:'mm:ss'}}</span>
+        </strong>
         <span ng-if="videoDuration >= 3600">{{videoDuration | secondsToDateTime | date:'hh:mm:ss'}}</span>
         <span ng-if="videoDuration < 3600">{{videoDuration | secondsToDateTime | date:'mm:ss'}}</span>
       </div>
