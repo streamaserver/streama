@@ -55,7 +55,9 @@ body {
 .page-header {
   background: none;
   text-align: center;
-  border: none; }
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0; }
 
 .project-tagline {
   font-size: 20px;
@@ -64,8 +66,8 @@ body {
   opacity: 0.7; }
 
 .main-content {
-  max-width: 1288px;
-  padding: 2rem 6rem;
+  max-width: 1262px;
+  padding: 2rem 4rem;
   margin: 0 auto;
   font-size: 16px; }
 
@@ -91,65 +93,67 @@ hr {
   margin: 60px 0;
   opacity: 0.3; }
 
-.feature-wrapper:after {
-  content: "";
-  display: table;
-  clear: both; }
-.feature-wrapper .feature-box {
-  float: left;
-  width: 282px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  background: #101113;
-  padding: 15px;
-  text-align: center;
-  min-height: 245px;
-  -moz-transition: background .4s;
-  -webkit-transition: background .4s;
-  -o-transition: background .4s;
-  -ms-transition: background .4s;
-  transition: background .4s; }
-  .feature-wrapper .feature-box .feature-icon {
-    font-size: 50px;
-    margin-top: 7px;
-    display: inline-block;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    padding: 20px;
-    color: white;
-    border-radius: 100%;
-    -moz-transition: background .4s, color .4s;
-    -webkit-transition: background .4s, color .4s;
-    -o-transition: background .4s, color .4s;
-    -ms-transition: background .4s, color .4s;
-    transition: background .4s, color .4s; }
-  .feature-wrapper .feature-box .feature-title {
-    font-size: 16px;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.75);
-    margin: 20px 0 0;
-    line-height: 1.4em; }
-  .feature-wrapper .feature-box .feature-description {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 300;
-    margin: 10px 0 10px;
-    line-height: 1.4em; }
-  .feature-wrapper .feature-box.coming-soon {
-    opacity: 0.6; }
-  .feature-wrapper .feature-box:hover {
-    background: #3e7d96;
-    text-decoration: none; }
-    .feature-wrapper .feature-box:hover .feature-icon {
-      color: #3e7d96;
-      background: white;
-      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); }
-    .feature-wrapper .feature-box:hover .feature-title {
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-      color: white; }
-    .feature-wrapper .feature-box:hover .feature-description {
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-      color: rgba(255, 255, 255, 0.75); }
+.feature-wrapper {
+  margin-right: -10px; }
+  .feature-wrapper:after {
+    content: "";
+    display: table;
+    clear: both; }
+  .feature-wrapper .feature-box {
+    float: left;
+    width: 288px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background: #101113;
+    padding: 15px;
+    text-align: center;
+    min-height: 245px;
+    -moz-transition: background .4s;
+    -webkit-transition: background .4s;
+    -o-transition: background .4s;
+    -ms-transition: background .4s;
+    transition: background .4s; }
+    .feature-wrapper .feature-box .feature-icon {
+      font-size: 50px;
+      margin-top: 7px;
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 20px;
+      color: white;
+      border-radius: 100%;
+      -moz-transition: background .4s, color .4s;
+      -webkit-transition: background .4s, color .4s;
+      -o-transition: background .4s, color .4s;
+      -ms-transition: background .4s, color .4s;
+      transition: background .4s, color .4s; }
+    .feature-wrapper .feature-box .feature-title {
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.75);
+      margin: 20px 0 0;
+      line-height: 1.4em; }
+    .feature-wrapper .feature-box .feature-description {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 300;
+      margin: 10px 0 10px;
+      line-height: 1.4em; }
+    .feature-wrapper .feature-box.coming-soon {
+      opacity: 0.6; }
+    .feature-wrapper .feature-box:hover {
+      background: #3e7d96;
+      text-decoration: none; }
+      .feature-wrapper .feature-box:hover .feature-icon {
+        color: #3e7d96;
+        background: white;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); }
+      .feature-wrapper .feature-box:hover .feature-title {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        color: white; }
+      .feature-wrapper .feature-box:hover .feature-description {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        color: rgba(255, 255, 255, 0.75); }
 
 .btn {
   display: inline-block;

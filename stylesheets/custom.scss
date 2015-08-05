@@ -24,6 +24,8 @@ body{
   background: none;
   text-align: center;
   border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .project-tagline{
@@ -34,8 +36,8 @@ body{
 }
 
 .main-content {
-  max-width: 1288px;
-  padding: 2rem 6rem;
+  max-width: 1262px;
+  padding: 2rem 4rem;
   margin: 0 auto;
   font-size: 16px;
 }
@@ -73,10 +75,11 @@ hr{
 
 .feature-wrapper{
   @include clearfix;
+  margin-right: -10px;
 
   .feature-box{
     float: left;
-    width: 282px;
+    width: 288px;
     margin-right: 10px;
     margin-bottom: 10px;
     background: #101113;
