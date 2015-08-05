@@ -7,6 +7,7 @@
 
 .logo{
   width: 400px;
+  max-width: 73%;
 }
 
 body{
@@ -33,6 +34,8 @@ body{
   margin-bottom: 2rem;
   font-weight: normal;
   opacity: 0.7;
+  max-width: 73%;
+  margin: 0 auto;
 }
 
 .main-content {
@@ -187,4 +190,26 @@ code{
 
 img{
   max-width: 100%;
+}
+
+
+@media (max-width: 667px) {
+  .main-content {
+    padding: 2rem;
+  }
+
+  .feature-wrapper{
+    margin-right: 0px;
+    .feature-box{
+      float: none;
+      display: block;
+      width: 100%;
+    }
+  }
+
+  h2.content-heading{
+    margin-top: 20px;
+    padding-top: 20px;
+    margin-bottom: 30px;
+  }
 }
