@@ -112,6 +112,7 @@ grails {
       compressHtml = true
       preserveHtmlComments = false
     }
+    excludes = ["jquery/src/*", "jquery/src/**/*"]
   }
 }
 
