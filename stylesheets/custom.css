@@ -45,7 +45,7 @@
   max-width: 73%; }
 
 body {
-  background-color: #151719;
+  background-color: #222529;
   color: white;
   font-weight: 300;
   font-family: 'Lato', sans-serif;
@@ -107,7 +107,7 @@ hr {
     width: 288px;
     margin-right: 10px;
     margin-bottom: 10px;
-    background: #101113;
+    background: rgba(16, 17, 19, 0.68);
     padding: 15px;
     text-align: center;
     min-height: 245px;
