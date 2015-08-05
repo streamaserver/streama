@@ -192,6 +192,9 @@ img {
   max-width: 100%; }
 
 @media (max-width: 667px) {
+  .logo {
+    margin-top: 45px; }
+
   .main-content {
     padding: 2rem; }
 
