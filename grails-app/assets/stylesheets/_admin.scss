@@ -6,23 +6,23 @@
   left: 0;
   right: 0;
 
-  
-  
+
+
   .nav{
     width: 300px;
     background: rgba(0, 0, 0, 0.15);
     border-right: 1px solid rgba(255, 255, 255, 0.11);
     @include flex(none);
-    
+
     ul{
       padding: 0;
-      
+
       li{
         list-style: none;
         font-size: 18px;
         font-weight: 300;
         border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-        
+
         a{
           color: white;
           display: block;
@@ -35,7 +35,7 @@
           background: darken($primary, 40%);
           color: white;
         }
-        
+
         ul li{
           padding: 10px;
         }
@@ -46,18 +46,18 @@
   .form-control{
     color: white;
   }
-  
+
   @include placeholder{
     color: #888;
     font-weight: 300;
   }
-  
+
   .admin-content{
     padding: 15px;
     @include flex(1);
     overflow: auto;
   }
-  
+
   .media-list-item{
     margin-top: 15px;
   }
@@ -70,4 +70,8 @@
 
   border: 1px solid rgba(255, 255, 255, 0.17);
   background-color: rgba(0, 0, 0, 0.08);
+}
+
+.admin-movie-item{
+  min-height: 260px;
 }

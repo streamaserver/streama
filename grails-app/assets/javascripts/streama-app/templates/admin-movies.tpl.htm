@@ -11,7 +11,7 @@
 <hr/>
 
 <div class="media-list">
-  <div class="media-list-item" ng-repeat="movie in movies" ui-sref="admin.movie({movieId: movie.id})">
+  <div class="media-list-item admin-movie-item"  ng-repeat="movie in movies" ui-sref="admin.movie({movieId: movie.id})">
     <div class="media-item" >
       <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
     </div>
