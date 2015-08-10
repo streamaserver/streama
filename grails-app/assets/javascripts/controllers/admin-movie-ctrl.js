@@ -27,14 +27,9 @@ streamaApp.controller('adminMovieCtrl', [
 		};
 
 
-    $scope.removeFile = function(file){
-      alertify.confirm('Are you sure you want to remove the file "'+file.originalFilename+'"?', function (confirmed) {
-        if(confirmed){
-          apiService.video.removeFile($scope.movie.id, file.id).success(function () {
-            _.remove($scope.movie.files, {id: file.id});
-          });
-        }
-      });
+
+    $scope.manageFiles = function(movie){
+      modalService.fileManagerModal(movie);
     };
 
 

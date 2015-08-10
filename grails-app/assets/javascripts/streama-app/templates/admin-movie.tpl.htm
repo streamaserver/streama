@@ -17,6 +17,8 @@
   <div class="clearfix">
 
     <div class="btn-group pull-right">
+      <button class="btn btn-success btn-sm" ng-click="manageFiles(movie)">Manage Files</button>
+
       <button class="btn btn-secondary btn-sm " ng-click="openMovieModal()">
         Edit movie
       </button>
@@ -33,9 +35,6 @@
     <span class="label label-danger" ng-show="!movie.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
 
   </div>
-
-  <button class="btn btn-success btn-xs" ng-show="movie.files.length" popover-placement="right"
-          popover-template="'popover--movie-files.htm'" popover-title="Added Files">Browse Files</button>
 
   <hr/>
 
