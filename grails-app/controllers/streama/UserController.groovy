@@ -48,6 +48,7 @@ class UserController {
     }
 
     userInstance.deleted = true
+    userInstance.username = userInstance.username + (randomUUID() as String)
     userInstance.accountExpired = true
 
     userInstance.save flush: true, failOnError: true
