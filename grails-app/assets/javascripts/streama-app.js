@@ -139,7 +139,9 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 		return {
 			request: function (config) {
 				config.params = config.params || {};
-				config.params.browserSocketUUID = $rootScope.browserSocketUUID;
+        if(config.params.socketSessionId){
+          config.params.browserSocketUUID = $rootScope.browserSocketUUID;
+        }
 				return config || $q.when(config);
 			},
 			response: function (response) {
@@ -151,7 +153,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
           alertify.error('You do not have the rights to carry out this action.');
         }
         else if(response.status != 404 && response.status != 401 && response.status != 406){
-          alertify.error('A system error occurred');
+          //alertify.error('A system error occurred');
         }
 
 
