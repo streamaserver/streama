@@ -76,24 +76,6 @@ streamaApp.factory('modalService', ['$modal', function ($modal) {
 		},
 
 
-		fileModal: function (video, callback) {
-			var modalInstance = $modal.open({
-				templateUrl: 'modal--file.htm',
-				controller: 'modalFileCtrl',
-				size: 'lg',
-				resolve: {
-					video: function () {
-						return video;
-					}
-				}
-			});
-
-			modalInstance.result.then(function (data) {
-				(callback || angular.noop)(data);
-			});
-		},
-
-
 		userModal: function (user, callback) {
 			var modalInstance = $modal.open({
 				templateUrl: 'modal--user.htm',
@@ -109,6 +91,25 @@ streamaApp.factory('modalService', ['$modal', function ($modal) {
 			modalInstance.result.then(function (data) {
 				(callback || angular.noop)(data);
 			});
-		}
+		},
+
+    fileManagerModal: function (video, callback) {
+      var modalInstance = $modal.open({
+        templateUrl: 'modal--manage-files.htm',
+        controller: 'modalFileCtrl',
+        size: 'lg',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          video: function () {
+            return video;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (data) {
+        (callback || angular.noop)(data);
+      });
+    }
 	};
 }]);

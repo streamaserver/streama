@@ -1,0 +1,63 @@
+<div class="modal-body">
+  <legend>
+    Files for "{{video.name || video.title}}"
+  </legend>
+
+  <button ng-model="file"  class="btn btn-dropzone btn-block btn-lg"
+          ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)" ngf-select>
+    Drop File or Click to Choose <span ng-show="uploadStatus.percentage != null">{{uploadStatus.percentage}}%</span>
+  </button>
+
+  <br/><br/>
+
+    <table class="table table-striped" style="font-size: 14px;" ng-show="video.files.length">
+      <thead>
+      <tr>
+        <th>Name </th>
+        <th>Type</th>
+        <th style="width: 100px;"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="file in video.files">
+        <td>{{file.originalFilename}}</td>
+        <td>{{file.contentType}}</td>
+        <td style="padding: 6px;">
+          <button class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
+          <a target="_blank" href="{{file.src}}" class="btn btn-xs btn-primary">preview</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div ng-show="video.subtitles.length">
+      <br/>
+      <h4>Subtitles</h4>
+
+      <table class="table table-striped" style="font-size: 14px;">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th style="width: 10px;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="file in video.subtitles">
+          <td>{{file.originalFilename}}</td>
+          <td>{{file.contentType}}</td>
+          <td style="padding: 6px;">
+            <button class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <p>*For subtitles, make sure to add them in vtt format. You can use <a target="_blank" href="https://atelier.u-sub.net/srt2vtt/">this online converter.</a></p>
+
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="cancel()">Close</button>
+</div>
