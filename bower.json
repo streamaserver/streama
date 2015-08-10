@@ -1,16 +1,31 @@
 {
-  "name": "streama",
-  "version": "1.0.0",
+  "name": "Streama",
+  "version": "0.1.4",
   "authors": [
     "dularion <antonia.hulha@systaro.de>"
   ],
-  "description": "Video-Streaming for private use",
+  "description": "It's like Netflix, but self-hosted!",
   "license": "MIT",
+  "homepage": "http://dularion.github.io/streama/",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
+    "grails-app/assets/lib",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "alertify": "~0.3.10",
+    "angular-ui-router": "~0.2.15",
+    "angular-local-storage": "~0.2.2",
+    "bootstrap": "~3.3.5",
+    "angular-ui-slider": "~0.1.3",
+    "ionicons": "~2.0.1",
+    "lodash": "~3.10.0",
+    "angular": "~1.4.3",
+    "angular-sanitize": "~1.4.3",
+    "ng-file-upload": "~5.0.9",
+    "mousetrap": "~1.5.3"
+  }
 }
