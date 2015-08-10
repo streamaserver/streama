@@ -1,6 +1,6 @@
 # Change Log
 
-## [[0.1.4]](https://github.com/dularion/streama/commit/7f2f0b14b02711ed4596bacf59eb94c6081ae2c2)
+## [[0.1.4]](https://github.com/dularion/streama/commit/7f2f0b14b02711ed4596bacf59eb94c6081ae2c2) - 2015-08-10
 ### Features
 - added subtitle-upload, subtitles in player & subtitle-controls (currently only .vtt format)
 - added improved file-manager modal
