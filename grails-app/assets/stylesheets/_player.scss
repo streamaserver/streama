@@ -1,3 +1,4 @@
+.video-wrapper-inner,
 .player-wrapper{
   @include flexbox;
   @include align-items(center);
@@ -6,8 +7,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  right: 0; 
+  right: 0;
   bottom: 0;
+}
+
+.player-wrapper{
 
   video {
     width: 100%;
@@ -22,7 +26,7 @@
     right: 0;
     bottom: 0;
     background: linear-gradient(rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.3) 100%);
-    z-index: 9;
+    z-index: -999;
 
 
     opacity: 0;
@@ -30,12 +34,30 @@
 
     &.visible{
       opacity: 1;
+      z-index: 10;
     }
   }
 
+  .play-button{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 82px;
+    margin: -0.75em;
+    line-height: 1.5em;
+    width: 1.5em;
+    padding-left: 0.1em;
+    height: 1.5em;
+    border-radius: 100%;
+    border: 1px solid white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.33);
+    z-index: 9;
+
+  }
 
 
-  .player-back{ 
+  .player-back{
     position: absolute;
     top: 20px;
     left: 20px;
@@ -54,14 +76,14 @@
       opacity: 1;
     }
   }
-  
+
   .video-info{
     position: absolute;
     max-width: 600px;
     top: 20%;
     left: 10%;
     right: 100px;
-    
+
     p{
       color: #999;
       margin: 0;
@@ -70,7 +92,7 @@
       margin: 0;
       margin-bottom: 10px;
     }
-    
+
     h3{
       margin: 0;
       font-size: 20px;
@@ -78,18 +100,19 @@
       font-weight: 300;
     }
   }
-  
+
   .spinner{
     position: absolute;
     top: 50%;
     left: 50%;
     width: auto;
-    
+
     >div{
       background: $primary;
       width: 20px;
       height: 20px;
-      margin-right: 12px; 
+      margin-right: 12px;
     }
   }
 }
+
