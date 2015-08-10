@@ -26,15 +26,11 @@
 				<label for="inputPassword" class="col-lg-2 control-label">Password</label>
 				<div class="col-lg-10">
 					<input type="password" name='j_password' class="form-control" placeholder="Password">
-					<div class="checkbox">
-						<label>
-							<input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/> Remember me
-						</label>
-					</div>
 				</div>
 			</div>
-			
-			
+
+			<input style="display: none;" type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' checked='checked'/>
+
 			<button class="btn btn-primary pull-right">Submit</button>
 		</form>
 	</div>
