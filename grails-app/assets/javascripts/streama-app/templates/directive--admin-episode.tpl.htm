@@ -4,8 +4,19 @@
 
   <div class="upload-overlay" ng-class="{'visible': uploadStatus.percentage != null}">
     <span class="hint" ng-show="uploadStatus.percentage == null">Upload File</span>
-    <span class="percentage" ng-show="uploadStatus.percentage != null">{{uploadStatus.percentage}} %</span>
+    <span class="percentage" ng-show="uploadStatus.percentage != null && uploadStatus.percentage < 100">{{uploadStatus.percentage}} %</span>
+    <span class="processing" ng-show="uploadStatus.percentage == 100">
+      <span>
+        <div class="spinner">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </span>
+      <!--<span class="converting">Converting...</span>-->
+    </span>
   </div>
+
   <span class="label label-danger pull-right" ng-show="!episode.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
 
 
