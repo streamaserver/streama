@@ -163,8 +163,15 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 	}]);
 
 
-streamaApp.run(['$rootScope', '$state', 'apiService', function ($rootScope, $state, apiService) {
+streamaApp.run(['$rootScope', '$state', 'localStorageService', function ($rootScope, $state, localStorageService) {
+  $rootScope.baseData = {};
 	$rootScope.isCurrentState = function (stateName) {
 		return ($state.current.name == stateName);
 	};
+
+  $rootScope.$on('$stateChangeSuccess', function (e, toState) {
+    if(toState.name == "player"){
+      localStorageService.set('originUrl', location.href);
+    }
+  });
 }]);

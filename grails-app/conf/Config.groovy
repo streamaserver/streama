@@ -154,6 +154,7 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'streama.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'streama.UserRole'
 grails.plugin.springsecurity.authority.className = 'streama.Role'
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/user/loginTarget'
+grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 //
 //grails.plugin.springsecurity.useSecurityEventListener = true
 //grails.plugin.springsecurity.onAbstractAuthenticationFailureEvent = { e, appCtx ->

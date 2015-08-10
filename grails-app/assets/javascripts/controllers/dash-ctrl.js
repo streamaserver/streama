@@ -1,7 +1,17 @@
 'use strict';
 
-streamaApp.controller('dashCtrl', ['$scope', 'apiService', '$state', '$rootScope', function ($scope, apiService, $state, $rootScope) {
+streamaApp.controller('dashCtrl', ['$scope', 'apiService', '$state', '$rootScope', 'localStorageService', function ($scope, apiService, $state, $rootScope, localStorageService) {
 	$scope.loading = true;
+
+  if($rootScope.baseData.redirected){
+    var originUrl = localStorageService.get('originUrl');
+    if(originUrl){
+      location.href = originUrl;
+    }else{
+      location.href = location.href.replace('?redirected=true', '');
+    }
+
+  }
 
   if($rootScope.currentUser.isAdmin){
     apiService.settings.list().success(function (data) {

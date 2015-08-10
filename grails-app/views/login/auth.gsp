@@ -1,6 +1,6 @@
 <html>
 <head>
-	<meta name='layout' content='main'/>
+	<meta name='layout' content='noAngular'/>
 	<title><g:message code="springSecurity.login.title"/></title>
 </head>
 
