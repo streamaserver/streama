@@ -5,6 +5,7 @@ class Settings {
     String settingsKey
     String value
     String description
+    String settingsType
     Boolean required
 
     static constraints = {
