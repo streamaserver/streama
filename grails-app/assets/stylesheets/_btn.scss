@@ -34,6 +34,40 @@
   @include btn(desaturate(darken($primary, 55%), 10%));
 }
 
+.btn-dropzone{
+  background: none;
+  border: 2px dashed gray;
+  position: relative;
+
+  &:hover,
+  &:focus,
+  &:focus:active,
+  &:active{
+    background: darken(#3E4346, 7%);
+  }
+
+  &.dragover-upload{
+    border-style: solid;
+
+    &:before {
+      content: "Drop File here";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      z-index: 9;
+      background-color: rgb(67, 158, 193);
+      border: 2px dashed #b0ddef;
+      text-align: center;
+      font-weight: 500;
+      line-height: 56px;
+      font-size: 28px;
+      border-radius: 6px;
+    }
+  }
+}
+
 
 .color-success{
   color: lighten($success, 10%);
