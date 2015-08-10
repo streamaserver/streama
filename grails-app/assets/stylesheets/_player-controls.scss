@@ -156,6 +156,10 @@
         color: transparent
       }
     }
+
+    &.inactive{
+      opacity: 0.3;
+    }
   }
 
   &.player-control-divider {
@@ -4114,4 +4118,37 @@ body.mdx-active #mdx-control-view {
   display: block;
   margin: 0 auto;
   vertical-align: middle
+}
+
+
+::cue {
+  color: white;
+  font-weight: normal;
+  font-size: 30px;
+  line-height:1.2em;
+}
+
+
+
+
+@media (max-width: 680px) {
+  .player-wrapper{
+
+    .player-status{
+      line-height: 5.5em;
+    }
+    .player-control-bar{
+      height: 5.5em;
+    }
+
+    .player-controls-wrapper{
+      bottom: 2em;
+      left: 5%;
+      width: 90%;
+
+      >section{
+        margin-top: 3.8em;
+      }
+    }
+  }
 }
