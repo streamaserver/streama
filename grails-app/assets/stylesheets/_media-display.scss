@@ -113,6 +113,9 @@
   .progress-info{
     font-weight: bold;
     line-height: 1.2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .media-progress{
     margin-top: 5px;
