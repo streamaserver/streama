@@ -6,7 +6,6 @@
     <span class="hint" ng-show="uploadStatus.percentage == null">Upload File</span>
     <span class="percentage" ng-show="uploadStatus.percentage != null">{{uploadStatus.percentage}} %</span>
   </div>
-
   <span class="label label-danger pull-right" ng-show="!episode.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
 
 
@@ -23,9 +22,7 @@
 
   <div class="button-wrapper">
     <button ng-click="editEpisode(episode)" class="btn btn-secondary btn-xs">Edit</button>
-
-      <button class="btn btn-secondary btn-xs"
-            popover-template="'popover--files.htm'" popover-title="Added Files" popover-append-to-body="true">Attached Files</button>
+    <button class="btn btn-secondary btn-xs" ng-click="manageFiles(episode)">Manage Files</button>
 
       <!--<button class="btn btn-success btn-xs pull-right" ng-click="openFileBrowser()" ng-show="!episode.files.length">Browse for File</button>-->
   </div>

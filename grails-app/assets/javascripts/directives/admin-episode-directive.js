@@ -32,21 +32,10 @@ streamaApp.directive('adminEpisode', [
 			};
 
 
-
-			$scope.addFile = function(episode){
-				modalService.fileModal(episode);
+			$scope.manageFiles = function(episode){
+				modalService.fileManagerModal(episode);
 			};
 
-
-			$scope.removeFile = function(file){
-				alertify.confirm('Are you sure you want to remove the file "'+file.originalFilename+'"?', function (confirmed) {
-					if(confirmed){
-						apiService.video.removeFile($scope.episode.id, file.id).success(function () {
-              _.remove($scope.episode.files, {id: file.id});
-						});
-					}
-				});
-			};
 
 
 
