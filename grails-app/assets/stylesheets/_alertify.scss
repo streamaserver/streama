@@ -1,0 +1,27 @@
+.alertify-cover{
+  background-color: black;
+  opacity: 0.7;
+}
+
+.alertify{
+  background-color: #3E4346;
+  color: white;
+
+  .alertify-message{
+    color: inherit;
+  }
+
+  .alertify-buttons{
+    border-top: 1px solid rgba(0, 0, 0, 0.46);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    text-align: center;
+  }
+
+  .alertify-button-ok{
+    @include btn($success);
+  }
+
+  .alertify-button-cancel{
+    @include btn($danger);
+  }
+}
