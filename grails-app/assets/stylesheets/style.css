@@ -212,6 +212,30 @@ label {
     color: white;
     outline: none; }
 
+.btn-dropzone {
+  background: none;
+  border: 2px dashed gray;
+  position: relative; }
+  .btn-dropzone:hover, .btn-dropzone:focus, .btn-dropzone:focus:active, .btn-dropzone:active {
+    background: #2d3133; }
+  .btn-dropzone.dragover-upload {
+    border-style: solid; }
+    .btn-dropzone.dragover-upload:before {
+      content: "Drop File here";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      z-index: 9;
+      background-color: #439ec1;
+      border: 2px dashed #b0ddef;
+      text-align: center;
+      font-weight: 500;
+      line-height: 56px;
+      font-size: 28px;
+      border-radius: 6px; }
+
 .color-success {
   color: #07c594; }
 
@@ -395,7 +419,10 @@ hr {
     opacity: 0.7; }
   .media-progress-wrapper .progress-info {
     font-weight: bold;
-    line-height: 1.2em; }
+    line-height: 1.2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   .media-progress-wrapper .media-progress {
     margin-top: 5px;
     height: 3px;
@@ -632,6 +659,9 @@ hr {
   border: 1px solid rgba(255, 255, 255, 0.17);
   background-color: rgba(0, 0, 0, 0.08); }
 
+.admin-movie-item {
+  min-height: 260px; }
+
 .spinner {
   width: 38px;
   text-align: center;
@@ -682,6 +712,7 @@ hr {
     -webkit-transform: scale(1);
     transform: scale(1); } }
 
+.video-wrapper-inner,
 .player-wrapper {
   display: -webkit-box;
   display: -moz-box;
@@ -698,76 +729,93 @@ hr {
   left: 0;
   right: 0;
   bottom: 0; }
-  .player-wrapper video {
-    width: 100%;
-    max-height: 100%; }
-  .player-wrapper .overlay {
-    -moz-transition: opacity .5s;
-    -webkit-transition: opacity .5s;
-    -o-transition: opacity .5s;
-    -ms-transition: opacity .5s;
-    transition: opacity .5s;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.3) 100%);
-    z-index: 9;
-    opacity: 0;
-    -moz-transition: opacity 0.3s;
-    -webkit-transition: opacity 0.3s;
-    -o-transition: opacity 0.3s;
-    -ms-transition: opacity 0.3s;
-    transition: opacity 0.3s; }
-    .player-wrapper .overlay.visible {
-      opacity: 1; }
-  .player-wrapper .player-back {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    box-shadow: 0 0 0 2px white;
-    border-radius: 100%;
-    width: 1.5em;
-    line-height: 1.5em;
-    text-align: center;
-    font-size: 26px;
-    z-index: 10;
-    opacity: 0;
-    -moz-transition: opacity 0.3s;
-    -webkit-transition: opacity 0.3s;
-    -o-transition: opacity 0.3s;
-    -ms-transition: opacity 0.3s;
-    transition: opacity 0.3s; }
-    .player-wrapper .player-back.visible {
-      opacity: 1; }
-  .player-wrapper .video-info {
-    position: absolute;
-    max-width: 600px;
-    top: 20%;
-    left: 10%;
-    right: 100px; }
-    .player-wrapper .video-info p {
-      color: #999;
-      margin: 0; }
-    .player-wrapper .video-info h1 {
-      margin: 0;
-      margin-bottom: 10px; }
-    .player-wrapper .video-info h3 {
-      margin: 0;
-      font-size: 20px;
-      margin-bottom: 10px;
-      font-weight: 300; }
-  .player-wrapper .spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: auto; }
-    .player-wrapper .spinner > div {
-      background: #b0ddef;
-      width: 20px;
-      height: 20px;
-      margin-right: 12px; }
+
+.player-wrapper video {
+  width: 100%;
+  max-height: 100%; }
+.player-wrapper .overlay {
+  -moz-transition: opacity .5s;
+  -webkit-transition: opacity .5s;
+  -o-transition: opacity .5s;
+  -ms-transition: opacity .5s;
+  transition: opacity .5s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.3) 100%);
+  z-index: -999;
+  opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -ms-transition: opacity 0.3s;
+  transition: opacity 0.3s; }
+  .player-wrapper .overlay.visible {
+    opacity: 1;
+    z-index: 10; }
+.player-wrapper .play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 82px;
+  margin: -0.75em;
+  line-height: 1.5em;
+  width: 1.5em;
+  padding-left: 0.1em;
+  height: 1.5em;
+  border-radius: 100%;
+  border: 1px solid white;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.33);
+  z-index: 9; }
+.player-wrapper .player-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  box-shadow: 0 0 0 2px white;
+  border-radius: 100%;
+  width: 1.5em;
+  line-height: 1.5em;
+  text-align: center;
+  font-size: 26px;
+  z-index: 10;
+  opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -ms-transition: opacity 0.3s;
+  transition: opacity 0.3s; }
+  .player-wrapper .player-back.visible {
+    opacity: 1; }
+.player-wrapper .video-info {
+  position: absolute;
+  max-width: 600px;
+  top: 20%;
+  left: 10%;
+  right: 100px; }
+  .player-wrapper .video-info p {
+    color: #999;
+    margin: 0; }
+  .player-wrapper .video-info h1 {
+    margin: 0;
+    margin-bottom: 10px; }
+  .player-wrapper .video-info h3 {
+    margin: 0;
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 300; }
+.player-wrapper .spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto; }
+  .player-wrapper .spinner > div {
+    background: #b0ddef;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px; }
 
 .player-wrapper button.button {
   padding: .5em 2em;
@@ -916,6 +964,8 @@ hr {
         background: linear-gradient(white, #858585);
         -webkit-background-clip: text;
         color: transparent; }
+    .player-wrapper .player-control-bar .player-control-button.inactive {
+      opacity: 0.3; }
   .player-wrapper .player-control-bar.player-control-divider {
     -webkit-order: 5;
     -ms-flex-order: 5;
@@ -4363,6 +4413,23 @@ body.mdx-active #mdx-control-view {
   margin: 0 auto;
   vertical-align: middle; }
 
+::cue {
+  color: white;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 1.2em; }
+
+@media (max-width: 680px) {
+  .player-wrapper .player-status {
+    line-height: 5.5em; }
+  .player-wrapper .player-control-bar {
+    height: 5.5em; }
+  .player-wrapper .player-controls-wrapper {
+    bottom: 2em;
+    left: 5%;
+    width: 90%; }
+    .player-wrapper .player-controls-wrapper > section {
+      margin-top: 3.8em; } }
 .invitation-wrapper {
   max-width: 600px;
   margin: 70px auto;
