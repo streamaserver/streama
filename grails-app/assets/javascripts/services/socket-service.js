@@ -7,7 +7,7 @@ streamaApp.factory('socketService', ['$rootScope', 'apiService', '$timeout', fun
   return {
     subscription: null,
     browserSocketUUID: null,
-    
+
     getUUID: function() {
       function s4() {
         return Math.floor((1 + Math.random()) * 0x10000)
@@ -17,12 +17,12 @@ streamaApp.factory('socketService', ['$rootScope', 'apiService', '$timeout', fun
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
     },
-    
+
     registerPlayerSessonListener: function (projectSessionId) {
       var that = this;
 
       var urlBase = $('base').attr('href');
-      
+
       var socket = new SockJS(urlBase + 'stomp');
       var client = Stomp.over(socket);
 
@@ -40,6 +40,8 @@ streamaApp.factory('socketService', ['$rootScope', 'apiService', '$timeout', fun
     unsubscribe: function () {
       if(this.subscription){
         this.subscription.unsubscribe();
+        this.browserSocketUUID = null;
+        $rootScope.browserSocketUUID = null;
       }
     }
   }
