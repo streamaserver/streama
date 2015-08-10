@@ -178,10 +178,12 @@ streamaApp.directive('streamaVideoPlayer', [
         $scope.fullScreen = function () {
           $scope.isFullScreen = !$scope.isFullScreen;
           var docElm;
+          var docElmClose;
           if($scope.isMobile){
             docElm = video;
           }else{
             docElm = document.documentElement;
+            docElmClose = document;
           }
 
           if($scope.isFullScreen){
@@ -200,17 +202,17 @@ streamaApp.directive('streamaVideoPlayer', [
           }
 
           else{
-            if (docElm.exitFullscreen) {
-              docElm.exitFullscreen();
+            if (docElmClose.exitFullscreen) {
+              docElmClose.exitFullscreen();
             }
-            else if (docElm.mozCancelFullScreen) {
-              docElm.mozCancelFullScreen();
+            else if (docElmClose.mozCancelFullScreen) {
+              docElmClose.mozCancelFullScreen();
             }
-            else if (docElm.webkitCancelFullScreen) {
-              docElm.webkitCancelFullScreen();
+            else if (docElmClose.webkitExitFullscreen) {
+              docElmClose.webkitExitFullscreen();
             }
-            else if (docElm.msExitFullscreen) {
-              docElm.msExitFullscreen();
+            else if (docElmClose.msExitFullscreen) {
+              docElmClose.msExitFullscreen();
             }
           }
         };
