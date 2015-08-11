@@ -296,7 +296,8 @@
           <ul>
             <li>if your application throws errors on startup and won't deploy, make sure that your
               <code>$JAVA_HOME</code> is set correctly. It needs to point to your installation of JDK not JRE, and it
-              needs to be version 1.7.x, not 1.6.x or 1.8.x.
+              needs to be version 1.7.x, not 1.6.x or 1.8.x. Windows users need to set their %JAVA_HOME% to something like 
+              `C:\Program Files\Java\jdk1.7.0_79` and add `%JAVA_HOME%\bin` to the PATH.
             </li>
             <li>Make sure your MySQL is running and that the application can access it with the credentials above</li>
           </ul>
