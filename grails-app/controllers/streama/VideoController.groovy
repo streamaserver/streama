@@ -14,6 +14,7 @@ class VideoController {
   def thetvdbService
   def uploadService
   def springSecurityService
+  def mediaService
 
     
   def index() {
@@ -45,16 +46,8 @@ class VideoController {
         return
       }
 
-      Episode firstEpisode = tvShow.episodes?.find{it.files && it.season_number != "0"}
+      def firstEpisode = mediaService.getFirstEpisode(tvShow)
 
-      tvShow.episodes.each{ Episode episode ->
-        if((episode.season_number == firstEpisode?.season_number) && (episode.episode_number < firstEpisode?.episode_number) && episode.files){
-          firstEpisode = episode
-        }
-        else if(episode.season_number < firstEpisode?.season_number && episode.files && episode.season_number != "0"){
-          firstEpisode = episode
-        }
-      }
 
       if(firstEpisode && firstEpisode.files){
         firstEpisodes.add(firstEpisode)

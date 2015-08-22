@@ -10,6 +10,7 @@ class MarshallerService {
 
   def springSecurityService
   def settingsService
+  def mediaService
 
   def init() {
 
@@ -70,6 +71,32 @@ class MarshallerService {
       returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
+      returnArray['hasFiles'] = returnArray['files']
+
+//            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
+
+      return returnArray;
+    }
+
+    JSON.registerObjectMarshaller(TvShow){ TvShow tvShow ->
+      def returnArray = [:]
+
+      returnArray['id'] = tvShow.id
+      returnArray['dateCreated'] = tvShow.dateCreated
+      returnArray['lastUpdated'] = tvShow.lastUpdated
+      returnArray['poster_path'] = tvShow.poster_path
+      returnArray['first_air_date'] = tvShow.first_air_date
+      returnArray['name'] = tvShow.name
+      returnArray['overview'] = tvShow.overview
+      returnArray['apiId'] = tvShow.apiId
+      returnArray['original_language'] = tvShow.original_language
+      returnArray['vote_average'] = tvShow.vote_average
+      returnArray['vote_count'] = tvShow.vote_count
+      returnArray['popularity'] = tvShow.popularity
+
+      returnArray['hasFiles'] = tvShow.episodes?.find{it.files}
+      returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
+
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
       return returnArray;
@@ -91,6 +118,8 @@ class MarshallerService {
 
       returnArray['files'] = video.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = video.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+
+      returnArray['hasFiles'] = returnArray['files']
 
       returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(video, springSecurityService.currentUser)
 

@@ -146,6 +146,12 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			}
 		},
 
+		dash: {
+			searchMedia: function (query) {
+				return $http.get(urlBase + 'dash/searchMedia.json', {params: {query: query}});
+			}
+		},
+
 		websocket: {
 			triggerPlayerAction: function (params) {
 				return $http.get(urlBase + 'websocket/triggerPlayerAction.json', {params: params});

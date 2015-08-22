@@ -163,15 +163,36 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 	}]);
 
 
-streamaApp.run(['$rootScope', '$state', 'localStorageService', function ($rootScope, $state, localStorageService) {
-  $rootScope.baseData = {};
-	$rootScope.isCurrentState = function (stateName) {
-		return ($state.current.name == stateName);
-	};
+streamaApp.run(
+  ['$rootScope', '$state', 'localStorageService', 'apiService',
+  function ($rootScope, $state, localStorageService, apiService) {
 
-  $rootScope.$on('$stateChangeSuccess', function (e, toState) {
-    if(toState.name == "player"){
-      localStorageService.set('originUrl', location.href);
-    }
-  });
+    $rootScope.baseData = {};
+    $rootScope.isCurrentState = function (stateName) {
+      return ($state.current.name == stateName);
+    };
+
+    $rootScope.searchMedia = function (query) {
+      return apiService.dash.searchMedia(query).then(function (data) {
+        return data.data.movies.concat(data.data.shows);
+      });
+    };
+
+    $rootScope.selectFromSearch = function (item) {
+			if(item.hasFiles){
+				var id;
+				if(item.firstEpisode){
+					id = item.firstEpisode.id;
+				}else{
+					id = item.id;
+				}
+				$state.go('player', {videoId: id});
+			}
+    };
+
+    $rootScope.$on('$stateChangeSuccess', function (e, toState) {
+      if(toState.name == "player"){
+        localStorageService.set('originUrl', location.href);
+      }
+    });
 }]);

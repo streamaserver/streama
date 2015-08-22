@@ -181,6 +181,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/user/changePassword':             ['IS_AUTHENTICATED_REMEMBERED'],
 	'/theMovieDb/availableGenres':      ['IS_AUTHENTICATED_REMEMBERED'],
 	'/user/loginTarget':                ['IS_AUTHENTICATED_REMEMBERED'],
+	'/dash/**':                         ['IS_AUTHENTICATED_REMEMBERED'],
 
   '/tvShow/**':                       ['ROLE_CONTENT_MANAGER'],
   '/video/**':                        ['ROLE_CONTENT_MANAGER'],

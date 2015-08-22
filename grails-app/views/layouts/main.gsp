@@ -24,6 +24,15 @@
 
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
+
+			<li ng-if="isCurrentState('dash')">
+				<div class="dash-search form-group has-feedback">
+					<input type="text" placeholder="Search.." class="form-control input-xs" ng-model="dashSearch"
+								 typeahead-append-to-body="true" typeahead="(item.title || item.name) for item in searchMedia($viewValue)"
+								 typeahead-on-select="selectFromSearch($item)" typeahead-template-url="typeahead--media.htm"/>
+					<span class="form-control-feedback ion-android-search" aria-hidden="true"></span>
+				</div>
+			</li>
 			<sec:ifLoggedIn>
 				<li><a ui-sref="dash">Dashboard</a></li>
 			</sec:ifLoggedIn>
@@ -41,7 +50,6 @@
 			</sec:ifLoggedIn>
 		</ul>
 	</div>
-
 
 	<i class="ion-navicon navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></i>
 </header>

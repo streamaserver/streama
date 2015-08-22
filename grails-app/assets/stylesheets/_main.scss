@@ -34,7 +34,7 @@ header.main{
 
       >a{
         color: white;
-        padding: 11px 6px;
+        padding: 11px 10px;
         display: block;
       }
     }
@@ -55,6 +55,35 @@ header.main{
 .content{
 }
 
+.dash-search{
+  margin: 0;
+  padding: 8px 9px 8px 0px;
+}
+
+
+.dropdown-menu>li{
+  >a.typeahead-item{
+    @include flexbox;
+    @include align-items(center);
+    padding: 7px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    img{
+      margin-right: 10px;
+      width: 50px;
+    }
+
+    &.inactive{
+      opacity: 0.5;
+    }
+  }
+
+
+  &:last-child >a{
+    border: none;
+  }
+}
 
 hr{
   border-color: rgba(255, 255, 255, 0.08);
