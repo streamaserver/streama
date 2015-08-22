@@ -285,9 +285,14 @@ h1, h2, h3, h4, h5, h6 {
 .logo {
   float: left;
   width: 130px;
-  padding: 6px 0; }
+  padding: 6px 0;
+  position: relative; }
   .logo i {
     font-size: 0.85em; }
+  .logo .spinner {
+    position: absolute;
+    left: 142px;
+    top: 20px; }
 
 header.main {
   background: rgba(0, 0, 0, 0.15);

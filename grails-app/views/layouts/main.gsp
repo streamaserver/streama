@@ -20,6 +20,11 @@
 <header class="main" ng-if="!isCurrentState('player')">
 	<a class="logo" ui-sref="dash">
 		<asset:image src="logo.png"></asset:image>
+    <div class="spinner" ng-show="baseData.loading">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
 	</a>
 
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -29,7 +34,7 @@
 				<div class="dash-search form-group has-feedback">
 					<input type="text" placeholder="Search.." class="form-control input-xs" ng-model="dashSearch"
 								 typeahead-append-to-body="true" typeahead="(item.title || item.name) for item in searchMedia($viewValue)"
-								 typeahead-on-select="selectFromSearch($item)" typeahead-template-url="typeahead--media.htm"/>
+								 typeahead-on-select="selectFromSearch($item)" typeahead-template-url="typeahead--media.htm" typeahead-loading="baseData.loading"/>
 					<span class="form-control-feedback ion-android-search" aria-hidden="true"></span>
 				</div>
 			</li>

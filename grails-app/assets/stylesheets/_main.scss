@@ -12,8 +12,15 @@ h1,h2,h3,h4,h5,h6{
   float: left;
   width: 130px;
   padding: 6px 0;
+  position: relative;
   i{
     font-size: 0.85em;
+  }
+
+  .spinner{
+    position: absolute;
+    left: 142px;
+    top: 20px;
   }
 }
 
