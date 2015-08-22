@@ -1,6 +1,10 @@
 .media-list{
   @include clearfix;
+  margin-right: -15px;
 }
+
+
+
 
 .media-list-item{
   float: left;
@@ -12,6 +16,14 @@
 
   .media-item{
     margin: 0 -12px;
+  }
+}
+
+.media-poster-item{
+  width: 170px;
+
+  .media-item{
+    height: 250px;
   }
 }
 
@@ -27,6 +39,18 @@
     @include vendor-property('transition', 'transform .3s');
   }
 
+  .info-icon{
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    line-height: 1em;
+    font-size: 31px;
+    color: $primary;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0);
+    opacity: 0;
+    @include vendor-property('transition', 'opacity .2s');
+  }
+
   .play-text{
     position: absolute;
     top: 0;
@@ -39,6 +63,15 @@
     font-weight: bold;
     opacity: 0;
     @include vendor-property('transition', 'opacity .2s');
+
+    h4{
+      font-size: 17px;
+      margin: 5px 0;
+    }
+    p{
+      font-weight: 300;
+      font-size: 12px;
+    }
   }
 
 
@@ -66,6 +99,7 @@
 
   &:hover{
     .play-icon,
+    .info-icon,
     .play-text{
       opacity: 1;
     }

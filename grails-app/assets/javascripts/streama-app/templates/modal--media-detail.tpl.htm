@@ -1,0 +1,32 @@
+
+<div class="modal-body modal-media-detail">
+  <i class="ion-close pull-right" ng-click="cancel()"></i>
+
+
+  <legend>
+    {{media.name || media.title}}
+    <span ng-if="currentUser.isContentManager">
+      <br/>
+      <button class="btn btn-primary btn-xs" ng-click="editMedia(media)">edit</button>
+    </span>
+  </legend>
+
+
+
+  <div class="row">
+    <div class="col-sm-8">
+      <ul class="info-list">
+        <li><strong>Released: </strong> {{media.release_date.substring(0,4) || media.first_air_date.substring(0,4)}}</li>
+        <li><strong>IMDB: </strong> <a href="http://www.imdb.com/title/{{media.imdb_id}}">{{media.name || media.title}}</a></li>
+        <li><strong>Rating: </strong> {{media.vote_average}} ({{media.vote_count}} votes)</li>
+      </ul>
+
+      <hr/>
+      <h4>Overview</h4>
+      <p class="overview-text">{{media.overview}}</p>
+    </div>
+    <div class="col-sm-4">
+      <img ng-src="https://image.tmdb.org/t/p/w300/{{media.poster_path}}"/>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,8 @@
 'use strict';
 
-streamaApp.controller('dashCtrl', ['$scope', 'apiService', '$state', '$rootScope', 'localStorageService', function ($scope, apiService, $state, $rootScope, localStorageService) {
+streamaApp.controller('dashCtrl', [
+  '$scope', 'apiService', '$state', '$rootScope', 'localStorageService', 'modalService',
+  function ($scope, apiService, $state, $rootScope, localStorageService, modalService) {
 	$scope.loading = true;
 
   if($rootScope.baseData.redirected){
@@ -24,6 +26,10 @@ streamaApp.controller('dashCtrl', ['$scope', 'apiService', '$state', '$rootScope
       }
     });
   }
+
+  $scope.showDetails = function (media) {
+    modalService.mediaDetailModal(media);
+  };
 
 
 

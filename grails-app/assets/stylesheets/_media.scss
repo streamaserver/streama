@@ -1,0 +1,35 @@
+@media (max-width: 670px){
+  .media-poster-item{
+    width: 23%;
+    width: calc(25% - 15px);
+
+    .media-item{
+      height: auto;
+    }
+  }
+
+  .media-list-continue-watching{
+    .media-list-item{
+      width: 47%;
+      width: calc(50% - 15px);
+    }
+  }
+}
+
+@media (max-width: 430px){
+  .media-poster-item{
+    width: 47%;
+    width: calc(50% - 15px);
+
+    .media-item{
+      height: auto;
+    }
+  }
+
+  .media-list-continue-watching{
+    .media-list-item{
+      float: none;
+      width: auto;
+    }
+  }
+}

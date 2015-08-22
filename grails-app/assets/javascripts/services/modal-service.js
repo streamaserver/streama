@@ -110,6 +110,24 @@ streamaApp.factory('modalService', ['$modal', function ($modal) {
       modalInstance.result.then(function (data) {
         (callback || angular.noop)(data);
       });
-    }
+    },
+
+
+		mediaDetailModal: function (media, callback) {
+			var modalInstance = $modal.open({
+				templateUrl: 'modal--media-detail.htm',
+				controller: 'modalMediaDetailCtrl',
+				size: 'lg',
+				resolve: {
+					media: function () {
+						return media;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (data) {
+				(callback || angular.noop)(data);
+			});
+		},
 	};
 }]);

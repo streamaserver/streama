@@ -10,7 +10,7 @@
     <h3>Continue watching</h3>
 
 
-    <div class="media-list">
+    <div class="media-list media-list-continue-watching">
       <div class="media-list-item" ng-repeat="viewingStatus in continueWatching">
         <div class="media-item">
           <img ng-if="viewingStatus.video.backdrop_path" ng-src="https://image.tmdb.org/t/p/w300/{{viewingStatus.video.backdrop_path}}"/>
@@ -42,16 +42,19 @@
   <div ng-if="episodes.length">
     <h3>Discover Shows</h3>
     <div class="media-list">
-      <div class="media-list-item" ng-repeat="episode in episodes">
+      <div class="media-list-item media-poster-item" ng-repeat="episode in episodes">
         <div class="media-item" >
-          <img ng-if="episode.show.backdrop_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.show.backdrop_path}}"/>
-          <div ng-if="!episode.show.backdrop_path" class="fallback-image"></div>
+          <img ng-if="episode.show.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.show.poster_path}}"/>
+          <div ng-if="!episode.show.poster_path" class="fallback-image"></div>
 
-          <div class="play-text">Play {{episode.episodeString}} - {{episode.name}}</div>
+          <div class="play-text">
+            <h4>{{episode.show.name}}</h4>
+            <p>{{episode.episodeString}} - {{episode.name}}</p>
+          </div>
+
+          <i class="info-icon ion-ios-information" ng-click="showDetails(episode.show)"></i>
           <a class="play-icon ion-ios-play" ui-sref="player({videoId: episode.id})"></a>
         </div>
-        <div class="media-title">{{episode.show.name}}</div>
-        <div class="media-meta"><i class="ion-ios-star"></i>{{episode.show.vote_average | number:1}} | {{episode.show.first_air_date}} </div>
       </div>
     </div>
 
@@ -61,13 +64,18 @@
   <div ng-if="movies.length">
     <h3>Discover Movies</h3>
     <div class="media-list">
-      <div class="media-list-item" ng-repeat="movie in movies">
+      <div class="media-list-item media-poster-item" ng-repeat="movie in movies">
         <div class="media-item" >
-          <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
+          <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
+
+          <div class="play-text">
+            <h4>{{movie.title}}</h4>
+            <p>{{movie.release_date.substring(0,4)}}</p>
+          </div>
+
+          <i class="info-icon ion-ios-information" ng-click="showDetails(movie)"></i>
           <a class="play-icon ion-ios-play" ui-sref="player({videoId: movie.id})"></a>
         </div>
-        <h3 class="media-title">{{movie.title}}</h3>
-        <div class="media-meta">Release: {{movie.release_date}} | <i class="ion-ios-star"></i> {{movie.vote_average}}</div>
       </div>
     </div>
   </div>
