@@ -10,6 +10,7 @@
 //= require angular/angular.js
 //= require angular-ui-router/release/angular-ui-router.js
 //= require angular-sanitize/angular-sanitize.js
+//= require bootstrap/dist/js/bootstrap.js
 //= require ui-bootstrap-custom-build/ui-bootstrap-custom-0.13.1.js
 //= require ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-0.13.1.js
 //= require alertify/alertify.js

@@ -297,17 +297,26 @@ header.main {
     content: "";
     display: table;
     clear: both; }
-  header.main .navigation {
+  header.main .navbar-nav {
     float: right;
     padding: 0;
     margin: 0; }
-    header.main .navigation li {
+    header.main .navbar-nav > li {
       list-style: none;
       display: inline-block; }
-      header.main .navigation li a {
+      header.main .navbar-nav > li > a {
         color: white;
         padding: 11px 6px;
         display: block; }
+
+.navbar-toggle {
+  margin: 0;
+  font-size: 30px;
+  padding: 0;
+  line-height: 1.2em;
+  position: absolute;
+  top: 6px;
+  right: 16px; }
 
 hr {
   border-color: rgba(255, 255, 255, 0.08); }
@@ -4565,6 +4574,19 @@ body.mdx-active #mdx-control-view {
   .genre-tag.active {
     background: #2898c5; }
 
+@media (max-width: 767px) {
+  .logo {
+    float: none;
+    display: block;
+    margin-bottom: 2px; }
+
+  header.main .navbar-nav {
+    float: none;
+    margin-top: 8px; }
+    header.main .navbar-nav > li {
+      display: block; }
+      header.main .navbar-nav > li > a {
+        padding: 5px 10px; } }
 @media (max-width: 670px) {
   .media-poster-item {
     width: 23%;

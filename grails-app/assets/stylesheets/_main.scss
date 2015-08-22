@@ -23,22 +23,33 @@ header.main{
   padding: 5px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.11);
 
-  .navigation{
+  .navbar-nav{
     float: right;
     padding: 0;
     margin: 0;
 
-    li{
+    >li{
       list-style: none;
       display: inline-block;
 
-      a{
+      >a{
         color: white;
         padding: 11px 6px;
         display: block;
       }
     }
   }
+}
+
+
+.navbar-toggle{
+  margin: 0;
+  font-size: 30px;
+  padding: 0;
+  line-height: 1.2em;
+  position: absolute;
+  top: 6px;
+  right: 16px;
 }
 
 .content{

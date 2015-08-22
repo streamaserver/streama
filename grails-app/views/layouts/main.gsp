@@ -22,24 +22,28 @@
 		<asset:image src="logo.png"></asset:image>
 	</a>
 
-	<ul class="navigation">
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<ul class="nav navbar-nav">
+			<sec:ifLoggedIn>
+				<li><a ui-sref="dash">Dashboard</a></li>
+			</sec:ifLoggedIn>
 
-		<sec:ifLoggedIn>
-			<li><a ui-sref="dash">Dashboard</a></li>
-		</sec:ifLoggedIn>
+			<sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
+				<li><a ui-sref="admin.shows">Manage Content</a></li>
+			</sec:ifAnyGranted>
+			<sec:ifAnyGranted roles="ROLE_ADMIN">
+				<li><a ui-sref="admin.users">Admin</a></li>
+			</sec:ifAnyGranted>
 
-		<sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
-			<li><a ui-sref="admin.shows">Manage Content</a></li>
-		</sec:ifAnyGranted>
-		<sec:ifAnyGranted roles="ROLE_ADMIN">
-			<li><a ui-sref="admin.users">Admin</a></li>
-		</sec:ifAnyGranted>
+			<sec:ifLoggedIn>
+				<li><a ui-sref="profile">Profile</a></li>
+				<li><g:link uri="/j_spring_security_logout">Logout</g:link></li>
+			</sec:ifLoggedIn>
+		</ul>
+	</div>
 
-		<sec:ifLoggedIn>
-			<li><a ui-sref="profile">Profile</a></li>
-			<li><g:link uri="/j_spring_security_logout">Logout</g:link></li>
-		</sec:ifLoggedIn>
-	</ul>
+
+	<i class="ion-navicon navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></i>
 </header>
 
 <g:layoutBody/>

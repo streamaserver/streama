@@ -1,3 +1,25 @@
+@media (max-width: 767px){
+  .logo{
+    float: none;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  header.main .navbar-nav{
+    float: none;
+    margin-top: 8px;
+
+    >li{
+      display: block;
+      >a{
+        padding: 5px 10px;
+      }
+    }
+  }
+}
+
+
+
 @media (max-width: 670px){
   .media-poster-item{
     width: 23%;
@@ -14,6 +36,7 @@
       width: calc(50% - 15px);
     }
   }
+
 }
 
 @media (max-width: 430px){
