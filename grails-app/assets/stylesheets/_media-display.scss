@@ -74,6 +74,15 @@
     }
   }
 
+  .complete-watching{
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    margin-left: -53px;
+    opacity: 0;
+    @include vendor-property('transition', 'opacity .2s');
+  }
+
 
   .play-icon{
     position: absolute;
@@ -99,6 +108,7 @@
 
   &:hover{
     .play-icon,
+    .complete-watching,
     .info-icon,
     .play-text{
       opacity: 1;

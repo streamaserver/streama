@@ -32,6 +32,7 @@ class VideoController {
       video{
         isNotEmpty("files")
       }
+      eq("completed", false)
       order("lastUpdated", "desc")
     }
     def movies = Movie.list().findAll{ Movie movie ->

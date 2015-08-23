@@ -178,7 +178,6 @@ streamaApp.run(
       });
     };
 
-
     $rootScope.selectFromSearch = function (item) {
 			if(item.hasFiles){
 				var id;

@@ -115,6 +115,9 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			save: function (params) {
 				return $http.get(urlBase + 'viewingStatus/save.json', {params: params});
 			},
+			markCompleted: function (viewingStatus) {
+				return $http.get(urlBase + 'viewingStatus/markCompleted.json', {params: {id: viewingStatus.id}});
+			},
 			delete: function (id) {
 				return $http.get(urlBase + 'viewingStatus/delete.json', {params: {id: id}});
 			}

@@ -70,4 +70,15 @@ class ViewingStatusController {
         viewingStatusInstance.delete flush:true
         render status: NO_CONTENT
     }
+
+    @Transactional
+    def markCompleted(ViewingStatus viewingStatusInstance){
+        if (viewingStatusInstance == null) {
+            render status: NOT_FOUND
+            return
+        }
+        viewingStatusInstance.completed = true
+        viewingStatusInstance.save flush:true
+        respond viewingStatusInstance, [status: OK]
+    }
 }

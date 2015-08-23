@@ -19,6 +19,7 @@
           <div ng-if="!viewingStatus.video.still_path && !viewingStatus.video.backdrop_path && !viewingStatus.video.show.backdrop_path" class="fallback-image"></div>
 
           <div class="play-text">Continue "{{viewingStatus.video.title || viewingStatus.video.show.name}}"</div>
+          <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">Mark completed</button>
           <i class="play-icon ion-ios-play" ui-sref="player({videoId: viewingStatus.video.id})"></i>
         </div>
 
