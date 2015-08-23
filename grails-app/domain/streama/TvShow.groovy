@@ -22,8 +22,13 @@ class TvShow {
   Double vote_average
   Integer vote_count
   Double popularity
-
   static hasMany = [episodes: Episode]
+
+  static mapping = {
+    cache true
+    episodes cache: true
+  }
+
 
   static constraints = {
       name nullable: false

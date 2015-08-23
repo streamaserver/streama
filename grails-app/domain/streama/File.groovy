@@ -15,7 +15,10 @@ class File {
   Long size
   
   String quality
-  
+
+  static mapping = {
+    cache true
+  }
 
   static constraints = {
     sha256Hex maxSize: 64

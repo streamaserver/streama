@@ -15,6 +15,12 @@ class ViewingStatus {
   Integer runtime
   Boolean completed = false
 
+  static mapping = {
+    cache true
+    video cache: true
+    tvShow cache: true
+    user cache: true
+  }
 
   static constraints = {
     dateCreated nullable: true

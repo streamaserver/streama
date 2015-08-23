@@ -14,6 +14,9 @@ class Movie extends Video{
   static constraints = {
   }
 
+  static mapping = {
+    cache true
+  }
 
   def getSimilarMovies(){
     theMovieDbService.getSimilarMovies(this.apiId)

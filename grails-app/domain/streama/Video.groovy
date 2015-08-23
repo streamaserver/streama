@@ -17,6 +17,10 @@ class Video {
 
   static hasMany = [files: File]
 
+  static mapping = {
+    cache true
+    files cache: true
+  }
 
   static constraints = {
     overview size: 1..5000
