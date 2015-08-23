@@ -14,9 +14,7 @@
       <div class="media-list-item" ng-repeat="viewingStatus in continueWatching">
         <div class="media-item">
           <img ng-if="viewingStatus.video.backdrop_path" ng-src="https://image.tmdb.org/t/p/w300/{{viewingStatus.video.backdrop_path}}"/>
-          <img ng-if="viewingStatus.video.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{viewingStatus.video.still_path}}"/>
-          <img ng-if="!viewingStatus.video.still_path && viewingStatus.video.show.backdrop_path" ng-src="https://image.tmdb.org/t/p/w300/{{viewingStatus.video.show.backdrop_path}}"/>
-          <div ng-if="!viewingStatus.video.still_path && !viewingStatus.video.backdrop_path && !viewingStatus.video.show.backdrop_path" class="fallback-image"></div>
+          <div ng-if="!viewingStatus.video.show.backdrop_path" class="fallback-image"></div>
 
           <div class="play-text">Continue "{{viewingStatus.video.title || viewingStatus.video.show.name}}"</div>
           <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">Mark completed</button>
@@ -25,8 +23,8 @@
 
         <div class="media-progress-wrapper">
 
-          <div class="progress-info" ng-show="viewingStatus.tvShow">{{viewingStatus.video.episodeString}} - {{viewingStatus.video.name}}</div>
-          <div class="progress-info" ng-show="!viewingStatus.tvShow">{{viewingStatus.video.title}}</div>
+          <div class="progress-info" ng-show="viewingStatus.video.isEpisode">{{viewingStatus.video.episodeString}} - {{viewingStatus.video.title}}</div>
+          <div class="progress-info" ng-show="!viewingStatus.video.isEpisode">{{viewingStatus.video.title}}</div>
 
           <div class="progress-time">{{viewingStatus.currentPlayTime | secondsToDateTime | date:'mm:ss'}} min</div>
 

@@ -71,7 +71,7 @@ class MarshallerService {
       returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
-      returnArray['hasFiles'] = returnArray['files']
+      returnArray['hasFiles'] = (returnArray['files'] ? true : false)
 
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
@@ -94,7 +94,7 @@ class MarshallerService {
       returnArray['vote_count'] = tvShow.vote_count
       returnArray['popularity'] = tvShow.popularity
 
-      returnArray['hasFiles'] = tvShow.episodes?.find{it.files}
+      returnArray['hasFiles'] = (tvShow.episodes?.find{it.files} ? true : false)
       returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
 
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
@@ -119,7 +119,7 @@ class MarshallerService {
       returnArray['files'] = video.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = video.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
-      returnArray['hasFiles'] = returnArray['files']
+      returnArray['hasFiles'] = (returnArray['files'] ? true : false)
 
       returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(video, springSecurityService.currentUser)
 
@@ -184,7 +184,7 @@ class MarshallerService {
     }
 
 
-    JSON.createNamedConfig('fullViewingStatus') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('dashViewingStatus') { DefaultConverterConfiguration<JSON> cfg ->
       cfg.registerObjectMarshaller(ViewingStatus) { ViewingStatus  viewingStatus ->
         def returnArray = [:]
 
@@ -192,10 +192,98 @@ class MarshallerService {
         returnArray['dateCreated'] = viewingStatus.dateCreated
         returnArray['lastUpdated'] = viewingStatus.lastUpdated
         returnArray['video'] = viewingStatus.video
-        returnArray['tvShow'] = viewingStatus.tvShow
-        returnArray['user'] = viewingStatus.user
         returnArray['currentPlayTime'] = viewingStatus.currentPlayTime
         returnArray['runtime'] = viewingStatus.runtime
+
+        return returnArray;
+      }
+      cfg.registerObjectMarshaller(Video) { Video  video ->
+        def returnArray = [:]
+
+        returnArray['id'] = video.id
+        returnArray['dateCreated'] = video.dateCreated
+        returnArray['lastUpdated'] = video.lastUpdated
+        returnArray['overview'] = video.overview
+        returnArray['imdb_id'] = video.imdb_id
+        returnArray['vote_average'] = video.vote_average
+        returnArray['vote_count'] = video.vote_count
+        returnArray['popularity'] = video.popularity
+        returnArray['original_language'] = video.original_language
+
+        if(video instanceof Movie){
+          returnArray['title'] = video.title
+          returnArray['release_date'] = video.release_date
+          returnArray['backdrop_path'] = video.backdrop_path
+        }
+
+        if(video instanceof Episode){
+          returnArray['isEpisode'] = true
+          returnArray['title'] = video.show?.name
+          returnArray['backdrop_path'] = video.still_path ? video.still_path : video.show?.backdrop_path
+          returnArray['episodeString'] = video.episodeString
+        }
+
+        return returnArray;
+      }
+    }
+
+    JSON.createNamedConfig('firstEpisode') { DefaultConverterConfiguration<JSON> cfg ->
+      cfg.registerObjectMarshaller(Episode) { Episode  episode ->
+        def returnArray = [:]
+
+        returnArray['id'] = episode.id
+        returnArray['name'] = episode.name
+        returnArray['dateCreated'] = episode.dateCreated
+        returnArray['lastUpdated'] = episode.lastUpdated
+        returnArray['overview'] = episode.overview
+        returnArray['imdb_id'] = episode.imdb_id
+        returnArray['vote_average'] = episode.vote_average
+        returnArray['vote_count'] = episode.vote_count
+        returnArray['popularity'] = episode.popularity
+        returnArray['show'] = episode.show
+        returnArray['episodeString'] = episode.episodeString
+        returnArray['air_date'] = episode.air_date
+        returnArray['still_path'] = episode.still_path
+
+        return returnArray;
+      }
+      cfg.registerObjectMarshaller(TvShow) { TvShow  tvShow ->
+        def returnArray = [:]
+
+        returnArray['id'] = tvShow.id
+        returnArray['name'] = tvShow.name
+        returnArray['dateCreated'] = tvShow.dateCreated
+        returnArray['first_air_date'] = tvShow.first_air_date
+        returnArray['lastUpdated'] = tvShow.lastUpdated
+        returnArray['overview'] = tvShow.overview
+        returnArray['imdb_id'] = tvShow.imdb_id
+        returnArray['vote_average'] = tvShow.vote_average
+        returnArray['vote_count'] = tvShow.vote_count
+        returnArray['popularity'] = tvShow.popularity
+        returnArray['backdrop_path'] = tvShow.backdrop_path
+        returnArray['poster_path'] = tvShow.poster_path
+
+        return returnArray;
+      }
+    }
+
+    JSON.createNamedConfig('dashMovies') { DefaultConverterConfiguration<JSON> cfg ->
+      cfg.registerObjectMarshaller(Movie) { Movie  movie ->
+        def returnArray = [:]
+
+        returnArray['id'] = movie.id
+        returnArray['dateCreated'] = movie.dateCreated
+        returnArray['lastUpdated'] = movie.lastUpdated
+        returnArray['overview'] = movie.overview
+        returnArray['imdb_id'] = movie.imdb_id
+        returnArray['vote_average'] = movie.vote_average
+        returnArray['vote_count'] = movie.vote_count
+        returnArray['popularity'] = movie.popularity
+        returnArray['original_language'] = movie.original_language
+        returnArray['title'] = movie.title
+        returnArray['release_date'] = movie.release_date
+        returnArray['backdrop_path'] = movie.backdrop_path
+        returnArray['poster_path'] = movie.poster_path
 
         return returnArray;
       }

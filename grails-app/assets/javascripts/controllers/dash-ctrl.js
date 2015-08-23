@@ -33,7 +33,7 @@ streamaApp.controller('dashCtrl', [
 
 
   $scope.markCompleted = function (viewingStatus) {
-    alertify.confirm("Are you sure you want to mark this video as completed? It will get removed from this list and the lists below. But you can still search for it above.", function (confirmed) {
+    alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
       if(confirmed){
         apiService.viewingStatus.markCompleted(viewingStatus).success(function (data) {
           _.remove($scope.continueWatching, {'id': data.id});

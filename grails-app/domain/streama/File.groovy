@@ -16,10 +16,6 @@ class File {
   
   String quality
 
-  static mapping = {
-    cache true
-  }
-
   static constraints = {
     sha256Hex maxSize: 64
     quality inList: ['720p', '480p', '360p']

@@ -56,13 +56,19 @@ class VideoController {
 
     }
 
-    result.firstEpisodes = firstEpisodes
-    result.movies = movies
-    result.continueWatching = continueWatching
-
-    JSON.use('fullViewingStatus'){
-      respond result
+    JSON.use ('firstEpisode') {
+      result.firstEpisodes = JSON.parse((firstEpisodes as JSON).toString())
     }
+
+    JSON.use('dashMovies'){
+      result.movies = JSON.parse((movies as JSON).toString())
+    }
+
+    JSON.use ('dashViewingStatus') {
+      result.continueWatching = JSON.parse((continueWatching as JSON).toString())
+    }
+
+    respond result
   }
 
   @Transactional
