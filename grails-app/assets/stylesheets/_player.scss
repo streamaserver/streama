@@ -1,3 +1,9 @@
+streama-video-player{
+  &.nocursor{
+    cursor:none;
+  }
+}
+
 .video-wrapper-inner,
 .player-wrapper{
   @include flexbox;
@@ -9,6 +15,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+
 }
 
 .player-wrapper{

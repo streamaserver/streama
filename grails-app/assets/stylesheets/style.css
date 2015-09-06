@@ -803,6 +803,9 @@ hr {
     -webkit-transform: scale(1);
     transform: scale(1); } }
 
+streama-video-player.nocursor {
+  cursor: none; }
+
 .video-wrapper-inner,
 .player-wrapper {
   display: -webkit-box;

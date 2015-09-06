@@ -13,6 +13,7 @@ streamaApp.directive('streamaVideoPlayer', [
 
       link: function ($scope, $elem, $attrs) {
         var video = $elem.find('video')[0];
+        $elem.addClass('nocursor');
 
         $scope.isMobile = false; //initiate as false
         // device detection
@@ -92,10 +93,12 @@ streamaApp.directive('streamaVideoPlayer', [
           }else{
             $scope.play();
           }
+          $scope.$apply();
         });
 
         //$scope.controlsVisible = true;
         $scope.showControls = function () {
+          $elem.removeClass('nocursor');
           $timeout.cancel(controlDisplayTimeout);
           $timeout.cancel(overlayTimeout);
           $scope.controlsVisible = true;
@@ -105,12 +108,16 @@ streamaApp.directive('streamaVideoPlayer', [
           controlDisplayTimeout = $timeout(function(){
             $scope.controlsVisible = false;
 
-            if(!$scope.playing)
+            if(!$scope.playing){
               overlayTimeout = $timeout(function () {
                 if(!$scope.playing){
                   $scope.overlayVisible = true;
                 }
               }, 5000);
+            }else{
+              $elem.addClass('nocursor');
+            }
+
           }, 2000);
         };
 
@@ -140,7 +147,7 @@ streamaApp.directive('streamaVideoPlayer', [
         var setVolue = function (slider) {
           var volume = slider.value / 10;
           video.volume = volume;
-          if($scope.rememberVolumeSetting){
+          if($scope.options.rememberVolumeSetting){
             localStorageService.set('volumeLevel', $scope.volumeLevel);
           }
         };
