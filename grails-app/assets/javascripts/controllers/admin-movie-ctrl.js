@@ -26,7 +26,11 @@ streamaApp.controller('adminMovieCtrl', [
 			})
 		};
 
-
+		$scope.addToCurrentNotification = function(){
+			apiService.notification.addMovieToCurrentNotification($stateParams.movieId).success(function () {
+				alertify.success('The movie was added to the current notification queue.');
+			});
+		};
 
     $scope.manageFiles = function(movie){
       modalService.fileManagerModal(movie);

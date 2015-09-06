@@ -16,6 +16,16 @@ streamaApp.controller('adminShowCtrl', ['$scope', 'apiService', '$stateParams', 
     });
   };
 
+	$scope.addToCurrentNotification = function(){
+		alertify.prompt('Add a description to this TvShow. For instance, tell the users which season you added.', function (confirmed, text) {
+			if(confirmed){
+				apiService.notification.addTvShowToCurrentNotification($stateParams.showId, text).success(function () {
+					alertify.success('The TvShow was added to the current notification queue.');
+				});
+			}
+		})
+	};
+
 
 	$scope.addNewEpisode = function(){
 		modalService.videoModal(null, 'manual', $scope.show, function (data) {

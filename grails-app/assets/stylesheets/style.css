@@ -143,6 +143,9 @@ label {
 .comma-separatad:last-child:after {
   display: none; }
 
+.fade-50 {
+  opacity: 0.5; }
+
 .btn {
   background: gray;
   border-color: #787878;

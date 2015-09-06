@@ -1,0 +1,40 @@
+<button class="pull-right btn btn-success btn-lg" ng-if="openNotificationAmount()" ng-click="sendCurrentNotifcation()">Send Current Notification Queue</button>
+
+<h1>Notification Queue</h1>
+
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+
+<hr/>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>date Created</td>
+      <td>movie / tv Show</td>
+      <td>Description</td>
+      <td>is Completed</td>
+    </tr>
+  </thead>
+  <tr ng-repeat="notification in notifications | orderBy: '-dateCreated'" ng-class="{'fade-50': notification.isCompleted}">
+    <td>{{notification.dateCreated | date:'short'}}</td>
+    <td ng-if="notification.movie">
+      <img ng-if="notification.movie.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{notification.movie.poster_path}}" style="max-width: 50px; margin-right: 10px;"/>
+      {{notification.movie.title}} ({{notification.movie.release_date.substring(0,4)}})
+    </td>
+    <td ng-if="notification.tvShow">
+      <img ng-if="notification.tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{notification.tvShow.poster_path}}" style="max-width: 50px; margin-right: 10px;"/>
+      {{notification.tvShow.name}} ({{notification.tvShow.first_air_date.substring(0,4)}})
+    </td>
+    <td>{{notification.description}}</td>
+    <td style="width: 117px;" class="text-center">
+      <i class="ion-ios-checkmark text-success" ng-if="notification.isCompleted" style="font-size: 42px; line-height: 1.7em;"></i>
+    </td>
+  </tr>
+</table>
+
+

@@ -115,6 +115,23 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
         }]
       }
 		})
+		.state('admin.notifications', {
+			url: '/notifications',
+			templateUrl: 'admin-notifications.htm',
+			controller: 'adminNotificationsCtrl',
+      resolve: {
+        currentUser: ['apiService', '$rootScope', '$state', function (apiService, $rootScope, $state) {
+          return apiService.currentUser().success(function (data) {
+            if (data.isAdmin) {
+              $rootScope.currentUser = data;
+              return data;
+            } else {
+              $state.go('dash');
+            }
+          });
+        }]
+      }
+		})
 		.state('admin.shows', {
 			url: '/shows',
 			templateUrl: 'admin-shows.htm',

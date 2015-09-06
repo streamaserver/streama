@@ -137,6 +137,22 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 		},
 
 
+		notification: {
+			list: function () {
+				return $http.get(urlBase + 'notificationQueue/index.json');
+			},
+			addMovieToCurrentNotification: function (movieId) {
+				return $http.get(urlBase + 'notificationQueue/addMovieToCurrentNotification.json', {params: {id: movieId}});
+			},
+			addTvShowToCurrentNotification: function (tvShowId, text) {
+				return $http.get(urlBase + 'notificationQueue/addTvShowToCurrentNotification.json', {params: {id: tvShowId, description: text}});
+			},
+			sendCurrentNotifcation: function () {
+				return $http.get(urlBase + 'notificationQueue/sendCurrentNotifcations.json');
+			}
+		},
+
+
 		theMovieDb: {
 			search: function (type, name) {
 				return $http.get(urlBase + 'theMovieDb/search.json', {params: {type: type, name: name}});

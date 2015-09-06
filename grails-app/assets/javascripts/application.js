@@ -23,4 +23,3 @@
 //= require angular-local-storage/dist/angular-local-storage.js
 //= require streama-app.js
 //= require_tree .
-//= require_self

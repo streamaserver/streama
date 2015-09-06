@@ -144,6 +144,8 @@ log4j.main = {
 }
 
 
+grails.mail.default.from = "Streama.club <info@streama.club>"
+
 
 grails.databinding.dateFormats = [
     "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", // javascript format in json
@@ -190,6 +192,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/episode/**':                      ['ROLE_CONTENT_MANAGER'],
 
 	'/user/**':                         ['ROLE_ADMIN'],
+	'/notificationQueue/**':            ['ROLE_ADMIN'],
 	'/settings/**':                     ['ROLE_ADMIN'],
   '/bulk/**':                         ['ROLE_ADMIN'],
   '/monitoring/**':                   ['ROLE_ADMIN'],

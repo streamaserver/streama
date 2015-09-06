@@ -52,6 +52,19 @@ class MarshallerService {
       return returnArray;
     }
 
+    JSON.registerObjectMarshaller(NotificationQueue) {  NotificationQueue notificationQueue ->
+      def returnArray = [:]
+
+      returnArray['id'] = notificationQueue.id
+      returnArray['dateCreated'] = notificationQueue.dateCreated
+      returnArray['movie'] = notificationQueue.movie
+      returnArray['tvShow'] = notificationQueue.tvShow
+      returnArray['description'] = notificationQueue.description
+      returnArray['isCompleted'] = notificationQueue.isCompleted
+
+      return returnArray;
+    }
+
     JSON.registerObjectMarshaller(Movie){ Movie movie ->
       def returnArray = [:]
 
