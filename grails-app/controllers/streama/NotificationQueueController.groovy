@@ -11,9 +11,8 @@ class NotificationQueueController {
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond NotificationQueue.list(params), [status: OK]
+    def index() {
+        respond NotificationQueue.list(), [status: OK]
     }
 
     @Transactional
