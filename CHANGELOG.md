@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.1.5]
+## [0.1.5] - 2015-10-24
 ### Features
 - added notification system for your users, that way you can send out notification emails with your new content! 
 
