@@ -39,4 +39,14 @@ streamaApp.controller('adminNotificationsCtrl', ['$scope', 'apiService', 'modalS
 		});
 	}
 
+	$scope.delete = function (notification) {
+		alertify.confirm('Are you sure you want to delete this notification?', function (confirmed) {
+			if(confirmed){
+				apiService.notification.delete(notification.id).success(function (data) {
+					_.remove($scope.notifications, {id: notification.id})
+				});
+			}
+		})
+	};
+
 }]);

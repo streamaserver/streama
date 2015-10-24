@@ -149,7 +149,10 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			},
 			sendCurrentNotifcation: function () {
 				return $http.get(urlBase + 'notificationQueue/sendCurrentNotifcations.json');
-			}
+			},
+			delete: function (id) {
+				return $http.delete(urlBase + 'notificationQueue/delete.json', {params: {id: id}});
+			},
 		},
 
 

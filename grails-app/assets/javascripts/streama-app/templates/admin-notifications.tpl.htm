@@ -18,6 +18,7 @@
       <td>movie / tv Show</td>
       <td>Description</td>
       <td>is Completed</td>
+      <td></td>
     </tr>
   </thead>
   <tr ng-repeat="notification in notifications | orderBy: '-dateCreated'" ng-class="{'fade-50': notification.isCompleted}">
@@ -33,6 +34,9 @@
     <td>{{notification.description}}</td>
     <td style="width: 117px;" class="text-center">
       <i class="ion-ios-checkmark text-success" ng-if="notification.isCompleted" style="font-size: 42px; line-height: 1.7em;"></i>
+    </td>
+    <td style="width: 1px;">
+      <button class="btn btn-xs btn-danger" ng-click="delete(notification)">delete</button>
     </td>
   </tr>
 </table>
