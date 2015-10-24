@@ -24,6 +24,14 @@ h1,h2,h3,h4,h5,h6{
   }
 }
 
+.version{
+  position: absolute;
+  top: 22px;
+  left: 137px;
+  color: $primary;
+  font-size: 10px;
+}
+
 header.main{
   @include clearfix;
   background: rgba(0, 0, 0, 0.15);

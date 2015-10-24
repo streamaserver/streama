@@ -297,6 +297,13 @@ h1, h2, h3, h4, h5, h6 {
     left: 142px;
     top: 20px; }
 
+.version {
+  position: absolute;
+  top: 22px;
+  left: 137px;
+  color: #b0ddef;
+  font-size: 10px; }
+
 header.main {
   background: rgba(0, 0, 0, 0.15);
   padding: 5px 15px;
