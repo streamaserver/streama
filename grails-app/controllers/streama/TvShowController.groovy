@@ -52,7 +52,9 @@ class TvShowController {
   }
 
   def episodesForTvShow(TvShow tvShowInstance) {
-    respond Episode.findAllByShow(tvShowInstance), [status: OK]
+    JSON.use('episodesForTvShow') {
+      respond Episode.findAllByShow(tvShowInstance), [status: OK]
+    }
   }
 
   @Transactional

@@ -90,14 +90,14 @@
                 </h2>
                 <ul class="episode-list">
                   <li class="episode icon-player-forward-arrow" ng-repeat="episode in options.selectedEpisodes" ng-click="visible = !visible"
-                      ng-class="{'current': (episode.episode_number == options.currentEpisode.episode && episode.season_number == options.currentEpisode.season), 'no-files': !episode.files.length}" >
+                      ng-class="{'current': (episode.episode_number == options.currentEpisode.episode && episode.season_number == options.currentEpisode.season), 'no-files': !episode.hasFile}" >
                     <div class="flex-wrapper">
                       <span class="episode-number">{{episode.episode_number | padnumber:2}}</span>
                       <span class="episode-name">{{episode.name}}</span>
-                      <span class="episode-play" ng-if="episode.files.length" ui-sref="player({videoId: episode.id})"><i class="ion-play"></i></span>
+                      <span class="episode-play" ng-if="episode.hasFile" ui-sref="player({videoId: episode.id})"><i class="ion-play"></i></span>
                     </div>
 
-                    <div class="extra-episode-info" ng-show="visible || (episode.episode_number == video.episode_number && episode.season_number == video.season_number)">
+                    <div class="extra-episode-info" ng-if="visible || (episode.episode_number == video.episode_number && episode.season_number == video.season_number)">
                       <div class="image-wrapper">
                         <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w92/{{episode.still_path}}"/>
                         <div ng-if="!episode.still_path" class="fallback-image"></div>
