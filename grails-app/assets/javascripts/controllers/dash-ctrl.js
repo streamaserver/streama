@@ -5,16 +5,6 @@ streamaApp.controller('dashCtrl', [
   function ($scope, apiService, $state, $rootScope, localStorageService, modalService) {
 	$scope.loading = true;
 
-  if($rootScope.baseData.redirected){
-    var originUrl = localStorageService.get('originUrl');
-    if(originUrl){
-      location.href = originUrl;
-    }else{
-      location.href = location.href.replace('?redirected=true', '');
-    }
-
-  }
-
   if($rootScope.currentUser.isAdmin){
     apiService.settings.list().success(function (data) {
       var TheMovieDbAPI = _.find(data, {settingsKey: 'TheMovieDB API key'});

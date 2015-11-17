@@ -15,7 +15,7 @@
 
 	<g:layoutHead/>
 </head>
-<body ng-init="baseData.redirected = ${params.redirected}">
+<body>
 
 <header class="main" ng-if="!isCurrentState('player')">
 	<a class="logo" ui-sref="dash">
