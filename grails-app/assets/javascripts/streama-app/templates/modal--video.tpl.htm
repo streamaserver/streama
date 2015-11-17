@@ -68,8 +68,14 @@
   </div>
 
   <div class="modal-footer" ng-if="episode.episode_number">
-    <button class="btn btn-danger pull-left" ng-if="episode.id" ng-click="deleteVideo(episode)">Delete Episode</button>
-    <button class="btn btn-success" ng-click="saveEpisode(episode)">Save</button>
-    <button class="btn" ng-click="cancel()">Cancel</button>
+    <div class="btn-group pull-left">
+
+      <button class="btn btn-danger btn-sm" ng-if="episode.id" ng-click="deleteVideo(episode)">Delete Episode</button>
+      <button class="btn btn-sm" ng-click="refetch(episode)">Re-Fetch Episode</button>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-success" ng-click="saveEpisode(episode)">Save</button>
+      <button class="btn" ng-click="cancel()">Cancel</button>
+    </div>
   </div>
 </form>

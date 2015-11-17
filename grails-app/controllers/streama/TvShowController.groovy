@@ -70,4 +70,19 @@ class TvShowController {
 
     render status: NO_CONTENT
   }
+
+  @Transactional
+  def removeSeason() {
+    TvShow tvShow = TvShow.get(params.getInt('showId'))
+    int season = params.getInt('season_number')
+
+    if (!tvShow || season == null) {
+      render status: NOT_FOUND
+      return
+    }
+
+    Episode.findAllByShowAndSeason_number(tvShow, season)*.delete()
+
+    render status: NO_CONTENT
+  }
 }

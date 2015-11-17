@@ -34,6 +34,19 @@ streamaApp.controller('modalVideoCtrl', [
 		})
 		
 	};
+
+	$scope.refetch = function(video){
+		alertify.confirm("Are you sure you want to re-fetch the meta-data from TheMovieDb? " +
+				"All your changes except for the added files will be overridden?", function (confirmed) {
+			if(confirmed){
+				apiService.video.refetch(video.id).success(function (result) {
+					_.assign(video, result);
+					alertify.success('Fetch successful');
+				});
+			}
+		})
+		
+	};
 		
 	setTimeout(function () {
 		$('.name-input').focus();

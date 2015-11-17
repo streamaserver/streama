@@ -168,4 +168,21 @@ class VideoController {
     respond status: OK
 
   }
+
+  @Transactional
+  def refetch() {
+    Episode episode = Episode.get(params.getInt('videoId'))
+
+    if (!episode) {
+      render status: NOT_FOUND
+      return
+    }
+
+    log.debug(episode.movieDbMeta)
+    bindData(episode, episode.movieDbMeta, [exclude: 'id'])
+    episode.save flush: true, failOnError: true
+
+    respond episode
+
+  }
 }

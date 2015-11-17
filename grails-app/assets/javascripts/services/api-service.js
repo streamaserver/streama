@@ -24,6 +24,9 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			},
 			episodesForTvShow: function (id) {
 				return $http.get(urlBase + 'tvShow/episodesForTvShow.json', {params: {id: id}});
+			},
+			removeSeason: function (showId, season_number) {
+				return $http.get(urlBase + 'tvShow/removeSeason.json', {params: {showId: showId, season_number: season_number}});
 			}
 		},
 
@@ -78,6 +81,9 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			},
 			addFile: function (videoId, fileId) {
 				return $http.get(urlBase + 'video/addFile.json', {params: {videoId: videoId, fileId: fileId}});
+			},
+			refetch: function (videoId) {
+				return $http.get(urlBase + 'video/refetch.json', {params: {videoId: videoId}});
 			}
 		},
 

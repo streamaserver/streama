@@ -55,7 +55,7 @@
   .admin-content{
     padding: 15px;
     @include flex(1);
-    overflow: auto;
+    overflow-y: scroll;
   }
 
   .media-list-item{

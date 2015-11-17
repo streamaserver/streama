@@ -30,6 +30,9 @@ class TheMovieDbController {
     def result = []
 
     episodes?.each{ episodeData ->
+      if(Episode.findByShowAndSeason_numberAndEpisode_number(tvShow, season, episodeData.episode_number)){
+        return
+      }
       Episode episode = new Episode(episodeData)
       episode.show = tvShow
       episode.save failOnError: true

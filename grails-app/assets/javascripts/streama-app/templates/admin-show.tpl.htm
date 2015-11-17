@@ -72,21 +72,39 @@
 </div>
 
 
-
-
-
 <hr/>
 <br/><br/>
-<button class="btn btn-primary" ng-click="addNewEpisode()">Add New Episode Manually</button>
-<button class="btn btn-primary" ng-click="fetchAllEpisodesForSeason()">Fetch all Episode for Season</button>
 
-<div ng-if="!seasons" class="data-display">No Episodes yet</div>
 
-<div ng-repeat="(season, episodes) in seasons | orderBy:'season'" ng-if="!episode.deleted" class="season-wrapper">
-  <h3 class="uppercase">Season {{season}}</h3>
+<div class="spinner" ng-show="showLoading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
 
-  <div class="media-list">
-    <admin-episode episode="episode" ng-repeat="episode in episodes | orderBy:'episode_number'" ></admin-episode>
+<div ng-show="!showLoading">
+
+  <button class="btn btn-primary" ng-click="addNewEpisode()">Add New Episode Manually</button>
+  <button class="btn btn-primary" ng-click="fetchAllEpisodesForSeason()">Fetch all Episode for Season</button>
+
+  <div ng-if="!seasons" class="no-episodes-yet">No Episodes yet</div>
+
+  <div ng-repeat="(season, episodes) in seasons | orderBy:'season'" ng-if="!episode.deleted" class="season-wrapper">
+    <h3 class="season-fold-out-heading uppercase">
+      <span class="season-fold-out-inner" ng-click="openSeason($index)">
+        <i class="season-fold-out" ng-class="{'ion-arrow-right-b': seasonOpened != $index, 'ion-arrow-down-b': seasonOpened == $index}"></i>
+      Season {{season}}
+      </span>
+
+      <div class="btn-group pull-right" ng-if="seasonOpened == $index">
+        <button ng-click="refetchSeason(season)" class="btn btn-xs">Re-fetch Season</button>
+        <button ng-click="deleteSeason(season)" class="btn btn-danger btn-xs">Delete Season</button>
+      </div>
+    </h3>
+
+    <div class="media-list" ng-if="seasonOpened == $index">
+      <admin-episode episode="episode" ng-repeat="episode in episodes | orderBy:'episode_number'" ></admin-episode>
+    </div>
   </div>
 </div>
 

@@ -2,6 +2,8 @@ package streama
 
 class Episode extends Video{
 
+  transient theMovieDbService
+
   String name
   String air_date
   int season_number
@@ -23,5 +25,10 @@ class Episode extends Video{
   def beforeUpdate(){
     episodeString = "s" + season_number.toString().padLeft(2, '0') + "e" + episode_number.toString().padLeft(2, '0')
 
+  }
+
+
+  def getMovieDbMeta(){
+    theMovieDbService.getEpisodeMeta(this.show.apiId, this.season_number, this.episode_number)
   }
 }

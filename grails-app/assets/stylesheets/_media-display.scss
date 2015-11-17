@@ -244,12 +244,30 @@
 }
 
 .season-wrapper{
-  margin-top: 57px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 28px;
 
-  h3{
+  .season-fold-out-heading{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     font-weight: 300;
+    margin: 0;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    margin-top: 8px;
+    font-size: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    @include flexbox;
+
+    .season-fold-out{
+      margin-right: 8px;
+      font-size: 14px;
+      position: relative;
+      top: -2px;
+    }
+  }
+
+  .season-fold-out-inner{
+    @include flex(1);
+    margin: -8px 0 -8px -8px;
+    padding: 8px 12px;
   }
 }
 
@@ -301,4 +319,14 @@
       }
     }
   }
+}
+
+
+.no-episodes-yet{
+  padding: 70px;
+  font-size: 40px;
+  text-align: center;
+  text-transform: uppercase;
+  word-spacing: 10px;
+  opacity: .15;
 }

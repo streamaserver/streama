@@ -588,12 +588,33 @@ hr {
 .button-wrapper {
   margin-top: 12px; }
 
-.season-wrapper {
-  margin-top: 57px;
+.season-wrapper .season-fold-out-heading {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-weight: 300;
+  margin: 0;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-top: 8px;
+  font-size: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 28px; }
-  .season-wrapper h3 {
-    font-weight: 300; }
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex; }
+  .season-wrapper .season-fold-out-heading .season-fold-out {
+    margin-right: 8px;
+    font-size: 14px;
+    position: relative;
+    top: -2px; }
+.season-wrapper .season-fold-out-inner {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin: -8px 0 -8px -8px;
+  padding: 8px 12px; }
 
 .files-wrapper h4 {
   font-size: 14px;
@@ -640,6 +661,14 @@ hr {
     transition: opacity .3s; }
   .similar-media .media-list-item:hover .hover-overlay {
     opacity: 1; }
+
+.no-episodes-yet {
+  padding: 70px;
+  font-size: 40px;
+  text-align: center;
+  text-transform: uppercase;
+  word-spacing: 10px;
+  opacity: .15; }
 
 .dashboard {
   padding: 15px; }
@@ -749,7 +778,7 @@ hr {
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    overflow: auto; }
+    overflow-y: scroll; }
   .admin .media-list-item {
     margin-top: 15px; }
 
