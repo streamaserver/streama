@@ -1,5 +1,19 @@
 # Change Log
 
+
+## [0.1.6] - 2015-11-17
+### Features
+- Added functionality to refetch theMovieDb-seasons (to fill up with missing episodes)
+- Added functionality to refetch theMovieDb-Meta-Data for single episode
+- Improved episode backend with season-tabs
+- Added functionality to remove entire seasons
+- added search to movie & show backend
+- improved episode browser performance
+
+### Bugfixes
+- removed faulty redirect logic
+
+
 ## [0.1.5] - 2015-10-24
 ### Features
 - added notification system for your users, that way you can send out notification emails with your new content! 
