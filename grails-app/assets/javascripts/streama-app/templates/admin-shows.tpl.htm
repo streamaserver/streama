@@ -2,6 +2,12 @@
 
 <h1>Shows</h1>
 
+<div class="row">
+  <div class="col-md-5">
+    <input placeholder="Search Show..." type="text" ng-model="search" class="form-control input-sm" />
+  </div>
+</div>
+
 <div class="spinner big" ng-show="loading">
   <div class="bounce1"></div>
   <div class="bounce2"></div>
@@ -12,14 +18,17 @@
 <hr/>
 
 <div class="media-list">
-  <div class="media-list-item" ng-repeat="show in shows" ui-sref="admin.show({showId: show.id})">
+  <div class="media-list-item media-poster-item" ng-repeat="show in shows | filter:search" ui-sref="admin.show({showId: show.id})">
     <div class="media-item" >
-      <img ng-src="https://image.tmdb.org/t/p/w300/{{show.backdrop_path}}"/>
-    </div>
-    <h3 class="media-title">{{show.name}}</h3>
-    <div class="media-meta">{{show.first_air_date}} | <i class="ion-ios-star"></i>{{show.vote_average}} </div>
+      <img ng-if="show.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{show.poster_path}}"/>
+      <div ng-if="!show.poster_path" class="fallback-image"></div>
 
-    <h3 class="media-episode-string">{{show.episodesWithFilesCount}}/{{show.episodesCount}} uploaded</h3>
+      <div class="play-text">
+        <h4>{{show.name}}</h4>
+        <p>{{show.first_air_date}} | <i class="ion-ios-star"></i>{{show.vote_average}} </p>
+        <p>{{show.episodesWithFilesCount}}/{{show.episodesCount}} uploaded</p>
+      </div>
+    </div>
   </div>
 </div>
 

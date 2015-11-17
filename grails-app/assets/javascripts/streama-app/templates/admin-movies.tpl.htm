@@ -2,6 +2,12 @@
 
 <h1>Movies</h1>
 
+<div class="row">
+  <div class="col-md-5">
+    <input placeholder="Search Movie..." type="text" ng-model="search" class="form-control input-sm" />
+  </div>
+</div>
+
 <div class="spinner big" ng-show="loading">
   <div class="bounce1"></div>
   <div class="bounce2"></div>
@@ -10,16 +16,15 @@
 
 <hr/>
 
-<div class="media-list">
-  <div class="media-list-item admin-movie-item"  ng-repeat="movie in movies" ui-sref="admin.movie({movieId: movie.id})">
-    <div class="media-item" >
-      <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
+
+<div class="media-list-item media-poster-item" ng-repeat="movie in movies | filter:search" ui-sref="admin.movie({movieId: movie.id})">
+  <div class="media-item" >
+    <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
+
+    <div class="play-text">
+      <h4>{{movie.title}}</h4>
+      <p>{{movie.release_date.substring(0,4)}}</p>
     </div>
-    <h3 class="media-title">{{movie.title}}</h3>
-    <div class="media-meta">Release: {{movie.release_date}} | <i class="ion-ios-star"></i> {{movie.vote_average}}</div>
-
-    <span class="label label-danger" ng-show="!movie.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
-
   </div>
 </div>
 
