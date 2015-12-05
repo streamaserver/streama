@@ -25,6 +25,9 @@ streamaApp.factory('apiService', ['$http', function ($http) {
 			episodesForTvShow: function (id) {
 				return $http.get(urlBase + 'tvShow/episodesForTvShow.json', {params: {id: id}});
 			},
+			adminEpisodesForTvShow: function (id) {
+				return $http.get(urlBase + 'tvShow/adminEpisodesForTvShow.json', {params: {id: id}});
+			},
 			removeSeason: function (showId, season_number) {
 				return $http.get(urlBase + 'tvShow/removeSeason.json', {params: {showId: showId, season_number: season_number}});
 			}

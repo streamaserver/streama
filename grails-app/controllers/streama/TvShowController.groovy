@@ -57,6 +57,12 @@ class TvShowController {
     }
   }
 
+  def adminEpisodesForTvShow(TvShow tvShowInstance) {
+    JSON.use('adminEpisodesForTvShow') {
+      respond Episode.findAllByShow(tvShowInstance), [status: OK]
+    }
+  }
+
   @Transactional
   def delete(TvShow tvShowInstance) {
 

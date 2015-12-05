@@ -349,5 +349,20 @@ class MarshallerService {
         return returnArray;
       }
     }
+    JSON.createNamedConfig('adminEpisodesForTvShow') { DefaultConverterConfiguration<JSON> cfg ->
+      cfg.registerObjectMarshaller(Episode) { Episode  episode ->
+        def returnArray = [:]
+
+        returnArray['id'] = episode.id
+        returnArray['overview'] = episode.overview
+        returnArray['name'] = episode.name
+        returnArray['season_number'] = episode.season_number
+        returnArray['episode_number'] = episode.episode_number
+        returnArray['files'] = episode.files
+        returnArray['still_path'] = episode.still_path
+
+        return returnArray;
+      }
+    }
   }
 }

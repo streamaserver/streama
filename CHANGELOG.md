@@ -1,6 +1,12 @@
 # Change Log
 
 
+## [0.1.6.1] - 2015-12-05
+
+### Bugfixes
+- improved load time of episodes in admin area ([#103](https://github.com/dularion/streama/issues/1030))
+
+
 ## [0.1.6] - 2015-11-17
 ### Features
 - Added functionality to refetch theMovieDb-seasons (to fill up with missing episodes)

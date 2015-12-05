@@ -1,5 +1,6 @@
 package streama
 
+import grails.converters.JSON
 import groovy.json.JsonSlurper
 
 class TheMovieDbController {
@@ -27,7 +28,7 @@ class TheMovieDbController {
     def json = new JsonSlurper().parseText(JsonContent)
 
     def episodes = json?.episodes
-    def result = []
+    List<Episode> result = []
 
     episodes?.each{ episodeData ->
       if(Episode.findByShowAndSeason_numberAndEpisode_number(tvShow, season, episodeData.episode_number)){
@@ -40,7 +41,9 @@ class TheMovieDbController {
       result.add(episode)
     }
 
-    respond result
+    JSON.use('adminEpisodesForTvShow') {
+      respond result
+    }
 
   }
 

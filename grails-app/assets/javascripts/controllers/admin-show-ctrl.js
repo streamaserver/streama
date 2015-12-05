@@ -8,7 +8,7 @@ streamaApp.controller('adminShowCtrl', ['$scope', 'apiService', '$stateParams', 
 	apiService.tvShow.get($stateParams.showId).success(function (data) {
 		$scope.show = data;
 
-		apiService.episode.list({showId: $stateParams.showId}).success(function (data) {
+		apiService.tvShow.adminEpisodesForTvShow($stateParams.showId).success(function (data) {
 			if(data.length){
 				$scope.seasons = _.groupBy(data, 'season_number');
 			}
