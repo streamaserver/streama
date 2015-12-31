@@ -40,7 +40,7 @@ class VideoController {
       return (!continueWatching.find{it.video.id == movie.id} && movie.files)
     }
 
-    result.tvShowsForDash = tvShows.findAll{!(continueWatching.find{(it.video instanceof Episode) && it.video.show?.id == tvShow?.id})}
+    result.tvShowsForDash = tvShows.findAll{tvShow-> !(continueWatching.find{(it.video instanceof Episode) && it.video.show?.id == tvShow?.id})}
 
     JSON.use('dashMovies'){
       result.movies = JSON.parse((movies as JSON).toString())
