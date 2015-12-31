@@ -1,10 +1,19 @@
 # Change Log
 
 
+## [0.1.7] - 2015-12-31
+### Features
+- Sort orders in Dashboard and Content Management: A-Z, Z-A, Recently Released, Recently Added, etc. ([#109](https://github.com/dularion/streama/issues/109))
+
+### Bugfixes
+- Cannot delete video with viewing status ([#110](https://github.com/dularion/streama/issues/110))
+
+
+
 ## [0.1.6.1] - 2015-12-05
 
 ### Bugfixes
-- improved load time of episodes in admin area ([#103](https://github.com/dularion/streama/issues/1030))
+- improved load time of episodes in admin area ([#103](https://github.com/dularion/streama/issues/103))
 
 
 ## [0.1.6] - 2015-11-17
