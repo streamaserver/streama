@@ -13,7 +13,7 @@ class EpisodeController {
 
     def index() {
         TvShow show = TvShow.get(params.getLong("showId"))
-        respond Episode.findAllByShow(show), [status: OK]
+        respond Episode.findAllByShowAndDeletedNotEqual(show, true), [status: OK]
     }
 
     @Transactional
@@ -59,7 +59,9 @@ class EpisodeController {
             return
         }
 
-        episodeInstance.delete flush:true
+        episodeInstance.deleted = true
+        episodeInstance.save failOnError: true, flush: true
+
         render status: NO_CONTENT
     }
 }

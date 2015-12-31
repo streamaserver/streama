@@ -12,7 +12,7 @@ class MovieController {
   static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
   def index() {
-    respond Movie.list(), [status: OK]
+    respond Movie.findAllByDeletedNotEqual(true), [status: OK]
   }
 
   @Transactional
@@ -50,7 +50,8 @@ class MovieController {
       return
     }
 
-    movieInstance.delete flush: true
+    movieInstance.deleted = true
+    movieInstance.save failOnError: true, flush: true
     render status: NO_CONTENT
   }
 }

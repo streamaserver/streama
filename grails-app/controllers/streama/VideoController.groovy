@@ -18,7 +18,7 @@ class VideoController {
 
     
   def index() {
-    respond Video.list(), [status: OK]
+    respond Video.findAllByDeletedNotEqual(true), [status: OK]
   }
 
   def dash() {
@@ -31,11 +31,12 @@ class VideoController {
       eq("user", currentUser)
       video{
         isNotEmpty("files")
+        ne("deleted", true)
       }
       eq("completed", false)
       order("lastUpdated", "desc")
     }
-    def movies = Movie.list().findAll{ Movie movie ->
+    def movies = Movie.findAllByDeletedNotEqual(true).findAll{ Movie movie ->
       return (!continueWatching.find{it.video.id == movie.id} && movie.files)
     }
 
@@ -115,7 +116,8 @@ class VideoController {
       return
     }
 
-    videoInstance.delete flush:true
+    videoInstance.deleted = true
+    videoInstance.save failOnError: true, flush: true
     render status: NO_CONTENT
   }
 

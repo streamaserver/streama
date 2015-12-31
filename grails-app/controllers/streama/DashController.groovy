@@ -4,8 +4,8 @@ class DashController {
 
     def searchMedia() {
       String query = params.query
-      def movies = Movie.list()
-      def shows = TvShow.list()
+      def movies = Movie.findAllByDeletedNotEqual(true)
+      def shows = TvShow.findAllByDeletedNotEqual(true)
 
 
       def result = [

@@ -13,6 +13,7 @@ class Video {
   Integer vote_count
   Double popularity
 
+  Boolean deleted = false
   String imdb_id
 
   static hasMany = [files: File]
