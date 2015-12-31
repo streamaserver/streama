@@ -103,3 +103,13 @@ header.main{
 hr{
   border-color: rgba(255, 255, 255, 0.08);
 }
+
+
+.sort-by{
+  margin-left: 8px;
+  .btn{
+    .caret{
+      margin-left: 8px;
+    }
+  }
+}

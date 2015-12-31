@@ -1,0 +1,8 @@
+<div class="sort-by btn-group" uib-dropdown dropdown-append-to-body>
+  <button id="btn-append-to-body" type="button" class="btn btn-white btn-outline btn-sm" uib-dropdown-toggle>
+    {{currentSort.label}}<span class="caret"></span>
+  </button>
+  <ul class="uib-dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
+    <li role="menuitem" ng-repeat="sortOrder in sortOrders"><a ng-click="setCurrentSort(sortOrder)">{{sortOrder.label}}</a></li>
+  </ul>
+</div>

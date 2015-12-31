@@ -19,6 +19,10 @@
   text-shadow:  1px 1px 2px rgba(0, 0, 0, 0.35);
 }
 
+.btn-white{
+  @include btn(white, #333);
+}
+
 .btn-success{
   @include btn($success);
 }
@@ -33,6 +37,8 @@
 .btn-secondary{
   @include btn(desaturate(darken($primary, 55%), 10%));
 }
+
+
 
 .btn-dropzone{
   background: none;

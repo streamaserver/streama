@@ -155,6 +155,11 @@ label {
     border-color: #616161;
     color: white;
     outline: none; }
+  .btn.btn-outline {
+    background: transparent;
+    border: 1px solid gray;
+    color: gray;
+    border-radius: 2em; }
   .btn.btn-xss {
     padding: 2px 4px;
     line-height: 1em;
@@ -174,6 +179,26 @@ label {
     border-color: #1e7192;
     color: white;
     outline: none; }
+  .btn-primary.btn-outline {
+    background: transparent;
+    border: 1px solid #2898c5;
+    color: #2898c5;
+    border-radius: 2em; }
+
+.btn-white {
+  background: white;
+  border-color: #f7f7f7;
+  color: #333333; }
+  .btn-white:hover, .btn-white:focus, .btn-white:focus:active, .btn-white:active {
+    background: #ededed;
+    border-color: #e0e0e0;
+    color: white;
+    outline: none; }
+  .btn-white.btn-outline {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    border-radius: 2em; }
 
 .btn-success {
   background: #05946f;
@@ -184,6 +209,11 @@ label {
     border-color: #035943;
     color: white;
     outline: none; }
+  .btn-success.btn-outline {
+    background: transparent;
+    border: 1px solid #05946f;
+    color: #05946f;
+    border-radius: 2em; }
 
 .btn-danger {
   background: #ce2f39;
@@ -194,6 +224,11 @@ label {
     border-color: #9c242b;
     color: white;
     outline: none; }
+  .btn-danger.btn-outline {
+    background: transparent;
+    border: 1px solid #ce2f39;
+    color: #ce2f39;
+    border-radius: 2em; }
 
 .btn-dark {
   background: #111111;
@@ -204,6 +239,11 @@ label {
     border-color: black;
     color: white;
     outline: none; }
+  .btn-dark.btn-outline {
+    background: transparent;
+    border: 1px solid #111111;
+    color: #111111;
+    border-radius: 2em; }
 
 .btn-secondary {
   background: #1d5369;
@@ -214,6 +254,11 @@ label {
     border-color: #102d39;
     color: white;
     outline: none; }
+  .btn-secondary.btn-outline {
+    background: transparent;
+    border: 1px solid #1d5369;
+    color: #1d5369;
+    border-radius: 2em; }
 
 .btn-dropzone {
   background: none;
@@ -267,6 +312,11 @@ label {
       border-color: #035943;
       color: white;
       outline: none; }
+    .alertify .alertify-button-ok.btn-outline {
+      background: transparent;
+      border: 1px solid #05946f;
+      color: #05946f;
+      border-radius: 2em; }
   .alertify .alertify-button-cancel {
     background: #ce2f39;
     border-color: #c22c36;
@@ -276,6 +326,11 @@ label {
       border-color: #9c242b;
       color: white;
       outline: none; }
+    .alertify .alertify-button-cancel.btn-outline {
+      background: transparent;
+      border: 1px solid #ce2f39;
+      color: #ce2f39;
+      border-radius: 2em; }
 
 body {
   background-color: #25292B;
@@ -360,6 +415,11 @@ header.main {
 
 hr {
   border-color: rgba(255, 255, 255, 0.08); }
+
+.sort-by {
+  margin-left: 8px; }
+  .sort-by .btn .caret {
+    margin-left: 8px; }
 
 .media-list {
   margin-right: -15px; }

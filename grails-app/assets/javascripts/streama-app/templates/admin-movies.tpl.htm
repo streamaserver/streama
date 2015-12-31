@@ -1,6 +1,9 @@
 <button class="btn btn-primary pull-right btn-lg" ng-click="openMovieModal()">Create new Movie</button>
 
-<h1>Movies</h1>
+<h1>
+  Movies
+  <video-sort-order-dropdown current-sort="currentSort" dropdown-type="'movie'"/>
+</h1>
 
 <div class="row">
   <div class="col-md-5">
@@ -16,8 +19,7 @@
 
 <hr/>
 
-
-<div class="media-list-item media-poster-item" ng-repeat="movie in movies | filter:search" ui-sref="admin.movie({movieId: movie.id})">
+<div class="media-list-item media-poster-item" ng-repeat="movie in movies | filter:search | orderBy:currentSort.sort" ui-sref="admin.movie({movieId: movie.id})">
   <div class="media-item" >
     <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
 

@@ -40,26 +40,7 @@ class VideoController {
       return (!continueWatching.find{it.video.id == movie.id} && movie.files)
     }
 
-    HashSet<Video> firstEpisodes = []
-
-    tvShows?.each{ tvShow->
-
-      if(continueWatching.find{(it.video instanceof Episode) && it.video.show?.id == tvShow?.id}){
-        return
-      }
-
-      def firstEpisode = mediaService.getFirstEpisode(tvShow)
-
-
-      if(firstEpisode && firstEpisode.files){
-        firstEpisodes.add(firstEpisode)
-      }
-
-    }
-
-    JSON.use ('firstEpisode') {
-      result.firstEpisodes = JSON.parse((firstEpisodes as JSON).toString())
-    }
+    result.tvShowsForDash = tvShows.findAll{!(continueWatching.find{(it.video instanceof Episode) && it.video.show?.id == tvShow?.id})}
 
     JSON.use('dashMovies'){
       result.movies = JSON.parse((movies as JSON).toString())

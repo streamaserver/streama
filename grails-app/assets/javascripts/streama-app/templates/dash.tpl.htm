@@ -38,21 +38,22 @@
     <hr/>
   </div>
 
-  <div ng-if="episodes.length">
-    <h3>Discover Shows</h3>
+  <div ng-if="tvShows.length">
+    <h3>Discover Shows
+      <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown></h3>
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="episode in episodes">
+      <div class="media-list-item media-poster-item" ng-repeat="tvShow in tvShows | orderBy:showSort.sort">
         <div class="media-item" >
-          <img ng-if="episode.show.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.show.poster_path}}"/>
-          <div ng-if="!episode.show.poster_path" class="fallback-image"></div>
+          <img ng-if="tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{tvShow.poster_path}}"/>
+          <div ng-if="!tvShow.poster_path" class="fallback-image"></div>
 
           <div class="play-text">
-            <h4>{{episode.show.name}}</h4>
-            <p>{{episode.episodeString}} - {{episode.name}}</p>
+            <h4>{{tvShow.name}}</h4>
+            <p>{{tvShow.firstEpisode.episodeString}} - {{tvShow.firstEpisode.name}}</p>
           </div>
 
-          <i class="info-icon ion-ios-information" ng-click="showDetails(episode.show)"></i>
-          <a class="play-icon ion-ios-play" ui-sref="player({videoId: episode.id})"></a>
+          <i class="info-icon ion-ios-information" ng-click="showDetails(tvShow)"></i>
+          <a class="play-icon ion-ios-play" ui-sref="player({videoId: tvShow.firstEpisode.id})"></a>
         </div>
       </div>
     </div>
@@ -61,9 +62,10 @@
   </div>
 
   <div ng-if="movies.length">
-    <h3>Discover Movies</h3>
+    <h3>Discover Movies
+      <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown></h3>
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="movie in movies">
+      <div class="media-list-item media-poster-item" ng-repeat="movie in movies | orderBy:movieSort.sort">
         <div class="media-item" >
           <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
 

@@ -36,7 +36,7 @@ streamaApp.controller('dashCtrl', [
 
   apiService.video.dash()
     .success(function (data) {
-      $scope.episodes = data.firstEpisodes;
+      $scope.tvShows = data.tvShowsForDash;
       $scope.continueWatching = data.continueWatching;
       $scope.movies = data.movies;
       $scope.loading = false;

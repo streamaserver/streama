@@ -149,6 +149,13 @@
     color: white;
     outline: none;
   }
+
+  &.btn-outline{
+    background: transparent;
+    border: 1px solid $background;
+    color: $background;
+    border-radius: 2em;
+  }
 }
 
 
