@@ -34,4 +34,4 @@
 # "temporary" build files
 /target
 
-
+.slcache
