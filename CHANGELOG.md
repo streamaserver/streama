@@ -4,6 +4,7 @@
 ## [0.1.7] - 2015-12-31
 ### Features
 - Sort orders in Dashboard and Content Management: A-Z, Z-A, Recently Released, Recently Added, etc. ([#109](https://github.com/dularion/streama/issues/109))
+- TV Series browsing from dashboard (via little i-icon) ([#101](https://github.com/dularion/streama/issues/101))
 
 ### Bugfixes
 - Cannot delete video with viewing status ([#110](https://github.com/dularion/streama/issues/110))
