@@ -118,6 +118,18 @@
       @include vendor-property('transform', 'scale(1.2)');
     }
   }
+
+
+}
+
+.media-list-item{
+  &.no-files{
+    .media-item:hover{
+      img{
+        @include vendor-property('transform', 'inherit');
+      }
+    }
+  }
 }
 
 .media-episode-string{
@@ -244,6 +256,7 @@
 }
 
 .season-wrapper{
+  clear: both;
 
   .season-fold-out-heading{
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);

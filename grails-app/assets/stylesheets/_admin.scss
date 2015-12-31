@@ -75,3 +75,18 @@
 .admin-movie-item{
   min-height: 260px;
 }
+
+.season-picker-list{
+  margin-bottom: 14px;
+
+  .season-picker-item{
+    padding: 3px 10px;
+    border: 1px solid transparent;
+    border-radius: 25px;
+
+    &.active{
+      border: 1px solid white;
+    }
+
+  }
+}

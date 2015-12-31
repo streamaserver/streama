@@ -80,6 +80,7 @@ class MarshallerService {
       returnArray['vote_average'] = movie.vote_average
       returnArray['vote_count'] = movie.vote_count
       returnArray['popularity'] = movie.popularity
+      returnArray['imdb_id'] = movie.imdb_id
 
       returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
@@ -102,6 +103,7 @@ class MarshallerService {
       returnArray['name'] = tvShow.name
       returnArray['overview'] = tvShow.overview
       returnArray['apiId'] = tvShow.apiId
+      returnArray['imdb_id'] = tvShow.imdb_id
       returnArray['original_language'] = tvShow.original_language
       returnArray['vote_average'] = tvShow.vote_average
       returnArray['vote_count'] = tvShow.vote_count

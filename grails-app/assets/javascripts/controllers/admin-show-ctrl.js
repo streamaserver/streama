@@ -11,6 +11,7 @@ streamaApp.controller('adminShowCtrl', ['$scope', 'apiService', '$stateParams', 
 		apiService.tvShow.adminEpisodesForTvShow($stateParams.showId).success(function (data) {
 			if(data.length){
 				$scope.seasons = _.groupBy(data, 'season_number');
+				$scope.currentSeason = _.min(data, 'season_number').season_number;
 			}
 			$scope.showLoading = false;
 		});
@@ -60,6 +61,10 @@ streamaApp.controller('adminShowCtrl', ['$scope', 'apiService', '$stateParams', 
 		}else{
 			$scope.seasonOpened = null;
 		}
+	};
+
+	$scope.setCurrentSeason = function (index) {
+		$scope.currentSeason = index;
 	};
 
 	var seasonForShow = function (season) {

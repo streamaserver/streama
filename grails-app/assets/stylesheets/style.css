@@ -541,6 +541,13 @@ hr {
     -ms-transform: scale(1.2);
     transform: scale(1.2); }
 
+.media-list-item.no-files .media-item:hover img {
+  -moz-transform: inherit;
+  -webkit-transform: inherit;
+  -o-transform: inherit;
+  -ms-transform: inherit;
+  transform: inherit; }
+
 .media-episode-string {
   font-size: 14px;
   font-weight: 100;
@@ -648,33 +655,35 @@ hr {
 .button-wrapper {
   margin-top: 12px; }
 
-.season-wrapper .season-fold-out-heading {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  font-weight: 300;
-  margin: 0;
-  padding: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  margin-top: 8px;
-  font-size: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex; }
-  .season-wrapper .season-fold-out-heading .season-fold-out {
-    margin-right: 8px;
-    font-size: 14px;
-    position: relative;
-    top: -2px; }
-.season-wrapper .season-fold-out-inner {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  margin: -8px 0 -8px -8px;
-  padding: 8px 12px; }
+.season-wrapper {
+  clear: both; }
+  .season-wrapper .season-fold-out-heading {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-weight: 300;
+    margin: 0;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    margin-top: 8px;
+    font-size: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex; }
+    .season-wrapper .season-fold-out-heading .season-fold-out {
+      margin-right: 8px;
+      font-size: 14px;
+      position: relative;
+      top: -2px; }
+  .season-wrapper .season-fold-out-inner {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    margin: -8px 0 -8px -8px;
+    padding: 8px 12px; }
 
 .files-wrapper h4 {
   font-size: 14px;
@@ -736,17 +745,22 @@ hr {
     font-size: 16px;
     text-transform: uppercase; }
 
-.modal-media-detail .info-list {
-  margin: 0;
-  padding: 0; }
-  .modal-media-detail .info-list li {
-    list-style: none; }
-    .modal-media-detail .info-list li strong {
-      margin-right: 6px;
-      min-width: 86px;
-      display: inline-block; }
-.modal-media-detail .overview-text {
-  font-size: 14px; }
+.modal-media-detail {
+  max-height: inherit !important; }
+  .modal-media-detail .info-list {
+    margin: 0;
+    padding: 0; }
+    .modal-media-detail .info-list li {
+      list-style: none; }
+      .modal-media-detail .info-list li strong {
+        margin-right: 6px;
+        min-width: 86px;
+        display: inline-block; }
+  .modal-media-detail .overview-text {
+    font-size: 14px; }
+  .modal-media-detail .media-list-item.episode-wrapper {
+    margin-bottom: 0px;
+    margin-right: 9px; }
 
 #login {
   margin: 15px 0px;
@@ -851,6 +865,15 @@ hr {
 
 .admin-movie-item {
   min-height: 260px; }
+
+.season-picker-list {
+  margin-bottom: 14px; }
+  .season-picker-list .season-picker-item {
+    padding: 3px 10px;
+    border: 1px solid transparent;
+    border-radius: 25px; }
+    .season-picker-list .season-picker-item.active {
+      border: 1px solid white; }
 
 .spinner {
   width: 38px;

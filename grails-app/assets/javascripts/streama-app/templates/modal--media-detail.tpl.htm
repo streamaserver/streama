@@ -17,7 +17,7 @@
     <div class="col-sm-8">
       <ul class="info-list">
         <li><strong>Released: </strong> {{media.release_date.substring(0,4) || media.first_air_date.substring(0,4)}}</li>
-        <li><strong>IMDB: </strong> <a href="http://www.imdb.com/title/{{media.imdb_id}}">{{media.name || media.title}}</a></li>
+        <li><strong>IMDB: </strong> <a target="_blank" href="http://www.imdb.com/title/{{media.imdb_id}}">{{media.name || media.title}}</a></li>
         <li><strong>Rating: </strong> {{media.vote_average}} ({{media.vote_count}} votes)</li>
       </ul>
 
@@ -29,4 +29,32 @@
       <img ng-src="https://image.tmdb.org/t/p/w300/{{media.poster_path}}"/>
     </div>
   </div>
+
+  <hr>
+
+  <div class="season-picker-list">
+    <span class="season-picker-item" ng-class="{'active': currentSeason == season}" ng-click="setCurrentSeason(season)"
+          ng-repeat="(season, episodes) in seasons | orderBy:'season'">
+      Season {{season}}
+    </span>
+  </div>
+
+  <div class="media-list">
+    <div class="media-list-item episode-wrapper" ng-repeat="episode in seasons[currentSeason] | orderBy:'episode_number'"
+         ng-class="{'no-files': !episode.hasFile}">
+      <h3 class="media-episode-string">
+        <span ng-show="episode.episodeString">{{episode.episodeString}}</span>
+        <span ng-show="!episode.episodeString">s{{episode.season_number | padnumber:2}}e{{episode.episode_number | padnumber:2}}</span>
+      </h3>
+      <h3 class="media-title">{{episode.name}}</h3>
+      <div class="media-item" >
+        <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.still_path}}"/>
+        <div ng-if="!episode.still_path" class="fallback-image"></div>
+        <a ng-show="episode.hasFile" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
+      </div>
+    </div>
+
+  </div>
+
+
 </div>
