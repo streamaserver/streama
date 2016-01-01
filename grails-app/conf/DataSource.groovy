@@ -75,7 +75,7 @@ environments {
 
             //DEV
             String host = System.getenv('MYSQL_HOST')
-            if(!host) host = "mysql"
+            if(!host) host = "db"
             String port = System.getenv('MYSQL_PORT')
             if(!port) port = "3306"
             String db = System.getenv('MYSQL_DB')
