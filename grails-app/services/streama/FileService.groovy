@@ -14,7 +14,7 @@ class FileService {
 
     def fileLength = rawFile.length()
     def contentLength = rawFile.length().toString()
-    def rangeEnd = fileLength.toInteger()-1
+    def rangeEnd = fileLength.toLong()-1
     def rangeStart
 
 
