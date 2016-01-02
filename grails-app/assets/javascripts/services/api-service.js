@@ -1,7 +1,8 @@
 'use strict';
 
-streamaApp.factory('apiService', ['$http', function ($http) {
+streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootScope) {
 	var urlBase = $('base').attr('href');
+	$rootScope.basePath = urlBase;
 
 	return{
 		currentUser: function () {

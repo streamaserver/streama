@@ -14,7 +14,7 @@
       <div class="media-list-item" ng-repeat="viewingStatus in continueWatching">
         <div class="media-item">
           <img ng-if="viewingStatus.video.backdrop_path" ng-src="https://image.tmdb.org/t/p/w300/{{viewingStatus.video.backdrop_path}}"/>
-          <div ng-if="!viewingStatus.video.show.backdrop_path" class="fallback-image"></div>
+          <img ng-if="!viewingStatus.video.show.backdrop_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
           <div class="play-text">Continue "{{viewingStatus.video.title || viewingStatus.video.show.name}}"</div>
           <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">Mark completed</button>
@@ -45,7 +45,9 @@
       <div class="media-list-item media-poster-item" ng-repeat="tvShow in tvShows | orderBy:showSort.sort">
         <div class="media-item" >
           <img ng-if="tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{tvShow.poster_path}}"/>
-          <div ng-if="!tvShow.poster_path" class="fallback-image"></div>
+          <img ng-if="!tvShow.poster_path && !tvShow.manualInput" ng-src="{{basePath}}assets/poster-not-found.png"/>
+
+          <img ng-show="tvShow.manualInput && tvShow.poster_image_src" ng-src="{{tvShow.poster_image_src}}">
 
           <div class="play-text">
             <h4>{{tvShow.name}}</h4>
@@ -67,7 +69,8 @@
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="movie in movies | orderBy:movieSort.sort">
         <div class="media-item" >
-          <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
+          <img ng-if="movie.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
+          <img ng-if="!movie.poster_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
           <div class="play-text">
             <h4>{{movie.title}}</h4>

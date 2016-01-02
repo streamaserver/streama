@@ -17,27 +17,27 @@
         </div>
       </div>
       <div class="col-sm-12" ng-if="addManually">
-        <input type="text" class="form-control" ng-model="episode.name" placeholder="Episode Name">
+        <input type="text" class="form-control" ng-model="episode.name" placeholder="Episode Name*">
       </div>
     </div>
     
     <div ng-show="episode.episode_number || addManually">
       <div class="form-group row-slim">
         <div class="col-sm-2">
-          <label>Episode Number</label>
-          <input type="text" class="form-control input-sm" ng-model="episode.episode_number" placeholder="Episode Number"/>
+          <label>Episode Number*</label>
+          <input type="text" class="form-control input-sm" ng-model="episode.episode_number" placeholder="#"/>
         </div>
         <div class="col-sm-2">
-          <label>Season Number</label>
-          <input type="text" class="form-control input-sm" ng-model="episode.season_number" placeholder="Season Number"/>
+          <label>Season Number*</label>
+          <input type="text" class="form-control input-sm" ng-model="episode.season_number" placeholder="#"/>
         </div>
         <div class="col-sm-2">
           <label>Episode String</label>
-          <input type="text" class="form-control input-sm" ng-model="episode.episodeString" placeholder="s01e01"/>
+          <input type="text" class="form-control input-sm" ng-model="episode.episodeString" placeholder="s##e##"/>
         </div>
         <div class="col-sm-2">
           <label>First Aired</label>
-          <input type="text" class="form-control input-sm" ng-model="episode.air_date" placeholder="2003-01-23"/>
+          <input type="text" class="form-control input-sm" ng-model="episode.air_date" placeholder="yyyy-mm-dd"/>
         </div>
         <div class="col-sm-2">
           <label>API ID</label>
@@ -67,15 +67,14 @@
     </div>
   </div>
 
-  <div class="modal-footer" ng-if="episode.episode_number">
-    <div class="btn-group pull-left">
+  <div class="modal-footer">
+    <div class="btn-group pull-left" ng-if="episode.id">
 
       <button class="btn btn-danger btn-sm" ng-if="episode.id" ng-click="deleteVideo(episode)">Delete Episode</button>
       <button class="btn btn-sm" ng-click="refetch(episode)">Re-Fetch Episode</button>
     </div>
     <div class="btn-group">
-      <button class="btn btn-success" ng-click="saveEpisode(episode)">Save</button>
-      <button class="btn" ng-click="cancel()">Cancel</button>
+      <button class="btn btn-success" ng-disabled="!episode.episode_number" ng-click="saveEpisode(episode)">Save</button>
     </div>
   </div>
 </form>

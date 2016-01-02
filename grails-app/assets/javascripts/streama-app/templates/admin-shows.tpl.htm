@@ -17,14 +17,15 @@
   <div class="bounce3"></div>
 </div>
 
-
 <hr/>
 
 <div class="media-list">
   <div class="media-list-item media-poster-item" ng-repeat="show in shows | filter:search | orderBy:currentSort.sort" ui-sref="admin.show({showId: show.id})">
     <div class="media-item" >
       <img ng-if="show.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{show.poster_path}}"/>
-      <div ng-if="!show.poster_path" class="fallback-image"></div>
+      <img ng-if="!show.poster_path && !show.manualInput" ng-src="{{basePath}}assets/poster-not-found.png"/>
+
+      <img ng-show="show.manualInput && show.poster_image_src" ng-src="{{show.poster_image_src}}">
 
       <div class="play-text">
         <h4>{{show.name}}</h4>

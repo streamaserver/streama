@@ -875,6 +875,29 @@ hr {
     .season-picker-list .season-picker-item.active {
       border: 1px solid white; }
 
+.upload-poster {
+  padding: 20px;
+  border: 2px dashed gray;
+  border-radius: 20px;
+  height: 300px;
+  max-width: 250px;
+  text-align: center; }
+  .upload-poster .main-text {
+    display: block;
+    font-size: 30px;
+    margin-top: 85px; }
+  .upload-poster .size-info {
+    display: block; }
+  .upload-poster.dragover {
+    border: 2px dashed white;
+    background: #2898c5; }
+  .upload-poster.update-poster {
+    height: auto;
+    margin-top: 15px;
+    max-width: inherit; }
+    .upload-poster.update-poster .main-text {
+      margin-top: 0px; }
+
 .spinner {
   width: 38px;
   text-align: center;

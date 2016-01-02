@@ -27,11 +27,16 @@ class FileController {
     response.contentType = file.contentType
 
 
-    if(file.extension == ".srt" || file.extension == ".vtt"){
-      render ( file: rawFile.bytes, contentType: file.contentType)
-    }else{
+    if(file.extension == ".mp4" || file.extension == ".mkv" || file.extension == ".webm" || file.extension == ".ogg"){
       fileService.serveVideo(request, response, rawFile)
+    }else{
+      render ( file: rawFile.bytes, contentType: file.contentType)
     }
 
+  }
+
+  def upload(){
+    def file = uploadService.upload(request)
+    respond file
   }
 }

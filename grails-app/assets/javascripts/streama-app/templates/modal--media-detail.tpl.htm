@@ -26,7 +26,8 @@
       <p class="overview-text">{{media.overview}}</p>
     </div>
     <div class="col-sm-4">
-      <img ng-src="https://image.tmdb.org/t/p/w300/{{media.poster_path}}"/>
+      <img ng-show="media.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{media.poster_path}}"/>
+      <img ng-show="media.manualInput && media.poster_image_src" ng-src="{{media.poster_image_src}}"/>
     </div>
   </div>
 

@@ -39,7 +39,7 @@
       </div>
       <div class="col-sm-2">
         <label>IMDB Link</label>
-        <p class="data-display"><a href="http://www.imdb.com/title/{{show.imdb_id}}">{{show.name}}</a></p>
+        <p class="data-display" ng-if="show.imdb_id"><a href="http://www.imdb.com/title/{{show.imdb_id}}">{{show.name}}</a></p>
       </div>
       <div class="col-sm-2">
         <label>Rating</label>
@@ -49,7 +49,7 @@
         <label>Rating Count</label>
         <p class="data-display">{{show.vote_count}}</p>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-2" ng-show="!show.manualInput">
         <label>API ID</label>
         <p class="data-display">{{show.apiId}}</p>
       </div>
@@ -67,7 +67,21 @@
   </div>
 
   <div class="col-sm-4">
-    <img ng-src="https://image.tmdb.org/t/p/w500/{{show.backdrop_path}}"/>
+    <div ng-if="!show.manualInput">
+      <img ng-show="show.backdrop_path" ng-src="https://image.tmdb.org/t/p/w500/{{show.backdrop_path}}"/>
+      <img ng-show="!show.backdrop_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
+    </div>
+
+    <div ng-if="show.manualInput">
+      <img ng-show="show.poster_image_src" ng-src="{{show.poster_image_src}}"/>
+
+      <div class="upload-poster" ng-class="{'update-poster': show.poster_image_src}" ng-model="manualPoster" class="btn btn-primary btn-block btn-lg"
+           ngf-change="uploadPoster($files)" ngf-select ngf-drop ngf-drag-over-class="dragover">
+        <span class="main-text">Upload Poster</span>
+        <span class="size-info">300x450 px</span>
+        <span ng-show="imageUpload.percentage">{{imageUpload.percentage}}%</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -85,7 +99,7 @@
 <div ng-show="!showLoading">
 
   <button class="btn btn-primary" ng-click="addNewEpisode()">Add New Episode Manually</button>
-  <button class="btn btn-primary" ng-click="fetchAllEpisodesForSeason()">Fetch all Episode for Season</button>
+  <button class="btn btn-primary" ng-click="fetchAllEpisodesForSeason()" ng-if="!show.manualInput">Fetch all Episode for Season</button>
 
   <div ng-if="!seasons" class="no-episodes-yet">No Episodes yet</div>
 

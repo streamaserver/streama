@@ -4,6 +4,10 @@ streamaApp.controller('modalTvShowCtrl', [
 	'$scope', '$modalInstance', 'apiService', 'tvShow',
 	function ($scope, $modalInstance, apiService, tvShow) {
 
+	$scope.toggleAddManually = function () {
+		$scope.tvShow.manualInput = !$scope.tvShow.manualInput;
+	};
+
 
 	$scope.loading = false;
 	$scope.tvShow = tvShow || {};

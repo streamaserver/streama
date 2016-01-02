@@ -31,7 +31,7 @@ class TvShowController {
     TvShow tvShowInstance = TvShow.findOrCreateById(data.id)
     tvShowInstance.properties = data
 
-    if(!tvShowInstance.imdb_id){
+    if(!tvShowInstance.imdb_id && !data.manualInput){
       tvShowInstance.imdb_id = tvShowInstance.externalLinks?.imdb_id
     }
 
@@ -53,13 +53,13 @@ class TvShowController {
 
   def episodesForTvShow(TvShow tvShowInstance) {
     JSON.use('episodesForTvShow') {
-      respond Episode.findAllByShow(tvShowInstance), [status: OK]
+      respond Episode.findAllByShowAndDeletedNotEqual(tvShowInstance, true), [status: OK]
     }
   }
 
   def adminEpisodesForTvShow(TvShow tvShowInstance) {
     JSON.use('adminEpisodesForTvShow') {
-      respond Episode.findAllByShow(tvShowInstance), [status: OK]
+      respond Episode.findAllByShowAndDeletedNotEqual(tvShowInstance, true), [status: OK]
     }
   }
 

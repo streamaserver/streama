@@ -90,3 +90,38 @@
 
   }
 }
+
+
+.upload-poster{
+  padding: 20px;
+  border: 2px dashed gray;
+  border-radius: 20px;
+  height: 300px;
+  max-width: 250px;
+  text-align: center;
+
+  .main-text{
+    display: block;
+    font-size: 30px;
+    margin-top: 85px;
+  }
+
+  .size-info{
+    display: block;
+  }
+
+  &.dragover{
+    border: 2px dashed white;
+    background: #2898c5;
+  }
+
+  &.update-poster{
+    height: auto;
+    margin-top: 15px;
+    max-width: inherit;
+
+    .main-text{
+      margin-top: 0px;
+    }
+  }
+}

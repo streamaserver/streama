@@ -108,6 +108,9 @@ class MarshallerService {
       returnArray['vote_average'] = tvShow.vote_average
       returnArray['vote_count'] = tvShow.vote_count
       returnArray['popularity'] = tvShow.popularity
+      returnArray['manualInput'] = tvShow.manualInput
+      returnArray['poster_image_src'] = tvShow.poster_image?.src
+
 
       returnArray['hasFiles'] = (tvShow.episodes?.find{it.files} ? true : false)
       returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
@@ -193,6 +196,8 @@ class MarshallerService {
         returnArray['popularity'] = tvShow.popularity
         returnArray['episodesWithFilesCount'] = tvShow.episodes.findAll{it.files}.size()
         returnArray['episodesCount'] = tvShow.episodes.size()
+        returnArray['manualInput'] = tvShow.manualInput
+        returnArray['poster_image_src'] = tvShow.poster_image?.src
 
         return returnArray;
       }
@@ -277,6 +282,8 @@ class MarshallerService {
         returnArray['popularity'] = tvShow.popularity
         returnArray['backdrop_path'] = tvShow.backdrop_path
         returnArray['poster_path'] = tvShow.poster_path
+        returnArray['manualInput'] = tvShow.manualInput
+        returnArray['poster_image_src'] = tvShow.poster_image?.src
 
         return returnArray;
       }

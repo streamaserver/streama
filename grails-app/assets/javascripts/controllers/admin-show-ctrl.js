@@ -1,6 +1,8 @@
 
 
-streamaApp.controller('adminShowCtrl', ['$scope', 'apiService', '$stateParams', 'modalService', '$state', function ($scope, apiService, $stateParams, modalService, $state) {
+streamaApp.controller('adminShowCtrl', [
+	'$scope', 'apiService', '$stateParams', 'modalService', '$state', 'uploadService',
+	function ($scope, apiService, $stateParams, modalService, $state, uploadService) {
 
 	$scope.seasonOpened = null;
 	$scope.showLoading = true;
@@ -36,8 +38,10 @@ streamaApp.controller('adminShowCtrl', ['$scope', 'apiService', '$stateParams', 
 
 	$scope.addNewEpisode = function(){
 		modalService.videoModal(null, 'manual', $scope.show, function (data) {
+			$scope.seasons = $scope.seasons || {};
 			$scope.seasons[parseInt(data.season_number)] = $scope.seasons[parseInt(data.season_number)] || [];
 			$scope.seasons[parseInt(data.season_number)].push(data);
+			$scope.currentSeason = data.season_number;
 
 		});
 	};
@@ -113,4 +117,17 @@ streamaApp.controller('adminShowCtrl', ['$scope', 'apiService', '$stateParams', 
 			}
 		})
 	};
+
+	$scope.imageUpload = {};
+
+	$scope.uploadPoster = uploadService.doUpload.bind(uploadService, $scope.imageUpload, 'file/upload.json', function (data) {
+		console.log('%c test', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
+		$scope.imageUpload.percentage = null;
+		$scope.show.poster_image = data.id;
+
+		apiService.tvShow.save($scope.show).success(function (data) {
+			$scope.show.poster_image_src = data.poster_image_src;
+		});
+	});
+
 }]);
