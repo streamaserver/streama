@@ -12,7 +12,7 @@
     <div class="form-group">
       <div class="col-sm-12 typeahead-wrapper" ng-if="!tvShow.manualInput">
         <input type="text" class="form-control name-input" ng-model="tvShow.name" placeholder="Search for TV Show..." typeahead-loading="loading" typeahead-append-to-body="true"
-               typeahead="show.name for show in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="typeahead--tvShow.htm">
+               uib-typeahead="show.name for show in search($viewValue)" uib-typeahead-on-select="selectFromAPI($item)" typeahead-template-url="typeahead--tvShow.htm">
         <div class="spinner" ng-show="loading">
           <div class="bounce1"></div>
           <div class="bounce2"></div>

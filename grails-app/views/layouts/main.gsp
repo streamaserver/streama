@@ -20,7 +20,7 @@
 <header class="main" ng-if="!isCurrentState('player')">
 	<a class="logo" ui-sref="dash">
 		<asset:image src="logo.png"></asset:image>
-		<div class="version">v0.1.7.1</div>
+		<div class="version">v0.1.8</div>
     <div class="spinner" ng-show="baseData.loading">
       <div class="bounce1"></div>
       <div class="bounce2"></div>

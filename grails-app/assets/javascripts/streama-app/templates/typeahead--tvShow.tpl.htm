@@ -1,5 +1,7 @@
 <a>
-  <img ng-if="match.model.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{match.model.poster_path}}" width="60px"/> &nbsp;
-  <span ng-bind-html="match.model.name | typeaheadHighlight:query"></span>
+  <img ng-show="match.model.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{match.model.poster_path}}" width="60px"/>
+  <img ng-show="!match.model.poster_path" ng-src="{{basePath}}assets/poster-not-found.png" width="60px"/>
+  &nbsp;
+  <span ng-bind-html="match.model.name | uibTypeaheadHighlight:query"></span>
   <span style="opacity: .5;">({{match.model.first_air_date.substring(0, 4)}})</span>
 </a>

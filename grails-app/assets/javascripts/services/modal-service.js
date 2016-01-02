@@ -1,9 +1,9 @@
 'use strict';
 
-streamaApp.factory('modalService', ['$modal', function ($modal) {
+streamaApp.factory('modalService', ['$uibModal', function ($uibModal) {
 	return{
 		tvShowModal: function (tvShow, callback) {
-			var modalInstance = $modal.open({
+			var modalInstance = $uibModal.open({
 				templateUrl: 'modal--tvShow.htm',
 				controller: 'modalTvShowCtrl',
 				size: 'lg',
@@ -21,7 +21,7 @@ streamaApp.factory('modalService', ['$modal', function ($modal) {
 
 
 		movieModal: function (movie, callback) {
-			var modalInstance = $modal.open({
+			var modalInstance = $uibModal.open({
 				templateUrl: 'modal--movie.htm',
 				controller: 'modalMovieCtrl',
 				size: 'lg',
@@ -39,7 +39,7 @@ streamaApp.factory('modalService', ['$modal', function ($modal) {
 
 
 		videoModal: function (video, isManual, tvShow, callback) {
-			var modalInstance = $modal.open({
+			var modalInstance = $uibModal.open({
 				templateUrl: 'modal--video.htm',
 				controller: 'modalVideoCtrl',
 				size: 'lg',
@@ -64,7 +64,7 @@ streamaApp.factory('modalService', ['$modal', function ($modal) {
 
 
 		openFileBrowser: function (callback) {
-			var modalInstance = $modal.open({
+			var modalInstance = $uibModal.open({
 				templateUrl: 'modal--file-browser.htm',
 				controller: 'modalFileBrowserCtrl',
 				size: 'lg'
@@ -77,7 +77,7 @@ streamaApp.factory('modalService', ['$modal', function ($modal) {
 
 
 		userModal: function (user, callback) {
-			var modalInstance = $modal.open({
+			var modalInstance = $uibModal.open({
 				templateUrl: 'modal--user.htm',
 				controller: 'modalUserCtrl',
 				size: 'lg',
@@ -94,7 +94,7 @@ streamaApp.factory('modalService', ['$modal', function ($modal) {
 		},
 
     fileManagerModal: function (video, callback) {
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         templateUrl: 'modal--manage-files.htm',
         controller: 'modalFileCtrl',
         size: 'lg',
@@ -114,7 +114,7 @@ streamaApp.factory('modalService', ['$modal', function ($modal) {
 
 
 		mediaDetailModal: function (media, callback) {
-			var modalInstance = $modal.open({
+			var modalInstance = $uibModal.open({
 				templateUrl: 'modal--media-detail.htm',
 				controller: 'modalMediaDetailCtrl',
 				size: 'lg',

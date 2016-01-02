@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.8] - 2016-01-02
+### Features
+- Add non-themoviedb shows ((#91)[https://github.com/dularion/streama/issues/91]) including upload for custom poster image
+
 ## [0.1.7.1] - 2016-01-02
 ### Bugfixes
 - fixed: I can't add video files to the player ((#107)[https://github.com/dularion/streama/issues/107])
