@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.7.1] - 2016-01-02
+### Bugfixes
+- I can't add video files to the player ((#107)[https://github.com/dularion/streama/issues/107])
+
 
 ## [0.1.7] - 2015-12-31
 ### Features
