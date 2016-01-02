@@ -153,6 +153,8 @@ grails.databinding.dateFormats = [
     "yyyy-MM-dd'T'hh:mm:ss'Z'"
 ]
 
+grails.app.context="/"
+
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'streama.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'streama.UserRole'
@@ -206,4 +208,3 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':                    ['permitAll'],
 	'/**/favicon.ico':                  ['permitAll']
 ]
-
