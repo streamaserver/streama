@@ -118,7 +118,7 @@ streamaApp.directive('streamaVideoPlayer', [
               $elem.addClass('nocursor');
             }
 
-          }, 2000);
+          }, 1000);
         };
 
         $scope.playerVolumeToggle = function () {
@@ -156,6 +156,7 @@ streamaApp.directive('streamaVideoPlayer', [
           video.play();
           $scope.playing = true;
           $scope.options.onPlay(video, socketData);
+          $scope.overlayVisible = false;
         };
 
 
