@@ -108,8 +108,10 @@ class NotificationQueueController {
                 return
             }
             sendMail {
+                multipart true
                 to user.username
                 subject "New Content on Streama"
+                text 'you have several new movies & shows in streama. Check it out!'
                 body(view: "/mail/notification", model: [notificationQueues: notificationQueues])
             }
         }
