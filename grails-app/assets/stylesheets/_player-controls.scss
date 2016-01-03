@@ -65,7 +65,8 @@
   @include align-content(center);
   @include align-items(center);
 
-  &.visible{
+  &.visible,
+  &:hover{
     opacity: 1;
   }
 }

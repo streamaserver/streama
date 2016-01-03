@@ -1,3 +1,4 @@
+@import url(icomoon/style.css);
 .flex-row {
   display: -webkit-box;
   display: -moz-box;
@@ -1120,7 +1121,7 @@ streama-video-player.nocursor {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center; }
-  .player-wrapper .player-controls-wrapper.visible {
+  .player-wrapper .player-controls-wrapper.visible, .player-wrapper .player-controls-wrapper:hover {
     opacity: 1; }
 
 #player-menu-volume {
