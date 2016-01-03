@@ -7,7 +7,7 @@ import static org.springframework.http.HttpStatus.*
 @Transactional
 class FileService {
 
-  def serveVideo(request, response, rawFile) {
+  def serveVideo(request, response, rawFile, File file) {
     def rangeHeader = request.getHeader("Range")
     //bytes=391694320-
 
@@ -25,8 +25,9 @@ class FileService {
     //add html5 video headers
     response.addHeader("Accept-Ranges", "bytes")
     response.addHeader("Content-Length", contentLength.toString())
-    response.addHeader("Connection", "Keep-Alive")
-    response.addHeader("Keep-Alive", "timeout=5, max=100")
+    response.addHeader("Last-Modified", (new Date()).toString())
+    response.addHeader("Cache-Control", 'public,max-age=3600,public')
+    response.addHeader("Etag", file.sha256Hex)
 
 
     if(rangeHeader){
