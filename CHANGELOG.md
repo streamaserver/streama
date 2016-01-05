@@ -1,5 +1,18 @@
 # Change Log
 
+## [0.1.9] - 2016-01-05
+### Features
+- continuously show controls if hovered directly over them
+- reduced delay for contol hide
+- improved detail-display for shows and movies in admin interface
+- improved display for movies and shows without files in admin overview page
+
+
+### Bugfixes
+- potential fix for notification email going to spam
+- adjusted video response headers to more closely resemple apache2 headers
+- bugfix for fetching shows from themoviedb
+
 ## [0.1.8] - 2016-01-02
 ### Features
 - Add non-themoviedb shows ((#91)[https://github.com/dularion/streama/issues/91]) including upload for custom poster image
