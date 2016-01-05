@@ -14,35 +14,39 @@
 <div class="movie-content" ng-show="movie.title"
      ngf-drop ngf-drag-over-class="movie-dragover-upload" ngf-change="upload($files)">
 
-  <div class="clearfix">
-
-    <div class="btn-group pull-right">
-      <button class="btn btn-success btn-sm" ng-click="manageFiles(movie)">Manage Files</button>
-
-      <button class="btn btn-secondary btn-sm " ng-click="openMovieModal()">
-        Edit movie
-      </button>
-      <button class="btn btn-danger btn-sm " ng-click="delete()">
-        Delete movie
-      </button>
-      <button class="btn btn-secondary btn-sm " ng-click="addToCurrentNotification()">
-        Add Notification
-      </button>
-    </div>
-
-    <h1>
-      {{movie.title}} &nbsp;
-      <a ng-show="movie.files.length" class="ion-android-arrow-dropright-circle" ui-sref="player({videoId: movie.id})"></a>
-    </h1>
-
-    <span class="label label-danger" ng-show="!movie.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
-
-  </div>
-
-  <hr/>
-
   <div class="row">
+
+
     <div class="col-md-8 col-lg-9">
+
+      <div class="row">
+        <div class="col-md-6">
+          <h1>
+            {{movie.title}} &nbsp;
+            <a ng-show="movie.files.length" class="ion-android-arrow-dropright-circle" ui-sref="player({videoId: movie.id})"></a>
+          </h1>
+          <span class="label label-danger" ng-click="manageFiles(movie)" ng-show="!movie.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
+        </div>
+
+        <div class="col-md-6">
+          <div class="btn-group pull-right">
+            <button class="btn btn-success btn-sm" ng-click="manageFiles(movie)">Manage Files</button>
+
+            <button class="btn btn-secondary btn-sm " ng-click="openMovieModal()">
+              Edit movie
+            </button>
+            <button class="btn btn-danger btn-sm " ng-click="delete()">
+              Delete movie
+            </button>
+            <button class="btn btn-secondary btn-sm " ng-click="addToCurrentNotification()">
+              Add Notification
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+
 
       <div class="row">
         <div class="col-sm-2">
@@ -73,6 +77,14 @@
         </div>
       </div>
 
+
+      <div class="row" ng-show="!movie.files.length">
+        <hr/>
+        <button class="btn btn-danger btn-block btn-lg" ng-click="manageFiles(movie)">
+          <i class="ion-alert-circled"></i> No Video File yet! Click here to add
+        </button>
+      </div>
+
     </div>
 
     <div class="col-sm-4 col-lg-3" >
@@ -81,15 +93,7 @@
   </div>
 
 
-  <div ng-show="!movie.files.length">
-    <hr/>
-    <br/>
-    <br/>
-    <button ng-model="file"  class="btn btn-primary btn-block btn-lg"
-            ngf-change="upload($files)" ngf-select>
-      Drop or Select Video File <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
-    </button>
-  </div>
+
 </div>
 
 <br/>

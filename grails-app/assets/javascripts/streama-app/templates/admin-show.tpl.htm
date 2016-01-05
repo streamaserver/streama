@@ -3,34 +3,42 @@
   <li class="active">{{show.name}}</li>
 </ul>
 
-<div class="clearfix">
-  <h1 class="pull-left">
-    {{show.name}}
 
-    <div class="spinner" ng-show="loading">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
-    </div>
-  </h1>
 
-  <div class="btn-group pull-right">
-    <button class="btn btn-danger btn-sm" ng-click="deleteShow()">
-      Delete show
-    </button>
-    <button class="btn btn-secondary btn-sm" ng-click="openShowModal()">
-      Edit show
-    </button>
-    <button class="btn btn-secondary btn-sm " ng-click="addToCurrentNotification()">
-      Add Notification
-    </button>
-  </div>
-</div>
-
-<hr/>
 
 <div class="row">
   <div class="col-md-8">
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <h1>
+          {{show.name}}
+
+          <div class="spinner" ng-show="loading">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </div>
+        </h1>
+      </div>
+
+      <div class="col-md-6">
+        <div class="btn-group pull-right">
+          <button class="btn btn-danger btn-sm" ng-click="deleteShow()">
+            Delete show
+          </button>
+          <button class="btn btn-secondary btn-sm" ng-click="openShowModal()">
+            Edit show
+          </button>
+          <button class="btn btn-secondary btn-sm " ng-click="addToCurrentNotification()">
+            Add Notification
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <hr>
 
     <div class="row">
       <div class="col-sm-2">

@@ -56,6 +56,10 @@
     padding: 15px;
     @include flex(1);
     overflow-y: scroll;
+
+    h1{
+      margin-top: 0;
+    }
   }
 
   .media-list-item{

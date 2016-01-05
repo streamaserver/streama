@@ -39,7 +39,8 @@
     @include vendor-property('transition', 'transform .3s');
   }
 
-  .info-icon{
+  .info-icon,
+  .warning-icon{
     position: absolute;
     bottom: 7px;
     right: 7px;
@@ -49,6 +50,11 @@
     text-shadow: 1px 1px 1px rgb(0, 0, 0);
     opacity: 0;
     @include vendor-property('transition', 'opacity .2s');
+  }
+
+  .warning-icon{
+    opacity: 1;
+    color: $danger;
   }
 
   .play-text{
@@ -124,6 +130,10 @@
 
 .media-list-item{
   &.no-files{
+    img{
+      opacity: 0.35;
+    }
+
     .media-item:hover{
       img{
         @include vendor-property('transform', 'inherit');

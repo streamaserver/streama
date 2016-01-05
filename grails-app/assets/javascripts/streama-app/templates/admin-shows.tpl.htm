@@ -20,7 +20,9 @@
 <hr/>
 
 <div class="media-list">
-  <div class="media-list-item media-poster-item" ng-repeat="show in shows | filter:search | orderBy:currentSort.sort" ui-sref="admin.show({showId: show.id})">
+  <div class="media-list-item media-poster-item"  ng-class="{'no-files': !show.episodesWithFilesCount}"
+       ng-repeat="show in shows | filter:search | orderBy:currentSort.sort"
+       ui-sref="admin.show({showId: show.id})">
     <div class="media-item" >
       <img ng-if="show.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{show.poster_path}}"/>
       <img ng-if="!show.poster_path && !show.manualInput" ng-src="{{basePath}}assets/poster-not-found.png"/>
@@ -30,8 +32,10 @@
       <div class="play-text">
         <h4>{{show.name}}</h4>
         <p>{{show.first_air_date}} | <i class="ion-ios-star"></i>{{show.vote_average}} </p>
-        <p>{{show.episodesWithFilesCount}}/{{show.episodesCount}} uploaded</p>
+        <p ng-class="{'label label-danger': !show.episodesWithFilesCount}">{{show.episodesWithFilesCount}}/{{show.episodesCount}} uploaded</p>
       </div>
+
+      <i class="warning-icon ion-alert-circled" ng-show="!show.episodesWithFilesCount"></i>
     </div>
   </div>
 </div>
