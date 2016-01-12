@@ -27,7 +27,7 @@ class FileController {
     response.contentType = file.contentType
 
 
-    if(file.extension == ".mp4" || file.extension == ".mkv" || file.extension == ".webm" || file.extension == ".ogg"){
+    if(fileService.allowedVideoFormats.contains(file.extension)){
       fileService.serveVideo(request, response, rawFile, file)
     }else{
       render ( file: rawFile.bytes, contentType: file.contentType)

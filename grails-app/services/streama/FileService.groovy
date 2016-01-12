@@ -7,6 +7,8 @@ import static org.springframework.http.HttpStatus.*
 @Transactional
 class FileService {
 
+  def allowedVideoFormats = ['.mp4', '.mkv', '.webm', '.ogg', '.m4v']
+
   def serveVideo(request, response, rawFile, File file) {
     def rangeHeader = request.getHeader("Range")
     //bytes=391694320-
@@ -16,7 +18,6 @@ class FileService {
     def contentLength = rawFile.length().toString()
     def rangeEnd = fileLength.toLong()-1
     def rangeStart
-
 
     if(rangeHeader){
       rangeStart = rangeHeader.split("\\D+")[1].toLong()

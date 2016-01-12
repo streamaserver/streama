@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.1.9.1] - 2016-01-12
+### Bugfixes
+- fixed: unable to play videos that users were able to play previously (m4v format)
+
+
 ## [0.1.9] - 2016-01-05
 ### Features
 - continuously show controls if hovered directly over them
