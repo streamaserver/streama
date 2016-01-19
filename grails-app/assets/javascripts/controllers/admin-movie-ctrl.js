@@ -37,7 +37,7 @@ streamaApp.controller('adminMovieCtrl', [
     };
 
 
-		$scope.addSimilarMovieToStreama = function(movie){
+		$scope.addSimilarMovieToStreama = function(movie, redirect){
       alertify.set({
         buttonReverse: true,
         labels: {
@@ -53,7 +53,9 @@ streamaApp.controller('adminMovieCtrl', [
           movie.apiId = apiId;
 
           apiService.movie.save(movie).success(function (data) {
-            $state.go('admin.movie', {movieId: data.id});
+						if(redirect){
+							$state.go('admin.movie', {movieId: data.id});
+						}
           });
 				}
 			})

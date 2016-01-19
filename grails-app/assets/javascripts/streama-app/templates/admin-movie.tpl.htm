@@ -105,7 +105,10 @@
   <div class="media-list similar-media">
     <div class="media-list-item" ng-repeat="movie in movie.similarMovies.results">
       <div class="hover-overlay">
-        <button class="btn btn-primary btn-sm" ng-click="addSimilarMovieToStreama(movie)">Add To Streama</button>
+        <div>
+          <button class="btn btn-primary btn-sm btn-block" ng-click="addSimilarMovieToStreama(movie, true)">Add and Open</button>
+          <button class="btn btn-primary btn-sm btn-block" ng-click="addSimilarMovieToStreama(movie, false)">Add and Continue</button>
+        </div>
       </div>
       <div class="media-item" >
         <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>

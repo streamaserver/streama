@@ -907,6 +907,10 @@ hr {
     .upload-poster.update-poster .main-text {
       margin-top: 0px; }
 
+hr {
+  display: block;
+  clear: both; }
+
 .spinner {
   width: 38px;
   text-align: center;
