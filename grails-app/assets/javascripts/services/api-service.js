@@ -61,6 +61,18 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			}
 		},
 
+		tag:{
+			save: function (data) {
+				return $http.post(urlBase + 'tag/save.json', data);
+			},
+			delete: function (id) {
+				return $http.delete(urlBase + 'tag/delete.json', {params: {id: id}});
+			},
+			list: function () {
+				return $http.get(urlBase + 'tag.json');
+			}
+		},
+
 		video: {
 			get: function (id) {
 				return $http.get(urlBase + 'video/show.json', {params: {id: id}});

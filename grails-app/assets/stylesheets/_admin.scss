@@ -134,3 +134,25 @@ hr{
   display: block;
   clear: both;
 }
+
+
+.ui-select-bootstrap .ui-select-choices-row>a{
+  color: white;
+}
+
+.ui-select-multiple input.ui-select-search {
+  width: inherit !important;
+  color: white;
+}
+
+.tag-select{
+  .tag-wrapper{
+    @include flexbox;
+    .tag-name{
+      @include flex(1);
+    }
+    i{
+      @include flex(none);
+    }
+  }
+}

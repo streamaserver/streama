@@ -190,6 +190,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/theMovieDb/**':                   ['ROLE_CONTENT_MANAGER'],
   '/movie/**':                        ['ROLE_CONTENT_MANAGER'],
   '/episode/**':                      ['ROLE_CONTENT_MANAGER'],
+  '/tag/**':                          ['ROLE_CONTENT_MANAGER'],
 
 	'/user/**':                         ['ROLE_ADMIN'],
 	'/notificationQueue/**':            ['ROLE_ADMIN'],

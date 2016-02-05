@@ -78,6 +78,24 @@
       </div>
 
 
+      <!--<div class="row">-->
+        <!--<div class="col-sm-12">-->
+          <!--<label>Tags</label>-->
+
+          <!--<ui-select class="tag-select" multiple tagging="tagTransform" ng-model="movie.tags" theme="bootstrap" title="Add Tags" on-select="onTagSelect($item, $model)">-->
+            <!--<ui-select-match placeholder="Select tag...">{{$item.name}}</ui-select-match>-->
+            <!--<ui-select-choices repeat="tag in tags | propsFilter: {name: $select.search}">-->
+              <!--<div ng-if="tag.isNew" ng-bind-html="tag.name +' <small>(new)</small>'| highlight: $select.search"></div>-->
+              <!--<div ng-if="!tag.isNew" class="tag-wrapper">-->
+                <!--<div class="tag-name" ng-bind-html="tag.name + tag.isTag| highlight: $select.search"></div>-->
+                <!--<i class="ion-trash-a" ng-click="deleteTag(tag)"></i>-->
+              <!--</div>-->
+            <!--</ui-select-choices>-->
+          <!--</ui-select>-->
+        <!--</div>-->
+      <!--</div>-->
+
+
       <div class="row" ng-show="!movie.files.length">
         <hr/>
         <button class="btn btn-danger btn-block btn-lg" ng-click="manageFiles(movie)">

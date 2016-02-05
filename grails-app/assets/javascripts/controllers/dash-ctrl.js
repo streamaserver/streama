@@ -5,6 +5,7 @@ streamaApp.controller('dashCtrl', [
   function ($scope, apiService, $state, $rootScope, localStorageService, modalService) {
 	$scope.loading = true;
 
+
   if($rootScope.currentUser.isAdmin){
     apiService.settings.list().success(function (data) {
       var TheMovieDbAPI = _.find(data, {settingsKey: 'TheMovieDB API key'});

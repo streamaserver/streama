@@ -13,6 +13,8 @@
 *= require angular/angular-csp.css
 *= require alertify/themes/alertify.core.css
 *= require alertify/themes/alertify.bootstrap3.css
+*= require angular-ui-select/dist/select.min.css
+
 *= require style
 
 *= require_self
