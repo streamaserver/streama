@@ -10,6 +10,7 @@ class BootStrap {
         defaultDataService.createDefaultUsers()
         defaultDataService.createDefaultSettings()
         migrationService.setDefaultDeletedFlag()
+        migrationService.setTrailerForMovies()
     }
     def destroy = {
     }

@@ -10,6 +10,7 @@ class Movie extends Video{
 
   String backdrop_path
   String poster_path
+  String trailerKey
 
   static constraints = {
   }
@@ -24,10 +25,6 @@ class Movie extends Video{
 
   def getFullMovieMeta(){
     theMovieDbService.getFullMovieMeta(this.apiId)
-  }
-
-  def getTrailer(){
-    theMovieDbService.getTrailerForMovie(this.apiId)
   }
 
 }

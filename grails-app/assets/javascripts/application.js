@@ -22,5 +22,6 @@
 //= require Autolinker.js/dist/Autolinker.js
 //= require angular-local-storage/dist/angular-local-storage.js
 //= require angular-ui-select/dist/select.min.js
+//= require jquery-mousewheel/jquery.mousewheel.min.js
 //= require streama-app.js
 //= require_tree .

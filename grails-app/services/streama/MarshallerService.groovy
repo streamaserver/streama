@@ -27,6 +27,7 @@ class MarshallerService {
       returnArray['favoriteGenres'] = user.favoriteGenres
       returnArray['isAdmin'] = (user.authorities.find{it.authority == 'ROLE_ADMIN'} ? true : false)
       returnArray['isContentManager'] = (user.authorities.find{it.authority == 'ROLE_CONTENT_MANAGER'} ? true : false)
+      returnArray['pauseVideoOnClick'] = user.pauseVideoOnClick
 
       if(user.invitationSent && user.uuid){
         returnArray['invitationLink'] = settingsService.baseUrl +  "/invite?uuid=${user?.uuid}"
@@ -306,7 +307,7 @@ class MarshallerService {
         returnArray['release_date'] = movie.release_date
         returnArray['backdrop_path'] = movie.backdrop_path
         returnArray['poster_path'] = movie.poster_path
-        returnArray['trailer'] = movie.trailer
+        returnArray['trailerKey'] = movie.trailerKey
 
         return returnArray;
       }
@@ -332,7 +333,7 @@ class MarshallerService {
         returnArray['release_date'] = movie.release_date
         returnArray['backdrop_path'] = movie.backdrop_path
         returnArray['poster_path'] = movie.poster_path
-        returnArray['trailer'] = movie.trailer
+        returnArray['trailerKey'] = movie.trailerKey
 
 
         returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}

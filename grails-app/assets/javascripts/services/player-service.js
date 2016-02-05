@@ -28,7 +28,8 @@ streamaApp.factory('playerService', [
       onPlay: angular.noop,
       onPause: angular.noop,
       onClose: angular.noop,
-      onNext: angular.noop
+      onNext: angular.noop,
+      onVideoClick: angular.noop
     };
 
     return {
@@ -78,6 +79,7 @@ streamaApp.factory('playerService', [
         videoOptions.onTimeChange = this.onVideoTimeChange.bind(videoOptions);
         videoOptions.onClose = this.onVideoClose.bind(videoOptions);
         videoOptions.onNext = this.onNext.bind(videoOptions);
+        videoOptions.onVideoClick = this.onVideoClick.bind(videoOptions);
         videoOptions.onSocketSessionCreate = this.onSocketSessionCreate.bind(videoOptions);
 
         return videoOptions;
@@ -244,6 +246,13 @@ streamaApp.factory('playerService', [
 
       onNext: function () {
         $state.go('player', {videoId: videoData.nextEpisode.id});
+      },
+
+
+      onVideoClick: function () {
+        if($rootScope.currentUser.pauseVideoOnClick){
+          $rootScope.$broadcast('triggerVideoToggle');
+        }
       }
     };
 }]);
