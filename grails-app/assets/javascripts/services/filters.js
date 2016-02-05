@@ -14,6 +14,13 @@ streamaApp.filter('secondsToDateTime', [function() {
 	};
 }]);
 
+streamaApp.filter('trustResourceUrl', ['$sce', function($sce) {
+	return function(input) {
+		return $sce.trustAsResourceUrl(input);
+	};
+}]);
+
+
 function pad(n, width, z) {
 	z = z || '0';
 	n = n + '';

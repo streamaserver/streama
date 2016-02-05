@@ -306,6 +306,7 @@ class MarshallerService {
         returnArray['release_date'] = movie.release_date
         returnArray['backdrop_path'] = movie.backdrop_path
         returnArray['poster_path'] = movie.poster_path
+        returnArray['trailer'] = movie.trailer
 
         return returnArray;
       }
@@ -331,6 +332,7 @@ class MarshallerService {
         returnArray['release_date'] = movie.release_date
         returnArray['backdrop_path'] = movie.backdrop_path
         returnArray['poster_path'] = movie.poster_path
+        returnArray['trailer'] = movie.trailer
 
 
         returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}

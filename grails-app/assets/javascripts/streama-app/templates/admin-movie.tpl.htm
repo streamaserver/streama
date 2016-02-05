@@ -75,6 +75,11 @@
           <label>Overview</label>
           <p class="data-display">{{movie.overview}}</p>
         </div>
+        <div class="col-sm-12" ng-if="movie.trailer">
+          <label>Trailer</label>
+          <br>
+          <iframe width="560" height="315" ng-src="{{'https://www.youtube.com/embed/'+movie.trailer.key+'?rel=0' | trustResourceUrl}}" frameborder="0" allowfullscreen></iframe>
+        </div>
       </div>
 
 

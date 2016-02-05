@@ -26,4 +26,8 @@ class Movie extends Video{
     theMovieDbService.getFullMovieMeta(this.apiId)
   }
 
+  def getTrailer(){
+    theMovieDbService.getTrailerForMovie(this.apiId)
+  }
+
 }
