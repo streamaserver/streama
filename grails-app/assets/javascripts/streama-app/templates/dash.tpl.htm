@@ -13,7 +13,7 @@
       <div class="media-list-item" ng-repeat="viewingStatus in continueWatching">
         <div class="media-item">
           <img ng-if="viewingStatus.video.backdrop_path" ng-src="https://image.tmdb.org/t/p/w300/{{viewingStatus.video.backdrop_path}}"/>
-          <img ng-if="!viewingStatus.video.show.backdrop_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
+          <img ng-if="!viewingStatus.video.backdrop_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
           <div class="play-text">Continue "{{viewingStatus.video.title || viewingStatus.video.show.name}}"</div>
           <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">Mark completed</button>
