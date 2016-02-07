@@ -555,6 +555,14 @@ hr {
   -ms-transform: inherit;
   transform: inherit; }
 
+.volume-info {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  text-shadow: 0 0 15px black; }
+
 .media-episode-string {
   font-size: 14px;
   font-weight: 100;

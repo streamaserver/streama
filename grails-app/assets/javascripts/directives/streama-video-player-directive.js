@@ -12,17 +12,34 @@ streamaApp.directive('streamaVideoPlayer', [
       },
 
       link: function ($scope, $elem, $attrs) {
+
+
+        var controlDisplayTimeout;
+        var overlayTimeout;
+        var volumeChangeTimeout;
+
         var video = $elem.find('video')[0];
         $elem.addClass('nocursor');
 
-        jQuery($elem).mousewheel(function(event) {
-          if(event.deltaY > 1){
+        jQuery($elem).mousewheel(function(event, scroll) {
+          event.preventDefault();
+          $scope.volumeChanged = true;
+          $timeout.cancel(volumeChangeTimeout);
+          console.log('%c event', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', event);
+          if(event.deltaY > 0){
             $scope.volumeLevel += 1;
           }else{
             $scope.volumeLevel -= 1;
           }
+
+
+          console.log('%c event', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', event.deltaY, $scope.volumeLevel);
           $scope.volumeLevel = $scope.volumeLevel.clamp(0, 10);
           $scope.$apply();
+
+          volumeChangeTimeout = $timeout(function () {
+            $scope.volumeChanged = false;
+          }, 1500);
         });
 
         $scope.isMobile = false; //initiate as false
@@ -35,9 +52,6 @@ streamaApp.directive('streamaVideoPlayer', [
         console.log('%c options', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', $scope.options);
         $scope.loading = true;
         $scope.initialPlay = false;
-
-        var controlDisplayTimeout;
-        var overlayTimeout;
 
         $scope.volumeLevel = localStorageService.get('volumeLevel') || 5;
 

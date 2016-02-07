@@ -1,5 +1,9 @@
 <div class="video-wrapper-inner"  ng-mousemove="showControls()" ng-mouseleave="delayHideControls()">
 
+  <div class="volume-info" ng-show="volumeChanged">
+    {{volumeLevel * 10}}% Volume
+  </div>
+
   <i class="ion-android-arrow-back player-back" ng-class="{'visible': controlsVisible}" ng-click="closeVideo()"></i>
 
 
