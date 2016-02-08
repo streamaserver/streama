@@ -22,8 +22,14 @@ class FileController {
       return
     }
 
+    def filePath = uploadService.getPath(file.sha256Hex, file.extension)
 
-    java.io.File rawFile = new java.io.File(uploadService.getPath(file.sha256Hex, file.extension))
+    if(!filePath){
+      render status: NOT_FOUND
+      return
+    }
+
+    java.io.File rawFile = new java.io.File(filePath)
     response.contentType = file.contentType
 
 

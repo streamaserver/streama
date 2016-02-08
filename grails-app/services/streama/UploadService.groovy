@@ -10,8 +10,8 @@ class UploadService {
 
   def settingsService
 
-  def getStoragePath(){
-    return Settings.findBySettingsKey('Upload Directory')?.value
+  def getStoragePaths(){
+    return [Settings.findBySettingsKey('Upload Directory')?.value, Settings.findBySettingsKey('Second Directory')?.value]
   }
 
   def upload(DefaultMultipartHttpServletRequest request) {
@@ -46,7 +46,7 @@ class UploadService {
   }
 
   def getDir() {
-    def imagePath = storagePath
+    def imagePath = storagePaths.getAt(0)
     def uploadDir = new java.io.File(imagePath + '/upload')
     if (!uploadDir.exists()){
       uploadDir.mkdirs()
@@ -57,8 +57,20 @@ class UploadService {
   }
 
   String getPath(String sha256Hex, extension){
-    def uploadDir = new java.io.File(storagePath + '/upload')
-    return "$uploadDir/$sha256Hex" + extension
+    def foundVideoPath
+
+    storagePaths.each{storagePath ->
+      if(foundVideoPath){
+        return
+      }
+      def uploadDir = new java.io.File(storagePath + '/upload')
+      def filePath = "$uploadDir/$sha256Hex" + extension
+      if((new java.io.File(filePath)).exists()){
+        foundVideoPath = filePath
+      }
+
+    }
+    return foundVideoPath
   }
 
   def getFileSrc(File file){
