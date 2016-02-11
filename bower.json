@@ -26,6 +26,7 @@
     "angular": "~1.4.3",
     "angular-sanitize": "~1.4.3",
     "ng-file-upload": "~5.0.9",
-    "mousetrap": "~1.5.3"
+    "mousetrap": "~1.5.3",
+    "jquery-mousewheel": "^3.1.13"
   }
 }

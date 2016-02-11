@@ -64,6 +64,12 @@ class DefaultDataService {
             settingsType: 'string',
             required: true
         ],
+        [
+            settingsKey: 'Second Directory',
+            description: 'This directory is not used for uploading of new files, only for playback of existing files. This can be useful if you want to spread your video files over two directories, for instance by mounting a second drive.',
+            settingsType: 'string',
+            required: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',

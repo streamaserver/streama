@@ -14,7 +14,7 @@ class SettingsService {
   def validate(Settings settingsInstance) {
     def resultValue = [:]
 
-    if (settingsInstance.settingsKey == 'Upload Directory') {
+    if (settingsInstance.settingsKey == 'Upload Directory' || settingsInstance.settingsKey == 'Second Directory') {
       validateUploadDirectoryPermissions(settingsInstance, resultValue)
     }
     if (settingsInstance.settingsKey == 'TheMovieDB API key') {

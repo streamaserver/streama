@@ -1,7 +1,7 @@
 'use strict';
 
 var streamaApp = angular.module('streamaApp', [
-	'ui.router', 'ui.bootstrap', 'ngFileUpload', 'ui.slider', 'LocalStorageModule'
+	'ui.router', 'ui.bootstrap', 'ngFileUpload', 'ui.slider', 'LocalStorageModule', 'ui.select', 'ngSanitize'
 ]);
 
 

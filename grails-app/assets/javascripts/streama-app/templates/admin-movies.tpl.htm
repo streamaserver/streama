@@ -29,8 +29,8 @@
 
 
       <div class="play-text">
-        <h4>{{movie.title}}</h4>
-        <p>{{movie.release_date.substring(0,4)}}</p>
+        <h4>{{::movie.title}}</h4>
+        <p>{{::movie.release_date.substring(0,4)}}</p>
         <span class="label label-danger" ng-show="!movie.hasFiles"><i class="ion-alert-circled"></i> No Video File yet!</span>
       </div>
 
@@ -55,7 +55,7 @@
       <div class="media-item" >
         <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
       </div>
-      <div class="media-meta">Release: {{movie.release_date.substring(0, 4)}} | <i class="ion-ios-star"></i> {{movie.vote_average}}</div>
+      <div class="media-meta">Release: {{::movie.release_date.substring(0, 4)}} | <i class="ion-ios-star"></i> {{::movie.vote_average}}</div>
     </div>
   </div>
 

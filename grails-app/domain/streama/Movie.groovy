@@ -10,6 +10,7 @@ class Movie extends Video{
 
   String backdrop_path
   String poster_path
+  String trailerKey
 
   static constraints = {
   }

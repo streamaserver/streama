@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.directive('streamaVideoPlayer', [
-  'uploadService', 'apiService', 'localStorageService', '$timeout',
-  function (uploadService, apiService, localStorageService, $timeout) {
+  'uploadService', 'localStorageService', '$timeout',
+  function (uploadService, localStorageService, $timeout) {
 
     return {
       restrict: 'AE',
@@ -12,8 +12,35 @@ streamaApp.directive('streamaVideoPlayer', [
       },
 
       link: function ($scope, $elem, $attrs) {
+
+
+        var controlDisplayTimeout;
+        var overlayTimeout;
+        var volumeChangeTimeout;
+
         var video = $elem.find('video')[0];
         $elem.addClass('nocursor');
+
+        jQuery($elem).mousewheel(function(event, scroll) {
+          event.preventDefault();
+          $scope.volumeChanged = true;
+          $timeout.cancel(volumeChangeTimeout);
+          console.log('%c event', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', event);
+          if(event.deltaY > 0){
+            $scope.volumeLevel += 1;
+          }else{
+            $scope.volumeLevel -= 1;
+          }
+
+
+          console.log('%c event', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', event.deltaY, $scope.volumeLevel);
+          $scope.volumeLevel = $scope.volumeLevel.clamp(0, 10);
+          $scope.$apply();
+
+          volumeChangeTimeout = $timeout(function () {
+            $scope.volumeChanged = false;
+          }, 1500);
+        });
 
         $scope.isMobile = false; //initiate as false
         // device detection
@@ -25,9 +52,6 @@ streamaApp.directive('streamaVideoPlayer', [
         console.log('%c options', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', $scope.options);
         $scope.loading = true;
         $scope.initialPlay = false;
-
-        var controlDisplayTimeout;
-        var overlayTimeout;
 
         $scope.volumeLevel = localStorageService.get('volumeLevel') || 5;
 
@@ -183,6 +207,10 @@ streamaApp.directive('streamaVideoPlayer', [
           $scope.options.onClose();
         };
 
+        $scope.clickVideo = function () {
+          $scope.options.onVideoClick();
+        };
+
         $scope.fullScreen = function () {
           $scope.isFullScreen = !$scope.isFullScreen;
           var docElm;
@@ -232,10 +260,19 @@ streamaApp.directive('streamaVideoPlayer', [
         $scope.$on('triggerVideoPause', function (e, data) {
           $scope.pause(data);
         });
+        $scope.$on('triggerVideoToggle', function (e, data) {
+          if($scope.playing){
+            $scope.pause(data);
+          }else{
+            $scope.play(data);
+          }
+        });
         $scope.$on('triggerVideoTimeChange', function (e, data) {
           video.currentTime = data.currentPlayerTime;
           $scope.currentTime = data.currentPlayerTime;
         });
+
+
 
 
         $scope.$on('$destroy', function() {

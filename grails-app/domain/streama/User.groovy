@@ -18,6 +18,7 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
 	boolean invitationSent = false
+	boolean pauseVideoOnClick = true
 	String uuid
 
   String fullName

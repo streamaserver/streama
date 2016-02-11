@@ -555,6 +555,14 @@ hr {
   -ms-transform: inherit;
   transform: inherit; }
 
+.volume-info {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  text-shadow: 0 0 15px black; }
+
 .media-episode-string {
   font-size: 14px;
   font-weight: 100;
@@ -910,6 +918,32 @@ hr {
 hr {
   display: block;
   clear: both; }
+
+.ui-select-bootstrap .ui-select-choices-row > a {
+  color: white; }
+
+.ui-select-multiple input.ui-select-search {
+  width: inherit !important;
+  color: white; }
+
+.tag-select .tag-wrapper {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex; }
+  .tag-select .tag-wrapper .tag-name {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1; }
+  .tag-select .tag-wrapper i {
+    -webkit-box-flex: none;
+    -moz-box-flex: none;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none; }
 
 .spinner {
   width: 38px;

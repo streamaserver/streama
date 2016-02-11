@@ -24,6 +24,11 @@
       <hr/>
       <h4>Overview</h4>
       <p class="overview-text">{{media.overview}}</p>
+
+      <div ng-if="media.trailerKey">
+        <h4>Trailer</h4>
+        <iframe width="560" height="315" ng-src="{{'https://www.youtube.com/embed/'+media.trailerKey+'?rel=0' | trustResourceUrl}}" frameborder="0" allowfullscreen></iframe>
+      </div>
     </div>
     <div class="col-sm-4">
       <img ng-show="media.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{media.poster_path}}"/>
