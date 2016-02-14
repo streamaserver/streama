@@ -11,7 +11,17 @@ class UploadService {
   def settingsService
 
   def getStoragePaths(){
-    return [Settings.findBySettingsKey('Upload Directory')?.value, Settings.findBySettingsKey('Second Directory')?.value]
+    def storages = []
+    def storage1 = Settings.findBySettingsKey('Upload Directory')?.value
+    if(storage1){
+      storages.add(storage1)
+    }
+    def storage2 = Settings.findBySettingsKey('Second Directory')?.value
+    if(storage2){
+      storages.add(storage2)
+    }
+
+    return storages
   }
 
   def upload(DefaultMultipartHttpServletRequest request) {

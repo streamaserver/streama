@@ -47,7 +47,7 @@ streamaApp.controller('adminSettingsCtrl', ['$scope', 'apiService', '$sce', func
 
   $scope.anySettingsInvalid = function () {
     return _.find($scope.settings, function (setting) {
-        return setting.invalid || (setting.dirty && !setting.valid) || !setting.value;
+        return setting.invalid || (setting.dirty && !setting.valid) || (!setting.value && setting.required);
    });
   };
 
