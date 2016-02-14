@@ -248,6 +248,8 @@ class MarshallerService {
       }
     }
 
+
+
     JSON.createNamedConfig('firstEpisode') { DefaultConverterConfiguration<JSON> cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
         def returnArray = [:]
@@ -340,6 +342,49 @@ class MarshallerService {
         returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
         returnArray['similarMovies'] = movie.similarMovies
+
+        return returnArray;
+      }
+    }
+
+
+    JSON.createNamedConfig('adminFileManager') { DefaultConverterConfiguration<JSON> cfg ->
+      cfg.registerObjectMarshaller(File) { File  file ->
+        def returnArray = [:]
+
+        returnArray['id'] = file.id
+        returnArray['name'] = file.name
+        returnArray['sha256Hex'] = file.sha256Hex
+        returnArray['src'] = file.getSrc()
+        returnArray['originalFilename'] = file.originalFilename
+        returnArray['extension'] = file.extension
+        returnArray['contentType'] = file.contentType
+        returnArray['size'] = file.size
+        returnArray['dateCreated'] = file.dateCreated
+        returnArray['quality'] = file.quality
+        returnArray['fileExists'] = file.fileExists
+        returnArray['videos'] = file.associatedVideos
+
+        return returnArray;
+      }
+
+
+      cfg.registerObjectMarshaller(Video) { Video  video ->
+        def returnArray = [:]
+
+        returnArray['id'] = video.id
+
+        if(video instanceof Movie){
+          returnArray['title'] = video.title
+          returnArray['release_date'] = video.release_date
+          returnArray['poster_path'] = video.poster_path
+        }
+
+        if(video instanceof Episode){
+          returnArray['isEpisode'] = true
+          returnArray['title'] = video.show?.name
+          returnArray['poster_path'] = video.show?.poster_path
+        }
 
         return returnArray;
       }

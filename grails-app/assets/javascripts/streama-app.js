@@ -71,6 +71,11 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
         }]
       }
 		})
+		.state('admin.fileManager', {
+			url: '/fileManager',
+			templateUrl: 'admin-fileManager.htm',
+			controller: 'adminFileManagerCtrl'
+		})
 		.state('admin.movies', {
 			url: '/movies',
 			templateUrl: 'admin-movies.htm',

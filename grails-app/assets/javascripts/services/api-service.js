@@ -92,8 +92,14 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			removeFile: function (videoId, fileId) {
 				return $http.get(urlBase + 'video/removeFile.json', {params: {videoId: videoId, fileId: fileId}});
 			},
-			listAllFiles: function () {
-				return $http.get(urlBase + 'file.json');
+			listAllFiles: function (params) {
+				return $http.get(urlBase + 'file.json', {params: params});
+			},
+			removeFileFromDisk: function (id, path) {
+				return $http.delete(urlBase + 'file/removeFileFromDisk.json', {params: {id: id, path: path}});
+			},
+			cleanUpFiles: function (type) {
+				return $http.delete(urlBase + 'file/cleanUpFiles.json', {params: {type: type}});
 			},
 			addFile: function (videoId, fileId) {
 				return $http.get(urlBase + 'video/addFile.json', {params: {videoId: videoId, fileId: fileId}});

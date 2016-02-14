@@ -74,6 +74,9 @@ class TvShowController {
     tvShowInstance.deleted = true
     tvShowInstance.save flush: true, failOnError: true
 
+    tvShowInstance.episodes*.deleted = true
+    tvShowInstance.episodes*.save flush: true, failOnError: true
+
     render status: NO_CONTENT
   }
 

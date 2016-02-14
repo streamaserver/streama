@@ -30,4 +30,46 @@ class File {
     def res = uploadService.getFileSrc(this)
     return res
   }
+
+  def getFileExists(){
+    if(this.imagePath){
+      java.io.File rawFile = new java.io.File(this.imagePath)
+      return rawFile.exists()
+    }else{
+      return false
+    }
+  }
+
+  def getAssociatedVideos(){
+    def videos = Video.withCriteria {
+      ne("deleted", true)
+      files{
+        idEq(this.id)
+      }
+    }
+
+    return videos
+  }
+
+  def getAssociatedVideosInclDeleted(){
+    def videos = Video.withCriteria {
+      files{
+        idEq(this.id)
+      }
+    }
+
+    return videos
+  }
+
+  def getIsInUse(){
+    if(this.associatedVideos){
+      return true
+    }
+    else if(TvShow.findByDeletedNotEqualAndBackdrop_image(true, this)){
+      return true
+    }
+    else if(TvShow.findByDeletedNotEqualAndPoster_image(true, this)){
+      return true
+    }
+  }
 }

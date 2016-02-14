@@ -61,4 +61,35 @@ class FileService {
 //      e.getCause().printStackTrace()
     }
   }
+
+
+  def fullyRemoveFile(File file){
+    if(file.associatedVideosInclDeleted){
+      file.associatedVideosInclDeleted.each{ video ->
+        video.removeFromFiles(file)
+        video.save(flush: true, failOnError: true)
+      }
+    }
+
+    if(file.isInUse){
+      def tvShowByPoster = TvShow.findByPoster_image(file)
+      if(tvShowByPoster){
+        tvShowByPoster.poster_image = null
+        tvShowByPoster.save(flush: true, failOnError: true)
+      }
+
+      def tvShowByBackdrop = TvShow.findByPoster_image(file)
+      if(tvShowByBackdrop){
+        tvShowByBackdrop.backdrop_image = null
+        tvShowByBackdrop.save(flush: true, failOnError: true)
+      }
+    }
+
+    if(file.imagePath && file.fileExists){
+      java.io.File rawFile = new java.io.File(file.imagePath)
+      rawFile.delete()
+    }
+
+    file.delete(flush: true)
+  }
 }

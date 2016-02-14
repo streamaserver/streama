@@ -147,6 +147,9 @@ label {
 .fade-50 {
   opacity: 0.5; }
 
+.margin-top-10 {
+  margin-top: 10px; }
+
 .btn {
   background: gray;
   border-color: #787878;
@@ -169,6 +172,10 @@ label {
     padding: 0px 1px;
     line-height: 1em;
     font-size: 10px; }
+  .btn.btn-icon {
+    font-size: 21px;
+    padding: 0px 9px;
+    line-height: 1.5; }
 
 .btn-primary {
   background: #2898c5;
@@ -944,6 +951,21 @@ hr {
     -webkit-flex: none;
     -ms-flex: none;
     flex: none; }
+
+.file-grid:after {
+  content: "";
+  display: table;
+  clear: both; }
+.file-grid .file-grid-item {
+  float: left;
+  background-color: rgba(255, 255, 255, 0.12);
+  width: 200px;
+  height: 200px;
+  margin: 0 10px 10px 0; }
+
+.file-manager-table {
+  word-break: break-word;
+  font-size: 12px; }
 
 .spinner {
   width: 38px;

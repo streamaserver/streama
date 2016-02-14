@@ -44,4 +44,8 @@ class TvShow {
   def getExternalLinks(){
     theMovieDbService.getExternalLinks(this.apiId)
   }
+
+  def getHasFiles(){
+    return (this.episodes?.find{it.files} ? true : false)
+  }
 }
