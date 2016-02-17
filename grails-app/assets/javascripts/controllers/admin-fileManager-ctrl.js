@@ -2,7 +2,7 @@
 
 streamaApp.controller('adminFileManagerCtrl', ['$scope', 'apiService', 'modalService', '$state', function ($scope, apiService, modalService, $state) {
 
-	$scope.loading = true;
+
 	$scope.maxPerPage = 10;
 	$scope.offset = 0;
 
@@ -45,6 +45,9 @@ streamaApp.controller('adminFileManagerCtrl', ['$scope', 'apiService', 'modalSer
 
 
 	var loadFiles = function (params) {
+		$scope.loading = true;
+		$scope.files = [];
+		$scope.filesCount = 0;
 		apiService.video.listAllFiles(params)
 			.success(function (data) {
 				$scope.loading = false;

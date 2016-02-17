@@ -3,7 +3,6 @@
 streamaApp.controller('dashCtrl', [
   '$scope', 'apiService', '$state', '$rootScope', 'localStorageService', 'modalService',
   function ($scope, apiService, $state, $rootScope, localStorageService, modalService) {
-	$scope.loading = true;
 
 
   if($rootScope.currentUser.isAdmin){
@@ -26,25 +25,24 @@ streamaApp.controller('dashCtrl', [
   $scope.markCompleted = function (viewingStatus) {
     alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
       if(confirmed){
-        apiService.viewingStatus.markCompleted(viewingStatus).success(function (data) {
+        apiService.viewingStatus.delete(viewingStatus).success(function (data) {
           _.remove($scope.continueWatching, {'id': data.id});
         });
       }
     })
   };
 
+  apiService.dash.listContinueWatching().success(function (data) {
+    $scope.continueWatching = data;
+  });
 
+  apiService.dash.listShows().success(function (data) {
+    $scope.tvShows = data;
+  });
 
-  apiService.video.dash()
-    .success(function (data) {
-      $scope.tvShows = data.tvShowsForDash;
-      $scope.continueWatching = data.continueWatching;
-      $scope.movies = data.movies;
-      $scope.loading = false;
-    })
-    .error(function () {
-      alertify('A server error occured.');
-      $scope.loading = false;
-    });
+  apiService.dash.listMovies().success(function (data) {
+    $scope.movies = data;
+  });
+
 
 }]);

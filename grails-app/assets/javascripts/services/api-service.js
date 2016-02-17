@@ -199,6 +199,18 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 		dash: {
 			searchMedia: function (query) {
 				return $http.get(urlBase + 'dash/searchMedia.json', {params: {query: query}});
+			},
+
+			listContinueWatching: function () {
+				return $http.get(urlBase + 'dash/listContinueWatching.json');
+			},
+
+			listMovies: function () {
+				return $http.get(urlBase + 'dash/listMovies.json');
+			},
+
+			listShows: function () {
+				return $http.get(urlBase + 'dash/listShows.json');
 			}
 		},
 

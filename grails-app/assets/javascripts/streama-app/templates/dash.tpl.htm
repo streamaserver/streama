@@ -1,13 +1,10 @@
 <div class="dashboard">
 
-  <div class="spinner big" ng-show="loading">
-    <div class="bounce1"></div>
-    <div class="bounce2"></div>
-    <div class="bounce3"></div>
-  </div>
+
 
   <div ng-if="continueWatching.length">
     <h3>Continue watching</h3>
+
 
     <div class="media-list media-list-continue-watching">
       <div class="media-list-item" ng-repeat="viewingStatus in continueWatching">
@@ -37,9 +34,17 @@
     <hr/>
   </div>
 
-  <div ng-if="tvShows.length">
+  <div>
     <h3>Discover Shows
       <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown></h3>
+
+
+    <div class="spinner" ng-show="!tvShows.length">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="tvShow in tvShows | orderBy:showSort.sort">
         <div class="media-item" >
@@ -62,9 +67,16 @@
     <hr/>
   </div>
 
-  <div ng-if="movies.length">
+  <div >
     <h3>Discover Movies
       <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown></h3>
+
+    <div class="spinner" ng-show="!movies.length">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="movie in movies | orderBy:movieSort.sort">
         <div class="media-item" >
