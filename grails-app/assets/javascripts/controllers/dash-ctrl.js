@@ -16,6 +16,13 @@ streamaApp.controller('dashCtrl', [
       }
     });
   }
+    
+  $scope.fetchFirstEpisodeAndPlay = function (tvShow) {
+    apiService.dash.firstEpisodeForShow(tvShow.id).success(function (data) {
+      console.log('%c data', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
+      $state.go('player', {videoId: data.id});
+    });
+  };
 
   $scope.showDetails = function (media) {
     modalService.mediaDetailModal(media);

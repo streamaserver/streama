@@ -211,6 +211,10 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 
 			listShows: function () {
 				return $http.get(urlBase + 'dash/listShows.json');
+			},
+
+			firstEpisodeForShow: function (id) {
+				return $http.get(urlBase + 'dash/firstEpisodeForShow.json', {params: {id: id}});
 			}
 		},
 

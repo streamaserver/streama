@@ -335,12 +335,6 @@ class MarshallerService {
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
 
-
-        returnArray['hasFiles'] = (tvShow.episodes?.find{it.files} ? true : false)
-        returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
-
-//            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
-
         return returnArray;
       }
     }

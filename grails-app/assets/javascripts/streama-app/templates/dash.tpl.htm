@@ -9,20 +9,20 @@
     <div class="media-list media-list-continue-watching">
       <div class="media-list-item" ng-repeat="viewingStatus in continueWatching">
         <div class="media-item">
-          <img ng-if="viewingStatus.video.backdrop_path" ng-src="https://image.tmdb.org/t/p/w300/{{viewingStatus.video.backdrop_path}}"/>
+          <img ng-if="viewingStatus.video.backdrop_path" ng-src="https://image.tmdb.org/t/p/w300/{{::viewingStatus.video.backdrop_path}}"/>
           <img ng-if="!viewingStatus.video.backdrop_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
-          <div class="play-text">Continue "{{viewingStatus.video.title || viewingStatus.video.show.name}}"</div>
+          <div class="play-text">Continue "<span ng-bind="::(viewingStatus.video.title || viewingStatus.video.show.name)"></span>"</div>
           <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">Mark completed</button>
           <i class="play-icon ion-ios-play" ui-sref="player({videoId: viewingStatus.video.id})"></i>
         </div>
 
         <div class="media-progress-wrapper">
 
-          <div class="progress-info" ng-show="viewingStatus.video.isEpisode">{{viewingStatus.video.episodeString}} - {{viewingStatus.video.title}}</div>
-          <div class="progress-info" ng-show="!viewingStatus.video.isEpisode">{{viewingStatus.video.title}}</div>
+          <div class="progress-info" ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span> - <span ng-bind="::viewingStatus.video.title"></span></div>
+          <div class="progress-info" ng-show="!viewingStatus.video.isEpisode" ng-bind="::viewingStatus.video.title"></div>
 
-          <div class="progress-time">{{viewingStatus.currentPlayTime | secondsToDateTime | date:'mm:ss'}} min</div>
+          <div class="progress-time"><span ng-bind="::(viewingStatus.currentPlayTime | secondsToDateTime | date:'mm:ss')"></span> min</div>
 
           <div class="media-progress" ng-if="viewingStatus.runtime">
             <div class="progress-inner" style="width: {{viewingStatus.currentPlayTime / viewingStatus.runtime * 100}}%;"></div>
@@ -48,18 +48,18 @@
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="tvShow in tvShows | orderBy:showSort.sort">
         <div class="media-item" >
-          <img ng-if="tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{tvShow.poster_path}}"/>
+          <img ng-if="tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{::tvShow.poster_path}}"/>
           <img ng-if="!tvShow.poster_path && !tvShow.manualInput" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
-          <img ng-show="tvShow.manualInput && tvShow.poster_image_src" ng-src="{{tvShow.poster_image_src}}">
+          <img ng-show="tvShow.manualInput && tvShow.poster_image_src" ng-src="{{::tvShow.poster_image_src}}">
 
           <div class="play-text">
-            <h4>{{tvShow.name}}</h4>
-            <p>{{tvShow.firstEpisode.episodeString}} - {{tvShow.firstEpisode.name}}</p>
+            <h4 ng-bind="::tvShow.name"></h4>
+            <p><span ng-bind="::tvShow.firstEpisode.episodeString"></span> - <span ng-bind="::tvShow.firstEpisode.name"></span></p>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="showDetails(tvShow)"></i>
-          <a class="play-icon ion-ios-play" ui-sref="player({videoId: tvShow.firstEpisode.id})"></a>
+          <a class="play-icon ion-ios-play" ng-click="fetchFirstEpisodeAndPlay(tvShow)"></a>
         </div>
       </div>
     </div>
@@ -84,8 +84,8 @@
           <img ng-if="!movie.poster_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
           <div class="play-text">
-            <h4>{{movie.title}}</h4>
-            <p>{{movie.release_date.substring(0,4)}}</p>
+            <h4 ng-bind="::movie.title"></h4>
+            <p ng-bind="::movie.release_date.substring(0,4)"></p>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="showDetails(movie)"></i>
