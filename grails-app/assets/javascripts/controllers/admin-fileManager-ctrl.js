@@ -5,6 +5,7 @@ streamaApp.controller('adminFileManagerCtrl', ['$scope', 'apiService', 'modalSer
 
 	$scope.maxPerPage = 10;
 	$scope.offset = 0;
+	$scope.pagination = {};
 
 	$scope.activeListDisplay = 'table';
 
@@ -34,7 +35,8 @@ streamaApp.controller('adminFileManagerCtrl', ['$scope', 'apiService', 'modalSer
 	};
 
 	$scope.pageChanged = function () {
-		loadFiles({max: $scope.maxPerPage, filter: $scope.listFilter, offset: ($scope.maxPerPage*($scope.currentPage-1))});
+		var newOffset = $scope.maxPerPage*($scope.pagination.currentPage-1);
+		loadFiles({max: $scope.maxPerPage, filter: $scope.listFilter, offset: newOffset});
 	};
 
 
