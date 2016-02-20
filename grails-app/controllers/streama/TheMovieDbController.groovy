@@ -6,6 +6,7 @@ import groovy.json.JsonSlurper
 class TheMovieDbController {
 
   def theMovieDbService
+  def migrationService
 
   def search() {
     String type = params.type
@@ -51,6 +52,11 @@ class TheMovieDbController {
   def availableGenres(){
     HashSet genres = theMovieDbService.movieGenres + theMovieDbService.tvGenres
     respond genres
+  }
+
+
+  def testMigration(){
+    migrationService.addGenresToMoviesAndShows()
   }
 
 }

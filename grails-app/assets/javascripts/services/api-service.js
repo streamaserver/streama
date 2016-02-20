@@ -152,6 +152,16 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 		},
 
 
+		genres: {
+			get: function (id) {
+				return $http.get(urlBase + 'genre/show.json', {params: {id: id}});
+			},
+			list: function () {
+				return $http.get(urlBase + 'genre.json');
+			}
+		},
+
+
     settings: {
 			list: function () {
 				return $http.get(urlBase + 'settings.json');
@@ -215,6 +225,10 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 
 			firstEpisodeForShow: function (id) {
 				return $http.get(urlBase + 'dash/firstEpisodeForShow.json', {params: {id: id}});
+			},
+
+			listGenres: function () {
+				return $http.get(urlBase + 'dash/listGenres.json');
 			}
 		},
 

@@ -311,6 +311,7 @@ class MarshallerService {
         returnArray['poster_path'] = movie.poster_path
         returnArray['trailerKey'] = movie.trailerKey
         returnArray['tags'] = movie.tags
+        returnArray['genre'] = movie.genre
 
         return returnArray;
       }
@@ -335,6 +336,7 @@ class MarshallerService {
         returnArray['popularity'] = tvShow.popularity
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
+        returnArray['genre'] = tvShow.genre
 
         return returnArray;
       }

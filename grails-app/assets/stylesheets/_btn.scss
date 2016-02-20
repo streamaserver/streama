@@ -44,6 +44,36 @@
   @include btn(desaturate(darken($primary, 55%), 10%));
 }
 
+.btn-link{
+  background: none;
+  font-size: 17px;
+  font-weight: 100;
+  color: $primary;
+  border-radius: 2em;
+  text-decoration: none;
+  padding: 5px 13px;
+  border: 1px solid transparent;
+
+  >i{
+    margin-left: 5px;
+  }
+
+  &:hover,
+  &:active,
+  &:focus{
+    text-decoration: none;
+    color: $primary;
+    background: none;
+    border: 1px solid $primary;
+  }
+
+  &:active:focus,
+  &.active{
+    text-decoration: none;
+    background: rgba($primary, 0.1);
+    border: 1px solid $primary;
+  }
+}
 
 
 .btn-dropzone{

@@ -13,7 +13,7 @@ class Movie extends Video{
   String trailerKey
 
 
-  static hasMany = [tags: Tag]
+  static hasMany = [tags: Tag, genre: Genre]
 
   static constraints = {
   }

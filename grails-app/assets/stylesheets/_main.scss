@@ -10,9 +10,14 @@ h1,h2,h3,h4,h5,h6{
 
 .logo{
   float: left;
-  width: 130px;
   padding: 6px 0;
   position: relative;
+  width: 170px;
+  margin-right: 15px;
+
+  img{
+    width: 130px;
+  }
   i{
     font-size: 0.85em;
   }

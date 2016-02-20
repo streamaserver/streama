@@ -18,15 +18,36 @@
 <body>
 
 <header class="main" ng-if="!isCurrentState('player')">
-	<a class="logo" ui-sref="dash">
-		<asset:image src="logo.png"></asset:image>
-		<div class="version">v0.1.9</div>
-    <div class="spinner" ng-show="baseData.loading">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
-    </div>
-	</a>
+	<div class="pull-left flex">
+		<a class="logo" ui-sref="dash">
+			<asset:image src="logo.png"></asset:image>
+			<div class="version">v0.1.9</div>
+			<div class="spinner" ng-show="baseData.loading">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
+			</div>
+		</a>
+
+		<div class="browse-genres" ng-if="isCurrentState('dash')">
+			<button class="btn btn-link toggle-menu" ng-click="toggleGenreMenu()">
+				<span ng-if="selectedGenre" ng-bind="selectedGenre.name"></span>
+				<span ng-if="!selectedGenre">Browse</span>
+				<i class="ion-android-arrow-dropdown"></i>
+			</button>
+
+			<div class="toggle-menu-content" ng-show="genreMenuOpen">
+				<ul>
+					<li>
+						<a ui-sref="dash({genreId: null})"><i class="ion-grid"></i> All</a>
+					</li>
+					<li ng-repeat="genre in ::genres">
+						<a ui-sref="dash({genreId: genre.id})" ng-bind="::genre.name"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">

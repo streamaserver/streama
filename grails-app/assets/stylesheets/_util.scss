@@ -208,3 +208,19 @@ label{
 .ui-select-multiple.ui-select-bootstrap{
   padding: 5px 3px 5px;
 }
+
+
+.flex{
+  @include flexbox;
+  @include align-items(center);
+}
+
+a{
+  color: $primary;
+  font-weight: 100;
+  &:hover,
+  &:focus,
+  &:active{
+    color: $primary;
+  }
+}

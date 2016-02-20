@@ -1,8 +1,8 @@
 <div class="dashboard">
 
+  <h2 class="genre-display" ng-if="selectedGenre">Youre looking at the genre: <strong ng-bind="selectedGenre.name"></strong></h2>
 
-
-  <div ng-if="continueWatching.length">
+  <div ng-if="continueWatching.length && !selectedGenre">
     <h3>Continue watching</h3>
 
 
@@ -35,7 +35,10 @@
   </div>
 
   <div>
-    <h3>Discover Shows</h3>
+    <h3>
+      <span ng-show="!selectedGenre">Discover Shows</span>
+      <span ng-show="selectedGenre">{{::selectedGenre.name}} TV Shows</span>
+    </h3>
 
     <div class="row">
       <div class="col-sm-2">
@@ -78,7 +81,10 @@
   </div>
 
   <div >
-    <h3>Discover Movies</h3>
+    <h3>
+      <span ng-show="!selectedGenre">Discover Movies</span>
+      <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>
+     </h3>
 
     <div class="row">
       <div class="col-sm-2">

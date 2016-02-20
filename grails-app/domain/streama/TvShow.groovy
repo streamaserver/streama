@@ -24,7 +24,7 @@ class TvShow {
   Double vote_average
   Integer vote_count
   Double popularity
-  static hasMany = [episodes: Episode]
+  static hasMany = [episodes: Episode, genre: Genre]
 
 
   File poster_image
@@ -47,5 +47,9 @@ class TvShow {
 
   def getHasFiles(){
     return (this.episodes?.find{it.files} ? true : false)
+  }
+
+  def getFullTvShowMeta(){
+    theMovieDbService.getFullTvShowMeta(this.apiId)
   }
 }

@@ -10,7 +10,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 
 	$stateProvider
 		.state('dash', {
-			url: '/',
+			url: '/dash?genreId',
 			templateUrl: 'dash.htm',
 			controller: 'dashCtrl',
       resolve: {
@@ -149,7 +149,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 		});
 
 
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/dash');
 
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -212,7 +212,18 @@ streamaApp.run(
 			}
     };
 
+
+		$rootScope.toggleGenreMenu = function (close) {
+			if(close){
+				$rootScope.genreMenuOpen = false;
+			}else{
+				$rootScope.genreMenuOpen = !$rootScope.genreMenuOpen;
+			}
+		};
+
+
     $rootScope.$on('$stateChangeSuccess', function (e, toState) {
+			$rootScope.toggleGenreMenu(true);
       if(toState.name == "player"){
         localStorageService.set('originUrl', location.href);
       }

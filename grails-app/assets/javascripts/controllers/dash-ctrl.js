@@ -1,10 +1,10 @@
 'use strict';
 
 streamaApp.controller('dashCtrl', [
-  '$scope', 'apiService', '$state', '$rootScope', 'localStorageService', 'modalService',
-  function ($scope, apiService, $state, $rootScope, localStorageService, modalService) {
+  '$scope', 'apiService', '$state', '$rootScope', 'localStorageService', 'modalService', '$stateParams',
+  function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams) {
 
-
+    console.log('%c $stateParams', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', $stateParams);
   if($rootScope.currentUser.isAdmin){
     apiService.settings.list().success(function (data) {
       var TheMovieDbAPI = _.find(data, {settingsKey: 'TheMovieDB API key'});
@@ -16,7 +16,8 @@ streamaApp.controller('dashCtrl', [
       }
     });
   }
-    
+
+
   $scope.fetchFirstEpisodeAndPlay = function (tvShow) {
     apiService.dash.firstEpisodeForShow(tvShow.id).success(function (data) {
       console.log('%c data', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
@@ -34,19 +35,21 @@ streamaApp.controller('dashCtrl', [
   });
 
   var applyFilter = function (item, filterObj) {
-    var showItem = true;
+    var showItemArray = [];
 
     _.forEach(filterObj, function (filterVal, key) {
       if(_.isArray(filterVal) && filterVal.length){
         var intersection = _.intersectionBy(item[key], filterVal, 'id');
-        showItem = intersection.length;
+        var isVisible = (intersection.length ? true : false);
+        showItemArray.push(isVisible);
       }
       if(_.isString(filterVal) && filterVal.length >= 1){
-        showItem = _.includes(item[key].toLowerCase(), filterVal.toLowerCase());
+        var isVisible = (_.includes(item[key].toLowerCase(), filterVal.toLowerCase()) ? true : false);
+        showItemArray.push(isVisible);
       }
     });
 
-    return showItem;
+    return (showItemArray.indexOf(false) < 0);
   };
 
   $scope.dashFilter = {
@@ -83,6 +86,17 @@ streamaApp.controller('dashCtrl', [
 
   apiService.dash.listMovies().success(function (data) {
     $scope.movies = data;
+  });
+
+
+  apiService.dash.listGenres().success(function (data) {
+    $rootScope.genres = data;
+
+    if($stateParams.genreId){
+      $rootScope.selectedGenre = _.find(data, {id: parseInt($stateParams.genreId)});
+      $scope.dashFilter.movie.genre = [$rootScope.selectedGenre];
+      $scope.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
+    }
   });
 
 

@@ -83,4 +83,9 @@ class DashController {
     ]
     respond result
   }
+
+
+  def listGenres(){
+    respond Genre.list()
+  }
 }
