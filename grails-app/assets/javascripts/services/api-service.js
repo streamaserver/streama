@@ -147,7 +147,7 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 				return $http.get(urlBase + 'viewingStatus/markCompleted.json', {params: {id: viewingStatus.id}});
 			},
 			delete: function (id) {
-				return $http.get(urlBase + 'viewingStatus/delete.json', {params: {id: id}});
+				return $http.delete(urlBase + 'viewingStatus/delete.json', {params: {id: id}});
 			}
 		},
 
