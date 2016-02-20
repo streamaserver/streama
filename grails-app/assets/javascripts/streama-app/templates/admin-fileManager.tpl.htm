@@ -84,7 +84,7 @@
     </tbody>
   </table>
 
-  <uib-pagination ng-if="filesCount > maxPerPage" total-items="filesCount" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
+  <uib-pagination ng-if="filesCount > maxPerPage && files.length < filesCount" total-items="filesCount" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
 
 </div>
 
