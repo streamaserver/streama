@@ -75,6 +75,13 @@
           <label>Overview</label>
           <p class="data-display">{{movie.overview}}</p>
         </div>
+        <div class="col-sm-12">
+          <label>Genre</label>
+          <ul class="genre-list">
+            <li class="genre-tag interactive" ng-repeat="genre in movie.genre" ui-sref="dash({genreId: genre.id})">
+              {{genre.name}}
+            </li>
+          </ul>
         <div class="col-sm-12" ng-if="movie.trailer">
           <label>Trailer</label>
           <br>

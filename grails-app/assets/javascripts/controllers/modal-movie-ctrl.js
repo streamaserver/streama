@@ -19,6 +19,7 @@ streamaApp.controller('modalMovieCtrl', [
 
 
 	$scope.selectFromAPI = function ($item) {
+		console.log('%c selectFromAPI', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
 		var apiId = $item.id;
 		delete $item.id;
 		$scope.movie = $item;

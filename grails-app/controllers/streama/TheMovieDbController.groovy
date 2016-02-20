@@ -8,6 +8,15 @@ class TheMovieDbController {
   def theMovieDbService
   def migrationService
 
+  def parseGenres(movieDbGenres){
+    def streamaGenres = []
+    movieDbGenres.each{ metaGenre ->
+      Genre genre = Genre.findByApiId(metaGenre)
+      streamaGenres.add(genre)
+    }
+    return streamaGenres
+  }
+
   def search() {
     String type = params.type
     String name = params.name
@@ -16,6 +25,12 @@ class TheMovieDbController {
 
     def JsonContent = new URL(theMovieDbService.BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + theMovieDbService.API_KEY).text
     def json = new JsonSlurper().parseText(JsonContent)
+
+    def results = json?.results
+
+    results.each{ hit ->
+      hit.genre = parseGenres(hit.genre_ids)
+    }
 
     respond json?.results
   }

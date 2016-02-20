@@ -370,6 +370,7 @@ class MarshallerService {
 
         returnArray['similarMovies'] = movie.similarMovies
         returnArray['tags'] = movie.tags
+        returnArray['genre'] = movie.genre
 
         return returnArray;
       }

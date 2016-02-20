@@ -13,6 +13,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			url: '/dash?genreId',
 			templateUrl: 'dash.htm',
 			controller: 'dashCtrl',
+			//reloadOnSearch: false,
       resolve: {
         currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
           return apiService.currentUser().success(function (data) {

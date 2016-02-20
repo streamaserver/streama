@@ -64,7 +64,7 @@ class MigrationService {
       }
 
       metaData?.genres.each{ metaGenre ->
-        log.debug(metaGenre.name + " for movie " + movie.title)
+        log.info("genre: " + metaGenre.name + " for movie " + movie.title)
         Genre genre = Genre.findByApiId(metaGenre.id)
         if(!genre){
           log.error("Genre missing!: " + metaGenre.name)
@@ -88,7 +88,7 @@ class MigrationService {
       }
 
       metaData?.genres.each{ metaGenre ->
-        log.debug(metaGenre.name + " for tvShow " + tvShow.name)
+        log.info("genre: " + metaGenre.name + " for tvShow " + tvShow.name)
         Genre genre = Genre.findByApiId(metaGenre.id)
 
         if(!genre){
