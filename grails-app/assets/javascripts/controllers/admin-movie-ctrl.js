@@ -71,33 +71,6 @@ streamaApp.controller('adminMovieCtrl', [
 
 
 
-		$scope.onTagSelect = function (tag) {
-			apiService.tag.save(tag);
-			apiService.movie.save($scope.movie);
-		};
-
-		$scope.tagTransform = function (newTag) {
-			var item = {
-				name: newTag,
-				isNew: true
-			};
-
-			return item;
-		};
-
-		$scope.deleteTag = function (tag) {
-				alertify.confirm('Are you sure you want to delete the tag ' + tag.name, function (confirmed) {
-					if(confirmed){
-						apiService.tag.delete(tag.id).success(function () {
-							_.remove($scope.tags, {id: tag.id});
-						})
-					}
-				});
-		};
-
-		apiService.tag.list().success(function (data) {
-			$scope.tags = data;
-		});
 
 
 }]);

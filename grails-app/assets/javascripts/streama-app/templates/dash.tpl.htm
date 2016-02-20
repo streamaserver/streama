@@ -35,9 +35,19 @@
   </div>
 
   <div>
-    <h3>Discover Shows
-      <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown></h3>
+    <h3>Discover Shows</h3>
 
+    <div class="row">
+      <div class="col-sm-2">
+        Sort:
+        <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown>
+      </div>
+
+      <div class="col-sm-2">
+        <input class="form-control input-sm" type="text" ng-model="dashFilter.tvShow.name" placeholder="Search by Name..." />
+      </div>
+    </div>
+    <br>
 
     <div class="spinner" ng-show="!tvShows.length">
       <div class="bounce1"></div>
@@ -46,7 +56,7 @@
     </div>
 
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="tvShow in tvShows | orderBy:showSort.sort">
+      <div class="media-list-item media-poster-item" ng-repeat="tvShow in tvShows | orderBy:showSort.sort |filter: dashFilter.showFilter">
         <div class="media-item" >
           <img ng-if="tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{::tvShow.poster_path}}"/>
           <img ng-if="!tvShow.poster_path && !tvShow.manualInput" ng-src="{{basePath}}assets/poster-not-found.png"/>
@@ -68,8 +78,28 @@
   </div>
 
   <div >
-    <h3>Discover Movies
-      <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown></h3>
+    <h3>Discover Movies</h3>
+
+    <div class="row">
+      <div class="col-sm-2">
+        Sort: <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
+      </div>
+      <div class="col-sm-2">
+        <ui-select class="tag-select" multiple ng-model="dashFilter.movie.tags" theme="bootstrap" title="Filter by Tag">
+          <ui-select-match placeholder="Filter by Tag...">{{$item.name}}</ui-select-match>
+          <ui-select-choices repeat="tag in tags | propsFilter: {name: $select.search}">
+            <div class="tag-wrapper">
+              <div class="tag-name" ng-bind-html="tag.name | highlight: $select.search"></div>
+            </div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+
+      <div class="col-sm-2">
+        <input class="form-control input-sm" type="text" ng-model="dashFilter.movie.title" placeholder="Search by Title..." />
+      </div>
+    </div>
+    <br>
 
     <div class="spinner" ng-show="!movies.length">
       <div class="bounce1"></div>
@@ -78,7 +108,7 @@
     </div>
 
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="movie in movies | orderBy:movieSort.sort">
+      <div class="media-list-item media-poster-item" ng-repeat="movie in movies | orderBy:movieSort.sort |filter: dashFilter.movieFilter">
         <div class="media-item" >
           <img ng-if="movie.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
           <img ng-if="!movie.poster_path" ng-src="{{basePath}}assets/poster-not-found.png"/>

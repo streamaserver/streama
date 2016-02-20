@@ -29,6 +29,40 @@ streamaApp.controller('dashCtrl', [
   };
 
 
+  apiService.tag.list().success(function (data) {
+    $scope.tags = data;
+  });
+
+  var applyFilter = function (item, filterObj) {
+    var showItem = true;
+
+    _.forEach(filterObj, function (filterVal, key) {
+      if(_.isArray(filterVal) && filterVal.length){
+        var intersection = _.intersectionBy(item[key], filterVal, 'id');
+        showItem = intersection.length;
+      }
+      if(_.isString(filterVal) && filterVal.length >= 1){
+        showItem = _.includes(item[key].toLowerCase(), filterVal.toLowerCase());
+      }
+    });
+
+    return showItem;
+  };
+
+  $scope.dashFilter = {
+    movie: {},
+    tvShow: {},
+
+    movieFilter: function (item) {
+      return applyFilter(item, $scope.dashFilter.movie);
+    },
+
+    showFilter: function (item) {
+      return applyFilter(item, $scope.dashFilter.tvShow);
+    }
+  };
+
+
   $scope.markCompleted = function (viewingStatus) {
     alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
       if(confirmed){

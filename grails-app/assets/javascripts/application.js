@@ -14,7 +14,7 @@
 //= require angular-bootstrap/ui-bootstrap.min.js
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
 //= require alertify/alertify.min.js
-//= require lodash/lodash.min.js
+//= require lodash/dist/lodash.min.js
 //= require ng-file-upload/ng-file-upload.min.js
 //= require jquery-ui-1.11.4.custom/jquery-ui.min.js
 //= require angular-ui-slider/src/slider.js

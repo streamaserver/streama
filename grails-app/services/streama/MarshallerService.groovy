@@ -310,6 +310,7 @@ class MarshallerService {
         returnArray['backdrop_path'] = movie.backdrop_path
         returnArray['poster_path'] = movie.poster_path
         returnArray['trailerKey'] = movie.trailerKey
+        returnArray['tags'] = movie.tags
 
         return returnArray;
       }
@@ -366,6 +367,7 @@ class MarshallerService {
         returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
         returnArray['similarMovies'] = movie.similarMovies
+        returnArray['tags'] = movie.tags
 
         return returnArray;
       }

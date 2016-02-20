@@ -150,6 +150,9 @@ label {
 .margin-top-10 {
   margin-top: 10px; }
 
+.ui-select-multiple.ui-select-bootstrap {
+  padding: 5px 3px 5px; }
+
 .btn {
   background: gray;
   border-color: #787878;
