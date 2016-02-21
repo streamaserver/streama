@@ -100,4 +100,11 @@ streamaApp.controller('dashCtrl', [
   });
 
 
+    $scope.$on('changedGenre', function (e, genre) {
+      $rootScope.selectedGenre = genre;
+      $scope.dashFilter.movie.genre = [$rootScope.selectedGenre];
+      $scope.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
+    });
+
+
 }]);

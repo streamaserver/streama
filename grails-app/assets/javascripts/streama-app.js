@@ -13,7 +13,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			url: '/dash?genreId',
 			templateUrl: 'dash.htm',
 			controller: 'dashCtrl',
-			//reloadOnSearch: false,
+			reloadOnSearch: false,
       resolve: {
         currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
           return apiService.currentUser().success(function (data) {
@@ -220,6 +220,13 @@ streamaApp.run(
 			}else{
 				$rootScope.genreMenuOpen = !$rootScope.genreMenuOpen;
 			}
+		};
+
+
+		$rootScope.changeGenre = function (genre) {
+			$rootScope.toggleGenreMenu(true);
+			$state.go('dash', {genreId: genre.id});
+			$rootScope.$broadcast('changedGenre', genre);
 		};
 
 

@@ -42,7 +42,7 @@
 						<a ui-sref="dash({genreId: null})"><i class="ion-grid"></i> All</a>
 					</li>
 					<li ng-repeat="genre in ::genres">
-						<a ui-sref="dash({genreId: genre.id})" ng-bind="::genre.name"></a>
+						<a ng-click="changeGenre(genre)" ng-bind="::genre.name"></a>
 					</li>
 				</ul>
 			</div>
