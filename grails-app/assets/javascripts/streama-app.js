@@ -235,7 +235,7 @@ streamaApp.run(
 
 		$rootScope.changeGenre = function (genre) {
 			$rootScope.toggleGenreMenu(true);
-			$state.go('dash', {genreId: genre.id});
+			$state.go('dash', {genreId: (genre ? genre.id : null)});
 			$rootScope.$broadcast('changedGenre', genre);
 		};
 

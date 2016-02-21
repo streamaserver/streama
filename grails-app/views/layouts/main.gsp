@@ -39,7 +39,7 @@
 			<div class="toggle-menu-content" ng-show="genreMenuOpen">
 				<ul>
 					<li>
-						<a ui-sref="dash({genreId: null})"><i class="ion-grid"></i> All</a>
+						<a ng-click="changeGenre()"><i class="ion-grid"></i> All</a>
 					</li>
 					<li ng-repeat="genre in ::genres">
 						<a ng-click="changeGenre(genre)" ng-bind="::genre.name"></a>

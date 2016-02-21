@@ -108,8 +108,13 @@ streamaApp.controller('dashCtrl', [
 
     $scope.$on('changedGenre', function (e, genre) {
       $rootScope.selectedGenre = genre;
-      $scope.dashFilter.movie.genre = [$rootScope.selectedGenre];
-      $scope.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
+      if($rootScope.selectedGenre){
+        $scope.dashFilter.movie.genre = [$rootScope.selectedGenre];
+        $scope.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
+      }else{
+        $scope.dashFilter.movie.genre = [];
+        $scope.dashFilter.tvShow.genre = [];
+      }
     });
 
 
