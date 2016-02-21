@@ -4,7 +4,6 @@ streamaApp.controller('dashCtrl', [
   '$scope', 'apiService', '$state', '$rootScope', 'localStorageService', 'modalService', '$stateParams',
   function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams) {
 
-    console.log('%c $stateParams', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', $stateParams);
   if($rootScope.currentUser.isAdmin){
     apiService.settings.list().success(function (data) {
       var TheMovieDbAPI = _.find(data, {settingsKey: 'TheMovieDB API key'});
@@ -20,15 +19,18 @@ streamaApp.controller('dashCtrl', [
 
   $scope.fetchFirstEpisodeAndPlay = function (tvShow) {
     apiService.dash.firstEpisodeForShow(tvShow.id).success(function (data) {
-      console.log('%c data', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
       $state.go('player', {videoId: data.id});
     });
   };
 
   $scope.showDetails = function (media) {
-    modalService.mediaDetailModal(media);
+    modalService.mediaDetailModal(media.id, media.mediaType);
   };
 
+
+  if($stateParams.mediaModal){
+    modalService.mediaDetailModal($stateParams.mediaModal, $stateParams.mediaType);
+  }
 
   apiService.tag.list().success(function (data) {
     $scope.tags = data;

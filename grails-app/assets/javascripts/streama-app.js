@@ -10,7 +10,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 
 	$stateProvider
 		.state('dash', {
-			url: '/dash?genreId',
+			url: '/dash?genreId?mediaModal?mediaType',
 			templateUrl: 'dash.htm',
 			controller: 'dashCtrl',
 			reloadOnSearch: false,

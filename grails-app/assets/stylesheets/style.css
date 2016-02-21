@@ -4892,6 +4892,10 @@ body.mdx-active #mdx-control-view {
 .genre-list {
   margin: 0;
   padding: 0; }
+  .genre-list:after {
+    content: "";
+    display: table;
+    clear: both; }
 
 .genre-tag {
   float: left;
