@@ -199,6 +199,7 @@ class MarshallerService {
         returnArray['episodesCount'] = tvShow.episodes.size()
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
+        returnArray['genre'] = tvShow.genre
 
         return returnArray;
       }

@@ -72,7 +72,15 @@
         <p class="data-display">{{show.overview}}</p>
       </div>
     </div>
+
+    <label>Genre</label>
+    <ul class="genre-list">
+      <li class="genre-tag interactive" ng-repeat="genre in show.genre" ui-sref="dash({genreId: genre.id})">
+        {{genre.name}}
+      </li>
+    </ul>
   </div>
+
 
   <div class="col-sm-4">
     <div ng-if="!show.manualInput">
