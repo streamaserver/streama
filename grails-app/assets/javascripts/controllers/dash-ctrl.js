@@ -90,6 +90,10 @@ streamaApp.controller('dashCtrl', [
     $scope.movies = data;
   });
 
+  apiService.dash.listGenericVideos().success(function (data) {
+    $scope.genericVideos = data;
+  });
+
 
   apiService.dash.listGenres().success(function (data) {
     $rootScope.genres = data;

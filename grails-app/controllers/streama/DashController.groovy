@@ -71,6 +71,18 @@ class DashController {
     }
   }
 
+
+  def listGenericVideos(){
+    def videos = GenericVideo.withCriteria {
+      ne("deleted", true)
+      isNotEmpty("files")
+    }
+
+    JSON.use('dashGenericVideo'){
+      respond videos
+    }
+  }
+
   def searchMedia() {
     String query = params.query
     def movies = Movie.findAllByDeletedNotEqual(true)

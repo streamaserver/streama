@@ -87,6 +87,16 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			templateUrl: 'admin-movie.htm',
 			controller: 'adminMovieCtrl'
 		})
+		.state('admin.videos', {
+			url: '/videos',
+			templateUrl: 'admin-videos.htm',
+			controller: 'adminVideosCtrl'
+		})
+		.state('admin.video', {
+			url: '/video/:videoId',
+			templateUrl: 'admin-video.htm',
+			controller: 'adminVideoCtrl'
+		})
 		.state('admin.users', {
 			url: '/users',
 			templateUrl: 'admin-users.htm',

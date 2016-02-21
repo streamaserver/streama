@@ -1,0 +1,135 @@
+<ul class="breadcrumb">
+  <li><a ui-sref="admin.videos">Videos</a></li>
+  <li class="active">{{video.title}}</li>
+</ul>
+
+
+
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<div class="movie-content" ng-show="video.title"
+     ngf-drop ngf-drag-over-class="movie-dragover-upload" ngf-change="upload($files)">
+
+  <div class="row">
+
+
+    <div class="col-md-8 col-lg-9">
+
+      <div class="row">
+        <div class="col-md-6">
+          <h1>
+            {{video.title}} &nbsp;
+            <a ng-show="video.files.length" class="ion-android-arrow-dropright-circle" ui-sref="player({videoId: video.id})"></a>
+          </h1>
+          <span class="label label-danger" ng-click="manageFiles(video)" ng-show="!video.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
+        </div>
+
+        <div class="col-md-6">
+          <div class="btn-group pull-right">
+            <button class="btn btn-success btn-sm" ng-click="manageFiles(video)">Manage Files</button>
+
+            <button class="btn btn-secondary btn-sm " ng-click="openVideoModal()">
+              Edit video
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+
+
+      <div class="row">
+        <div class="col-sm-2">
+          <label>Release Date</label>
+          <p class="data-display">{{video.release_date}}</p>
+        </div>
+        <div class="col-sm-2">
+          <label>IMDB Link</label>
+          <p class="data-display"><a href="http://www.imdb.com/title/{{video.imdb_id}}">{{video.title}}</a></p>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating</label>
+          <p class="data-display">{{video.vote_average}}</p>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating Count</label>
+          <p class="data-display">{{video.vote_count}}</p>
+        </div>
+      </div>
+
+      <br/>
+
+
+      <div class="row">
+        <div class="col-sm-12">
+          <label>Overview</label>
+          <p ng-show="video.overview" class="data-display">{{video.overview}}</p>
+          <p ng-show="!video.overview" class="data-display fade-50">No overview added yet</p>
+        </div>
+
+        <br>
+
+        <div class="col-sm-12">
+          <label>Genre</label>
+          <ul class="genre-list">
+            <li class="genre-tag interactive" ng-repeat="genre in video.genre" ui-sref="dash({genreId: genre.id})">
+              {{genre.name}}
+            </li>
+          </ul>
+          <p ng-show="!video.genre.length" class="data-display fade-50">No genre added yet</p>
+        </div>
+
+        <br>
+        <div class="col-sm-12" ng-if="video.trailerKey">
+          <label>Trailer</label>
+          <br>
+          <iframe width="560" height="315" ng-src="{{'https://www.youtube.com/embed/'+video.trailerKey+'?rel=0' | trustResourceUrl}}" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+
+
+      <div class="row" ng-show="!video.files.length">
+        <hr/>
+        <button class="btn btn-danger btn-block btn-lg" ng-click="manageFiles(video)">
+          <i class="ion-alert-circled"></i> No Video File yet! Click here to add
+        </button>
+      </div>
+
+    </div>
+
+    <div class="col-sm-4 col-lg-3" >
+      <img ng-show="!video.poster_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
+      <img ng-show="video.poster_image_src" ng-src="{{video.poster_image_src}}"/>
+    </div>
+
+  </div>
+
+
+</div>
+
+<br/>
+<hr/>
+
+<div ng-show="video.similarMovies">
+  <h3>Similar Movies</h3>
+  <h5>Suggested by TheMovieDb.org</h5>
+  <div class="media-list similar-media">
+    <div class="media-list-item" ng-repeat="movie in video.similarMovies.results">
+      <div class="hover-overlay">
+        <div>
+          <button class="btn btn-primary btn-sm btn-block" ng-click="addSimilarMovieToStreama(movie, true)">Add and Open</button>
+          <button class="btn btn-primary btn-sm btn-block" ng-click="addSimilarMovieToStreama(movie, false)">Add and Continue</button>
+        </div>
+      </div>
+      <div class="media-item" >
+        <img ng-src="https://image.tmdb.org/t/p/w300/{{video.poster_path}}"/>
+      </div>
+      <div class="media-meta">Release: {{video.release_date.substring(0, 4)}} | <i class="ion-ios-star"></i> {{video.vote_average}}</div>
+    </div>
+  </div>
+
+</div>

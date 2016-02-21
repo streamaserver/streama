@@ -139,6 +139,21 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			}
 		},
 
+		genericVideo: {
+			get: function (id) {
+				return $http.get(urlBase + 'genericVideo/show.json', {params: {id: id}});
+			},
+			save: function (data) {
+				return $http.post(urlBase + 'genericVideo/save.json', data);
+			},
+			delete: function (id) {
+				return $http.delete(urlBase + 'genericVideo/delete.json', {params: {id: id}});
+			},
+			list: function () {
+				return $http.get(urlBase + 'genericVideo.json');
+			}
+		},
+
 		viewingStatus: {
 			save: function (params) {
 				return $http.get(urlBase + 'viewingStatus/save.json', {params: params});
@@ -229,6 +244,10 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 
 			listGenres: function () {
 				return $http.get(urlBase + 'dash/listGenres.json');
+			},
+
+			listGenericVideos: function () {
+				return $http.get(urlBase + 'dash/listGenericVideos.json');
 			}
 		},
 

@@ -44,7 +44,7 @@ streamaApp.factory('playerService', [
         }
 
         videoOptions.videoMetaTitle = (video.show ? video.show.name : video.title);
-        videoOptions.videoMetaSubtitle = (video.show ? video.episodeString + ' - ' + video.name : video.release_date.substring(0, 4));
+        videoOptions.videoMetaSubtitle = (video.show ? video.episodeString + ' - ' + video.name : (video.release_date ? video.release_date.substring(0, 4) : ''));
         videoOptions.videoMetaDescription = video.overview;
 
         if(videoData.nextEpisode){

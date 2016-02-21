@@ -38,6 +38,25 @@ streamaApp.factory('modalService', ['$uibModal', '$state', function ($uibModal, 
 		},
 
 
+
+		genericVideoModal: function (video, callback) {
+			var modalInstance = $uibModal.open({
+				templateUrl: 'modal--genericVideo.htm',
+				controller: 'modalGenericVideoCtrl',
+				size: 'lg',
+				resolve: {
+					video: function () {
+						return video;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (data) {
+				(callback || angular.noop)(data);
+			});
+		},
+
+
 		videoModal: function (video, isManual, tvShow, callback) {
 			var modalInstance = $uibModal.open({
 				templateUrl: 'modal--video.htm',

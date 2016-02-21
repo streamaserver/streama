@@ -88,7 +88,9 @@ class VideoController {
   }
 
   def show(Video videoInstance){
-    respond videoInstance, [status: OK]
+    JSON.use('player') {
+      respond videoInstance, [status: OK]
+    }
   }
 
 
