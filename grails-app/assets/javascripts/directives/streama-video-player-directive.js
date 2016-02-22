@@ -17,30 +17,135 @@ streamaApp.directive('streamaVideoPlayer', [
         var controlDisplayTimeout;
         var overlayTimeout;
         var volumeChangeTimeout;
+        var currentTimeChangeTimeout;
 
         var video = $elem.find('video')[0];
         $elem.addClass('nocursor');
 
-        jQuery($elem).mousewheel(function(event, scroll) {
-          event.preventDefault();
+        //The duration of video skips in seconds.
+        var skippingDuration = 20;  //Skipping duration for holding an arrow key to left or right.
+        var longSkippingDuration = 60; //Skipping duration for holding ctrl + arrow key.
+
+
+
+
+
+
+        //Changes the video player's volume. Takes the changing amount as a parameter.
+        var changeVolume = function (amount) {
           $scope.volumeChanged = true;
           $timeout.cancel(volumeChangeTimeout);
-          console.log('%c event', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', event);
-          if(event.deltaY > 0){
-            $scope.volumeLevel += 1;
-          }else{
-            $scope.volumeLevel -= 1;
-          }
-
-
-          console.log('%c event', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', event.deltaY, $scope.volumeLevel);
+          //console.log('%c event', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', event);
+          $scope.volumeLevel += amount;
+          //console.log('%c event', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', event.deltaY, $scope.volumeLevel);
           $scope.volumeLevel = $scope.volumeLevel.clamp(0, 10);
           $scope.$apply();
 
           volumeChangeTimeout = $timeout(function () {
             $scope.volumeChanged = false;
           }, 1500);
+        };
+
+
+
+        //Shows the video's current time and duration on the upper right corner of the screen for a limited time.
+        var skipActivated = function(){
+
+          $scope.currentTimeChanged = true;
+          $scope.options.onTimeChange(video.currentTime, $scope.videoDuration);
+          $timeout.cancel(currentTimeChangeTimeout);
+          $scope.$apply();
+
+          currentTimeChangeTimeout = $timeout(function () {
+            $scope.currentTimeChanged = false;
+          }, 10000);
+        };
+
+
+
+
+
+        //Shortcuts:
+        Mousetrap.bind('left', function(event) {
+          event.preventDefault();
+          skipActivated();
+          video.currentTime-=skippingDuration;
+        },'keyup');
+
+        Mousetrap.bind('right', function(event) {
+          event.preventDefault();
+          skipActivated();
+          video.currentTime+=skippingDuration;
+        },'keyup');
+
+        Mousetrap.bind('ctrl+right', function(event) {
+          event.preventDefault();
+          skipActivated();
+          video.currentTime+=longSkippingDuration;
+        },'keyup');
+
+        Mousetrap.bind('ctrl+left', function(event) {
+          event.preventDefault();
+          skipActivated();
+          video.currentTime-=longSkippingDuration;
+        },'keyup');
+
+        Mousetrap.bind('alt+enter', function(event) {
+          event.preventDefault();
+          $scope.fullScreen();
         });
+
+        Mousetrap.bind(['backspace', 'del'], function(event) {
+          event.preventDefault();
+          $scope.closeVideo();
+        });
+
+        Mousetrap.bind('s', function(event) {
+          event.preventDefault();
+          $scope.toggleTextTrack();
+        });
+
+        Mousetrap.bind('up', function(event) {
+          event.preventDefault();
+          changeVolume(1);
+        });
+
+        Mousetrap.bind('down', function(event) {
+          event.preventDefault();
+          changeVolume(-1);
+        });
+
+        Mousetrap.bind('m', function(event) {
+          event.preventDefault();
+          $scope.playerVolumeToggle();
+          $scope.showControls();
+        });
+
+        Mousetrap.bind('e', function(event) {
+          event.preventDefault();
+          $scope.toggleSelectEpisodes();
+          $scope.showControls();
+        });
+
+        Mousetrap.bind('space', function() {
+          if($scope.playing){
+            $scope.pause();
+          }else{
+            $scope.play();
+          }
+          $scope.$apply();
+        });
+
+        jQuery($elem).mousewheel(function(event) {
+          if (event.deltaY > 0) {
+            changeVolume(1);
+          } else if (event.deltaY < 0) {
+            changeVolume(-1);
+          }
+          $scope.showControls();
+        });
+
+
 
         $scope.isMobile = false; //initiate as false
         // device detection
@@ -111,14 +216,6 @@ streamaApp.directive('streamaVideoPlayer', [
           }
         };
 
-        Mousetrap.bind('space', function() {
-          if($scope.playing){
-            $scope.pause();
-          }else{
-            $scope.play();
-          }
-          $scope.$apply();
-        });
 
         //$scope.controlsVisible = true;
         $scope.showControls = function () {
@@ -147,7 +244,7 @@ streamaApp.directive('streamaVideoPlayer', [
 
         $scope.playerVolumeToggle = function () {
           if($scope.volumeLevel == 0){
-            $scope.volumeLevel = 6;
+            $scope.volumeLevel = 5;
           }else{
             $scope.volumeLevel = 0;
           }
@@ -159,11 +256,14 @@ streamaApp.directive('streamaVideoPlayer', [
           max: 255,
           range: 'min',
           change: function (e, slider) {
+            angular.element('#playerDurationSlider .ui-slider-handle').blur();
           },
           stop: function (e, slider) {
+            angular.element('#playerDurationSlider .ui-slider-handle').blur();
             video.currentTime = slider.value;
             $scope.currentTime = slider.value;
             $scope.options.onTimeChange(slider, $scope.videoDuration);
+
           }
         };
 
@@ -197,14 +297,24 @@ streamaApp.directive('streamaVideoPlayer', [
           range: 'min',
           change: function (e, slider) {
             setVolue(slider);
+            angular.element('#playerVolumeSlider .ui-slider-handle').blur();
           },
           slide: function (e, slider) {
             setVolue(slider);
+            angular.element('#playerVolumeSlider .ui-slider-handle').blur();
           }
         };
 
         $scope.closeVideo = function () {
+
+          //If full screen is enabled, it will be canceled.
+          if ($scope.isFullScreen = true) {
+            $scope.fullScreen();
+          }
+
           $scope.options.onClose();
+
+
         };
 
         $scope.clickVideo = function () {
@@ -276,6 +386,15 @@ streamaApp.directive('streamaVideoPlayer', [
 
 
         $scope.$on('$destroy', function() {
+
+          //If full screen is enabled, it will be canceled.
+          if ($scope.isFullScreen = true) {
+            $scope.fullScreen();
+          }
+
+          //Disable these shortcut keys for other pages. They are re-initialized when the user opens the player again.
+          Mousetrap.reset();
+
           console.log("destroy");
           video.pause();
           video.src = '';
