@@ -97,6 +97,9 @@ class MarshallerService {
       def returnArray = [:]
 
       returnArray['id'] = genericVideo.id
+      returnArray['isGenericVideo'] = true
+      returnArray['mediaType'] = 'genericVideo'
+
       returnArray['dateCreated'] = genericVideo.dateCreated
       returnArray['lastUpdated'] = genericVideo.lastUpdated
       returnArray['overview'] = genericVideo.overview
@@ -302,7 +305,7 @@ class MarshallerService {
     }
 
     JSON.createNamedConfig('dashTvShow') { DefaultConverterConfiguration<JSON> cfg ->
-      JSON.registerObjectMarshaller(TvShow){ TvShow tvShow ->
+      cfg.registerObjectMarshaller(TvShow){ TvShow tvShow ->
         def returnArray = [:]
 
         returnArray['id'] = tvShow.id
@@ -330,7 +333,7 @@ class MarshallerService {
     }
 
     JSON.createNamedConfig('dashGenericVideo') { DefaultConverterConfiguration<JSON> cfg ->
-      JSON.registerObjectMarshaller(GenericVideo){ GenericVideo genericVideo ->
+      cfg.registerObjectMarshaller(GenericVideo){ GenericVideo genericVideo ->
         def returnArray = [:]
 
         returnArray['id'] = genericVideo.id
@@ -345,6 +348,7 @@ class MarshallerService {
         returnArray['vote_count'] = genericVideo.vote_count
         returnArray['popularity'] = genericVideo.popularity
         returnArray['original_language'] = genericVideo.original_language
+        returnArray['overview'] = genericVideo.overview
 
         returnArray['title'] = genericVideo.title
         returnArray['release_date'] = genericVideo.release_date
@@ -502,8 +506,8 @@ class MarshallerService {
     }
 
 
-    JSON.createNamedConfig('player') {
-      JSON.registerObjectMarshaller(Video) {  Video video ->
+    JSON.createNamedConfig('player') { DefaultConverterConfiguration<JSON> cfg ->
+      cfg.registerObjectMarshaller(Video) {  Video video ->
         def returnArray = [:]
 
         returnArray['id'] = video.id

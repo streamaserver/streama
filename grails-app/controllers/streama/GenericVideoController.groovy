@@ -66,8 +66,8 @@ class GenericVideoController {
 
 
     def show(GenericVideo genericVideoInstance) {
-        JSON.use('admin') {
+
             respond genericVideoInstance, [status: OK]
-        }
+
     }
 }

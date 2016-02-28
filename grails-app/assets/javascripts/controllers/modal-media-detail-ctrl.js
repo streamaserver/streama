@@ -33,6 +33,10 @@ streamaApp.controller('modalMediaDetailCtrl', [
 
 	$scope.editMedia = function (media) {
 		if($rootScope.currentUser.isContentManager){
+			console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', media);
+			if(media.isGenericVideo){
+				$state.go('admin.video', {videoId: media.id});
+			}
 			if(media.title){
 				$state.go('admin.movie', {movieId: media.id});
 			}
