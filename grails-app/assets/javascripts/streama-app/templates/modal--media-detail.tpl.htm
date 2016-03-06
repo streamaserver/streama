@@ -18,7 +18,7 @@
       <ul class="info-list">
         <li><strong>Released: </strong> {{media.release_date.substring(0,4) || media.first_air_date.substring(0,4)}}</li>
         <li><strong>IMDB: </strong> <a target="_blank" href="http://www.imdb.com/title/{{media.imdb_id}}">{{media.name || media.title}}</a></li>
-        <li><strong>Rating: </strong> {{media.vote_average}} ({{media.vote_count}} votes)</li>
+        <li><strong>Rating: </strong> {{media.vote_average}}/10 ({{media.vote_count}} votes)</li>
       </ul>
 
       <hr/>
