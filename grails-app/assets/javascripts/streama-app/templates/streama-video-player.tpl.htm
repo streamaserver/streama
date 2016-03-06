@@ -1,7 +1,19 @@
 <div class="video-wrapper-inner"  ng-mousemove="showControls()" ng-mouseleave="delayHideControls()">
 
-  <div class="volume-info" ng-show="volumeChanged">
-    {{volumeLevel * 10}}% Volume
+  <div>
+    <div class="volume-info" ng-show="volumeChanged">
+      {{volumeLevel * 10}}% Volume
+    </div>
+
+    <div class="volume-info" ng-show="currentTimeChanged">
+      <br>
+      <strong ng-show="currentTime">
+        <span ng-if="currentTime >= 3600">{{currentTime | secondsToDateTime | date:'hh:mm:ss'}}</span>
+        <span ng-if="currentTime < 3600">{{currentTime | secondsToDateTime | date:'mm:ss'}}</span>
+      </strong>
+      <span ng-if="videoDuration >= 3600">{{videoDuration | secondsToDateTime | date:'hh:mm:ss'}}</span>
+      <span ng-if="videoDuration < 3600">{{videoDuration | secondsToDateTime | date:'mm:ss'}}</span>
+    </div>
   </div>
 
   <i class="ion-android-arrow-back player-back" ng-class="{'visible': controlsVisible}" ng-click="closeVideo()"></i>
@@ -28,7 +40,7 @@
   <div class="player-controls-wrapper player-active no-select" ng-class="{'visible': controlsVisible}" ng-hide="loading && !initialPlay">
 
     <div class="slider-ui-wrapper" ng-show="!volumeOpen">
-      <div class="player-ui-slider" ui-slider="scrubberOptions" min="0" max="{{videoDuration}}" ng-model="currentTime"></div>
+      <div id="playerDurationSlider" class="player-ui-slider" ui-slider="scrubberOptions" min="0" max="{{videoDuration}}" ng-model="currentTime"></div>
       <div class="time-display">
         <strong ng-show="currentTime">
           <span ng-if="currentTime >= 3600">{{currentTime | secondsToDateTime | date:'hh:mm:ss'}}</span>
@@ -52,12 +64,12 @@
         'ion-volume-medium': volumeLevel >= 3 && volumeLevel < 6,
         'ion-volume-high': volumeLevel >= 6
         }" ng-click="playerVolumeToggle()"
-          ></i>
+        ></i>
 
         <div id="player-menu-volume" class="player-menu" ng-show="volumeOpen">
           <div class="volume-menu-content">
 
-            <div class="player-ui-slider volume-scrubber" ui-slider="volumeScrubberOptions"  min="0" max="10" step="1" ng-model="volumeLevel"></div>
+            <div id="playerVolumeSlider" class="player-ui-slider volume-scrubber" ui-slider="volumeScrubberOptions"  min="0" max="10" step="1" ng-model="volumeLevel"></div>
           </div>
         </div>
       </div>
@@ -132,3 +144,5 @@
   </video>
 
 </div>
+
+
