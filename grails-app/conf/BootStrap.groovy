@@ -11,6 +11,8 @@ class BootStrap {
         defaultDataService.createDefaultSettings()
         migrationService.setDefaultDeletedFlag()
         migrationService.setTrailerForMovies()
+        migrationService.importMovieDbGenres()
+        migrationService.addGenresToMoviesAndShows()
     }
     def destroy = {
     }

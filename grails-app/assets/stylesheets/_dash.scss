@@ -4,7 +4,15 @@
   h3{
     font-size: 16px;
     text-transform: uppercase;
-  }  
+  }
+
+  .genre-display{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 18px;
+    display: inline-block;
+    font-size: 26px;
+    font-weight: 100;
+  }
 
 }
 
@@ -33,5 +41,31 @@
   .media-list-item.episode-wrapper{
     margin-bottom: 0px;
     margin-right: 9px;
+  }
+}
+
+.browse-genres{
+  position: relative;
+
+  .toggle-menu-content{
+    position: absolute;
+    background: #1C1F21;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    top: 100%;
+    margin-top: 9px;
+    width: 640px;
+    z-index: 9;
+    padding: 13px 22px;
+    box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.46);
+
+    ul{
+      padding: 0;
+      margin: 0;
+      li{
+        list-style: none;
+        float: left;
+        width: 25%;
+      }
+    }
   }
 }

@@ -92,8 +92,14 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			removeFile: function (videoId, fileId) {
 				return $http.get(urlBase + 'video/removeFile.json', {params: {videoId: videoId, fileId: fileId}});
 			},
-			listAllFiles: function () {
-				return $http.get(urlBase + 'file.json');
+			listAllFiles: function (params) {
+				return $http.get(urlBase + 'file.json', {params: params});
+			},
+			removeFileFromDisk: function (id, path) {
+				return $http.delete(urlBase + 'file/removeFileFromDisk.json', {params: {id: id, path: path}});
+			},
+			cleanUpFiles: function (type) {
+				return $http.delete(urlBase + 'file/cleanUpFiles.json', {params: {type: type}});
 			},
 			addFile: function (videoId, fileId) {
 				return $http.get(urlBase + 'video/addFile.json', {params: {videoId: videoId, fileId: fileId}});
@@ -133,6 +139,21 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			}
 		},
 
+		genericVideo: {
+			get: function (id) {
+				return $http.get(urlBase + 'genericVideo/show.json', {params: {id: id}});
+			},
+			save: function (data) {
+				return $http.post(urlBase + 'genericVideo/save.json', data);
+			},
+			delete: function (id) {
+				return $http.delete(urlBase + 'genericVideo/delete.json', {params: {id: id}});
+			},
+			list: function () {
+				return $http.get(urlBase + 'genericVideo.json');
+			}
+		},
+
 		viewingStatus: {
 			save: function (params) {
 				return $http.get(urlBase + 'viewingStatus/save.json', {params: params});
@@ -141,7 +162,17 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 				return $http.get(urlBase + 'viewingStatus/markCompleted.json', {params: {id: viewingStatus.id}});
 			},
 			delete: function (id) {
-				return $http.get(urlBase + 'viewingStatus/delete.json', {params: {id: id}});
+				return $http.delete(urlBase + 'viewingStatus/delete.json', {params: {id: id}});
+			}
+		},
+
+
+		genres: {
+			get: function (id) {
+				return $http.get(urlBase + 'genre/show.json', {params: {id: id}});
+			},
+			list: function () {
+				return $http.get(urlBase + 'genre.json');
 			}
 		},
 
@@ -193,6 +224,30 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 		dash: {
 			searchMedia: function (query) {
 				return $http.get(urlBase + 'dash/searchMedia.json', {params: {query: query}});
+			},
+
+			listContinueWatching: function () {
+				return $http.get(urlBase + 'dash/listContinueWatching.json');
+			},
+
+			listMovies: function () {
+				return $http.get(urlBase + 'dash/listMovies.json');
+			},
+
+			listShows: function () {
+				return $http.get(urlBase + 'dash/listShows.json');
+			},
+
+			firstEpisodeForShow: function (id) {
+				return $http.get(urlBase + 'dash/firstEpisodeForShow.json', {params: {id: id}});
+			},
+
+			listGenres: function () {
+				return $http.get(urlBase + 'dash/listGenres.json');
+			},
+
+			listGenericVideos: function () {
+				return $http.get(urlBase + 'dash/listGenericVideos.json');
 			}
 		},
 

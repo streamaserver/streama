@@ -1,6 +1,6 @@
 'use strict';
 
-streamaApp.factory('modalService', ['$uibModal', function ($uibModal) {
+streamaApp.factory('modalService', ['$uibModal', '$state', function ($uibModal, $state) {
 	return{
 		tvShowModal: function (tvShow, callback) {
 			var modalInstance = $uibModal.open({
@@ -28,6 +28,25 @@ streamaApp.factory('modalService', ['$uibModal', function ($uibModal) {
 				resolve: {
 					movie: function () {
 						return movie;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (data) {
+				(callback || angular.noop)(data);
+			});
+		},
+
+
+
+		genericVideoModal: function (video, callback) {
+			var modalInstance = $uibModal.open({
+				templateUrl: 'modal--genericVideo.htm',
+				controller: 'modalGenericVideoCtrl',
+				size: 'lg',
+				resolve: {
+					video: function () {
+						return video;
 					}
 				}
 			});
@@ -113,21 +132,29 @@ streamaApp.factory('modalService', ['$uibModal', function ($uibModal) {
     },
 
 
-		mediaDetailModal: function (media, callback) {
+		mediaDetailModal: function (mediaId, mediaType, callback) {
+			$state.go('dash', {mediaModal: mediaId, mediaType: mediaType});
+
 			var modalInstance = $uibModal.open({
 				templateUrl: 'modal--media-detail.htm',
 				controller: 'modalMediaDetailCtrl',
 				size: 'lg',
 				resolve: {
-					media: function () {
-						return media;
+					mediaId: function () {
+						return mediaId;
+					},
+					mediaType: function () {
+						return mediaType;
 					}
 				}
 			});
 
 			modalInstance.result.then(function (data) {
+				//$state.go('dash', {mediaModal: null, mediaType: null});
 				(callback || angular.noop)(data);
+			}, function () {
+				//$state.go('dash', {mediaModal: null, mediaType: null});
 			});
-		},
+		}
 	};
 }]);

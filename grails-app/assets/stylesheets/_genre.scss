@@ -1,17 +1,25 @@
 .genre-list{
   margin: 0;
   padding: 0;
+  @include clearfix;
 }
 
 .genre-tag{
   float: left;
   list-style: none;
   padding: 6px 9px;
-  background-color: #3F4244;
+  background-color: #505456;
   margin-right: 8px;
   margin-bottom: 8px;
 
   &.active{
     background: darken($primary, 35%);
+  }
+
+  &.interactive{
+    &:hover{
+      background: $primary;
+      color: #333;
+    }
   }
 }

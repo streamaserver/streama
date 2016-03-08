@@ -1,18 +1,18 @@
 
 
-streamaApp.controller('adminMovieCtrl', [
+streamaApp.controller('adminVideoCtrl', [
 	'$scope', 'apiService', '$stateParams', 'modalService', '$state', 'uploadService',
 	function ($scope, apiService, $stateParams, modalService, $state, uploadService) {
     $scope.loading = true;
 
-		apiService.movie.get($stateParams.movieId).success(function (data) {
-			$scope.movie = data;
+		apiService.genericVideo.get($stateParams.videoId).success(function (data) {
+			$scope.video = data;
       $scope.loading = false;
 		});
 
-    $scope.openMovieModal = function () {
-      modalService.movieModal($scope.movie, function (data) {
-        angular.merge($scope.movie, data)
+    $scope.openVideoModal = function () {
+      modalService.genericVideoModal($scope.video, function (data) {
+        angular.merge($scope.video, data)
       });
     };
 
@@ -32,8 +32,8 @@ streamaApp.controller('adminMovieCtrl', [
 			});
 		};
 
-    $scope.manageFiles = function(movie){
-      modalService.fileManagerModal(movie);
+    $scope.manageFiles = function(video){
+      modalService.fileManagerModal(video);
     };
 
 
@@ -65,8 +65,8 @@ streamaApp.controller('adminMovieCtrl', [
 
 		$scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + $stateParams.movieId, function (data) {
 			$scope.uploadStatus.percentage = null;
-			$scope.movie.files = $scope.movie.files || [];
-			$scope.movie.files.push(data);
+			$scope.video.files = $scope.video.files || [];
+			$scope.video.files.push(data);
 		});
 
 

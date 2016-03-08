@@ -10,9 +10,10 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 
 	$stateProvider
 		.state('dash', {
-			url: '/',
+			url: '/dash?genreId?mediaModal?mediaType',
 			templateUrl: 'dash.htm',
 			controller: 'dashCtrl',
+			reloadOnSearch: false,
       resolve: {
         currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
           return apiService.currentUser().success(function (data) {
@@ -71,6 +72,11 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
         }]
       }
 		})
+		.state('admin.fileManager', {
+			url: '/fileManager',
+			templateUrl: 'admin-fileManager.htm',
+			controller: 'adminFileManagerCtrl'
+		})
 		.state('admin.movies', {
 			url: '/movies',
 			templateUrl: 'admin-movies.htm',
@@ -80,6 +86,16 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			url: '/movie/:movieId',
 			templateUrl: 'admin-movie.htm',
 			controller: 'adminMovieCtrl'
+		})
+		.state('admin.videos', {
+			url: '/videos',
+			templateUrl: 'admin-videos.htm',
+			controller: 'adminVideosCtrl'
+		})
+		.state('admin.video', {
+			url: '/video/:videoId',
+			templateUrl: 'admin-video.htm',
+			controller: 'adminVideoCtrl'
 		})
 		.state('admin.users', {
 			url: '/users',
@@ -144,7 +160,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 		});
 
 
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/dash');
 
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -207,7 +223,25 @@ streamaApp.run(
 			}
     };
 
+
+		$rootScope.toggleGenreMenu = function (close) {
+			if(close){
+				$rootScope.genreMenuOpen = false;
+			}else{
+				$rootScope.genreMenuOpen = !$rootScope.genreMenuOpen;
+			}
+		};
+
+
+		$rootScope.changeGenre = function (genre) {
+			$rootScope.toggleGenreMenu(true);
+			$state.go('dash', {genreId: (genre ? genre.id : null)});
+			$rootScope.$broadcast('changedGenre', genre);
+		};
+
+
     $rootScope.$on('$stateChangeSuccess', function (e, toState) {
+			$rootScope.toggleGenreMenu(true);
       if(toState.name == "player"){
         localStorageService.set('originUrl', location.href);
       }

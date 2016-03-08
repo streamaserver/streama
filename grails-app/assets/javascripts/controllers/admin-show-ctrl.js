@@ -74,6 +74,7 @@ streamaApp.controller('adminShowCtrl', [
 	var seasonForShow = function (season) {
 		apiService.theMovieDb.seasonForShow({apiId: $scope.show.apiId, showId: $stateParams.showId, season: season})
 				.success(function (data) {
+					$scope.seasons = $scope.seasons ||  [];
 					$scope.seasons[season] = $scope.seasons[season] || [];
 					$scope.seasons[season] = $scope.seasons[season].concat(data);
 					$scope.loading = false;

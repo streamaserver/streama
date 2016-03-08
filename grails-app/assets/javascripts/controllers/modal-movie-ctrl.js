@@ -19,6 +19,7 @@ streamaApp.controller('modalMovieCtrl', [
 
 
 	$scope.selectFromAPI = function ($item) {
+		console.log('%c selectFromAPI', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
 		var apiId = $item.id;
 		delete $item.id;
 		$scope.movie = $item;
@@ -43,8 +44,37 @@ streamaApp.controller('modalMovieCtrl', [
 		})
 		
 	};
-		
-	setTimeout(function () {
+
+		$scope.onTagSelect = function (tag) {
+			apiService.tag.save(tag);
+			apiService.movie.save($scope.movie);
+		};
+
+		$scope.tagTransform = function (newTag) {
+			var item = {
+				name: newTag,
+				isNew: true
+			};
+
+			return item;
+		};
+
+		$scope.deleteTag = function (tag) {
+			alertify.confirm('Are you sure you want to delete the tag ' + tag.name, function (confirmed) {
+				if(confirmed){
+					apiService.tag.delete(tag.id).success(function () {
+						_.remove($scope.tags, {id: tag.id});
+					})
+				}
+			});
+		};
+
+		apiService.tag.list().success(function (data) {
+			$scope.tags = data;
+		});
+
+
+		setTimeout(function () {
 		$('.name-input').focus();
 	}, 200);
 

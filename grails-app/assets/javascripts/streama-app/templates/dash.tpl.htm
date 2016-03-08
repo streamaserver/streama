@@ -1,31 +1,29 @@
 <div class="dashboard">
 
-  <div class="spinner big" ng-show="loading">
-    <div class="bounce1"></div>
-    <div class="bounce2"></div>
-    <div class="bounce3"></div>
-  </div>
+  <h2 class="genre-display" ng-if="selectedGenre">Youre looking at the genre: <strong ng-bind="selectedGenre.name"></strong></h2>
 
-  <div ng-if="continueWatching.length">
+  <div ng-if="continueWatching.length && !selectedGenre">
     <h3>Continue watching</h3>
+
 
     <div class="media-list media-list-continue-watching">
       <div class="media-list-item" ng-repeat="viewingStatus in continueWatching">
         <div class="media-item">
-          <img ng-if="viewingStatus.video.backdrop_path" ng-src="https://image.tmdb.org/t/p/w300/{{viewingStatus.video.backdrop_path}}"/>
-          <img ng-if="!viewingStatus.video.backdrop_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
+          <img ng-if="!viewingStatus.video.backdrop_path && viewingStatus.video.backdrop_image_src" ng-src="{{::viewingStatus.video.backdrop_image_src}}"/>
+          <img ng-if="viewingStatus.video.backdrop_path && !viewingStatus.video.backdrop_image_src" ng-src="https://image.tmdb.org/t/p/w300/{{::viewingStatus.video.backdrop_path}}"/>
+          <img ng-if="!viewingStatus.video.backdrop_path && !viewingStatus.video.backdrop_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
-          <div class="play-text">Continue "{{viewingStatus.video.title || viewingStatus.video.show.name}}"</div>
+          <div class="play-text">Continue "<span ng-bind="::(viewingStatus.video.title || viewingStatus.video.show.name)"></span>"</div>
           <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">Mark completed</button>
           <i class="play-icon ion-ios-play" ui-sref="player({videoId: viewingStatus.video.id})"></i>
         </div>
 
         <div class="media-progress-wrapper">
 
-          <div class="progress-info" ng-show="viewingStatus.video.isEpisode">{{viewingStatus.video.episodeString}} - {{viewingStatus.video.title}}</div>
-          <div class="progress-info" ng-show="!viewingStatus.video.isEpisode">{{viewingStatus.video.title}}</div>
+          <div class="progress-info" ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span> - <span ng-bind="::viewingStatus.video.title"></span></div>
+          <div class="progress-info" ng-show="!viewingStatus.video.isEpisode" ng-bind="::viewingStatus.video.title"></div>
 
-          <div class="progress-time">{{viewingStatus.currentPlayTime | secondsToDateTime | date:'mm:ss'}} min</div>
+          <div class="progress-time"><span ng-bind="::(viewingStatus.currentPlayTime | secondsToDateTime | date:'mm:ss')"></span> min</div>
 
           <div class="media-progress" ng-if="viewingStatus.runtime">
             <div class="progress-inner" style="width: {{viewingStatus.currentPlayTime / viewingStatus.runtime * 100}}%;"></div>
@@ -37,24 +35,45 @@
     <hr/>
   </div>
 
-  <div ng-if="tvShows.length">
-    <h3>Discover Shows
-      <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown></h3>
+  <div>
+    <h3>
+      <span ng-show="!selectedGenre">Discover Shows</span>
+      <span ng-show="selectedGenre">{{::selectedGenre.name}} TV Shows</span>
+    </h3>
+
+    <div class="row">
+      <div class="col-sm-2">
+        Sort:
+        <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown>
+      </div>
+
+      <div class="col-sm-2">
+        <input class="form-control input-sm" type="text" ng-model="dashFilter.tvShow.name" placeholder="Search by Name..." />
+      </div>
+    </div>
+    <br>
+
+    <div class="spinner" ng-show="!tvShows.length">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="tvShow in tvShows | orderBy:showSort.sort">
+      <div class="media-list-item media-poster-item" ng-repeat="tvShow in tvShows | orderBy:showSort.sort |filter: dashFilter.showFilter">
         <div class="media-item" >
-          <img ng-if="tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{tvShow.poster_path}}"/>
+          <img ng-if="tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{::tvShow.poster_path}}"/>
           <img ng-if="!tvShow.poster_path && !tvShow.manualInput" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
-          <img ng-show="tvShow.manualInput && tvShow.poster_image_src" ng-src="{{tvShow.poster_image_src}}">
+          <img ng-show="tvShow.manualInput && tvShow.poster_image_src" ng-src="{{::tvShow.poster_image_src}}">
 
           <div class="play-text">
-            <h4>{{tvShow.name}}</h4>
-            <p>{{tvShow.firstEpisode.episodeString}} - {{tvShow.firstEpisode.name}}</p>
+            <h4 ng-bind="::tvShow.name"></h4>
+            <p><span ng-bind="::tvShow.firstEpisode.episodeString"></span> - <span ng-bind="::tvShow.firstEpisode.name"></span></p>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="showDetails(tvShow)"></i>
-          <a class="play-icon ion-ios-play" ui-sref="player({videoId: tvShow.firstEpisode.id})"></a>
+          <a class="play-icon ion-ios-play" ng-click="fetchFirstEpisodeAndPlay(tvShow)"></a>
         </div>
       </div>
     </div>
@@ -62,18 +81,89 @@
     <hr/>
   </div>
 
-  <div ng-if="movies.length">
-    <h3>Discover Movies
-      <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown></h3>
+  <div >
+    <h3>
+      <span ng-show="!selectedGenre">Discover Movies</span>
+      <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>
+     </h3>
+
+    <div class="row">
+      <div class="col-sm-2">
+        Sort: <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
+      </div>
+      <div class="col-sm-2">
+        <ui-select class="tag-select" multiple ng-model="dashFilter.movie.tags" theme="bootstrap" title="Filter by Tag">
+          <ui-select-match placeholder="Filter by Tag...">{{$item.name}}</ui-select-match>
+          <ui-select-choices repeat="tag in tags | propsFilter: {name: $select.search}">
+            <div class="tag-wrapper">
+              <div class="tag-name" ng-bind-html="tag.name | highlight: $select.search"></div>
+            </div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+
+      <div class="col-sm-2">
+        <input class="form-control input-sm" type="text" ng-model="dashFilter.movie.title" placeholder="Search by Title..." />
+      </div>
+    </div>
+    <br>
+
+    <div class="spinner" ng-show="!movies.length">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="movie in movies | orderBy:movieSort.sort">
+      <div class="media-list-item media-poster-item" ng-repeat="movie in movies | orderBy:movieSort.sort |filter: dashFilter.movieFilter">
         <div class="media-item" >
           <img ng-if="movie.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
           <img ng-if="!movie.poster_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
           <div class="play-text">
-            <h4>{{movie.title}}</h4>
-            <p>{{movie.release_date.substring(0,4)}}</p>
+            <h4 ng-bind="::movie.title"></h4>
+            <p ng-bind="::movie.release_date.substring(0,4)"></p>
+          </div>
+
+          <i class="info-icon ion-ios-information" ng-click="showDetails(movie)"></i>
+          <a class="play-icon ion-ios-play" ui-sref="player({videoId: movie.id})"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div ng-if="genericVideos.length">
+    <h3>
+      <span ng-show="!selectedGenre">Other Videos</span>
+      <span ng-show="selectedGenre">{{::selectedGenre.name}} Videos</span>
+     </h3>
+
+    <div class="row">
+      <div class="col-sm-2">
+        Sort: <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
+      </div>
+
+      <div class="col-sm-2">
+        <input class="form-control input-sm" type="text" ng-model="dashFilter.genericVideo.title" placeholder="Search by Title..." />
+      </div>
+    </div>
+    <br>
+
+    <div class="spinner" ng-show="!movies.length">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+
+    <div class="media-list">
+      <div class="media-list-item media-poster-item" ng-repeat="movie in genericVideos | orderBy:movieSort.sort |filter: dashFilter.genericVideo.title">
+        <div class="media-item" >
+          <img ng-if="!movie.poster_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
+          <img ng-show="movie.poster_image_src" ng-src="{{::movie.poster_image_src}}">
+          <div class="play-text">
+            <h4 ng-bind="::movie.title"></h4>
+            <p ng-bind="::movie.release_date.substring(0,4)"></p>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="showDetails(movie)"></i>

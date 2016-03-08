@@ -67,6 +67,11 @@ class TheMovieDbService {
     return new JsonSlurper().parseText(JsonContent)
   }
 
+  def getFullTvShowMeta(tvId){
+    def JsonContent = new URL(BASE_URL + "/tv/$tvId?api_key=$API_KEY").text
+    return new JsonSlurper().parseText(JsonContent)
+  }
+
   def getEpisodeMeta(tvApiId, seasonNumber, episodeNumber){
     def JsonContent = new URL(BASE_URL + "/tv/$tvApiId/season/$seasonNumber/episode/$episodeNumber?api_key=$API_KEY").text
     return new JsonSlurper().parseText(JsonContent)

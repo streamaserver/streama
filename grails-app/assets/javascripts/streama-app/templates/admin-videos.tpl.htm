@@ -1,0 +1,41 @@
+<button class="btn btn-primary pull-right btn-lg" ng-click="openGenericVideoModal()">Create generic video</button>
+
+<h1>
+  Other Videos
+  <video-sort-order-dropdown current-sort="currentSort" dropdown-type="'movie'"/>
+</h1>
+
+<div class="row">
+  <div class="col-md-5">
+    <input placeholder="Search Videos..." type="text" ng-model="search" class="form-control input-sm" />
+  </div>
+</div>
+
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<div ng-show="videos.length">
+  <hr/>
+
+  <div class="media-list-item media-poster-item" ng-class="{'no-files': !video.hasFiles}"
+       ng-repeat="video in videos | filter:search | orderBy:currentSort.sort"
+       ui-sref="admin.video({videoId: video.id})">
+    <div class="media-item" >
+      <img ng-show="video.poster_image_src" ng-src="{{video.poster_image_src}}">
+
+
+      <div class="play-text">
+        <h4>{{::video.title}}</h4>
+        <p>{{::video.release_date.substring(0,4)}}</p>
+        <span class="label label-danger" ng-show="!video.hasFiles"><i class="ion-alert-circled"></i> No Video File yet!</span>
+      </div>
+
+      <i class="warning-icon ion-alert-circled" ng-show="!video.hasFiles"></i>
+    </div>
+  </div>
+</div>
+
+

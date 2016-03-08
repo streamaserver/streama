@@ -156,3 +156,20 @@ hr{
     }
   }
 }
+
+.file-grid{
+  @include clearfix;
+
+  .file-grid-item{
+    float: left;
+    background-color: rgba(255, 255, 255, 0.12);
+    width: 200px;
+    height: 200px;
+    margin: 0 10px 10px 0;
+  }
+}
+
+.file-manager-table{
+  word-break: break-word;
+  font-size: 12px;
+}

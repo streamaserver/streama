@@ -15,6 +15,7 @@ class VideoController {
   def uploadService
   def springSecurityService
   def mediaService
+  def fileService
 
     
   def index() {
@@ -41,7 +42,7 @@ class VideoController {
     }
 
     result.tvShowsForDash = tvShows.findAll{tvShow->
-      !(continueWatching.find{(it.video instanceof Episode) && it.video.show?.id == tvShow?.id}) && tvShow.episodes
+      return (!(continueWatching.find{(it.video instanceof Episode) && it.video.show?.id == tvShow?.id}) && tvShow.hasFiles)
     }
 
     JSON.use('dashMovies'){
@@ -87,7 +88,9 @@ class VideoController {
   }
 
   def show(Video videoInstance){
-    respond videoInstance, [status: OK]
+    JSON.use('player') {
+      respond videoInstance, [status: OK]
+    }
   }
 
 
@@ -133,6 +136,8 @@ class VideoController {
 
     video.removeFromFiles(file)
     video.save flush: true, failOnError: true
+
+    fileService.fullyRemoveFile(file)
 
     respond status: OK
 

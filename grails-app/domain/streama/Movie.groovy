@@ -12,6 +12,9 @@ class Movie extends Video{
   String poster_path
   String trailerKey
 
+
+  static hasMany = [tags: Tag, genre: Genre]
+
   static constraints = {
   }
 

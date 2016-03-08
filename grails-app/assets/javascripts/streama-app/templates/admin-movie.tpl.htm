@@ -75,30 +75,20 @@
           <label>Overview</label>
           <p class="data-display">{{movie.overview}}</p>
         </div>
+        <div class="col-sm-12">
+          <label>Genre</label>
+          <ul class="genre-list">
+            <li class="genre-tag interactive" ng-repeat="genre in movie.genre" ui-sref="dash({genreId: genre.id})">
+              {{genre.name}}
+            </li>
+          </ul>
+        </div>
         <div class="col-sm-12" ng-if="movie.trailer">
           <label>Trailer</label>
           <br>
           <iframe width="560" height="315" ng-src="{{'https://www.youtube.com/embed/'+movie.trailerKey+'?rel=0' | trustResourceUrl}}" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
-
-
-      <!--<div class="row">-->
-        <!--<div class="col-sm-12">-->
-          <!--<label>Tags</label>-->
-
-          <!--<ui-select class="tag-select" multiple tagging="tagTransform" ng-model="movie.tags" theme="bootstrap" title="Add Tags" on-select="onTagSelect($item, $model)">-->
-            <!--<ui-select-match placeholder="Select tag...">{{$item.name}}</ui-select-match>-->
-            <!--<ui-select-choices repeat="tag in tags | propsFilter: {name: $select.search}">-->
-              <!--<div ng-if="tag.isNew" ng-bind-html="tag.name +' <small>(new)</small>'| highlight: $select.search"></div>-->
-              <!--<div ng-if="!tag.isNew" class="tag-wrapper">-->
-                <!--<div class="tag-name" ng-bind-html="tag.name + tag.isTag| highlight: $select.search"></div>-->
-                <!--<i class="ion-trash-a" ng-click="deleteTag(tag)"></i>-->
-              <!--</div>-->
-            <!--</ui-select-choices>-->
-          <!--</ui-select>-->
-        <!--</div>-->
-      <!--</div>-->
 
 
       <div class="row" ng-show="!movie.files.length">

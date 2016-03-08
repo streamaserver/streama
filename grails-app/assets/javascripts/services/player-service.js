@@ -44,7 +44,7 @@ streamaApp.factory('playerService', [
         }
 
         videoOptions.videoMetaTitle = (video.show ? video.show.name : video.title);
-        videoOptions.videoMetaSubtitle = (video.show ? video.episodeString + ' - ' + video.name : video.release_date.substring(0, 4));
+        videoOptions.videoMetaSubtitle = (video.show ? video.episodeString + ' - ' + video.name : (video.release_date ? video.release_date.substring(0, 4) : ''));
         videoOptions.videoMetaDescription = video.overview;
 
         if(videoData.nextEpisode){
@@ -176,7 +176,7 @@ streamaApp.factory('playerService', [
 
         if(!video.files || !video.files.length){
           hasError = true;
-          alertify.alert('There is a problem with this content. It seems you removed the associated video fime from it.', function () {
+          alertify.alert('There is a problem with this content. It seems you removed the associated video file from it.', function () {
             if($rootScope.currentUser.authorities.length){
               if(video.show){
                 $state.go('admin.show', {showId: video.show.id});

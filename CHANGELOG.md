@@ -1,5 +1,24 @@
 # Change Log
 
+## [0.2.0] - 2016-03-08
+### Features
+- added functionality for "Generic Videos", aka videos that are not necessarily Movies or TV shows
+- Added Genres for Movies and shows! When starting the app, it might be slower for the first time because it adds all the genres for existing movies and shows :)
+- added filters for dashboard
+- immensely improved performance for dashboard
+- added file-manager in admin section
+- added custom tags for movies
+- added more keyboard and mouse controls in player
+
+
+### Bugfixes
+- deleting a file will now erase the file from disk
+- fixed: Fetching tv-show information doesn't seem to end #145
+- fixed: You can’t save settings if you haven’t selected a second video directory #144
+- fixed: play button from media dialog leads to dashboard
+
+
+
 ## [0.1.9.1] - 2016-01-12
 ### Bugfixes
 - fixed: unable to play videos that users were able to play previously (m4v format)
