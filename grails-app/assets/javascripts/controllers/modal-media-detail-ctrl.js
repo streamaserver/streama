@@ -18,6 +18,10 @@ streamaApp.controller('modalMediaDetailCtrl', [
 						$scope.currentSeason = _.min(data, 'season_number').season_number;
 					}
 				});
+
+				apiService.dash.firstEpisodeForShow($scope.media.id).success(function (data) {
+					$scope.firstEpisode = data;
+				});
 			}
 		});
 

@@ -819,6 +819,13 @@ hr {
 
 .modal-media-detail {
   max-height: inherit !important; }
+  .modal-media-detail .icon-play {
+    font-size: 52px;
+    line-height: 1em; }
+  .modal-media-detail legend {
+    border: none;
+    padding: 0;
+    margin: 0; }
   .modal-media-detail .info-list {
     margin: 0;
     padding: 0; }

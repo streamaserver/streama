@@ -1,15 +1,23 @@
 
 <div class="modal-body modal-media-detail">
-  <i class="ion-close pull-right" ng-click="cancel()"></i>
+  <div class="row">
+    <div class="col-xs-10">
+      <legend>
+        {{media.name || media.title}}
+      </legend>
+    </div>
+    <div class="col-xs-2">
+      <div class="pull-right">
+        <button ng-if="currentUser.isContentManager" class="btn btn-primary btn-xs pull-left" style="margin-right: 15px;" ng-click="editMedia(media)">edit</button>
+        <i class="ion-close pull-left" ng-click="cancel()"></i>
+      </div>
+    </div>
+  </div>
+
+  <a class="icon-play ion-android-arrow-dropright-circle" ui-sref="player({videoId: (firstEpisode.id || media.id)})"></a>
 
 
-  <legend>
-    {{media.name || media.title}}
-    <span ng-if="currentUser.isContentManager">
-      <br/>
-      <button class="btn btn-primary btn-xs" ng-click="editMedia(media)">edit</button>
-    </span>
-  </legend>
+  <hr>
 
   <div class="spinner big" ng-show="!media">
     <div class="bounce1"></div>

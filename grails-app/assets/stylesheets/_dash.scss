@@ -19,6 +19,17 @@
 .modal-media-detail{
   max-height:inherit !important;
 
+  .icon-play{
+    font-size: 52px;
+    line-height: 1em;
+  }
+
+  legend{
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
   .info-list{
     margin: 0;
     padding: 0;
