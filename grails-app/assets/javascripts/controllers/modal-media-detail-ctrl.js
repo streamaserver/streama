@@ -22,9 +22,10 @@ streamaApp.controller('modalMediaDetailCtrl', [
 		});
 
 
-	
+
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
+		$state.go('dash', {mediaModal: null, mediaType: null});
 	};
 
 	$scope.setCurrentSeason = function (index) {
@@ -46,7 +47,7 @@ streamaApp.controller('modalMediaDetailCtrl', [
 			$modalInstance.dismiss('cancel');
 		}
 	};
-		
+
 		$scope.$on('$stateChangeStart', function () {
 			$modalInstance.dismiss('cancel');
 		})

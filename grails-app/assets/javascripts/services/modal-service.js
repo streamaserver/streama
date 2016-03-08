@@ -150,10 +150,10 @@ streamaApp.factory('modalService', ['$uibModal', '$state', function ($uibModal, 
 			});
 
 			modalInstance.result.then(function (data) {
-				$state.go('dash', {mediaModal: null, mediaType: null});
+				//$state.go('dash', {mediaModal: null, mediaType: null});
 				(callback || angular.noop)(data);
 			}, function () {
-				$state.go('dash', {mediaModal: null, mediaType: null});
+				//$state.go('dash', {mediaModal: null, mediaType: null});
 			});
 		}
 	};
