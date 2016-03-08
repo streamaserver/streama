@@ -197,8 +197,8 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 
 
 streamaApp.run(
-  ['$rootScope', '$state', 'localStorageService', 'apiService',
-  function ($rootScope, $state, localStorageService, apiService) {
+  ['$rootScope', '$state', 'localStorageService', 'apiService', 'modalService',
+  function ($rootScope, $state, localStorageService, apiService, modalService) {
 
     $rootScope.baseData = {};
     $rootScope.isCurrentState = function (stateName) {
@@ -212,15 +212,7 @@ streamaApp.run(
     };
 
     $rootScope.selectFromSearch = function (item) {
-			if(item.hasFiles){
-				var id;
-				if(item.firstEpisode){
-					id = item.firstEpisode.id;
-				}else{
-					id = item.id;
-				}
-				$state.go('player', {videoId: id});
-			}
+			modalService.mediaDetailModal(item.id, item.mediaType);
     };
 
 

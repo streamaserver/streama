@@ -70,6 +70,7 @@ class MarshallerService {
       def returnArray = [:]
 
       returnArray['id'] = movie.id
+      returnArray['mediaType'] = 'movie'
       returnArray['dateCreated'] = movie.dateCreated
       returnArray['lastUpdated'] = movie.lastUpdated
       returnArray['poster_path'] = movie.poster_path
@@ -130,6 +131,7 @@ class MarshallerService {
       def returnArray = [:]
 
       returnArray['id'] = tvShow.id
+      returnArray['mediaType'] = 'tvShow'
       returnArray['dateCreated'] = tvShow.dateCreated
       returnArray['lastUpdated'] = tvShow.lastUpdated
       returnArray['poster_path'] = tvShow.poster_path
