@@ -213,19 +213,23 @@ class MarshallerService {
         if(video instanceof Movie){
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
-          returnArray['backdrop_path'] = video.backdrop_path
+          returnArray['poster_path'] = video.poster_path
+          returnArray['mediaType'] = 'movie'
         }
         if(video instanceof GenericVideo){
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
-          returnArray['backdrop_image_src'] = video.backdrop_image?.src
+          returnArray['poster_image_src'] = video.poster_image?.src
+          returnArray['mediaType'] = 'genericVideo'
         }
 
         if(video instanceof Episode){
           returnArray['isEpisode'] = true
           returnArray['title'] = video.show?.name
-          returnArray['backdrop_path'] = video.still_path ? video.still_path : video.show?.backdrop_path
+          returnArray['poster_path'] = video.show?.poster_path
           returnArray['episodeString'] = video.episodeString
+          returnArray['tvShowId'] = video.show?.id
+          returnArray['mediaType'] = 'tvShow'
         }
 
         return returnArray;

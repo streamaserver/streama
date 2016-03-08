@@ -7,15 +7,21 @@
 
 
     <div class="media-list media-list-continue-watching">
-      <div class="media-list-item" ng-repeat="viewingStatus in continueWatching">
-        <div class="media-item">
-          <img ng-if="!viewingStatus.video.backdrop_path && viewingStatus.video.backdrop_image_src" ng-src="{{::viewingStatus.video.backdrop_image_src}}"/>
-          <img ng-if="viewingStatus.video.backdrop_path && !viewingStatus.video.backdrop_image_src" ng-src="https://image.tmdb.org/t/p/w300/{{::viewingStatus.video.backdrop_path}}"/>
-          <img ng-if="!viewingStatus.video.backdrop_path && !viewingStatus.video.backdrop_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
+      <div class="media-list-item media-poster-item" ng-repeat="viewingStatus in continueWatching">
+        <div class="media-item" >
 
-          <div class="play-text">Continue "<span ng-bind="::(viewingStatus.video.title || viewingStatus.video.show.name)"></span>"</div>
-          <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">Mark completed</button>
-          <i class="play-icon ion-ios-play" ui-sref="player({videoId: viewingStatus.video.id})"></i>
+          <img ng-if="viewingStatus.video.poster_image_src" ng-src="{{::viewingStatus.video.poster_image_src}}"/>
+          <img ng-if="!viewingStatus.video.poster_image_src && viewingStatus.video.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{::viewingStatus.video.poster_path}}"/>
+          <img ng-if="!viewingStatus.video.poster_path && !viewingStatus.video.poster_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
+
+          <div class="play-text">
+            <h4>Continue "<span ng-bind="::(viewingStatus.video.title || viewingStatus.video.show.name)"></span>"</h4>
+            <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">Mark completed</button>
+            <p ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span></p>
+          </div>
+
+          <i class="info-icon ion-ios-information" ng-click="showDetails(viewingStatus.video)"></i>
+          <a class="play-icon ion-ios-play" ui-sref="player({videoId: viewingStatus.video.id})"></a>
         </div>
 
         <div class="media-progress-wrapper">
@@ -31,6 +37,7 @@
         </div>
       </div>
     </div>
+
 
     <hr/>
   </div>

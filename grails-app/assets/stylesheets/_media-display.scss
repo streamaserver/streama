@@ -83,8 +83,7 @@
   .complete-watching{
     position: absolute;
     bottom: 7px;
-    right: 7px;
-    margin-left: -53px;
+    left: 7px;
     opacity: 0;
     @include vendor-property('transition', 'opacity .2s');
   }

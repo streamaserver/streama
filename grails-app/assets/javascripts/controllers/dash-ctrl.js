@@ -24,7 +24,7 @@ streamaApp.controller('dashCtrl', [
   };
 
   $scope.showDetails = function (media) {
-    modalService.mediaDetailModal(media.id, media.mediaType);
+    modalService.mediaDetailModal((media.tvShowId || media.id), media.mediaType);
   };
 
 
