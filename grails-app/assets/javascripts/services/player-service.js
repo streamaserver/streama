@@ -33,7 +33,10 @@ streamaApp.factory('playerService', [
     };
 
     return {
-
+      getVideoOptions: function()
+      {
+        return videoOptions;
+      },
       setVideoOptions: function (video) {
         videoData = video;
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src);
@@ -44,7 +47,7 @@ streamaApp.factory('playerService', [
         }
 
         videoOptions.videoMetaTitle = (video.show ? video.show.name : video.title);
-        videoOptions.videoMetaSubtitle = (video.show ? video.episodeString + ' - ' + video.name : (video.release_date ? video.release_date.substring(0, 4) : ''));
+        videoOptions.videoMetaSubtitle = (video.show ? video.episodeString + ' - ' + video.name : video.release_date.substring(0, 4));
         videoOptions.videoMetaDescription = video.overview;
 
         if(videoData.nextEpisode){
@@ -59,7 +62,11 @@ streamaApp.factory('playerService', [
             videoOptions.selectedEpisodes = videoOptions.episodeList[videoData.season_number];
             videoOptions.currentEpisode = {
               episode: videoData.episode_number,
-              season: videoData.season_number
+              season: videoData.season_number,
+              intro_start: videoData.intro_start,
+              intro_end: videoData.intro_end,
+              outro_start: videoData.outro_start
+
             };
           });
         }
@@ -86,7 +93,6 @@ streamaApp.factory('playerService', [
       },
 
       viewingStatusSaveInterval: null,
-
       onVideoPlay: function (videoElement, socketData) {
         var that = this;
         console.log('%c onVideoPlay', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
@@ -176,7 +182,7 @@ streamaApp.factory('playerService', [
 
         if(!video.files || !video.files.length){
           hasError = true;
-          alertify.alert('There is a problem with this content. It seems you removed the associated video file from it.', function () {
+          alertify.alert('There is a problem with this content. It seems you removed the associated video fime from it.', function () {
             if($rootScope.currentUser.authorities.length){
               if(video.show){
                 $state.go('admin.show', {showId: video.show.id});
