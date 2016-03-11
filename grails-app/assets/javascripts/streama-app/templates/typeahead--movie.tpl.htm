@@ -1,7 +1,16 @@
 <a>
-  <img ng-if="match.model.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{match.model.poster_path}}" width="60px"/>
-  <img ng-if="!match.model.poster_path" src="/assets/poster-not-found.png" width="60px">
-  &nbsp;
-  <span ng-bind-html="match.model.title | uibTypeaheadHighlight:query"></span>
-  <span ng-show="match.model.release_date" style="opacity: .5;">({{match.model.release_date.substring(0, 4)}})</span>
+  <div class="flex-row center" >
+    <div class="image no-flex col">
+      <img ng-if="match.model.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{match.model.poster_path}}" width="60px"/>
+      <img ng-if="!match.model.poster_path" src="/assets/poster-not-found.png" width="60px">
+    </div>
+    <div class="detail col">
+      <span ng-bind-html="match.model.title | uibTypeaheadHighlight:query"></span>
+      <br>
+      <span ng-show="match.model.release_date" style="opacity: .5;">{{match.model.release_date.substring(0, 4)}}</span>
+      <br>
+      <uib-rating ng-model="match.model.vote_average" max="10" state-on="'ion-ios-star'" state-off="'ion-ios-star-outline'" readonly="true"></uib-rating>
+      <span style="font-size: 11px; font-weight: 300;">({{match.model.vote_average}} / 10)</span>
+    </div>
+  </div>
 </a>

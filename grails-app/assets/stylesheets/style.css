@@ -7,12 +7,22 @@
   display: -webkit-flex;
   display: flex;
   margin-bottom: 10px; }
+  .flex-row.center {
+    align-items: center; }
+  .flex-row .col {
+    margin: 0 10px; }
   .flex-row > * {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1; }
+  .flex-row > .no-flex {
+    -webkit-box-flex: none;
+    -moz-box-flex: none;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none; }
 
 .row-slim,
 .form-horizontal .row-slim {

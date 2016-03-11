@@ -1,8 +1,20 @@
 .flex-row{
   @include flexbox;
   margin-bottom: 10px;
+
+  &.center{
+    align-items: center;
+  }
+
+  .col{
+    margin: 0 10px;
+  }
+
   >*{
     @include flex(1);
+  }
+  >.no-flex{
+    @include flex(none);
   }
 }
 
