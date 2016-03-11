@@ -31,6 +31,9 @@ class TheMovieDbService {
   }
 
   def getMovieGenres(){
+    if(!API_KEY){
+      return []
+    }
     def JsonContent = new URL(BASE_URL + "/genre/movie/list?api_key=$API_KEY").text
     def genres =  new JsonSlurper().parseText(JsonContent).genres
 
@@ -43,6 +46,9 @@ class TheMovieDbService {
   }
 
   def getTvGenres(){
+    if(!API_KEY){
+      return []
+    }
     def JsonContent = new URL(BASE_URL + "/genre/tv/list?api_key=$API_KEY").text
     def genres =  new JsonSlurper().parseText(JsonContent).genres
 
