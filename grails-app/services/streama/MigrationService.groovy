@@ -79,7 +79,7 @@ class MigrationService {
     def tvShows = TvShow.list()
 
     tvShows.each{ tvShow ->
-      if(tvShow.genre){
+      if(tvShow.genre || !tvShow.apiId){
         return
       }
       def metaData = tvShow.fullTvShowMeta
