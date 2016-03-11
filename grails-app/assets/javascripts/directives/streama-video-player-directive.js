@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.directive('streamaVideoPlayer', [
-  'uploadService', 'localStorageService', '$timeout',
-  function (uploadService, localStorageService, $timeout) {
+  'uploadService', 'localStorageService', '$timeout', '$http',
+  function (uploadService, localStorageService, $timeout, $http) {
 
     return {
       restrict: 'AE',
