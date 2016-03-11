@@ -20,7 +20,7 @@
         <input type="text" class="form-control" ng-model="episode.name" placeholder="Episode Name*">
       </div>
     </div>
-    
+
     <div ng-show="episode.episode_number || addManually">
       <div class="form-group row-slim">
         <div class="col-sm-2">
@@ -49,7 +49,20 @@
         </div>
       </div>
 
-
+      <div class="form-group row-slim">
+        <div class="col-sm-2">
+          <label>Intro Start</label>
+          <input type="text" class="form-control input-sm" format-directive ng-model="episode.intro_start"  placeholder="0:0"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Intro End</label>
+          <input type="text" class="form-control input-sm" ng-model="episode.intro_end" format-directive placeholder="0:0"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Outro Start</label>
+          <input type="text" class="form-control input-sm" ng-model="episode.outro_start" format-directive placeholder="0:0"/>
+        </div>
+      </div>
       <div class="form-group">
         <div class="col-sm-12">
           <label>Overview</label>
