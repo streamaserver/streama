@@ -49,22 +49,26 @@
     </h3>
 
     <div class="row">
-      <div class="col-sm-2">
+      <div class="col-md-3 col-lg-2">
         Sort:
         <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown>
       </div>
 
-      <div class="col-sm-2">
+      <div class="col-md-3 col-lg-2">
         <input class="form-control input-sm" type="text" ng-model="dashFilter.tvShow.name" placeholder="Search by Name..." />
       </div>
     </div>
     <br>
 
-    <div class="spinner" ng-show="!tvShows.length">
+    <div class="spinner" ng-show="loadingTvShows">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
       <div class="bounce3"></div>
     </div>
+
+    <p class="no-episodes-yet" ng-show="!tvShows.length">
+      No Tv-Shows Available
+    </p>
 
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="tvShow in tvShows | orderBy:showSort.sort |filter: dashFilter.showFilter">
@@ -94,11 +98,11 @@
       <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>
      </h3>
 
-    <div class="row">
-      <div class="col-sm-2">
+    <div class="row" ng-hide="!dashFilter.movie && !movies.length">
+      <div class="col-md-3 col-lg-2">
         Sort: <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
-      <div class="col-sm-2">
+      <div class="col-md-3 col-lg-2">
         <ui-select class="tag-select" multiple ng-model="dashFilter.movie.tags" theme="bootstrap" title="Filter by Tag">
           <ui-select-match placeholder="Filter by Tag...">{{$item.name}}</ui-select-match>
           <ui-select-choices repeat="tag in tags | propsFilter: {name: $select.search}">
@@ -109,17 +113,21 @@
         </ui-select>
       </div>
 
-      <div class="col-sm-2">
+      <div class="col-md-3 col-lg-2">
         <input class="form-control input-sm" type="text" ng-model="dashFilter.movie.title" placeholder="Search by Title..." />
       </div>
     </div>
     <br>
 
-    <div class="spinner" ng-show="!movies.length">
+    <div class="spinner" ng-show="loadingMovies">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
       <div class="bounce3"></div>
     </div>
+
+    <p class="no-episodes-yet" ng-show="!movies.length">
+      No Movies Available
+    </p>
 
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="movie in movies | orderBy:movieSort.sort |filter: dashFilter.movieFilter">
@@ -147,21 +155,23 @@
      </h3>
 
     <div class="row">
-      <div class="col-sm-2">
+      <div class="col-md-3 col-lg-2">
         Sort: <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
 
-      <div class="col-sm-2">
+      <div class="col-md-3 col-lg-2">
         <input class="form-control input-sm" type="text" ng-model="dashFilter.genericVideo.title" placeholder="Search by Title..." />
       </div>
     </div>
     <br>
 
-    <div class="spinner" ng-show="!movies.length">
+    <div class="spinner" ng-show="loadingGenericVideos">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
       <div class="bounce3"></div>
     </div>
+
+
 
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="movie in genericVideos | orderBy:movieSort.sort |filter: dashFilter.genericVideo.title">

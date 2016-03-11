@@ -82,16 +82,22 @@ streamaApp.controller('dashCtrl', [
     $scope.continueWatching = data;
   });
 
+  $scope.loadingTvShows = true;
   apiService.dash.listShows().success(function (data) {
     $scope.tvShows = data;
+    $scope.loadingTvShows = false;
   });
 
+  $scope.loadingMovies = true;
   apiService.dash.listMovies().success(function (data) {
     $scope.movies = data;
+    $scope.loadingMovies = false;
   });
 
+  $scope.loadingGenericVideos = true;
   apiService.dash.listGenericVideos().success(function (data) {
     $scope.genericVideos = data;
+    $scope.loadingGenericVideos = true;
   });
 
 
