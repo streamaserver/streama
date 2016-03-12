@@ -1102,6 +1102,8 @@ hr {
     transform: scale(1); } }
 streama-video-player.nocursor {
   cursor: none; }
+  streama-video-player.nocursor video {
+    cursor: none; }
 
 .video-wrapper-inner,
 .player-wrapper {
