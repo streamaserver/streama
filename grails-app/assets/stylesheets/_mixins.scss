@@ -178,3 +178,17 @@
   ::-moz-placeholder          {@content}
   :-ms-input-placeholder      {@content}
 }
+
+
+
+@mixin spin{
+  @include vendor-property('animation', 'spin 1s infinite linear');
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+@include vendor-keyframes('spin') {
+  0%        { @include vendor-property('transform', 'rotate(0deg)');}
+  100%	{@include vendor-property('transform', 'rotate(359deg)'); }
+}

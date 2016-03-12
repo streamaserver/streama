@@ -5,7 +5,16 @@
 
   <button ng-model="file"  class="btn btn-dropzone btn-block btn-lg"
           ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)" ngf-select>
-    Drop File or Click to Choose <span ng-show="uploadStatus.percentage != null">{{uploadStatus.percentage}}%</span>
+
+    <span ng-show="uploadStatus.percentage == null">Drop File or Click to Choose</span>
+
+    <span ng-show="uploadStatus.percentage != null && uploadStatus.percentage < 100">Uploading {{uploadStatus.percentage}}%</span>
+
+    <span ng-show="uploadStatus.percentage == 100">
+      <i class="ion-load-c spin"></i>
+      <br>
+      Processing...
+    </span>
   </button>
 
   <br/><br/>
