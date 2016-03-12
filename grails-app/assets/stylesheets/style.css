@@ -1,5 +1,70 @@
 @charset "UTF-8";
 @import url(icomoon/style.css);
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    transform: rotate(359deg); } }
+@-webkit-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    transform: rotate(359deg); } }
+@-o-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    transform: rotate(359deg); } }
+@-ms-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    transform: rotate(359deg); } }
+@keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    transform: rotate(359deg); } }
 .flex-row {
   display: -webkit-box;
   display: -moz-box;
@@ -180,6 +245,83 @@ a {
   font-weight: 100; }
   a:hover, a:focus, a:active {
     color: #B0DDEF; }
+
+/********** COLOR UTILS ***********/
+.bg-primary {
+  background-color: #B0DDEF;
+  color: white; }
+
+.bg-secondary {
+  background-color: #1f779a;
+  color: white; }
+
+.text-primary {
+  color: #B0DDEF; }
+
+.text-secondary {
+  color: #1f779a; }
+
+.text-grey {
+  color: grey; }
+
+/********** OPACITY CLASSES ***********/
+.opacity-50 {
+  opacity: 0.5; }
+
+.opacity-30 {
+  opacity: 0.3; }
+
+.opacity-70 {
+  opacity: 0.7; }
+
+/********** SPIN ICON ***********/
+[class*='ion-'].spin {
+  position: relative;
+  margin: 0;
+  height: 1em;
+  width: 1em;
+  text-align: center; }
+  [class*='ion-'].spin:before {
+    -moz-animation: spin 1s infinite linear;
+    -webkit-animation: spin 1s infinite linear;
+    -o-animation: spin 1s infinite linear;
+    -ms-animation: spin 1s infinite linear;
+    animation: spin 1s infinite linear;
+    position: absolute;
+    left: 0;
+    top: 0; }
+
+/********** ICON OUTLINE ***********/
+.icon-outline {
+  border: 2px solid grey;
+  border-radius: 100%;
+  width: 1.2em;
+  display: inline-block;
+  line-height: 1.2em;
+  font-style: normal;
+  font-weight: 400;
+  box-sizing: content-box;
+  text-align: center;
+  font-size: 1.2em; }
+  .icon-outline.icon-outline-secondary {
+    border-color: #1f779a;
+    color: #1f779a; }
+
+/********** PAGE LOADER ***********/
+.page-loader {
+  text-align: center;
+  font-size: 52px;
+  color: #B0DDEF; }
+  .page-loader [class*='ion-'].spin {
+    font-size: inherit;
+    display: inline-block; }
+
+/************* icon sizes ******************/
+.icon-lg {
+  font-size: 20px; }
+
+.icon-xl {
+  font-size: 36px; }
 
 .btn {
   background: gray;
@@ -1102,6 +1244,8 @@ hr {
     transform: scale(1); } }
 streama-video-player.nocursor {
   cursor: none; }
+  streama-video-player.nocursor video {
+    cursor: none; }
 
 .video-wrapper-inner,
 .player-wrapper {
@@ -1540,7 +1684,7 @@ streama-video-player.nocursor {
       -webkit-flex: 1;
       -ms-flex: 1;
       flex: 1;
-      line-height: 1.3em; }
+      line-height: 2.3em; }
     #player-menu-episode-selector .episode-list .episode-play,
     #player-menu-episode-selector .season-list .episode-play {
       -webkit-box-flex: none;
@@ -1548,7 +1692,17 @@ streama-video-player.nocursor {
       -webkit-flex: none;
       -ms-flex: none;
       flex: none;
-      margin-left: 10px; }
+      margin: 0px -10px 0px 10px; }
+      #player-menu-episode-selector .episode-list .episode-play i,
+      #player-menu-episode-selector .season-list .episode-play i {
+        margin: 3px;
+        display: block;
+        border: 1px solid white;
+        padding: 8px 11px;
+        border-radius: 2em; }
+        #player-menu-episode-selector .episode-list .episode-play i:hover,
+        #player-menu-episode-selector .season-list .episode-play i:hover {
+          background: #175670; }
     #player-menu-episode-selector .episode-list .extra-episode-info:after,
     #player-menu-episode-selector .season-list .extra-episode-info:after {
       content: "";
@@ -1582,15 +1736,24 @@ streama-video-player.nocursor {
     #player-menu-episode-selector .season-list li {
       color: white;
       list-style: none;
-      padding: 5px 12px;
+      padding: 0px 12px;
       border-top: 1px solid rgba(0, 0, 0, 0.27);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+      #player-menu-episode-selector .episode-list li .flex-wrapper,
+      #player-menu-episode-selector .season-list li .flex-wrapper {
+        -webkit-flex-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center; }
       #player-menu-episode-selector .episode-list li:hover,
       #player-menu-episode-selector .season-list li:hover {
         background: rgba(0, 0, 0, 0.2); }
       #player-menu-episode-selector .episode-list li.current,
       #player-menu-episode-selector .season-list li.current {
         background: #1f779a; }
+        #player-menu-episode-selector .episode-list li.current .episode-play,
+        #player-menu-episode-selector .season-list li.current .episode-play {
+          display: none; }
       #player-menu-episode-selector .episode-list li.no-files,
       #player-menu-episode-selector .season-list li.no-files {
         opacity: 0.7; }

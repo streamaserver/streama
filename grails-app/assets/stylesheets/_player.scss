@@ -1,6 +1,9 @@
 streama-video-player{
   &.nocursor{
     cursor:none;
+    video{
+      cursor:none;
+    }
   }
 }
 

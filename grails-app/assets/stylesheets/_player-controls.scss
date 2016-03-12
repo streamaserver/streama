@@ -355,12 +355,22 @@
     .episode-name{
       float: left;
       @include flex(1);
-      line-height: 1.3em;
+      line-height: 2.3em;
     }
 
     .episode-play{
       @include flex(none);
-      margin-left: 10px;
+      margin: 0px -10px 0px 10px;
+      i{
+        margin: 3px;
+        display: block;
+        border: 1px solid white;
+        padding: 8px 11px;
+        border-radius: 2em;
+        &:hover{
+          background: darken($primary, 55%);
+        }
+      }
     }
 
     .extra-episode-info{
@@ -387,9 +397,13 @@
     li{
       color: white;
       list-style: none;
-      padding: 5px 12px;
+      padding: 0px 12px;
       border-top: 1px solid rgba(0, 0, 0, 0.27);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+      .flex-wrapper{
+        @include align-items(center);
+      }
 
       &:hover{
         background: rgba(0, 0, 0, 0.20);
@@ -397,6 +411,9 @@
 
       &.current{
         background: darken($primary, 45%);
+        .episode-play{
+          display: none;
+        }
       }
 
       &.no-files{
