@@ -196,6 +196,7 @@ streamaApp.directive('streamaVideoPlayer', [
 
         video.ontimeupdate = function(){
           $scope.currentTime = video.currentTime;
+          $scope.$apply();
         };
 
         $scope.toggleSelectEpisodes = function (episodes) {
