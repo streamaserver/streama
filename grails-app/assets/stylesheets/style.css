@@ -1542,7 +1542,7 @@ streama-video-player.nocursor {
       -webkit-flex: 1;
       -ms-flex: 1;
       flex: 1;
-      line-height: 1.3em; }
+      line-height: 2.3em; }
     #player-menu-episode-selector .episode-list .episode-play,
     #player-menu-episode-selector .season-list .episode-play {
       -webkit-box-flex: none;
@@ -1550,7 +1550,17 @@ streama-video-player.nocursor {
       -webkit-flex: none;
       -ms-flex: none;
       flex: none;
-      margin-left: 10px; }
+      margin: 0px -10px 0px 10px; }
+      #player-menu-episode-selector .episode-list .episode-play i,
+      #player-menu-episode-selector .season-list .episode-play i {
+        margin: 3px;
+        display: block;
+        border: 1px solid white;
+        padding: 8px 11px;
+        border-radius: 2em; }
+        #player-menu-episode-selector .episode-list .episode-play i:hover,
+        #player-menu-episode-selector .season-list .episode-play i:hover {
+          background: #175670; }
     #player-menu-episode-selector .episode-list .extra-episode-info:after,
     #player-menu-episode-selector .season-list .extra-episode-info:after {
       content: "";
@@ -1584,15 +1594,24 @@ streama-video-player.nocursor {
     #player-menu-episode-selector .season-list li {
       color: white;
       list-style: none;
-      padding: 5px 12px;
+      padding: 0px 12px;
       border-top: 1px solid rgba(0, 0, 0, 0.27);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+      #player-menu-episode-selector .episode-list li .flex-wrapper,
+      #player-menu-episode-selector .season-list li .flex-wrapper {
+        -webkit-flex-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center; }
       #player-menu-episode-selector .episode-list li:hover,
       #player-menu-episode-selector .season-list li:hover {
         background: rgba(0, 0, 0, 0.2); }
       #player-menu-episode-selector .episode-list li.current,
       #player-menu-episode-selector .season-list li.current {
         background: #1f779a; }
+        #player-menu-episode-selector .episode-list li.current .episode-play,
+        #player-menu-episode-selector .season-list li.current .episode-play {
+          display: none; }
       #player-menu-episode-selector .episode-list li.no-files,
       #player-menu-episode-selector .season-list li.no-files {
         opacity: 0.7; }
