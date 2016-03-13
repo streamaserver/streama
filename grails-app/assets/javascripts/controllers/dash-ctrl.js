@@ -97,7 +97,7 @@ streamaApp.controller('dashCtrl', [
   $scope.loadingGenericVideos = true;
   apiService.dash.listGenericVideos().success(function (data) {
     $scope.genericVideos = data;
-    $scope.loadingGenericVideos = true;
+    $scope.loadingGenericVideos = false;
   });
 
 
