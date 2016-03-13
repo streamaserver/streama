@@ -11,6 +11,7 @@ class Movie extends Video{
   String backdrop_path
   String poster_path
   String trailerKey
+  File poster_image
 
 
   static hasMany = [tags: Tag, genre: Genre]
@@ -23,10 +24,16 @@ class Movie extends Video{
   }
 
   def getSimilarMovies(){
+    if(!this.apiId){
+      return
+    }
     theMovieDbService.getSimilarMovies(this.apiId)
   }
 
   def getFullMovieMeta(){
+    if(!this.apiId){
+      return
+    }
     theMovieDbService.getFullMovieMeta(this.apiId)
   }
 

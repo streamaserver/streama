@@ -110,26 +110,3 @@
 
 
 </div>
-
-<br/>
-<hr/>
-
-<div ng-show="video.similarMovies">
-  <h3>Similar Movies</h3>
-  <h5>Suggested by TheMovieDb.org</h5>
-  <div class="media-list similar-media">
-    <div class="media-list-item" ng-repeat="movie in video.similarMovies.results">
-      <div class="hover-overlay">
-        <div>
-          <button class="btn btn-primary btn-sm btn-block" ng-click="addSimilarMovieToStreama(movie, true)">Add and Open</button>
-          <button class="btn btn-primary btn-sm btn-block" ng-click="addSimilarMovieToStreama(movie, false)">Add and Continue</button>
-        </div>
-      </div>
-      <div class="media-item" >
-        <img ng-src="https://image.tmdb.org/t/p/w300/{{video.poster_path}}"/>
-      </div>
-      <div class="media-meta">Release: {{video.release_date.substring(0, 4)}} | <i class="ion-ios-star"></i> {{video.vote_average}}</div>
-    </div>
-  </div>
-
-</div>

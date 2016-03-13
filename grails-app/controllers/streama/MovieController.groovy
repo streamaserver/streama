@@ -22,7 +22,7 @@ class MovieController {
       return
     }
 
-    if (!movieInstance.imdb_id) {
+    if (!movieInstance.imdb_id && movieInstance.apiId) {
       movieInstance.imdb_id = movieInstance.fullMovieMeta?.imdb_id
     }
 

@@ -83,6 +83,7 @@ class MarshallerService {
       returnArray['vote_count'] = movie.vote_count
       returnArray['popularity'] = movie.popularity
       returnArray['imdb_id'] = movie.imdb_id
+      returnArray['poster_image_src'] = movie.poster_image?.src
 
       returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
@@ -305,6 +306,7 @@ class MarshallerService {
         returnArray['trailerKey'] = movie.trailerKey
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
+        returnArray['poster_image_src'] = movie.poster_image?.src
 
         return returnArray;
       }
@@ -394,8 +396,11 @@ class MarshallerService {
 
         returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
         returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+        returnArray['poster_image_src'] = movie.poster_image?.src
 
-        returnArray['similarMovies'] = movie.similarMovies
+        if(movie.apiId){
+          returnArray['similarMovies'] = movie.similarMovies
+        }
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
 

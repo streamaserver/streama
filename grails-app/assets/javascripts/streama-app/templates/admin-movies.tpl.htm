@@ -24,7 +24,9 @@
        ng-repeat="movie in movies | filter:search | orderBy:currentSort.sort"
        ui-sref="admin.movie({movieId: movie.id})">
     <div class="media-item" >
-      <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
+      <img ng-if="!movie.poster_path && !movie.poster_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
+      <img ng-if="movie.poster_path" ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"/>
+      <img ng-if="movie.poster_image_src" ng-src="{{movie.poster_image_src}}"/>
 
 
 

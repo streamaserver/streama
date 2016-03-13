@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.controller('modalMovieCtrl', [
-	'$scope', '$modalInstance', 'apiService', 'movie',
-	function ($scope, $modalInstance, apiService, movie) {
+	'$scope', '$modalInstance', 'apiService', 'movie', '$state', 'uploadService',
+	function ($scope, $modalInstance, apiService, movie, $state, uploadService) {
 	$scope.loading = false;
 		
 	$scope.movie = movie || {};
@@ -35,15 +35,25 @@ streamaApp.controller('modalMovieCtrl', [
 	};
 		
 	$scope.deleteMovie = function(movie){
-		alertify.confirm("Are you sure, you want to delete this Episode?", function (confirmed) {
+		alertify.confirm("Are you sure, you want to delete this Movie?", function (confirmed) {
 			if(confirmed){
 				apiService.movie.delete(movie.id).success(function () {
-					$modalInstance.close({deleted: true});
+					$state.go('admin.movies');
+					$modalInstance.dismiss('cancel');
 				});
 			}
 		})
 		
 	};
+
+		$scope.imageUpload = {};
+		$scope.uploadImage = function (files, type) {
+			uploadService.doUpload($scope.imageUpload, 'file/upload.json', function (data) {
+				$scope.imageUpload.percentage = null;
+				$scope.movie[type] = data;
+				$scope.movie[type+'_src'] = data.src;
+			}, files);
+		};
 
 		$scope.onTagSelect = function (tag) {
 			apiService.tag.save(tag);

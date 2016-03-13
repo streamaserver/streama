@@ -3,7 +3,7 @@
   <div class="modal-body">
     <legend>
       Movie
-      <button class="btn btn-default pull-right btn-sm" type="button" ng-click="toggleAddManually()" ng-show="!addManually">Add Manually</button>
+      <button class="btn btn-default pull-right btn-sm" type="button" ng-click="toggleAddManually()" ng-show="!addManually && !movie.id">Add Manually</button>
       <button class="btn btn-success pull-right btn-sm" type="button" ng-click="toggleAddManually()" ng-show="addManually">Add Automatically</button>
     </legend>
 
@@ -85,19 +85,44 @@
 
 
 
-      <div class="form-group">
+      <div class="form-group" ng-if="movie.backdrop_path">
         <div class="col-sm-6">
           <label>Image</label>
           <br/>
           <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
         </div>
       </div>
+
+
+
+
+
+      <div class="form-group" ng-if="!movie.backdrop_path && movie.id">
+        <div class="col-sm-12">
+          <label>Poster Image</label>
+          <br/>
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="upload-poster" ng-class="{'update-poster': movie.poster_image_src}" ng-model="manualPoster" class="btn btn-primary btn-block btn-lg"
+                   ngf-change="uploadImage($files, 'poster_image')" ngf-select ngf-drop ngf-drag-over-class="dragover">
+                <span class="main-text">Upload Poster</span>
+                <span class="size-info">300x450 px</span>
+                <span ng-show="imageUpload.percentage">{{imageUpload.percentage}}%</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <img ng-show="movie.poster_image || movie.poster_image_src" ng-src="{{movie.poster_image.src || movie.poster_image_src}}"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="modal-footer" ng-if="movie.release_date || movie.id">
-    <button class="btn btn-danger pull-left" ng-if="episode.id" ng-click="deleteMovie(movie)">Delete Episode</button>
-    <button class="btn btn-success" ng-click="saveMovie(movie)">Save</button>
+  <div class="modal-footer" ng-if="movie.release_date || movie.id || addManually">
+    <button class="btn btn-danger pull-left" ng-if="movie.id" ng-click="deleteMovie(movie)">Delete Movie</button>
+    <button class="btn btn-success" ng-click="saveMovie(movie)" ng-disabled="!movie.title">Save</button>
     <button class="btn" ng-click="cancel()">Cancel</button>
   </div>
 </form>

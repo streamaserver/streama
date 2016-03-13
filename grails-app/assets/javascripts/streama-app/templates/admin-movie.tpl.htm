@@ -35,9 +35,6 @@
             <button class="btn btn-secondary btn-sm " ng-click="openMovieModal()">
               Edit movie
             </button>
-            <button class="btn btn-danger btn-sm " ng-click="delete()">
-              Delete movie
-            </button>
             <button class="btn btn-secondary btn-sm " ng-click="addToCurrentNotification()">
               Add Notification
             </button>
@@ -53,15 +50,15 @@
           <label>Release Date</label>
           <p class="data-display">{{movie.release_date}}</p>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2" ng-show="movie.imdb_id">
           <label>IMDB Link</label>
           <p class="data-display"><a target="_blank" href="http://www.imdb.com/title/{{movie.imdb_id}}">{{movie.title}}</a></p>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2" ng-show="movie.vote_average">
           <label>Rating</label>
           <p class="data-display">{{movie.vote_average}}/10</p>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2" ng-show="movie.vote_count">
           <label>Rating Count</label>
           <p class="data-display">{{movie.vote_count}}</p>
         </div>
@@ -101,7 +98,9 @@
     </div>
 
     <div class="col-sm-4 col-lg-3" >
-      <img ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"/>
+      <img ng-if="!movie.poster_path && !movie.poster_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
+      <img ng-if="movie.poster_path" ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"/>
+      <img ng-if="movie.poster_image_src" ng-src="{{movie.poster_image_src}}"/>
     </div>
   </div>
 
