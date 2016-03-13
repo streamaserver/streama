@@ -37,6 +37,7 @@
 			</button>
 
 			<div class="toggle-menu-content" ng-show="genreMenuOpen">
+				<i class="ion-close-circled pull-right" ng-click="toggleGenreMenu()"></i>
 				<ul>
 					<li>
 						<a ng-click="changeGenre()"><i class="ion-grid"></i> All</a>

@@ -557,6 +557,11 @@ h1, h2, h3, h4, h5, h6 {
     left: 142px;
     top: 20px; }
 
+.navbar-collapse.collapsing,
+.navbar-collapse.in {
+  clear: both;
+  display: block; }
+
 .version {
   position: absolute;
   top: 22px;
@@ -5084,7 +5089,37 @@ body.mdx-active #mdx-control-view {
     header.main .navbar-nav > li {
       display: block; }
       header.main .navbar-nav > li > a {
-        padding: 5px 10px; } }
+        padding: 5px 10px; }
+
+  .browse-genres .toggle-menu-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    overflow-y: auto;
+    margin: 0; }
+    .browse-genres .toggle-menu-content ul li {
+      float: none;
+      width: auto;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px; }
+
+  .dash-filter {
+    display: none; }
+
+  .admin {
+    position: static; }
+    .admin .nav {
+      width: 110px; }
+      .admin .nav ul li {
+        font-size: 13px; }
+    .admin .admin-content h1 {
+      font-size: 24px; }
+
+  .breadcrumb {
+    font-size: 12px; } }
 @media (max-width: 670px) {
   .media-poster-item {
     width: 23%;

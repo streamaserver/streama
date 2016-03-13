@@ -29,6 +29,12 @@ h1,h2,h3,h4,h5,h6{
   }
 }
 
+.navbar-collapse.collapsing,
+.navbar-collapse.in{
+  clear: both;
+  display: block;
+}
+
 .version{
   position: absolute;
   top: 22px;
