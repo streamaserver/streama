@@ -47,7 +47,7 @@ class TheMovieDbController {
     List<Episode> result = []
 
     episodes?.each{ episodeData ->
-      if(Episode.findByShowAndSeason_numberAndEpisode_number(tvShow, season, episodeData.episode_number)){
+      if(Episode.findByShowAndSeason_numberAndEpisode_numberAndDeletedNotEqual(tvShow, season, episodeData.episode_number, true)){
         return
       }
       Episode episode = new Episode(episodeData)

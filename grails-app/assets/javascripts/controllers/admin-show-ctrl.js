@@ -78,6 +78,7 @@ streamaApp.controller('adminShowCtrl', [
 					$scope.seasons[season] = $scope.seasons[season] || [];
 					$scope.seasons[season] = $scope.seasons[season].concat(data);
 					$scope.loading = false;
+					alertify.success( data.length + ' Episodes fetched');
 				}).error(function () {
 			$scope.loading = false;
 		});
