@@ -118,7 +118,7 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-success" ng-click="saveVideo(video)">Save</button>
+    <button ng-disabled="!video.title" class="btn btn-success" ng-click="saveVideo(video)">Save</button>
     <button class="btn" ng-click="cancel()">Cancel</button>
   </div>
 </form>
