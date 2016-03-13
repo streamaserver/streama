@@ -1462,7 +1462,6 @@ streama-video-player.nocursor {
     padding: 0;
     cursor: pointer;
     position: relative;
-    font-family: "nf-icon";
     background: transparent;
     width: 2em;
     height: 100%;
@@ -1492,13 +1491,9 @@ streama-video-player.nocursor {
         font-size: 1.1em;
         color: #FFF; }
     .player-wrapper .player-control-bar .player-control-button:before {
-      background: linear-gradient(#cacaca, #6a6a6a);
-      -webkit-background-clip: text;
-      color: transparent; }
+      color: #cacaca; }
       .player-wrapper .player-control-bar .player-control-button:before:hover {
-        background: linear-gradient(#fff, #858585);
-        -webkit-background-clip: text;
-        color: transparent; }
+        color: #fff; }
     .player-wrapper .player-control-bar .player-control-button.inactive {
       opacity: 0.3; }
   .player-wrapper .player-control-bar.player-control-divider {

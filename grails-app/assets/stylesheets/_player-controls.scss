@@ -119,7 +119,6 @@
     padding: 0;
     cursor: pointer;
     position: relative;
-    font-family: "nf-icon";
     background: transparent;
     width: 2em;
     height: 100%;
@@ -147,14 +146,10 @@
     }
 
     &:before{
-      background: linear-gradient( #cacaca, #6a6a6a);
-      -webkit-background-clip: text;
-      color: transparent;
+      color: #cacaca;
 
       &:hover{
-        background: linear-gradient( #fff, #858585);
-        -webkit-background-clip: text;
-        color: transparent
+        color: #fff
       }
     }
 
