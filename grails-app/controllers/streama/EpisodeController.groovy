@@ -8,6 +8,8 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class EpisodeController {
 
+    def videoService
+
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -59,9 +61,7 @@ class EpisodeController {
             return
         }
 
-        episodeInstance.deleted = true
-        episodeInstance.save failOnError: true, flush: true
-
+        videoService.deleteVideoAndAssociations(episodeInstance)
         render status: NO_CONTENT
     }
 }

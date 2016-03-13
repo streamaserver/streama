@@ -16,6 +16,7 @@ class VideoController {
   def springSecurityService
   def mediaService
   def fileService
+  def videoService
 
     
   def index() {
@@ -101,9 +102,7 @@ class VideoController {
       render status: NOT_FOUND
       return
     }
-
-    videoInstance.deleted = true
-    videoInstance.save failOnError: true, flush: true
+    videoService.deleteVideoAndAssociations(videoInstance)
     render status: NO_CONTENT
   }
 

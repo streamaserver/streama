@@ -9,6 +9,7 @@ import grails.transaction.Transactional
 class TvShowController {
 
   def theMovieDbService
+  def videoService
 
   static responseFormats = ['json', 'xml']
   static allowedMethods = [save: "POST", delete: "DELETE"]
@@ -90,7 +91,10 @@ class TvShowController {
       return
     }
 
-    Episode.findAllByShowAndSeason_number(tvShow, season)*.delete()
+    def episodes = Episode.findAllByShowAndSeason_numberAndDeletedNotEqual(tvShow, season, true)
+    episodes.each{episode ->
+      videoService.deleteVideoAndAssociations(episode)
+    }
 
     render status: NO_CONTENT
   }

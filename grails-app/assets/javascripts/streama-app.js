@@ -182,6 +182,10 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			},
 			responseError: function (response) {
 
+        if(response.status == 500){
+          alertify.error('An internal Server error occured.');
+        }
+
         if(response.status == 403){
           alertify.error('You do not have the rights to carry out this action.');
         }

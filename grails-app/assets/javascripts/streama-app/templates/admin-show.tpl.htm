@@ -130,8 +130,9 @@
     </div>
 
     <div class="season-wrapper">
-      <div class="btn-group">
-        <button ng-click="refetchSeason(currentSeason)" class="btn btn-xs">Re-fetch Season</button>
+      <div>
+        <button ng-click="refetchSeason(currentSeason)" ng-show="newEpisodesForSeason.count > 0" class="btn btn-success btn-xs">
+          {{newEpisodesForSeason.count}} new Episodes For this Season. Re-fetch now</button>
         <button ng-click="deleteSeason(currentSeason)" class="btn btn-danger btn-xs">Delete Season</button>
       </div>
       <div class="media-list">

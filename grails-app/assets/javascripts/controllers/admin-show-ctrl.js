@@ -13,7 +13,7 @@ streamaApp.controller('adminShowCtrl', [
 		apiService.tvShow.adminEpisodesForTvShow($stateParams.showId).success(function (data) {
 			if(data.length){
 				$scope.seasons = _.groupBy(data, 'season_number');
-				$scope.currentSeason = _.min(data, 'season_number').season_number;
+				$scope.setCurrentSeason(_.min(data, 'season_number').season_number);
 			}
 			$scope.showLoading = false;
 		});
@@ -41,8 +41,7 @@ streamaApp.controller('adminShowCtrl', [
 			$scope.seasons = $scope.seasons || {};
 			$scope.seasons[parseInt(data.season_number)] = $scope.seasons[parseInt(data.season_number)] || [];
 			$scope.seasons[parseInt(data.season_number)].push(data);
-			$scope.currentSeason = data.season_number;
-
+			$scope.setCurrentSeason(data.season_number);
 		});
 	};
 
@@ -62,6 +61,7 @@ streamaApp.controller('adminShowCtrl', [
 	$scope.openSeason = function (index) {
 		if($scope.seasonOpened != index){
 			$scope.seasonOpened = index;
+
 		}else{
 			$scope.seasonOpened = null;
 		}
@@ -69,15 +69,25 @@ streamaApp.controller('adminShowCtrl', [
 
 	$scope.setCurrentSeason = function (index) {
 		$scope.currentSeason = index;
+		if(index){
+			apiService.theMovieDb.countNewEpisodesForSeason({apiId: $scope.show.apiId, showId: $stateParams.showId, season: index})
+				.success(function (data) {
+					$scope.newEpisodesForSeason = data;
+				})
+		}
+
 	};
 
 	var seasonForShow = function (season) {
 		apiService.theMovieDb.seasonForShow({apiId: $scope.show.apiId, showId: $stateParams.showId, season: season})
 				.success(function (data) {
-					$scope.seasons = $scope.seasons ||  [];
+					console.log('%c seasonForShow', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
+					$scope.seasons = $scope.seasons ||  {};
 					$scope.seasons[season] = $scope.seasons[season] || [];
 					$scope.seasons[season] = $scope.seasons[season].concat(data);
 					$scope.loading = false;
+					$scope.newEpisodesForSeason = null;
+					$scope.setCurrentSeason(season);
 					alertify.success( data.length + ' Episodes fetched');
 				}).error(function () {
 			$scope.loading = false;
@@ -114,6 +124,11 @@ streamaApp.controller('adminShowCtrl', [
 				$scope.loading = true;
 				apiService.tvShow.removeSeason($stateParams.showId, season_number).success(function () {
 					delete $scope.seasons[season_number];
+					$scope.loading = false;
+					var lowestSeasonNumber = _.property('season_number')(_.min($scope.seasons, 'season_number'));
+					if(lowestSeasonNumber){
+						$scope.setCurrentSeason(lowestSeasonNumber);
+					}
 				});
 
 			}

@@ -4,6 +4,7 @@ import grails.converters.JSON
 import groovy.json.JsonSlurper
 
 class TheMovieDbController {
+  static responseFormats = ['json', 'xml']
 
   def theMovieDbService
   def migrationService
@@ -36,6 +37,25 @@ class TheMovieDbController {
   }
 
   def seasonForShow() {
+
+    def episodes = listNewEpisodesForSeason(params)
+    List<Episode> result = []
+    TvShow tvShow = TvShow.get(params.getInt('showId'))
+
+    episodes?.each{ episodeData ->
+      Episode episode = new Episode(episodeData)
+      episode.show = tvShow
+      episode.save failOnError: true
+      result.add(episode)
+    }
+
+    JSON.use('adminEpisodesForTvShow') {
+      respond result
+    }
+
+  }
+
+  def listNewEpisodesForSeason(params){
     String apiId = params.apiId
     String season = params.season
     TvShow tvShow = TvShow.get(params.getInt('showId'))
@@ -44,23 +64,22 @@ class TheMovieDbController {
     def json = new JsonSlurper().parseText(JsonContent)
 
     def episodes = json?.episodes
-    List<Episode> result = []
+    def result = []
 
     episodes?.each{ episodeData ->
       if(Episode.findByShowAndSeason_numberAndEpisode_numberAndDeletedNotEqual(tvShow, season, episodeData.episode_number, true)){
         return
       }
-      Episode episode = new Episode(episodeData)
-      episode.show = tvShow
-      episode.save failOnError: true
-
-      result.add(episode)
+      result.add(episodeData)
     }
 
-    JSON.use('adminEpisodesForTvShow') {
-      respond result
-    }
+    return result
 
+  }
+
+  def countNewEpisodesForSeason(){
+    def resultObj = [count: listNewEpisodesForSeason(params).size()]
+    respond resultObj
   }
 
 

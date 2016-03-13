@@ -218,6 +218,9 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			},
       availableGenres: function (params) {
 				return $http.get(urlBase + 'theMovieDb/availableGenres.json');
+			},
+			countNewEpisodesForSeason: function (params) {
+				return $http.get(urlBase + 'theMovieDb/countNewEpisodesForSeason', {params: params});
 			}
 		},
 
