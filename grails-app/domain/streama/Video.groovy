@@ -12,9 +12,9 @@ class Video {
   Double vote_average
   Integer vote_count
   Double popularity
-  int intro_start
-  int intro_end
-  int outro_start
+  Integer intro_start
+  Integer intro_end
+  Integer outro_start
   Boolean deleted = false
   String imdb_id
 
