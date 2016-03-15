@@ -233,6 +233,9 @@ class MarshallerService {
           returnArray['episodeString'] = video.episodeString
           returnArray['tvShowId'] = video.show?.id
           returnArray['mediaType'] = 'tvShow'
+          returnArray['intro_start'] = video.intro_start
+          returnArray['intro_end'] = video.intro_end
+          returnArray['outro_start'] = video.outro_start
         }
 
         return returnArray;
@@ -463,6 +466,9 @@ class MarshallerService {
         returnArray['episode_number'] = episode.episode_number
         returnArray['hasFile'] = episode.files?.size()
         returnArray['still_path'] = episode.still_path
+        returnArray['intro_start'] = episode.intro_start
+        returnArray['intro_end'] = episode.intro_end
+        returnArray['outro_start'] = episode.outro_start
 
         return returnArray;
       }
@@ -478,6 +484,13 @@ class MarshallerService {
         returnArray['episode_number'] = episode.episode_number
         returnArray['files'] = episode.files
         returnArray['still_path'] = episode.still_path
+        returnArray['intro_start'] = episode.intro_start
+        returnArray['intro_end'] = episode.intro_end
+        returnArray['outro_start'] = episode.outro_start
+        returnArray['air_date'] = episode.air_date
+        returnArray['vote_average'] = episode.vote_average
+        returnArray['apiId'] = episode.apiId
+        returnArray['episodeString'] = episode.episodeString
 
         return returnArray;
       }
@@ -547,7 +560,9 @@ class MarshallerService {
           returnArray['season_number'] = video.season_number
           returnArray['episode_number'] = video.episode_number
           returnArray['still_path'] = video.still_path
-
+          returnArray['intro_start'] = video.intro_start
+          returnArray['intro_end'] = video.intro_end
+          returnArray['outro_start'] = video.outro_start
           Video nextEpisode
 
           nextEpisode = video.show.episodes?.find{

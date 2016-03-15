@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.directive('streamaVideoPlayer', [
-  'uploadService', 'localStorageService', '$timeout', '$http',
-  function (uploadService, localStorageService, $timeout, $http) {
+  'uploadService', 'localStorageService', '$timeout', 'playerService',
+  function (uploadService, localStorageService, $timeout, playerService) {
 
     return {
       restrict: 'AE',
@@ -25,6 +25,8 @@ streamaApp.directive('streamaVideoPlayer', [
         //The duration of video skips in seconds.
         var skippingDuration = 20;  //Skipping duration for holding an arrow key to left or right.
         var longSkippingDuration = 60; //Skipping duration for holding ctrl + arrow key.
+        var skipIntro = true;         //Userflag intro should be skipped
+        var minimizeOnOutro = true;   //Userflag skip to next episode on outro
 
 
 
@@ -194,9 +196,22 @@ streamaApp.directive('streamaVideoPlayer', [
           }
         };
 
-        video.ontimeupdate = function(){
+        /** Get CurrentEpisode/Skip on IntroStart to IntroEnd if skipIntro == true*/
+        var currEpisode = null;
+        video.ontimeupdate = function(event){
           $scope.currentTime = video.currentTime;
           $scope.$apply();
+       if(skipIntro)
+          {
+            if(currEpisode == null)
+            {
+              currEpisode = playerService.getVideoOptions().currentEpisode;
+            }
+            if(currEpisode.intro_start < this.currentTime && this.currentTime < currEpisode.intro_end)
+            {
+              video.currentTime = currEpisode.intro_end;
+            }
+          }
         };
 
         $scope.toggleSelectEpisodes = function (episodes) {

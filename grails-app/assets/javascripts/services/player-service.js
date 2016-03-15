@@ -33,7 +33,10 @@ streamaApp.factory('playerService', [
     };
 
     return {
-
+      getVideoOptions: function()
+      {
+        return videoOptions;
+      },
       setVideoOptions: function (video) {
         videoData = video;
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src);
@@ -59,7 +62,10 @@ streamaApp.factory('playerService', [
             videoOptions.selectedEpisodes = videoOptions.episodeList[videoData.season_number];
             videoOptions.currentEpisode = {
               episode: videoData.episode_number,
-              season: videoData.season_number
+              season: videoData.season_number,
+              intro_start: videoData.intro_start,
+              intro_end: videoData.intro_end,
+              outro_start: videoData.outro_start
             };
           });
         }
