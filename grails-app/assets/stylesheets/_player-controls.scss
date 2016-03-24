@@ -350,7 +350,8 @@
     .episode-name{
       float: left;
       @include flex(1);
-      line-height: 2.3em;
+      line-height: 1.3em;
+      padding: 6px 0;
     }
 
     .episode-play{
@@ -360,7 +361,7 @@
         margin: 3px;
         display: block;
         border: 1px solid white;
-        padding: 8px 11px;
+        padding: 5px 11px;
         border-radius: 2em;
         &:hover{
           background: darken($primary, 55%);
@@ -392,7 +393,7 @@
     li{
       color: white;
       list-style: none;
-      padding: 0px 12px;
+      padding: 0 12px;
       border-top: 1px solid rgba(0, 0, 0, 0.27);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
@@ -414,6 +415,13 @@
       &.no-files{
         opacity: 0.7;
       }
+    }
+  }
+
+
+  .season-list{
+    li{
+      padding: 12px;
     }
   }
 }

@@ -592,11 +592,11 @@ header.main {
 .navbar-toggle {
   margin: 0;
   font-size: 30px;
-  padding: 0;
+  padding: 0 13px;
   line-height: 1.2em;
   position: absolute;
   top: 6px;
-  right: 16px; }
+  right: 7px; }
 
 .dash-search {
   margin: 0;
@@ -1684,7 +1684,8 @@ streama-video-player.nocursor {
       -webkit-flex: 1;
       -ms-flex: 1;
       flex: 1;
-      line-height: 2.3em; }
+      line-height: 1.3em;
+      padding: 6px 0; }
     #player-menu-episode-selector .episode-list .episode-play,
     #player-menu-episode-selector .season-list .episode-play {
       -webkit-box-flex: none;
@@ -1698,7 +1699,7 @@ streama-video-player.nocursor {
         margin: 3px;
         display: block;
         border: 1px solid white;
-        padding: 8px 11px;
+        padding: 5px 11px;
         border-radius: 2em; }
         #player-menu-episode-selector .episode-list .episode-play i:hover,
         #player-menu-episode-selector .season-list .episode-play i:hover {
@@ -1736,7 +1737,7 @@ streama-video-player.nocursor {
     #player-menu-episode-selector .season-list li {
       color: white;
       list-style: none;
-      padding: 0px 12px;
+      padding: 0 12px;
       border-top: 1px solid rgba(0, 0, 0, 0.27);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
       #player-menu-episode-selector .episode-list li .flex-wrapper,
@@ -1757,6 +1758,8 @@ streama-video-player.nocursor {
       #player-menu-episode-selector .episode-list li.no-files,
       #player-menu-episode-selector .season-list li.no-files {
         opacity: 0.7; }
+  #player-menu-episode-selector .season-list li {
+    padding: 12px; }
 
 .player-wrapper .player-control-bar .player-fill-screen {
   -webkit-order: 25;
@@ -5135,10 +5138,6 @@ body.mdx-active #mdx-control-view {
     width: 47%;
     width: calc(50% - 15px); }
     .media-poster-item .media-item {
-      height: auto; }
-
-  .media-list-continue-watching .media-list-item {
-    float: none;
-    width: auto; } }
+      height: auto; } }
 
 /*# sourceMappingURL=style.css.map */

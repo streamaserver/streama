@@ -90,7 +90,7 @@
               <div class="season-list-container">
                 <h2 class="seasons-title">{{options.videoMetaTitle}}</h2>
                 <ul class="season-list">
-                  <li class="season icon-player-forward-arrow" ng-click="toggleSelectEpisodes(episodes)"
+                  <li class="season" ng-click="toggleSelectEpisodes(episodes)"
                       ng-repeat="(season, episodes) in options.episodeList">
                     <span>Season {{season}}</span>
                   </li>
@@ -105,7 +105,7 @@
                   Season {{options.selectedEpisodes[0].season_number}}
                 </h2>
                 <ul class="episode-list">
-                  <li class="episode icon-player-forward-arrow" ng-repeat="episode in options.selectedEpisodes"
+                  <li class="episode" ng-repeat="episode in options.selectedEpisodes"
                       ng-class="{'current': (episode.episode_number == options.currentEpisode.episode && episode.season_number == options.currentEpisode.season), 'no-files': !episode.hasFile}" >
                     <div class="flex-wrapper">
                       <span class="episode-number">{{episode.episode_number | padnumber:2}}</span>
