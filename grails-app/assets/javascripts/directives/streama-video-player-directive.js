@@ -340,12 +340,11 @@ streamaApp.directive('streamaVideoPlayer', [
         $scope.fullScreen = function () {
           $scope.isFullScreen = !$scope.isFullScreen;
           var docElm;
-          var docElmClose;
+          var docElmClose = document;
           if($scope.isMobile){
             docElm = video;
           }else{
             docElm = document.documentElement;
-            docElmClose = document;
           }
 
           if($scope.isFullScreen){
