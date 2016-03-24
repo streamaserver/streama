@@ -29,7 +29,7 @@
 			</div>
 		</a>
 
-		<div class="browse-genres" ng-if="isCurrentState('dash')">
+		<div class="browse-genres" ng-if="isCurrentState('dash') && genres.length">
 			<button class="btn btn-link toggle-menu" ng-click="toggleGenreMenu()">
 				<span ng-if="selectedGenre" ng-bind="selectedGenre.name"></span>
 				<span ng-if="!selectedGenre">Browse</span>
