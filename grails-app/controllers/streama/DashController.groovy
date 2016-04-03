@@ -16,7 +16,7 @@ class DashController {
         isNotEmpty("files")
         ne("deleted", true)
       }
-      eq("completed", false)
+//      eq("completed", false)
       order("lastUpdated", "desc")
     }
 
