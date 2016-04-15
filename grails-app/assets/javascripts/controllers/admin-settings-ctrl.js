@@ -17,6 +17,7 @@ streamaApp.controller('adminSettingsCtrl', ['$scope', 'apiService', '$sce', func
     apiService.settings.updateMultiple(settings)
       .success(function () {
         window.location.reload();
+        alertify.success('Settings saved.');
       })
   };
 

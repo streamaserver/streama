@@ -29,6 +29,7 @@ streamaApp.controller('adminFileManagerCtrl', ['$scope', 'apiService', 'modalSer
 				apiService.video.removeFileFromDisk(file.id, file.path).success(function () {
 					_.remove($scope.files, {id: file.id});
 					_.remove($scope.files, {path: file.path});
+          alertify.success('File deleted.');
 				});
 			}
 		})
@@ -83,5 +84,4 @@ streamaApp.controller('adminFileManagerCtrl', ['$scope', 'apiService', 'modalSer
 
 	//Initial Load
 	$scope.refreshList('all');
-
 }]);

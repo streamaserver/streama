@@ -20,8 +20,10 @@ streamaApp.controller('modalFileCtrl', [
           apiService.video.removeFile($scope.video.id, file.id).success(function () {
             if(file.extension == '.srt' || file.extension == '.vtt'){
               _.remove($scope.video.subtitles, {id: file.id});
+              alertify.success('Subtitles deleted.');
             }else{
               _.remove($scope.video.files, {id: file.id});
+              alertify.success('Video deleted.');
             }
           });
         }
