@@ -53,7 +53,7 @@ class DefaultDataService {
         ],
         [
             settingsKey: 'TheMovieDB API key',
-            description: 'This API-key is required by the application to fetch all the nice Movie/Episode/Show data for you. Get one for free at https://www.themoviedb.org/',
+            description: 'This API-key is required by the application to fetch all the nice Movie/Episode/Show data for you. Get one for free by creating an account at https://www.themoviedb.org/account/signup and filling in an API request form.',
             settingsType: 'string',
             required: true
         ],
