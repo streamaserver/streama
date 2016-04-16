@@ -6,25 +6,15 @@
 
 
 
-    <div class="nav">
-
-      <div ng-controller="helpCtrl">
-        <ul>
-          <li><a href="" ng-click="gotoAnchor(1)">Question 1?</a></li>
-          <li><a href="" ng-click="gotoAnchor(2)">Question 2?</a></li>
-          <li><a href="" ng-click="gotoAnchor(3)">Question 3?</a></li>
-          <li><a href="" ng-click="gotoAnchor(4)">Question 4?</a></li>
-          <li><a href="" ng-click="gotoAnchor(5)">Question 5?</a></li>
-          <li><a href="" ng-click="gotoAnchor(6)">Question 6?</a></li>
-          <li><a href="" ng-click="gotoAnchor(7)">Question 7?</a></li>
-          <li><a href="" ng-click="gotoAnchor(8)">Question 8?</a></li>
-          <li><a href="" ng-click="gotoAnchor(9)">Question 9?</a></li>
-          <li><a href="" ng-click="gotoAnchor(10)">Question 10?</a></li>
-        </ul>
+  <div class="nav">
+    <ul>
+      <div question-object="question" ng-repeat="question in questions" ng-cloak>
+        <li>
+          <a href="" ng-click="gotoAnchor(question.id)">{{question.id}}. {{ question.name }}</a>
+        </li>
       </div>
-
-    </div>
-
+    </ul>
+  </div>
 
 
 
@@ -46,97 +36,22 @@
 
 
 
-
-
-    <div>
-      <h2 id ="question1" class="anchor">Question 1?</h2>
+    <div question-object="question" ng-repeat="question in questions" ng-cloak>
       <br>
-      <p>The meaning of life is...</p>
+      <h2 id ="question{{question.id}}" class="anchor">{{question.id}}. {{ question.name }}</h2>
       <br>
-    </div>
-
-
-
-
-
-
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-
-
-
-
-    <div>
-      <h2 id ="question2" class="anchor">Question 2?</h2>
+      <p>{{ question.answer }}</p>
       <br>
-      <p>The meaning of life is...</p>
+      <br>
+      <br>
+      <br>
       <br>
     </div>
 
-
-
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-
-
-
-    <div>
-      <h2 id ="question3" class="anchor">Question 3?</h2>
-      <br>
-      <p>The meaning of life is...</p>
-      <br>
-    </div>
-
-
-
-
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-
-
-
-    <div>
-      <h2 id ="question4" class="anchor">Question 4?</h2>
-      <br>
-      <p>The meaning of life is...</p>
-      <br>
-    </div>
 
 
 
   </div>
-
-
 
 </div>
 
