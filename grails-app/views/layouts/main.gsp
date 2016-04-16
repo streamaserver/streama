@@ -72,6 +72,10 @@
 				<li><a ui-sref="admin.users">Admin</a></li>
 			</sec:ifAnyGranted>
 
+      <sec:ifLoggedIn>
+        <li><a ui-sref="help">Help</a></li>
+      </sec:ifLoggedIn>
+
 			<sec:ifLoggedIn>
 				<li><a ui-sref="profile">Profile</a></li>
 				<li><g:link uri="/j_spring_security_logout">Logout</g:link></li>
