@@ -157,7 +157,12 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 			url: '/show/:showId',
 			templateUrl: 'admin-show.htm',
 			controller: 'adminShowCtrl'
-		});
+		})
+    .state('help', {
+      url: '/help',
+      templateUrl: 'help.htm',
+      controller: 'helpCtrl'
+    });
 
 
 	$urlRouterProvider.otherwise('/dash');
