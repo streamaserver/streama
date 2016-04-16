@@ -1,12 +1,4 @@
 
-/*
-streamaApp.controller('helpCtrl', [
-	'$scope', 'apiService', '$stateParams', 'modalService', '$state', 'uploadService',
-	function ($scope, apiService, $stateParams, modalService, $state, uploadService) {
-}]);
-*/
-
-
 streamaApp.controller('helpCtrl', ['$anchorScroll', '$location', '$scope',
   function ($anchorScroll, $location, $scope) {
 
@@ -24,22 +16,51 @@ streamaApp.controller('helpCtrl', ['$anchorScroll', '$location', '$scope',
       }
     };
 
-    /*
+    //Array of question objects. Help page contents are constructed by reading these.
     $scope.questions = [
       {
-        name: 'What is the meaning of life?',
-        answer: 'First answer.'
+        id: 1,
+        name: "What's an API-key and why do I need one?",
+        answer: ''
       },
       {
-        name: 'Second question?',
-        answer: 'Second answer.'
+        id: 2,
+        name: 'Which video formats are supported?',
+        answer: ''
       },
       {
-        name: 'Third question?',
-        answer: 'Third answer.'
+        id: 3,
+        name: 'How should I configure the base URL?',
+        answer: ''
+      },
+      {
+        id: 4,
+        name: 'How does the video sharing work?',
+        answer: ''
+      },
+      {
+        id: 5,
+        name: "What are the video player's shortcut keys?",
+        answer: ''
+      },
+      {
+        id: 6,
+        name: 'What are the notifications?',
+        answer: ''
+      },
+      {
+        id: 7,
+        name: 'How can I add Subtitles to videos?',
+        answer: ''
+      },
+      {
+        id: 8,
+        name: 'Useful links',
+        answer: ""
       }
+
     ]
-    */
+
 
 
   }
