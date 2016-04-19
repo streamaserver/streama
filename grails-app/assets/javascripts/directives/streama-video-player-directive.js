@@ -398,14 +398,16 @@ streamaApp.directive('streamaVideoPlayer', [
         });
 
 
-
+        $scope.$on('$stateChangeSuccess', function (e, toState) {
+          if(toState.name != "player"){
+            //If full screen is enabled, it will be canceled.
+            if ($scope.isFullScreen = true) {
+              $scope.fullScreen();
+            }
+          }
+        });
 
         $scope.$on('$destroy', function() {
-
-          //If full screen is enabled, it will be canceled.
-          if ($scope.isFullScreen = true) {
-            $scope.fullScreen();
-          }
 
           //Disable these shortcut keys for other pages. They are re-initialized when the user opens the player again.
           Mousetrap.reset();
