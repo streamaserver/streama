@@ -214,6 +214,12 @@ streamaApp.directive('streamaVideoPlayer', [
           }
         };
 
+        video.addEventListener('ended', function () {
+          if($scope.options.showNextButton){
+            $scope.options.onNext();
+          }
+        });
+
         $scope.toggleSelectEpisodes = function (episodes) {
           $scope.options.selectedEpisodes = episodes;
         };
