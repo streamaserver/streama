@@ -43,5 +43,5 @@
 <div class="modal-footer">
   <button ng-if="!user.id" class="btn btn-success" ng-disabled="!valid && !user.id" ng-click="saveAndInviteUser(user)">Save & Invite User</button>
   <button ng-if="user.id" class="btn btn-success" ng-click="saveAndInviteUser(user)">Save User</button>
-  <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
 </div>
