@@ -16,9 +16,9 @@
 		<form action='${postUrl}' method='POST' id='loginForm' class='cssform form-horizontal' autocomplete='off'>
 
 			<div class="form-group">
-				<label for="inputEmail" class="col-lg-2 control-label">Email</label>
+				<label for="inputEmail" class="col-lg-2 control-label">Username</label>
 				<div class="col-lg-10">
-					<input type="text" name="j_username" class="form-control" placeholder="Email">
+					<input type="text" name="j_username" class="form-control" placeholder="Username">
 				</div>
 			</div>
 
