@@ -1,5 +1,9 @@
 <div class="profile">
   <div class="profile-heading">
+    <div class="btn-group pull-right">
+        <button class="btn btn-primary" ng-click="saveProfile()">Save Profile</button>
+        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()">Change Password</button>
+    </div>
     <h1>
       <i class="ion-ios-arrow-thin-left" ng-if="changePasswordIsActive" ng-click="toggleChangePassword()"></i> Profile
 
@@ -59,10 +63,7 @@
 
       <hr/>
 
-      <div class="btn-group pull-right">
-        <button class="btn btn-primary" ng-click="saveProfile()">Save Profile</button>
-        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()">Change Password</button>
-      </div>
+      
 
     </form>
 
