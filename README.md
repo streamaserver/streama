@@ -6,7 +6,8 @@
 
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal Netflix for just such a purpose!
 
-Streama is on BountySource for those of you who want to invest in getting features & bugfixes faster: https://www.bountysource.com/teams/dularion-streama/issues
+### Donations
+If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq
 
 [Visit the Promo-Website here!](http://dularion.github.io/streama/)
 
