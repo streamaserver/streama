@@ -1,6 +1,6 @@
 
 
-streamaApp.controller('adminUsersCtrl', ['$scope', 'apiService', 'modalService', '$rootScope', function ($scope, apiService, modalService, $rootScope) {
+streamaApp.controller('settingsUsersCtrl', ['$scope', 'apiService', 'modalService', '$rootScope', function ($scope, apiService, modalService, $rootScope) {
 	$scope.loading = true;
 
 	apiService.user.list().success(function (data) {

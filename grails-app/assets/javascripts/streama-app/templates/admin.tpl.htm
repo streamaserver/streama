@@ -13,12 +13,6 @@
       <li ng-class="{'active': isCurrentState('admin.fileManager')}" ng-if="$root.currentUser.isContentManager">
         <a ui-sref="admin.fileManager">File Manager</a>
       </li>
-      <li ng-class="{'active': isCurrentState('admin.users')}" ng-if="$root.currentUser.isAdmin">
-        <a ui-sref="admin.users">Users</a>
-      </li>
-      <li ng-class="{'active': isCurrentState('admin.settings')}" ng-if="$root.currentUser.isAdmin">
-        <a ui-sref="admin.settings">Settings</a>
-      </li>
       <li ng-class="{'active': isCurrentState('admin.notifications')}" ng-if="$root.currentUser.isAdmin">
         <a ui-sref="admin.notifications">Notifications</a>
       </li>

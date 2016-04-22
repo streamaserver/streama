@@ -1,0 +1,19 @@
+<div class="admin">
+  <div class="nav">
+    <ul>
+      <li ng-class="{'active': isCurrentState('admin.settings')}" ng-if="$root.currentUser.isAdmin">
+        <a ui-sref="settings.settings">Settings</a>
+      </li>
+      <li ng-class="{'active': isCurrentState('admin.users')}" ng-if="$root.currentUser.isAdmin">
+        <a ui-sref="settings.users">Users</a>
+      </li>
+      <li ng-class="{'active': isCurrentState('profile')}">
+        <a ui-sref="settings.profile">Profile</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="admin-content">
+    <ui-view/>
+  </div>
+</div>
