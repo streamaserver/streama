@@ -5140,4 +5140,8 @@ body.mdx-active #mdx-control-view {
     .media-poster-item .media-item {
       height: auto; } }
 
+#help-page-bottom {
+  height: 80%;
+  }
+
 /*# sourceMappingURL=style.css.map */
