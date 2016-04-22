@@ -72,7 +72,7 @@ streamaApp.controller('helpCtrl', ['$anchorScroll', '$location', '$scope',
       },
       {
         id: 9,
-        name: "How do user's favourite genres affect Streama?",
+        name: "How do user's favorite genres affect Streama?",
         answer: ""
       },
       {

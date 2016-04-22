@@ -5080,6 +5080,11 @@ body.mdx-active #mdx-control-view {
     background: #B0DDEF;
     color: #333; }
 
+#help-page-bottom {
+  visibility: hidden;
+  padding-bottom: 45%;
+}
+
 @media (max-width: 767px) {
   .logo {
     float: none;
@@ -5139,9 +5144,5 @@ body.mdx-active #mdx-control-view {
     width: calc(50% - 15px); }
     .media-poster-item .media-item {
       height: auto; } }
-
-#help-page-bottom {
-  height: 80%;
-  }
 
 /*# sourceMappingURL=style.css.map */
