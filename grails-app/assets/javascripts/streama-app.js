@@ -28,7 +28,7 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', func
 		.state('settings.profile', {
 			url: '/profile',
 			templateUrl: 'profile.htm',
-			controller: 'profileCtrl',
+			controller: 'settingsProfileCtrl',
       resolve: {
         currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
           return apiService.currentUser().success(function (data) {
