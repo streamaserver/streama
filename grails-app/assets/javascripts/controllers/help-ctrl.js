@@ -22,15 +22,15 @@ streamaApp.controller('helpCtrl', ['$anchorScroll', '$location', '$scope',
         id: 1,
         name: 'How can I upload a video?',
         answer: "You can upload videos by going to Manage Content menu. Choose if you want to upload a Movie, TV show or Other video. Click the relevant sub-menu option" +
-        " on the vertical navigation bar on the left side of the screen. You can upload a video by clicking the Create new movie/TV show/other video button or by typing" +
+        " on the vertical navigation bar on the left side of the screen. You can upload a video by clicking the Create New Movie/TV Show/Other Video button or by typing" +
         " the name of the video you want to upload to the search bar and selecting the relevant movie from search results. After that, you can choose to fill in the video's" +
-        " information either manually or loading its information from TheMovieDB. After that, you can upload the relevant video and subtitle files by clicking Manage Files button."
+        " information either manually or loading its information from TheMovieDB. After that, you can upload the video and subtitle files by clicking Manage Files button."
       },
       {
         id: 2,
         name: 'How can I delete a video?',
-        answer: "You can delete a video by going to the video's information page and clicking Manage Files and selecting the red trash can icon. Clicking Edit movie and selecting" +
-        " Delete movie is another way to do it. You can also use the File Manager which is in the Manage Content menu. You can see all the files you have uploaded there. Click" +
+        answer: "You can delete a video by going to the video's information page and clicking Manage Files and selecting the red trash can icon. Clicking Edit Movie and selecting" +
+        " Delete Movie is another way to do it. You can also use the File Manager which is in the Manage Content menu. You can see all the files you have uploaded there. Click" +
         " the red trash can icon to delete a file."
       },
       {
@@ -48,9 +48,9 @@ streamaApp.controller('helpCtrl', ['$anchorScroll', '$location', '$scope',
       {
         id: 5,
         name: "How can I invite friends to watch my hosted videos?",
-        answer: "You can share your videos with your friends by inviting them to use your hosted Streama. Go to the Users menu and click Invite user button. Fill in the invite form and" +
+        answer: "You can share your videos with your friends by inviting them to use your hosted Streama. Go to the Users menu and click Invite User button. Fill in the invite form and" +
         " select the invitee's role(s). Users with the role Admin can edit Users & Settings. Users with the role Content Manager can edit content. Your friend will be notified about" +
-        " the invitation via email. You can also share video sessions with your friends by clicking the video player's share button and linking the session URL to them."
+        " the invitation via email. You can also share video sessions with your friends by clicking the video player's Share button and linking the session URL to them."
 
       },
       {
@@ -61,7 +61,8 @@ streamaApp.controller('helpCtrl', ['$anchorScroll', '$location', '$scope',
       {
         id: 7,
         name: "What are notifications?",
-        answer: "You can notify your invited friends by creating notification messages about uploaded videos."
+        answer: "You can notify your invited friends about uploaded videos by sending them notification messages. You can send them by adding them your notification queue by clicking" +
+        " Add Notification button which is in your video's information page and going to the Notifications menu and clicking Send Queue button."
       },
       {
         id: 8,
