@@ -36,9 +36,11 @@ streamaApp.controller('modalFileCtrl', [
       if(data.extension == '.srt' || data.extension == '.vtt'){
         $scope.video.subtitles = $scope.video.subtitles || [];
         $scope.video.subtitles.push(data);
+        alertify.success('Subtitles uploaded successfully.');
       }else{
         $scope.video.files = $scope.video.files || [];
         $scope.video.files.push(data);
+        alertify.success('Video uploaded successfully.');
       }
 
     });
