@@ -69,7 +69,7 @@
 				<li><a ui-sref="admin.shows">Manage Content</a></li>
 			</sec:ifAnyGranted>
 			<sec:ifAnyGranted roles="ROLE_ADMIN">
-				<li><a ui-sref="admin.users">Users</a></li>
+				<li><a ui-sref="admin.users">Admin</a></li>
 			</sec:ifAnyGranted>
 
 			<sec:ifLoggedIn>
