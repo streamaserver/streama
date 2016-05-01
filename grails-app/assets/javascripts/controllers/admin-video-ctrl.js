@@ -17,6 +17,7 @@ streamaApp.controller('adminVideoCtrl', [
     };
 
 		$scope.delete = function(){
+      alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 			alertify.confirm("Are you sure, you want to delete this Movie?", function (confirmed) {
 				if(confirmed){
 					apiService.movie.delete($stateParams.movieId).success(function () {
@@ -38,12 +39,7 @@ streamaApp.controller('adminVideoCtrl', [
 
 
 		$scope.addSimilarMovieToStreama = function(movie, redirect){
-      alertify.set({
-        buttonReverse: true,
-        labels: {
-          ok     : "Yes",
-          cancel : "Cancel"
-        } });
+      alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 
 			alertify.confirm("Do you want to add \""+ movie.title +"\" to the Streama library?", function (confirmed) {
 				if(confirmed){

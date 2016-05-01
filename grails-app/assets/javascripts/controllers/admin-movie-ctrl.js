@@ -17,7 +17,8 @@ streamaApp.controller('adminMovieCtrl', [
     };
 
 		$scope.delete = function(){
-			alertify.confirm("Are you sure, you want to delete this Movie?", function (confirmed) {
+      alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
+			alertify.confirm("Are you sure you want to delete this Movie?", function (confirmed) {
 				if(confirmed){
 					apiService.movie.delete($stateParams.movieId).success(function () {
 						$state.go('admin.movies');
@@ -28,7 +29,16 @@ streamaApp.controller('adminMovieCtrl', [
 
 		$scope.addToCurrentNotification = function(){
 			apiService.notification.addMovieToCurrentNotification($stateParams.movieId).success(function () {
-				alertify.success('The movie was added to the current notification queue.');
+        alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "No"}});
+        alertify.confirm('The movie was added to the current notification queue. Would you like to send it?', function (send) {
+          if(send){
+            apiService.notification.sendCurrentNotifcation();
+            alertify.success('Notification sent.');
+          }
+          else{
+            alertify.success('The movie was added to the current notification queue.');
+          }
+        })
 			});
 		};
 
@@ -38,13 +48,7 @@ streamaApp.controller('adminMovieCtrl', [
 
 
 		$scope.addSimilarMovieToStreama = function(movie, redirect){
-      alertify.set({
-        buttonReverse: true,
-        labels: {
-          ok     : "Yes",
-          cancel : "Cancel"
-        } });
-
+      alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 			alertify.confirm("Do you want to add \""+ movie.title +"\" to the Streama library?", function (confirmed) {
 				if(confirmed){
 

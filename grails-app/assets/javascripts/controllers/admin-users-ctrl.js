@@ -28,6 +28,7 @@ streamaApp.controller('adminUsersCtrl', ['$scope', 'apiService', 'modalService',
 	};
 
 	$scope.delete = function (user) {
+    alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm('Are you sure you want to delete ' + user.username + '?', function (confirmed) {
 			if(confirmed){
 				apiService.user.delete(user.id).success(function (data) {

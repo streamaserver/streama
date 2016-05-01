@@ -51,4 +51,9 @@ streamaApp.controller('adminSettingsCtrl', ['$scope', 'apiService', '$sce', func
    });
   };
 
+  $scope.resetBaseURL = function (settings) {
+    settings.value = 'http://localhost:8080';
+    settings.valid = true;
+  }
+
 }]);

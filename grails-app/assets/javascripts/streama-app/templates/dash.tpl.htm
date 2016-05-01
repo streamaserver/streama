@@ -49,12 +49,12 @@
     </h3>
 
     <div class="row dash-filter">
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-3 col-lg-3 col-sm-4">
         Sort:
         <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown>
       </div>
 
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-2 col-lg-2 col-sm-2">
         <input class="form-control input-sm" type="text" ng-model="dashFilter.tvShow.name" placeholder="Search by Name..." />
       </div>
     </div>
@@ -99,10 +99,10 @@
      </h3>
 
     <div class="row dash-filter" ng-hide="!dashFilter.movie && !movies.length">
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-3 col-lg-3 col-sm-4">
         Sort: <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-2 col-lg-2 col-sm-2">
         <ui-select class="tag-select" multiple ng-model="dashFilter.movie.tags" theme="bootstrap" title="Filter by Tag">
           <ui-select-match placeholder="Filter by Tag...">{{$item.name}}</ui-select-match>
           <ui-select-choices repeat="tag in tags | propsFilter: {name: $select.search}">
@@ -113,7 +113,7 @@
         </ui-select>
       </div>
 
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-2 col-lg-2 col-sm-2">
         <input class="form-control input-sm" type="text" ng-model="dashFilter.movie.title" placeholder="Search by Title..." />
       </div>
     </div>
@@ -157,11 +157,11 @@
      </h3>
 
     <div class="row dash-filter">
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-3 col-lg-3 col-sm-4">
         Sort: <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
 
-      <div class="col-md-3 col-lg-2">
+      <div class="col-md-2 col-lg-2 col-sm-2">
         <input class="form-control input-sm" type="text" ng-model="dashFilter.genericVideo.title" placeholder="Search by Title..." />
       </div>
     </div>

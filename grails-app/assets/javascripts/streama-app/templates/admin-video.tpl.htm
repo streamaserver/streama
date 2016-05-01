@@ -33,7 +33,7 @@
             <button class="btn btn-success btn-sm" ng-click="manageFiles(video)">Manage Files</button>
 
             <button class="btn btn-secondary btn-sm " ng-click="openVideoModal()">
-              Edit video
+              Edit info
             </button>
           </div>
         </div>
@@ -51,11 +51,11 @@
           <label>IMDB Link</label>
           <p class="data-display"><a href="http://www.imdb.com/title/{{video.imdb_id}}">{{video.title}}</a></p>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2" ng-show="video.vote_average">
           <label>Rating</label>
-          <p class="data-display">{{video.vote_average}}</p>
+          <p ng-show="video.vote_average" class="data-display">{{video.vote_average}}/10</p>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2" ng-show="video.vote_count">
           <label>Rating Count</label>
           <p class="data-display">{{video.vote_count}}</p>
         </div>
@@ -95,7 +95,7 @@
       <div class="row" ng-show="!video.files.length">
         <hr/>
         <button class="btn btn-danger btn-block btn-lg" ng-click="manageFiles(video)">
-          <i class="ion-alert-circled"></i> No Video File yet! Click here to add
+          <i class="ion-alert-circled"></i> No Video File yet! Drop file or click here to add
         </button>
       </div>
 

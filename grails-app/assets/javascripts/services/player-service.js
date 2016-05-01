@@ -168,6 +168,7 @@ streamaApp.factory('playerService', [
       },
 
       onSocketSessionCreate: function () {
+        alertify.set({ buttonReverse: true, labels: {ok: "OK", cancel : "Cancel"}});
         alertify.confirm('By creating a new session you will be redirected back to this player, but this time you will ' +
           'have a unique session ID in the url. Share this with your friends to have a syncronized watching experience with them!', function (confirmed) {
           if(confirmed){

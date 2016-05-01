@@ -15,6 +15,7 @@ streamaApp.controller('modalFileCtrl', [
     };
 
     $scope.removeFile = function (file) {
+      alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
       alertify.confirm('Are you sure you want to remove the file "'+file.originalFilename+'"?', function (confirmed) {
         if(confirmed){
           apiService.video.removeFile($scope.video.id, file.id).success(function () {

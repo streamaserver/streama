@@ -15,7 +15,7 @@
 <form name="settings-form" class="settings-form">
   <div class="form-group row-slim" ng-repeat="setting in settings">
     <div class="col-sm-3">
-      <label class="control-label">{{setting.settingsKey}} <span ng-if="setting.required">*</span></label>
+      <label class="control-label">{{setting.settingsKey}} <span ng-if="setting.required" style="color:red">*</span></label>
     </div>
     <div class="col-sm-7" ng-class="{'has-error has-feedback': setting.invalid, 'has-success has-feedback': setting.valid}">
       <input ng-required="setting.required" type="text" class="form-control" ng-model="setting.value" placeholder="{{setting.settingsKey}}" ng-change="changeValue(setting)">
@@ -28,11 +28,13 @@
       <button type="button" class="btn btn-success btn-block" ng-click="validateSettings(setting)" ng-show="!setting.valid && setting.dirty">validate</button>
     </div>
     <div class="col-sm-7 col-sm-offset-3">
+      <a ng-if="setting.settingsKey=='Base URL'" ng-click="resetBaseURL(setting)"> Reset to default value.</a>
       <p class="settings-description" ng-bind-html="setting.description"></p>
     </div>
+
   </div>
 </form>
-
+<p style="color:red">* required field</p>
 
 <hr/>
 
