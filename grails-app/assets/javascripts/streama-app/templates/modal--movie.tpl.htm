@@ -33,8 +33,8 @@
           <input type="text" class="form-control input-sm" ng-model="movie.imdb_id" placeholder="tt0383126"/>
         </div>
         <div class="col-sm-2">
-          <label>API ID</label>
-          <input type="text" class="form-control input-sm" disabled ng-model="movie.apiId" placeholder="API ID"/>
+          <label>TheMovieDB ID</label>
+          <input type="text" class="form-control input-sm" disabled ng-model="movie.apiId" placeholder="TheMovieDB ID"/>
         </div>
         <div class="col-sm-2">
           <label>Rating</label>
@@ -123,6 +123,6 @@
   <div class="modal-footer" ng-if="movie.release_date || movie.id || addManually">
     <button class="btn btn-danger pull-left" ng-if="movie.id" ng-click="deleteMovie(movie)">Delete Movie</button>
     <button class="btn btn-success" ng-click="saveMovie(movie)" ng-disabled="!movie.title">Save</button>
-    <button class="btn" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
   </div>
 </form>

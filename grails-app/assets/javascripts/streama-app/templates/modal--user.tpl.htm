@@ -1,7 +1,7 @@
 <div class="modal-body">
   <form class="form-horizontal">
     <legend>
-      User
+      Invite User
       <div class="spinner" ng-show="loading">
         <div class="bounce1"></div>
         <div class="bounce2"></div>
@@ -43,5 +43,5 @@
 <div class="modal-footer">
   <button ng-if="!user.id" class="btn btn-success" ng-disabled="!valid && !user.id" ng-click="saveAndInviteUser(user)">Save & Invite User</button>
   <button ng-if="user.id" class="btn btn-success" ng-click="saveAndInviteUser(user)">Save User</button>
-  <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
 </div>

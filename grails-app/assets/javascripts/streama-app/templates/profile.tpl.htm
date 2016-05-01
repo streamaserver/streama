@@ -1,5 +1,9 @@
 <div class="profile">
   <div class="profile-heading">
+    <div class="btn-group pull-right">
+        <button class="btn btn-primary" ng-click="saveProfile()">Save Profile</button>
+        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()">Change Password</button>
+    </div>
     <h1>
       <i class="ion-ios-arrow-thin-left" ng-if="changePasswordIsActive" ng-click="toggleChangePassword()"></i> Profile
 
@@ -18,10 +22,10 @@
 
       <div class="form-group" >
         <div class="col-sm-3">
-          <label class="control-label">E-Mail-Address</label>
+          <label class="control-label">Username</label>
         </div>
         <div class="col-sm-9">
-          <input type="email" class="form-control" disabled ng-model="user.username" placeholder="E-Mail-Address">
+          <input type="email" class="form-control" disabled ng-model="user.username" placeholder="Username">
         </div>
       </div>
 
@@ -59,10 +63,7 @@
 
       <hr/>
 
-      <div class="btn-group pull-right">
-        <button class="btn btn-primary" ng-click="saveProfile()">Save Profile</button>
-        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()">Change Password</button>
-      </div>
+      
 
     </form>
 

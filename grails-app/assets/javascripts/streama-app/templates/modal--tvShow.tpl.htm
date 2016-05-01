@@ -35,8 +35,8 @@
           <input type="text" class="form-control input-sm" ng-model="tvShow.imdb_id" placeholder="tt0383126"/>
         </div>
         <div class="col-sm-2">
-          <label>API ID</label>
-          <input type="text" class="form-control input-sm" ng-disabled="tvShow.manualInput" ng-model="tvShow.apiId" placeholder="API ID"/>
+          <label>TheMovieDB ID</label>
+          <input type="text" class="form-control input-sm" ng-disabled="tvShow.manualInput" ng-model="tvShow.apiId" placeholder="TheMovieDB ID"/>
         </div>
         <div class="col-sm-2">
           <label>Rating</label>
@@ -79,7 +79,7 @@
 
   <div class="modal-footer" ng-show="tvShow.overview || tvShow.manualInput">
     <button class="btn btn-success" ng-click="saveShow(tvShow)">Save Show</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
   </div>
 
 </form>
