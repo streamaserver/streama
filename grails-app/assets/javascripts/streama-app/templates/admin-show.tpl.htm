@@ -29,7 +29,7 @@
             Delete show
           </button>
           <button class="btn btn-secondary btn-sm" ng-click="openShowModal()">
-            Edit show
+            Edit info
           </button>
           <button class="btn btn-secondary btn-sm " ng-click="addToCurrentNotification()">
             Add Notification
@@ -44,16 +44,18 @@
       <div class="col-sm-2">
         <label>Release Date</label>
         <p class="data-display">{{show.first_air_date}}</p>
+        <p ng-show="!show.first_air_date" class="data-display fade-50">-</p>
       </div>
       <div class="col-sm-2">
         <label>IMDB Link</label>
         <p class="data-display" ng-if="show.imdb_id"><a href="http://www.imdb.com/title/{{show.imdb_id}}">{{show.name}}</a></p>
+        <p ng-show="!show.imdb_id" class="data-display fade-50">-</p>
       </div>
-      <div class="col-sm-2">
+      <div ng-show="show.vote_average" class="col-sm-2">
         <label>Rating</label>
         <p class="data-display">{{show.vote_average}}/10</p>
       </div>
-      <div class="col-sm-2">
+      <div ng-show="show.vote_count"class="col-sm-2">
         <label>Rating Count</label>
         <p class="data-display">{{show.vote_count}}</p>
       </div>
@@ -66,6 +68,7 @@
       <div class="col-sm-12">
         <label>Overview</label>
         <p class="data-display">{{show.overview}}</p>
+        <p ng-show="!show.overview" class="data-display fade-50">No overview added yet</p>
       </div>
     </div>
 
@@ -75,6 +78,7 @@
         {{genre.name}}
       </li>
     </ul>
+    <p ng-show="!show.genre.length" class="data-display fade-50">No genre added yet</p>
   </div>
 
 

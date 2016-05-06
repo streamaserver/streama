@@ -5,13 +5,13 @@
       New Show
       <button class="btn btn-sm btn-white btn-outline pull-right" ng-click="toggleAddManually()">
         <span ng-show="!tvShow.manualInput">Add Manually</span>
-        <span ng-show="tvShow.manualInput">Add Via API</span>
+        <span ng-show="tvShow.manualInput">Add Automatically</span>
       </button>
     </legend>
 
     <div class="form-group">
       <div class="col-sm-12 typeahead-wrapper" ng-if="!tvShow.manualInput">
-        <input type="text" class="form-control name-input" ng-model="tvShow.name" placeholder="Search for TV Show..." typeahead-loading="loading" typeahead-append-to-body="true"
+        <input type="text" class="form-control name-input" ng-model="tvShow.name" placeholder="Search from TheMovieDb..." typeahead-loading="loading" typeahead-append-to-body="true"
                uib-typeahead="show.name for show in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="typeahead--tvShow.htm">
         <div class="spinner" ng-show="loading">
           <div class="bounce1"></div>
@@ -34,6 +34,7 @@
           <label>IMDB ID</label>
           <input type="text" class="form-control input-sm" ng-model="tvShow.imdb_id" placeholder="tt0383126"/>
         </div>
+        <div ng-hide="tvShow.manualInput">
         <div class="col-sm-2">
           <label>TheMovieDB ID</label>
           <input type="text" class="form-control input-sm" ng-disabled="tvShow.manualInput" ng-model="tvShow.apiId" placeholder="TheMovieDB ID"/>
@@ -47,6 +48,7 @@
           <input type="text" class="form-control input-sm" ng-model="tvShow.vote_count" placeholder="Rating Count"/>
         </div>
       </div>
+      </div>
 
       <div class="form-group">
         <div class="col-sm-12">
@@ -55,14 +57,16 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <div class="col-sm-12">
-          <label>Genre</label>
-          <ul class="genre-list">
-            <li class="genre-tag" ng-repeat="genre in tvShow.genre">
-              {{genre.name}}
-            </li>
-          </ul>
+      <div ng-hide="tvShow.manualInput">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label>Genre</label>
+            <ul class="genre-list">
+              <li class="genre-tag" ng-repeat="genre in tvShow.genre">
+                {{genre.name}}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 

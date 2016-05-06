@@ -15,6 +15,7 @@ streamaApp.controller('modalTvShowCtrl', [
 	$scope.saveShow = function (video) {
 		apiService.tvShow.save(video).success(function (data) {
 			$modalInstance.close(data);
+      alertify.success("TV Show saved.");
 		});
 	};
 

@@ -26,6 +26,7 @@ streamaApp.controller('adminShowCtrl', [
   };
 
 	$scope.addToCurrentNotification = function(){
+    alertify.set({ buttonReverse: true, labels: {ok: "OK", cancel : "Cancel"}});
 		alertify.prompt('Add a description to this TvShow. For instance, tell the users which season you added.', function (confirmed, text) {
 			if(confirmed){
 				apiService.notification.addTvShowToCurrentNotification($stateParams.showId, text).success(function () {
@@ -47,7 +48,8 @@ streamaApp.controller('adminShowCtrl', [
 
 
 	$scope.deleteShow = function(){
-		alertify.confirm("Are you sure, you want to delete this Show?", function (confirmed) {
+    alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
+		alertify.confirm("Are you sure you want to delete this Show?", function (confirmed) {
 			if(confirmed){
 				apiService.tvShow.delete($scope.show.id).success(function () {
 					$state.go('admin.shows');
@@ -97,13 +99,7 @@ streamaApp.controller('adminShowCtrl', [
 
 
 	$scope.fetchAllEpisodesForSeason = function(){
-		alertify.set({
-			buttonReverse: true,
-			labels: {
-				ok     : "Yes",
-				cancel : "Cancel"
-			} });
-
+    alertify.set({ buttonReverse: true, labels: {ok: "OK", cancel : "Cancel"}});
 		alertify.prompt("For which season would you like to fetch the episodes?", function (confirmed, season) {
 			if(confirmed && season){
 				$scope.loading = true;
@@ -117,7 +113,7 @@ streamaApp.controller('adminShowCtrl', [
 	};
 
 	$scope.deleteSeason = function (season_number) {
-		alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
+    alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 
 		alertify.confirm("Are you sure you want to remove the entire season " + season_number + "?", function (confirmed) {
 			if(confirmed){

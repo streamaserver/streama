@@ -9,7 +9,7 @@
 
     <div class="form-group">
       <div class="col-sm-12 typeahead-wrapper" ng-if="!addManually">
-        <input type="text" class="form-control name-input" ng-model="movie.title" placeholder="Movie Name" typeahead-loading="loading" typeahead-append-to-body="true"
+        <input type="text" class="form-control name-input" ng-model="movie.title" placeholder="Search from TheMovieDB..." typeahead-loading="loading" typeahead-append-to-body="true"
                uib-typeahead="item.title for item in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="typeahead--movie.htm">
         <div class="spinner" ng-show="loading">
           <div class="bounce1"></div>
@@ -32,17 +32,19 @@
           <label>IMDB ID</label>
           <input type="text" class="form-control input-sm" ng-model="movie.imdb_id" placeholder="tt0383126"/>
         </div>
-        <div class="col-sm-2">
-          <label>TheMovieDB ID</label>
-          <input type="text" class="form-control input-sm" disabled ng-model="movie.apiId" placeholder="TheMovieDB ID"/>
-        </div>
-        <div class="col-sm-2">
-          <label>Rating</label>
-          <input type="text" class="form-control input-sm" ng-model="movie.vote_average" placeholder="Rating"/>
-        </div>
-        <div class="col-sm-2">
-          <label>Rating Count</label>
-          <input type="text" class="form-control input-sm" ng-model="movie.vote_count" placeholder="Rating Count"/>
+        <div ng-hide="addManually">
+          <div class="col-sm-2">
+            <label>TheMovieDB ID</label>
+            <input type="text" class="form-control input-sm" disabled ng-model="movie.apiId" placeholder="TheMovieDB ID"/>
+          </div>
+          <div class="col-sm-2">
+            <label>Rating</label>
+            <input type="text" class="form-control input-sm" ng-model="movie.vote_average" placeholder="Rating"/>
+          </div>
+          <div class="col-sm-2">
+            <label>Rating Count</label>
+            <input type="text" class="form-control input-sm" ng-model="movie.vote_count" placeholder="Rating Count"/>
+          </div>
         </div>
       </div>
 
@@ -53,14 +55,16 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <div class="col-sm-12">
-          <label>Genre</label>
-          <ul class="genre-list">
-            <li class="genre-tag" ng-repeat="genre in movie.genre">
-              {{genre.name}}
-            </li>
-          </ul>
+      <div ng-hide="addManually">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label>Genre</label>
+            <ul class="genre-list">
+              <li class="genre-tag" ng-repeat="genre in movie.genre">
+                {{genre.name}}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 

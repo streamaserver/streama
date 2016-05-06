@@ -11,7 +11,7 @@ streamaApp.controller('modalFileBrowserCtrl', [
 				$scope.files = data;
 			})
 			.error(function () {
-				alertify.error('An error occurred.');
+				alertify.error('Failed to load the list of files.');
 			});
 
 		$scope.chooseFile = function (file) {

@@ -12,7 +12,7 @@
 </div>
 
 <div class="movie-content" ng-show="movie.title"
-     ngf-drop ngf-drag-over-class="movie-dragover-upload" ngf-change="upload($files)">
+     ngf-drop ngf-drag-over-class="manageFiles(movie)" ngf-change="upload($files)">
 
   <div class="row">
 
@@ -33,7 +33,7 @@
             <button class="btn btn-success btn-sm" ng-click="manageFiles(movie)">Manage Files</button>
 
             <button class="btn btn-secondary btn-sm " ng-click="openMovieModal()">
-              Edit movie
+              Edit info
             </button>
             <button class="btn btn-secondary btn-sm " ng-click="addToCurrentNotification()">
               Add Notification
@@ -49,14 +49,16 @@
         <div class="col-sm-2">
           <label>Release Date</label>
           <p class="data-display">{{movie.release_date}}</p>
+          <p ng-show="!movie.release_date" class="data-display fade-50">-</p>
         </div>
         <div class="col-sm-2" ng-show="movie.imdb_id">
           <label>IMDB Link</label>
           <p class="data-display"><a target="_blank" href="http://www.imdb.com/title/{{movie.imdb_id}}">{{movie.title}}</a></p>
+          <p ng-show="!movie.imdb_id" class="data-display fade-50">-</p>
         </div>
         <div class="col-sm-2" ng-show="movie.vote_average">
           <label>Rating</label>
-          <p class="data-display">{{movie.vote_average}}/10</p>
+          <p ng-show="movie.vote_average" class="data-display">{{movie.vote_average}}/10</p>
         </div>
         <div class="col-sm-2" ng-show="movie.vote_count">
           <label>Rating Count</label>
@@ -66,12 +68,17 @@
 
       <br/>
 
-
       <div class="row">
         <div class="col-sm-12">
           <label>Overview</label>
           <p class="data-display">{{movie.overview}}</p>
         </div>
+
+        <div class="col-sm-2" ng-if="movie.trailerKey">
+          <label>Trailer</label>
+          <iframe width="560" height="315" ng-src="{{'https://www.youtube.com/embed/'+movie.trailerKey+'?rel=0' | trustResourceUrl}}" frameborder="0" allowfullscreen></iframe>
+        </div>
+
         <div class="col-sm-12">
           <label>Genre</label>
           <ul class="genre-list">
@@ -79,6 +86,7 @@
               {{genre.name}}
             </li>
           </ul>
+          <p ng-show="!movie.genre.length" class="data-display fade-50">No genre added yet</p>
         </div>
         <div class="col-sm-12" ng-if="movie.trailer">
           <label>Trailer</label>
@@ -91,7 +99,7 @@
       <div class="row" ng-show="!movie.files.length">
         <hr/>
         <button class="btn btn-danger btn-block btn-lg" ng-click="manageFiles(movie)">
-          <i class="ion-alert-circled"></i> No Video File yet! Click here to add
+          <i class="ion-alert-circled"></i> No Video File yet! Drop file or click here to add
         </button>
       </div>
 

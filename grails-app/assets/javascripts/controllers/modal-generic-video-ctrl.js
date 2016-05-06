@@ -4,7 +4,7 @@ streamaApp.controller('modalGenericVideoCtrl', [
 	'$scope', '$modalInstance', 'apiService', 'video', 'uploadService',
 	function ($scope, $modalInstance, apiService, video, uploadService) {
 	$scope.loading = false;
-		
+
 	$scope.video = video || {};
 
 	$scope.saveVideo = function (video) {
@@ -33,6 +33,7 @@ streamaApp.controller('modalGenericVideoCtrl', [
 
 
 	$scope.deleteMovie = function(movie){
+    alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm("Are you sure, you want to delete this Episode?", function (confirmed) {
 			if(confirmed){
 				apiService.movie.delete(movie.id).success(function () {
@@ -56,6 +57,7 @@ streamaApp.controller('modalGenericVideoCtrl', [
 	};
 
 	$scope.deleteTag = function (tag) {
+    alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm('Are you sure you want to delete the tag ' + tag.name, function (confirmed) {
 			if(confirmed){
 				apiService.tag.delete(tag.id).success(function () {
@@ -74,7 +76,7 @@ streamaApp.controller('modalGenericVideoCtrl', [
 		$('.name-input').focus();
 	}, 200);
 
-	
+
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
 	};

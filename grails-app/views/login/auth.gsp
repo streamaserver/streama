@@ -28,10 +28,10 @@
 					<input type="password" name='j_password' class="form-control" placeholder="Password">
 				</div>
 			</div>
-
+      <span>First time logging in? Try 'admin' for both fields.
 			<input style="display: none;" type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' checked='checked'/>
 
-			<button class="btn btn-primary pull-right">Submit</button>
+			<button class="btn btn-primary pull-right">Submit</button></span>
 		</form>
 	</div>
 </div>

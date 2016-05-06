@@ -23,7 +23,7 @@ streamaApp.controller('adminFileManagerCtrl', ['$scope', 'apiService', 'modalSer
 		}else {
 			confirmText = 'This file is not associated with any Video. Do you want to remove this File from the hard drive?';
 		}
-
+    alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm(confirmText, function (confirmed) {
 			if(confirmed){
 				apiService.video.removeFileFromDisk(file.id, file.path).success(function () {
@@ -69,6 +69,7 @@ streamaApp.controller('adminFileManagerCtrl', ['$scope', 'apiService', 'modalSer
 		}else if(type == 'noFile'){
 			message = 'Are you sure you want to proceed? This will delete all non-associated files from the harddrive';
 		}
+    alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm(message, function (confirmed) {
 			if(confirmed){
 				$scope.loading = true;
