@@ -10,7 +10,7 @@ streamaApp.controller('dashCtrl', [
 
       if(!TheMovieDbAPI.value){
         alertify.alert('You need to fill out some required base-settings. You will be redirected to the settings page now.', function () {
-          $state.go('admin.settings');
+          $state.go('settings.settings');
         });
       }
     });

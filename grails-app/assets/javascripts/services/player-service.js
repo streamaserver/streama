@@ -210,7 +210,7 @@ streamaApp.factory('playerService', [
           alertify.alert('You video get\'s included using the wrong Base Path, but you are browsing the page via "'+basePath+'". ' +
             'Make sure you set the correct Base Path in the settings and that you are using it to browse the application.', function () {
             if(_.find($rootScope.currentUser.authorities, {authority: "ROLE_ADMIN"})){
-              $state.go('admin.settings');
+              $state.go('settings.settings');
             }else{
               $state.go('dash', {});
             }

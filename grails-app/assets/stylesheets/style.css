@@ -5080,6 +5080,11 @@ body.mdx-active #mdx-control-view {
     background: #B0DDEF;
     color: #333; }
 
+#help-page-bottom {
+  visibility: hidden;
+  padding-bottom: 45%;
+}
+
 @media (max-width: 767px) {
   .logo {
     float: none;

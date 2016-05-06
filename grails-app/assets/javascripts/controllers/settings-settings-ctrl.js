@@ -1,6 +1,6 @@
 'use strict';
 
-streamaApp.controller('adminSettingsCtrl', ['$scope', 'apiService', '$sce', function ($scope, apiService, $sce) {
+streamaApp.controller('settingsSettingsCtrl', ['$scope', 'apiService', '$sce', function ($scope, apiService, $sce) {
 
   apiService.settings.list().success(function (data) {
     $scope.settings = data;
@@ -17,6 +17,7 @@ streamaApp.controller('adminSettingsCtrl', ['$scope', 'apiService', '$sce', func
     apiService.settings.updateMultiple(settings)
       .success(function () {
         window.location.reload();
+        alertify.success('Settings saved.');
       })
   };
 

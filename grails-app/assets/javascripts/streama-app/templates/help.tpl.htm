@@ -1,0 +1,57 @@
+
+
+<div class="admin">
+
+
+
+
+
+  <div class="nav">
+    <ul>
+      <div question-object="question" ng-repeat="question in questions" ng-cloak>
+        <li>
+          <a href="" ng-click="gotoAnchor(question.id)">{{question.id}}. {{ question.name }}</a>
+        </li>
+      </div>
+    </ul>
+  </div>
+
+
+
+
+  <div class="admin-content">
+
+    <h1>
+      Help
+
+      <div class="spinner" ng-show="loading">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </h1>
+
+    <hr/>
+
+
+
+
+    <div question-object="question" ng-repeat="question in questions" ng-cloak>
+      <br>
+      <h2 id ="question{{question.id}}" class="anchor">{{question.id}}. {{ question.name }}</h2>
+      <br>
+      <p>{{ question.answer }}</p>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+
+    <div id="help-page-bottom"></div>
+
+  </div>
+
+</div>
+
+

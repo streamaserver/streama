@@ -68,12 +68,16 @@
 			<sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
 				<li><a ui-sref="admin.shows">Manage Content</a></li>
 			</sec:ifAnyGranted>
-			<sec:ifAnyGranted roles="ROLE_ADMIN">
-				<li><a ui-sref="admin.users">Admin</a></li>
-			</sec:ifAnyGranted>
+
+      <sec:ifLoggedIn>
+        <li><a ui-sref="settings.settings">Settings</a></li>
+      </sec:ifLoggedIn>
+
+      <sec:ifLoggedIn>
+        <li><a ui-sref="help">Help</a></li>
+      </sec:ifLoggedIn>
 
 			<sec:ifLoggedIn>
-				<li><a ui-sref="profile">Profile</a></li>
 				<li><g:link uri="/j_spring_security_logout">Logout</g:link></li>
 			</sec:ifLoggedIn>
 		</ul>
