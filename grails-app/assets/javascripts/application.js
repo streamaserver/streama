@@ -23,5 +23,7 @@
 //= require angular-local-storage/dist/angular-local-storage.min.js
 //= require angular-ui-select/dist/select.min.js
 //= require jquery-mousewheel/jquery.mousewheel.min.js
+
+//= require lodash-mixins.js
 //= require streama-app.js
 //= require_tree .
