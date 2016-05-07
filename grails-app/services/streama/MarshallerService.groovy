@@ -43,6 +43,7 @@ class MarshallerService {
       returnArray['name'] = file.name
       returnArray['sha256Hex'] = file.sha256Hex
       returnArray['src'] = file.getSrc()
+      returnArray['externalLink'] = file.externalLink
       returnArray['originalFilename'] = file.originalFilename
       returnArray['extension'] = file.extension
       returnArray['contentType'] = file.contentType
@@ -88,7 +89,7 @@ class MarshallerService {
       returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
-      returnArray['hasFiles'] = (returnArray['files'] ? true : false)
+      returnArray['hasFiles'] = movie.hasFiles()
 
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
@@ -122,7 +123,7 @@ class MarshallerService {
       returnArray['subtitles'] = genericVideo.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
       returnArray['tags'] = genericVideo.tags
       returnArray['genre'] = genericVideo.genre
-      returnArray['hasFiles'] = (returnArray['files'] ? true : false)
+      returnArray['hasFiles'] = genericVideo.hasFiles()
 
 
       return returnArray;
@@ -149,7 +150,7 @@ class MarshallerService {
       returnArray['poster_image_src'] = tvShow.poster_image?.src
 
 
-      returnArray['hasFiles'] = (tvShow.episodes?.find{it.files} ? true : false)
+      returnArray['hasFiles'] = tvShow.getHasFiles()
       returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
 
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
@@ -212,6 +213,8 @@ class MarshallerService {
         returnArray['vote_count'] = video.vote_count
         returnArray['popularity'] = video.popularity
         returnArray['original_language'] = video.original_language
+        returnArray['externalVideoUrl'] = video.externalVideoUrl
+        returnArray['externalSubtitleUrl'] = video.externalSubtitleUrl
 
         if(video instanceof Movie){
           returnArray['title'] = video.title
@@ -380,6 +383,7 @@ class MarshallerService {
         def returnArray = [:]
 
         returnArray['id'] = movie.id
+        returnArray['videoType'] = 'movie'
         returnArray['dateCreated'] = movie.dateCreated
         returnArray['lastUpdated'] = movie.lastUpdated
         returnArray['overview'] = movie.overview
@@ -406,6 +410,11 @@ class MarshallerService {
         }
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
+
+
+        returnArray['hasFiles'] = movie.hasFiles()
+//        returnArray['externalSubtitleUrl'] = movie.externalSubtitleUrl
+//        returnArray['externalVideoUrl'] = movie.externalVideoUrl
 
         return returnArray;
       }
@@ -469,6 +478,7 @@ class MarshallerService {
         returnArray['intro_start'] = episode.intro_start
         returnArray['intro_end'] = episode.intro_end
         returnArray['outro_start'] = episode.outro_start
+        returnArray['videoType'] = 'episode'
 
         return returnArray;
       }
@@ -522,7 +532,7 @@ class MarshallerService {
         returnArray['subtitles'] = genericVideo.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
         returnArray['tags'] = genericVideo.tags
         returnArray['genre'] = genericVideo.genre
-        returnArray['hasFiles'] = (returnArray['files'] ? true : false)
+        returnArray['hasFiles'] = genericVideo.hasFiles()
 
 
         return returnArray;
@@ -548,7 +558,7 @@ class MarshallerService {
         returnArray['files'] = video.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
         returnArray['subtitles'] = video.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
-        returnArray['hasFiles'] = (returnArray['files'] ? true : false)
+        returnArray['hasFiles'] = video.hasFiles()
 
         returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(video, springSecurityService.currentUser)
 

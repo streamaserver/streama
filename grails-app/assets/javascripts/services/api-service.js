@@ -106,6 +106,9 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			},
 			refetch: function (videoId) {
 				return $http.get(urlBase + 'video/refetch.json', {params: {videoId: videoId}});
+			},
+			addExternalUrl: function (params) {
+				return $http.get(urlBase + 'video/addExternalUrl.json', {params: params});
 			}
 		},
 

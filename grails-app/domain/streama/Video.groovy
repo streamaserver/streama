@@ -31,4 +31,11 @@ class Video {
     dateCreated nullable: true
     lastUpdated nullable: true
   }
+
+  def hasFiles(){
+    if(files){
+      return true
+    }
+    return false
+  }
 }
