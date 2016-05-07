@@ -534,6 +534,11 @@ a {
       color: #CE2F39;
       border-radius: 2em; }
 
+.tab-pane {
+  padding: 10px;
+  border: 1px solid #222;
+  margin-bottom: 20px; }
+
 body {
   background-color: #25292B;
   color: white;
@@ -5079,11 +5084,6 @@ body.mdx-active #mdx-control-view {
   .genre-tag.interactive:hover {
     background: #B0DDEF;
     color: #333; }
-
-#help-page-bottom {
-  visibility: hidden;
-  padding-bottom: 45%;
-}
 
 @media (max-width: 767px) {
   .logo {
