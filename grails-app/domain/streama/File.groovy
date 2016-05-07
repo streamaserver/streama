@@ -13,7 +13,7 @@ class File {
   String contentType
   String originalFilename
   Long size
-  
+  String externalLink
   String quality
 
   static constraints = {
@@ -27,6 +27,9 @@ class File {
   }
 
   def getSrc(){
+    if(externalLink){
+      return externalLink
+    }
     def res = uploadService.getFileSrc(this)
     return res
   }
