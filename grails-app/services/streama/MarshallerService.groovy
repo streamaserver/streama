@@ -213,8 +213,6 @@ class MarshallerService {
         returnArray['vote_count'] = video.vote_count
         returnArray['popularity'] = video.popularity
         returnArray['original_language'] = video.original_language
-        returnArray['externalVideoUrl'] = video.externalVideoUrl
-        returnArray['externalSubtitleUrl'] = video.externalSubtitleUrl
 
         if(video instanceof Movie){
           returnArray['title'] = video.title
