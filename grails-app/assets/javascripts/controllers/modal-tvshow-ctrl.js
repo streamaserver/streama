@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.controller('modalTvShowCtrl', [
-	'$scope', '$modalInstance', 'apiService', 'tvShow',
-	function ($scope, $modalInstance, apiService, tvShow) {
+	'$scope', '$uibModalInstance', 'apiService', 'tvShow',
+	function ($scope, $uibModalInstance, apiService, tvShow) {
 
 	$scope.toggleAddManually = function () {
 		$scope.tvShow.manualInput = !$scope.tvShow.manualInput;
@@ -14,7 +14,7 @@ streamaApp.controller('modalTvShowCtrl', [
 
 	$scope.saveShow = function (video) {
 		apiService.tvShow.save(video).success(function (data) {
-			$modalInstance.close(data);
+			$uibModalInstance.close(data);
       alertify.success("TV Show saved.");
 		});
 	};
@@ -40,6 +40,6 @@ streamaApp.controller('modalTvShowCtrl', [
 
 
 	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 }]);

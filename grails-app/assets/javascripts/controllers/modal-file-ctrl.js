@@ -1,17 +1,17 @@
 'use strict';
 
 streamaApp.controller('modalFileCtrl', [
-  '$scope', '$modalInstance', 'apiService', 'uploadService', 'video',
-  function ($scope, $modalInstance, apiService, uploadService, video) {
+  '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'video',
+  function ($scope, $uibModalInstance, apiService, uploadService, video) {
     $scope.loading = false;
 
 
-    //$modalInstance.close(data);
+    //$uibModalInstance.close(data);
 
     $scope.video = video;
 
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
 
     $scope.removeFile = function (file) {

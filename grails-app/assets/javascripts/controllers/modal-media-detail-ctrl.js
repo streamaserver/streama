@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.controller('modalMediaDetailCtrl', [
-	'$scope', '$modalInstance', '$rootScope', 'mediaId', '$state', 'apiService', 'mediaType',
-	function ($scope, $modalInstance, $rootScope, mediaId, $state, apiService, mediaType) {
+	'$scope', '$uibModalInstance', '$rootScope', 'mediaId', '$state', 'apiService', 'mediaType',
+	function ($scope, $uibModalInstance, $rootScope, mediaId, $state, apiService, mediaType) {
 
 	console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
 
@@ -28,7 +28,7 @@ streamaApp.controller('modalMediaDetailCtrl', [
 
 
 	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 		$state.go('dash', {mediaModal: null, mediaType: null});
 	};
 
@@ -48,11 +48,11 @@ streamaApp.controller('modalMediaDetailCtrl', [
 			else if(media.name){
 				$state.go('admin.show', {showId: media.id});
 			}
-			$modalInstance.dismiss('cancel');
+			$uibModalInstance.dismiss('cancel');
 		}
 	};
 
 		$scope.$on('$stateChangeStart', function () {
-			$modalInstance.dismiss('cancel');
+			$uibModalInstance.dismiss('cancel');
 		})
 }]);

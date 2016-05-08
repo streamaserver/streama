@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.controller('modalFileBrowserCtrl', [
-	'$scope', '$modalInstance', 'apiService',
-	function ($scope, $modalInstance, apiService) {
+	'$scope', '$uibModalInstance', 'apiService',
+	function ($scope, $uibModalInstance, apiService) {
 		$scope.loading = true;
 
 		apiService.video.listAllFiles()
@@ -15,11 +15,11 @@ streamaApp.controller('modalFileBrowserCtrl', [
 			});
 
 		$scope.chooseFile = function (file) {
-			$modalInstance.close(file);
+			$uibModalInstance.close(file);
 		};
 
 
 		$scope.cancel = function () {
-			$modalInstance.dismiss('cancel');
+			$uibModalInstance.dismiss('cancel');
 		};
 }]);

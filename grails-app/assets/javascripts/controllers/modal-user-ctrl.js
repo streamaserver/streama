@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.controller('modalUserCtrl', [
-	'$scope', '$modalInstance', 'apiService', 'user',
-	function ($scope, $modalInstance, apiService, user) {
+	'$scope', '$uibModalInstance', 'apiService', 'user',
+	function ($scope, $uibModalInstance, apiService, user) {
 
 		$scope.user = angular.copy(user);
 		$scope.loading = false;
@@ -12,7 +12,7 @@ streamaApp.controller('modalUserCtrl', [
     });
 
 		$scope.cancel = function () {
-			$modalInstance.dismiss('cancel');
+			$uibModalInstance.dismiss('cancel');
 		};
 
 		$scope.checkAvailability = function (username) {
@@ -46,7 +46,7 @@ streamaApp.controller('modalUserCtrl', [
 			apiService.user.saveAndInviteUser(dateObj)
 
 				.success(function (data) {
-					$modalInstance.close(data);
+					$uibModalInstance.close(data);
 					$scope.loading = false;
 				})
 				.error(function () {

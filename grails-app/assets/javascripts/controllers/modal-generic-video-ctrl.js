@@ -1,15 +1,15 @@
 'use strict';
 
 streamaApp.controller('modalGenericVideoCtrl', [
-	'$scope', '$modalInstance', 'apiService', 'video', 'uploadService',
-	function ($scope, $modalInstance, apiService, video, uploadService) {
+	'$scope', '$uibModalInstance', 'apiService', 'video', 'uploadService',
+	function ($scope, $uibModalInstance, apiService, video, uploadService) {
 	$scope.loading = false;
 
 	$scope.video = video || {};
 
 	$scope.saveVideo = function (video) {
 		apiService.genericVideo.save(video).success(function (data) {
-			$modalInstance.close(data);
+			$uibModalInstance.close(data);
 		});
 	};
 
@@ -37,7 +37,7 @@ streamaApp.controller('modalGenericVideoCtrl', [
 		alertify.confirm("Are you sure, you want to delete this Episode?", function (confirmed) {
 			if(confirmed){
 				apiService.movie.delete(movie.id).success(function () {
-					$modalInstance.close({deleted: true});
+					$uibModalInstance.close({deleted: true});
 				});
 			}
 		})
@@ -78,6 +78,6 @@ streamaApp.controller('modalGenericVideoCtrl', [
 
 
 	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 }]);

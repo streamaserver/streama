@@ -1,8 +1,8 @@
 'use strict';
 
 streamaApp.controller('modalVideoCtrl', [
-	'$scope', '$modalInstance', 'apiService', 'video', 'isManual', 'tvShow',
-	function ($scope, $modalInstance, apiService, video, isManual, tvShow) {
+	'$scope', '$uibModalInstance', 'apiService', 'video', 'isManual', 'tvShow',
+	function ($scope, $uibModalInstance, apiService, video, isManual, tvShow) {
 	$scope.loading = false;
 	$scope.addManually = isManual;
 
@@ -17,7 +17,7 @@ streamaApp.controller('modalVideoCtrl', [
 
 		apiService.episode.save(episode)
 			.success(function (data) {
-				$modalInstance.close(data);
+				$uibModalInstance.close(data);
         alertify.success("Video saved.");
 			})
 			.error(function () {
@@ -30,7 +30,7 @@ streamaApp.controller('modalVideoCtrl', [
 		alertify.confirm("Are you sure you want to delete this Episode?", function (confirmed) {
 			if(confirmed){
 				apiService.video.delete(video.id).success(function () {
-					$modalInstance.close({deleted: true});
+					$uibModalInstance.close({deleted: true});
 				});
 			}
 		})
@@ -57,6 +57,6 @@ streamaApp.controller('modalVideoCtrl', [
 
 
 	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 }]);

@@ -1,15 +1,15 @@
 'use strict';
 
 streamaApp.controller('modalMovieCtrl', [
-	'$scope', '$modalInstance', 'apiService', 'movie', '$state', 'uploadService',
-	function ($scope, $modalInstance, apiService, movie, $state, uploadService) {
+	'$scope', '$uibModalInstance', 'apiService', 'movie', '$state', 'uploadService',
+	function ($scope, $uibModalInstance, apiService, movie, $state, uploadService) {
 	$scope.loading = false;
 
 	$scope.movie = movie || {};
 
 	$scope.saveMovie = function (movie) {
 		apiService.movie.save(movie).success(function (data) {
-			$modalInstance.close(data);
+			$uibModalInstance.close(data);
       alertify.success("Movie saved.");
 		});
 	};
@@ -41,7 +41,7 @@ streamaApp.controller('modalMovieCtrl', [
 			if(confirmed){
 				apiService.movie.delete(movie.id).success(function () {
 					$state.go('admin.movies');
-					$modalInstance.dismiss('cancel');
+					$uibModalInstance.dismiss('cancel');
 				});
 			}
 		})
@@ -93,6 +93,6 @@ streamaApp.controller('modalMovieCtrl', [
 
 
 	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 }]);
