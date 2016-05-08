@@ -10,6 +10,15 @@ streamaApp.controller('modalFileCtrl', [
 
     $scope.video = video;
 
+    $scope.addExternalUrl = function (externalUrl) {
+      apiService.video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).success(function (data) {
+        alertify.success("External Url Added.");
+        //$scope.video.files.push(data);
+        $scope.video.externalLink = null;
+        _.pushOrReplace($scope.video.files, data);
+      });
+    };
+
     $scope.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };

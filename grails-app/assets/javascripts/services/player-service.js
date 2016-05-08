@@ -203,9 +203,10 @@ streamaApp.factory('playerService', [
       handleWrongBasepathError: function (video) {
         var hasError = false;
         var videoSource = video.files[0].src;
+        var externalLink = video.files[0].externalLink;
         var basePath = location.origin + $('base').attr('href');
 
-        if(videoSource.indexOf(basePath) == -1){
+        if(videoSource.indexOf(basePath) == -1 && !externalLink){
           hasError = true;
           alertify.alert('You video get\'s included using the wrong Base Path, but you are browsing the page via "'+basePath+'". ' +
             'Make sure you set the correct Base Path in the settings and that you are using it to browse the application.', function () {
