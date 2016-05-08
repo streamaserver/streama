@@ -22,11 +22,20 @@
     "bootstrap": "~3.3.5",
     "angular-ui-slider": "~0.1.3",
     "ionicons": "~2.0.1",
-    "lodash": "~4.5.0",
     "angular": "~1.4.3",
     "angular-sanitize": "~1.4.3",
     "ng-file-upload": "~5.0.9",
     "mousetrap": "~1.5.3",
-    "jquery-mousewheel": "^3.1.13"
+    "jquery-mousewheel": "^3.1.13",
+    "angular-bootstrap": "^1.3.2",
+    "Autolinker.js": "^0.26.0",
+    "ui-select": "angular-ui-select#^0.16.1",
+    "lodash": "^4.11.2"
+  },
+  "install": {
+    "path": "grails-app/assets/bower"
+  },
+  "resolutions": {
+    "lodash": "^4.11.2"
   }
 }
