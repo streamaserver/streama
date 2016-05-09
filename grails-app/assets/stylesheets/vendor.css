@@ -13,6 +13,6 @@
 *= require alertify/alertify.core
 *= require alertify/alertify.bootstrap3
 *= require ui-select/select
-
+*= require owl.carousel/owl.carousel
 
 */

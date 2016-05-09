@@ -23,4 +23,5 @@
 //= require angular-local-storage/angular-local-storage
 //= require ui-select/select
 //= require jquery-mousewheel/jquery.mousewheel
+//= require owl.carousel/owl.carousel
 
