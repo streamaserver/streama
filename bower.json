@@ -30,7 +30,8 @@
     "angular-bootstrap": "^1.3.2",
     "Autolinker.js": "^0.26.0",
     "ui-select": "angular-ui-select#^0.16.1",
-    "lodash": "^4.11.2"
+    "lodash": "^4.11.2",
+    "owl.carousel": "OwlCarousel2#^2.1.1"
   },
   "install": {
     "path": "grails-app/assets/bower"
