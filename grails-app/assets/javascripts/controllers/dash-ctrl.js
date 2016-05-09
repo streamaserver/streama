@@ -36,6 +36,10 @@ streamaApp.controller('dashCtrl', [
 			$scope.tags = data;
 		});
 
+		apiService.dash.listNewReleases().success(function (data) {
+			$scope.newReleases = data;
+		});
+
 		var applyFilter = function (item, filterObj) {
 			var showItemArray = [];
 

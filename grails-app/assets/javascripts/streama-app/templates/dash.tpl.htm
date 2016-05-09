@@ -1,5 +1,12 @@
 <div class="dashboard">
 
+  <div uis-owl-carousel>
+    <div ng-repeat="newRelease in newReleases">
+      <pre>{{newRelease | json}}</pre>
+      <img ng-src="https://image.tmdb.org/t/p/w300/{{newRelease.poster_path}}"/>
+    </div>
+  </div>
+
   <h2 class="genre-display" ng-if="selectedGenre">Youre looking at the genre: <strong ng-bind="selectedGenre.name"></strong></h2>
 
   <div ng-if="continueWatching.length && !selectedGenre">
