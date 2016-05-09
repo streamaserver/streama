@@ -100,4 +100,8 @@ class DashController {
   def listGenres(){
     respond Genre.list()
   }
+
+  def listNewReleases(){
+    respond Movie.list()
+  }
 }

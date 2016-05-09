@@ -254,6 +254,10 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 
 			listGenericVideos: function () {
 				return $http.get(urlBase + 'dash/listGenericVideos.json');
+			},
+
+			listNewReleases: function () {
+				return $http.get(urlBase + 'dash/listNewReleases.json');
 			}
 		},
 
