@@ -1,0 +1,39 @@
+<h1>Dashboard Highlights</h1>
+
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+
+<hr/>
+
+<p>Here you can manage the highlights currently displayed on the dashboard. To add new ones, go into the movie/tvShow
+  page and create a new Highlight Entry from there.</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>date Created</td>
+      <td>movie / tv Show</td>
+      <td>Description</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tr ng-repeat="notification in notifications | orderBy: '-dateCreated'">
+    <td>{{notification.dateCreated | date:'short'}}</td>
+    <td>
+      <img ng-if="notification.media.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{notification.media.poster_path}}" style="max-width: 50px; margin-right: 10px;"/>
+      {{notification.media.title || notification.media.name}} <span ng-if="notification.media.release_date">({{notification.media.release_date.substring(0,4)}})</span>
+    </td>
+    <td>
+      {{notification.description}}</span>
+    </td>
+    <td style="width: 1px;">
+      <button class="btn btn-xs btn-danger" ng-click="delete(notification)">delete</button>
+    </td>
+  </tr>
+</table>
+
+

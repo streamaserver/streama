@@ -125,6 +125,10 @@ class NotificationQueueController {
         render status: OK
     }
 
+    def listNewReleases(){
+        respond NotificationQueue.findAllByType('newRelease'), [status: OK]
+    }
+
     @Transactional
     def highlightOnDashboard(){
         def data = request.JSON

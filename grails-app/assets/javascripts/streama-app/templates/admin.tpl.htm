@@ -16,6 +16,9 @@
       <li ng-class="{'active': isCurrentState('admin.notifications')}" ng-if="$root.currentUser.isAdmin">
         <a ui-sref="admin.notifications">Notifications</a>
       </li>
+      <li ng-class="{'active': isCurrentState('admin.newReleases')}" ng-if="$root.currentUser.isContentManager">
+        <a ui-sref="admin.newReleases">Dashboard Highlights</a>
+      </li>
     </ul>
   </div>
 

@@ -197,6 +197,9 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			list: function () {
 				return $http.get(urlBase + 'notificationQueue/index.json');
 			},
+			listNewReleases: function () {
+				return $http.get(urlBase + 'notificationQueue/listNewReleases.json');
+			},
 			addMovieToCurrentNotification: function (movieId) {
 				return $http.get(urlBase + 'notificationQueue/addMovieToCurrentNotification.json', {params: {id: movieId}});
 			},
