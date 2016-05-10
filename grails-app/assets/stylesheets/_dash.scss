@@ -80,3 +80,57 @@
     }
   }
 }
+
+.new-releases-slider.owl-carousel{
+  .owl-item{
+    .poster-image{
+      float: left;
+      width: auto;
+    }
+  }
+
+  .new-releases-slide{
+    @include clearfix;
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+  .info-icon{
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    line-height: 1em;
+    font-size: 31px;
+    color: $primary;
+    text-shadow: 1px 1px 1px black;
+    z-index: 9;
+  }
+  .new-release-footer{
+    position: absolute;
+    left: 342px;
+    background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.71) 20%);
+    padding: 34px;
+    bottom: 0;
+    @include flexbox;
+    @include align-items(center);
+
+    .play-icon{
+      @include flex(none);
+      margin-right: 30px;
+      font-size: 50px;
+    }
+
+  }
+  .new-releases-description{
+
+    h3{
+      font-size: 32px;
+      text-transform: none;
+      font-weight: 100;
+    }
+
+    h4{
+      font-size: 22px;
+      font-weight: 100;
+    }
+  }
+}
