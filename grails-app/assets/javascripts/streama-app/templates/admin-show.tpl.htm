@@ -11,7 +11,7 @@
 
     <div class="row">
 
-      <div class="col-md-6">
+      <div class="col-md-11">
         <h1>
           {{show.name}}
 
@@ -23,17 +23,17 @@
         </h1>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-1">
         <div class="btn-group pull-right">
-          <button class="btn btn-danger btn-sm" ng-click="deleteShow()">
-            Delete show
-          </button>
-          <button class="btn btn-secondary btn-sm" ng-click="openShowModal()">
-            Edit info
-          </button>
-          <button class="btn btn-secondary btn-sm " ng-click="addToCurrentNotification()">
-            Add Notification
-          </button>
+            <span uib-dropdown on-toggle="toggled(open)">
+              <i class="ion-ios-settings icon-xl" uib-dropdown-toggle></i>
+              <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                <li><a ng-click="openShowModal()">Edit info</a></li>
+                <li><a ng-click="deleteShow()">Delete TV-Show</a></li>
+                <li><a ng-click="addToCurrentNotification()">Add to Email-Notification</a></li>
+                <li><a ng-click="highlightOnDashboard()">Highlight on Dashboard</a></li>
+              </ul>
+            </span>
         </div>
       </div>
     </div>
