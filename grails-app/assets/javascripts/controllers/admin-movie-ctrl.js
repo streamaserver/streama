@@ -8,6 +8,7 @@ streamaApp.controller('adminMovieCtrl', [
 		apiService.movie.get($stateParams.movieId).success(function (data) {
 			$scope.movie = data;
       $scope.loading = false;
+			$scope.highlightOnDashboard = modalService.newReleaseModal.bind(modalService, $scope.movie,'movie');
 		});
 
     $scope.openMovieModal = function () {
@@ -40,6 +41,19 @@ streamaApp.controller('adminMovieCtrl', [
           }
         })
 			});
+		};
+
+
+		$scope.deleteMovie = function(movie){
+			alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
+			alertify.confirm("Are you sure, you want to delete this Movie?", function (confirmed) {
+				if(confirmed){
+					apiService.movie.delete(movie.id).success(function () {
+						$state.go('admin.movies');
+						$uibModalInstance.dismiss('cancel');
+					});
+				}
+			})
 		};
 
     $scope.manageFiles = function(movie){
