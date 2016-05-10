@@ -35,18 +35,7 @@ streamaApp.controller('modalMovieCtrl', [
 		});
 	};
 
-	$scope.deleteMovie = function(movie){
-    alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
-		alertify.confirm("Are you sure, you want to delete this Movie?", function (confirmed) {
-			if(confirmed){
-				apiService.movie.delete(movie.id).success(function () {
-					$state.go('admin.movies');
-					$uibModalInstance.dismiss('cancel');
-				});
-			}
-		})
 
-	};
 
 		$scope.imageUpload = {};
 		$scope.uploadImage = function (files, type) {
