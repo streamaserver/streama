@@ -128,7 +128,8 @@ label {
     opacity: 0.5; }
 
 [ui-sref],
-[ng-click] {
+[ng-click],
+[uib-dropdown-toggle] {
   cursor: pointer; }
 
 .typeahead-wrapper {
@@ -322,6 +323,20 @@ a {
 
 .icon-xl {
   font-size: 36px; }
+
+/************* icon styles ******************/
+.play-icon {
+  width: 1.8em;
+  line-height: 1.8em;
+  text-align: center;
+  color: #b0ddef;
+  font-size: 33px;
+  border-radius: 100%;
+  border: 1px solid white;
+  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.78); }
 
 .btn {
   background: gray;
@@ -1022,6 +1037,56 @@ hr {
         list-style: none;
         float: left;
         width: 25%; }
+
+.new-releases-slider.owl-carousel .owl-item .poster-image {
+  float: left;
+  width: auto; }
+.new-releases-slider.owl-carousel .new-releases-slide {
+  background-size: cover;
+  background-position: 50% 50%; }
+  .new-releases-slider.owl-carousel .new-releases-slide:after {
+    content: "";
+    display: table;
+    clear: both; }
+.new-releases-slider.owl-carousel .info-icon {
+  position: absolute;
+  bottom: 7px;
+  right: 7px;
+  line-height: 1em;
+  font-size: 31px;
+  color: #B0DDEF;
+  text-shadow: 1px 1px 1px black;
+  z-index: 9; }
+.new-releases-slider.owl-carousel .new-release-footer {
+  position: absolute;
+  left: 342px;
+  background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.71) 20%);
+  padding: 34px;
+  bottom: 0;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center; }
+  .new-releases-slider.owl-carousel .new-release-footer .play-icon {
+    -webkit-box-flex: none;
+    -moz-box-flex: none;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none;
+    margin-right: 30px;
+    font-size: 50px; }
+.new-releases-slider.owl-carousel .new-releases-description h3 {
+  font-size: 32px;
+  text-transform: none;
+  font-weight: 100; }
+.new-releases-slider.owl-carousel .new-releases-description h4 {
+  font-size: 22px;
+  font-weight: 100; }
 
 #login {
   margin: 15px 0px;
