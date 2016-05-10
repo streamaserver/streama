@@ -17,7 +17,10 @@ function uisOwlCarousel($timeout) {
 		$timeout(function () {
 			$($elem)
 				.addClass('owl-carousel owl-theme')
-				.owlCarousel();
-		});
+				.owlCarousel({
+					items: 1,
+					dots: true
+				});
+		}, 10);
 	}
 }
