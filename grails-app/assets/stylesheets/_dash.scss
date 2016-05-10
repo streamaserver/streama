@@ -82,6 +82,11 @@
 }
 
 .new-releases-slider.owl-carousel{
+
+  .owl-dots{
+    text-align: center;
+    padding: 10px;
+  }
   .owl-item{
     .poster-image{
       float: left;

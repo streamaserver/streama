@@ -18,8 +18,11 @@ function uisOwlCarousel($timeout) {
 			$($elem)
 				.addClass('owl-carousel owl-theme')
 				.owlCarousel({
+					loop: true,
 					items: 1,
-					dots: true
+					dots: true,
+					autoplay: true,
+					autoplaySpeed: 1000
 				});
 		}, 10);
 	}

@@ -14,5 +14,6 @@
 *= require alertify/alertify.bootstrap3
 *= require ui-select/select
 *= require owl.carousel/owl.carousel
+*= require owl.carousel/owl.theme.default.min
 
 */

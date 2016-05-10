@@ -1038,6 +1038,9 @@ hr {
         float: left;
         width: 25%; }
 
+.new-releases-slider.owl-carousel .owl-dots {
+  text-align: center;
+  padding: 10px; }
 .new-releases-slider.owl-carousel .owl-item .poster-image {
   float: left;
   width: auto; }
