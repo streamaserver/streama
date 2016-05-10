@@ -131,6 +131,22 @@ streamaApp.factory('modalService', ['$uibModal', '$state', function ($uibModal, 
       });
     },
 
+    newReleaseModal: function (media, type, episodes, callback) {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'modal--new-release.htm',
+        controller: 'modalNewReleaseCtrl',
+        resolve: {
+          media: function () {return media;},
+          type: function () {return type;},
+					episodes: function () {return episodes;}
+        }
+      });
+
+      modalInstance.result.then(function (data) {
+        (callback || angular.noop)(data);
+      });
+    },
+
 
 		mediaDetailModal: function (mediaId, mediaType, callback) {
 			$state.go('dash', {mediaModal: mediaId, mediaType: mediaType});
