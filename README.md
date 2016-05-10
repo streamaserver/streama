@@ -8,6 +8,7 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 
 ### Donations
 If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq
+If you want to use paypal, use this link https://www.paypal.me/dularion
 
 [Visit the Promo-Website here!](http://dularion.github.io/streama/)
 
