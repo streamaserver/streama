@@ -102,6 +102,8 @@ class DashController {
   }
 
   def listNewReleases(){
-    respond Movie.list()
+    JSON.use('dashMovies'){
+      respond NotificationQueue.findAllByType('newRelease')
+    }
   }
 }
