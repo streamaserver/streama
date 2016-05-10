@@ -61,7 +61,9 @@ class MarshallerService {
       returnArray['dateCreated'] = notificationQueue.dateCreated
       returnArray['movie'] = notificationQueue.movie
       returnArray['tvShow'] = notificationQueue.tvShow
+      returnArray['media'] = notificationQueue.tvShow ? notificationQueue.tvShow : notificationQueue.movie
       returnArray['description'] = notificationQueue.description
+      returnArray['videoToPlayId'] = notificationQueue.videoToPlay?.id
       returnArray['isCompleted'] = notificationQueue.isCompleted
 
       return returnArray;
@@ -137,6 +139,7 @@ class MarshallerService {
       returnArray['dateCreated'] = tvShow.dateCreated
       returnArray['lastUpdated'] = tvShow.lastUpdated
       returnArray['poster_path'] = tvShow.poster_path
+      returnArray['backdrop_path'] = tvShow.backdrop_path
       returnArray['first_air_date'] = tvShow.first_air_date
       returnArray['name'] = tvShow.name
       returnArray['overview'] = tvShow.overview
