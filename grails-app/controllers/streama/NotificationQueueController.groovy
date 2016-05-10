@@ -1,6 +1,6 @@
 package streama
 
-
+import grails.converters.JSON
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -12,7 +12,7 @@ class NotificationQueueController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index() {
-        respond NotificationQueue.list(), [status: OK]
+        respond NotificationQueue.findAllByTypeNotEqual('newRelease'), [status: OK]
     }
 
     @Transactional
@@ -93,7 +93,7 @@ class NotificationQueueController {
 
     @Transactional
     def sendCurrentNotifcations() {
-        def notificationQueues = NotificationQueue.findAllByIsCompleted(false)
+        def notificationQueues = NotificationQueue.findAllByIsCompletedAndTypeNotEqual(false, 'newRelease')
 
 
         if(!notificationQueues){
@@ -123,5 +123,65 @@ class NotificationQueueController {
         }
 
         render status: OK
+    }
+
+    @Transactional
+    def highlightOnDashboard(){
+        def data = request.JSON
+        def movie
+        def tvShow
+        def id = data.mediaId
+        def mediaType = data.mediaType
+        def videoToPlay = Video.get(data.videoToPlay?.id ?: data.mediaId)
+        if(mediaType == 'movie'){
+            movie = Movie.get(id)
+        }else{
+            tvShow = TvShow.get(id)
+        }
+
+        if(!videoToPlay){
+            response.setStatus(NOT_ACCEPTABLE.value())
+            render ([message: 'Internal Server error: no Video selected to play.'] as JSON)
+            return
+        }
+
+        if(!videoToPlay.hasFiles()){
+            response.setStatus(NOT_ACCEPTABLE.value())
+            render ([message: 'The video you selected does not have an associated File to play.'] as JSON)
+            return
+        }
+
+        if(!movie && !tvShow){
+            render status: NOT_ACCEPTABLE
+            return
+        }
+
+        def duplicateCount = NotificationQueue.where{
+            type == 'newRelease'
+            if(movie){
+                movie == movie
+            }
+            if(tvShow){
+                tvShow == tvShow
+            }
+            if(videoToPlay){
+                videoToPlay == videoToPlay
+            }
+        }.count()
+        if(duplicateCount > 0){
+            response.setStatus(CONFLICT.value())
+            render ([message: 'You already have a highlight for this Video'] as JSON)
+            return
+        }
+
+        NotificationQueue notification = new NotificationQueue()
+        notification.type = 'newRelease'
+        notification.description = data.description
+        notification.movie = movie
+        notification.tvShow = tvShow
+        notification.videoToPlay = videoToPlay
+        notification.save(failOnError: true)
+
+        respond notification
     }
 }

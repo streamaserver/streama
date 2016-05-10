@@ -200,6 +200,9 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			addMovieToCurrentNotification: function (movieId) {
 				return $http.get(urlBase + 'notificationQueue/addMovieToCurrentNotification.json', {params: {id: movieId}});
 			},
+			highlightOnDashboard: function (newRelease) {
+				return $http.post(urlBase + 'notificationQueue/highlightOnDashboard.json', newRelease);
+			},
 			addTvShowToCurrentNotification: function (tvShowId, text) {
 				return $http.get(urlBase + 'notificationQueue/addTvShowToCurrentNotification.json', {params: {id: tvShowId, description: text}});
 			},
