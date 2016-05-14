@@ -19,6 +19,7 @@ streamaApp.controller('modalFileCtrl', [
         if(_.find($scope.video.files, {id: data.id})){
           $scope.video.files[_.indexOf($scope.video.files, {id: data.id})] = data;
         }else{
+          $scope.video.files = $scope.video.files || [];
           $scope.video.files.push(data);
         }
       });
