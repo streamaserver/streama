@@ -5,18 +5,20 @@
 
 
     <div uis-owl-carousel class="new-releases-slider" >
-      <div ng-repeat="newRelease in newReleases" class="new-releases-slide" style="background-image: url('https://image.tmdb.org/t/p/w1280/{{newRelease.media.backdrop_path}}')">
+      <div ng-repeat="newRelease in newReleases" class="new-releases-slide">
         <img class="poster-image" ng-src="https://image.tmdb.org/t/p/w342/{{newRelease.media.poster_path}}" class="pull-left">
-        <i class="info-icon ion-ios-information" ng-click="showDetails(newRelease.media)"></i>
-        <div class="new-release-footer">
-          <a class="play-icon ion-ios-play" ui-sref="player({videoId: newRelease.videoToPlayId})"></a>
-          <div class="new-releases-description">
-            <h3>
-              {{newRelease.media.title || newRelease.media.name}}
-              <span ng-if="newRelease.media.release_date">({{newRelease.media.release_date.substring(0,4)}})</span>
-            </h3>
-            <h4>{{newRelease.description}}</h4>
-            <p>{{newRelease.media.overview}}</p>
+        <div class="image-background" style="background-image: url('https://image.tmdb.org/t/p/w1280/{{newRelease.media.backdrop_path}}')">
+          <i class="info-icon ion-ios-information" ng-click="showDetails(newRelease.media)"></i>
+          <div class="new-release-footer">
+            <a class="play-icon ion-ios-play" ui-sref="player({videoId: newRelease.videoToPlayId})"></a>
+            <div class="new-releases-description">
+              <h3>
+                {{newRelease.media.title || newRelease.media.name}}
+                <span ng-if="newRelease.media.release_date">({{newRelease.media.release_date.substring(0,4)}})</span>
+              </h3>
+              <h4>{{newRelease.description}}</h4>
+              <p>{{newRelease.media.overview}}</p>
+            </div>
           </div>
         </div>
       </div>

@@ -93,15 +93,18 @@
     }
     .owl-item{
       .poster-image{
-        float: left;
         width: auto;
       }
     }
 
     .new-releases-slide{
-      @include clearfix;
-      background-size: cover;
-      background-position: 50% 50%;
+      @include flexbox();
+
+      .image-background{
+        @include flex(1);
+        background-size: cover;
+        background-position: 50% 0%;
+      }
     }
     .info-icon{
       position: absolute;

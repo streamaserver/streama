@@ -1051,15 +1051,21 @@ hr {
       text-align: center;
       padding: 10px; }
     .new-releases-slider.owl-carousel .owl-item .poster-image {
-      float: left;
       width: auto; }
     .new-releases-slider.owl-carousel .new-releases-slide {
-      background-size: cover;
-      background-position: 50% 50%; }
-      .new-releases-slider.owl-carousel .new-releases-slide:after {
-        content: "";
-        display: table;
-        clear: both; }
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex; }
+      .new-releases-slider.owl-carousel .new-releases-slide .image-background {
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        background-size: cover;
+        background-position: 50% 0%; }
     .new-releases-slider.owl-carousel .info-icon {
       position: absolute;
       bottom: 7px;
