@@ -12,8 +12,8 @@ and it gets approved, the language will be added in the profile language selecto
 <img src="docs/changelog-highlighting.png"/>
 - We now have a help section in streama with some helpful info and FAQ. Thanks @JanneNiemela !
 - Multiple cosmetic changes, thanks @JanneNiemela, @LorenzoGarbanzo, @jsniemela !
-- implemented feature to add videos from external URL (http Link)
-
+- implemented feature to add videos from external URL (http Link)  
+<img src="docs/changelog-externalUrl.png"/>
 
 
 ## [0.2.0] - 2016-03-08
