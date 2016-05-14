@@ -31,7 +31,8 @@
     "Autolinker.js": "^0.26.0",
     "ui-select": "angular-ui-select#^0.16.1",
     "lodash": "^4.11.2",
-    "owl.carousel": "OwlCarousel2#^2.1.1"
+    "owl.carousel": "OwlCarousel2#^2.1.1",
+    "angular-translate": "^2.11.0"
   },
   "install": {
     "path": "grails-app/assets/bower"
