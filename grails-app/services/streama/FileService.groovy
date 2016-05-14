@@ -64,6 +64,9 @@ class FileService {
 
 
   def fullyRemoveFile(File file){
+    if(file.externalLink){
+      return
+    }
     if(file.associatedVideosInclDeleted){
       file.associatedVideosInclDeleted.each{ video ->
         video.removeFromFiles(file)
