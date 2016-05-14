@@ -5,8 +5,8 @@ streamaApp.factory('playerService', [
   function ($stateParams, $sce, $state, $rootScope, socketService, apiService, $interval, $filter) {
 
     var videoData = null;
-
-    var videoOptions = {
+    var videoOptions;
+    var defaultVideoOptions = {
       customStartingTime: 0,
       rememberVolumeSetting: true,
       videoMetaTitle: '',
@@ -38,6 +38,7 @@ streamaApp.factory('playerService', [
         return videoOptions;
       },
       setVideoOptions: function (video) {
+        videoOptions = angular.copy(defaultVideoOptions);
         videoData = video;
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src);
         videoOptions.videoType = video.files[0].contentType;
@@ -51,6 +52,7 @@ streamaApp.factory('playerService', [
         videoOptions.videoMetaDescription = video.overview;
 
         if(videoData.nextEpisode){
+          console.log('%c showNextButton', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
           videoOptions.showNextButton = true;
         }
 
