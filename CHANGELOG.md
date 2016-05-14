@@ -6,10 +6,10 @@
 Right now, only English is implemented. You are welcome to contribute! Simply add a copy of the fle at  
 `/grails-app/assets/javascripts/translations/EN_us.js`, name it with your language token, and translate away! Once you mead a Pull Request 
 and it gets approved, the language will be added in the profile language selector.  
-<img src="docs/changelog-language.png" width="300px;"/>
+<img src="docs/changelog-language.png"/>
 
 - Added Content Highlighting for the Dashboard. You can now present your users with a pretty slideshow  
-<img src="docs/changelog-highlighting.png" width="300px;"/>
+<img src="docs/changelog-highlighting.png"/>
 - We now have a help section in streama with some helpful info and FAQ. Thanks @JanneNiemela !
 - Multiple cosmetic changes, thanks @JanneNiemela, @LorenzoGarbanzo, @jsniemela !
 - implemented feature to add videos from external URL (http Link)
