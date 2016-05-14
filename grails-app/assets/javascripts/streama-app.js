@@ -62,7 +62,6 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$tr
 
 streamaApp.run(
   function ($rootScope, $state, localStorageService, apiService, modalService, userService) {
-		$rootScope.availableLanguages = ['en', 'de'];
 
 		apiService.currentUser().success(function (data) {
 			userService.setCurrentUser(data);

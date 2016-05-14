@@ -4,5 +4,9 @@
 angular.module('streama.translations', ['pascalprecht.translate'])
 	.config(function ($translateProvider) {
 		$translateProvider.preferredLanguage('en');
+	})
+
+	.run(function ($rootScope) {
+	$rootScope.availableLanguages = ['en'];
 	});
 
