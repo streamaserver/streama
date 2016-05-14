@@ -15,7 +15,12 @@ streamaApp.controller('modalFileCtrl', [
         alertify.success("External Url Added.");
         //$scope.video.files.push(data);
         $scope.video.externalLink = null;
-        _.pushOrReplace($scope.video.files, data);
+
+        if(_.find($scope.video.files, {id: data.id})){
+          $scope.video.files[_.indexOf($scope.video.files, {id: data.id})] = data;
+        }else{
+          $scope.video.files.push(data);
+        }
       });
     };
 
