@@ -587,7 +587,7 @@ class MarshallerService {
           }
 
           if(nextEpisode && nextEpisode.files){
-            returnArray['nextEpisode'] = nextEpisode
+            returnArray['nextEpisode'] = [id: nextEpisode?.id]
           }
         }
         if(video instanceof Movie){
