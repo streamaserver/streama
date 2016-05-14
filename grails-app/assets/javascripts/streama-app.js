@@ -1,4 +1,5 @@
 //= require systaro/core/systaro.core
+//= require translations/streama.translations
 
 'use strict';
 
@@ -7,7 +8,7 @@ var streamaApp = angular.module('streamaApp', [
 	'ui.bootstrap',
 	'ngFileUpload',
 	'ui.slider',
-	'pascalprecht.translate',
+	'streama.translations',
 	'LocalStorageModule',
 	'ui.select',
 	'ngSanitize',
@@ -19,7 +20,6 @@ var streamaApp = angular.module('streamaApp', [
 streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider',
 	function ($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider) {
 
-	$translateProvider.preferredLanguage('en');
 	$urlRouterProvider.otherwise('/dash');
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -61,8 +61,12 @@ streamaApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$tr
 
 
 streamaApp.run(
-  ['$rootScope', '$state', 'localStorageService', 'apiService', 'modalService',
-  function ($rootScope, $state, localStorageService, apiService, modalService) {
+  function ($rootScope, $state, localStorageService, apiService, modalService, userService) {
+		$rootScope.availableLanguages = ['en', 'de'];
+
+		apiService.currentUser().success(function (data) {
+			userService.setCurrentUser(data);
+		});
 
     $rootScope.baseData = {};
     $rootScope.isCurrentState = function (stateName) {
@@ -102,4 +106,4 @@ streamaApp.run(
         localStorageService.set('originUrl', location.href);
       }
     });
-}]);
+});

@@ -35,7 +35,7 @@
 		<div class="browse-genres" ng-if="isCurrentState('dash') && genres.length">
 			<button class="btn btn-link toggle-menu" ng-click="toggleGenreMenu()">
 				<span ng-if="selectedGenre" ng-bind="selectedGenre.name"></span>
-				<span ng-if="!selectedGenre">Browse</span>
+				<span ng-if="!selectedGenre">{{'DASHBOARD.BROWSE_GENRES' | translate}}</span>
 				<i class="ion-android-arrow-dropdown"></i>
 			</button>
 
@@ -65,28 +65,30 @@
 				</div>
 			</li>
 			<sec:ifLoggedIn>
-				<li><a ui-sref="dash">Dashboard</a></li>
+				<li><a ui-sref="dash">{{'DASHBOARD.TITLE' | translate}}</a></li>
 			</sec:ifLoggedIn>
 
 			<sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
-				<li><a ui-sref="admin.shows">Manage Content</a></li>
+				<li><a ui-sref="admin.shows">{{'MANAGE_CONTENT' | translate}}</a></li>
 			</sec:ifAnyGranted>
 
       <sec:ifLoggedIn>
-        <li><a ui-sref="settings.settings">Admin</a></li>
+        <li><a ui-sref="settings.settings">{{'ADMIN' | translate}}</a></li>
       </sec:ifLoggedIn>
 
       <sec:ifLoggedIn>
         <li>
 					<div class="btn-group" uib-dropdown is-open="status.isopen" style="margin: 4px 0;">
-						<button id="single-button" type="button" class="btn btn-primary btn-sm" uib-dropdown-toggle ng-disabled="disabled">
+						<button id="single-button" type="button" class="btn btn-primary btn-sm"
+										uib-dropdown-toggle ng-disabled="disabled">
 							{{$root.currentUser.fullName || $root.currentUser.username}} <span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-							<li role="menuitem"><a ui-sref="help">Help / FAQ</a></li>
-							<li role="menuitem"><a ui-sref="profile">Profile Settings</a></li>
+						<ul class="dropdown-menu dropdown-menu-right"
+								uib-dropdown-menu role="menu" aria-labelledby="single-button">
+							<li role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>
+							<li role="menuitem"><a ui-sref="profile">{{'PROFILE_SETTINGS' | translate}}</a></li>
 							<li class="divider"></li>
-							<li><g:link uri="/j_spring_security_logout">Logout</g:link></li>
+							<li><g:link uri="/j_spring_security_logout">{{'LOGOUT' | translate}}</g:link></li>
 						</ul>
 					</div>
 				</li>

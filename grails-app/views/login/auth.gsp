@@ -1,37 +1,37 @@
 <html>
 <head>
 	<meta name='layout' content='noAngular'/>
-	<title><g:message code="springSecurity.login.title"/></title>
+	<title>Streama</title>
 </head>
 
 <body>
-<div id='login'>
+<div id='login' ng-app="streama.translations">
 	<div class='inner'>
-		<div class='fheader'><g:message code="springSecurity.login.header"/></div>
+		<div class='fheader'>{{'LOGIN.TITLE' | translate}}</div>
 
 		<g:if test='${flash.message}'>
-			<div class='login_message'>${flash.message}</div>
+			<div class='login_message'>${flash as grails.converters.JSON}</div>
 		</g:if>
 
 		<form action='${postUrl}' method='POST' id='loginForm' class='cssform form-horizontal' autocomplete='off'>
 
 			<div class="form-group">
-				<label for="inputEmail" class="col-lg-2 control-label">Username</label>
+				<label for="inputEmail" class="col-lg-2 control-label">{{'LOGIN.USERNAME' | translate}}</label>
 				<div class="col-lg-10">
-					<input type="text" name="j_username" class="form-control" placeholder="Username">
+					<input type="text" name="j_username" class="form-control" placeholder="{{'LOGIN.USERNAME' | translate}}">
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="inputPassword" class="col-lg-2 control-label">Password</label>
+				<label for="inputPassword" class="col-lg-2 control-label">{{'LOGIN.PASSWORD' | translate}}</label>
 				<div class="col-lg-10">
-					<input type="password" name='j_password' class="form-control" placeholder="Password">
+					<input type="password" name='j_password' class="form-control" placeholder="{{'LOGIN.PASSWORD' | translate}}">
 				</div>
 			</div>
-      <span>First time logging in? Try 'admin' for both fields.
+      <span>{{'LOGIN.FIRST_TIME_HINT' | translate}}
 			<input style="display: none;" type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' checked='checked'/>
 
-			<button class="btn btn-primary pull-right">Submit</button></span>
+			<button class="btn btn-primary pull-right">{{'LOGIN.SUBMIT' | translate}}</button></span>
 		</form>
 	</div>
 </div>

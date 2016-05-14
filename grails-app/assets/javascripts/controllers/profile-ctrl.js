@@ -1,10 +1,11 @@
 'use strict';
 
-streamaApp.controller('profileCtrl', ['$scope', 'apiService', '$rootScope', function ($scope, apiService, $rootScope) {
+streamaApp.controller('profileCtrl', function ($scope, apiService, $rootScope, userService) {
   $scope.user = angular.copy($rootScope.currentUser);
   $scope.loading = true;
   $scope.passwordData = {};
   $scope.passwordsInvalid = true;
+  $scope.languages = true;
 
 
   apiService.theMovieDb.availableGenres().success(function (data) {
@@ -29,8 +30,9 @@ streamaApp.controller('profileCtrl', ['$scope', 'apiService', '$rootScope', func
     apiService.user.saveProfile($scope.user)
       .success(function (data) {
         $scope.loading = false;
-        $rootScope.currentUser = data;
+        userService.setCurrentUser(data);
         alertify.success('Your profile was successfully saved.');
+        $scope.profileForm.$setPristine();
       })
       .error(function () {
         $scope.loading = false;
@@ -66,4 +68,4 @@ streamaApp.controller('profileCtrl', ['$scope', 'apiService', '$rootScope', func
       });
   };
 
-}]);
+});

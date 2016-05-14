@@ -1,11 +1,11 @@
 <div class="profile">
   <div class="profile-heading">
     <div class="btn-group pull-right">
-        <button class="btn btn-primary" ng-click="saveProfile()">Save Profile</button>
-        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()">Change Password</button>
+        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()">{{'CHANGE_PASSWORD' | translate}}</button>
     </div>
     <h1>
-      <i class="ion-ios-arrow-thin-left" ng-if="changePasswordIsActive" ng-click="toggleChangePassword()"></i> Profile
+      <i class="ion-ios-arrow-thin-left" ng-if="changePasswordIsActive" ng-click="toggleChangePassword()"></i>
+      {{'PROFILE_SETTINGS' | translate}}
 
       <div class="spinner" ng-show="loading">
         <div class="bounce1"></div>
@@ -18,29 +18,38 @@
   </div>
 
   <div class="profile-inner" ng-class="{'password-active': changePasswordIsActive}">
-    <form class="form-horizontal">
+    <form name="profileForm" class="form-horizontal">
 
       <div class="form-group" >
         <div class="col-sm-3">
-          <label class="control-label">Username</label>
+          <label class="control-label">{{'PROFIlE.USERNAME' | translate}}</label>
         </div>
         <div class="col-sm-9">
-          <input type="email" class="form-control" disabled ng-model="user.username" placeholder="Username">
+          <input type="email" class="form-control" disabled ng-model="user.username" placeholder="{{'PROFIlE.USERNAME' | translate}}">
         </div>
       </div>
 
       <div class="form-group" >
         <div class="col-sm-3">
-          <label class="control-label">Full Name</label>
+          <label class="control-label">{{'PROFIlE.FULL_NAME' | translate}}</label>
         </div>
         <div class="col-sm-9">
-          <input type="text" class="form-control" ng-model="user.fullName" placeholder="Full Name">
+          <input type="text" class="form-control" ng-model="user.fullName" placeholder="{{'PROFIlE.FULL_NAME' | translate}}">
         </div>
       </div>
 
       <div class="form-group" >
         <div class="col-sm-3">
-          <label class="control-label">Pause Video on Click</label>
+          <label class="control-label">{{'PROFIlE.LANGUAGE' | translate}}</label>
+        </div>
+        <div class="col-sm-9">
+          <select class="form-control" ng-model="user.language" ng-options="lang as ('LANGUAGE_'+lang | translate) for lang in $root.availableLanguages"></select>
+        </div>
+      </div>
+
+      <div class="form-group" >
+        <div class="col-sm-3">
+          <label class="control-label">{{'PROFIlE.PAUSE_ON_CLICK' | translate}}</label>
         </div>
         <div class="col-sm-9">
           <input type="checkbox" ng-model="user.pauseVideoOnClick">
@@ -50,7 +59,7 @@
 
       <div class="form-group" ng-show="availableGenres.length">
         <div class="col-sm-3">
-          <label class="control-label">Favorite Genres</label>
+          <label class="control-label">{{'PROFIlE.FAVORITE_GENRES' | translate}}</label>
         </div>
         <div class="col-sm-9">
           <ul class="genre-list">
@@ -63,6 +72,9 @@
 
       <hr/>
 
+
+      <button class="btn btn-success pull-right" ng-show="profileForm.$dirty" ng-click="saveProfile()">{{'PROFIlE.SAVE' | translate}}</button>
+
       
 
     </form>
@@ -71,27 +83,29 @@
     <form class="form-horizontal password-form">
       <div class="form-group" >
         <div class="col-sm-3">
-          <label class="control-label">Old Password</label>
+          <label class="control-label">{{'PROFIlE.OLD_PASS' | translate}}</label>
         </div>
         <div class="col-sm-9">
-          <input type="password" class="form-control" ng-model="passwordData.oldPassword" placeholder="Old Password">
+          <input type="password" class="form-control" ng-model="passwordData.oldPassword" placeholder="{{'PROFIlE.OLD_PASS' | translate}}">
         </div>
       </div>
       <div class="form-group" ng-class="{'has-success has-feedback': !passwordsInvalid}">
         <div class="col-sm-3">
-          <label class="control-label">New Password</label>
+          <label class="control-label">{{'PROFIlE.NEW_PASS' | translate}}</label>
         </div>
         <div class="col-sm-9">
-          <input type="password" class="form-control" ng-model="passwordData.newPassword" placeholder="New Password  (min. 6 Characters)" ng-change="validatePasswords()">
+          <input type="password" class="form-control" ng-model="passwordData.newPassword" placeholder="{{'PROFIlE.NEW_PASS_PLACEHOLDER' | translate}}"
+                 ng-change="validatePasswords()">
           <span class="ion-checkmark form-control-feedback" ng-show="!passwordsInvalid" aria-hidden="true"></span>
         </div>
       </div>
       <div class="form-group" ng-class="{'has-success has-feedback': !passwordsInvalid}">
         <div class="col-sm-3">
-          <label class="control-label">Repeat Password</label>
+          <label class="control-label">{{'PROFIlE.REPEAT_PASS' | translate}}</label>
         </div>
         <div class="col-sm-9">
-          <input type="password" class="form-control" ng-model="passwordData.repeatPassword" placeholder="Repeat Password" ng-change="validatePasswords()">
+          <input type="password" class="form-control" ng-model="passwordData.repeatPassword" placeholder="{{'PROFIlE.REPEAT_PASS' | translate}}"
+                 ng-change="validatePasswords()">
           <span class="ion-checkmark form-control-feedback" ng-show="!passwordsInvalid" aria-hidden="true"></span>
         </div>
       </div>
@@ -99,7 +113,9 @@
       <hr/>
 
       <div class="btn-group pull-right">
-        <button type="button" class="btn btn-secondary" ng-disabled="passwordsInvalid" ng-click="saveNewPassword()">Set New Password</button>
+        <button type="button" class="btn btn-secondary" ng-disabled="passwordsInvalid" ng-click="saveNewPassword()">
+          {{'PROFIlE.SAVE_PASS' | translate}}
+        </button>
       </div>
     </form>
   </div>

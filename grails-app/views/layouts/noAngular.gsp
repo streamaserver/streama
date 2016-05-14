@@ -17,6 +17,7 @@
 	<asset:javascript src="application.js"/>
 
 	<g:layoutHead/>
+
 </head>
 <body>
 

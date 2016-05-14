@@ -20,7 +20,7 @@ class User {
 	boolean invitationSent = false
 	boolean pauseVideoOnClick = true
 	String uuid
-
+	String language = 'en'
   String fullName
 
 	static transients = ['springSecurityService']

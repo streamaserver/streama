@@ -32,17 +32,21 @@
    <div class="row">
      <div class="col-sm-8">
        <ul class="info-list">
-         <li><strong>Released: </strong> {{media.release_date.substring(0,4) || media.first_air_date.substring(0,4)}}</li>
-         <li><strong>IMDB: </strong> <a target="_blank" href="http://www.imdb.com/title/{{media.imdb_id}}">{{media.name || media.title}}</a></li>
-         <li><strong>Rating: </strong> {{media.vote_average}}/10 ({{media.vote_count}} votes)</li>
+         <li><strong>{{'VIDEO.RELEASED' | translate}}: </strong> {{media.release_date.substring(0,4) || media.first_air_date.substring(0,4)}}</li>
+         <li><strong>{{'VIDEO.IMDB' | translate}}: </strong>
+           <a target="_blank" href="http://www.imdb.com/title/{{media.imdb_id}}">{{media.name || media.title}}</a>
+         </li>
+         <li><strong>{{'VIDEO.RATING' | translate}}: </strong>
+           {{media.vote_average}}/10 ({{media.vote_count}} {{'VIDEO.VOTES' | translate}})
+         </li>
        </ul>
 
        <hr/>
-       <h4>Overview</h4>
+       <h4>{{'VIDEO.OVERVIEW' | translate}}</h4>
        <p class="overview-text">{{media.overview}}</p>
 
 
-       <h4>Genre</h4>
+       <h4>{{'VIDEO.GENRE' | translate}}</h4>
        <ul class="genre-list">
          <li class="genre-tag interactive" ng-repeat="genre in media.genre" ui-sref="dash({genreId: genre.id})">
            {{genre.name}}
@@ -50,8 +54,9 @@
        </ul>
 
        <div ng-if="media.trailerKey">
-         <h4>Trailer</h4>
-         <iframe width="560" height="315" ng-src="{{'https://www.youtube.com/embed/'+media.trailerKey+'?rel=0' | trustResourceUrl}}" frameborder="0" allowfullscreen></iframe>
+         <h4>{{'VIDEO.TRAILER' | translate}}</h4>
+         <iframe width="560" height="315" ng-src="{{'https://www.youtube.com/embed/'+media.trailerKey+'?rel=0' | trustResourceUrl}}"
+                 frameborder="0" allowfullscreen></iframe>
        </div>
      </div>
      <div class="col-sm-4">
@@ -65,7 +70,7 @@
    <div class="season-picker-list">
     <span class="season-picker-item" ng-class="{'active': currentSeason == season}" ng-click="setCurrentSeason(season)"
           ng-repeat="(season, episodes) in seasons | orderBy:'season'">
-      Season {{season}}
+      {{'VIDEO.SEASON' | translate}} {{season}}
     </span>
    </div>
 

@@ -24,6 +24,7 @@ class MarshallerService {
       returnArray['dateCreated'] = user.dateCreated
       returnArray['fullName'] = user.fullName
       returnArray['invitationSent'] = user.invitationSent
+      returnArray['language'] = user.language
       returnArray['favoriteGenres'] = user.favoriteGenres
       returnArray['isAdmin'] = (user.authorities.find{it.authority == 'ROLE_ADMIN'} ? true : false)
       returnArray['isContentManager'] = (user.authorities.find{it.authority == 'ROLE_CONTENT_MANAGER'} ? true : false)

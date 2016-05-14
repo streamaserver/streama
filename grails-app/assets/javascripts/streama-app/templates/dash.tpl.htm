@@ -1,6 +1,8 @@
+
 <div class="dashboard">
-  <div ng-if="newReleases.length">
-    <h3>New Releases</h3>
+  <div ng-if="newReleases.length && !selectedGenre">
+    <h3>{{'DASHBOARD.NEW_RELEASES' | translate}}</h3>
+
 
     <div uis-owl-carousel class="new-releases-slider" >
       <div ng-repeat="newRelease in newReleases" class="new-releases-slide" style="background-image: url('https://image.tmdb.org/t/p/w1280/{{newRelease.media.backdrop_path}}')">
@@ -22,10 +24,10 @@
   </div>
 
 
-  <h2 class="genre-display" ng-if="selectedGenre">Youre looking at the genre: <strong ng-bind="selectedGenre.name"></strong></h2>
+  <h2 class="genre-display" ng-if="selectedGenre">{{'DASHBOARD.LOOKING_AT_GENRE' | translate}} <strong ng-bind="selectedGenre.name"></strong></h2>
 
   <div ng-if="continueWatching.length && !selectedGenre">
-    <h3>Continue watching</h3>
+    <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}</h3>
 
 
     <div class="media-list media-list-continue-watching">
@@ -33,12 +35,15 @@
         <div class="media-item" >
 
           <img ng-if="viewingStatus.video.poster_image_src" ng-src="{{::viewingStatus.video.poster_image_src}}"/>
-          <img ng-if="!viewingStatus.video.poster_image_src && viewingStatus.video.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{::viewingStatus.video.poster_path}}"/>
-          <img ng-if="!viewingStatus.video.poster_path && !viewingStatus.video.poster_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
+          <img ng-if="!viewingStatus.video.poster_image_src && viewingStatus.video.poster_path"
+               ng-src="https://image.tmdb.org/t/p/w300/{{::viewingStatus.video.poster_path}}"/>
+          <img ng-if="!viewingStatus.video.poster_path && !viewingStatus.video.poster_image_src"
+               ng-src="{{basePath}}assets/poster-not-found.png"/>
 
           <div class="play-text">
             <h4>Continue "<span ng-bind="::(viewingStatus.video.title || viewingStatus.video.show.name)"></span>"</h4>
-            <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">Mark completed</button>
+            <button class=" btn btn-secondary btn-xss complete-watching" ng-click="markCompleted(viewingStatus)">
+              {{'DASHBOARD.MARK_COMPLETED' | translate}}</button>
             <p ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span></p>
           </div>
 
@@ -48,7 +53,9 @@
 
         <div class="media-progress-wrapper">
 
-          <div class="progress-info" ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span> - <span ng-bind="::viewingStatus.video.title"></span></div>
+          <div class="progress-info" ng-show="viewingStatus.video.isEpisode">
+            <span ng-bind="::viewingStatus.video.episodeString"></span> - <span ng-bind="::viewingStatus.video.title"></span>
+          </div>
           <div class="progress-info" ng-show="!viewingStatus.video.isEpisode" ng-bind="::viewingStatus.video.title"></div>
 
           <div class="progress-time"><span ng-bind="::(viewingStatus.currentPlayTime | secondsToDateTime | date:'mm:ss')"></span> min</div>
@@ -66,18 +73,19 @@
 
   <div>
     <h3>
-      <span ng-show="!selectedGenre">Discover Shows</span>
+      <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_SHOWS' | translate}}</span>
       <span ng-show="selectedGenre">{{::selectedGenre.name}} TV Shows</span>
     </h3>
 
     <div class="row dash-filter">
       <div class="col-md-3 col-lg-3 col-sm-4">
-        Sort:
+        {{'DASHBOARD.SORT' | translate}}
         <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown>
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
-        <input class="form-control input-sm" type="text" ng-model="dashFilter.tvShow.name" placeholder="Search by Name..." />
+        <input class="form-control input-sm" type="text" ng-model="dashFilter.tvShow.name"
+               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" />
       </div>
     </div>
     <br>
@@ -89,7 +97,7 @@
     </div>
 
     <p class="no-episodes-yet" ng-show="!tvShows.length">
-      No Tv-Shows Available
+      {{'DASHBOARD.NO_TVSHOWS_FOUND' | translate}}
     </p>
 
     <div class="media-list">
@@ -116,17 +124,18 @@
 
   <div >
     <h3>
-      <span ng-show="!selectedGenre">Discover Movies</span>
+      <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_MOVIES' | translate}}</span>
       <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>
      </h3>
 
     <div class="row dash-filter" ng-hide="!dashFilter.movie && !movies.length">
       <div class="col-md-3 col-lg-3 col-sm-4">
-        Sort: <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
+        {{'DASHBOARD.SORT' | translate}}
+        <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
       <div class="col-md-2 col-lg-2 col-sm-2">
         <ui-select class="tag-select" multiple ng-model="dashFilter.movie.tags" theme="bootstrap" title="Filter by Tag">
-          <ui-select-match placeholder="Filter by Tag...">{{$item.name}}</ui-select-match>
+          <ui-select-match placeholder="{{'DASHBOARD.FILTER_BY_TAG' | translate}}">{{$item.name}}</ui-select-match>
           <ui-select-choices repeat="tag in tags | propsFilter: {name: $select.search}">
             <div class="tag-wrapper">
               <div class="tag-name" ng-bind-html="tag.name | highlight: $select.search"></div>
@@ -136,7 +145,8 @@
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
-        <input class="form-control input-sm" type="text" ng-model="dashFilter.movie.title" placeholder="Search by Title..." />
+        <input class="form-control input-sm" type="text" ng-model="dashFilter.movie.title"
+               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" />
       </div>
     </div>
     <br>
@@ -148,7 +158,8 @@
     </div>
 
     <p class="no-episodes-yet" ng-show="!movies.length">
-      No Movies Available
+
+      {{'DASHBOARD.NO_MOVIES_FOUND' | translate}}
     </p>
 
     <div class="media-list">
@@ -174,13 +185,14 @@
 
   <div ng-if="genericVideos.length">
     <h3>
-      <span ng-show="!selectedGenre">Other Videos</span>
+      <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_OTHER_VIDEOS' | translate}}</span>
       <span ng-show="selectedGenre">{{::selectedGenre.name}} Videos</span>
      </h3>
 
     <div class="row dash-filter">
       <div class="col-md-3 col-lg-3 col-sm-4">
-        Sort: <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
+        {{'DASHBOARD.SORT' | translate}}
+        <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
