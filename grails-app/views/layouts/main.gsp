@@ -73,16 +73,24 @@
 			</sec:ifAnyGranted>
 
       <sec:ifLoggedIn>
-        <li><a ui-sref="settings.settings">Settings</a></li>
+        <li><a ui-sref="settings.settings">Admin</a></li>
       </sec:ifLoggedIn>
 
       <sec:ifLoggedIn>
-        <li><a ui-sref="help">Help</a></li>
+        <li>
+					<div class="btn-group" uib-dropdown is-open="status.isopen" style="margin: 4px 0;">
+						<button id="single-button" type="button" class="btn btn-primary btn-sm" uib-dropdown-toggle ng-disabled="disabled">
+							{{$root.currentUser.fullName || $root.currentUser.username}} <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+							<li role="menuitem"><a ui-sref="help">Help / FAQ</a></li>
+							<li role="menuitem"><a ui-sref="profile">Profile Settings</a></li>
+							<li class="divider"></li>
+							<li><g:link uri="/j_spring_security_logout">Logout</g:link></li>
+						</ul>
+					</div>
+				</li>
       </sec:ifLoggedIn>
-
-			<sec:ifLoggedIn>
-				<li><g:link uri="/j_spring_security_logout">Logout</g:link></li>
-			</sec:ifLoggedIn>
 		</ul>
 	</div>
 
