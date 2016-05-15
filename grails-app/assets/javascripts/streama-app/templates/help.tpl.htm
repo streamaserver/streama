@@ -10,7 +10,7 @@
     <ul>
       <div question-object="question" ng-repeat="question in questions" ng-cloak>
         <li>
-          <a href="" ng-click="gotoAnchor(question.id)">{{question.id}}. {{ question.name }}</a>
+          <a href="" ng-click="gotoAnchor($index+1)">{{$index+1}}. {{ 'FAQ.' + question + '.TITLE' | translate }}</a>
         </li>
       </div>
     </ul>
@@ -22,7 +22,7 @@
   <div class="admin-content">
 
     <h1>
-      Help
+      {{'HELP_FAQ' | translate}}
 
       <div class="spinner" ng-show="loading">
         <div class="bounce1"></div>
@@ -38,9 +38,9 @@
 
     <div question-object="question" ng-repeat="question in questions" ng-cloak>
       <br>
-      <h2 id ="question{{question.id}}" class="anchor">{{question.id}}. {{ question.name }}</h2>
+      <h2 id ="question{{$index+1}}" class="anchor">{{$index+1}}. {{ 'FAQ.' + question + '.TITLE' | translate }}</h2>
       <br>
-      <p>{{ question.answer }}</p>
+      <p>{{ 'FAQ.' + question + '.TEXT' | translate }}</p>
       <br>
       <br>
       <br>
