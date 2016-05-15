@@ -3,7 +3,8 @@
  */
 angular.module('streama.translations', ['pascalprecht.translate'])
 	.config(function ($translateProvider) {
-		$translateProvider.preferredLanguage('en');
+		$translateProvider.determinePreferredLanguage();
+		$translateProvider.fallbackLanguage('en');
 	})
 
 	.run(function ($rootScope) {
