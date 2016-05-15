@@ -28,7 +28,10 @@
 					<input type="password" name='j_password' class="form-control" placeholder="{{'LOGIN.PASSWORD' | translate}}">
 				</div>
 			</div>
-      <span>{{'LOGIN.FIRST_TIME_HINT' | translate}}
+      <span>
+				<g:if test="${streama.Settings.findBySettingsKey('First Time Login Info').value == 'true'}">
+					{{'LOGIN.FIRST_TIME_HINT' | translate}}
+				</g:if>
 			<input style="display: none;" type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' checked='checked'/>
 
 			<button class="btn btn-primary pull-right">{{'LOGIN.SUBMIT' | translate}}</button></span>
