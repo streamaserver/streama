@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.1.RC - 2016-05-18
+### Features
+- now you dont need to manually parse your SRT files to vtt anymore! the application will do it for you on the fly! 
+
+
 ## 0.3.0.RC1 - 2016-05-15
 ### Features
 - implemented Multilanguage support for the frontend part of the app! Users can choose in their profile which language they want to see. 

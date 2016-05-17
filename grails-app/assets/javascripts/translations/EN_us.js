@@ -99,7 +99,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			SUBTITLES: {
 				TITLE: 'How can I add subtitles to videos?',
 				TEXT: "You can add subtitles to videos by clicking Manage Files button which is in the video's information page. You can drag and drop subtitle files there." +
-				" Please note that the subtitles must be .vtt format. You can use the website which link is in the Manage Files popup to convert .srt type subtitle files to .vtt."
+				" Previously you had to manually convert them into a compatible file format, but not anymore! Now the application handles that for you."
 			},
 			INVITE_USERS: {
 				TITLE: 'How can I invite friends to watch my hosted videos?',
