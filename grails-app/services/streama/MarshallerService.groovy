@@ -3,7 +3,6 @@ package streama
 
 import grails.converters.JSON
 import grails.transaction.Transactional
-import org.codehaus.groovy.grails.web.converters.configuration.DefaultConverterConfiguration
 
 @Transactional
 class MarshallerService {
@@ -163,7 +162,7 @@ class MarshallerService {
     }
 
 
-    JSON.createNamedConfig('fullShow') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('fullShow') {  cfg ->
       cfg.registerObjectMarshaller(TvShow) { TvShow  tvShow ->
         def returnArray = [:]
 
@@ -192,7 +191,7 @@ class MarshallerService {
     }
 
 
-    JSON.createNamedConfig('dashViewingStatus') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('dashViewingStatus') {  cfg ->
       cfg.registerObjectMarshaller(ViewingStatus) { ViewingStatus  viewingStatus ->
         def returnArray = [:]
 
@@ -249,7 +248,7 @@ class MarshallerService {
 
 
 
-    JSON.createNamedConfig('firstEpisode') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('firstEpisode') {  cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
         def returnArray = [:]
 
@@ -291,7 +290,7 @@ class MarshallerService {
       }
     }
 
-    JSON.createNamedConfig('dashMovies') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('dashMovies') {  cfg ->
       cfg.registerObjectMarshaller(Movie) { Movie  movie ->
         def returnArray = [:]
 
@@ -320,7 +319,7 @@ class MarshallerService {
       }
     }
 
-    JSON.createNamedConfig('dashTvShow') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('dashTvShow') {  cfg ->
       cfg.registerObjectMarshaller(TvShow){ TvShow tvShow ->
         def returnArray = [:]
 
@@ -348,7 +347,7 @@ class MarshallerService {
       }
     }
 
-    JSON.createNamedConfig('dashGenericVideo') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('dashGenericVideo') {  cfg ->
       cfg.registerObjectMarshaller(GenericVideo){ GenericVideo genericVideo ->
         def returnArray = [:]
 
@@ -380,7 +379,7 @@ class MarshallerService {
     }
 
 
-    JSON.createNamedConfig('fullMovie') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('fullMovie') {  cfg ->
       cfg.registerObjectMarshaller(Movie) { Movie  movie ->
         def returnArray = [:]
 
@@ -423,7 +422,7 @@ class MarshallerService {
     }
 
 
-    JSON.createNamedConfig('adminFileManager') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('adminFileManager') {  cfg ->
       cfg.registerObjectMarshaller(File) { File  file ->
         def returnArray = [:]
 
@@ -466,7 +465,7 @@ class MarshallerService {
     }
 
 
-    JSON.createNamedConfig('episodesForTvShow') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('episodesForTvShow') {  cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
         def returnArray = [:]
 
@@ -485,7 +484,7 @@ class MarshallerService {
         return returnArray;
       }
     }
-    JSON.createNamedConfig('adminEpisodesForTvShow') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('adminEpisodesForTvShow') {  cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
         def returnArray = [:]
 
@@ -508,7 +507,7 @@ class MarshallerService {
       }
     }
 
-    JSON.createNamedConfig('admin') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('admin') {  cfg ->
 
       cfg.registerObjectMarshaller(GenericVideo) { GenericVideo  genericVideo ->
         def returnArray = [:]
@@ -542,7 +541,7 @@ class MarshallerService {
     }
 
 
-    JSON.createNamedConfig('player') { DefaultConverterConfiguration<JSON> cfg ->
+    JSON.createNamedConfig('player') {  cfg ->
       cfg.registerObjectMarshaller(Video) {  Video video ->
         def returnArray = [:]
 

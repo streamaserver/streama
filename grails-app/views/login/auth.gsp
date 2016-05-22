@@ -5,7 +5,7 @@
 </head>
 
 <body>
-<div id='login' ng-app="streama.translations">
+<div id='login' ng-app="streama.translations" ng-cloak>
 	<div class='inner'>
 		<div class='fheader'>{{'LOGIN.TITLE' | translate}}</div>
 
@@ -18,21 +18,21 @@
 			<div class="form-group">
 				<label for="inputEmail" class="col-lg-2 control-label">{{'LOGIN.USERNAME' | translate}}</label>
 				<div class="col-lg-10">
-					<input type="text" name="j_username" class="form-control" placeholder="{{'LOGIN.USERNAME' | translate}}">
+					<input type="text" name="username" class="form-control" placeholder="{{'LOGIN.USERNAME' | translate}}">
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="inputPassword" class="col-lg-2 control-label">{{'LOGIN.PASSWORD' | translate}}</label>
 				<div class="col-lg-10">
-					<input type="password" name='j_password' class="form-control" placeholder="{{'LOGIN.PASSWORD' | translate}}">
+					<input type="password" name='password' class="form-control" placeholder="{{'LOGIN.PASSWORD' | translate}}">
 				</div>
 			</div>
       <span>
-				<g:if test="${streama.Settings.findBySettingsKey('First Time Login Info').value == 'true'}">
+				<g:if test="${streama.Settings.findBySettingsKey('First Time Login Info')?.value == 'true'}">
 					{{'LOGIN.FIRST_TIME_HINT' | translate}}
 				</g:if>
-			<input style="display: none;" type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' checked='checked'/>
+			<input style="display: none;" type='checkbox' name='remember_me' id='remember_me' checked='checked'/>
 
 			<button class="btn btn-primary pull-right">{{'LOGIN.SUBMIT' | translate}}</button></span>
 		</form>
@@ -41,7 +41,7 @@
 <script type='text/javascript'>
 	<!--
 	(function() {
-		document.forms['loginForm'].elements['j_username'].focus();
+		document.forms['loginForm'].elements['username'].focus();
 	})();
 	// -->
 </script>

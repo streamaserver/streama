@@ -45,7 +45,7 @@ class User {
 
 	def beforeInsert() {
 		if(!password){
-			password = randomUUID() as String
+			password  = randomUUID() as String
 		}
 
 		encodePassword()

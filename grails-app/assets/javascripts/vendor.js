@@ -8,6 +8,7 @@
 //= require spring-websocket
 //= require jquery/jquery
 //= require angular/angular
+//= require angular/angular-resource
 //= require angular-ui-router/angular-ui-router
 //= require angular-sanitize/angular-sanitize
 //= require angular-translate/angular-translate

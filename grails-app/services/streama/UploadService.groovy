@@ -2,7 +2,6 @@ package streama
 
 import grails.transaction.Transactional
 import org.apache.commons.codec.digest.DigestUtils
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest
 
 @Transactional
@@ -24,9 +23,9 @@ class UploadService {
     return storages
   }
 
-  def upload(DefaultMultipartHttpServletRequest request) {
+  def upload(request) {
 
-    CommonsMultipartFile rawFile = request.getFile('file')
+    def rawFile = request.getFile('file')
     def sha256Hex = DigestUtils.sha256Hex(rawFile.inputStream)
     def index = rawFile.originalFilename.lastIndexOf('.')
     String extension = rawFile.originalFilename[index..-1];

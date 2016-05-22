@@ -8,11 +8,13 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class NotificationQueueController {
 
+    def mailService
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index() {
-        respond NotificationQueue.findAllByTypeNotEqual('newRelease'), [status: OK]
+        def notificationQueueList = NotificationQueue.findAllByTypeIsNull()
+        respond notificationQueueList, [status: OK]
     }
 
     @Transactional
@@ -86,14 +88,15 @@ class NotificationQueueController {
         notificationQueueInstance.tvShow = tvShow
         notificationQueueInstance.description = params.description
 
-        notificationQueueInstance.save flush:true
-        render status: OK
+        notificationQueueInstance.save flush:true, failOnError: true
+        response.setStatus(OK.value())
+        respond notificationQueueInstance
     }
 
 
     @Transactional
     def sendCurrentNotifcations() {
-        def notificationQueues = NotificationQueue.findAllByIsCompletedAndTypeNotEqual(false, 'newRelease')
+        def notificationQueues = NotificationQueue.findAllByIsCompletedAndTypeIsNull(false)
 
 
         if(!notificationQueues){
@@ -107,7 +110,7 @@ class NotificationQueueController {
             if(user.username == "admin"){
                 return
             }
-            sendMail {
+            mailService.sendMail {
                 multipart true
                 to user.username
                 subject "New Content on Streama"

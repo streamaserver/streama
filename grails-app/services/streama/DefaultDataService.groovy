@@ -24,6 +24,7 @@ class DefaultDataService {
         [
             username: 'admin',
             password: 'admin',
+            fullName: 'Administrator',
             enabled: true,
             roles: [Role.findByAuthority("ROLE_ADMIN"), Role.findByAuthority("ROLE_CONTENT_MANAGER")]
         ]

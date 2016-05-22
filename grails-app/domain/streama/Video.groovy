@@ -23,6 +23,7 @@ class Video {
   static mapping = {
     cache true
     files cache: true
+    overview type: 'text'
   }
 
   static constraints = {

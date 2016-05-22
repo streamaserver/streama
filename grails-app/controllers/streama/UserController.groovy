@@ -8,6 +8,7 @@ import grails.transaction.Transactional
 class UserController {
 
   def validationService
+  def mailService
   def springSecurityService
   def passwordEncoder
 
@@ -72,7 +73,7 @@ class UserController {
 
     def data = request.JSON
 
-    User userInstance = User.findOrCreateById(data.id)
+    User userInstance = data.id ? User.get(data.id) : new User()
 
     if (userInstance == null) {
       render status: NOT_FOUND
@@ -92,7 +93,7 @@ class UserController {
       userInstance.uuid = randomUUID() as String
 
       try {
-        sendMail {
+        mailService.sendMail {
           to userInstance.username
           subject "You have been invited!"
           body(view: "/mail/userInvite", model: [user: userInstance])
@@ -120,7 +121,12 @@ class UserController {
 
 
   def current() {
-    respond springSecurityService.currentUser, [status: OK]
+    User user = springSecurityService.currentUser
+    if(user){
+      return [user: user]
+    }
+
+    respond status: UNAUTHORIZED
   }
 
   @Transactional

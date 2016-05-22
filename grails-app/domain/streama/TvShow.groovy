@@ -33,6 +33,7 @@ class TvShow {
   static mapping = {
     cache true
     episodes cache: true
+    overview type: 'text'
   }
 
 
