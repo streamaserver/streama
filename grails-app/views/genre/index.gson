@@ -1,0 +1,8 @@
+import streama.Genre
+
+model {
+	Iterable<Genre> genreList
+}
+
+json tmpl.genre(genreList ?: [])
+

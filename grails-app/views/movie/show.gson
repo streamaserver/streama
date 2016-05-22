@@ -1,0 +1,7 @@
+import streama.Movie
+
+model {
+	Movie movie
+}
+
+json tmpl.movie(movie)

@@ -36,3 +36,4 @@
 
 .slcache
 /bower-components
+/node_modules

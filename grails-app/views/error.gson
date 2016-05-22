@@ -1,0 +1,6 @@
+response.status 500
+
+json {    
+    message "Internal server error"
+    error 500
+}

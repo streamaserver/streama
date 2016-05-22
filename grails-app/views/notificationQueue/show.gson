@@ -1,0 +1,7 @@
+import streama.NotificationQueue
+
+model {
+	NotificationQueue notificationQueue
+}
+
+json tmpl.notificationQueue(notificationQueue)

@@ -1,0 +1,6 @@
+response.status 404
+
+json {
+	message "Not Found"
+	error 404
+}

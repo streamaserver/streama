@@ -1,0 +1,7 @@
+import streama.Genre
+
+model {
+	Genre genre
+}
+
+json tmpl.genre(genre)

@@ -1,0 +1,8 @@
+import streama.Movie
+
+model {
+	Iterable<Movie> movieList
+}
+
+json tmpl.movie(movieList ?: [])
+
