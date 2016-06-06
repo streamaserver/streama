@@ -29,7 +29,7 @@ class TvShowController {
       return
     }
 
-    TvShow tvShowInstance = TvShow.get(data.apiId)
+    TvShow tvShowInstance = TvShow.findByApiId(data.apiId)
 
     if (tvShowInstance == null) {
       tvShowInstance = new TvShow()
