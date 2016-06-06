@@ -35,6 +35,7 @@ class TvShowController {
       tvShowInstance = new TvShow()
     }
     tvShowInstance.properties = data
+    tvShowInstance.deleted = false
 
     if(!tvShowInstance.imdb_id && !data.manualInput){
       tvShowInstance.imdb_id = tvShowInstance.externalLinks?.imdb_id
