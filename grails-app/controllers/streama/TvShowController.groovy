@@ -29,7 +29,11 @@ class TvShowController {
       return
     }
 
-    TvShow tvShowInstance = data.id ? TvShow.get(data.id) : new TvShow()
+    TvShow tvShowInstance = TvShow.get(data.apiId)
+
+    if (tvShowInstance == null) {
+      tvShowInstance = new TvShow()
+    }
     tvShowInstance.properties = data
 
     if(!tvShowInstance.imdb_id && !data.manualInput){
