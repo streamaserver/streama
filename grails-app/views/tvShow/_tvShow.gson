@@ -4,4 +4,4 @@ model {
 	TvShow tvShow
 }
 
-json g.render(tvShow)
+json g.render(tvShow, [deep: true])
