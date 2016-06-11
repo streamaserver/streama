@@ -27,7 +27,7 @@
     <div class="pull-left flex">
         <a class="logo" ui-sref="dash">
             <asset:image src="logo.png"></asset:image>
-            <div class="version">v0.3.1</div>
+            <div class="version">v1.0.1</div>
             <div class="spinner" ng-show="baseData.loading">
                 <div class="bounce1"></div>
                 <div class="bounce2"></div>
