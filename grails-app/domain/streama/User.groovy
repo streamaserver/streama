@@ -5,6 +5,7 @@ import static java.util.UUID.randomUUID
 class User {
 
 	transient springSecurityService
+	transient settingsService
 
 	Date dateCreated
 	Date lastUpdated
@@ -54,6 +55,12 @@ class User {
 	def beforeUpdate() {
 		if (isDirty('password')) {
 			encodePassword()
+		}
+	}
+
+	def getInvitationLink(){
+		if(invitationSent && uuid){
+			return settingsService.baseUrl +  "/invite?uuid=${uuid}"
 		}
 	}
 
