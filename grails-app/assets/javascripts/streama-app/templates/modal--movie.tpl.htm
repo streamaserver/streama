@@ -125,8 +125,7 @@
   </div>
 
   <div class="modal-footer" ng-if="movie.release_date || movie.id || addManually">
-    <button class="btn btn-danger pull-left" ng-if="movie.id" ng-click="deleteMovie(movie)">Delete Movie</button>
     <button class="btn btn-success" ng-click="saveMovie(movie)" ng-disabled="!movie.title">Save</button>
-    <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
   </div>
 </form>

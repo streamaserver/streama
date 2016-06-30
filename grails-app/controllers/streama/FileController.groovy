@@ -8,6 +8,7 @@ class FileController {
 
   def uploadService
   def fileService
+  def srt2vttService
 
   def index(){
     def filter = params.filter
@@ -124,6 +125,9 @@ class FileController {
 
     if(fileService.allowedVideoFormats.contains(file.extension)){
       fileService.serveVideo(request, response, rawFile, file)
+    }else if(file.extension == '.srt'){
+      def vttResult = srt2vttService.convert(rawFile)
+      render ( file: vttResult.getBytes('utf-8'), contentType: file.contentType, fileName: file.originalFilename.replace('.srt', '.vtt'))
     }else{
       render ( file: rawFile.bytes, contentType: file.contentType)
     }

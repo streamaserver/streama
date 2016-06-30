@@ -106,6 +106,9 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			},
 			refetch: function (videoId) {
 				return $http.get(urlBase + 'video/refetch.json', {params: {videoId: videoId}});
+			},
+			addExternalUrl: function (params) {
+				return $http.get(urlBase + 'video/addExternalUrl.json', {params: params});
 			}
 		},
 
@@ -194,8 +197,14 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 			list: function () {
 				return $http.get(urlBase + 'notificationQueue/index.json');
 			},
+			listNewReleases: function () {
+				return $http.get(urlBase + 'notificationQueue/listNewReleases.json');
+			},
 			addMovieToCurrentNotification: function (movieId) {
 				return $http.get(urlBase + 'notificationQueue/addMovieToCurrentNotification.json', {params: {id: movieId}});
+			},
+			highlightOnDashboard: function (newRelease) {
+				return $http.post(urlBase + 'notificationQueue/highlightOnDashboard.json', newRelease);
 			},
 			addTvShowToCurrentNotification: function (tvShowId, text) {
 				return $http.get(urlBase + 'notificationQueue/addTvShowToCurrentNotification.json', {params: {id: tvShowId, description: text}});
@@ -251,6 +260,10 @@ streamaApp.factory('apiService', ['$http', '$rootScope', function ($http, $rootS
 
 			listGenericVideos: function () {
 				return $http.get(urlBase + 'dash/listGenericVideos.json');
+			},
+
+			listNewReleases: function () {
+				return $http.get(urlBase + 'dash/listNewReleases.json');
 			}
 		},
 

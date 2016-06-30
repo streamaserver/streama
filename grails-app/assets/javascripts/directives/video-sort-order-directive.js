@@ -10,27 +10,27 @@ streamaApp.directive('videoSortOrderDropdown', [function () {
 			},
 			link: function ($scope, $elem, $attrs) {
 				$scope.sortOrders = [
-					{sort: '-dateCreated', label: 'Most Recently Added'},
-					{sort: 'dateCreated', label: 'First Added'}
+					{sort: '-dateCreated', label: 'SORT_OPTIONS.NEWEST_ADDED'},
+					{sort: 'dateCreated', label: 'SORT_OPTIONS.OLDEST_ADDED'}
 				];
 
 				console.log('%c $scope.dropdownType', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', $scope.dropdownType);
 
 				if($scope.dropdownType == 'movie'){
 					$scope.sortOrders = $scope.sortOrders.concat([
-						{sort: 'title', label: 'A-Z'},
-						{sort: '-title', label: 'Z-A'},
-						{sort: '-release_date', label: 'Latest Release'},
-						{sort: 'release_date', label: 'Oldest Release'}
+						{sort: 'title', label: 'SORT_OPTIONS.AZ'},
+						{sort: '-title', label: 'SORT_OPTIONS.ZA'},
+						{sort: '-release_date', label: 'SORT_OPTIONS.NEWEST_RELEASED'},
+						{sort: 'release_date', label: 'SORT_OPTIONS.OLDEST_RELEASED'}
 					])
 				}
 
 				if($scope.dropdownType == 'tvShow'){
 					$scope.sortOrders = $scope.sortOrders.concat([
-						{sort: 'name', label: 'A-Z'},
-						{sort: '-name', label: 'Z-A'},
-						{sort: '-first_air_date', label: 'Most recently aired'},
-						{sort: 'first_air_date', label: 'Oldest Air-Date'}
+						{sort: 'name', label: 'SORT_OPTIONS.AZ'},
+						{sort: '-name', label: 'SORT_OPTIONS.ZA'},
+						{sort: '-first_air_date', label: 'SORT_OPTIONS.NEWEST_AIRED'},
+						{sort: 'first_air_date', label: 'SORT_OPTIONS.OLDEST_AIRED'}
 					])
 				}
 

@@ -10,7 +10,10 @@
 	<link rel="apple-touch-icon" href="${assetPath(src: 'apple-touch-icon.png')}">
 	<link rel="apple-touch-icon" sizes="114x114" href="${assetPath(src: 'apple-touch-icon-retina.png')}">
 
+	<asset:stylesheet src="vendor.css"/>
 	<asset:stylesheet src="application.css"/>
+
+	<asset:javascript src="vendor.js"/>
 	<asset:javascript src="application.js"/>
 
 	<g:layoutHead/>
@@ -21,7 +24,7 @@
 	<div class="pull-left flex">
 		<a class="logo" ui-sref="dash">
 			<asset:image src="logo.png"></asset:image>
-			<div class="version">v0.2.0</div>
+			<div class="version">v0.3.1</div>
 			<div class="spinner" ng-show="baseData.loading">
 				<div class="bounce1"></div>
 				<div class="bounce2"></div>
@@ -32,7 +35,7 @@
 		<div class="browse-genres" ng-if="isCurrentState('dash') && genres.length">
 			<button class="btn btn-link toggle-menu" ng-click="toggleGenreMenu()">
 				<span ng-if="selectedGenre" ng-bind="selectedGenre.name"></span>
-				<span ng-if="!selectedGenre">Browse</span>
+				<span ng-if="!selectedGenre">{{'DASHBOARD.BROWSE_GENRES' | translate}}</span>
 				<i class="ion-android-arrow-dropdown"></i>
 			</button>
 
@@ -56,30 +59,40 @@
 			<li ng-if="isCurrentState('dash')">
 				<div class="dash-search form-group has-feedback">
 					<input type="text" placeholder="Search.." class="form-control input-xs" ng-model="dashSearch"
-								 typeahead-append-to-body="true" typeahead="(item.title || item.name) for item in searchMedia($viewValue)"
+								 typeahead-append-to-body="true" uib-typeahead="(item.title || item.name) for item in searchMedia($viewValue)"
 								 typeahead-on-select="selectFromSearch($item)" typeahead-template-url="typeahead--media.htm" typeahead-loading="baseData.loading"/>
 					<span class="form-control-feedback ion-android-search" aria-hidden="true"></span>
 				</div>
 			</li>
 			<sec:ifLoggedIn>
-				<li><a ui-sref="dash">Dashboard</a></li>
+				<li><a ui-sref="dash">{{'DASHBOARD.TITLE' | translate}}</a></li>
 			</sec:ifLoggedIn>
 
 			<sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
-				<li><a ui-sref="admin.shows">Manage Content</a></li>
+				<li><a ui-sref="admin.shows">{{'MANAGE_CONTENT' | translate}}</a></li>
 			</sec:ifAnyGranted>
 
       <sec:ifLoggedIn>
-        <li><a ui-sref="settings.settings">Settings</a></li>
+        <li><a ui-sref="settings.settings">{{'ADMIN' | translate}}</a></li>
       </sec:ifLoggedIn>
 
       <sec:ifLoggedIn>
-        <li><a ui-sref="help">Help</a></li>
+        <li>
+					<div class="btn-group" uib-dropdown is-open="status.isopen" style="margin: 4px 0;">
+						<button id="single-button" type="button" class="btn btn-primary btn-sm"
+										uib-dropdown-toggle ng-disabled="disabled">
+							{{$root.currentUser.fullName || $root.currentUser.username}} <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right"
+								uib-dropdown-menu role="menu" aria-labelledby="single-button">
+							<li role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>
+							<li role="menuitem"><a ui-sref="profile">{{'PROFILE_SETTINGS' | translate}}</a></li>
+							<li class="divider"></li>
+							<li><g:link uri="/j_spring_security_logout">{{'LOGOUT' | translate}}</g:link></li>
+						</ul>
+					</div>
+				</li>
       </sec:ifLoggedIn>
-
-			<sec:ifLoggedIn>
-				<li><g:link uri="/j_spring_security_logout">Logout</g:link></li>
-			</sec:ifLoggedIn>
 		</ul>
 	</div>
 

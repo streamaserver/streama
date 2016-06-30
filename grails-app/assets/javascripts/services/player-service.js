@@ -1,12 +1,12 @@
 'use strict';
 
 streamaApp.factory('playerService', [
-  '$stateParams', '$sce', '$state', '$rootScope', 'socketService', 'apiService', '$interval',
-  function ($stateParams, $sce, $state, $rootScope, socketService, apiService, $interval) {
+  '$stateParams', '$sce', '$state', '$rootScope', 'socketService', 'apiService', '$interval', '$filter',
+  function ($stateParams, $sce, $state, $rootScope, socketService, apiService, $interval, $filter) {
 
     var videoData = null;
-
-    var videoOptions = {
+    var videoOptions;
+    var defaultVideoOptions = {
       customStartingTime: 0,
       rememberVolumeSetting: true,
       videoMetaTitle: '',
@@ -38,6 +38,7 @@ streamaApp.factory('playerService', [
         return videoOptions;
       },
       setVideoOptions: function (video) {
+        videoOptions = angular.copy(defaultVideoOptions);
         videoData = video;
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src);
         videoOptions.videoType = video.files[0].contentType;
@@ -51,6 +52,7 @@ streamaApp.factory('playerService', [
         videoOptions.videoMetaDescription = video.overview;
 
         if(videoData.nextEpisode){
+          console.log('%c showNextButton', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
           videoOptions.showNextButton = true;
         }
 
@@ -141,8 +143,7 @@ streamaApp.factory('playerService', [
         console.log('%c onVideoError', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
 
         if($state.current.name == 'player'){
-          alertify.alert('There seems to be a problem adding the video-file to the player. This is most likely due to a codec-problem. ' +
-            'Try converting it to a compatible HTML5 codec, remove the currently attached file and re-add it. If the codecs are fine, check the error log of the server and the base URL in the settings.', function () {
+          alertify.alert($filter('translate')('MESSAGES.CODEC_PROBLEM'), function () {
             if($rootScope.currentUser.authorities.length){
               if(videoData.show){
                 $state.go('admin.show', {showId: videoData.show.id});
@@ -169,8 +170,7 @@ streamaApp.factory('playerService', [
 
       onSocketSessionCreate: function () {
         alertify.set({ buttonReverse: true, labels: {ok: "OK", cancel : "Cancel"}});
-        alertify.confirm('By creating a new session you will be redirected back to this player, but this time you will ' +
-          'have a unique session ID in the url. Share this with your friends to have a syncronized watching experience with them!', function (confirmed) {
+        alertify.confirm($filter('translate')('MESSAGES.SHARE_SOCKET'), function (confirmed) {
           if(confirmed){
             $stateParams.sessionId = socketService.getUUID();
             $state.go($state.current, $stateParams, {reload: true});
@@ -183,7 +183,7 @@ streamaApp.factory('playerService', [
 
         if(!video.files || !video.files.length){
           hasError = true;
-          alertify.alert('There is a problem with this content. It seems you removed the associated video file from it.', function () {
+          alertify.alert($filter('translate')('MESSAGES.FILE_MISSING'), function () {
             if($rootScope.currentUser.authorities.length){
               if(video.show){
                 $state.go('admin.show', {showId: video.show.id});
@@ -203,12 +203,12 @@ streamaApp.factory('playerService', [
       handleWrongBasepathError: function (video) {
         var hasError = false;
         var videoSource = video.files[0].src;
+        var externalLink = video.files[0].externalLink;
         var basePath = location.origin + $('base').attr('href');
 
-        if(videoSource.indexOf(basePath) == -1){
+        if(videoSource.indexOf(basePath) == -1 && !externalLink){
           hasError = true;
-          alertify.alert('You video get\'s included using the wrong Base Path, but you are browsing the page via "'+basePath+'". ' +
-            'Make sure you set the correct Base Path in the settings and that you are using it to browse the application.', function () {
+          alertify.alert($filter('translate')('MESSAGES.WRONG_BASEPATH', {basePath: basePath}), function () {
             if(_.find($rootScope.currentUser.authorities, {authority: "ROLE_ADMIN"})){
               $state.go('settings.settings');
             }else{

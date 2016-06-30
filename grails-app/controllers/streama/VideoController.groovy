@@ -18,7 +18,7 @@ class VideoController {
   def fileService
   def videoService
 
-    
+
   def index() {
     respond Video.findAllByDeletedNotEqual(true), [status: OK]
   }
@@ -173,5 +173,16 @@ class VideoController {
 
     respond episode
 
+  }
+
+  @Transactional
+  def addExternalUrl(Video videoInstance){
+    File file = File.findOrCreateByExternalLink(params.externalUrl)
+    file.originalFilename = params.externalUrl
+    def extensionIndex = params.externalUrl.lastIndexOf('.')
+    file.extension = params.externalUrl[extensionIndex..-1];
+    file.save()
+    videoInstance.addToFiles(file)
+    respond file
   }
 }

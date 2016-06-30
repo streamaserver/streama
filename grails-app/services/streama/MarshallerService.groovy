@@ -24,6 +24,7 @@ class MarshallerService {
       returnArray['dateCreated'] = user.dateCreated
       returnArray['fullName'] = user.fullName
       returnArray['invitationSent'] = user.invitationSent
+      returnArray['language'] = user.language
       returnArray['favoriteGenres'] = user.favoriteGenres
       returnArray['isAdmin'] = (user.authorities.find{it.authority == 'ROLE_ADMIN'} ? true : false)
       returnArray['isContentManager'] = (user.authorities.find{it.authority == 'ROLE_CONTENT_MANAGER'} ? true : false)
@@ -43,6 +44,7 @@ class MarshallerService {
       returnArray['name'] = file.name
       returnArray['sha256Hex'] = file.sha256Hex
       returnArray['src'] = file.getSrc()
+      returnArray['externalLink'] = file.externalLink
       returnArray['originalFilename'] = file.originalFilename
       returnArray['extension'] = file.extension
       returnArray['contentType'] = file.contentType
@@ -60,7 +62,9 @@ class MarshallerService {
       returnArray['dateCreated'] = notificationQueue.dateCreated
       returnArray['movie'] = notificationQueue.movie
       returnArray['tvShow'] = notificationQueue.tvShow
+      returnArray['media'] = notificationQueue.tvShow ? notificationQueue.tvShow : notificationQueue.movie
       returnArray['description'] = notificationQueue.description
+      returnArray['videoToPlayId'] = notificationQueue.videoToPlay?.id
       returnArray['isCompleted'] = notificationQueue.isCompleted
 
       return returnArray;
@@ -88,7 +92,7 @@ class MarshallerService {
       returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
-      returnArray['hasFiles'] = (returnArray['files'] ? true : false)
+      returnArray['hasFiles'] = movie.hasFiles()
 
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
@@ -122,7 +126,7 @@ class MarshallerService {
       returnArray['subtitles'] = genericVideo.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
       returnArray['tags'] = genericVideo.tags
       returnArray['genre'] = genericVideo.genre
-      returnArray['hasFiles'] = (returnArray['files'] ? true : false)
+      returnArray['hasFiles'] = genericVideo.hasFiles()
 
 
       return returnArray;
@@ -136,6 +140,7 @@ class MarshallerService {
       returnArray['dateCreated'] = tvShow.dateCreated
       returnArray['lastUpdated'] = tvShow.lastUpdated
       returnArray['poster_path'] = tvShow.poster_path
+      returnArray['backdrop_path'] = tvShow.backdrop_path
       returnArray['first_air_date'] = tvShow.first_air_date
       returnArray['name'] = tvShow.name
       returnArray['overview'] = tvShow.overview
@@ -149,7 +154,7 @@ class MarshallerService {
       returnArray['poster_image_src'] = tvShow.poster_image?.src
 
 
-      returnArray['hasFiles'] = (tvShow.episodes?.find{it.files} ? true : false)
+      returnArray['hasFiles'] = tvShow.getHasFiles()
       returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
 
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
@@ -380,6 +385,7 @@ class MarshallerService {
         def returnArray = [:]
 
         returnArray['id'] = movie.id
+        returnArray['videoType'] = 'movie'
         returnArray['dateCreated'] = movie.dateCreated
         returnArray['lastUpdated'] = movie.lastUpdated
         returnArray['overview'] = movie.overview
@@ -406,6 +412,11 @@ class MarshallerService {
         }
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
+
+
+        returnArray['hasFiles'] = movie.hasFiles()
+//        returnArray['externalSubtitleUrl'] = movie.externalSubtitleUrl
+//        returnArray['externalVideoUrl'] = movie.externalVideoUrl
 
         return returnArray;
       }
@@ -469,6 +480,7 @@ class MarshallerService {
         returnArray['intro_start'] = episode.intro_start
         returnArray['intro_end'] = episode.intro_end
         returnArray['outro_start'] = episode.outro_start
+        returnArray['videoType'] = 'episode'
 
         return returnArray;
       }
@@ -522,7 +534,7 @@ class MarshallerService {
         returnArray['subtitles'] = genericVideo.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
         returnArray['tags'] = genericVideo.tags
         returnArray['genre'] = genericVideo.genre
-        returnArray['hasFiles'] = (returnArray['files'] ? true : false)
+        returnArray['hasFiles'] = genericVideo.hasFiles()
 
 
         return returnArray;
@@ -548,7 +560,7 @@ class MarshallerService {
         returnArray['files'] = video.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
         returnArray['subtitles'] = video.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
-        returnArray['hasFiles'] = (returnArray['files'] ? true : false)
+        returnArray['hasFiles'] = video.hasFiles()
 
         returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(video, springSecurityService.currentUser)
 
@@ -575,7 +587,7 @@ class MarshallerService {
           }
 
           if(nextEpisode && nextEpisode.files){
-            returnArray['nextEpisode'] = nextEpisode
+            returnArray['nextEpisode'] = [id: nextEpisode?.id]
           }
         }
         if(video instanceof Movie){

@@ -1,5 +1,26 @@
 # Change Log
 
+## 0.3.1.RC - 2016-05-18
+### Features
+- now you dont need to manually parse your SRT files to vtt anymore! the application will do it for you on the fly! 
+
+
+## 0.3.0.RC1 - 2016-05-15
+### Features
+- implemented Multilanguage support for the frontend part of the app! Users can choose in their profile which language they want to see. 
+Right now, only English is implemented. You are welcome to contribute! Simply add a copy of the fle at  
+`/grails-app/assets/javascripts/translations/EN_us.js`, name it with your language token, and translate away! Once you mead a Pull Request 
+and it gets approved, the language will be added in the profile language selector.  
+<img src="docs/changelog-language.png"/>
+
+- Added Content Highlighting for the Dashboard. You can now present your users with a pretty slideshow  
+<img src="docs/changelog-highlighting.png"/>
+- We now have a help section in streama with some helpful info and FAQ. Thanks @JanneNiemela !
+- Multiple cosmetic changes, thanks @JanneNiemela, @LorenzoGarbanzo, @jsniemela !
+- implemented feature to add videos from external URL (http Link)  
+<img src="docs/changelog-externalUrl.png"/>
+
+
 ## [0.2.0] - 2016-03-08
 ### Features
 - added functionality for "Generic Videos", aka videos that are not necessarily Movies or TV shows

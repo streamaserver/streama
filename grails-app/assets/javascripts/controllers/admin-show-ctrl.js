@@ -10,12 +10,13 @@ streamaApp.controller('adminShowCtrl', [
 	apiService.tvShow.get($stateParams.showId).success(function (data) {
 		$scope.show = data;
 
-		apiService.tvShow.adminEpisodesForTvShow($stateParams.showId).success(function (data) {
-			if(data.length){
-				$scope.seasons = _.groupBy(data, 'season_number');
-				$scope.setCurrentSeason(_.min(data, 'season_number').season_number);
+		apiService.tvShow.adminEpisodesForTvShow($stateParams.showId).success(function (episodes) {
+			if(episodes.length){
+				$scope.seasons = _.groupBy(episodes, 'season_number');
+				$scope.setCurrentSeason(_.min(episodes, 'season_number').season_number);
 			}
 			$scope.showLoading = false;
+			$scope.highlightOnDashboard = modalService.newReleaseModal.bind(modalService, $scope.show,'tvShow', episodes);
 		});
 	});
 
@@ -24,6 +25,8 @@ streamaApp.controller('adminShowCtrl', [
       angular.merge($scope.show, data);
     });
   };
+
+
 
 	$scope.addToCurrentNotification = function(){
     alertify.set({ buttonReverse: true, labels: {ok: "OK", cancel : "Cancel"}});

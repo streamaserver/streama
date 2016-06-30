@@ -92,7 +92,7 @@
                 <ul class="season-list">
                   <li class="season" ng-click="toggleSelectEpisodes(episodes)"
                       ng-repeat="(season, episodes) in options.episodeList">
-                    <span>Season {{season}}</span>
+                    <span>{{'VIDEO.SEASON' | translate}} {{season}}</span>
                   </li>
                 </ul>
               </div>
@@ -102,7 +102,7 @@
               <div class="season-list-container">
                 <h2 class="seasons-title" ng-click="toggleSelectEpisodes()">
                   <span class="back-button"><i class="ion-chevron-left"></i></span>
-                  Season {{options.selectedEpisodes[0].season_number}}
+                  {{'VIDEO.SEASON' | translate}} {{options.selectedEpisodes[0].season_number}}
                 </h2>
                 <ul class="episode-list">
                   <li class="episode" ng-repeat="episode in options.selectedEpisodes"

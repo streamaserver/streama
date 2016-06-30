@@ -1,0 +1,30 @@
+<div class="modal-body">
+  <form class="form-horizontal">
+    <legend>
+      Highlight on Dashboard
+    </legend>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label>Highlight Description:</label>
+        <input class="form-control" type="text" ng-model="newRelease.description"
+               placeholder="Optional description for new release">
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="episodes.length">
+      <div class="col-sm-12">
+        <label>Starting Episode:</label>
+        <select class="form-control" ng-model="newRelease.videoToPlay" required
+               ng-options="episode as (episode.episodeString + ' - ' + episode.name) for episode in episodes"></select>
+      </div>
+    </div>
+
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-success" ng-click="save(newRelease)">Save Highlight</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,17 +1,32 @@
 'use strict';
 
 streamaApp.controller('modalFileCtrl', [
-  '$scope', '$modalInstance', 'apiService', 'uploadService', 'video',
-  function ($scope, $modalInstance, apiService, uploadService, video) {
+  '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'video',
+  function ($scope, $uibModalInstance, apiService, uploadService, video) {
     $scope.loading = false;
 
 
-    //$modalInstance.close(data);
+    //$uibModalInstance.close(data);
 
     $scope.video = video;
 
+    $scope.addExternalUrl = function (externalUrl) {
+      apiService.video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).success(function (data) {
+        alertify.success("External Url Added.");
+        //$scope.video.files.push(data);
+        $scope.video.externalLink = null;
+
+        if(_.find($scope.video.files, {id: data.id})){
+          $scope.video.files[_.indexOf($scope.video.files, {id: data.id})] = data;
+        }else{
+          $scope.video.files = $scope.video.files || [];
+          $scope.video.files.push(data);
+        }
+      });
+    };
+
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
 
     $scope.removeFile = function (file) {

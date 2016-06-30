@@ -72,6 +72,11 @@ class DefaultDataService {
             settingsType: 'string',
             required: false
         ],
+        [
+            settingsKey: 'First Time Login Info',
+            description: 'Should the First-Time login info (admin/admin) be shown in the login screen?',
+            settingsType: 'boolean'
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',
