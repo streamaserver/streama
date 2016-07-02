@@ -4,4 +4,4 @@ model {
 	Movie movie
 }
 
-json g.render(movie)
+json g.render(movie, [deep:true])
