@@ -10,7 +10,7 @@
     <div class="form-group">
       <div class="col-sm-12 typeahead-wrapper" ng-if="!addManually">
         <input type="text" class="form-control name-input" ng-model="movie.title" placeholder="Search from TheMovieDB..." typeahead-loading="loading" typeahead-append-to-body="true"
-               uib-typeahead="item.title for item in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="typeahead--movie.htm">
+               uib-typeahead="item.title for item in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="/streama/typeahead--movie.htm">
         <div class="spinner" ng-show="loading">
           <div class="bounce1"></div>
           <div class="bounce2"></div>
