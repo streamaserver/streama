@@ -5,7 +5,12 @@
 language: groovy
 
 jdk:
-- oraclejdk7
+  - oraclejdk7
 
-script: ./grailsw refresh-dependencies
-     && ./grailsw test-app
+before_install:
+- curl -s http://get.sdkman.io | bash
+- echo sdkman_auto_answer=true > ~/.sdkman/etc/config
+- source "/home/travis/.sdkman/bin/sdkman-init.sh"
+- sdk install grails 3.1.6
+
+script: grails test-app --stacktrace
