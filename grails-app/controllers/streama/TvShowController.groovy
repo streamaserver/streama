@@ -29,37 +29,37 @@ class TvShowController {
       return
     }
 
-    TvShow tvShowInstance = TvShow.findByApiId(data.apiId)
+    TvShow tvShow = TvShow.findByApiId(data.apiId)
 
-    if (tvShowInstance == null) {
-      tvShowInstance = new TvShow()
+    if (tvShow == null) {
+      tvShow = new TvShow()
     }
-    tvShowInstance.properties = data
-    tvShowInstance.deleted = false
+    tvShow.properties = data
+    tvShow.deleted = false
 
-    if(!tvShowInstance.imdb_id && !data.manualInput){
-      tvShowInstance.imdb_id = tvShowInstance.externalLinks?.imdb_id
+    if(!tvShow.imdb_id && !data.manualInput){
+      tvShow.imdb_id = tvShow.externalLinks?.imdb_id
     }
 
-    tvShowInstance.validate()
-    if (tvShowInstance.hasErrors()) {
+    tvShow.validate()
+    if (tvShow.hasErrors()) {
       render status: NOT_ACCEPTABLE
       return
     }
 
-    tvShowInstance.save flush: true
-    respond tvShowInstance, [status: CREATED]
+    tvShow.save flush: true
+    respond tvShow, [status: CREATED]
   }
 
-  def show(TvShow tvShowInstance) {
+  def show(TvShow tvShow) {
     JSON.use('fullShow') {
-      respond tvShowInstance, [status: OK]
+      respond tvShow, [status: OK]
     }
   }
 
-  def episodesForTvShow(TvShow tvShowInstance) {
+  def episodesForTvShow(TvShow tvShow) {
     JSON.use('episodesForTvShow') {
-      respond Episode.findAllByShowAndDeletedNotEqual(tvShowInstance, true), [status: OK]
+      respond Episode.findAllByShowAndDeletedNotEqual(tvShow, true), [status: OK]
     }
   }
 
@@ -70,18 +70,18 @@ class TvShowController {
   }
 
   @Transactional
-  def delete(TvShow tvShowInstance) {
+  def delete(TvShow tvShow) {
 
-    if (tvShowInstance == null) {
+    if (tvShow == null) {
       render status: NOT_FOUND
       return
     }
 
-    tvShowInstance.deleted = true
-    tvShowInstance.save flush: true, failOnError: true
+    tvShow.deleted = true
+    tvShow.save flush: true, failOnError: true
 
-    tvShowInstance.episodes*.deleted = true
-    tvShowInstance.episodes*.save flush: true, failOnError: true
+    tvShow.episodes*.deleted = true
+    tvShow.episodes*.save flush: true, failOnError: true
 
     render status: NO_CONTENT
   }
