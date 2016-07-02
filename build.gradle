@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.6.4"
-        classpath "gradle.plugin.com.craigburke.gradle:karma-gradle:1.4.3"
+//        classpath "gradle.plugin.com.craigburke.gradle:karma-gradle:1.4.3"
         classpath "gradle.plugin.com.craigburke.gradle:bower-installer-gradle:2.5.1"
         classpath "org.grails.plugins:hibernate4:5.0.5"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.8.2"
@@ -25,7 +25,7 @@ apply plugin:"idea"
 apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.grails-gsp"
-apply plugin:"com.craigburke.karma"
+//apply plugin:"com.craigburke.karma"
 apply plugin:"com.craigburke.bower-installer"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.plugins.views-json"
@@ -110,19 +110,19 @@ bower {
     }
 }
 
-karma {
-    dependencies(['karma-wrap-preprocessor'])
-
-    profile 'angularJS'
-
-    preprocessors = [
-        'grails-app/assets/javascripts/**/*.js': ['wrap']
-    ]
-
-    wrapPreprocessor = [
-        template: "(function () { 'use strict';  <%= contents %> })()"
-    ]
-}
+//karma {
+//    dependencies(['karma-wrap-preprocessor'])
+//
+//    profile 'angularJS'
+//
+//    preprocessors = [
+//        'grails-app/assets/javascripts/**/*.js': ['wrap']
+//    ]
+//
+//    wrapPreprocessor = [
+//        template: "(function () { 'use strict';  <%= contents %> })()"
+//    ]
+//}
 
 assets {
     minifyJs = true
