@@ -9,13 +9,14 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName:  'com.mysql.jdbc.Driver'
+    driverClassName: 'org.h2.Driver'
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 environments:
     development:
         dataSource:
             dbCreate: update
+            driverClassName:  'com.mysql.jdbc.Driver'
             url: jdbc:mysql://localhost/streama
             username: root
             password:
@@ -50,6 +51,7 @@ environments:
     production:
         dataSource:
             dbCreate: update
+            driverClassName:  'com.mysql.jdbc.Driver'
             url: jdbc:mysql://localhost/streama
             username: root
             password:
