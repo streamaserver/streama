@@ -2,6 +2,7 @@ package streama
 
 import grails.converters.JSON
 
+import java.nio.file.Files
 import java.nio.file.Paths
 
 import static org.springframework.http.HttpStatus.*
@@ -213,6 +214,8 @@ class VideoController {
     File file = File.findOrCreateByLocalFile(params.localFile)
     file.localFile = params.localFile
     file.originalFilename = params.localFile
+    file.contentType = Files.probeContentType(givenPath)
+    file.size = Files.size(givenPath)
     def extensionIndex = params.localFile.lastIndexOf('.')
     file.extension = params.localFile[extensionIndex..-1];
     file.save()
