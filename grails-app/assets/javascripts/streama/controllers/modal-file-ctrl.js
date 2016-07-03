@@ -4,14 +4,20 @@ angular.module('streama').controller('modalFileCtrl', [
   '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'video',
   function ($scope, $uibModalInstance, apiService, uploadService, video) {
     $scope.loading = false;
+    $scope.localFilesEnabled = false;
     $scope.localFiles = [];
     $scope.localDir = [];
     $scope.video = video;
 
     $scope.loadLocalFiles = function(path) {
       apiService.file.localFiles(path).success(function(data) {
+        $scope.localFilesEnabled = true;
         $scope.localFiles = data;
       }).error(function(data) {
+        if (data.code == 'LocalFilesNotEnabled') {
+          $scope.localFilesEnabled = false;
+          return;
+        }
         alertify.error(data.message);
       });
     };

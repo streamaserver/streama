@@ -30,7 +30,7 @@
       <button class="btn btn-success btn-sm" ng-click="addExternalUrl(video.externalLink)" ng-disabled="!video.externalLink">Add External URL</button>
 
     </uib-tab>
-    <uib-tab active="tabActive" heading="Local File">
+    <uib-tab active="tabActive" heading="Local File" ng-if="localFilesEnabled">
       <div>
         <span class="btn btn-default btn-sm" ng-click="backLocalDirectory()" ng-if="localDir.length > 0">
           <span class="ion-android-arrow-back"></span>

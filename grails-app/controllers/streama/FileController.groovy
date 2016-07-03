@@ -161,6 +161,7 @@ class FileController {
   def localFiles(String path) {
     def result = [:]
     if (!uploadService.localPath) {
+      result.code = "LocalFilesNotEnabled"
       result.message = "The Local Video Files setting is not configured."
       response.setStatus(NOT_ACCEPTABLE.value)
       respond result
@@ -171,6 +172,7 @@ class FileController {
     def dirPath = localPath.resolve(path).toAbsolutePath()
 
     if (!dirPath.startsWith(localPath)) {
+      result.code = "FileNotInLocalPath"
       result.message = "The video file must be contained in the Local Video Files setting."
       response.setStatus(NOT_ACCEPTABLE.value)
       respond result
