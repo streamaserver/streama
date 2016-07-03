@@ -20,6 +20,11 @@ environments:
             url: jdbc:mysql://localhost/streama
             username: root
             password:
+    development-no-mysql:
+            dataSource:
+                dbCreate: update
+                driverClassName:  'org.h2.Driver'
+                url: jdbc:h2:mem:streama;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     test:
         dataSource:
             dbCreate: update
