@@ -106,9 +106,18 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
 			addExternalUrl: function (params) {
 				return $http.get('video/addExternalUrl.json', {params: params});
-			}
+			},
+      addLocalFile: function (params) {
+        return $http.get('video/addLocalFile.json', {params: params});
+      }
 		},
 
+    file: {
+      localFiles: function(path) {
+        return $http.get('file/localFiles.json', {params: {path: path}});
+      }
+    },
+    
 		episode: {
 			get: function (id) {
 				return $http.get('episode/show.json', {params: {id: id}});

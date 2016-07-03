@@ -74,6 +74,12 @@ class DefaultDataService {
             required: false
         ],
         [
+            settingsKey: 'Local Video Files',
+            description: 'If you already have a directory with your videos, put it here and you will be able to choose them when creating movies or TV shows.',
+            settingsType: 'string',
+            required: false
+        ],
+        [
             settingsKey: 'First Time Login Info',
             description: 'Should the First-Time login info (admin/admin) be shown in the login screen?',
             settingsType: 'boolean'

@@ -2,6 +2,9 @@ package streama
 
 import grails.converters.JSON
 
+import java.nio.file.Files
+import java.nio.file.Paths
+
 import static org.springframework.http.HttpStatus.*
 
 class FileController {
@@ -39,7 +42,6 @@ class FileController {
     }
   }
 
-
   def findUnusedFiles(){
     def files = []
     uploadService.storagePaths.each{path ->
@@ -64,7 +66,6 @@ class FileController {
 
     return files
   }
-
 
   def removeFileFromDisk(File file){
     def path = params.path
@@ -112,7 +113,7 @@ class FileController {
       return
     }
 
-    def filePath = uploadService.getPath(file.sha256Hex, file.extension)
+    def filePath = uploadService.getPath(file)
 
     if(!filePath){
       render status: NOT_FOUND
@@ -139,10 +140,6 @@ class FileController {
     respond file
   }
 
-
-
-
-
   def deletedUnusedFilesOnHardDrive(){
     uploadService.storagePaths.each{path ->
       java.io.File directory = new java.io.File(path + '/upload')
@@ -159,5 +156,38 @@ class FileController {
       }
 
     }
+  }
+
+  def localFiles(String path) {
+    def result = [:]
+    if (!uploadService.localPath) {
+      result.code = "LocalFilesNotEnabled"
+      result.message = "The Local Video Files setting is not configured."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
+    def localPath = Paths.get(uploadService.localPath)
+    def dirPath = localPath.resolve(path).toAbsolutePath()
+
+    if (!dirPath.startsWith(localPath)) {
+      result.code = "FileNotInLocalPath"
+      result.message = "The video file must be contained in the Local Video Files setting."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
+    def response = []
+    Files.list(dirPath).each { file ->
+      response << [
+        name: file.getFileName().toString(),
+        path: file.toAbsolutePath().toString(),
+        directory: Files.isDirectory(file)
+      ]
+    }
+
+    render response as JSON
   }
 }

@@ -44,6 +44,7 @@ class MarshallerService {
       returnArray['sha256Hex'] = file.sha256Hex
       returnArray['src'] = file.getSrc()
       returnArray['externalLink'] = file.externalLink
+      returnArray['localFile'] = file.localFile
       returnArray['originalFilename'] = file.originalFilename
       returnArray['extension'] = file.extension
       returnArray['contentType'] = file.contentType
