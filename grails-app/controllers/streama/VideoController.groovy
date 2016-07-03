@@ -193,7 +193,7 @@ class VideoController {
     def result = [:]
 
     // The local path is configured?
-    if (uploadService.localPath == null) {
+    if (!uploadService.localPath) {
       result.message = "The Local Video Files setting is not configured."
       response.setStatus(NOT_ACCEPTABLE.value)
       respond result
@@ -202,7 +202,7 @@ class VideoController {
 
     // Check that the given file path is contained in the local files directory
     def localPath = Paths.get(uploadService.localPath)
-    def givenPath = Paths.get(params.localFile)
+    def givenPath = Paths.get(params.localFile).toAbsolutePath()
     if (!givenPath.startsWith(localPath)) {
       result.message = "The video file must be contained in the Local Video Files setting."
       response.setStatus(NOT_ACCEPTABLE.value)

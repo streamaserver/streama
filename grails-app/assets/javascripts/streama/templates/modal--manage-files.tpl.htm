@@ -32,13 +32,33 @@
     </uib-tab>
     <uib-tab active="tabActive" heading="Local File">
       <div>
-        <div class="form-group">
-          <input type="url" ng-model="video.localFile" class="form-control input-sm" placeholder="Local file path">
-        </div>
+        <span class="btn btn-default btn-sm" ng-click="backLocalDirectory()" ng-if="localDir.length > 0">
+          <span class="ion-android-arrow-back"></span>
+        </span>
+        <span>{{ localDir.join('/') }}</span>
+
+        <table class="table table-striped">
+          <tr ng-repeat="file in localFiles | orderBy: '-directory'">
+            <td>
+            <span ng-if="file.directory" ng-click="openLocalDirectory(file)">
+              <span class="ion-folder"></span>
+              {{ file.name }}
+            </span>
+
+            <span ng-if="!file.directory">
+              <span class="ion-document"></span>
+              {{ file.name }}
+            </span>
+            </td>
+
+            <td>
+              <span class="btn btn-success btn-sm" ng-click="addLocalFile(file.path)" ng-if="!file.directory">
+                Choose
+              </span>
+            </td>
+          </tr>
+        </table>
       </div>
-
-      <button class="btn btn-success btn-sm" ng-click="addLocalFile(video.localFile)" ng-disabled="!video.localFile">Add local file</button>
-
     </uib-tab>
   </uib-tabset>
 

@@ -112,6 +112,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
       }
 		},
 
+    file: {
+      localFiles: function(path) {
+        return $http.get('file/localFiles.json', {params: {path: path}});
+      }
+    },
+    
 		episode: {
 			get: function (id) {
 				return $http.get('episode/show.json', {params: {id: id}});

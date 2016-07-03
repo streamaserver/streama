@@ -2,6 +2,9 @@ package streama
 
 import grails.converters.JSON
 
+import java.nio.file.Files
+import java.nio.file.Paths
+
 import static org.springframework.http.HttpStatus.*
 
 class FileController {
@@ -153,5 +156,36 @@ class FileController {
       }
 
     }
+  }
+
+  def localFiles(String path) {
+    def result = [:]
+    if (!uploadService.localPath) {
+      result.message = "The Local Video Files setting is not configured."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
+    def localPath = Paths.get(uploadService.localPath)
+    def dirPath = localPath.resolve(path).toAbsolutePath()
+
+    if (!dirPath.startsWith(localPath)) {
+      result.message = "The video file must be contained in the Local Video Files setting."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
+    def response = []
+    Files.list(dirPath).each { file ->
+      response << [
+        name: file.getFileName().toString(),
+        path: file.toAbsolutePath().toString(),
+        directory: Files.isDirectory(file)
+      ]
+    }
+
+    render response as JSON
   }
 }

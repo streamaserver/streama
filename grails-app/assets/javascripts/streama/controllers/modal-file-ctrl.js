@@ -4,8 +4,30 @@ angular.module('streama').controller('modalFileCtrl', [
   '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'video',
   function ($scope, $uibModalInstance, apiService, uploadService, video) {
     $scope.loading = false;
-
+    $scope.localFiles = [];
+    $scope.localDir = [];
     $scope.video = video;
+
+    $scope.loadLocalFiles = function(path) {
+      apiService.file.localFiles(path).success(function(data) {
+        $scope.localFiles = data;
+      }).error(function(data) {
+        alertify.error(data.message);
+      });
+    };
+    $scope.loadLocalFiles('');
+
+    $scope.backLocalDirectory = function() {
+      $scope.localFiles = [];
+      $scope.localDir.pop();
+      $scope.loadLocalFiles($scope.localDir.join('/'));
+    };
+
+    $scope.openLocalDirectory = function(dir) {
+      $scope.localFiles = [];
+      $scope.localDir.push(dir.name);
+      $scope.loadLocalFiles($scope.localDir.join('/'));
+    };
 
     $scope.addExternalUrl = function (externalUrl) {
       apiService.video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).success(function (data) {
