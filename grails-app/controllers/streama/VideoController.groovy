@@ -213,7 +213,7 @@ class VideoController {
     // Create the file in database
     File file = File.findOrCreateByLocalFile(params.localFile)
     file.localFile = params.localFile
-    file.originalFilename = params.localFile
+    file.originalFilename = givenPath.getFileName().toString()
     file.contentType = Files.probeContentType(givenPath)
     file.size = Files.size(givenPath)
     def extensionIndex = params.localFile.lastIndexOf('.')
