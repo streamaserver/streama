@@ -37,3 +37,7 @@
 .slcache
 /bower-components
 /node_modules
+
+# IDEA
+.idea
+*.iml
