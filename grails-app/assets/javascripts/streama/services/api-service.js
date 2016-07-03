@@ -106,7 +106,10 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
 			addExternalUrl: function (params) {
 				return $http.get('video/addExternalUrl.json', {params: params});
-			}
+			},
+      addLocalFile: function (params) {
+        return $http.get('video/addLocalFile.json', {params: params});
+      }
 		},
 
 		episode: {

@@ -23,6 +23,10 @@ class UploadService {
     return storages
   }
 
+  def getLocalPath(){
+    return Settings.findBySettingsKey('Local Video Files')?.value
+  }
+
   def upload(request) {
 
     def rawFile = request.getFile('file')
@@ -65,7 +69,13 @@ class UploadService {
 
   }
 
-  String getPath(String sha256Hex, extension){
+  String getPath(File file){
+    if (file.localFile) {
+      // A local file is defined
+      return new java.io.File(file.localFile)
+    }
+
+    // The file is stored in the upload directory
     def foundVideoPath
 
     storagePaths.each{storagePath ->
@@ -73,7 +83,7 @@ class UploadService {
         return
       }
       def uploadDir = new java.io.File(storagePath + '/upload')
-      def filePath = "$uploadDir/$sha256Hex" + extension
+      def filePath = "$uploadDir/$file.sha256Hex" + file.extension
       if((new java.io.File(filePath)).exists()){
         foundVideoPath = filePath
       }
@@ -85,6 +95,4 @@ class UploadService {
   def getFileSrc(File file){
     return settingsService.baseUrl  + "/file/serve/" + file.id + file.extension
   }
-
-
 }

@@ -5,15 +5,11 @@ angular.module('streama').controller('modalFileCtrl', [
   function ($scope, $uibModalInstance, apiService, uploadService, video) {
     $scope.loading = false;
 
-
-    //$uibModalInstance.close(data);
-
     $scope.video = video;
 
     $scope.addExternalUrl = function (externalUrl) {
       apiService.video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).success(function (data) {
-        alertify.success("External Url Added.");
-        //$scope.video.files.push(data);
+        alertify.success("External URL Added.");
         $scope.video.externalLink = null;
 
         if(_.find($scope.video.files, {id: data.id})){
@@ -22,6 +18,22 @@ angular.module('streama').controller('modalFileCtrl', [
           $scope.video.files = $scope.video.files || [];
           $scope.video.files.push(data);
         }
+      });
+    };
+
+    $scope.addLocalFile = function (localFile) {
+      apiService.video.addLocalFile({id: $scope.video.id, localFile: localFile}).success(function (data) {
+        alertify.success("Local File Added.");
+        $scope.video.localFile = null;
+
+        if(_.find($scope.video.files, {id: data.id})){
+          $scope.video.files[_.indexOf($scope.video.files, {id: data.id})] = data;
+        }else{
+          $scope.video.files = $scope.video.files || [];
+          $scope.video.files.push(data);
+        }
+      }).error(function(data) {
+        alertify.error(data.message);
       });
     };
 

@@ -15,7 +15,10 @@ class SettingsService {
     def resultValue = [:]
 
     if (settingsInstance.settingsKey == 'Upload Directory' || settingsInstance.settingsKey == 'Second Directory') {
-      validateUploadDirectoryPermissions(settingsInstance, resultValue)
+      validateUploadDirectoryPermissions(settingsInstance.value + '/upload', resultValue)
+    }
+    if (settingsInstance.settingsKey == 'Local Video Files') {
+      validateUploadDirectoryPermissions(settingsInstance.value, resultValue)
     }
     if (settingsInstance.settingsKey == 'TheMovieDB API key') {
       validateTheMovieDbAPI(settingsInstance, resultValue)
@@ -25,8 +28,8 @@ class SettingsService {
   }
 
 
-  def validateUploadDirectoryPermissions(Settings settingsInstance, resultValue) {
-    def uploadDir = new java.io.File(settingsInstance.value + '/upload')
+  def validateUploadDirectoryPermissions(String path, resultValue) {
+    def uploadDir = new java.io.File(path)
     try {
       uploadDir.mkdirs()
       if (uploadDir.canWrite()) {

@@ -20,14 +20,24 @@
       </button>
 
     </uib-tab>
-    <uib-tab active="tabActive" heading="External URL" >
+    <uib-tab active="tabActive" heading="External URL">
       <div>
         <div class="form-group">
-          <input type="url" ng-model="video.externalLink" class="form-control input-sm" placeholder="External Url">
+          <input type="url" ng-model="video.externalLink" class="form-control input-sm" placeholder="External URL">
         </div>
       </div>
 
-      <button class="btn btn-success btn-sm" ng-click="addExternalUrl(video.externalLink)" ng-disabled="!video.externalLink">Add External Url</button>
+      <button class="btn btn-success btn-sm" ng-click="addExternalUrl(video.externalLink)" ng-disabled="!video.externalLink">Add External URL</button>
+
+    </uib-tab>
+    <uib-tab active="tabActive" heading="Local File">
+      <div>
+        <div class="form-group">
+          <input type="url" ng-model="video.localFile" class="form-control input-sm" placeholder="Local file path">
+        </div>
+      </div>
+
+      <button class="btn btn-success btn-sm" ng-click="addLocalFile(video.localFile)" ng-disabled="!video.localFile">Add local file</button>
 
     </uib-tab>
   </uib-tabset>

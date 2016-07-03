@@ -39,7 +39,6 @@ class FileController {
     }
   }
 
-
   def findUnusedFiles(){
     def files = []
     uploadService.storagePaths.each{path ->
@@ -64,7 +63,6 @@ class FileController {
 
     return files
   }
-
 
   def removeFileFromDisk(File file){
     def path = params.path
@@ -112,7 +110,7 @@ class FileController {
       return
     }
 
-    def filePath = uploadService.getPath(file.sha256Hex, file.extension)
+    def filePath = uploadService.getPath(file)
 
     if(!filePath){
       render status: NOT_FOUND
@@ -138,10 +136,6 @@ class FileController {
     def file = uploadService.upload(request)
     respond file
   }
-
-
-
-
 
   def deletedUnusedFilesOnHardDrive(){
     uploadService.storagePaths.each{path ->
