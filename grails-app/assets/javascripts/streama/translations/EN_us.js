@@ -8,7 +8,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USERNAME: 'Username',
 			PASSWORD: 'Password',
 			FIRST_TIME_HINT: 'First time logging in? Try \'admin\' for both fields.',
-			SUBMIT: 'Login',
+			SUBMIT: 'Login'
 		},
 		DASHBOARD: {
 			TITLE: 'Dashboard',
@@ -24,7 +24,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'You\'re looking at the genre:',
 			MARK_COMPLETED: 'Mark completed',
 			NO_TVSHOWS_FOUND: 'No Tv-Shows Available',
-			NO_MOVIES_FOUND: 'No Movies Available',
+			NO_MOVIES_FOUND: 'No Movies Available'
 		},
 		VIDEO: {
 			RELEASED: 'Released',
@@ -34,14 +34,14 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			OVERVIEW: 'Overview',
 			GENRE: 'Genre',
 			TRAILER: 'Trailer',
-			SEASON: 'Season',
+			SEASON: 'Season'
 		},
 
 		MESSAGES: {
 			SHARE_SOCKET: 'By creating a new session you will be redirected back to this player, but this time you will have a unique session ID in the url. Share this with your friends to have a syncronized watching experience with them!',
-			FILE_MISSING: 'There is a problem with this content. It seems you removed the associated video file from it.. Share this with your friends to have a syncronized watching experience with them!',
+			FILE_MISSING: 'There is a problem with this content. It seems you removed the associated video file from it.',
 			CODEC_PROBLEM: 'There seems to be a problem adding the video-file to the player. This is most likely due to a codec-problem. Try converting it to a compatible HTML5 codec, remove the currently attached file and re-add it. If the codecs are fine, check the error log of the server and the base URL in the settings.',
-			WRONG_BASEPATH: 'You video get\'s included using the wrong Base Path, but you are browsing the page via "{{basePath}}". Make sure you set the correct Base Path in the settings and that you are using it to browse the application.',
+			WRONG_BASEPATH: 'You video get\'s included using the wrong Base Path, but you are browsing the page via "{{basePath}}". Make sure you set the correct Base Path in the settings and that you are using it to browse the application.'
 		},
 		MANAGE_CONTENT: 'Manage Content',
 		ADMIN: 'Admin',
@@ -52,6 +52,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		CHANGE_PASSWORD: 'Change Password',
 		LANGUAGE_en: 'English',
 		LANGUAGE_de: 'German',
+    LANGUAGE_fr: 'French',
 		PROFIlE: {
 			USERNAME: 'Username',
 			FULL_NAME: 'Full Name',
@@ -63,7 +64,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEW_PASS: 'New Password',
 			NEW_PASS_PLACEHOLDER: 'New Password  (min. 6 Characters)',
 			REPEAT_PASS: 'Repeat Password',
-			SAVE_PASS: 'Set New Password',
+			SAVE_PASS: 'Set New Password'
 		},
 
 		SORT_OPTIONS: {
@@ -74,7 +75,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEWEST_RELEASED: 'Latest Release',
 			OLDEST_RELEASED: 'Oldest Release',
 			NEWEST_AIRED: 'Most Recently Aired',
-			OLDEST_AIRED: 'Oldest Air-Date',
+			OLDEST_AIRED: 'Oldest Air-Date'
 		},
 
 		FAQ: {
@@ -129,7 +130,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USEFUL_LINKS: {
 				TITLE: "Useful links",
 				TEXT: "Coming soon..."
-			},
+			}
 		}
 	});
 });
