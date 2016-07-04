@@ -6,8 +6,11 @@
 
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal Netflix for just such a purpose!
 
-### Grails3
+### v1.x.x.BETA - Grails3
 Youre welcome to try out the brand new pre-release of the grails3 version of this app, with mega simple setup! [Check out the wiki for deployment info](https://github.com/dularion/streama/wiki/BETA---Grails-3).
+
+### Translations
+If you want to contribute a translation, please follow [the guide here](https://github.com/dularion/streama/wiki/Translating-the-app). 
 
 ### Donations
 If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
