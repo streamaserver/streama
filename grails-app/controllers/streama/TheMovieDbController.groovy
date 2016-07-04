@@ -59,12 +59,16 @@ class TheMovieDbController {
     String apiId = params.apiId
     String season = params.season
     TvShow tvShow = TvShow.get(params.getInt('showId'))
+    def result = []
+
+    if(!apiId){
+      return result
+    }
 
     def JsonContent = new URL(theMovieDbService.BASE_URL + '/tv/' + apiId + '/season/' + season + '?api_key=' + theMovieDbService.API_KEY).text
     def json = new JsonSlurper().parseText(JsonContent)
 
     def episodes = json?.episodes
-    def result = []
 
     episodes?.each{ episodeData ->
       if(Episode.findByShowAndSeason_numberAndEpisode_numberAndDeletedNotEqual(tvShow, season, episodeData.episode_number, true)){
