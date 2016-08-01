@@ -39,7 +39,7 @@ angular.module('streama').factory('playerService',
       setVideoOptions: function (video) {
         videoOptions = angular.copy(defaultVideoOptions);
         videoData = video;
-        videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src);
+        videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src || video.files[0].externalLink);
         videoOptions.videoType = video.files[0].contentType;
 
         if(video.subtitles && video.subtitles.length){
@@ -205,7 +205,7 @@ angular.module('streama').factory('playerService',
         var externalLink = video.files[0].externalLink;
         var basePath = location.origin + contextPath;
 
-        if(videoSource.indexOf(basePath) == -1 && !externalLink){
+        if(videoSource && videoSource.indexOf(basePath) == -1 && !externalLink){
           hasError = true;
           alertify.alert($filter('translate')('MESSAGES.WRONG_BASEPATH', {basePath: basePath}), function () {
             if(_.find($rootScope.currentUser.authorities, {authority: "ROLE_ADMIN"})){
