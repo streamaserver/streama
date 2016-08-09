@@ -2,6 +2,8 @@ package streama
 
 class Video {
 
+  def springSecurityService
+
   Date dateCreated
   Date lastUpdated
 
@@ -38,5 +40,30 @@ class Video {
       return true
     }
     return false
+  }
+
+  def getViewingStatus(){
+    ViewingStatus.findByVideoAndUser(this, springSecurityService.currentUser)
+  }
+
+  def getNextEpisode(){
+    if(!(this instanceof Episode)){
+      return
+    }
+
+    Episode episode = (Episode) this
+
+    Video nextEpisode = episode.show.episodes?.find{
+      return (it.episode_number == episode.episode_number+1 && it.season_number == episode.season_number)
+    }
+    if(!nextEpisode){
+      nextEpisode = episode.show.episodes?.find{
+        return (it.season_number == episode.season_number+1 && it.episode_number == 1)
+      }
+    }
+
+    if(nextEpisode && nextEpisode.files){
+      return nextEpisode
+    }
   }
 }

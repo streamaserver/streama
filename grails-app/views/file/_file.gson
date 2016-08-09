@@ -1,0 +1,10 @@
+import streama.File
+
+model {
+	File file
+}
+
+json g.render(file){
+
+	src file.getSrc()
+}

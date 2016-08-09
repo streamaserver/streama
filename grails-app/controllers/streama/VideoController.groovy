@@ -92,7 +92,7 @@ class VideoController {
 
   def show(Video videoInstance){
     JSON.use('player') {
-      respond videoInstance, [status: OK]
+      render (videoInstance as JSON)
     }
   }
 
@@ -218,8 +218,9 @@ class VideoController {
     file.size = Files.size(givenPath)
     def extensionIndex = params.localFile.lastIndexOf('.')
     file.extension = params.localFile[extensionIndex..-1];
-    file.save()
+    file.save(failOnError: true, flush: true)
     videoInstance.addToFiles(file)
+    videoInstance.save(failOnError: true, flush: true)
     respond file
   }
 }

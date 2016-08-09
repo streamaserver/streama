@@ -1,0 +1,8 @@
+import streama.Video
+
+model {
+	Iterable<Video> videoList
+}
+
+json tmpl.video(videoList ?: [])
+

@@ -4,4 +4,8 @@ model {
 	Movie movie
 }
 
-json tmpl.movie(movie)
+json g.render(movie, [deep: true, excludes: ['files']]){
+	hasFiles movie.files ? true : false
+	files movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
+	subtitles movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+}
