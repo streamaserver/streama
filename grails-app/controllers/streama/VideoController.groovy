@@ -177,12 +177,17 @@ class VideoController {
 
   }
 
+  // last occurrence of mp4|webm|ogg|srt|vtt
+  def videoExtensionRegex = ~/(?:.(?![^a-zA-Z0-9]))(mp4|webm|ogg|srt|vtt)/
+
   @Transactional
   def addExternalUrl(Video videoInstance){
     File file = File.findOrCreateByExternalLink(params.externalUrl)
     file.originalFilename = params.externalUrl
-    def extensionIndex = params.externalUrl.lastIndexOf('.')
-    file.extension = params.externalUrl[extensionIndex..-1];
+    def matcher = params.externalUrl =~ videoExtensionRegex
+    if (matcher.getCount()) {
+      file.extension = matcher[0][0]
+    }
     file.save()
     videoInstance.addToFiles(file)
     respond file
