@@ -19,6 +19,22 @@ angular.module('streama').factory('modalService', ['$uibModal', '$state', functi
 			});
 		},
 
+    notificationAddModal: function (notification, callback) {
+      var modalInstance = $uibModal.open({
+        templateUrl: '/streama/modal--notification-add.htm',
+      	controller: 'modalNotificationAddCtrl',
+      	size: 'lg',
+      	resolve: {
+      	  notification: function () {
+      			return notification;
+      		}
+      	}
+      });
+
+      modalInstance.result.then(function (data) {
+        (callback || angular.noop)(data);
+      });
+    },
 
 		movieModal: function (movie, callback) {
 			var modalInstance = $uibModal.open({
