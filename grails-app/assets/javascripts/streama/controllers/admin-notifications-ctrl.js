@@ -4,11 +4,14 @@ angular.module('streama').controller('adminNotificationsCtrl', ['$scope', 'apiSe
 
 	$scope.loading = true;
 
-	apiService.notification.list().success(function (data) {
-		$scope.notifications = data;
-		$scope.loading = false;
-	});
+	$scope.openNotificationModal = openNotificationModal;
 
+
+
+   apiService.notification.list().success(function (data) {
+    	$scope.notifications = data;
+    	$scope.loading = false;
+   });
 
 	$scope.sendCurrentNotifcation = function () {
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
@@ -27,6 +30,13 @@ angular.module('streama').controller('adminNotificationsCtrl', ['$scope', 'apiSe
 					});
 			}
 		})
+	};
+
+	function openNotificationModal() {
+	    modalService.notificationAddModal({}, function (data) {
+	        console.log(data);
+	        $scope.notifications.push(data);
+      });
 	};
 
 	$scope.openNotificationAmount = function () {

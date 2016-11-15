@@ -74,7 +74,8 @@ class NotificationQueueController {
         notificationQueueInstance.movie = movie
 
         notificationQueueInstance.save flush:true
-        render status: OK
+        response.setStatus(OK.value())
+        respond notificationQueueInstance
     }
 
 
