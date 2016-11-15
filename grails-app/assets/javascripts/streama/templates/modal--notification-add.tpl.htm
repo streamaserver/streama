@@ -1,0 +1,65 @@
+
+<form class="form-horizontal" name="notificationForm" novalidate>
+  <div class="modal-body">
+    <legend>
+      New Notification
+    </legend>
+
+    <div class="form-group" ng-show="!selectedItem.id">
+      <div class="col-sm-12 typeahead-wrapper" ng-if="!addManually">
+        <input type="text" class="form-control name-input" ng-model="typeahead.currentTitle" placeholder="Search from TV-Shows/Movies..." typeahead-loading="loading" typeahead-append-to-body="true"
+               uib-typeahead="item.title for item in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="/streama/typeahead--media.htm"
+               typeahead-min-length="3" typeahead-wait-ms="500" required>
+        <div class="spinner" ng-show="loading">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" ng-show="selectedItem.id">
+      <button type="button" class="close pull-right" aria-label="Close" ng-click="clearNotification()"><span aria-hidden="true">&times;</span></button>
+      <div ng-switch="selectedItem.mediaType">
+
+        <div ng-switch-when="tvShow">
+          <div class="col-md-4" ng-if="selectedItem.backdrop_path">
+            <img ng-src="https://image.tmdb.org/t/p/w300/{{selectedItem.backdrop_path}}"/>
+          </div>
+
+          <div class="col-md-8">
+            <h2>{{selectedItem.name}}</h2>
+            <p>{{selectedItem.overview}}</p>
+          </div>
+        </div>
+
+        <div ng-switch-when="movie">
+          <div class="col-md-4" ng-if="selectedItem.poster_path">
+            <img ng-src="https://image.tmdb.org/t/p/w300/{{selectedItem.poster_path}}"/>
+          </div>
+          <div class="col-md-8">
+            <h2>{{selectedItem.title}}</h2>
+            <p>{{selectedItem.overview}}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="form-group" ng-show="selectedItem.id && selectedItem.mediaType=='tvShow'">
+        <div class="col-sm-12">
+          <label>Description</label>
+          <textarea class="form-control" cols="30" rows="4" ng-model="notification.description" placeholder="Description"></textarea>
+        </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+
+    <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" ng-click="saveNotification(notification)" ng-disabled="!selectedItem.id">Save Notification</button>
+
+  </div>
+
+</form>
