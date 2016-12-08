@@ -75,9 +75,9 @@
                 <li><a ui-sref="admin.shows">{{'MANAGE_CONTENT' | translate}}</a></li>
             </sec:ifAnyGranted>
 
-            <sec:ifLoggedIn>
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
                 <li><a ui-sref="settings.settings">{{'ADMIN' | translate}}</a></li>
-            </sec:ifLoggedIn>
+            </sec:ifAnyGranted>
 
             <sec:ifLoggedIn>
                 <li>
