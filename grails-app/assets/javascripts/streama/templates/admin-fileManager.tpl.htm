@@ -57,7 +57,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="file in files">
-      <td><input type="checkbox" ng-click="addToDeletionBulk($event, file)"/></td>
+      <td><input type="checkbox" ng-click="addToOrRemoveFromDeletionBulk($event, file)"/></td>
       <td>
         <div><strong>{{file.originalFilename}}</strong></div>
         <div ng-if="file.src"><a href="{{file.src}}">{{file.src}}</a></div>
