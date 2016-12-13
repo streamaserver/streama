@@ -28,6 +28,10 @@
         Files that only exist on Hard-Drive
       </button>
     </div>
+
+    <button class="btn btn-danger btn-sm pull-right" ng-click="removeMultipleFiles()">
+      Delete Multiple Files
+    </button>
   </div>
 
 </div>
@@ -42,6 +46,7 @@
   <table class="table table-striped file-manager-table" ng-if="activeListDisplay == 'table'">
     <thead>
     <tr>
+      <th></th>
       <th>Name</th>
       <th>Uploaded</th>
       <th>Content-Type</th>
@@ -52,6 +57,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="file in files">
+      <td><input type="checkbox" ng-click="addToDeletionBulk($event, file)"/></td>
       <td>
         <div><strong>{{file.originalFilename}}</strong></div>
         <div ng-if="file.src"><a href="{{file.src}}">{{file.src}}</a></div>
