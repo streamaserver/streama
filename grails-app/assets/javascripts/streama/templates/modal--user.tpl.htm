@@ -33,8 +33,8 @@
       <div class="col-sm-3">
         <label class="control-label">Roles</label>
       </div>
-      <div class="col-sm-8">
-        <select class="form-control" multiple ng-options="role as role.displayName for role in roles track by role.id" ng-model="user.authorities"></select>
+      <div class="col-sm-8" ng-repeat="role in roles">
+        <input type="checkbox" name="authorities[]" value="{{role.id}}" ng-checked="checkAuthorities(role.id)" ng-click="toggleAuthorities(role)"> {{role.displayName}}
       </div>
     </div>
   </form>
