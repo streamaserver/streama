@@ -6,9 +6,10 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 	$scope.maxPerPage = 10;
 	$scope.offset = 0;
 	$scope.pagination = {};
-	$scope.deletionBulk = [];
 
 	$scope.activeListDisplay = 'table';
+
+	$scope.deletionBulk = [];
 
 	$scope.changeListDisplay = function (displayType) {
 		$scope.activeListDisplay = displayType;
@@ -42,18 +43,28 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
       alertify.confirm(confirmText, function (confirmed) {
         if(confirmed){
-//          apiService.video.removeFileFromDisk(file.id, file.path).success(function () {
-//            _.remove($scope.files, {id: file.id});
-//            _.remove($scope.files, {path: file.path});
-//            alertify.success('File deleted.');
-//          });
+          var bulk = JSON.stringify($scope.deletionBulk);
+          apiService.video.removeMultipleFilesFromDisk(bulk).success(function () {
+            $scope.deletionBulk.forEach(file => {
+              _.remove($scope.files, {id: file.id});
+              _.remove($scope.files, {path: file.path});
+            });
+            deletionBulk = [];
+            alertify.success('Files deleted.');
+          });
         }
       });
 	  }
 	};
 
-	$scope.addToDeletionBulk = function(file) {
-    $scope.deletionBulk.push(file);
+	$scope.addToDeletionBulk = function($event, file) {
+	  if($event.target.checked) {
+      var toBeDeleted = {id: file.id}
+      $scope.deletionBulk.push(toBeDeleted);
+    } else {
+      var index = $scope.deletionBulk.indexOf(file.id);
+      $scope.deletionBulk.splice(index, 1);
+    }
 	};
 
 	$scope.pageChanged = function () {
