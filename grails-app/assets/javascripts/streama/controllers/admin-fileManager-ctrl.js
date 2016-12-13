@@ -9,7 +9,7 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 
 	$scope.activeListDisplay = 'table';
 
-	$scope.deletionBulk = [];
+	$scope.selectedFiles = [];
 
 	$scope.changeListDisplay = function (displayType) {
 		$scope.activeListDisplay = displayType;
@@ -38,18 +38,19 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 	};
 
 	$scope.removeMultipleFiles = function() {
-	  if($scope.deletionBulk.length > 0) {
+	  if($scope.selectedFiles.length > 0) {
       var confirmText = "This will delete all selected Files. Do you want to proceed?";
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
       alertify.confirm(confirmText, function (confirmed) {
         if(confirmed){
-          apiService.video.removeMultipleFilesFromDisk($scope.deletionBulk).success(function () {
-            $scope.deletionBulk.forEach(id => {
+          apiService.video.removeMultipleFilesFromDisk($scope.selectedFiles).success(function () {
+            _.forEach($scope.selectedFiles.forEach, id => {
+              // TODO investigate why {id: id} doesn't work
               _.remove($scope.files, function(file) {
                 return file.id === id;
               });
             });
-            deletionBulk = [];
+            selectedFiles = [];
             alertify.success('Files deleted.');
           });
         }
@@ -57,11 +58,11 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 	  }
 	};
 
-	$scope.addToOrRemoveFromDeletionBulk = function($event, file) {
+	$scope.addOrRemoveFromSelection = function($event, file) {
 	  if($event.target.checked) {
-      $scope.deletionBulk.push(file.id);
+      $scope.selectedFiles.push(file.id);
     } else {
-      _.remove($scope.deletionBulk, function(id) {
+      _.remove($scope.selectedFiles, function(id) {
         return id === file.id;
       });
     }

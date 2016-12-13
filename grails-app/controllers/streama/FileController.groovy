@@ -87,7 +87,7 @@ class FileController {
   def removeMultipleFilesFromDisk() {
     def idBulk = params.list('id').collect({it.toLong()})
     idBulk.each { id ->
-      def file = File.findById(id)
+      def file = File.get(id)
       fileService.fullyRemoveFile(file)
     }
     respond status: NO_CONTENT
