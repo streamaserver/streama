@@ -9,6 +9,8 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 
 	$scope.activeListDisplay = 'table';
 
+	$scope.selectedFiles = [];
+
 	$scope.changeListDisplay = function (displayType) {
 		$scope.activeListDisplay = displayType;
 	};
@@ -33,6 +35,37 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 				});
 			}
 		})
+	};
+
+	$scope.removeMultipleFiles = function() {
+	  if($scope.selectedFiles.length > 0) {
+      var confirmText = "This will delete all selected Files. Do you want to proceed?";
+      alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
+      alertify.confirm(confirmText, function (confirmed) {
+        if(confirmed){
+          apiService.video.removeMultipleFilesFromDisk($scope.selectedFiles).success(function () {
+            _.forEach($scope.selectedFiles.forEach, id => {
+              // TODO investigate why {id: id} doesn't work
+              _.remove($scope.files, function(file) {
+                return file.id === id;
+              });
+            });
+            selectedFiles = [];
+            alertify.success('Files deleted.');
+          });
+        }
+      });
+	  }
+	};
+
+	$scope.addOrRemoveFromSelection = function($event, file) {
+	  if($event.target.checked) {
+      $scope.selectedFiles.push(file.id);
+    } else {
+      _.remove($scope.selectedFiles, function(id) {
+        return id === file.id;
+      });
+    }
 	};
 
 	$scope.pageChanged = function () {

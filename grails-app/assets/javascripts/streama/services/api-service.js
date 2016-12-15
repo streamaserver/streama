@@ -6,7 +6,6 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			return $http.get('user/current.json');
 		},
 
-
 		tvShow: {
 			get: function (id) {
 				return $http.get('tvShow/show.json', {params: {id: id}});
@@ -95,6 +94,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			removeFileFromDisk: function (id, path) {
 				return $http.delete('file/removeFileFromDisk.json', {params: {id: id, path: path}});
 			},
+      removeMultipleFilesFromDisk: function(bulk) {
+        return $http.delete('file/removeMultipleFilesFromDisk.json', {params: {id: bulk}})
+      },
 			cleanUpFiles: function (type) {
 				return $http.delete('file/cleanUpFiles.json', {params: {type: type}});
 			},
@@ -117,7 +119,7 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
         return $http.get('file/localFiles.json', {params: {path: path}});
       }
     },
-    
+
 		episode: {
 			get: function (id) {
 				return $http.get('episode/show.json', {params: {id: id}});
