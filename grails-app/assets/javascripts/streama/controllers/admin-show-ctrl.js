@@ -1,8 +1,11 @@
 
 
 angular.module('streama').controller('adminShowCtrl', [
-	'$scope', 'apiService', '$stateParams', 'modalService', '$state', 'uploadService',
-	function ($scope, apiService, $stateParams, modalService, $state, uploadService) {
+	'$scope', '$q', 'apiService', '$stateParams', 'modalService', '$state', 'uploadService',
+	function ($scope, $q, apiService, $stateParams, modalService, $state, uploadService) {
+
+	var episodesFetched = 0;
+	var maxSeason = 0;
 
 	$scope.seasonOpened = null;
 	$scope.showLoading = true;
@@ -62,7 +65,6 @@ angular.module('streama').controller('adminShowCtrl', [
 
 	};
 
-
 	$scope.openSeason = function (index) {
 		if($scope.seasonOpened != index){
 			$scope.seasonOpened = index;
@@ -84,29 +86,62 @@ angular.module('streama').controller('adminShowCtrl', [
 	};
 
 	var seasonForShow = function (season) {
-		apiService.theMovieDb.seasonForShow({apiId: $scope.show.apiId, showId: $stateParams.showId, season: season})
+		return apiService.theMovieDb.seasonForShow({apiId: $scope.show.apiId, showId: $stateParams.showId, season: season})
 				.success(function (data) {
 					console.log('%c seasonForShow', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
 					$scope.seasons = $scope.seasons ||  {};
 					$scope.seasons[season] = $scope.seasons[season] || [];
 					$scope.seasons[season] = $scope.seasons[season].concat(data);
-					$scope.loading = false;
 					$scope.newEpisodesForSeason = null;
-					$scope.setCurrentSeason(season);
-					alertify.success( data.length + ' Episodes fetched');
-				}).error(function () {
+					maxSeason = Math.max(maxSeason, season);
+					if (maxSeason == season) {
+						$scope.setCurrentSeason(season);
+					}
+					episodesFetched += data.length;
+				});
+	};
+
+	var getEpisodesForSeasons = function (seasons) {
+		var promises = [];
+		for (var i = 0; i < seasons.length; i++) {
+			promises.push(seasonForShow(seasons[i]));
+		}
+
+		$q.all(promises).then(function() {
 			$scope.loading = false;
+			maxSeason = 0;
+			alertify.success(episodesFetched + " Episodes fetched");
+			episodesFetched = 0;
 		});
 	};
 
-
-
-	$scope.fetchAllEpisodesForSeason = function(){
-    alertify.set({ buttonReverse: true, labels: {ok: "OK", cancel : "Cancel"}});
-		alertify.prompt("For which season would you like to fetch the episodes?", function (confirmed, season) {
-			if(confirmed && season){
+	$scope.fetchEpisodes = function(){
+    	alertify.set({ buttonReverse: true, labels: {ok: "OK", cancel : "Cancel"}});
+		alertify.prompt("For which seasons would you like to fetch the episodes? (Leave blank to fetch for all seasons)", function (confirmed, season) {
+			if (confirmed) {
 				$scope.loading = true;
-				seasonForShow(season);
+				var seasons = [];
+
+				if (!season) {
+					apiService.theMovieDb.seasonNumberForShow({apiId: $scope.show.apiId}).then(function(data) {
+						getEpisodesForSeasons(data.data);
+					});
+					return;
+				} else if (season.indexOf('-') > -1) {
+					var start = parseInt(season.substring(0, season.indexOf('-')));
+					var end = parseInt(season.substring(season.indexOf('-') + 1));
+					if (start > end) {
+						var temp = start;
+						start = end;
+						end = temp;
+					}
+
+					seasons = _.range(start, end+1);
+				} else {
+					seasons.push(parseInt(season));
+				}
+
+				getEpisodesForSeasons(seasons);
 			}
 		})
 	};

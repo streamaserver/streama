@@ -117,7 +117,7 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
         return $http.get('file/localFiles.json', {params: {path: path}});
       }
     },
-    
+
 		episode: {
 			get: function (id) {
 				return $http.get('episode/show.json', {params: {id: id}});
@@ -227,6 +227,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 		theMovieDb: {
 			search: function (type, name) {
 				return $http.get('theMovieDb/search.json', {params: {type: type, name: name}});
+			},
+			seasonNumberForShow: function (params) {
+				return $http.get('theMovieDb/seasonNumberForShow.json', {params: params});
 			},
 			seasonForShow: function (params) {
 				return $http.get('theMovieDb/seasonForShow.json', {params: params});
