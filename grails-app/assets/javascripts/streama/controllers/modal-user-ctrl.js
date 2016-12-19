@@ -30,6 +30,14 @@ angular.module('streama').controller('modalUserCtrl', [
 			}
 		};
 
+	$scope.checkAuthorities = function (id) {
+	  return _.some($scope.user.authorities, {id: id});
+	};
+
+	$scope.toggleAuthorities = function (value) {
+	  $scope.user.authorities = _.xorBy($scope.user.authorities, [value], "id");
+	};
+
     $scope.toggleSelection = function (value, array) {
       if(array.indexOf(value) > -1){
         array.splice(array.indexOf(value), 1);
