@@ -105,7 +105,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			INVITE_USERS: {
 				TITLE: '¿Cómo puedo invitar a mis amigos a ver mis vídeos?',
 				TEXT:"Puedes compartir tus vídeos con tus amigos invitándoles a usar tu Streama. Ve al menú de Usuarios y haz click en el botón de Invitar Usuario. Rellena el formulario de invitación y" +
-				" selecciona el rol del invitado. Los usuarios con el rol de Administradores pueden editar Usuarios y Configuraciones. Los usuarios con el rol de Gestor de Contenidop pueden editar el contenido. Tu amigo será notificado" +
+				" selecciona el rol del invitado. Los usuarios con el rol de Administradores pueden editar Usuarios y Configuraciones. Los usuarios con el rol de Gestor de Contenido pueden editar el contenido. Tu amigo será notificado" +
 				" a través de su correo electrónico. También puedes compartir una sesión de vídeo con tus amigos haciendo click sobre el botón Compartir del reproductor y enviándoles el enlace correspondiente."
 			},
 			BASE_URL: {
