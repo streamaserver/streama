@@ -7,6 +7,6 @@ angular.module('streama.translations', ['pascalprecht.translate'])
 	})
 
 	.run(function ($rootScope) {
-	$rootScope.availableLanguages = ['en', 'nl'];
+	$rootScope.availableLanguages = ['en', 'nl', 'es'];
 	});
 
