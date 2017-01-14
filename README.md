@@ -2,21 +2,27 @@
 
 
 [![Build Status](https://travis-ci.org/dularion/streama.svg?branch=master)](https://travis-ci.org/dularion/streama) [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/dularion/streama/blob/master/LICENSE.md) [![Join the chat at https://gitter.im/dularion/streama](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dularion/streama?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![ProjectTalk](http://www.projecttalk.io/images/gh_badge-3e578a9f437f841de7446bab9a49d103.svg?vsn=d)] (http://www.projecttalk.io/boards/dularion%2Fstreama?utm_campaign=gh-badge&utm_medium=badge&utm_source=github) 
 
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal Netflix for just such a purpose!
 
-### v1.x.x.BETA - Grails3
-Youre welcome to try out the brand new pre-release of the grails3 version of this app, with mega simple setup! [Check out the wiki for deployment info](https://github.com/dularion/streama/wiki/BETA---Grails-3).
+[Visit the Promo-Website here!](http://dularion.github.io/streama/)
 
-### Translations
+
+## Up and Running
+Youre welcome to try out the brand new pre-release of the v1.x of this app, with mega simple setup! 
+Check out the [v1 deployment instructions](https://github.com/dularion/streama/wiki/BETA--Streama-v1).
+
+## Contributing
+#### Translations
 If you want to contribute a translation, please follow [the guide here](https://github.com/dularion/streama/wiki/Translating-the-app). 
 
-### Donations
+#### PRs
+If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your effors on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
+
+#### Donations
 If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
 If you want to use paypal, use this link https://www.paypal.me/dularion
 
-[Visit the Promo-Website here!](http://dularion.github.io/streama/)
 
 ## Table of contents:
 - [Getting Started](#getting-started)
