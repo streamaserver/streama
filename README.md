@@ -12,7 +12,7 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 Youre welcome to try out the brand new pre-release of the v1.x of this app, with mega simple setup! 
 Check out the wikis.
 - [up and running with v1.x](https://github.com/dularion/streama/wiki/BETA--Streama-v1)
-- [up and running with legacy v0.x](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
+- [up and running with v0.x (legacy)](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
 
 ## Contributing
 #### Translations
