@@ -29,6 +29,12 @@ apply plugin:"org.grails.grails-gsp"
 apply plugin:"com.craigburke.bower-installer"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.plugins.views-json"
+apply plugin: 'spring-boot'
+
+
+springBoot {
+    executable = true
+}
 
 ext {
     grailsVersion = project.grailsVersion
@@ -127,4 +133,10 @@ bower {
 assets {
     minifyJs = true
     minifyCss = true
+}
+
+
+bootRun {
+    // local.config.location is just a random name. You can use yours.
+    jvmArgs = ['-Dlocal.config.location=app-config.yml']
 }
