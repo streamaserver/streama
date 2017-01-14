@@ -15,20 +15,29 @@ angular.module('streama').controller('modalUserCtrl', [
 			$uibModalInstance.dismiss('cancel');
 		};
 
-		$scope.checkAvailability = function (username) {
+		$scope.checkAvailability = function (isInvite, username, password) {
 			$scope.error = null;
+            $scope.error2 = null;
 			$scope.valid = false;
+            $scope.validUser = false;
+            $scope.validPassword = password;
 
 			if(username){
 				apiService.user.checkAvailability(username).success(function (data) {
 					if(data.error){
 						$scope.error = 	data.error;
 					}else{
-						$scope.valid = true;
+                      if(password || isInvite){
+                        $scope.valid = true;
+                      }
+                      $scope.validUser = true;
 					}
 				});
 			}
-		};
+            if(!password){
+				$scope.error2 = "Password can not be empty!"
+            }
+    };
 
 	$scope.checkAuthorities = function (id) {
 	  return _.some($scope.user.authorities, {id: id});
@@ -62,5 +71,21 @@ angular.module('streama').controller('modalUserCtrl', [
 					alertify.error('There was an error saving the user.');
 				});
 		};
+
+    $scope.saveAndCreateUser = function (user) {
+      $scope.loading = true;
+
+      var dateObj = angular.copy(user);
+      apiService.user.saveAndCreateUser(dateObj)
+
+        .success(function (data) {
+          $uibModalInstance.close(data);
+          $scope.loading = false;
+        })
+        .error(function () {
+          $scope.loading = false;
+          alertify.error('There was an error saving the user.');
+        });
+    };
 
 }]);

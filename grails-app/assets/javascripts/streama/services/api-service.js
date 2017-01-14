@@ -40,9 +40,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			list: function () {
 				return $http.get('user.json');
 			},
-			checkAvailability: function (username) {
-				return $http.get('user/checkAvailability.json', {params: {username: username}});
+			checkAvailability: function (username, isInvite) {
+				return $http.get('user/checkAvailability.json', {params: {username: username, isInvite: isInvite}});
 			},
+      saveAndCreateUser: function (user) {
+        return $http.post('user/saveAndCreateUser.json', user);
+      },
 			saveAndInviteUser: function (user) {
 				return $http.post('user/saveAndInviteUser.json', user);
 			},
