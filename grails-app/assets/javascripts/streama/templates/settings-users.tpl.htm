@@ -1,4 +1,5 @@
-<button class="btn btn-primary pull-right btn-lg" ng-click="openUserModal()">Invite User</button>
+<button class="btn btn-primary pull-right btn-lg" ng-click="openUserInviteModal()">Invite User</button>
+<button class="btn btn-primary pull-right btn-lg" ng-click="openUserCreateModal()">Create User</button>
 
 <h1>Users</h1>
 
@@ -36,7 +37,7 @@
     <td> <span class="comma-separatad" ng-repeat="role in user.authorities">{{role.displayName}}</span></td>
 
     <td style="width: 110px;">
-      <button class="btn btn-xs btn-primary" ng-click="openUserModal(user)">edit</button>
+      <button class="btn btn-xs btn-primary" ng-click="openUserEditModal(user)">edit</button>
       <button class="btn btn-xs btn-danger" ng-click="delete(user)">delete</button>
     </td>
   </tr>

@@ -110,10 +110,43 @@ angular.module('streama').factory('modalService', ['$uibModal', '$state', functi
 			});
 		},
 
+    openUserEditModal: function (user, callback) {
+      var modalInstance = $uibModal.open({
+        templateUrl: '/streama/modal--edit-user.htm',
+        controller: 'modalUserCtrl',
+        size: 'lg',
+        resolve: {
+          user: function () {
+            return user;
+          }
+        }
+      });
 
-		userModal: function (user, callback) {
+      modalInstance.result.then(function (data) {
+        (callback || angular.noop)(data);
+      });
+    },
+
+    userCreateModal: function (user, callback) {
+      var modalInstance = $uibModal.open({
+        templateUrl: '/streama/modal--create-user.htm',
+        controller: 'modalUserCtrl',
+        size: 'lg',
+        resolve: {
+          user: function () {
+            return user;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (data) {
+        (callback || angular.noop)(data);
+      });
+    },
+
+		userInviteModal: function (user, callback) {
 			var modalInstance = $uibModal.open({
-				templateUrl: '/streama/modal--user.htm',
+				templateUrl: '/streama/modal--invite-user.htm',
 				controller: 'modalUserCtrl',
 				size: 'lg',
 				resolve: {
