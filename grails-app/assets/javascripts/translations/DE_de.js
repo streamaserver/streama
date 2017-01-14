@@ -1,3 +1,7 @@
+/**
+ * Created by antonia on 14/05/16.
+ * Translation by @ManuGithubSteam and @bastilimbach on 14/01/17
+ */
 angular.module('streama.translations').config(function ($translateProvider) {
 	$translateProvider.translations('de', {
 		LOGIN: {
