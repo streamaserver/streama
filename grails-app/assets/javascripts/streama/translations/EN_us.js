@@ -61,11 +61,14 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PAUSE_ON_CLICK: 'Pause Video on Click',
 			FAVORITE_GENRES: 'Favorite Genres',
 			SAVE: 'Save Profile',
+			PASS: 'Password',
 			OLD_PASS: 'Old Password',
 			NEW_PASS: 'New Password',
 			NEW_PASS_PLACEHOLDER: 'New Password  (min. 6 Characters)',
 			REPEAT_PASS: 'Repeat Password',
-			SAVE_PASS: 'Set New Password'
+			PASS_ERROR_EMPTY: 'The password can not be empty',
+			PASS_ERROR_LENGTH: 'The password must be at least 6 characters long',
+			PASS_ERROR_REPEAT: 'The passwords need to match'
 		},
 
 		SORT_OPTIONS: {

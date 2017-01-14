@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('streama').controller('modalUserCtrl', [
-	'$scope', '$uibModalInstance', 'apiService', 'user',
-	function ($scope, $uibModalInstance, apiService, user) {
+	'$scope', '$uibModalInstance', 'apiService', 'user', 'isInvite',
+	function ($scope, $uibModalInstance, apiService, user, isInvite) {
 
-		$scope.user = angular.copy(user);
+		$scope.user = angular.copy(user) || {};
 		$scope.loading = false;
+		$scope.validPassword = isInvite ? true : false;
 
 		apiService.user.availableRoles().success(function (data) {
       $scope.roles = data;
@@ -15,29 +16,40 @@ angular.module('streama').controller('modalUserCtrl', [
 			$uibModalInstance.dismiss('cancel');
 		};
 
-		$scope.checkAvailability = function (isInvite, username, password) {
+		$scope.checkAvailability = function (username) {
 			$scope.error = null;
-            $scope.error2 = null;
-			$scope.valid = false;
-            $scope.validUser = false;
-            $scope.validPassword = password;
+			$scope.validUser = false;
 
 			if(username){
 				apiService.user.checkAvailability(username).success(function (data) {
 					if(data.error){
 						$scope.error = 	data.error;
 					}else{
-                      if(password || isInvite){
-                        $scope.valid = true;
-                      }
-                      $scope.validUser = true;
+						$scope.validUser = true;
 					}
 				});
 			}
-            if(!password){
-				$scope.error2 = "Password can not be empty!"
-            }
     };
+
+		$scope.checkPassword = function (password, passwordRepeat) {
+			$scope.validPassword = true;
+			$scope.passwordValidationError = null;
+			if(!password){
+				$scope.passwordValidationError = "PASS_ERROR_EMPTY";
+				$scope.validPassword = false;
+				return;
+			}
+			if(password.length < 6){
+				$scope.passwordValidationError = "PASS_ERROR_LENGTH";
+				$scope.validPassword = false;
+				return;
+			}
+			if(password != passwordRepeat){
+				$scope.passwordValidationError = "PASS_ERROR_REPEAT";
+				$scope.validPassword = false;
+				return;
+			}
+		};
 
 	$scope.checkAuthorities = function (id) {
 	  return _.some($scope.user.authorities, {id: id});

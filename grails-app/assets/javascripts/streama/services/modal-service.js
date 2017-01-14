@@ -118,7 +118,10 @@ angular.module('streama').factory('modalService', ['$uibModal', '$state', functi
         resolve: {
           user: function () {
             return user;
-          }
+          },
+					isInvite: function () {
+						return true;
+					}
         }
       });
 
@@ -135,7 +138,10 @@ angular.module('streama').factory('modalService', ['$uibModal', '$state', functi
         resolve: {
           user: function () {
             return user;
-          }
+          },
+					isInvite: function () {
+						return false;
+					}
         }
       });
 
@@ -152,6 +158,9 @@ angular.module('streama').factory('modalService', ['$uibModal', '$state', functi
 				resolve: {
 					user: function () {
 						return user;
+					},
+					isInvite: function () {
+						return true;
 					}
 				}
 			});
