@@ -1,3 +1,4 @@
+# Place this file next to the streama-[version].war on deployment
 environments:
     production:
         dataSource:
