@@ -51,6 +51,12 @@ class TvShow {
   }
 
   def getFullTvShowMeta(){
-    theMovieDbService.getFullTvShowMeta(this.apiId)
+    try{
+      return theMovieDbService.getFullTvShowMeta(this.apiId)
+    }catch (e){
+      log.error("couldnt get FullTvShowMeta for ${this.apiId}")
+      log.error(e)
+      return null
+    }
   }
 }
