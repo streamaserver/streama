@@ -2,7 +2,7 @@
 //= require /angular/angular
 //= require /systaro/core/systaro.core
 //= require /streama/core/streama.core
-//= require translations/streama.translations
+//= require streama.translations
 //= require_tree translations
 
 //= require_self
