@@ -44,12 +44,12 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
       alertify.confirm(confirmText, function (confirmed) {
         if(confirmed){
           apiService.video.removeMultipleFilesFromDisk($scope.selectedFiles).success(function () {
-            _.forEach($scope.selectedFiles.forEach, id => {
-              // TODO investigate why {id: id} doesn't work
-              _.remove($scope.files, function(file) {
-                return file.id === id;
-              });
-            });
+            _.forEach($scope.selectedFiles.forEach, function (id) {
+								// TODO investigate why {id: id} doesn't work
+								_.remove($scope.files, function(file) {
+									return file.id === id;
+								});
+						});
             selectedFiles = [];
             alertify.success('Files deleted.');
           });

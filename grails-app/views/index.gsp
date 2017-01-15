@@ -107,6 +107,6 @@
     </div>
 
     <asset:javascript src="vendor.js" />
-    <asset:javascript src="/streama/streama.js" />
+    <asset:javascript src="streama/streama.js" />
 </body>
 </html>

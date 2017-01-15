@@ -1,3 +1,4 @@
+//= wrapped
 angular.module('streama.translations').config(function ($translateProvider) {
 	$translateProvider.translations('fr', {
 		LOGIN: {

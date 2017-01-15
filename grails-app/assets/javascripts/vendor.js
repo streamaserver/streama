@@ -13,7 +13,6 @@
 //= require angular-sanitize/angular-sanitize
 //= require angular-translate/angular-translate
 //= require bootstrap/bootstrap
-//= require ab/ui-bootstrap.min.js
 //= require angular-bootstrap/ui-bootstrap-tpls
 //= require alertify/alertify.min
 //= require lodash/lodash

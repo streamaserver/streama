@@ -1,5 +1,8 @@
 //= wrapped
 
+//= require_self
+//= require_tree translations
+
 angular.module('streama.translations', ['pascalprecht.translate'])
 	.config(function ($translateProvider) {
 		$translateProvider.determinePreferredLanguage();
