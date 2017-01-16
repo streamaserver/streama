@@ -8,12 +8,6 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 [Visit the Promo-Website here!](http://dularion.github.io/streama/)
 
 
-## Up and Running
-Youre welcome to try out the brand new pre-release of the v1.x of this app, with mega simple setup! 
-Check out the wikis.
-- [up and running with v1.x](https://github.com/dularion/streama/wiki/BETA--Streama-v1)
-- [up and running with v0.x (legacy)](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
-
 ## Contributing
 #### Translations
 If you want to contribute a translation, please follow [the guide here](https://github.com/dularion/streama/wiki/Translating-the-app). 
@@ -41,9 +35,11 @@ If you want to use paypal, use this link https://www.paypal.me/dularion
 - [License](#license)
 
 # Getting Started
-- For local setup, please refer to [Local Streama Setup](https://github.com/dularion/streama/wiki/Local-Streama-Setup)
-- For remote setup, please refer to [Streama on a remote Ubuntu 14.04](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
-- For developers, please refer to [Streama for development](https://github.com/dularion/streama/wiki/Set-Up-Streama-for-Development)
+- For the new v1.x, refer to [up and running with v1.x](https://github.com/dularion/streama/wiki/BETA--Streama-v1)
+
+- For local setup with v0.x (legacy), please refer to [Local Streama Setup](https://github.com/dularion/streama/wiki/Local-Streama-Setup)
+- For remote setup with v0.x (legacy), please refer to [Streama on a remote Ubuntu 14.04](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
+- For developers with v0.x (legacy), please refer to [Streama for development](https://github.com/dularion/streama/wiki/Set-Up-Streama-for-Development)
 
 # The Application
 
