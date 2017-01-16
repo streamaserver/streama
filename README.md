@@ -9,7 +9,7 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 
 
 ## Up and Running
-Youre welcome to try out the brand new pre-release of the v1.x of this app, with mega simple setup! 
+You're welcome to try out the brand new pre-release of the v1.x of this app, with mega simple setup! 
 Check out the wikis.
 - [up and running with v1.x](https://github.com/dularion/streama/wiki/BETA--Streama-v1)
 - [up and running with v0.x (legacy)](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
@@ -19,11 +19,11 @@ Check out the wikis.
 If you want to contribute a translation, please follow [the guide here](https://github.com/dularion/streama/wiki/Translating-the-app). 
 
 #### PRs
-If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your effors on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
+If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your efforts on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
 
 #### Donations
 If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
-If you want to use paypal, use this link https://www.paypal.me/dularion
+If you want to use PayPal, use this link https://www.paypal.me/dularion
 
 
 ## Table of contents:
@@ -106,7 +106,7 @@ Please refer to [Change Log](https://github.com/dularion/streama/blob/master/CHA
 # Roadmap
 These [enhancement-issues](https://github.com/dularion/streama/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement) are the features that I will be working on in the near future.
 
-At this point I would like to mention that this project is still very much a work-in-progress. I will be adding new features and bugfixes often and quickly, but this is first and foremost a hobby project, so the time that I can spend on it is limited. If you want to contibute, feel free! I will be honored by each and every Pull request :)
+At this point I would like to mention that this project is still very much a work-in-progress. I will be adding new features and bugfixes often and quickly, but this is first and foremost a hobby project, so the time that I can spend on it is limited. If you want to contribute, feel free! I will be honored by each and every Pull request :)
 
 Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
 
