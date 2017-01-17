@@ -225,7 +225,9 @@ img {
       font-weight: 100;
       opacity: 0.7; }
     .main-content #mc_embed_signup .mc-field-group input {
-      background: rgba(255, 255, 255, 0.25); }
+      background: rgba(255, 255, 255, 0.25);
+      text-align: center;
+      text-indent: 0; }
   .main-content #mc_embed_signup .button {
     background: #8BB7C9;
     display: block;
