@@ -125,19 +125,19 @@
       <li role="presentation" class="active">
         <a href="#local" aria-controls="local" role="tab" data-toggle="tab">
           <img src="img/java-logo.png" alt=""/>
-          <span class="hidden-xs">Local Vanilla-Setup</span>
+          <span class="hidden-xs">Local Setup</span>
         </a>
       </li>
       <li role="presentation">
         <a href="#vServer" aria-controls="vServer" role="tab" data-toggle="tab">
           <img src="img/ubuntu-logo.png" alt=""/>
-          <span class="hidden-xs">vServer Vanilla-Setup</span>
+          <span class="hidden-xs">ubuntu Setup</span>
         </a>
       </li>
       <li role="presentation">
         <a href="#docker" aria-controls="docker" role="tab" data-toggle="tab">
           <img src="img/docker-logo.png" alt=""/>
-          <span class="hidden-xs">Setup with Docker</span>
+          <span class="hidden-xs">Setup with Docker (legacy)</span>
         </a>
       </li>
     </ul>
@@ -148,93 +148,34 @@
         <div class="markdown-body">
           <h3>
             <a id="user-content-step-1---jdk" class="anchor" href="#step-1---jdk" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Step 1 - JDK</h3>
+                class="octicon octicon-link"></span></a>Step 1 - Java</h3>
 
-          <ul>
-            <li>If you don't have it already, go ahead and download a copy of <a
-                href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">JDK7
-              (Oracle)</a>
-            </li>
-            <li>install JDK as usual, make sure to let JDK add new variables to your system</li>
-            <li>After install, open up your command line and make sure the following outputs look correct:
-
-              <ul>
-                <li>
-                  <code>java -version</code> - this should be something like 1.7.0_79
-                </li>
-                <li style="word-break: break-all;">
-                  <code>echo $JAVA_HOME</code> - this should be something like <em>/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home</em>
-                  or <em>/usr/lib/jvm/java-8-oracle</em>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <p>If you don't have it already, go ahead and download a copy of <a
+              href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JDK8
+            (Oracle)</a> and install JDK as usual, make sure to let JDK add new variables to your system.</p>
 
           <br/>
 
           <h3>
             <a id="user-content-step-2---clone-the-git-repo" class="anchor" href="#step-2---clone-the-git-repo"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 2 - Clone the git repo</h3>
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 2 - Download the executable</h3>
 
-          <ul>
-            <li>In your command line, or your favorite Git Application, clone this repo to your desired location. <code>git
-              clone https://github.com/dularion/streama.git</code>.
-
-              <ul>
-                <li>Note: This location will most likely differ from the Upload Directory of your video-files, so you
-                  don't have to keep that in mind while choosing the repo-location.
-                </li>
-              </ul>
-            </li>
-          </ul>
-
-          <br/>
-
-          <h3>
-            <a id="user-content-step-3---mysql-database" class="anchor" href="#step-3---mysql-database"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 3 - MySQL Database</h3>
-
-          <ul>
-            <li>if you don't have a local installation of MySQL, install one. It could also be useful to have a way to
-              browse your databases in a convenient way, for instance with phpMyAdmin. To get all in one, i recommend <a
-                  href="https://www.apachefriends.org/index.html">XAMPP</a>
-            </li>
-            <li>once your MySQL is up and running, create a database called "streama". via command line, this would be
-              <code>mysql&gt; CREATE DATABASE streama;</code>
-            </li>
-            <li>the application assumes the following login-credentials for the database: <code>username root, no
-              password</code>. If you want to change this, find and edit the information in <code>/grails-app/conf/DataSource.groovy</code>.
-            </li>
-          </ul>
-
-          <br/>
-
-          <h3>
-            <a id="user-content-step-4---upload-directory" class="anchor" href="#step-4---upload-directory"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4 - Upload Directory</h3>
-
-          <ul>
-            <li>Somewhere on your machine, create a directory where the application will store the uploaded video files.
-              You can choose any directory.
-            </li>
-          </ul>
+          <p>Download the most recent .war file in the <a href="https://github.com/dularion/streama/releases">releases page</a></p>
 
           <br/>
 
           <h3>
             <a id="user-content-step-5---run-the-application" class="anchor" href="#step-5---run-the-application"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 5 - Run the application</h3>
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 3 - Run the application</h3>
 
           <ul>
             <li>open your command line tool</li>
-            <li>navigate to the directory of the repo. for instance <code>cd /projects/streama</code>
+            <li>on a unix-system (Ubuntu, Mac, etc), run <code>./streama-[version].war</code>
             </li>
-            <li>on Windows, run <code>grailsw.bat run-war</code>
+            <li>on Windows (untested), run <code>streama-[version].war</code>
             </li>
-            <li>on a unix-system (Ubuntu, Mac, etc), run <code>./grailsw run-war</code>
-            </li>
-            <li>This command will download the local version of grails and run the app under
-              http://localhost:8080/streama
+            <li>This command will run the application in an embedded server against a local database
+              http://localhost:8080
             </li>
           </ul>
 
@@ -242,228 +183,73 @@
 
           <h3>
             <a id="user-content-step-6---base-settings" class="anchor" href="#step-6---base-settings"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 6 - Base Settings</h3>
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4 - Login</h3>
 
-          <ul>
-            <li>the first thing you will see when opening the URL is a login screen. Use username <code>admin</code> and
-              password <code>admin</code> to log in.
-            </li>
-            <li>You will then be redirected to the Settings page
 
-              <ul>
-                <li>enter the Upload Directory that you created in step 4 &amp; verify if the application has access by
-                  pressing the "verify" button
-                </li>
-                <li>enter your API-Key for theMovieDb.org &amp; verify</li>
-              </ul>
-            </li>
-          </ul>
-
-          <p>If Everything worked out all right, you are now ready to use the application! </p>
+          <p>the first thing you will see when opening the URL is a login screen. Use username <code>admin</code> and
+            password <code>admin</code> to log in. Enjoy
+          </p>
 
 
           <br/>
           <br/>
 
-          <h3>
-            <a id="user-content-troubleshooting" class="anchor" href="#troubleshooting" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Troubleshooting</h3>
-
-          <h4>
-            <a id="user-content-upload-directory" class="anchor" href="#upload-directory" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Upload Directory</h4>
-
-          <ul>
-            <li>if the application cannot verify your Upload Directory, make sure you have the right permissions for the
-              folder. If the app is running in a different user, make sure to add read/write permissions for the group
-              or even all on the folder, through something like this <code>chmod g+rw your/directory</code> or <code>chmod
-                ga+rw your/directory</code>
-            </li>
-          </ul>
-
-          <h4>
-            <a id="user-content-startup-problems" class="anchor" href="#startup-problems" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Startup problems</h4>
-
-          <ul>
-            <li>if your application throws errors on startup and won't deploy, make sure that your
-              <code>$JAVA_HOME</code> is set correctly. It needs to point to your installation of JDK not JRE, and it
-              needs to be version 1.7.x, not 1.6.x or 1.8.x. Windows users need to set their %JAVA_HOME% to something like 
-              `C:\Program Files\Java\jdk1.7.0_79` and add `%JAVA_HOME%\bin` to the PATH.
-            </li>
-            <li>Make sure your MySQL is running and that the application can access it with the credentials above</li>
-          </ul>
-
-          <h4>
-            <a id="user-content-video-playback" class="anchor" href="#video-playback" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Video Playback</h4>
-
-          <ul>
-            <li>if your videos won't play, make sure that they are HTML5 compatible. I will add video-conversion soon,
-              but right now there is no conversion, so you have to rely on what your browser can handle. A quick and
-              easy test is to open a new empty browser-tab and drag&amp;drop your video file in. If it shows up in a
-              player, then it's a compatible format. If it downloads, it's incompatible. Also, of all browsers, Chrome
-              supports most of the HTML5 formats as far as I know.
-            </li>
-          </ul>
+          <p>For further information and FAQ, see the <a href="https://github.com/dularion/streama/wiki/Getting-started-with-v1">Up and Running with v1 Wiki</a></p>
 
         </div>
       </div>
       <div role="tabpanel" class="tab-pane" id="vServer">
         <div class="markdown-body">
+
           <h3>
-            <a id="user-content-update-server" class="anchor" href="#update-server" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Step 1 - Update Server</h3>
+            <a id="user-content-step-1---jdk" class="anchor" href="#step-1---jdk" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Step 1 - Java</h3>
 
-<pre><code>apt-get update
-apt-get upgrade
-reboot
-</code></pre>
+          <code>sudo apt-get install openjdk-8-jdk</code>
 
-          <p>reconnect afterward</p>
           <br/>
 
           <h3>
-            <a id="user-content-setup-tomcat-and-mysql" class="anchor" href="#setup-tomcat-and-mysql"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 2 - Setup Tomcat and MySQL</h3>
+            <a id="user-content-step-2---clone-the-git-repo" class="anchor" href="#step-2---clone-the-git-repo"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 2 - Download the executable</h3>
 
-<pre><code>apt-get install tomcat7
-apt-get install mysql-server
-mysql&gt; CREATE DATABASE streama;
-</code></pre>
+          <p>Download the most recent .war file in the <a href="https://github.com/dularion/streama/releases">releases page</a></p>
+          <code>wget https://github.com/dularion/streama/releases/download/v[version]/streama-[version].war</code>
 
+          <br/>
+
+          <h3>
+            <a id="user-content-step-5---run-the-application" class="anchor" href="#step-5---run-the-application"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 3 - Run the application</h3>
+
+          <code>./streama-[version].war</code>
+
+          <br/>
+
+          <h3>
+            <a id="user-content-step-6---base-settings" class="anchor" href="#step-6---base-settings"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4 - Login</h3>
+
+
+          <p>the first thing you will see when opening the URL is a login screen. Use username <code>admin</code> and
+            password <code>admin</code> to log in. Enjoy
+          </p>
+
+          <br/>
+
+          <h3>
+            <a id="user-content-step-6---base-settings" class="anchor" href="#step-6---base-settings"
+               aria-hidden="true"><span class="octicon octicon-link"></span></a>Tipps</h3>
           <ul>
-            <li><p>For installing tomcat, this tutorial is fantastic: <a
-                href="https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-7-on-ubuntu-14-04-via-apt-get">Tomcat7
-              on Ubuntu 14.04</a></p></li>
-            <li><p>For installing mysql, this tutorial may be partly helpful: <a
-                href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-14-04">LAMP
-              on Ubuntu 14.04</a></p></li>
+            <li>Make sure you have the correct rights, such as execution rights, on the .war file. use <code>chmod ug+x</code>
+              to give the owner and group execution rights. </li>
+            <li>use systemctrl to run the war as a service in the background. see <a href="https://github.com/dularion/streama/wiki/Getting-started-with-v1#10-how-do-i-install-it-as-a-service">instructions here</a></li>
+            <li>customize the database to be mysql with your own secure username and password. see <a href="https://github.com/dularion/streama/wiki/Getting-started-with-v1#2-where-is-the-data-stored">instructions here</a> </li>
           </ul>
 
-          <p>By default the application assumes a db-login of username "root", no password. If you wish to change this,
-            edit the settings in the production-section of <code>grails-app/conf/DataSource.groovy</code></p>
-          <br/>
+          <br>
+          <p>For further information, FAQs and other tricks, see the <a href="https://github.com/dularion/streama/wiki/Getting-started-with-v1">Up and Running with v1 Wiki</a></p>
 
-          <p>Also, make sure to give the tomcat a good amount of ram, I recommend at least the following settings:</p>
-
-<pre>sudo nano /etc/default/tomcat7
-JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xmx1024m -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC"
-</pre>
-
-
-          <br/>
-
-          <h3>
-            <a id="user-content-install-mail-server-optional" class="anchor" href="#install-mail-server-optional"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 3 - Install Mail Server (optional)
-          </h3>
-
-          <p>By default the application assumes the default mail server configured at localhost on port 25. You install
-            simply by using</p>
-
-
-
-<pre><code>apt-get install sendmail
-</code></pre>
-
-          <p>In order to get emails to work with something else, look into <a href="http://grails.org/plugins/mail">Grails
-            mail plugin</a>.</p>
-          <br/>
-
-          <h3>
-            <a id="user-content-create-upload-directory" class="anchor" href="#create-upload-directory"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4 - Create Upload Directory</h3>
-
-          <p>it is recommended that you choose an upload-directory outside of the application, so that no one can access
-            without permission. Let's assume you choose to place it in root under /data/streama</p>
-
-<pre><code>mkdir /data
-mkdir /data/streama
-chown tomcat7:tomcat7 /data/streama
-</code></pre>
-          <br/>
-
-          <h3>
-            <a id="user-content-compile-the-streama-rootwar" class="anchor" href="#compile-the-streama-rootwar"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 5 - Compile the Streama ROOT.war
-          </h3>
-
-          <p>This can be done either on your local machine or on the remote server</p>
-
-<pre><code>sudo apt-get install default-jdk
-cd /wherever/you/want/to/put/streama
-git clone git@github.com:dularion/streama.git
-cd streama
-./grailsw war ROOT.war -Dgrails.env=production
-</code></pre>
-
-          <br/>
-
-
-          <h3>
-            <a id="user-content-deploy-to-tomcat" class="anchor" href="#deploy-to-tomcat" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Step 6 - Deploy to Tomcat</h3>
-
-          <p>on your remote server, stop tomcat7 &amp; remove old tomcat7 ROOT</p>
-
-<pre><code>service tomcat7 stop
-rm -R /var/lib/tomcat7/webapps/ROOT
-</code></pre>
-
-          <br/>
-
-          <h5>
-            <a id="user-content-rootwar-is-on-local-machine" class="anchor" href="#rootwar-is-on-local-machine"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>ROOT.war is on local machine</h5>
-
-          <p>If you built the ROOT.war on your remote server, run</p>
-
-<pre><code>cp ROOT.war /var/lib/tomcat7/webapps
-</code></pre>
-
-          <br/>
-
-          <h5>
-            <a id="user-content-rootwar-is-on-remote-machine" class="anchor" href="#rootwar-is-on-remote-machine"
-               aria-hidden="true"><span class="octicon octicon-link"></span></a>ROOT.war is on remote machine</h5>
-
-          <p>If you built the ROOT.war on your local machine, run</p>
-
-<pre><code>rsync -avzhP ROOT.war username@your-remote-server:/var/lib/tomcat7/webapps/
-</code></pre>
-
-
-          <br/>
-
-          <h3>
-            <a id="user-content-start-application" class="anchor" href="#start-application" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Step 7 - Start Application</h3>
-
-<pre><code>service tomcat7 start
-tail -f /var/log/tomcat7/catalina.out -n99
-</code></pre>
-
-          <p>after successful deployment, the last line should read <code>INFORMATION: Server startup in X ms</code></p>
-
-          <p>If everything worked out all right, you should now be able to access the application on <code>http://your-remote-server:8080</code>
-
-
-            <br/>
-            <br/>
-
-
-          <h1>
-            <a id="user-content-extras" class="anchor" href="#extras" aria-hidden="true"><span
-                class="octicon octicon-link"></span></a>Extras</h1>
-
-          <ul>
-            <li>If you have iptables running, make sure to add port 8080 to the Allowed list.</li>
-            <li>If you want to add SSL to the application, you can either use nginx or the native functionality in
-              tomcat. <a href="https://github.com/rhulha">rhulha</a> wrote a comprehensive tutorial for this: <a
-                  href="https://github.com/dularion/streama/wiki/SSL-tutorial-for-ubuntu-and-www.startssl.com">https://github.com/dularion/streama/wiki/SSL-tutorial-for-ubuntu-and-www.startssl.com</a>
-            </li>
-          </ul>
 
         </div>
       </div>
