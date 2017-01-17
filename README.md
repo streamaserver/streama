@@ -91,7 +91,7 @@ Please refer to [Change Log](https://github.com/dularion/streama/blob/master/CHA
 # Roadmap
 These [enhancement-issues](https://github.com/dularion/streama/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement) are the features that I will be working on in the near future.
 
-At this point I would like to mention that this project is still very much a work-in-progress. I will be adding new features and bugfixes often and quickly, but this is first and foremost a hobby project, so the time that I can spend on it is limited. If you want to contibute, feel free! I will be honored by each and every Pull request :)
+At this point I would like to mention that this project is still very much a work-in-progress. I will be adding new features and bugfixes often and quickly, but this is first and foremost a hobby project, so the time that I can spend on it is limited. If you want to contribute, feel free! I will be honored by each and every Pull request :)
 
 Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
 
