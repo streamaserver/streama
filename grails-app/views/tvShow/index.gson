@@ -1,0 +1,8 @@
+import streama.TvShow
+
+model {
+	Iterable<TvShow> tvShowList
+}
+
+json tmpl.tvShow(tvShowList ?: [])
+

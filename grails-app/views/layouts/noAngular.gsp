@@ -13,10 +13,16 @@
 	<asset:stylesheet src="vendor.css"/>
 	<asset:stylesheet src="application.css"/>
 
-	<asset:javascript src="vendor.js"/>
-	<asset:javascript src="application.js"/>
-
 	<g:layoutHead/>
+
+	<asset:javascript src="vendor.js"/>
+	<asset:javascript src="/streama/streama.js" />
+
+	<style type="text/css">
+	[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+		display: none !important;
+	}
+	</style>
 
 </head>
 <body>
@@ -28,5 +34,7 @@
 </header>
 
 <g:layoutBody/>
+
+
 </body>
 </html>

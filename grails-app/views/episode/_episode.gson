@@ -1,0 +1,7 @@
+import streama.Episode
+
+model {
+	Episode episode
+}
+
+json g.render(episode)

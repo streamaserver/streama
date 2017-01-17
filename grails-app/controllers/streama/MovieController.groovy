@@ -36,10 +36,8 @@ class MovieController {
     respond movieInstance, [status: CREATED]
   }
 
-  def show(Movie movieInstance) {
-    JSON.use('fullMovie') {
-      respond movieInstance, [status: OK]
-    }
+  def show(Movie movie) {
+    respond movie, [status: OK]
   }
 
   @Transactional

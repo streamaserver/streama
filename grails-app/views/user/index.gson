@@ -1,0 +1,8 @@
+import streama.User
+
+model {
+	Iterable<User> userList
+}
+
+json tmpl.user(userList ?: [])
+

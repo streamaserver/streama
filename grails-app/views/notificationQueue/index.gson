@@ -1,0 +1,8 @@
+import streama.NotificationQueue
+
+model {
+	Iterable<NotificationQueue> notificationQueueList
+}
+
+json tmpl.notificationQueue(notificationQueueList ?: [])
+

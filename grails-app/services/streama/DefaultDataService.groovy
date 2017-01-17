@@ -24,6 +24,7 @@ class DefaultDataService {
         [
             username: 'admin',
             password: 'admin',
+            fullName: 'Administrator',
             enabled: true,
             roles: [Role.findByAuthority("ROLE_ADMIN"), Role.findByAuthority("ROLE_CONTENT_MANAGER")]
         ]
@@ -69,6 +70,12 @@ class DefaultDataService {
         [
             settingsKey: 'Second Directory',
             description: 'This directory is not used for uploading of new files, only for playback of existing files. This can be useful if you want to spread your video files over two directories, for instance by mounting a second drive.',
+            settingsType: 'string',
+            required: false
+        ],
+        [
+            settingsKey: 'Local Video Files',
+            description: 'If you already have a directory with your videos, put it here and you will be able to choose them when creating movies or TV shows.',
             settingsType: 'string',
             required: false
         ],

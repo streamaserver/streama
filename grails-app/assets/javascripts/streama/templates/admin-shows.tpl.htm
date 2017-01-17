@@ -1,0 +1,43 @@
+<button class="btn btn-primary pull-right btn-lg" ng-click="openShowModal()">Create new Show</button>
+
+<h1>
+  Shows
+  <video-sort-order-dropdown current-sort="currentSort" dropdown-type="'tvShow'"/>
+</h1>
+
+<div class="row">
+  <div class="col-md-5">
+    <input placeholder="{{searchText}}" type="text" ng-model="search" class="form-control input-sm" />
+  </div>
+</div>
+
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<hr/>
+
+<div class="media-list">
+  <div class="media-list-item media-poster-item"  ng-class="{'no-files': !show.episodesWithFilesCount}"
+       ng-repeat="show in shows | filter:search | orderBy:currentSort.sort"
+       ui-sref="admin.show({showId: show.id})">
+    <div class="media-item" >
+      <img ng-if="show.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{show.poster_path}}"/>
+      <img ng-if="!show.poster_path && !show.manualInput" ng-src="{{basePath}}assets/poster-not-found.png"/>
+
+      <img ng-show="show.manualInput && show.poster_image_src" ng-src="{{show.poster_image_src}}">
+
+      <div class="play-text">
+        <h4>{{show.name}}</h4>
+        <p>{{show.first_air_date}} | <i class="ion-ios-star"></i>{{show.vote_average}} </p>
+        <p ng-class="{'label label-danger': !show.episodesWithFilesCount}">{{show.episodesWithFilesCount}}/{{show.episodesCount}} uploaded</p>
+      </div>
+
+      <i class="warning-icon ion-alert-circled" ng-show="!show.episodesWithFilesCount"></i>
+    </div>
+  </div>
+</div>
+
+

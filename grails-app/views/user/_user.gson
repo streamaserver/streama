@@ -1,0 +1,10 @@
+import streama.User
+
+model {
+	User user
+}
+
+json g.render(user){
+	invitationLink user.invitationLink
+	authorities user.authorities.collect{[id: it.id, displayName: it.displayName]}
+}

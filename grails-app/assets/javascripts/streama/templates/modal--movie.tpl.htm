@@ -1,0 +1,133 @@
+<form class="form-horizontal">
+
+  <div class="modal-body">
+    <legend>
+      Movie
+      <button class="btn btn-sm btn-white btn-outline pull-right" ng-show="hasKey" ng-click="toggleAddManually()">
+        <span ng-show="!addManually && !movie.id">Add Manually</span>
+        <span ng-show="addManually">Add Automatically</span>
+      </button>
+    </legend>
+
+    <div class="form-group">
+      <div class="col-sm-12 typeahead-wrapper" ng-if="!addManually">
+        <input type="text" class="form-control name-input" ng-model="movie.title" placeholder="Search from TheMovieDB..." typeahead-loading="loading" typeahead-append-to-body="true"
+               uib-typeahead="item.title for item in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="/streama/typeahead--movie.htm">
+        <div class="spinner" ng-show="loading">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </div>
+      <div class="col-sm-12" ng-if="addManually">
+        <input type="text" class="form-control" ng-model="movie.title" placeholder="Movie Name">
+      </div>
+    </div>
+
+    <div ng-show="movie.release_date || movie.id || addManually">
+      <div class="form-group row-slim">
+        <div class="col-sm-2">
+          <label>Release Date</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.release_date" placeholder="2003-01-23"/>
+        </div>
+        <div class="col-sm-2">
+          <label>IMDB ID</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.imdb_id" placeholder="tt0383126"/>
+        </div>
+        <div ng-hide="addManually">
+          <div class="col-sm-2">
+            <label>TheMovieDB ID</label>
+            <input type="text" class="form-control input-sm" disabled ng-model="movie.apiId" placeholder="TheMovieDB ID"/>
+          </div>
+          <div class="col-sm-2">
+            <label>Rating</label>
+            <input type="text" class="form-control input-sm" ng-model="movie.vote_average" placeholder="Rating"/>
+          </div>
+          <div class="col-sm-2">
+            <label>Rating Count</label>
+            <input type="text" class="form-control input-sm" ng-model="movie.vote_count" placeholder="Rating Count"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label>Overview</label>
+          <textarea class="form-control" cols="30" rows="4" ng-model="movie.overview" placeholder="Overview"></textarea>
+        </div>
+      </div>
+
+      <div ng-hide="addManually">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label>Genre</label>
+            <ul class="genre-list">
+              <li class="genre-tag" ng-repeat="genre in movie.genre">
+                {{genre.name}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group" ng-show="movie.id">
+        <div class="col-sm-12">
+          <label>Tags</label>
+
+          <ui-select class="tag-select" multiple tagging="tagTransform" ng-model="movie.tags" theme="bootstrap" title="Add Tags" on-select="onTagSelect($item, $model)">
+            <ui-select-match placeholder="Select tag...">{{$item.name}}</ui-select-match>
+            <ui-select-choices repeat="tag in tags | propsFilter: {name: $select.search}">
+              <div ng-if="tag.isNew" ng-bind-html="tag.name +' <small>(new)</small>'| highlight: $select.search"></div>
+              <div ng-if="!tag.isNew" class="tag-wrapper">
+                <div class="tag-name" ng-bind-html="tag.name + tag.isTag| highlight: $select.search"></div>
+                <i class="ion-trash-a" ng-click="deleteTag(tag)"></i>
+              </div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+
+
+      <div class="form-group" ng-if="movie.backdrop_path">
+        <div class="col-sm-6">
+          <label>Image</label>
+          <br/>
+          <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="form-group" ng-if="!movie.backdrop_path && movie.id">
+        <div class="col-sm-12">
+          <label>Poster Image</label>
+          <br/>
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="upload-poster" ng-class="{'update-poster': movie.poster_image_src}" ng-model="manualPoster" class="btn btn-primary btn-block btn-lg"
+                   ngf-change="uploadImage($files, 'poster_image')" ngf-select ngf-drop ngf-drag-over-class="dragover">
+                <span class="main-text">Upload Poster</span>
+                <span class="size-info">300x450 px</span>
+                <span ng-show="imageUpload.percentage">{{imageUpload.percentage}}%</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <img ng-show="movie.poster_image || movie.poster_image_src" ng-src="{{movie.poster_image.src || movie.poster_image_src}}"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-footer" ng-if="movie.release_date || movie.id || addManually">
+    <button class="btn btn-success" ng-click="saveMovie(movie)" ng-disabled="!movie.title">Save</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+  </div>
+</form>

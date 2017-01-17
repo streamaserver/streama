@@ -1,5 +1,7 @@
 package streama
 
+import grails.transaction.Transactional
+
 import static java.util.UUID.randomUUID
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -8,6 +10,7 @@ import grails.transaction.Transactional
 class UserController {
 
   def validationService
+  def mailService
   def springSecurityService
   def passwordEncoder
 
@@ -58,10 +61,11 @@ class UserController {
 
   def checkAvailability() {
     def username = params.username
+    def isInvite = params.isInvite
     def result = [:]
 
     if (User.findByUsername(username)) {
-      result.error = "User with that E-Mail-Address already exists."
+      result.error = (isInvite == "true") ? "User with that E-Mail-Address already exists." : "Username already exists."
     }
 
     respond result
@@ -72,7 +76,7 @@ class UserController {
 
     def data = request.JSON
 
-    User userInstance = User.findOrCreateById(data.id)
+    User userInstance = data.id ? User.get(data.id) : new User()
 
     if (userInstance == null) {
       render status: NOT_FOUND
@@ -92,7 +96,7 @@ class UserController {
       userInstance.uuid = randomUUID() as String
 
       try {
-        sendMail {
+        mailService.sendMail {
           to userInstance.username
           subject "You have been invited!"
           body(view: "/mail/userInvite", model: [user: userInstance])
@@ -118,9 +122,45 @@ class UserController {
     respond userInstance, [status: CREATED]
   }
 
+  @Transactional
+  def saveAndCreateUser() {
+
+    def data = request.JSON
+
+    User userInstance = data.id ? User.get(data.id) : new User()
+
+    if (userInstance == null) {
+      render status: NOT_FOUND
+      return
+    }
+
+    userInstance.properties = data
+
+    userInstance.validate()
+    if (userInstance.hasErrors()) {
+      render status: NOT_ACCEPTABLE
+      return
+    }
+
+    userInstance.save flush: true
+
+    UserRole.removeAll(userInstance)
+
+    data.authorities?.each { roleJson ->
+      Role role = Role.get(roleJson.id)
+      UserRole.create(userInstance, role)
+    }
+
+    respond userInstance, [status: CREATED]
+  }
 
   def current() {
-    respond springSecurityService.currentUser, [status: OK]
+    User user = springSecurityService.currentUser
+    if(user){
+      return [user: user]
+    }
+
+    respond status: UNAUTHORIZED
   }
 
   @Transactional

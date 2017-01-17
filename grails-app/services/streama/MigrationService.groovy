@@ -7,6 +7,17 @@ class MigrationService {
 
   def theMovieDbService
 
+  def setTheMovieDBKey() {
+    def setting = Settings.list()
+
+    setting.each {
+      if (it.id == 2) {
+        it.required = false
+        it.save(failOnError: true)
+      }
+    }
+  }
+
   def setDefaultDeletedFlag() {
     def videos = Video.findAllByDeletedIsNull()
 

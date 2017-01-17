@@ -1,0 +1,52 @@
+<div class="btn-group pull-right">
+  <button class="btn btn-primary" ng-click="openUserInviteModal()">Invite User via email</button>
+  <button class="btn btn-primary" ng-click="openUserCreateModal()">Create User</button>
+</div>
+<h1>Users</h1>
+
+<div class="spinner big" ng-show="loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<hr/>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>Username</td>
+    <td>date Created</td>
+    <td>enabled</td>
+    <td>invitation link</td>
+    <td>roles</td>
+    <td></td>
+  </tr>
+  </thead>
+  <tr ng-repeat="user in users">
+    <td>{{user.username}}</td>
+    <td>{{user.dateCreated | date:'short'}}</td>
+    <td>
+      <i class="ion-checkmark color-success" ng-show="user.enabled"></i>
+      <i class="ion-close color-danger" ng-show="!user.enabled"></i>
+    </td>
+
+    <td>
+      <input ng-if="user.invitationLink" class="form-control input-xs" type="text" ng-model="user.invitationLink"/>
+    </td>
+
+    <td> <span class="comma-separatad" ng-repeat="role in user.authorities">{{role.displayName}}</span></td>
+
+    <td style="width: 110px;">
+      <button class="btn btn-xs btn-primary" ng-click="openUserEditModal(user)">edit</button>
+      <button class="btn btn-xs btn-danger" ng-click="delete(user)">delete</button>
+    </td>
+  </tr>
+</table>
+
+<hr/>
+
+<p class="text-muted">
+  Users with the role <strong>Admin</strong> can edit Users & Settings. <br/>
+  Users with the role <strong>Content Manager</strong> can edit content. <br/>
+  Users with <strong>both rules</strong> have full rights.</p>

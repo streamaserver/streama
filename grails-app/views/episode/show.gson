@@ -1,0 +1,13 @@
+import streama.Episode
+
+model {
+	Episode episode
+}
+
+json g.render(episode, [deep:true, excludes: ['files']]){
+	files episode.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
+	subtitles episode.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+	hasFiles episode.files ? true : false
+	nextEpisode {id {((Episode)episode.getNextEpisode())?.id}}
+	viewedStatus episode.getViewingStatus()
+}

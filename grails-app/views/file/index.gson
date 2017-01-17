@@ -1,0 +1,8 @@
+import streama.File
+
+model {
+	Iterable<File> fileList
+}
+
+json tmpl.file(fileList ?: [])
+

@@ -2,7 +2,6 @@ package streama
 
 import grails.transaction.Transactional
 import org.apache.commons.codec.digest.DigestUtils
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest
 
 @Transactional
@@ -24,9 +23,13 @@ class UploadService {
     return storages
   }
 
-  def upload(DefaultMultipartHttpServletRequest request) {
+  def getLocalPath(){
+    return Settings.findBySettingsKey('Local Video Files')?.value
+  }
 
-    CommonsMultipartFile rawFile = request.getFile('file')
+  def upload(request) {
+
+    def rawFile = request.getFile('file')
     def sha256Hex = DigestUtils.sha256Hex(rawFile.inputStream)
     def index = rawFile.originalFilename.lastIndexOf('.')
     String extension = rawFile.originalFilename[index..-1];
@@ -66,7 +69,13 @@ class UploadService {
 
   }
 
-  String getPath(String sha256Hex, extension){
+  String getPath(File file){
+    if (file.localFile) {
+      // A local file is defined
+      return new java.io.File(file.localFile)
+    }
+
+    // The file is stored in the upload directory
     def foundVideoPath
 
     storagePaths.each{storagePath ->
@@ -74,7 +83,7 @@ class UploadService {
         return
       }
       def uploadDir = new java.io.File(storagePath + '/upload')
-      def filePath = "$uploadDir/$sha256Hex" + extension
+      def filePath = "$uploadDir/$file.sha256Hex" + file.extension
       if((new java.io.File(filePath)).exists()){
         foundVideoPath = filePath
       }
@@ -86,6 +95,4 @@ class UploadService {
   def getFileSrc(File file){
     return settingsService.baseUrl  + "/file/serve/" + file.id + file.extension
   }
-
-
 }

@@ -1,0 +1,7 @@
+import streama.TvShow
+
+model {
+	TvShow tvShow
+}
+
+json g.render(tvShow, [deep: true])

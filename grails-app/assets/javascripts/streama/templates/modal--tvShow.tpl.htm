@@ -1,0 +1,89 @@
+
+<form class="form-horizontal">
+  <div class="modal-body">
+    <legend>
+      New Show
+      <button class="btn btn-sm btn-white btn-outline pull-right" ng-show="hasKey" ng-click="toggleAddManually()">
+        <span ng-show="!tvShow.manualInput">Add Manually</span>
+        <span ng-show="tvShow.manualInput">Add Automatically</span>
+      </button>
+    </legend>
+
+    <div class="form-group">
+      <div class="col-sm-12 typeahead-wrapper" ng-if="!tvShow.manualInput">
+        <input type="text" class="form-control name-input" ng-model="tvShow.name" placeholder="Search from TheMovieDb..." typeahead-loading="loading" typeahead-append-to-body="true"
+               uib-typeahead="show.name for show in search($viewValue)" typeahead-on-select="selectFromAPI($item)" typeahead-template-url="/streama/typeahead--tvShow.htm">
+        <div class="spinner" ng-show="loading">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <input class="form-control name-input" ng-if="tvShow.manualInput" type="text" ng-model="tvShow.name" placeholder="Show Name*">
+      </div>
+    </div>
+
+    <div ng-show="tvShow.overview || tvShow.manualInput">
+      <div class="form-group row-slim">
+        <div class="col-sm-2">
+          <label>Release Date</label>
+          <input type="text" class="form-control input-sm" ng-model="tvShow.first_air_date" placeholder="yyyy-mm-dd"/>
+        </div>
+        <div class="col-sm-2">
+          <label>IMDB ID</label>
+          <input type="text" class="form-control input-sm" ng-model="tvShow.imdb_id" placeholder="tt0383126"/>
+        </div>
+        <div ng-hide="tvShow.manualInput">
+        <div class="col-sm-2">
+          <label>TheMovieDB ID</label>
+          <input type="text" class="form-control input-sm" ng-disabled="tvShow.manualInput" ng-model="tvShow.apiId" placeholder="TheMovieDB ID"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating</label>
+          <input type="text" class="form-control input-sm" ng-model="tvShow.vote_average" placeholder="Rating"/>
+        </div>
+        <div class="col-sm-2">
+          <label>Rating Count</label>
+          <input type="text" class="form-control input-sm" ng-model="tvShow.vote_count" placeholder="Rating Count"/>
+        </div>
+      </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label>Overview</label>
+          <textarea class="form-control" cols="30" rows="4" ng-model="tvShow.overview" placeholder="Overview"></textarea>
+        </div>
+      </div>
+
+      <div ng-hide="tvShow.manualInput">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label>Genre</label>
+            <ul class="genre-list">
+              <li class="genre-tag" ng-repeat="genre in tvShow.genre">
+                {{genre.name}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group" ng-if="!tvShow.manualInput">
+        <div class="col-sm-6">
+          <label>Image</label>
+          <br/>
+          <img ng-src="https://image.tmdb.org/t/p/w300/{{tvShow.backdrop_path}}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer" ng-show="tvShow.overview || tvShow.manualInput">
+    <button class="btn btn-success" ng-click="saveShow(tvShow)">Save Show</button>
+    <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+  </div>
+
+</form>

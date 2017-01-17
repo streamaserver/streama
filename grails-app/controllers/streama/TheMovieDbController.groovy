@@ -36,6 +36,31 @@ class TheMovieDbController {
     respond json?.results
   }
 
+  def hasKey() {
+    def resultObj = [key: theMovieDbService.API_KEY!=null]
+    respond resultObj
+  }
+
+  def seasonNumberForShow(params) {
+    String apiId = params.apiId
+    def result = []
+
+    if (!apiId) {
+      return
+    }
+
+    def JsonContent = new URL(theMovieDbService.BASE_URL + '/tv/' + apiId + '?api_key=' + theMovieDbService.API_KEY).text
+    def json = new JsonSlurper().parseText(JsonContent)
+
+    def seasons = json?.seasons
+
+    seasons?.each{ seasonData ->
+      result.add(seasonData.season_number)
+    }
+
+    respond result
+  }
+
   def seasonForShow() {
 
     def episodes = listNewEpisodesForSeason(params)
