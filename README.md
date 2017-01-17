@@ -8,24 +8,6 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 [Visit the Promo-Website here!](http://dularion.github.io/streama/)
 
 
-## Up and Running
-Youre welcome to try out the brand new pre-release of the v1.x of this app, with mega simple setup! 
-Check out the wikis.
-- [up and running with v1.x](https://github.com/dularion/streama/wiki/BETA--Streama-v1)
-- [up and running with v0.x (legacy)](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
-
-## Contributing
-#### Translations
-If you want to contribute a translation, please follow [the guide here](https://github.com/dularion/streama/wiki/Translating-the-app). 
-
-#### PRs
-If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your effors on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
-
-#### Donations
-If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
-If you want to use paypal, use this link https://www.paypal.me/dularion
-
-
 ## Table of contents:
 - [Getting Started](#getting-started)
 - [The Application](#the-application)
@@ -38,12 +20,15 @@ If you want to use paypal, use this link https://www.paypal.me/dularion
 - [Changelog](#changelog)
 - [Roadmap](#roadmap)
 - [Known Issues](#known-issues)
+- [Contributing](#contributing)
 - [License](#license)
 
 # Getting Started
-- For local setup, please refer to [Local Streama Setup](https://github.com/dularion/streama/wiki/Local-Streama-Setup)
-- For remote setup, please refer to [Streama on a remote Ubuntu 14.04](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
-- For developers, please refer to [Streama for development](https://github.com/dularion/streama/wiki/Set-Up-Streama-for-Development)
+- For the new v1.x, refer to [up and running with v1.x](https://github.com/dularion/streama/wiki/Getting-started-with-v1)
+
+- For local setup with v0.x (legacy), please refer to [Local Streama Setup](https://github.com/dularion/streama/wiki/Local-Streama-Setup)
+- For remote setup with v0.x (legacy), please refer to [Streama on a remote Ubuntu 14.04](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
+- For developers with v0.x (legacy), please refer to [Streama for development](https://github.com/dularion/streama/wiki/Set-Up-Streama-for-Development)
 
 # The Application
 
@@ -106,9 +91,20 @@ Please refer to [Change Log](https://github.com/dularion/streama/blob/master/CHA
 # Roadmap
 These [enhancement-issues](https://github.com/dularion/streama/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement) are the features that I will be working on in the near future.
 
-At this point I would like to mention that this project is still very much a work-in-progress. I will be adding new features and bugfixes often and quickly, but this is first and foremost a hobby project, so the time that I can spend on it is limited. If you want to contibute, feel free! I will be honored by each and every Pull request :)
+At this point I would like to mention that this project is still very much a work-in-progress. I will be adding new features and bugfixes often and quickly, but this is first and foremost a hobby project, so the time that I can spend on it is limited. If you want to contribute, feel free! I will be honored by each and every Pull request :)
 
 Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
+
+# Contributing
+### Translations
+If you want to contribute a translation, please follow [the guide here](https://github.com/dularion/streama/wiki/Translating-the-app). 
+
+### PRs
+If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your effors on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
+
+### Donations
+If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
+If you want to use paypal, use this link https://www.paypal.me/dularion
 
 # Known Issues
 - There is no video-conversion currently, meaning you are reliant upon HTML5 browser compatibilities. I will implement server-side conversion soon which will enable this functionality. See Issue [#17](https://github.com/dularion/streama/issues/17)

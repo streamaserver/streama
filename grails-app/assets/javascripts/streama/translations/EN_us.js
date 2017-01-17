@@ -39,8 +39,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		},
 
 		MESSAGES: {
-			SHARE_SOCKET: 'By creating a new session you will be redirected back to this player, but this time you will have a unique session ID in the url. Share this with your friends to have a syncronized watching experience with them!',
-			FILE_MISSING: 'There is a problem with this content. It seems you removed the associated video file from it.',
+			SHARE_SOCKET: 'By creating a new session you will be redirected back to this player, but this time you will have a unique session ID in the url. Share this with your friends to have a synchronized watching experience with them!',
+			FILE_MISSING: 'There is a problem with this content. It seems you removed the associated video file from it.. Share this with your friends to have a synchronized watching experience with them!',
 			CODEC_PROBLEM: 'There seems to be a problem adding the video-file to the player. This is most likely due to a codec-problem. Try converting it to a compatible HTML5 codec, remove the currently attached file and re-add it. If the codecs are fine, check the error log of the server and the base URL in the settings.',
 			WRONG_BASEPATH: 'You video get\'s included using the wrong Base Path, but you are browsing the page via "{{basePath}}". Make sure you set the correct Base Path in the settings and that you are using it to browse the application.'
 		},
@@ -55,6 +55,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LANGUAGE_de: 'German',
     LANGUAGE_fr: 'French',
 		LANGUAGE_es: 'Spanish',
+		LANGUAGE_kr: 'Korean',
 		PROFIlE: {
 			USERNAME: 'Username',
 			FULL_NAME: 'Full Name',
