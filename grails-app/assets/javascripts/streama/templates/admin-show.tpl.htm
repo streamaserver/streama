@@ -115,7 +115,7 @@
 <div ng-show="!showLoading">
 
   <button class="btn btn-primary" ng-click="addNewEpisode()">Add New Episode Manually</button>
-  <button class="btn btn-primary" ng-click="fetchEpisodes()" ng-if="!show.manualInput">Fetch Episodes</button>
+  <button class="btn btn-primary" ng-click="fetchEpisodes()" ng-if="!show.manualInput" ng-show="hasKey">Fetch Episodes</button>
 
   <div ng-if="!seasons" class="no-episodes-yet">No Episodes yet</div>
 

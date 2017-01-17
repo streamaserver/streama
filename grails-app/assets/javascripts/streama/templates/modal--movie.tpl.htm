@@ -3,8 +3,10 @@
   <div class="modal-body">
     <legend>
       Movie
-      <button class="btn btn-default pull-right btn-sm" type="button" ng-click="toggleAddManually()" ng-show="!addManually && !movie.id">Add Manually</button>
-      <button class="btn btn-success pull-right btn-sm" type="button" ng-click="toggleAddManually()" ng-show="addManually">Add Automatically</button>
+      <button class="btn btn-sm btn-white btn-outline pull-right" ng-show="hasKey" ng-click="toggleAddManually()">
+        <span ng-show="!addManually && !movie.id">Add Manually</span>
+        <span ng-show="addManually">Add Automatically</span>
+      </button>
     </legend>
 
     <div class="form-group">

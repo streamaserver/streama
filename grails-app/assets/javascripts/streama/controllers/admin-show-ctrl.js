@@ -9,6 +9,13 @@ angular.module('streama').controller('adminShowCtrl', [
 
 	$scope.seasonOpened = null;
 	$scope.showLoading = true;
+	$scope.hasMovieDBKey = true;
+
+  apiService.theMovieDb.hasKey().success(function (data) {
+    if (!data.key) {
+      $scope.hasMovieDBKey = false;
+    }
+  });
 
 	apiService.tvShow.get($stateParams.showId).success(function (data) {
 		$scope.show = data;
@@ -77,16 +84,19 @@ angular.module('streama').controller('adminShowCtrl', [
 	$scope.setCurrentSeason = function (index) {
 		$scope.currentSeason = index;
 		if(index){
-			apiService.theMovieDb.countNewEpisodesForSeason({apiId: $scope.show.apiId, showId: $stateParams.showId, season: index})
-				.success(function (data) {
-					$scope.newEpisodesForSeason = data;
-				})
+		  if($scope.hasMovieDBKey){
+        apiService.theMovieDb.countNewEpisodesForSeason({apiId: $scope.show.apiId, showId: $stateParams.showId, season: index})
+          .success(function (data) {
+            $scope.newEpisodesForSeason = data;
+          })
+      }
 		}
 
 	};
 
 	var seasonForShow = function (season) {
-		return apiService.theMovieDb.seasonForShow({apiId: $scope.show.apiId, showId: $stateParams.showId, season: season})
+    if($scope.hasMovieDBKey){
+      return apiService.theMovieDb.seasonForShow({apiId: $scope.show.apiId, showId: $stateParams.showId, season: season})
 				.success(function (data) {
 					console.log('%c seasonForShow', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
 					$scope.seasons = $scope.seasons ||  {};
@@ -99,6 +109,7 @@ angular.module('streama').controller('adminShowCtrl', [
 					}
 					episodesFetched += data.length;
 				});
+    }
 	};
 
 	var getEpisodesForSeasons = function (seasons) {

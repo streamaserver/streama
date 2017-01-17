@@ -36,6 +36,11 @@ class TheMovieDbController {
     respond json?.results
   }
 
+  def hasKey() {
+    def resultObj = [key: theMovieDbService.API_KEY!=null]
+    respond resultObj
+  }
+
   def seasonNumberForShow(params) {
     String apiId = params.apiId
     def result = []

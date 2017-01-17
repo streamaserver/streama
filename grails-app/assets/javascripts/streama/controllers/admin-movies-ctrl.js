@@ -3,7 +3,15 @@
 angular.module('streama').controller('adminMoviesCtrl', ['$scope', 'apiService', 'modalService', '$state', function ($scope, apiService, modalService, $state) {
 
 	$scope.loading = true;
+  $scope.hasMovieDBKey = true;
+  $scope.searchText = "Search Movie from collection or TheMovieDB...";
 
+  apiService.theMovieDb.hasKey().success(function (data) {
+    if (!data.key) {
+      $scope.hasMovieDBKey = false;
+      $scope.searchText = "Search Movie from collection...";
+    }
+  });
 
 	apiService.movie.list().success(function (data) {
 		$scope.movies = data;
@@ -17,9 +25,11 @@ angular.module('streama').controller('adminMoviesCtrl', ['$scope', 'apiService',
 	};
 
 	$scope.doSearch = function (query) {
-		return apiService.theMovieDb.search('movie', query).then(function (data) {
-			$scope.suggestedMovies = data.data;
-		});
+    if ($scope.hasMovieDBKey) {
+      return apiService.theMovieDb.search('movie', query).then(function (data) {
+        $scope.suggestedMovies = data.data;
+      });
+    }
 	};
 
 	$scope.addFromSuggested = function (movie, redirect) {

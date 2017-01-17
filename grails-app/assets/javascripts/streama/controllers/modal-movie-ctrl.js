@@ -6,6 +6,15 @@ angular.module('streama').controller('modalMovieCtrl', [
 	$scope.loading = false;
 
 	$scope.movie = movie || {};
+	$scope.movieDB = true;
+	$scope.hasMovieDBKey = true;
+
+  apiService.theMovieDb.hasKey().success(function (data) {
+    if (!data.key) {
+      $scope.addManually = true;
+      $scope.hasMovieDBKey = false;
+    }
+  });
 
 	$scope.saveMovie = function (movie) {
 		apiService.movie.save(movie).success(function (data) {

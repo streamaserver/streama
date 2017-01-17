@@ -230,6 +230,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 
 
 		theMovieDb: {
+      hasKey: function (params) {
+        return $http.get('theMovieDb/hasKey.json');
+      },
 			search: function (type, name) {
 				return $http.get('theMovieDb/search.json', {params: {type: type, name: name}});
 			},

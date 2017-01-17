@@ -3,7 +3,7 @@
   <div class="modal-body">
     <legend>
       New Show
-      <button class="btn btn-sm btn-white btn-outline pull-right" ng-click="toggleAddManually()">
+      <button class="btn btn-sm btn-white btn-outline pull-right" ng-show="hasKey" ng-click="toggleAddManually()">
         <span ng-show="!tvShow.manualInput">Add Manually</span>
         <span ng-show="tvShow.manualInput">Add Automatically</span>
       </button>
