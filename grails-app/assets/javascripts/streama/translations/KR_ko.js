@@ -53,8 +53,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		CHANGE_PASSWORD: '비밀번호 변경',
 		LANGUAGE_en: '영어',
 		LANGUAGE_de: '독일어',
+		LANGUAGE_fr: '프랑스의',
 		LANGUAGE_es: '스페인어',
 		LANGUAGE_kr: '한국어',
+		LANGUAGE_nl: '네덜란드',
 		PROFIlE: {
 			USERNAME: '아이디',
 			FULL_NAME: '이름',
@@ -134,4 +136,3 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		}
 	});
 });
-
