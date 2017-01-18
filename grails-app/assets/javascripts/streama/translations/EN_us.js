@@ -141,4 +141,3 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		}
 	});
 });
-

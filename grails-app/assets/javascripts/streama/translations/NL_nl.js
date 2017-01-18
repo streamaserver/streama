@@ -53,6 +53,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		CHANGE_PASSWORD: 'Wachtwoord wijzigen',
 		LANGUAGE_en: 'Engels',
 		LANGUAGE_de: 'Duits',
+		LANGUAGE_fr: 'Frans',
+		LANGUAGE_es: 'Spaans',
+		LANGUAGE_kr: 'Koreaans',
+		LANGUAGE_nl: 'Nederlands',
 		PROFIlE: {
 			USERNAME: 'Gebruikersnaam',
 			FULL_NAME: 'Volledige naam',
@@ -79,4 +83,3 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		}
 	});
 });
-
