@@ -45,6 +45,7 @@ angular.module('streama').controller('modalFileCtrl', [
         }else{
           $scope.video.files = $scope.video.files || [];
           $scope.video.files.push(data);
+          $scope.video.hasFiles = true;
         }
       });
     };
@@ -59,6 +60,7 @@ angular.module('streama').controller('modalFileCtrl', [
         }else{
           $scope.video.files = $scope.video.files || [];
           $scope.video.files.push(data);
+					$scope.video.hasFiles = true;
         }
       }).error(function(data) {
         alertify.error(data.message);
@@ -94,10 +96,12 @@ angular.module('streama').controller('modalFileCtrl', [
       if(data.extension == '.srt' || data.extension == '.vtt'){
         $scope.video.subtitles = $scope.video.subtitles || [];
         $scope.video.subtitles.push(data);
+				$scope.video.hasFiles = true;
         alertify.success('Subtitles uploaded successfully.');
       }else{
         $scope.video.files = $scope.video.files || [];
         $scope.video.files.push(data);
+				$scope.video.hasFiles = true;
         alertify.success('Video uploaded successfully.');
       }
 

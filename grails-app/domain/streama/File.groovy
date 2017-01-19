@@ -76,4 +76,13 @@ class File {
       return true
     }
   }
+
+  def getSimpleInstance(){
+    return [
+        id: this.id,
+        src: this.getSrc(),
+        originalFilename: this.originalFilename,
+        contentType: this.contentType
+    ]
+  }
 }

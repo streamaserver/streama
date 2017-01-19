@@ -57,7 +57,9 @@ angular.module('streama').controller('adminMovieCtrl', [
 		};
 
     $scope.manageFiles = function(movie){
-      modalService.fileManagerModal(movie);
+      modalService.fileManagerModal(movie, function (data) {
+				movie.hasFiles = !!movie.files.length;
+			});
     };
 
 
