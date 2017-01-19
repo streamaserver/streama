@@ -69,7 +69,7 @@ class DefaultDataService {
         ],
         [
             settingsKey: 'Second Directory',
-            description: 'This directory is not used for uploading of new files, only for playback of existing files. This can be useful if you want to spread your video files over two directories, for instance by mounting a second drive.',
+            description: 'Enter one or more directories, split with |. Example: /data/streama|/mnt/streama. These directories are only used for reading previously uploaded files. This can be useful if you want to spread your video files over two or more directories, for instance by mounting a second or third drive and rsyncing everything over.',
             settingsType: 'string',
             required: false
         ],
@@ -96,6 +96,12 @@ class DefaultDataService {
       if(!Settings.findBySettingsKey(settingData.settingsKey)){
         def setting = new Settings(settingData)
         setting.save flush: true, failOnError: true
+      }
+
+      Settings changedSetting = Settings.findBySettingsKeyAndDescriptionNotEqual(settingData.settingsKey, settingData.description)
+      if(changedSetting){
+        changedSetting.description = settingData.description
+        changedSetting.save flush: true, failOnError: true
       }
     }
   }

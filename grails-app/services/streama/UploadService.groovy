@@ -15,11 +15,14 @@ class UploadService {
     if(storage1){
       storages.add(storage1)
     }
-    def storage2 = Settings.findBySettingsKey('Second Directory')?.value
-    if(storage2){
-      storages.add(storage2)
-    }
 
+    def secondDirectory = Settings.findBySettingsKey('Second Directory')?.value
+    def storage2 = secondDirectory
+    def additionalReadStorages = secondDirectory.split(/\|/)
+
+    if(additionalReadStorages){
+      storages.addAll(additionalReadStorages)
+    }
     return storages
   }
 

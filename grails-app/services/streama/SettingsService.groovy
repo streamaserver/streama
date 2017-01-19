@@ -14,8 +14,14 @@ class SettingsService {
   def validate(Settings settingsInstance) {
     def resultValue = [:]
 
-    if (settingsInstance.settingsKey == 'Upload Directory' || settingsInstance.settingsKey == 'Second Directory') {
+    if (settingsInstance.settingsKey == 'Upload Directory') {
       validateUploadDirectoryPermissions(settingsInstance.value + '/upload', resultValue)
+    }
+    if (settingsInstance.settingsKey == 'Second Directory') {
+      def additionalReadStorages = settingsInstance.value?.split(/\|/)
+      additionalReadStorages.each{ value ->
+        validateUploadDirectoryPermissions(value + '/upload', resultValue)
+      }
     }
     if (settingsInstance.settingsKey == 'Local Video Files') {
       validateUploadDirectoryPermissions(settingsInstance.value, resultValue)
