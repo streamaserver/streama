@@ -63,7 +63,9 @@ angular.module('streama').directive('streamaVideoPlayer', [
 					$scope.$on('$stateChangeSuccess', onStateChangeSuccess);
 
 					$timeout(function () {
-						video = $elem.find('video')[0];
+						var $video = $elem.find('video');
+						$video.bind("contextmenu",function(){return false;});
+						video = $video[0];
 						video.oncanplay = oncanplay;
 						video.onwaiting = onwaiting;
 						video.onplaying = onplaying;
