@@ -6,5 +6,4 @@ model {
 
 json g.render(movie, [deep:true]){
 	hasFiles movie.files ? true : false
-	foo "bar"
 }
