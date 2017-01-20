@@ -137,12 +137,13 @@ angular.module('streama').factory('playerService',
         $state.go('dash', {});
       },
 
-      onVideoError: function () {
+      onVideoError: function (errorCode) {
         var that = this;
+				errorCode = errorCode || 'CODEC_PROBLEM';
         console.log('%c onVideoError', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
 
         if($state.current.name == 'player'){
-          alertify.alert($filter('translate')('MESSAGES.CODEC_PROBLEM'), function () {
+          alertify.alert($filter('translate')('MESSAGES.' + errorCode), function () {
             if($rootScope.currentUser.authorities.length){
               if(videoData.show){
                 $state.go('admin.show', {showId: videoData.show.id});

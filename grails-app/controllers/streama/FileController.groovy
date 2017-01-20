@@ -118,14 +118,21 @@ class FileController {
 
     def file = File.get(params.getInt('id'))
     if(!file){
-      render status: NOT_FOUND
+      response.setStatus(BAD_REQUEST.value())
+      render ([messageCode: 'FILE_IN_DB_NOT_FOUND'] as JSON)
       return
     }
 
     def filePath = uploadService.getPath(file)
 
     if(!filePath){
-      render status: NOT_FOUND
+      response.setStatus(NOT_ACCEPTABLE.value())
+      render ([messageCode: 'FILE_IN_FS_NOT_FOUND', data: file.sha256Hex] as JSON)
+      return
+    }
+
+    if(request.method == 'HEAD'){
+      render(status: OK)
       return
     }
 
