@@ -20,7 +20,7 @@
     <div class="col-md-8 col-lg-9">
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-11">
           <h1>
             {{video.title}} &nbsp;
             <a ng-show="video.files.length" class="ion-android-arrow-dropright-circle" ui-sref="player({videoId: video.id})"></a>
@@ -28,13 +28,17 @@
           <span class="label label-danger" ng-click="manageFiles(video)" ng-show="!video.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
         </div>
 
-        <div class="col-md-6">
-          <div class="btn-group pull-right">
-            <button class="btn btn-success btn-sm" ng-click="manageFiles(video)">Manage Files</button>
 
-            <button class="btn btn-secondary btn-sm " ng-click="openVideoModal()">
-              Edit info
-            </button>
+        <div class="col-md-1">
+          <div class="btn-group pull-right">
+            <span uib-dropdown on-toggle="toggled(open)">
+              <i class="ion-ios-settings icon-xl" uib-dropdown-toggle></i>
+              <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                <li><a ng-click="openVideoModal()">Edit info</a></li>
+                <li><a ng-click="manageFiles(video)">Manage Files</a></li>
+                <li><a ng-click="delete()">Delete Video</a></li>
+              </ul>
+            </span>
           </div>
         </div>
       </div>

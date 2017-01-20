@@ -18,10 +18,10 @@ angular.module('streama').controller('adminVideoCtrl', [
 
 		$scope.delete = function(){
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
-			alertify.confirm("Are you sure, you want to delete this Movie?", function (confirmed) {
+			alertify.confirm("Are you sure, you want to delete this Video?", function (confirmed) {
 				if(confirmed){
-					apiService.movie.delete($stateParams.movieId).success(function () {
-						$state.go('admin.movies');
+					apiService.genericVideo.delete($stateParams.videoId).success(function () {
+						$state.go('admin.videos');
 					});
 				}
 			})
