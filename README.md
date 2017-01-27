@@ -82,8 +82,7 @@ This application is web-based and is programmed with [Grails 2.4.4](https://grai
 
 The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can also just use the frontend components and add your own REST-API for handling all the data :)
 
-As an API for all the movies and shows I used the awesome API from theMovieDatabase.
-[![theMovieDatabase](https://d3a8mw37cqal2z.cloudfront.net/images/header_v2.png)](https://www.themoviedb.org/documentation/api)
+As an API for all the movies and shows I used the [awesome API](https://www.themoviedb.org/documentation/api) from [theMovieDatabase](https://www.themoviedb.org).
 
 # Changelog
 Please refer to [Change Log](https://github.com/dularion/streama/blob/master/CHANGELOG.md)
