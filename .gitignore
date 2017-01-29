@@ -41,3 +41,5 @@
 # IDEA
 .idea
 *.iml
+/classes
+*.log
