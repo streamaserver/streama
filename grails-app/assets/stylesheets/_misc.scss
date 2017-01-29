@@ -3,3 +3,14 @@
   border: 1px solid #222;
   margin-bottom: 20px;
 }
+
+
+.btn.button-icon{
+  i{
+    margin-left: 10px;
+    line-height: 0;
+    position: relative;
+    top: 3px;
+    margin-right: 10px;
+  }
+}

@@ -4,6 +4,7 @@ import grails.converters.JSON
 
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.regex.Pattern
 
 import static org.springframework.http.HttpStatus.*
 
@@ -205,5 +206,62 @@ class FileController {
     }
 
     render response as JSON
+  }
+
+
+  def matchMetaDataFromFiles(){
+    def files = request.JSON.files
+    def result = []
+    log.debug(files)
+
+    files.each{ file ->
+      def fileResult = [file: file.path]
+
+      String fileName = file.name
+      def matcher = fileName =~ /^(
+        (.*[^ (_.])
+          [ (_.]+
+          ((\d{4})
+            ([ (_.]+S(\d{1,2}))?
+          |
+            (!\d{4}[ (_.])
+            S(\d{1,2})
+          |
+            (\d{3})
+          )
+      |
+        (.+)
+      )/
+
+
+//      (.*)[ (_.]+(!\d{4}(?:S(\d{1,2})E(\d{1,2}))|(\d{3}))
+
+//      American.Crime.Story.S01E02.720p.BluRay.x264.ShAaNiG.mkv
+//      master.chef.us.603.hdtv-lol.mp4
+//      Silicon.Valley.S02E01.HDTV.x264-ASAP.mp4
+//      Vikings.S03E06.HDTV.x264-KILLERS.srt
+//      Seinfeld.S01E03.The.Robbery.720p.HULU.WEBRip.AAC2.0.H.264-NTb.mkv
+
+
+      if(matcher.matches()){
+        log.debug(matcher.group('ShowNameA'))
+        log.debug(matcher.group('ShowYearA'))
+        log.debug(matcher.group('SeasonA'))
+        log.debug(matcher.group('EpisodeA'))
+        log.debug(matcher.group('SeasonB'))
+        log.debug(matcher.group('EpisodeB'))
+        log.debug(matcher.group('EpisodeC'))
+        log.debug(matcher.group('ShowNameB'))
+        fileResult.status = 1
+        fileResult.message = 'match found'
+      }else{
+        fileResult.status = 0
+        fileResult.message = 'No match found'
+      }
+
+      result.add(fileResult)
+    }
+
+    render (result as JSON)
   }
 }

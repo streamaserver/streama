@@ -16,7 +16,8 @@ function modalService($uibModal, $state) {
 		userInviteModal: userInviteModal,
 		fileManagerModal: fileManagerModal,
 		newReleaseModal: newReleaseModal,
-		mediaDetailModal: mediaDetailModal
+		mediaDetailModal: mediaDetailModal,
+		createFromFilesModal: createFromFilesModal
 	};
 
 	function tvShowModal (tvShow, callback) {
@@ -223,7 +224,7 @@ function modalService($uibModal, $state) {
 
 		var modalInstance = $uibModal.open({
 			templateUrl: '/streama/modal--media-detail.htm',
-			controller: 'modalMediaDetailCtrl',
+			controller: 'modalMediaDetailCtrl as vm',
 			size: 'lg',
 			resolve: {
 				mediaId: function () {
@@ -241,5 +242,24 @@ function modalService($uibModal, $state) {
 		}, function () {
 			//$state.go('dash', {mediaModal: null, mediaType: null});
 		});
+	}
+
+	function createFromFilesModal(mediaType) {
+		var modalInstance = $uibModal.open({
+			templateUrl: '/streama/modal--create-from-file.htm',
+			controller: 'modalCreateFromFileCtrl as vm',
+			size: 'lg',
+			backdrop: 'static',
+			keyboard: false,
+			resolve: {
+				dialogOptions: function () {
+					return {
+						mediaType: mediaType
+					};
+				}
+			}
+		});
+
+		return modalInstance.result;
 	}
 }
