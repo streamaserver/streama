@@ -24,11 +24,7 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 - [License](#license)
 
 # Getting Started
-- For the new v1.x, refer to [up and running with v1.x](https://github.com/dularion/streama/wiki/Getting-started-with-v1)
-
-- For local setup with v0.x (legacy), please refer to [Local Streama Setup](https://github.com/dularion/streama/wiki/Local-Streama-Setup)
-- For remote setup with v0.x (legacy), please refer to [Streama on a remote Ubuntu 14.04](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
-- For developers with v0.x (legacy), please refer to [Streama for development](https://github.com/dularion/streama/wiki/Set-Up-Streama-for-Development)
+- [up and running with v1.x](https://github.com/dularion/streama/wiki/Getting-started-with-v1)
 
 # The Application
 
