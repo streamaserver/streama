@@ -58,10 +58,11 @@ class SettingsService {
   def validateURL(String url, resultValue) {
     try {
         def actualUrl = new java.net.URL(url);
+        actualUrl.getContent();
         resultValue.success = true;
         resultValue.message = "The entered url is valid."
     }
-    catch (MalformedURLException ex) {
+    catch (Exception ex) {
         resultValue.error = true;
         resultValue.message = "The entered url is invalid."
     }
