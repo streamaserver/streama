@@ -59,11 +59,11 @@ class SettingsService {
     try {
         def actualUrl = new java.net.URL(url);
         resultValue.success = true;
-        resultValue.message = "The given url is valid."
+        resultValue.message = "The entered url is valid."
     }
     catch (MalformedURLException ex) {
         resultValue.error = true;
-        resultValue.message = "The url given is invalid."
+        resultValue.message = "The entered url is invalid."
     }
   }
 
