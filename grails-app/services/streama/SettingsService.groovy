@@ -14,6 +14,9 @@ class SettingsService {
   def validate(Settings settingsInstance) {
     def resultValue = [:]
 
+    if (settingsInstance.settingsKey == 'Base URL') {
+        validateURL(settingsInstance.value, resultValue)
+    }
     if (settingsInstance.settingsKey == 'Upload Directory') {
       validateUploadDirectoryPermissions(settingsInstance.value + '/upload', resultValue)
     }
@@ -52,6 +55,17 @@ class SettingsService {
     }
   }
 
+  def validateURL(String url, resultValue) {
+    try {
+        def actualUrl = new java.net.URL(url);
+        resultValue.success = true;
+        resultValue.message = "The given url is valid."
+    }
+    catch (MalformedURLException ex) {
+        resultValue.error = true;
+        resultValue.message = "The url given is invalid."
+    }
+  }
 
   def validateTheMovieDbAPI(Settings settingsInstance, resultValue) {
     try {
@@ -67,5 +81,3 @@ class SettingsService {
   }
 
 }
-
-
