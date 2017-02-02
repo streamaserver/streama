@@ -45,6 +45,9 @@
 
   .form-control{
     color: white;
+    option{
+        color:black;
+    }
   }
 
   @include placeholder{

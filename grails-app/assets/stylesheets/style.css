@@ -123,9 +123,13 @@ label {
 .form-control {
   background-color: rgba(255, 255, 255, 0.12);
   color: white; }
-  .form-control[disabled] {
-    background-color: rgba(255, 255, 255, 0.12);
-    opacity: 0.5; }
+
+.form-control option {
+  color: black;}
+  
+.form-control[disabled] {
+  background-color: rgba(255, 255, 255, 0.12);
+  opacity: 0.5; }
 
 [ui-sref],
 [ng-click],
