@@ -15,13 +15,17 @@ class FileService {
 
 
     def fileLength = rawFile.length()
-    def contentLength = rawFile.length().toString()
+    def contentLength = rawFile.length()
     def rangeEnd = fileLength.toLong()-1
     def rangeStart
 
     if(rangeHeader){
-      rangeStart = rangeHeader.split("\\D+")[1].toLong()
-      contentLength = fileLength - rangeStart
+      String[] range = rangeHeader.substring(6).split("-")
+      rangeStart = range[0].toLong()
+      if (range.length == 2)
+        rangeEnd = range[1].toLong()
+
+      contentLength = rangeEnd - rangeStart
     }
     //add html5 video headers
     response.addHeader("Accept-Ranges", "bytes")
