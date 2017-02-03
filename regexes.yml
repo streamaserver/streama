@@ -1,0 +1,11 @@
+Movies:
+    regex:
+        test
+
+Shows:
+    regex:
+        ...
+
+Other:
+    regex:
+        ...

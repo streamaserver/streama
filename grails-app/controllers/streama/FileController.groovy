@@ -1,6 +1,7 @@
 package streama
 
 import grails.converters.JSON
+import grails.config.Config
 
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -210,6 +211,19 @@ class FileController {
 
 
   def matchMetaDataFromFiles(){
+    Config config = grailsApplication.config
+
+    def isMovieConfigAvailable = config.containsProperty("Movies.regex")
+    def isTvShowConfigAvailable = config.containsProperty("Shows.regex")
+    def isOtherConfigAvailable = config.containsProperty("Other.regex")
+
+    def moviesRegex = isMovieConfigAvailable ? config.getProperty("Movies.regex") :
+      "abc" // TODO std pattern
+    def tvShowRegex = isTvShowConfigAvailable ? config.getProperty("Shows.regex") :
+      "abc" // TODO std pattern
+    def otherRegex = isOtherConfigAvailable ? config.getProperty("Other.regex") :
+      "abc" // TODO std pattern
+
     def files = request.JSON.files
     def result = []
     log.debug(files)
