@@ -246,6 +246,7 @@ class FileController {
     def result = []
     log.debug(files)
 
+    // TODO: differentiate between files and folders.
     files.each{ file ->
       def fileResult = [file: file.path]
 
