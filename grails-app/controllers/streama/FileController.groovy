@@ -3,6 +3,8 @@ package streama
 import grails.converters.JSON
 import grails.config.Config
 
+import groovy.json.JsonSlurper
+
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.regex.Pattern
@@ -14,6 +16,7 @@ class FileController {
   def uploadService
   def fileService
   def srt2vttService
+  def theMovieDbService
 
   def index(){
     def filter = params.filter
@@ -211,18 +214,33 @@ class FileController {
 
 
   def matchMetaDataFromFiles(){
-    Config config = grailsApplication.config
+//      Shows:
+//      American.Crime.Story.S01E02.720p.BluRay.x264.ShAaNiG.mkv
+//      master.chef.us.603.hdtv-lol.mp4
+//      Silicon.Valley.S02E01.HDTV.x264-ASAP.mp4
+//      Vikings_S03E06_HDTV_x264-KILLERS.srt
+//      Seinfeld.S01E03.The.Robbery.720p.HULU.WEBRip.AAC2.0.H.264-NTb.mkv
+
+//      Movies:
+//      Pulp.Fiction.(1994).avi
+//      The_Avengers_:_Age_of_Ultron_(2015).mp4
+//      Green.Lantern.(2011).H.264.mkv
+
+    def config = grailsApplication.config
+
+    def stdMovieRegex = /^(?<Name>.*)[_.]\(\d{4}\).*/
+    def stdTvShowRegex = /^(?<Name>.+)[._]S(?<Season>\d{2})E(?<Episode>\d{2,3}).*/
 
     def isMovieConfigAvailable = config.containsProperty("Movies.regex")
     def isTvShowConfigAvailable = config.containsProperty("Shows.regex")
-    def isOtherConfigAvailable = config.containsProperty("Other.regex")
+    // def isOtherConfigAvailable = config.containsProperty("Other.regex")
 
-    def moviesRegex = isMovieConfigAvailable ? config.getProperty("Movies.regex") :
-      "abc" // TODO std pattern
-    def tvShowRegex = isTvShowConfigAvailable ? config.getProperty("Shows.regex") :
-      "abc" // TODO std pattern
-    def otherRegex = isOtherConfigAvailable ? config.getProperty("Other.regex") :
-      "abc" // TODO std pattern
+    def movieRegex = isMovieConfigAvailable ?
+      config.getProperty("Movies.regex") : stdMovieRegex
+    def tvShowRegex = isTvShowConfigAvailable ?
+      config.getProperty("Shows.regex") : stdTvShowRegex
+    // def otherRegex = isOtherConfigAvailable ?
+    //  config.getProperty("Other.regex") : stdTvShowRegex
 
     def files = request.JSON.files
     def result = []
@@ -232,43 +250,59 @@ class FileController {
       def fileResult = [file: file.path]
 
       String fileName = file.name
-      def matcher = fileName =~ /^(
-        (.*[^ (_.])
-          [ (_.]+
-          ((\d{4})
-            ([ (_.]+S(\d{1,2}))?
-          |
-            (!\d{4}[ (_.])
-            S(\d{1,2})
-          |
-            (\d{3})
-          )
-      |
-        (.+)
-      )/
+      def tvShowMatcher = fileName =~ tvShowRegex
+      def movieMatcher = fileName =~ movieRegex
+      // def otherMatcher = fileName =~ otherRegex
 
+      if(tvShowMatcher.matches()){
+        def name = tvShowMatcher.group('Name').replaceAll(/[._]/, " ")
+        def seasonNumber = tvShowMatcher.group('Season').toInteger()
+        def episodeNumber = tvShowMatcher.group('Episode').toInteger()
+        def type = "tv"
 
-//      (.*)[ (_.]+(!\d{4}(?:S(\d{1,2})E(\d{1,2}))|(\d{3}))
+        if(theMovieDbService.API_KEY) {
+          def json = theMovieDbService.searchForEntry(type, name)
+          def movieDbResults = json?.results
 
-//      American.Crime.Story.S01E02.720p.BluRay.x264.ShAaNiG.mkv
-//      master.chef.us.603.hdtv-lol.mp4
-//      Silicon.Valley.S02E01.HDTV.x264-ASAP.mp4
-//      Vikings.S03E06.HDTV.x264-KILLERS.srt
-//      Seinfeld.S01E03.The.Robbery.720p.HULU.WEBRip.AAC2.0.H.264-NTb.mkv
+          if(movieDbResults) {
+            // Why do i need to access index 0? Worked just fine without before extracting to service
+            def tvShowId = movieDbResults.id[0]
 
+            def episodeResult = theMovieDbService.getEpisodeMeta(tvShowId, seasonNumber, episodeNumber)
 
-      if(matcher.matches()){
-        log.debug(matcher.group('ShowNameA'))
-        log.debug(matcher.group('ShowYearA'))
-        log.debug(matcher.group('SeasonA'))
-        log.debug(matcher.group('EpisodeA'))
-        log.debug(matcher.group('SeasonB'))
-        log.debug(matcher.group('EpisodeB'))
-        log.debug(matcher.group('EpisodeC'))
-        log.debug(matcher.group('ShowNameB'))
+            fileResult.episodeName = episodeResult.name
+            fileResult.air_date = episodeResult.air_date
+            fileResult.id = episodeResult.id
+          }
+        }
         fileResult.status = 1
         fileResult.message = 'match found'
-      }else{
+        fileResult.type = type
+        fileResult.season = seasonNumber
+        fileResult.episodeNumber = episodeNumber
+      }
+      else if(movieMatcher.matches()) {
+        def name = movieMatcher.group('Name').replaceAll(/[._]/, " ")
+        def type = "movie"
+
+        if(theMovieDbService.API_KEY) {
+          def json = theMovieDbService.searchForEntry(type, name)
+          def movieDbResults = json?.results
+
+          if(movieDbResults) {
+            def movieId = movieDbResults.id[0]
+
+            def movieResult = theMovieDbService.getFullMovieMeta(movieId)
+            fileResult.id = movieResult.id
+            fileResult.release_date = movieResult.release_date
+            fileResult.name = movieResult.title
+          }
+        }
+        fileResult.status = 1
+        fileResult.message = 'match found'
+        fileResult.type = type
+      }
+      else {
         fileResult.status = 0
         fileResult.message = 'No match found'
       }

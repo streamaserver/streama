@@ -82,4 +82,11 @@ class TheMovieDbService {
     def JsonContent = new URL(BASE_URL + "/tv/$tvApiId/season/$seasonNumber/episode/$episodeNumber?api_key=$API_KEY").text
     return new JsonSlurper().parseText(JsonContent)
   }
+
+  def searchForEntry(type, name) {
+    def query = URLEncoder.encode(name, "UTF-8")
+
+    def JsonContent = new URL(BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY).text
+    return new JsonSlurper().parseText(JsonContent)
+  }
 }
