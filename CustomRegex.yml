@@ -1,0 +1,7 @@
+Movies:
+    regex:
+        ^(?<Name>.*)[_.]\(\d{4}\).*
+
+Shows:
+    regex:
+        ^(?<Name>.+)[._]S(?<Season>\d{2})E(?<Episode>\d{2,3}).*
