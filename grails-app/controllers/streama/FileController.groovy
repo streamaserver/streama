@@ -233,27 +233,22 @@ class FileController {
 
     def isMovieConfigAvailable = config.containsProperty("Movies.regex")
     def isTvShowConfigAvailable = config.containsProperty("Shows.regex")
-    // def isOtherConfigAvailable = config.containsProperty("Other.regex")
 
     def movieRegex = isMovieConfigAvailable ?
       config.getProperty("Movies.regex") : stdMovieRegex
     def tvShowRegex = isTvShowConfigAvailable ?
       config.getProperty("Shows.regex") : stdTvShowRegex
-    // def otherRegex = isOtherConfigAvailable ?
-    //  config.getProperty("Other.regex") : stdTvShowRegex
 
     def files = request.JSON.files
     def result = []
     log.debug(files)
 
-    // TODO: differentiate between files and folders.
     files.each{ file ->
       def fileResult = [file: file.path]
 
       String fileName = file.name
       def tvShowMatcher = fileName =~ tvShowRegex
       def movieMatcher = fileName =~ movieRegex
-      // def otherMatcher = fileName =~ otherRegex
 
       if(tvShowMatcher.matches()){
         def name = tvShowMatcher.group('Name').replaceAll(/[._]/, " ")
@@ -261,7 +256,7 @@ class FileController {
         def episodeNumber = tvShowMatcher.group('Episode').toInteger()
         def type = "tv"
 
-        if(theMovieDbService.API_KEY) {
+        try {
           def json = theMovieDbService.searchForEntry(type, name)
           def movieDbResults = json?.results
 
@@ -275,6 +270,9 @@ class FileController {
             fileResult.air_date = episodeResult.air_date
             fileResult.id = episodeResult.id
           }
+        } catch(Exception ex) {
+          log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+          fileResult.name = name
         }
         fileResult.status = 1
         fileResult.message = 'match found'
@@ -286,7 +284,7 @@ class FileController {
         def name = movieMatcher.group('Name').replaceAll(/[._]/, " ")
         def type = "movie"
 
-        if(theMovieDbService.API_KEY) {
+        try {
           def json = theMovieDbService.searchForEntry(type, name)
           def movieDbResults = json?.results
 
@@ -298,6 +296,9 @@ class FileController {
             fileResult.release_date = movieResult.release_date
             fileResult.name = movieResult.title
           }
+        } catch(Exception ex) {
+          log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+          fileResult.name = name
         }
         fileResult.status = 1
         fileResult.message = 'match found'
