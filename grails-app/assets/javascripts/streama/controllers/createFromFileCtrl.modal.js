@@ -23,6 +23,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	vm.toggleSelection = toggleSelection;
 	vm.getMatchForPath = getMatchForPath;
 	vm.selection = [];
+  vm.addAllMatches = addAllMatches;
+  vm.addThisFile = addThisFile;
 
 
 	init();
@@ -52,9 +54,15 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	}
 
 	function openLocalDirectory(dir) {
-		vm.localFiles = [];
-		vm.localDir.push(dir.name);
-		vm.loadLocalFiles(vm.localDir.join('/'));
+		// vm.localFiles = [];
+		// vm.localDir.push(dir.name);
+		// vm.loadLocalFiles(vm.localDir.join('/'));
+    dir.showFiles = dir.showFiles == true ? false : true;
+    dir.localFiles = [];
+    apiService.file.localFiles(dir.path).success(function(data) {
+      dir.localFiles = data;
+    });
+    console.log(dir);
 	}
 
 	function addExternalUrl(externalUrl) {
@@ -139,5 +147,13 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	function getMatchForPath(path) {
 		return _.find(vm.matchResult, {file: path});
 	}
+
+  function addAllMatches() {
+    alert("to be implemented")
+  }
+
+  function addThisFile() {
+    alert("to be implemented")
+  }
 
 }
