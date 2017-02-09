@@ -266,9 +266,17 @@ class FileController {
 
             def episodeResult = theMovieDbService.getEpisodeMeta(tvShowId, seasonNumber, episodeNumber)
 
+            fileResult.tvShowApiId = tvShowId
+            fileResult.tvShowOverview = movieDbResults.overview[0]
+            fileResult.showName = movieDbResults.name[0]
+            fileResult.poster_path = movieDbResults.poster_path[0]
+            fileResult.backdrop_path = movieDbResults.backdrop_path[0]
+
             fileResult.episodeName = episodeResult.name
-            fileResult.air_date = episodeResult.air_date
-            fileResult.id = episodeResult.id
+            fileResult.first_air_date = episodeResult.air_date
+            fileResult.episodeApiId = episodeResult.id
+            fileResult.episodeOverview = episodeResult.overview
+            fileResult.still_path = episodeResult.still_path
           }
         } catch(Exception ex) {
           log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
@@ -292,13 +300,18 @@ class FileController {
             def movieId = movieDbResults.id[0]
 
             def movieResult = theMovieDbService.getFullMovieMeta(movieId)
-            fileResult.id = movieResult.id
+
+            fileResult.apiId = movieResult.id
+            fileResult.overview = movieResult.overview
             fileResult.release_date = movieResult.release_date
-            fileResult.name = movieResult.title
+            fileResult.title = movieResult.title
+            fileResult.poster_path = movieResult.poster_path
+            fileResult.backdrop_path = movieResult.backdrop_path
+            fileResult.genres = movieResult.genres
           }
         } catch(Exception ex) {
           log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
-          fileResult.name = name
+          fileResult.title = name
         }
         fileResult.status = 1
         fileResult.message = 'match found'
