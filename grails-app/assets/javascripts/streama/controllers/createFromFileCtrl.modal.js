@@ -24,7 +24,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	vm.getMatchForPath = getMatchForPath;
 	vm.selection = [];
   vm.addAllMatches = addAllMatches;
-  vm.addThisFile = addThisFile;
+  vm.addSelectedFile = addSelectedFile;
 
 
 	init();
@@ -136,7 +136,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		apiService.file.matchMetaDataFromFiles(vm.selection).success(function (data) {
 			vm.isMatcherLoading = false;
 			vm.matchResult = data;
-			console.log(data);
+			//console.log(data);
 		});
 	}
 
@@ -149,11 +149,77 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	}
 
   function addAllMatches() {
-    alert("to be implemented")
+    _.each(vm.matchResult, function(fileMatch) {
+      if(fileMatch.type == "movie") {
+        addMovie(fileMatch);
+      } else if(fileMatch.type == "tv") {
+        addEpisodeToShow(fileMatch);
+      }
+    });
   }
 
-  function addThisFile() {
-    alert("to be implemented")
+  function addSelectedFile(file) {
+    var fileMatch = _.find(vm.matchResult, {"file": file.path})
+    if(fileMatch.type == "movie") {
+      addMovie(fileMatch);
+    } else if (fileMatch.type == "tv") {
+      addEpisodeToShow(fileMatch);
+    }
+  }
+
+  function addMovie(fileMatch) {
+    apiService.movie.save(fileMatch).success(function (data) {
+      apiService.video.addLocalFile({id: data.id, localFile: fileMatch.file}).success(function (data) {
+        alertify.success(fileMatch.title + " has been added");
+      });
+		});
+  }
+
+  function addEpisodeToShow(fileMatch) {
+    apiService.tvShow.list().success(function (data) {
+      var targetShow;
+
+      _.each(data, function (show) {
+        if(show.apiId == fileMatch.tvShowApiId) {
+          targetShow = show;
+        }
+      });
+
+      if(targetShow) {
+        addEpisode(targetShow, fileMatch);
+      } else {
+        addShow(fileMatch);
+      }
+    });
+  }
+
+  function addShow(fileMatch) {
+    var targetShow = {}
+    targetShow.apiId = fileMatch.tvShowApiId;
+    targetShow.name = fileMatch.showName;
+    targetShow.overview = fileMatch.tvShowOverview;
+    targetShow.poster_path = fileMatch.poster_path;
+    targetShow.backdrop_path = fileMatch.backdrop_path;
+
+    apiService.tvShow.save(targetShow).success(function (data) {
+      addEpisode(data, fileMatch);
+    });
+  }
+
+  function addEpisode(targetShow, fileMatch) {
+    var episode = {};
+    episode.show = targetShow.id;
+    episode.apiId = fileMatch.episodeApiId;
+    episode.episode_number = fileMatch.episodeNumber;
+    episode.season_number = fileMatch.season;
+    episode.name = fileMatch.episodeName;
+    episode.overview = fileMatch.episodeOverview;
+    episode.still_path = fileMatch.still_path;
+    apiService.episode.save(episode).success(function (data) {
+      apiService.video.addLocalFile({id: data.id, localFile: fileMatch.file}).success(function (data) {
+        alertify.success(fileMatch.episodeName + " has been added");
+      });
+    });
   }
 
 }
