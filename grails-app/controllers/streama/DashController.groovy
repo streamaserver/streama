@@ -4,26 +4,19 @@ import grails.converters.JSON
 import static org.springframework.http.HttpStatus.*
 
 class DashController {
+  static responseFormats = ['json', 'xml']
 
   def springSecurityService
+  def videoService
 
   def listContinueWatching(){
     User currentUser = springSecurityService.currentUser
 
-    def continueWatching = ViewingStatus.withCriteria {
-      eq("user", currentUser)
-      video{
-        isNotEmpty("files")
-        ne("deleted", true)
-      }
-//      eq("completed", false)
-      order("lastUpdated", "desc")
-    }
+    List<ViewingStatus> viewingStatusList = videoService.listContinueWatching(currentUser)
 
-    JSON.use ('dashViewingStatus') {
-      respond continueWatching
-    }
+    return [viewingStatusList: viewingStatusList]
   }
+
 
   def listShows(){
     def tvShows = TvShow.withCriteria{

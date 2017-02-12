@@ -58,6 +58,8 @@ grails:
     spring:
         transactionManagement:
             proxies: false
+
+
 info:
     app:
         name: '@info.app.name@'
@@ -109,8 +111,12 @@ grails:
         defaultScope: singleton
     converters:
         encoding: UTF-8
-
-
+    cors:
+        enabled: true
+        mappings:
+            /api/**: {}
+            /login/**: {}
+            /dash/**: {}
 
 grails.controllers.upload.maxFileSize: 10000000000000 # 10TB
 grails.controllers.upload.maxRequestSize: 10000000000000 # 10TB

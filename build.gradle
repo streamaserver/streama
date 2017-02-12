@@ -20,16 +20,17 @@ buildscript {
 version "0.1"
 group "streama"
 
+
 apply plugin:"eclipse"
 apply plugin:"idea"
 apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.grails-gsp"
 //apply plugin:"com.craigburke.karma"
-apply plugin:"com.craigburke.bower-installer"
+//apply plugin:"com.craigburke.client-dependencies"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.plugins.views-json"
-apply plugin: 'spring-boot'
+apply plugin:'org.springframework.boot'
 
 
 springBoot {
@@ -54,7 +55,7 @@ dependencyManagement {
 }
 
 dependencies {
-    assets "com.craigburke.angular:angular-template-asset-pipeline:2.2.6"
+    assets "com.craigburke.angular:angular-template-asset-pipeline:2.3.0"
     assets "com.craigburke.angular:angular-annotate-asset-pipeline:2.4.0"
     assets "com.craigburke:js-closure-wrap-asset-pipeline:1.2.0"
     compile "org.springframework.boot:spring-boot-starter-logging"
@@ -74,13 +75,16 @@ dependencies {
     compile "org.grails:grails-logging"
     compile "org.grails.plugins:cache"
     compile "org.grails:grails-plugin-gsp"
-    compile "org.grails.plugins:hibernate4"
-    compile "org.hibernate:hibernate-ehcache"
-    compile "org.grails.plugins:views-json:1.0.12"
+    compile "org.grails.plugins:angular-scaffolding:1.0.1"
+    compile "org.grails.plugins:hibernate5"
+    compile "org.hibernate:hibernate-core:5.1.2.Final"
+    compile "org.hibernate:hibernate-ehcache:5.1.2.Final"
+    compile "org.grails.plugins:views-json"
+    compile "org.grails.plugins:views-json-templates"
     console "org.grails:grails-console"
-    profile "org.grails.profiles:angular:3.1.6"
+    profile "org.grails.profiles:angular"
     runtime "com.h2database:h2"
-    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.8.2"
+    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testCompile "org.grails:grails-datastore-rest-client"
@@ -98,23 +102,29 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
-bower {
-    'angular'('1.4.x') {
-        source 'angular.js'
-    }
-    'angular-resource'('1.4.x') {
-        source 'angular-resource.js' >> '/angular/'
-    }
-    'angular-mocks'('1.4.x') {
-        source 'angular-mocks.js' >> '/angular/'
-    }
-    'angular-bootstrap'('1.1.x') {
-        source 'ui-bootstrap-tpls.js' >> '/angular/'
-    }
-    'bootstrap'('3.x.x') {
-        source 'dist/css/bootstrap.css' >> '/bootstrap/'
-    }
-}
+
+//clientDependencies {
+//    npm {
+//        'angular'('1.5.x', into: 'angular') {
+//            include 'angular.js'
+//        }
+//        'angular-mocks'('1.5.x', into: 'angular') {
+//            include 'angular-mocks.js'
+//        }
+//        'angular-resource'('1.5.x', into: 'angular') {
+//            include 'angular-resource.js'
+//        }
+//        'angular-ui-bootstrap'('1.3.x', into: 'angular') {
+//            include 'ui-bootstrap-tpls.js'
+//        }
+//        'angular-ui-router'('0.2.x', into: 'angular', from: 'release') {
+//            include 'angular-ui-router.js'
+//        }
+//        'bootstrap'('3.3.x', into: 'bootstrap', from: 'dist/css') {
+//            include 'bootstrap.css'
+//        }
+//    }
+//}
 
 //karma {
 //    dependencies(['karma-wrap-preprocessor'])
