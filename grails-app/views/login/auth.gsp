@@ -23,6 +23,7 @@
 </head>
 
 <body >
+	<g:render template="/templates/header_simple"></g:render>
 	<div id='login' ng-app="streama.translations" class="ng-cloak">
 		<div class='inner'>
 			<div class='fheader'>{{'LOGIN.TITLE' | translate}}</div>
