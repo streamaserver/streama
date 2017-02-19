@@ -38,7 +38,7 @@ class FileController {
     }
 
     JSON.use('adminFileManager'){
-      respond responseObj
+      render (responseObj as JSON)
     }
   }
 
