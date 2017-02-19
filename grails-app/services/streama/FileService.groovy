@@ -15,7 +15,7 @@ class FileService {
 
 
     def fileLength = rawFile.length()
-    def contentLength = rawFile.length()
+    def contentLength = rawFile.length().toString()
     def rangeEnd = fileLength.toLong()-1
     def rangeStart
 
@@ -25,7 +25,7 @@ class FileService {
       if (range.length == 2)
         rangeEnd = range[1].toLong()
 
-      contentLength = rangeEnd - rangeStart
+      contentLength = rangeEnd + 1 - rangeStart
     }
     //add html5 video headers
     response.addHeader("Accept-Ranges", "bytes")
@@ -59,10 +59,13 @@ class FileService {
         }
         response.outputStream.write(buffer, 0, read)
       }
-      fis.close()
     }catch(Exception e){
+//      log.error('caught exception for video playback. ' + e.message)
 //      e.printStackTrace()
 //      e.getCause().printStackTrace()
+    }finally{
+//      response.outputStream.flush()
+      fis.close()
     }
   }
 
