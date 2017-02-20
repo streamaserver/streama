@@ -42,4 +42,5 @@
 .idea
 *.iml
 /classes
+/build
 *.log
