@@ -63,7 +63,7 @@
         </div>
         <div class="col-sm-9">
           <ul class="genre-list">
-            <li class="genre-tag" ng-class="{'active': isGenreSelected(genre)}" ng-repeat="genre in availableGenres" ng-click="toggleSelectGenre(genre)">
+            <li class="genre-tag" ng-class="{'active': isGenreSelected(genre)}" ng-repeat="genre in availableGenres | orderBy:'name'" ng-click="toggleSelectGenre(genre)">
               {{genre.name}}
             </li>
           </ul>

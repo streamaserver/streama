@@ -14,11 +14,8 @@ angular.module('streama').controller('profileCtrl', function ($scope, apiService
   });
 
   $scope.toggleSelectGenre = function (genre) {
-    if(_.find($scope.user.favoriteGenres, {apiId: genre.apiId})){
-      _.remove($scope.user.favoriteGenres, {apiId: genre.apiId});
-    }else{
-      $scope.user.favoriteGenres.push(genre);
-    }
+		$scope.user.favoriteGenres = _.xorBy($scope.user.favoriteGenres, [genre], 'apiId');
+		$scope.profileForm.$setDirty();
   };
 
   $scope.isGenreSelected = function (genre) {

@@ -73,6 +73,36 @@
     <hr/>
   </div>
 
+
+  <div ng-if="recommendations.length && !selectedGenre">
+    <h3>{{'DASHBOARD.RECOMMENDATIONS' | translate}}</h3>
+
+
+    <div class="media-list media-list-continue-watching">
+      <div class="media-list-item media-poster-item" ng-repeat="video in recommendations track by video.id">
+        <div class="media-item" >
+
+          <img ng-if="video.poster_image_src" ng-src="{{::video.poster_image_src}}"/>
+          <img ng-if="!video.poster_image_src && video.poster_path"
+               ng-src="https://image.tmdb.org/t/p/w300/{{::video.poster_path}}"/>
+          <img ng-if="!video.poster_path && !video.poster_image_src"
+               ng-src="{{basePath}}assets/poster-not-found.png"/>
+
+          <div class="play-text">
+            <h4 ng-bind="::(video.title || video.show.name)"></h4>
+            <p ng-show="video.isEpisode"><span ng-bind="::video.episodeString"></span></p>
+          </div>
+
+          <i class="info-icon ion-ios-information" ng-click="showDetails(video)"></i>
+          <a class="play-icon ion-ios-play" ui-sref="player({videoId: video.id})"></a>
+        </div>
+      </div>
+    </div>
+
+
+    <hr/>
+  </div>
+
   <div>
     <h3>
       <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_SHOWS' | translate}}</span>
@@ -112,7 +142,6 @@
 
           <div class="play-text">
             <h4 ng-bind="::tvShow.name"></h4>
-            <p><span ng-bind="::tvShow.firstEpisode.episodeString"></span> - <span ng-bind="::tvShow.firstEpisode.name"></span></p>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="showDetails(tvShow)"></i>

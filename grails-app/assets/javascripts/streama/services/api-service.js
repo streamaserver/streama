@@ -281,6 +281,10 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 
 			listNewReleases: function () {
 				return $http.get('dash/listNewReleases.json');
+			},
+
+			listRecommendations: function () {
+				return $http.get('dash/listRecommendations.json');
 			}
 		},
 

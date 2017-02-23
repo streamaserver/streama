@@ -97,6 +97,12 @@ angular.module('streama').controller('dashCtrl',
 			$scope.loadingMovies = false;
 		});
 
+		$scope.loadingRecommendations = true;
+		apiService.dash.listRecommendations().success(function (data) {
+			$scope.recommendations = data;
+			$scope.loadingRecommendations = false;
+		});
+
 		$scope.loadingGenericVideos = true;
 		apiService.dash.listGenericVideos().success(function (data) {
 			$scope.genericVideos = data;

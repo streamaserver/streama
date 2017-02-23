@@ -38,7 +38,7 @@ class FileController {
     }
 
     JSON.use('adminFileManager'){
-      respond responseObj
+      render (responseObj as JSON)
     }
   }
 
@@ -120,6 +120,7 @@ class FileController {
     if(!file){
       response.setStatus(BAD_REQUEST.value())
       render ([messageCode: 'FILE_IN_DB_NOT_FOUND'] as JSON)
+      log.debug('FILE_IN_DB_NOT_FOUND')
       return
     }
 
@@ -128,6 +129,7 @@ class FileController {
     if(!filePath){
       response.setStatus(NOT_ACCEPTABLE.value())
       render ([messageCode: 'FILE_IN_FS_NOT_FOUND', data: file.sha256Hex] as JSON)
+      log.debug('FILE_IN_FS_NOT_FOUND')
       return
     }
 
@@ -142,6 +144,7 @@ class FileController {
 
     if(fileService.allowedVideoFormats.contains(file.extension)){
       fileService.serveVideo(request, response, rawFile, file)
+      return null
     }else if(file.extension == '.srt'){
       def vttResult = srt2vttService.convert(rawFile)
       render ( file: vttResult.getBytes('utf-8'), contentType: file.contentType, fileName: file.originalFilename.replace('.srt', '.vtt'))

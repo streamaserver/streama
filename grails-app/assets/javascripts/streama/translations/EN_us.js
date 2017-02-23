@@ -13,6 +13,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		},
 		DASHBOARD: {
 			TITLE: 'Dashboard',
+			RECOMMENDATIONS: 'Recommendations for you',
 			NEW_RELEASES: 'New Releases',
 			CONTINUE_WATCHING: 'Continue Watching',
 			DISCOVER_SHOWS: 'Discover Shows',
