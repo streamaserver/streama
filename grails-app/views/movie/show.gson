@@ -6,6 +6,6 @@ model {
 
 json g.render(movie, [deep: true, excludes: ['files']]){
 	hasFiles movie.files ? true : false
-	files movie.files.collect{it.simpleInstance}
-	subtitles movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+	files movie.files?.collect{it.simpleInstance}
+	subtitles movie.files?.findAll{it.extension == '.srt' || it.extension == '.vtt'}?.collect{it.simpleInstance}
 }
