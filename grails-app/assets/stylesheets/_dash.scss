@@ -122,6 +122,7 @@
       background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.71) 20%);
       padding: 34px;
       bottom: 0;
+      right: 0;
       @include flexbox;
       @include align-items(center);
 
