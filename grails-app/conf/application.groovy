@@ -18,6 +18,9 @@ grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 grails.plugin.springsecurity.secureChannel.useHeaderCheckChannelSecurity = true
 grails.plugin.springsecurity.portMapper.httpPort = 80
 grails.plugin.springsecurity.portMapper.httpsPort = 443
+grails.plugin.springsecurity.rememberMe.cookieName = 'streama_remember_me'
+grails.plugin.springsecurity.rememberMe.alwaysRemember = true
+grails.plugin.springsecurity.rememberMe.key = 'streama_Rocks123!!RememberMe'
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
