@@ -139,7 +139,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				function closeVideo() {
 
 					//If full screen is enabled, it will be canceled.
-					if ($scope.isFullScreen = true) {
+					if ($scope.isFullScreen == true) {
 						$scope.fullScreen();
 					}
 
