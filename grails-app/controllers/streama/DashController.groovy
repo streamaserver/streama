@@ -48,7 +48,8 @@ class DashController {
     def favoriteGenreNames = currentUser.favoriteGenres*.name
 
     if(!favoriteGenreNames){
-      respond (result as JSON)
+      render status: NO_CONTENT
+      return
     }
     def movies = Movie.where{
       genre{
