@@ -54,8 +54,8 @@ class TvShow {
     try{
       return theMovieDbService.getFullTvShowMeta(this.apiId)
     }catch (e){
-      log.error("couldnt get FullTvShowMeta for ${this.apiId}")
-      log.error(e.message)
+      log.warn("couldnt get FullTvShowMeta for ${this.apiId}")
+      log.warn(e.message)
       return null
     }
   }
