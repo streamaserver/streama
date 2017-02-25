@@ -18,6 +18,8 @@ class UrlMappings {
         "/api/v1/dash/listShows"(controller: 'dash', action: 'listShows')
         "/api/v1/dash/listMovies"(controller: 'dash', action: 'listMovies')
         "/api/v1/dash/listGenericVideos"(controller: 'dash', action: 'listGenericVideos')
+        "/api/v1/dash/listNewReleases"(controller: 'dash', action: 'listNewReleases')
+        "/api/v1/dash/listRecommendations"(controller: 'dash', action: 'listRecommendations')
 //        "/api/v1/dash/listAllVideos"(controller: 'dash', action: 'listAllVideos')
 
         "/"(view: '/index')
