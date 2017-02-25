@@ -124,7 +124,7 @@ class DashController {
 
   def listNewReleases(){
     JSON.use('dashMovies'){
-      respond NotificationQueue.findAllByType('newRelease')
+      respond NotificationQueue.findAllByType('newRelease').sort{new Random(System.nanoTime())}
     }
   }
 }
