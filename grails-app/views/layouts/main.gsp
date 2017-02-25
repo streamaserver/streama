@@ -60,7 +60,7 @@
 				<div class="dash-search form-group has-feedback">
 					<input type="text" placeholder="Search.." class="form-control input-xs" ng-model="dashSearch"
 								 typeahead-append-to-body="true" uib-typeahead="(item.title || item.name) for item in searchMedia($viewValue)"
-								 typeahead-on-select="selectFromSearch($item)" typeahead-template-url="typeahead--media.htm" typeahead-loading="baseData.loading"/>
+								 typeahead-on-select="selectFromSearch($item)" typeahead-template-url="/streama/typeahead--media.htm" typeahead-loading="baseData.loading"/>
 					<span class="form-control-feedback ion-android-search" aria-hidden="true"></span>
 				</div>
 			</li>
