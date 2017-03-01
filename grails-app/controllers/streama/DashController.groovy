@@ -121,4 +121,29 @@ class DashController {
       respond NotificationQueue.findAllByType('newRelease').sort{new Random(System.nanoTime())}
     }
   }
+
+  def mediaDetail(){
+    log.debug(params.mediaType)
+    log.debug(params.id)
+    Integer id = params.int('id')
+    def media
+
+    if(params.mediaType == 'movie'){
+      media = Movie.get(id)
+    }
+    if(params.mediaType == 'tvShow'){
+      media = TvShow.get(id)
+    }
+    if(params.mediaType == 'genericVideo'){
+      media = GenericVideo.get(id)
+    }
+    if(!media){
+      render status: NOT_FOUND
+      return
+    }
+
+    JSON.use('mediaDetail'){
+      render (media as JSON)
+    }
+  }
 }

@@ -13,7 +13,7 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'streama.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'streama.UserRole'
 grails.plugin.springsecurity.authority.className = 'streama.Role'
 
-grails.plugin.springsecurity.rejectIfNoRule = false
+grails.plugin.springsecurity.rejectIfNoRule = true
 grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 grails.plugin.springsecurity.secureChannel.useHeaderCheckChannelSecurity = true
 grails.plugin.springsecurity.portMapper.httpPort = 80
@@ -43,6 +43,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/theMovieDb/availableGenres',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/user/loginTarget',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/dash/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/player/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag.json',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
 
@@ -61,14 +62,19 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/bulk/**',  access :['ROLE_ADMIN']],
   [pattern:'/monitoring/**',  access :['ROLE_ADMIN']],
 
-
   [pattern:'/user/current',  access :['permitAll']],
   [pattern:'/invite/**',  access :['permitAll']],
   [pattern:'/assets/**',  access :['permitAll']],
   [pattern:'/**/js/**',  access :['permitAll']],
   [pattern:'/**/css/**',  access :['permitAll']],
   [pattern:'/**/images/**',  access :['permitAll']],
-  [pattern:'/**/favicon.ico', access :['permitAll']]
+  [pattern:'/**/favicon.ico', access :['permitAll']],
+
+
+
+  [pattern:'/api/validateDomain',  access :['permitAll']],
+  [pattern:'/api/currentUser',  access :['permitAll']],
+  [pattern:'/api/v1/dash/**',  access :['IS_AUTHENTICATED_REMEMBERED']]
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [

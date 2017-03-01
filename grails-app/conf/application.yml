@@ -117,6 +117,7 @@ grails:
             /api/**: {}
             /login/**: {}
             /dash/**: {}
+            /player/**: {}
 
 grails.controllers.upload.maxFileSize: 10000000000000 # 10TB
 grails.controllers.upload.maxRequestSize: 10000000000000 # 10TB

@@ -1,8 +1,17 @@
-package streama
+package streama.marshallers
 
 
 import grails.converters.JSON
 import grails.transaction.Transactional
+import streama.Episode
+import streama.File
+import streama.GenericVideo
+import streama.Movie
+import streama.NotificationQueue
+import streama.TvShow
+import streama.User
+import streama.Video
+import streama.ViewingStatus
 
 @Transactional
 class MarshallerService {
@@ -10,10 +19,13 @@ class MarshallerService {
   def springSecurityService
   def settingsService
   def mediaService
+  def mediaDetailMarshallerService
 
   def init() {
+    mediaDetailMarshallerService.init()
 
-    JSON.registerObjectMarshaller(User) {  User user ->
+
+    JSON.registerObjectMarshaller(User) { User user ->
       def returnArray = [:]
 
       returnArray['id'] = user.id
@@ -36,7 +48,7 @@ class MarshallerService {
       return returnArray;
     }
 
-    JSON.registerObjectMarshaller(File) {  File file ->
+    JSON.registerObjectMarshaller(File) { File file ->
       def returnArray = [:]
 
       returnArray['id'] = file.id
@@ -55,7 +67,7 @@ class MarshallerService {
       return returnArray;
     }
 
-    JSON.registerObjectMarshaller(NotificationQueue) {  NotificationQueue notificationQueue ->
+    JSON.registerObjectMarshaller(NotificationQueue) { NotificationQueue notificationQueue ->
       def returnArray = [:]
 
       returnArray['id'] = notificationQueue.id
@@ -88,6 +100,7 @@ class MarshallerService {
       returnArray['popularity'] = movie.popularity
       returnArray['imdb_id'] = movie.imdb_id
       returnArray['poster_image_src'] = movie.poster_image?.src
+      returnArray['genre'] = movie.genre
 
       returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
