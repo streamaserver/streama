@@ -123,13 +123,9 @@ label {
 .form-control {
   background-color: rgba(255, 255, 255, 0.12);
   color: white; }
-
-.form-control option {
-  color: black;}
-  
-.form-control[disabled] {
-  background-color: rgba(255, 255, 255, 0.12);
-  opacity: 0.5; }
+  .form-control[disabled] {
+    background-color: rgba(255, 255, 255, 0.12);
+    opacity: 0.5; }
 
 [ui-sref],
 [ng-click],
@@ -1085,6 +1081,7 @@ hr {
       background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.71) 20%);
       padding: 34px;
       bottom: 0;
+      right: 0;
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
@@ -1181,6 +1178,8 @@ hr {
           padding: 10px; }
   .admin .form-control {
     color: white; }
+    .admin .form-control option {
+      color: black; }
   .admin ::-webkit-input-placeholder {
     color: #888;
     font-weight: 300; }

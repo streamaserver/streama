@@ -17,7 +17,7 @@ buildscript {
     }
 }
 
-version "1.0.13"
+version "1.0.14"
 group "streama"
 
 apply plugin:"eclipse"
