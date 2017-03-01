@@ -46,6 +46,7 @@ class TheMovieDbService {
       return genres
     }catch (e){
       log.warn("could not load genres this time, " + e.message)
+      return []
     }
 
   }
@@ -66,6 +67,7 @@ class TheMovieDbService {
       return genres
     }catch (e){
       log.warn("could not load genres this time, " + e.message)
+      return []
     }
   }
 
