@@ -84,6 +84,20 @@ class DefaultDataService {
             description: 'Should the First-Time login info (admin/admin) be shown in the login screen?',
             settingsType: 'boolean'
         ],
+        [
+            settingsKey: 'Show Version Number',
+            name: 'show_version_num',
+            description: 'Should the Streama version number be shown in the header of the application',
+            settingsType: 'boolean',
+            value: 'true'
+        ],
+        [
+            settingsKey: 'Logo',
+            name: 'logo',
+            description: 'Upload your custom Streama Logo here',
+            settingsType: 'fileUpload',
+            value: ''
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',

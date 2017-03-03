@@ -1,8 +1,8 @@
 <header class="main" ng-if="!isCurrentState('player')">
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
-      <asset:image src="logo.png"></asset:image>
-      <div class="version">v${java.lang.System.properties.getProperty('info.app.version')}</div>
+      <img ng-show="$root.getSetting('logo')" ng-src="{{$root.getSetting('logo').value}}" src="/assets/logo.png" alt="Streama">
+      <div ng-show="$root.getSetting('show_version_num').value == true" class="version">v${grailsApplication.metadata.getApplicationVersion()}</div>
       <div class="spinner" ng-show="baseData.loading">
         <div class="bounce1"></div>
         <div class="bounce2"></div>

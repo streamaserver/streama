@@ -566,10 +566,20 @@ h1, h2, h3, h4, h5, h6 {
   float: left;
   padding: 6px 0;
   position: relative;
-  width: 170px;
-  margin-right: 15px; }
+  margin-right: 15px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: flex-end;
+  -ms-flex-align: flex-end;
+  -webkit-align-items: flex-end;
+  align-items: flex-end; }
   .logo img {
-    width: 130px; }
+    max-width: 130px;
+    max-height: 31px;
+    margin-right: 10px; }
   .logo i {
     font-size: 0.85em; }
   .logo .spinner {
@@ -583,9 +593,6 @@ h1, h2, h3, h4, h5, h6 {
   display: block; }
 
 .version {
-  position: absolute;
-  top: 22px;
-  left: 137px;
   color: #B0DDEF;
   font-size: 10px; }
 

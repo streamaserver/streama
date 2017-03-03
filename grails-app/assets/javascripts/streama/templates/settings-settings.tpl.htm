@@ -35,6 +35,19 @@
       <div ng-switch-when="boolean" class="col-sm-2">
         <input type="checkbox" ng-model="setting.value" ng-init="setting.value = (setting.value == 'true')" />
       </div>
+      <div ng-switch-when="fileUpload" class="col-sm-7">
+       <div class="row">
+         <div class="col-md-6">
+           <button ng-model="file"  class="btn btn-dark" ngf-drop
+                   ngf-drag-over-class="dragover-upload" ngf-change="upload(setting, $files)" ngf-select>
+             Drop or Select Attachment <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
+           </button>
+         </div>
+         <div class="col-md-6">
+           <img class="pull-right" ng-show="setting.value" ng-src="{{setting.value}}" alt="Streama Logo">
+         </div>
+       </div>
+      </div>
 
     </div>
     <div class="col-sm-7 col-sm-offset-3">

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiService', '$sce', function ($scope, apiService, $sce) {
+angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiService', '$sce', 'uploadService', function ($scope, apiService, $sce, uploadService) {
 
   apiService.settings.list().success(function (data) {
     $scope.settings = data;
@@ -44,6 +44,16 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
     settings.invalid = undefined;
     settings.dirty = settings.value;
   };
+
+
+	$scope.uploadStatus = {};
+	$scope.upload = function (setting, files) {
+		uploadService.doUpload($scope.uploadStatus, 'file/upload.json', function (data) {
+			console.log('%c doUpload', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
+			$scope.uploadStatus.percentage = null;
+			setting.value = data.src;
+		}, files);
+	};
 
 
   $scope.anySettingsInvalid = function () {
