@@ -48,8 +48,7 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 
 	$scope.uploadStatus = {};
 	$scope.upload = function (setting, files) {
-		uploadService.doUpload($scope.uploadStatus, 'file/upload.json', function (data) {
-			console.log('%c doUpload', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
+		uploadService.doUpload($scope.uploadStatus, 'file/upload.json?isPublic=true', function (data) {
 			$scope.uploadStatus.percentage = null;
 			setting.value = data.src;
 		}, files);

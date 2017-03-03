@@ -12,6 +12,7 @@ class FileController {
   def uploadService
   def fileService
   def srt2vttService
+  def springSecurityService
 
   def index(){
     def filter = params.filter
@@ -111,7 +112,6 @@ class FileController {
   }
 
   def serve() {
-
     if (!params.id) {
       return;
     }
@@ -121,6 +121,13 @@ class FileController {
       response.setStatus(BAD_REQUEST.value())
       render ([messageCode: 'FILE_IN_DB_NOT_FOUND'] as JSON)
       log.debug('FILE_IN_DB_NOT_FOUND')
+      return
+    }
+
+    if(!file.isPublic && !springSecurityService.isLoggedIn()){
+      response.setStatus(UNAUTHORIZED.value())
+      render ([messageCode: 'UNAUTHORIZED'] as JSON)
+      log.debug('UNAUTHORIZED')
       return
     }
 
@@ -155,7 +162,7 @@ class FileController {
   }
 
   def upload(){
-    def file = uploadService.upload(request)
+    def file = uploadService.upload(request, params)
     respond file
   }
 

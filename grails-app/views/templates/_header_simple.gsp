@@ -1,8 +1,11 @@
+<%@ page import="streama.Settings" %>
 <header class="main" ng-if="!isCurrentState('player')">
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
-      <asset:image src="logo.png"></asset:image>
-      <div class="version">v${java.lang.System.properties.getProperty('info.app.version')}</div>
+      <img src="${streama.Settings.findByName('logo').value}" alt="Streama">
+      <g:if test="${streama.Settings.findByName('show_version_num').value == 'true'}">
+        <div class="version">v${grailsApplication.metadata.getApplicationVersion()}</div>
+      </g:if>
     </a>
   </div>
 
