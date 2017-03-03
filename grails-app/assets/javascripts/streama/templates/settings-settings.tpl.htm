@@ -29,7 +29,7 @@
 
         </div>
         <div class="col-sm-2">
-          <button type="button" class="btn btn-success btn-block" ng-click="validateSettings(setting)" ng-show="!setting.valid && setting.dirty">validate</button>
+          <button type="button" class="btn btn-success btn-block" ng-click="validateSettings(setting)" ng-show="!setting.valid && setting.dirty && setting.validationRequired">validate</button>
         </div>
       </div>
       <div ng-switch-when="boolean" class="col-sm-2">
@@ -54,6 +54,8 @@
       <a ng-if="setting.settingsKey=='Base URL'" ng-click="resetBaseURL(setting)"> Reset to default value.</a>
       <p class="settings-description" ng-bind-html="setting.description"></p>
     </div>
+
+    <hr class="col-xs-12">
 
   </div>
 </form>

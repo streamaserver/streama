@@ -40,9 +40,14 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
   };
 
   $scope.changeValue = function (settings) {
-    settings.valid = undefined;
-    settings.invalid = undefined;
-    settings.dirty = settings.value;
+    if(settings.validationRequired === false){
+			settings.valid = true;
+			settings.invalid = false;
+    }else{
+			settings.valid = undefined;
+			settings.invalid = undefined;
+			settings.dirty = settings.value;
+    }
   };
 
 
@@ -57,7 +62,7 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 
   $scope.anySettingsInvalid = function () {
     return _.find($scope.settings, function (setting) {
-        return setting.invalid || (setting.dirty && !setting.valid) || (!setting.value && setting.required);
+        return (setting.validationRequired !== false && (setting.invalid || (setting.dirty && !setting.valid) || (!setting.value && setting.required)));
    });
   };
 

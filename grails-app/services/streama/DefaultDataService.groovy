@@ -98,6 +98,15 @@ class DefaultDataService {
             settingsType: 'fileUpload',
             value: ''
         ],
+        [
+            settingsKey: 'Streama title',
+            name: 'title',
+            description: 'Change Name of Application',
+            settingsType: 'string',
+            value: 'Streama',
+            required: true,
+            validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',

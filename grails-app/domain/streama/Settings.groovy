@@ -8,6 +8,7 @@ class Settings {
     String description
     String settingsType
     Boolean required
+    Boolean validationRequired = true
 
     static constraints = {
         settingsKey nullable: false
