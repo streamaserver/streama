@@ -39,15 +39,19 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				$scope.loading = true;
 				$scope.initialPlay = false;
 
-				$http.head(videoSrc)
-          .success(function(){
-            initDirective();
-          })
-          .error(function(data, status) {
-            if(status == 406){
-              $scope.options.onError('FILE_IN_FS_NOT_FOUND');
-            }
-          });
+				if(!$scope.options.isExternalLink){
+					$http.head(videoSrc)
+						.success(function(){
+							initDirective();
+						})
+						.error(function(data, status) {
+							if(status == 406){
+								$scope.options.onError('FILE_IN_FS_NOT_FOUND');
+							}
+						});
+				}else{
+					initDirective();
+				}
 
 				function initDirective() {
 					$scope.isInitialized = true;
