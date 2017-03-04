@@ -120,5 +120,10 @@ class MigrationService {
       setting.value = '/assets/logo.png'
       setting.save()
     }
+
+    if(!setting.defaultValue){
+      setting.defaultValue = '/assets/logo.png'
+      setting.save()
+    }
   }
 }

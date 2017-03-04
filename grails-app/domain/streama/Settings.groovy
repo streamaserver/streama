@@ -4,6 +4,7 @@ class Settings {
 
     String settingsKey
     String value
+    String defaultValue
     String name
     String description
     String settingsType
