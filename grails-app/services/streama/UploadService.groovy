@@ -98,6 +98,8 @@ class UploadService {
   }
 
   def getFileSrc(File file){
-    return settingsService.baseUrl  + "/file/serve/" + file.id + file.extension
+    def baseUrl = settingsService.baseUrl
+    baseUrl = baseUrl.replaceAll('/$', '')
+    return baseUrl  + "/file/serve/" + file.id + file.extension
   }
 }
