@@ -96,7 +96,7 @@ class DefaultDataService {
             name: 'logo',
             description: 'Upload your custom Streama Logo here',
             settingsType: 'fileUpload',
-            value: ''
+            value: '/assets/logo.png'
         ],
         [
             settingsKey: 'Streama title',
