@@ -29,7 +29,7 @@
 
         </div>
         <div class="col-sm-2">
-          <button type="button" class="btn btn-success btn-block" ng-click="validateSettings(setting)" ng-show="!setting.valid && setting.dirty && setting.validationRequired">validate</button>
+          <button type="button" class="btn btn-success btn-block" ng-click="validateSettings(setting)" ng-show="!setting.valid && setting.dirty && setting.validationRequired !== false">validate</button>
         </div>
       </div>
       <div ng-switch-when="boolean" class="col-sm-2">
@@ -40,11 +40,21 @@
          <div class="col-md-6">
            <button ng-model="file"  class="btn btn-dark" ngf-drop
                    ngf-drag-over-class="dragover-upload" ngf-change="upload(setting, $files)" ngf-select>
-             Drop or Select Attachment <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
+             Drop or Select Logo <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
            </button>
          </div>
          <div class="col-md-6">
-           <img class="pull-right" ng-show="setting.value" ng-src="{{setting.value}}" alt="Streama Logo">
+          <div>
+            <img class="pull-right" ng-show="setting.value" ng-src="{{setting.value}}" alt="Streama Logo">
+          </div>
+          <div>
+            <input class="form-control input-sm" type="text" ng-model="setting.value" />
+          </div>
+           <div>
+             <button class="btn btn-sm btn-dark" ng-click="setting.value = setting.defaultValue">
+               Reset to default
+             </button>
+           </div>
          </div>
        </div>
       </div>

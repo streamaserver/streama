@@ -13,7 +13,6 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 
   $scope.updateMultipleSettings = function (settings) {
     settings.invalid = false;
-
     apiService.settings.updateMultiple(settings)
       .success(function () {
         window.location.reload();

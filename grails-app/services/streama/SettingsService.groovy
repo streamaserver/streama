@@ -58,9 +58,7 @@ class SettingsService {
 
   def validateURL(String url, resultValue) {
     try {
-
-      String[] schemes = ["http","https"]
-      UrlValidator urlValidator = new UrlValidator(schemes)
+      UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_LOCAL_URLS)
       if (urlValidator.isValid(url)) {
         resultValue.success = true
         resultValue.message = "The entered url is valid."
