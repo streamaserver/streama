@@ -27,7 +27,6 @@ class Episode extends Video{
 
   }
 
-
   def getMovieDbMeta(){
     theMovieDbService.getEpisodeMeta(this.show.apiId, this.season_number, this.episode_number)
   }

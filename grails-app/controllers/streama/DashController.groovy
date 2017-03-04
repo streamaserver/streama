@@ -134,6 +134,9 @@ class DashController {
     if(params.mediaType == 'tvShow'){
       media = TvShow.get(id)
     }
+    if(params.mediaType == 'episode'){
+      media = Episode.get(id)
+    }
     if(params.mediaType == 'genericVideo'){
       media = GenericVideo.get(id)
     }

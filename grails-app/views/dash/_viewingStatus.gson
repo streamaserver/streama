@@ -41,7 +41,7 @@ json g.render(viewingStatus, [includes: ['id', 'dateCreated', 'lastUpdated', 'cu
       if (viewingStatus.video instanceof Episode) {
         Episode episode = viewingStatus.video as Episode
 
-        mediaType 'tvShow'
+        mediaType 'episode'
         isEpisode true
         backdrop_path episode.still_path
         poster_path episode.show?.poster_path
