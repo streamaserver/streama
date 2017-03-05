@@ -5,7 +5,7 @@
 angular.module('streama.translations').config(function ($translateProvider) {
 	$translateProvider.translations('da', {
 		LOGIN: {
-			TITLE: 'Login',
+			TITLE: 'Log Ind',
 			USERNAME: 'Brugernavn',
 			PASSWORD: 'Kodeord',
 			FIRST_TIME_HINT: 'Første gang du logger ind? Prøv \'admin\' i begge felter.',
