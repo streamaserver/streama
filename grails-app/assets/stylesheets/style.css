@@ -126,6 +126,8 @@ label {
   .form-control[disabled] {
     background-color: rgba(255, 255, 255, 0.12);
     opacity: 0.5; }
+  .form-control option {
+    color: black; }
 
 [ui-sref],
 [ng-click],
