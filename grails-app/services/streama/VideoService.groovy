@@ -10,9 +10,7 @@ class VideoService {
   def deleteVideoAndAssociations(Video video) {
     video.deleted = true
     ViewingStatus.findAllByVideo(video)*.delete(flush: true)
-    video.files?.each{File file->
-      fileService.fullyRemoveFile(file)
-    }
+    video.files?.each{ fileService.fullyRemoveFile(it) }
     video.save failOnError: true, flush: true
   }
 }
