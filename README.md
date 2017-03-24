@@ -24,7 +24,7 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 - [License](#license)
 
 # Getting Started
-- [up and running with v1.x](https://github.com/dularion/streama/wiki/Getting-started-with-v1)
+- [up and running with Streama](https://github.com/dularion/streama/wiki/Getting-started)
 
 # The Application
 
