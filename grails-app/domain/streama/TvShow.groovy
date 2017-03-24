@@ -42,6 +42,11 @@ class TvShow {
       overview size: 1..5000
   }
 
+  def getFilteredEpisodes(){
+    def filteredEpisodes = episodes.findAll{!it.deleted}
+    return filteredEpisodes
+  }
+
   def getExternalLinks(){
     theMovieDbService.getExternalLinks(this.apiId)
   }
