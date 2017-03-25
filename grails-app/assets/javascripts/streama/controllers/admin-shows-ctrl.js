@@ -25,7 +25,7 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
 	};
 
   $scope.doSearch = function (query) {
-    if ($scope.hasMovieDBKey) {
+    if ($scope.hasMovieDBKey && query) {
       return apiService.theMovieDb.search('tv', query).then(function (data) {
         $scope.suggestedShows = data.data;
       });
@@ -48,7 +48,7 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
   };
 
   $scope.alreadyAdded = function (show) {
-    console.log('%c show', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', show);
+    // console.log('%c show', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', show);
     return show.id && _.find($scope.shows, {apiId: show.id.toString()});
   };
 
