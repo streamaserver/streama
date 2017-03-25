@@ -100,6 +100,14 @@ class DefaultDataService {
             defaultValue: '/assets/logo.png'
         ],
         [
+            settingsKey: 'Favicon',
+            name: 'favicon',
+            description: 'Upload your custom Favicon here. For most compatibility, use 16x16 .ico file',
+            settingsType: 'fileUpload',
+            value: '/assets/favicon.ico',
+            defaultValue: '/assets/favicon.ico'
+        ],
+        [
             settingsKey: 'Streama title',
             name: 'title',
             description: 'Change Name of Application',
