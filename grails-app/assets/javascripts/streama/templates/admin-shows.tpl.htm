@@ -7,7 +7,8 @@
 
 <div class="row">
   <div class="col-md-5">
-    <input placeholder="{{searchText}}" type="text" ng-model="search" class="form-control input-sm" />
+    <input placeholder="{{searchText}}" type="text" ng-model="search" ng-change="doSearch(search)"
+           ng-model-options="{debounce: 333}" class="form-control input-sm" />
   </div>
 </div>
 
@@ -41,3 +42,22 @@
 </div>
 
 
+<div ng-if="suggestedShows.length">
+  <hr>
+  <h3>Want to add a new Show?</h3>
+  <div class="media-list similar-media">
+    <div class="media-list-item" ng-repeat="show in suggestedShows | filter:search | orderBy: '-vote_count'" ng-if="!alreadyAdded(show)">
+      <div class="hover-overlay">
+        <div>
+          <button class="btn btn-primary btn-sm btn-block" ng-click="addFromSuggested(show, true)">Add and Open</button>
+          <button class="btn btn-primary btn-sm btn-block" ng-click="addFromSuggested(show, false)">Add and Continue</button>
+        </div>
+      </div>
+      <div class="media-item" >
+        <img ng-src="https://image.tmdb.org/t/p/w300/{{show.poster_path}}"/>
+      </div>
+      <div class="media-meta">Release: {{::show.release_date.substring(0, 4)}} | <i class="ion-ios-star"></i> {{::show.vote_average}}</div>
+    </div>
+  </div>
+
+</div>
