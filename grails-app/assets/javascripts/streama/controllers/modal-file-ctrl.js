@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalFileCtrl', [
-  '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'video',
-  function ($scope, $uibModalInstance, apiService, uploadService, video) {
+  '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'video', 'localStorageService',
+  function ($scope, $uibModalInstance, apiService, uploadService, video, localStorageService) {
     $scope.loading = false;
     $scope.localFilesEnabled = false;
     $scope.localFiles = [];
@@ -11,6 +11,7 @@ angular.module('streama').controller('modalFileCtrl', [
 
     $scope.loadLocalFiles = function(path) {
       apiService.file.localFiles(path).success(function(data) {
+				localStorageService.set('localFileLastPath', path);
         $scope.localFilesEnabled = true;
         $scope.localFiles = data;
       }).error(function(data) {
@@ -21,7 +22,7 @@ angular.module('streama').controller('modalFileCtrl', [
         alertify.error(data.message);
       });
     };
-    $scope.loadLocalFiles('');
+    $scope.loadLocalFiles(localStorageService.get('localFileLastPath') || '');
 
     $scope.backLocalDirectory = function() {
       $scope.localFiles = [];
