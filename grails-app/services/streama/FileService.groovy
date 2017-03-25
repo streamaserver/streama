@@ -1,5 +1,6 @@
 package streama
 
+import grails.converters.JSON
 import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
@@ -44,7 +45,13 @@ class FileService {
 
 
     //Read and write bytes of file incrementally into the outputstream
-    FileInputStream fis = new FileInputStream(rawFile) //391694394
+    try{
+      FileInputStream fis = new FileInputStream(rawFile) //391694394
+    }catch(e){
+      response.setStatus(PRECONDITION_FAILED.value())
+      render ([message: e.message] as JSON)
+      return
+    }
     byte[] buffer = new byte[16000]
 
     if(rangeStart){
