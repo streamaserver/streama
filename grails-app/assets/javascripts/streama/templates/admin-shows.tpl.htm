@@ -7,7 +7,8 @@
 
 <div class="row">
   <div class="col-md-5">
-    <input placeholder="{{searchText}}" type="text" ng-model="search" ng-change="doSearch(search)" class="form-control input-sm" />
+    <input placeholder="{{searchText}}" type="text" ng-model="search" ng-change="doSearch(search)"
+           ng-model-options="{debounce: 333}" class="form-control input-sm" />
   </div>
 </div>
 
