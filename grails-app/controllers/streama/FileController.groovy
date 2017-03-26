@@ -77,12 +77,22 @@ class FileController {
     }
 
     if(file){
-      fileService.fullyRemoveFile(file)
-    } else if(path){
+      Map result = fileService.fullyRemoveFile(file)
+      if(result.error){
+        response.setStatus(result.statusCode)
+        render (result as JSON)
+        return
+      }else{
+        respond status: OK
+      }
+    }
+
+
+    else if(path){
       java.io.File rawFile = new java.io.File(path)
       rawFile.delete()
+      respond status: OK
     }
-    respond status: NO_CONTENT
   }
 
   def removeMultipleFilesFromDisk() {
@@ -91,7 +101,7 @@ class FileController {
       def file = File.get(id)
       fileService.fullyRemoveFile(file)
     }
-    respond status: NO_CONTENT
+    respond status: OK
   }
 
   def cleanUpFiles(){
