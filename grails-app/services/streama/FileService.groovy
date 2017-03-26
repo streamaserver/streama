@@ -1,6 +1,7 @@
 package streama
 
 import grails.converters.JSON
+import static javax.servlet.http.HttpServletResponse.SC_NOT_ACCEPTABLE
 import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
@@ -77,10 +78,14 @@ class FileService {
   }
 
 
-  def fullyRemoveFile(File file){
+  def Map fullyRemoveFile(File file){
     if(file.externalLink || file.localFile){
       // External and local files are not deleted
-      return
+      return ResultHelper.generateErrorResult(SC_NOT_ACCEPTABLE, 'local', 'cant delete file associated with the File-Browser.')
+    }
+    if(file.externalLink || file.localFile){
+      // External and local files are not deleted
+      return ResultHelper.generateErrorResult(SC_NOT_ACCEPTABLE, 'external', 'cant delete file associated with an external Link.')
     }
     if(file.associatedVideosInclDeleted){
       file.associatedVideosInclDeleted.each{ video ->
@@ -109,5 +114,8 @@ class FileService {
     }
 
     file.delete(flush: true)
+
+
+    return ResultHelper.generateOkResult()
   }
 }
