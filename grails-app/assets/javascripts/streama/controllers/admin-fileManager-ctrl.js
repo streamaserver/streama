@@ -46,7 +46,7 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
       alertify.confirm(confirmText, function (confirmed) {
         if(confirmed){
-          apiService.video.removeMultipleFilesFromDisk($scope.selectedFiles).success(function () {
+          apiService.video.removeMultipleFilesFromDisk($scope.selectedFiles).success(function (response) {
             _.forEach($scope.selectedFiles.forEach, function (id) {
 								// TODO investigate why {id: id} doesn't work
 								_.remove($scope.files, function(file) {
@@ -54,8 +54,10 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 								});
 						});
             selectedFiles = [];
-            alertify.success('Files deleted.');
-          });
+            alertify.success(response.successes.length + ' of ' + $scope.selectedFiles.length + ' files deleted.');
+          }).error(function (response) {
+						alertify.error(response.successes.length + ' of ' + $scope.selectedFiles.length + ' files could be deleted. (this could be due to them being associated with the file-browser or an externalLink)');
+					});
         }
       });
 	  }

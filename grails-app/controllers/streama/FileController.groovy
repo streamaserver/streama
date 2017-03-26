@@ -97,11 +97,26 @@ class FileController {
 
   def removeMultipleFilesFromDisk() {
     def idBulk = params.list('id').collect({it.toLong()})
+    def result = [
+        successes: [],
+        errors: []
+    ]
     idBulk.each { id ->
       def file = File.get(id)
-      fileService.fullyRemoveFile(file)
+      def individualResult =fileService.fullyRemoveFile(file)
+
+      if(individualResult.error){
+        result.errors.add(id)
+      }else{
+        result.successes.add(id)
+      }
     }
-    respond status: OK
+    if(result.successes.size() > 0){
+      response.setStatus(OK.value())
+    }else{
+      response.setStatus(NOT_ACCEPTABLE.value())
+    }
+    render (result as JSON)
   }
 
   def cleanUpFiles(){
