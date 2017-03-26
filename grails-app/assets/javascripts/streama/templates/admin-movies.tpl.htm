@@ -1,13 +1,17 @@
-<button class="btn btn-primary pull-right btn-lg" ng-click="openMovieModal()">Create new Movie</button>
-
-<h1>
-  Movies
-  <video-sort-order-dropdown current-sort="currentSort" dropdown-type="'movie'"/>
-</h1>
-
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-md-6">
+    <h1>
+      Movies <video-sort-order-dropdown current-sort="currentSort" dropdown-type="'movie'"/>
+    </h1>
+
     <input placeholder="{{searchText}}" type="text" ng-model="search" ng-change="doSearch(search)" class="form-control input-sm" />
+  </div>
+  <div class="col-md-6">
+    <br>
+    <div class="btn-group pull-right">
+      <button class="btn btn-primary" ng-click="createFromFiles()">Create from file(s)</button>
+      <button class="btn btn-primary" ng-click="openMovieModal()">Create new Movie</button>
+    </div>
   </div>
 </div>
 
