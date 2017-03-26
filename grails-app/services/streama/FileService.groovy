@@ -42,11 +42,11 @@ class FileService {
     }
 
 
-
+    FileInputStream fis
 
     //Read and write bytes of file incrementally into the outputstream
     try{
-      FileInputStream fis = new FileInputStream(rawFile) //391694394
+      fis = new FileInputStream(rawFile) //391694394
     }catch(e){
       response.setStatus(PRECONDITION_FAILED.value())
       render ([message: e.message] as JSON)
