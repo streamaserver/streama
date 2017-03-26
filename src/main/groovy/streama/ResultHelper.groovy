@@ -1,6 +1,7 @@
 package streama
 
 import org.apache.commons.logging.LogFactory
+import static javax.servlet.http.HttpServletResponse.SC_OK
 
 class ResultHelper {
 
@@ -16,7 +17,7 @@ class ResultHelper {
     ]
   }
 
-  public static  Map generateOkResult(statusCode, data){
+  public static  Map generateOkResult(statusCode = SC_OK, data = [:]){
     return [
         statusCode: statusCode,
         data: data
