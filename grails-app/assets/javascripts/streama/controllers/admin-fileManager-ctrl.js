@@ -32,6 +32,9 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 					_.remove($scope.files, {id: file.id});
 					_.remove($scope.files, {path: file.path});
           alertify.success('File deleted.');
+				}).error(function (err) {
+					console.log(err);
+					alertify.error('An error occured. ' + err.data);
 				});
 			}
 		})
