@@ -220,7 +220,7 @@ class FileController {
     }
 
     def localPath = Paths.get(uploadService.localPath)
-    def dirPath = localPath.resolve(path).toAbsolutePath()
+    def dirPath = localPath.resolve( uploadService.localPath + path).toAbsolutePath()
 
     if (!dirPath.startsWith(localPath)) {
       result.code = "FileNotInLocalPath"
