@@ -79,12 +79,13 @@ class FileService {
 
 
   def Map fullyRemoveFile(File file){
-    if(file.externalLink || file.localFile){
-      // External and local files are not deleted
+    if(!file){
+      return ResultHelper.generateErrorResult(SC_NOT_ACCEPTABLE, 'file', 'No valid file selected.')
+    }
+    if(file.localFile){
       return ResultHelper.generateErrorResult(SC_NOT_ACCEPTABLE, 'local', 'cant delete file associated with the File-Browser.')
     }
-    if(file.externalLink || file.localFile){
-      // External and local files are not deleted
+    if(file.externalLink){
       return ResultHelper.generateErrorResult(SC_NOT_ACCEPTABLE, 'external', 'cant delete file associated with an external Link.')
     }
     if(file.associatedVideosInclDeleted){

@@ -47,7 +47,7 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
       alertify.confirm(confirmText, function (confirmed) {
         if(confirmed){
           apiService.video.removeMultipleFilesFromDisk($scope.selectedFiles).success(function (response) {
-            _.forEach($scope.selectedFiles.forEach, function (id) {
+            _.forEach(response.successes, function (id) {
 								// TODO investigate why {id: id} doesn't work
 								_.remove($scope.files, function(file) {
 									return file.id === id;
