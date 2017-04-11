@@ -58,6 +58,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LANGUAGE_kr: '한국어',
 		LANGUAGE_nl: '네덜란드',
 		LANGUAGE_pt: '포르투갈어',
+    LANGUAGE_ja: '일본어',
 		
 		PROFIlE: {
 			USERNAME: '아이디',
