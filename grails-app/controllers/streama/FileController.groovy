@@ -77,21 +77,46 @@ class FileController {
     }
 
     if(file){
-      fileService.fullyRemoveFile(file)
-    } else if(path){
+      Map result = fileService.fullyRemoveFile(file)
+      if(result.error){
+        response.setStatus(result.statusCode)
+        render (result as JSON)
+        return
+      }else{
+        respond status: OK
+      }
+    }
+
+
+    else if(path){
       java.io.File rawFile = new java.io.File(path)
       rawFile.delete()
+      respond status: OK
     }
-    respond status: NO_CONTENT
   }
 
   def removeMultipleFilesFromDisk() {
     def idBulk = params.list('id').collect({it.toLong()})
+    def result = [
+        successes: [],
+        errors: []
+    ]
     idBulk.each { id ->
       def file = File.get(id)
-      fileService.fullyRemoveFile(file)
+      def individualResult =fileService.fullyRemoveFile(file)
+
+      if(individualResult.error){
+        result.errors.add(id)
+      }else{
+        result.successes.add(id)
+      }
     }
-    respond status: NO_CONTENT
+    if(result.successes.size() > 0){
+      response.setStatus(OK.value())
+    }else{
+      response.setStatus(NOT_ACCEPTABLE.value())
+    }
+    render (result as JSON)
   }
 
   def cleanUpFiles(){
@@ -195,7 +220,7 @@ class FileController {
     }
 
     def localPath = Paths.get(uploadService.localPath)
-    def dirPath = localPath.resolve(path).toAbsolutePath()
+    def dirPath = localPath.resolve( uploadService.localPath + path).toAbsolutePath()
 
     if (!dirPath.startsWith(localPath)) {
       result.code = "FileNotInLocalPath"

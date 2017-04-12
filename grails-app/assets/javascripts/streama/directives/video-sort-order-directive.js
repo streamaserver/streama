@@ -9,12 +9,8 @@ angular.module('streama').directive('videoSortOrderDropdown', [function () {
 				dropdownType: '='
 			},
 			link: function ($scope, $elem, $attrs) {
-				$scope.sortOrders = [
-					{sort: '-dateCreated', label: 'SORT_OPTIONS.NEWEST_ADDED'},
-					{sort: 'dateCreated', label: 'SORT_OPTIONS.OLDEST_ADDED'}
-				];
 
-				console.log('%c $scope.dropdownType', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', $scope.dropdownType);
+				$scope.sortOrders = [];
 
 				if($scope.dropdownType == 'movie'){
 					$scope.sortOrders = $scope.sortOrders.concat([
@@ -33,6 +29,11 @@ angular.module('streama').directive('videoSortOrderDropdown', [function () {
 						{sort: 'first_air_date', label: 'SORT_OPTIONS.OLDEST_AIRED'}
 					])
 				}
+
+				$scope.sortOrders = $scope.sortOrders.concat([
+					{sort: '-dateCreated', label: 'SORT_OPTIONS.NEWEST_ADDED'},
+					{sort: 'dateCreated', label: 'SORT_OPTIONS.OLDEST_ADDED'}
+				]);
 
 				$scope.setCurrentSort = function (sortOrder) {
 					$scope.currentSort = sortOrder;

@@ -45,6 +45,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/dash/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag.json',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/settings/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
 
   [pattern:'/genericVideo/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/genre/**',  access :['ROLE_CONTENT_MANAGER']],
