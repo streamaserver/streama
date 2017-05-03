@@ -12,11 +12,14 @@ h1,h2,h3,h4,h5,h6{
   float: left;
   padding: 6px 0;
   position: relative;
-  width: 170px;
   margin-right: 15px;
+  @include flexbox;
+  @include align-items(flex-end);
 
   img{
-    width: 130px;
+    max-width: 130px;
+    max-height: 31px;
+    margin-right: 10px;
   }
   i{
     font-size: 0.85em;
@@ -36,9 +39,6 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .version{
-  position: absolute;
-  top: 22px;
-  left: 137px;
   color: $primary;
   font-size: 10px;
 }

@@ -1,4 +1,4 @@
-# streama v1.0.11
+# streama v1.0.21
 
 
 [![Build Status](https://travis-ci.org/dularion/streama.svg?branch=master)](https://travis-ci.org/dularion/streama) [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/dularion/streama/blob/master/LICENSE.md) [![Join the chat at https://gitter.im/dularion/streama](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dularion/streama?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -24,11 +24,7 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 - [License](#license)
 
 # Getting Started
-- For the new v1.x, refer to [up and running with v1.x](https://github.com/dularion/streama/wiki/Getting-started-with-v1)
-
-- For local setup with v0.x (legacy), please refer to [Local Streama Setup](https://github.com/dularion/streama/wiki/Local-Streama-Setup)
-- For remote setup with v0.x (legacy), please refer to [Streama on a remote Ubuntu 14.04](https://github.com/dularion/streama/wiki/Setup-Streama-on-Ubuntu-14.04)
-- For developers with v0.x (legacy), please refer to [Streama for development](https://github.com/dularion/streama/wiki/Set-Up-Streama-for-Development)
+- [up and running with Streama](https://github.com/dularion/streama/wiki/Getting-started)
 
 # The Application
 
@@ -82,8 +78,7 @@ This application is web-based and is programmed with [Grails 2.4.4](https://grai
 
 The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can also just use the frontend components and add your own REST-API for handling all the data :)
 
-As an API for all the movies and shows I used the awesome API from theMovieDatabase.
-[![theMovieDatabase](https://d3a8mw37cqal2z.cloudfront.net/images/header_v2.png)](https://www.themoviedb.org/documentation/api)
+As an API for all the movies and shows I used the [awesome API](https://www.themoviedb.org/documentation/api) from [theMovieDatabase](https://www.themoviedb.org).
 
 # Changelog
 Please refer to [Change Log](https://github.com/dularion/streama/blob/master/CHANGELOG.md)

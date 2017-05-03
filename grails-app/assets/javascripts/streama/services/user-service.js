@@ -4,7 +4,7 @@ angular.module('streama').factory('userService', function ($rootScope, $translat
 	return {
 		setCurrentUser: function (data) {
 			$rootScope.currentUser = data;
-			$translate.use($rootScope.currentUser.language || 'en');
+			$translate.use(_.get($rootScope, 'currentUser.language') || 'en');
 		}
 	};
 });

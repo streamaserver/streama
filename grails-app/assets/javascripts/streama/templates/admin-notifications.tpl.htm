@@ -1,5 +1,7 @@
-<button class="pull-right btn btn-success btn-lg" ng-if="openNotificationAmount()" ng-click="sendCurrentNotifcation()">Send Current Notification Queue</button>
-<button class="pull-right btn btn-success btn-lg" ng-click="openNotificationModal()">Add to Email-Notification</button>
+<div class="pull-right">
+  <button class="btn btn-success" ng-if="openNotificationAmount()" ng-click="sendCurrentNotifcation()">Send Current Notification Queue</button>
+  <button class="btn btn-success" ng-click="openNotificationModal()">Add to Email-Notification</button>
+</div>
 
 <h1>Notification Queue</h1>
 

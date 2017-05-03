@@ -14,6 +14,14 @@ angular.module('streama').run(function ($rootScope, $state, localStorageService,
 		});
 	};
 
+	apiService.settings.list().success(function (data) {
+		$rootScope.settings = data;
+	});
+
+	$rootScope.getSetting = function (name) {
+		return _.find($rootScope.settings, {name: name}) || _.find($rootScope.settings, {settingsKey: name});
+	};
+
 	$rootScope.selectFromSearch = function (item) {
 		modalService.mediaDetailModal(item.id, item.mediaType);
 	};

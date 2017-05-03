@@ -12,14 +12,7 @@ angular.module('streama').config(function ($stateProvider) {
 			controller: 'dashCtrl',
 			reloadOnSearch: false,
 			resolve: {
-				currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
-					return apiService.currentUser().success(function (data) {
-						if (data) {
-							$rootScope.currentUser = data;
-							return data;
-						}
-					});
-				}]
+				currentUser: resolveCurrentUser
 			}
 		})
 
@@ -28,14 +21,7 @@ angular.module('streama').config(function ($stateProvider) {
 			templateUrl: '/streama/player.htm',
 			controller: 'playerCtrl',
 			resolve: {
-				currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
-					return apiService.currentUser().success(function (data) {
-						if (data) {
-							$rootScope.currentUser = data;
-							return data;
-						}
-					});
-				}]
+				currentUser: resolveCurrentUser
 			}
 		})
 
@@ -44,14 +30,7 @@ angular.module('streama').config(function ($stateProvider) {
 			templateUrl: '/streama/profile.htm',
 			controller: 'profileCtrl',
 			resolve: {
-				currentUser: ['apiService', '$rootScope', function (apiService, $rootScope) {
-					return apiService.currentUser().success(function (data) {
-						if (data) {
-							$rootScope.currentUser = data;
-							return data;
-						}
-					});
-				}]
+				currentUser: resolveCurrentUser
 			}
 		})
 
@@ -68,16 +47,7 @@ angular.module('streama').config(function ($stateProvider) {
 			templateUrl: '/streama/admin.htm',
 			controller: 'adminCtrl',
 			resolve: {
-				currentUser: ['apiService', '$rootScope', '$state', function (apiService, $rootScope, $state) {
-					return apiService.currentUser().success(function (data) {
-						if (data && data.authorities.length) {
-							$rootScope.currentUser = data;
-							return data;
-						} else {
-							$state.go('dash');
-						}
-					});
-				}]
+				currentUser: checkPermission
 			}
 		})
 		.state('admin.fileManager', {
@@ -111,16 +81,7 @@ angular.module('streama').config(function ($stateProvider) {
 			templateUrl: '/streama/admin-notifications.htm',
 			controller: 'adminNotificationsCtrl',
 			resolve: {
-				currentUser: ['apiService', '$rootScope', '$state', function (apiService, $rootScope, $state) {
-					return apiService.currentUser().success(function (data) {
-						if (data.isAdmin) {
-							$rootScope.currentUser = data;
-							return data;
-						} else {
-							$state.go('dash');
-						}
-					});
-				}]
+				currentUser: checkPermissionAdmin
 			}
 		})
 
@@ -148,16 +109,7 @@ angular.module('streama').config(function ($stateProvider) {
 			templateUrl: '/streama/settings-users.htm',
 			controller: 'settingsUsersCtrl',
 			resolve: {
-				currentUser: ['apiService', '$rootScope', '$state', function (apiService, $rootScope, $state) {
-					return apiService.currentUser().success(function (data) {
-						if (data && data.isAdmin) {
-							$rootScope.currentUser = data;
-							return data;
-						} else {
-							$state.go('dash');
-						}
-					});
-				}]
+				currentUser: checkPermissionAdmin
 			}
 		})
 		.state('settings.settings', {
@@ -165,16 +117,7 @@ angular.module('streama').config(function ($stateProvider) {
 			templateUrl: '/streama/settings-settings.htm',
 			controller: 'settingsSettingsCtrl',
 			resolve: {
-				currentUser: ['apiService', '$rootScope', '$state', function (apiService, $rootScope, $state) {
-					return apiService.currentUser().success(function (data) {
-						if (data.isAdmin) {
-							$rootScope.currentUser = data;
-							return data;
-						} else {
-							$state.go('dash');
-						}
-					});
-				}]
+				currentUser: checkPermissionAdmin
 			}
 		})
 
@@ -183,17 +126,51 @@ angular.module('streama').config(function ($stateProvider) {
 			templateUrl: '/streama/settings.htm',
 			controller: 'settingsCtrl',
 			resolve: {
-				currentUser: ['apiService', '$rootScope', '$state', function (apiService, $rootScope, $state) {
-					return apiService.currentUser().success(function (data) {
-						if (data && data.authorities.length) {
-							$rootScope.currentUser = data;
-							return data;
-						} else {
-							$state.go('dash');
-						}
-					});
-				}]
+				currentUser: checkPermission
 			}
 		});
+
+
+	function resolveCurrentUser(apiService, $rootScope) {
+		return apiService.currentUser().success(function (data) {
+			if(!data){
+				location.href = '/login/auth'
+			}
+
+			if (data) {
+				$rootScope.currentUser = data;
+				return data;
+			}
+		});
+	}
+
+	function checkPermissionAdmin(apiService, $rootScope, $state) {
+		return apiService.currentUser().success(function (data) {
+			if(!data){
+				location.href = '/login/auth'
+			}
+			if (data.isAdmin) {
+				$rootScope.currentUser = data;
+				return data;
+			} else {
+				$state.go('dash');
+			}
+		});
+	}
+
+	function checkPermission(apiService, $rootScope, $state) {
+		return apiService.currentUser().success(function (data) {
+			if(!data){
+				location.href = '/login/auth'
+			}
+			if (data && data.authorities.length) {
+				$rootScope.currentUser = data;
+				return data;
+			} else {
+				$state.go('dash');
+			}
+		});
+	}
+
 });
 

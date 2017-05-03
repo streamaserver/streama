@@ -60,7 +60,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LANGUAGE_pt: '포르투갈어',
     LANGUAGE_ja: '일본어',
     LANGUAGE_it: '이탈리아 사람',
-		
+    LANGUAGE_da: '덴마크 말',
 		PROFIlE: {
 			USERNAME: '아이디',
 			FULL_NAME: '이름',

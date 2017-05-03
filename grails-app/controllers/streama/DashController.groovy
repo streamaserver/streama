@@ -41,19 +41,41 @@ class DashController {
   }
 
 
-  def firstEpisodeForShow(TvShow tvShow){
-    Episode firstEpisode = tvShow.episodes?.find{it.files && it.season_number != "0"}
 
-    tvShow.episodes.each{ Episode episode ->
-      if((episode.season_number == firstEpisode?.season_number) && (episode.episode_number < firstEpisode?.episode_number) && episode.files){
-        firstEpisode = episode
-      }
-      else if(episode.season_number < firstEpisode?.season_number && episode.files && episode.season_number != "0"){
-        firstEpisode = episode
-      }
+  def listRecommendations(){
+    User currentUser = springSecurityService.currentUser
+    List<Video> result = []
+    def favoriteGenreNames = currentUser.favoriteGenres*.name
+
+    if(!favoriteGenreNames){
+      render status: NO_CONTENT
+      return
     }
+    def movies = Movie.where{
+      genre{
+        name in favoriteGenreNames
+      }
+      deleted != true
+    }.list().findAll{it.hasFiles()}
 
-    if(firstEpisode && firstEpisode.files){
+    def tvShows = TvShow.where{
+      genre{
+        name in favoriteGenreNames
+      }
+      episodes.size() > 0
+      deleted != true
+    }.list()
+    result = movies + tvShows*.firstEpisode
+
+    JSON.use ('dashViewingStatus') {
+      render (result as JSON)
+    }
+  }
+
+
+  def firstEpisodeForShow(TvShow tvShow){
+    Episode firstEpisode = tvShow.firstEpisode
+    if(firstEpisode){
       respond firstEpisode
     }else{
       respond status: NOT_FOUND
@@ -103,7 +125,7 @@ class DashController {
 
   def listNewReleases(){
     JSON.use('dashMovies'){
-      respond NotificationQueue.findAllByType('newRelease')
+      respond NotificationQueue.findAllByType('newRelease').sort{new Random(System.nanoTime())}
     }
   }
 }

@@ -16,6 +16,7 @@ class File {
   String externalLink
   String localFile
   String quality
+  Boolean isPublic = false
 
   static constraints = {
     sha256Hex maxSize: 64

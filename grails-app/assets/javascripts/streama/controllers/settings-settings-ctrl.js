@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiService', '$sce', function ($scope, apiService, $sce) {
+angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiService', '$sce', 'uploadService', function ($scope, apiService, $sce, uploadService) {
 
   apiService.settings.list().success(function (data) {
     $scope.settings = data;
@@ -13,7 +13,6 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 
   $scope.updateMultipleSettings = function (settings) {
     settings.invalid = false;
-
     apiService.settings.updateMultiple(settings)
       .success(function () {
         window.location.reload();
@@ -40,15 +39,29 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
   };
 
   $scope.changeValue = function (settings) {
-    settings.valid = undefined;
-    settings.invalid = undefined;
-    settings.dirty = settings.value;
+    if(settings.validationRequired === false){
+			settings.valid = true;
+			settings.invalid = false;
+    }else{
+			settings.valid = undefined;
+			settings.invalid = undefined;
+			settings.dirty = settings.value;
+    }
   };
+
+
+	$scope.uploadStatus = {};
+	$scope.upload = function (setting, files) {
+		uploadService.doUpload($scope.uploadStatus, 'file/upload.json?isPublic=true', function (data) {
+			$scope.uploadStatus.percentage = null;
+			setting.value = data.src;
+		}, files);
+	};
 
 
   $scope.anySettingsInvalid = function () {
     return _.find($scope.settings, function (setting) {
-        return setting.invalid || (setting.dirty && !setting.valid) || (!setting.value && setting.required);
+        return (setting.validationRequired !== false && (setting.invalid || (setting.dirty && !setting.valid) || (!setting.value && setting.required)));
    });
   };
 

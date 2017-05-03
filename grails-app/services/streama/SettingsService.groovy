@@ -1,6 +1,7 @@
 package streama
 
 import grails.transaction.Transactional
+import org.apache.commons.validator.routines.UrlValidator
 
 @Transactional
 class SettingsService {
@@ -14,6 +15,9 @@ class SettingsService {
   def validate(Settings settingsInstance) {
     def resultValue = [:]
 
+    if (settingsInstance.settingsKey == 'Base URL') {
+        validateURL(settingsInstance.value, resultValue)
+    }
     if (settingsInstance.settingsKey == 'Upload Directory') {
       validateUploadDirectoryPermissions(settingsInstance.value + '/upload', resultValue)
     }
@@ -52,6 +56,23 @@ class SettingsService {
     }
   }
 
+  def validateURL(String url, resultValue) {
+    try {
+      UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_LOCAL_URLS)
+      if (urlValidator.isValid(url)) {
+        resultValue.success = true
+        resultValue.message = "The entered url is valid."
+      } else {
+        resultValue.error = true
+        resultValue.message = "The entered url is invalid."
+      }
+    }
+    catch (Exception ex) {
+        log.error(ex.message)
+        resultValue.error = true;
+        resultValue.message = "The entered url is invalid."
+    }
+  }
 
   def validateTheMovieDbAPI(Settings settingsInstance, resultValue) {
     try {
@@ -67,5 +88,3 @@ class SettingsService {
   }
 
 }
-
-

@@ -4,7 +4,7 @@ model {
 	User user
 }
 
-json g.render(user){
+json g.render(user, [deep: true]){
 	authorities user.authorities?.collect{[id: it?.id]}
 	isAdmin (user?.authorities?.find{it.authority == 'ROLE_ADMIN'} ? true : false)
 	isContentManager (user?.authorities?.find{it.authority == 'ROLE_CONTENT_MANAGER'} ? true : false)

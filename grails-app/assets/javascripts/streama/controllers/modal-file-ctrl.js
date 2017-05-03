@@ -1,39 +1,49 @@
 'use strict';
 
 angular.module('streama').controller('modalFileCtrl', [
-  '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'video',
-  function ($scope, $uibModalInstance, apiService, uploadService, video) {
+  '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'video', 'localStorageService',
+  function ($scope, $uibModalInstance, apiService, uploadService, video, localStorageService) {
     $scope.loading = false;
     $scope.localFilesEnabled = false;
     $scope.localFiles = [];
-    $scope.localDir = [];
+    var localFileLastPath = localStorageService.get('localFileLastPath')|| '';
+		$scope.localDir = localFileLastPath.split('/') || [];
     $scope.video = video;
 
-    $scope.loadLocalFiles = function(path) {
-      apiService.file.localFiles(path).success(function(data) {
-        $scope.localFilesEnabled = true;
-        $scope.localFiles = data;
-      }).error(function(data) {
-        if (data.code == 'LocalFilesNotEnabled') {
-          $scope.localFilesEnabled = false;
-          return;
-        }
-        alertify.error(data.message);
-      });
-    };
-    $scope.loadLocalFiles('');
+    $scope.loadLocalFiles = loadLocalFiles;
+		$scope.backLocalDirectory = backLocalDirectory;
+		$scope.openLocalDirectory = openLocalDirectory;
 
-    $scope.backLocalDirectory = function() {
+
+		$scope.loadLocalFiles(localFileLastPath);
+
+
+
+		function loadLocalFiles(path) {
+			apiService.file.localFiles(path).success(function(data) {
+				localStorageService.set('localFileLastPath', path);
+				$scope.localFilesEnabled = true;
+				$scope.localFiles = data;
+			}).error(function(data) {
+				if (data.code == 'LocalFilesNotEnabled') {
+					$scope.localFilesEnabled = false;
+					return;
+				}
+				alertify.error(data.message);
+			});
+		}
+
+    function backLocalDirectory() {
       $scope.localFiles = [];
       $scope.localDir.pop();
       $scope.loadLocalFiles($scope.localDir.join('/'));
-    };
+    }
 
-    $scope.openLocalDirectory = function(dir) {
+    function openLocalDirectory(dir) {
       $scope.localFiles = [];
       $scope.localDir.push(dir.name);
       $scope.loadLocalFiles($scope.localDir.join('/'));
-    };
+    }
 
     $scope.addExternalUrl = function (externalUrl) {
       apiService.video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).success(function (data) {
