@@ -1450,7 +1450,8 @@ streama-video-player.nocursor {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: auto; }
+  width: auto;
+  margin-left: -48px; }
   .player-wrapper .spinner > div {
     background: #B0DDEF;
     width: 20px;
