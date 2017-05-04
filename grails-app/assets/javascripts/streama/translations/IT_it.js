@@ -112,8 +112,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			},
 			SUBTITLES: {
 				TITLE: 'Come posso aggiungere sottotitoli ai video?',
-				TEXT: "È possibile aggiungere i sottotitoli ai video facendo clic sul pulsante file che si trova nella pagina di informazioni del video Gestisci. È possibile trascinare e rilasciare i file di sottotitoli là ". +
-					  "In precedenza era necessario convertirli manualmente in un formato file compatibile, ma ora non più! Ora l'applicazione gestisce che per voi."
+				TEXT: "È possibile aggiungere i sottotitoli ai video facendo clic sul pulsante file che si trova nella pagina di informazioni del video Gestisci. È possibile trascinare e rilasciare i file di sottotitoli là " +
+					  "in precedenza era necessario convertirli manualmente in un formato file compatibile, ma ora non più! Ora l'applicazione gestisce che per voi."
 			},
 			INVITE_USERS: {
 				TITLE: 'Come posso invitare gli amici a guardare i miei video ospitati?',
