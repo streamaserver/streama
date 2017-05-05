@@ -219,6 +219,13 @@ function modalService($uibModal, $state) {
 		});
 	}
 
+	/**
+	 * opens mediaDetail Modal with Trailer, Genre, Description, Poster etc
+	 * @param config
+	 * 				config.mediaId    						Integer				The id of the media, will be queried from REST endpoint. Requires mediaType
+	 * 				config.mediaType    					String				The name of the mediaType, can be one of TvShow|Movie|GenericVideo. Requires mediaId
+	 * @param callback
+	 */
 	function mediaDetailModal (config, callback) {
 		$state.go('dash', {mediaModal: config.mediaId, mediaType: config.mediaType});
 
