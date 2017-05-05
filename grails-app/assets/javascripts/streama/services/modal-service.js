@@ -224,6 +224,7 @@ function modalService($uibModal, $state) {
 	 * @param config
 	 * 				config.mediaId    						Integer				The id of the media, will be queried from REST endpoint. Requires mediaType
 	 * 				config.mediaType    					String				The name of the mediaType, can be one of TvShow|Movie|GenericVideo. Requires mediaId
+	 * 				config.isEditButtonHidden    	Boolean				Determines, whether the edit-Button should be hidden or not
 	 * @param callback
 	 */
 	function mediaDetailModal (config, callback) {

@@ -6,6 +6,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 
 		var mediaType = config.mediaType;
 		var mediaId = config.mediaId;
+		$scope.isEditButtonHidden = config.isEditButtonHidden;
 
 		if(mediaId && mediaType){
 			console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
