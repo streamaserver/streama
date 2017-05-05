@@ -33,7 +33,9 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
-		$state.go('dash', {mediaModal: null, mediaType: null});
+		if($state.current.name === 'dash'){
+			$state.go('dash', {mediaModal: null, mediaType: null});
+		}
 	};
 
 	$scope.setCurrentSeason = function (index) {
