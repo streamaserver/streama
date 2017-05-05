@@ -7,25 +7,27 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 		var mediaType = config.mediaType;
 		var mediaId = config.mediaId;
 
-		console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
-		apiService[mediaType].get(mediaId).success(function (data) {
-			$scope.media = data;
+		if(mediaId && mediaType){
+			console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
+			apiService[mediaType].get(mediaId).success(function (data) {
+				$scope.media = data;
 
-			if(mediaType == 'tvShow'){
-				$scope.currentSeason = 0;
+				if(mediaType == 'tvShow'){
+					$scope.currentSeason = 0;
 
-				apiService.tvShow.episodesForTvShow($scope.media.id).success(function (data) {
-					if(data.length){
-						$scope.seasons = _.groupBy(data, 'season_number');
-						$scope.currentSeason = _.min(data, 'season_number').season_number;
-					}
-				});
+					apiService.tvShow.episodesForTvShow($scope.media.id).success(function (data) {
+						if(data.length){
+							$scope.seasons = _.groupBy(data, 'season_number');
+							$scope.currentSeason = _.min(data, 'season_number').season_number;
+						}
+					});
 
-				apiService.dash.firstEpisodeForShow($scope.media.id).success(function (data) {
-					$scope.firstEpisode = data;
-				});
-			}
-		});
+					apiService.dash.firstEpisodeForShow($scope.media.id).success(function (data) {
+						$scope.firstEpisode = data;
+					});
+				}
+			});
+		}
 
 
 
