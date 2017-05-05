@@ -219,8 +219,8 @@ function modalService($uibModal, $state) {
 		});
 	}
 
-	function mediaDetailModal (mediaId, mediaType, callback) {
-		$state.go('dash', {mediaModal: mediaId, mediaType: mediaType});
+	function mediaDetailModal (config, callback) {
+		$state.go('dash', {mediaModal: config.mediaId, mediaType: config.mediaType});
 
 		var modalInstance = $uibModal.open({
 			templateUrl: '/streama/modal--media-detail.htm',
@@ -228,10 +228,10 @@ function modalService($uibModal, $state) {
 			size: 'lg',
 			resolve: {
 				mediaId: function () {
-					return mediaId;
+					return config.mediaId;
 				},
 				mediaType: function () {
-					return mediaType;
+					return config.mediaType;
 				}
 			}
 		});
