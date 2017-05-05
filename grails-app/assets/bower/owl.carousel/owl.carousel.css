@@ -1,5 +1,5 @@
 /**
- * Owl Carousel v2.1.1
+ * Owl Carousel v2.2.0
  * Copyright 2013-2016 David Deutsch
  * Licensed under MIT (https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE)
  */
@@ -60,7 +60,7 @@
   .owl-carousel.owl-hidden {
     opacity: 0; }
   .owl-carousel.owl-refresh .owl-item {
-    display: none; }
+    visibility: hidden; }
   .owl-carousel.owl-drag .owl-item {
     -webkit-user-select: none;
     -moz-user-select: none;

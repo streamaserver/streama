@@ -1,35 +1,42 @@
 'use strict';
 
 angular.module('streama').controller('modalMediaDetailCtrl', [
-	'$scope', '$uibModalInstance', '$rootScope', 'mediaId', '$state', 'apiService', 'mediaType',
-	function ($scope, $uibModalInstance, $rootScope, mediaId, $state, apiService, mediaType) {
+	'$scope', '$uibModalInstance', '$rootScope', 'config', '$state', 'apiService',
+	function ($scope, $uibModalInstance, $rootScope, config, $state, apiService) {
 
-	console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
+		var mediaType = config.mediaType;
+		var mediaId = config.mediaId;
+		$scope.isEditButtonHidden = config.isEditButtonHidden;
 
-		apiService[mediaType].get(mediaId).success(function (data) {
-			$scope.media = data;
+		if(mediaId && mediaType){
+			console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
+			apiService[mediaType].get(mediaId).success(function (data) {
+				$scope.media = data;
 
-			if(mediaType == 'tvShow'){
-				$scope.currentSeason = 0;
+				if(mediaType == 'tvShow'){
+					$scope.currentSeason = 0;
 
-				apiService.tvShow.episodesForTvShow($scope.media.id).success(function (data) {
-					if(data.length){
-						$scope.seasons = _.groupBy(data, 'season_number');
-						$scope.currentSeason = _.min(data, 'season_number').season_number;
-					}
-				});
+					apiService.tvShow.episodesForTvShow($scope.media.id).success(function (data) {
+						if(data.length){
+							$scope.seasons = _.groupBy(data, 'season_number');
+							$scope.currentSeason = _.min(data, 'season_number').season_number;
+						}
+					});
 
-				apiService.dash.firstEpisodeForShow($scope.media.id).success(function (data) {
-					$scope.firstEpisode = data;
-				});
-			}
-		});
+					apiService.dash.firstEpisodeForShow($scope.media.id).success(function (data) {
+						$scope.firstEpisode = data;
+					});
+				}
+			});
+		}
 
 
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
-		$state.go('dash', {mediaModal: null, mediaType: null});
+		if($state.current.name === 'dash'){
+			$state.go('dash', {mediaModal: null, mediaType: null});
+		}
 	};
 
 	$scope.setCurrentSeason = function (index) {

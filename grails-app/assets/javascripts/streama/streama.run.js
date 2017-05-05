@@ -23,7 +23,7 @@ angular.module('streama').run(function ($rootScope, $state, localStorageService,
 	};
 
 	$rootScope.selectFromSearch = function (item) {
-		modalService.mediaDetailModal(item.id, item.mediaType);
+		modalService.mediaDetailModal({mediaId: item.id, mediaType: item.mediaType});
 	};
 
 

@@ -120,7 +120,10 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
     file: {
       localFiles: function(path) {
         return $http.get('file/localFiles.json', {params: {path: path}});
-      }
+      },
+			matchMetaDataFromFiles: function (files) {
+				return $http.post('file/matchMetaDataFromFiles.json', {files: files});
+			}
     },
 
 		episode: {
