@@ -227,11 +227,8 @@ function modalService($uibModal, $state) {
 			controller: 'modalMediaDetailCtrl as vm',
 			size: 'lg',
 			resolve: {
-				mediaId: function () {
-					return config.mediaId;
-				},
-				mediaType: function () {
-					return config.mediaType;
+				config: function () {
+					return config;
 				}
 			}
 		});

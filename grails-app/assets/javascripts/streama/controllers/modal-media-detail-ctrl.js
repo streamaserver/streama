@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('streama').controller('modalMediaDetailCtrl', [
-	'$scope', '$uibModalInstance', '$rootScope', 'mediaId', '$state', 'apiService', 'mediaType',
-	function ($scope, $uibModalInstance, $rootScope, mediaId, $state, apiService, mediaType) {
+	'$scope', '$uibModalInstance', '$rootScope', 'config', '$state', 'apiService',
+	function ($scope, $uibModalInstance, $rootScope, config, $state, apiService) {
 
-	console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
+		var mediaType = config.mediaType;
+		var mediaId = config.mediaId;
 
+		console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
 		apiService[mediaType].get(mediaId).success(function (data) {
 			$scope.media = data;
 
