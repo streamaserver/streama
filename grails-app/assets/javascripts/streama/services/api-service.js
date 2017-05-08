@@ -120,7 +120,10 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
     file: {
       localFiles: function(path) {
         return $http.get('file/localFiles.json', {params: {path: path}});
-      }
+      },
+			matchMetaDataFromFiles: function (files) {
+				return $http.post('file/matchMetaDataFromFiles.json', {files: files});
+			}
     },
 
 		episode: {
@@ -142,6 +145,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			get: function (id) {
 				return $http.get('movie/show.json', {params: {id: id}});
 			},
+      getsimilar: function (id) {
+        return $http.get('movie/getsimilar.json', {params: {id: id}});
+      },
 			save: function (data) {
 				return $http.post('movie/save.json', data);
 			},
@@ -189,7 +195,6 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('genre.json');
 			}
 		},
-
 
     settings: {
 			list: function () {

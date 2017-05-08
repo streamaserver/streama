@@ -8,7 +8,7 @@
     </div>
     <div class="col-xs-2">
       <div class="pull-right">
-        <button ng-if="currentUser.isContentManager" class="btn btn-primary btn-xs pull-left" style="margin-right: 15px;" ng-click="editMedia(media)">edit</button>
+        <button ng-if="currentUser.isContentManager && !isEditButtonHidden" class="btn btn-primary btn-xs pull-left" style="margin-right: 15px;" ng-click="editMedia(media)">edit</button>
         <i class="ion-close pull-left" ng-click="cancel()"></i>
       </div>
     </div>

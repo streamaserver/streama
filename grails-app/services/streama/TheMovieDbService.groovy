@@ -20,10 +20,23 @@ class TheMovieDbService {
 
 
   def getSimilarMovies(movieId){
-    def JsonContent = new URL(BASE_URL + "/movie/$movieId/similar?api_key=$API_KEY").text
-    return new JsonSlurper().parseText(JsonContent)
+    def JsonContent_similar = new URL(BASE_URL + "/movie/$movieId/similar?api_key=$API_KEY").text
+    def json_similar = new JsonSlurper().parseText(JsonContent_similar)
+    for(item in json_similar.results ){
+          def JsonContent_trailer = new URL(BASE_URL + "/movie/$item.id/videos?api_key=$API_KEY").text
+          def json_trailer = new JsonSlurper().parseText(JsonContent_trailer)
+          item << [mediatype: "Movie"]
+          item << [test:  "success"]
+          def videokey = ""
+          for(videoItem in json_trailer.results)
+          {
+            videokey = videoItem.key
+          }
+          item << [trailerKey: videokey]
+    }
+    String strList = new groovy.json.JsonBuilder(json_similar).toString()
+    return new JsonSlurper().parseText(strList)
   }
-
 
   def getExternalLinks(showId){
     def JsonContent = new URL(BASE_URL + "/tv/$showId/external_ids?api_key=$API_KEY").text

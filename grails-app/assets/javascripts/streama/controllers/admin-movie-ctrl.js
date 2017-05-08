@@ -1,16 +1,34 @@
 
 
 angular.module('streama').controller('adminMovieCtrl', [
-	'$scope', 'apiService', '$stateParams', 'modalService', '$state', 'uploadService',
+	'$scope',   'apiService', '$stateParams', 'modalService', '$state', 'uploadService',
 	function ($scope, apiService, $stateParams, modalService, $state, uploadService) {
     $scope.loading = true;
-
+    $scope.loading_similiar = true;
 		apiService.movie.get($stateParams.movieId).success(function (data) {
 			$scope.movie = data;
       $scope.loading = false;
 			$scope.highlightOnDashboard = modalService.newReleaseModal.bind(modalService, $scope.movie,'movie');
+      if($scope.movie.hasOwnProperty('apiId')){//if the data came from moviedb
+        $scope.loadsimilar()
+      }
+      else{
+        $scope.loading_similiar = false;
+        $state.go('admin.movie');
+      }
 		});
 
+    $scope.loadsimilar= function () {
+      apiService.movie.getsimilar($stateParams.movieId).success(function (data) {
+        $scope.loading_similiar = false;
+        $scope.movie.similarMovies = data;
+        $state.go('admin.movie');
+      });
+    };
+    $scope.showDetails = function (media) {
+      $scope.media = media;
+      modalService.mediaDetailModal({isEditButtonHidden: true,mediaId: media.id, mediaType: media.mediaType, mediaObject: media});
+    };
     $scope.openMovieModal = function () {
       modalService.movieModal($scope.movie, function (data) {
         angular.merge($scope.movie, data)
