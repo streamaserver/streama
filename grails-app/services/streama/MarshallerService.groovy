@@ -595,6 +595,8 @@ class MarshallerService {
           returnArray['release_date'] = video.release_date
           returnArray['backdrop_path'] = video.backdrop_path
           returnArray['poster_path'] = video.poster_path
+          returnArray['trailerKey'] = video.trailerKey
+
         }
         if(video instanceof GenericVideo){
           returnArray['title'] = video.title
