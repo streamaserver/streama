@@ -88,7 +88,7 @@ class MarshallerService {
       returnArray['popularity'] = movie.popularity
       returnArray['imdb_id'] = movie.imdb_id
       returnArray['poster_image_src'] = movie.poster_image?.src
-
+      returnArray['trailerKey'] = movie.trailerKey
       returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
       returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
 
@@ -406,8 +406,8 @@ class MarshallerService {
         returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
         returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
         returnArray['poster_image_src'] = movie.poster_image?.src
-
-        if(movie.apiId){
+        if(movie.apiId)
+        {
           returnArray['similarMovies'] = movie.similarMovies
         }
         returnArray['tags'] = movie.tags
@@ -595,6 +595,7 @@ class MarshallerService {
           returnArray['release_date'] = video.release_date
           returnArray['backdrop_path'] = video.backdrop_path
           returnArray['poster_path'] = video.poster_path
+          returnArray['trailerKey'] = video.trailerKey
         }
         if(video instanceof GenericVideo){
           returnArray['title'] = video.title

@@ -1,6 +1,7 @@
 package streama
 
 import grails.converters.JSON
+import groovy.json.JsonSlurper
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -51,5 +52,12 @@ class MovieController {
     movieInstance.deleted = true
     movieInstance.save failOnError: true, flush: true
     render status: NO_CONTENT
+  }
+
+  def getsimilar(){
+    def movieId = params.id
+    Movie movie = Movie.get(movieId)
+    def similarMovies = movie.getSimilarMovies()
+    render(similarMovies.results as JSON)
   }
 }

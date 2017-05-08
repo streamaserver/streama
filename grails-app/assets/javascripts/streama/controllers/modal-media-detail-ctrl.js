@@ -7,8 +7,8 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 		var mediaType = config.mediaType;
 		var mediaId = config.mediaId;
 		$scope.isEditButtonHidden = config.isEditButtonHidden;
+		if(mediaId && mediaType && $state.current.name != "admin.movie"){
 
-		if(mediaId && mediaType){
 			console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
 			apiService[mediaType].get(mediaId).success(function (data) {
 				$scope.media = data;
@@ -29,6 +29,10 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 				}
 			});
 		}
+		else if ($state.current.name == "admin.movie")
+    {
+      $scope.media = config.mediaObject
+    }
 
 
 

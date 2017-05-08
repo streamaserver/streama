@@ -225,11 +225,11 @@ function modalService($uibModal, $state) {
 	 * 				config.mediaId    						Integer				The id of the media, will be queried from REST endpoint. Requires mediaType
 	 * 				config.mediaType    					String				The name of the mediaType, can be one of TvShow|Movie|GenericVideo. Requires mediaId
 	 * 				config.isEditButtonHidden    	Boolean				Determines, whether the edit-Button should be hidden or not
+   * 			  mediaObject	                  Object        The media object
 	 * @param callback
 	 */
 	function mediaDetailModal (config, callback) {
-		$state.go('dash', {mediaModal: config.mediaId, mediaType: config.mediaType});
-
+		$state.go($state.current.name, {isEditButtonHidden: true, mediaModal: config.mediaId, mediaType: config.mediaType, mediaObject: config.mediaObject});
 		var modalInstance = $uibModal.open({
 			templateUrl: '/streama/modal--media-detail.htm',
 			controller: 'modalMediaDetailCtrl as vm',
