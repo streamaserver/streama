@@ -142,6 +142,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			get: function (id) {
 				return $http.get('movie/show.json', {params: {id: id}});
 			},
+      getsimilar: function (id) {
+        return $http.get('movie/getsimilar.json', {params: {id: id}});
+      },
 			save: function (data) {
 				return $http.post('movie/save.json', data);
 			},

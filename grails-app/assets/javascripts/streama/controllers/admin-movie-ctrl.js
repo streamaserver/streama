@@ -9,11 +9,27 @@ angular.module('streama').controller('adminMovieCtrl', [
 			$scope.movie = data;
       $scope.loading = false;
 			$scope.highlightOnDashboard = modalService.newReleaseModal.bind(modalService, $scope.movie,'movie');
-		});
+      if($scope.movie.hasOwnProperty('apiId')){//if the data came from moviedb
+        $scope.loadsimilar()
+      }
+      else{
+        $scope.loading_similiar = false;
+        $state.go('admin.movie');
+      }
 
-    $scope.openMovieModal = function () {
+    });
+
+    $scope.loadsimilar= function () {
+      apiService.movie.getsimilar($stateParams.movieId).success(function (data) {
+        $scope.loading_similiar = false;
+        $scope.movie.similarMovies = data;
+        $state.go('admin.movie');
+      });
+    };
+
+      $scope.openMovieModal = function () {
       modalService.movieModal($scope.movie, function (data) {
-        angular.merge($scope.movie, data)
+        angular.merge($scope.movie, data);
       });
     };
 
