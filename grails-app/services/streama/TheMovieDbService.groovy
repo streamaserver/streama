@@ -22,11 +22,11 @@ class TheMovieDbService {
   def getSimilarMovies(movieId){
     def JsonContent_similar = new URL(BASE_URL + "/movie/$movieId/similar?api_key=$API_KEY").text
     def json_similar = new JsonSlurper().parseText(JsonContent_similar)
-    json_similar.results.each { item ->
+    json_similar?.results?.each { item ->
       def JsonContent_trailer = new URL(BASE_URL + "/movie/$item.id/videos?api_key=$API_KEY").text
       def json_trailer = new JsonSlurper().parseText(JsonContent_trailer)
       item.mediatype = "Movie"
-      if(json_trailer.results[0] != null) {item.trailerKey = json_trailer.results[0].key}
+      item.trailerKey = json_trailer?.results[0]?.key
     }
     return json_similar
   }
