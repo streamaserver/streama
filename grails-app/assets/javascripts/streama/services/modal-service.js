@@ -212,10 +212,11 @@ angular.module('streama').factory('modalService', ['$uibModal', '$state', functi
      * 				config.mediaType    					String				The name of the mediaType, can be one of TvShow|Movie|GenericVideo. Requires mediaId
      * 				config.isEditButtonHidden    	Boolean				Determines, whether the edit-Button should be hidden or not
      * 			  mediaObject	                  Object        The media object
+     * 			  isApiMovie                    Boolean       Determines, if the movie is api-based or if it exists locally
      * @param callback
      */
 		mediaDetailModal: function (config, callback) {
-			$state.go($state.current.name, {isEditButtonHidden: true, mediaModal: config.mediaId, mediaType: config.mediaType});
+			$state.go($state.current.name, {isApiMovie: config.isApiMovie, isEditButtonHidden: true, mediaModal: config.mediaId, mediaType: config.mediaType});
 
 			var modalInstance = $uibModal.open({
 				templateUrl: '/streama/modal--media-detail.htm',

@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <a class="icon-play ion-android-arrow-dropright-circle" ui-sref="player({videoId: (firstEpisode.id || media.id)})"></a>
+  <a ng-if="!media.isApiMovie" class="icon-play ion-android-arrow-dropright-circle" ui-sref="player({videoId: (firstEpisode.id || media.id)})">{{isApiMovie}}</a>
 
 
   <hr>

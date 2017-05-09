@@ -10,7 +10,7 @@ angular.module('streama').controller('adminMovieCtrl', [
       $scope.loading = false;
 			$scope.highlightOnDashboard = modalService.newReleaseModal.bind(modalService, $scope.movie,'movie');
       if($scope.movie.hasOwnProperty('apiId')){//if the data came from moviedb
-        $scope.loadsimilar()
+        $scope.loadsimilar();
       }
       else{
         $scope.loading_similiar = false;
@@ -28,7 +28,7 @@ angular.module('streama').controller('adminMovieCtrl', [
 
     $scope.showDetails = function (media) {
       $scope.media = media;
-      modalService.mediaDetailModal({isEditButtonHidden: true,mediaId: media.id, mediaType: media.mediaType, mediaObject: media});
+      modalService.mediaDetailModal({isEditButtonHidden: true,mediaId: media.id, mediaType: media.mediaType, mediaObject: media, isApiMovie: true});
     };
 
 
