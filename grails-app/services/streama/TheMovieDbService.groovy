@@ -28,8 +28,7 @@ class TheMovieDbService {
       item.mediatype = "Movie"
       item.trailerKey = json_trailer.results[0].key
     }
-    String strList = new groovy.json.JsonBuilder(json_similar).toString()
-    return new JsonSlurper().parseText(strList)
+    return json_similar
   }
 
 
