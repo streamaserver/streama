@@ -8,8 +8,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     var mediaId = config.mediaId;
     $scope.isEditButtonHidden = config.isEditButtonHidden;
 
-    if(angular.isDefined(config.mediaObject) === true)
-    {
+    if(config.mediaObject) {
       $scope.media = config.mediaObject;
       $scope.media.isApiMovie = config.isApiMovie;
     }
@@ -33,9 +32,8 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
         }
       });
     }
-    else if(angular.isDefined(config.mediaObject) == false && angular.isDefined(mediaId) == true && angular.isDefined(mediaType) == true )
-    {
-      alertify.success('No data available');
+    else if(!config.mediaObject && !mediaId && !mediaType) {
+      alertify.error('No data available');
     }
     $scope.cancel = function () {
       $uibModalInstance.dismiss('cancel');
