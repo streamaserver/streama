@@ -10,7 +10,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 
     if(config.mediaObject) {
       $scope.media = config.mediaObject;
-      $scope.media.isApiMovie = config.isApiMovie;
+      $scope.isApiMovie = config.isApiMovie;
     }
     else if(mediaId && mediaType){
 
