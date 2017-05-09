@@ -8,7 +8,12 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     var mediaId = config.mediaId;
     $scope.isEditButtonHidden = config.isEditButtonHidden;
 
-    if(mediaId && mediaType && $state.current.name != "admin.movie"){
+    if(angular.isDefined(config.mediaObject) === true)
+    {
+      $scope.media = config.mediaObject;
+      $scope.media.isApiMovie = config.isApiMovie;
+    }
+    else if(mediaId && mediaType){
 
       console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
       apiService[mediaType].get(mediaId).success(function (data) {
@@ -16,27 +21,22 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 
         if(mediaType == 'tvShow'){
           $scope.currentSeason = 0;
-
           apiService.tvShow.episodesForTvShow($scope.media.id).success(function (data) {
             if(data.length){
               $scope.seasons = _.groupBy(data, 'season_number');
               $scope.currentSeason = _.min(data, 'season_number').season_number;
             }
           });
-
           apiService.dash.firstEpisodeForShow($scope.media.id).success(function (data) {
             $scope.firstEpisode = data;
           });
         }
       });
     }
-    else if ($state.current.name === 'admin.movie')
+    else if(angular.isDefined(config.mediaObject) == false && angular.isDefined(mediaId) == true && angular.isDefined(mediaType) == true )
     {
-      $scope.media = config.mediaObject;
+      alertify.success('No data available');
     }
-    $scope.media.isApiMovie = config.isApiMovie;
-
-
     $scope.cancel = function () {
       $uibModalInstance.dismiss('cancel');
       if($state.current.name === 'dash'){
@@ -44,11 +44,9 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 
       }
 	};
-
 	$scope.setCurrentSeason = function (index) {
 		$scope.currentSeason = index;
 	};
-
 	$scope.editMedia = function (media) {
 		if($rootScope.currentUser.isContentManager){
 			console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', media);
