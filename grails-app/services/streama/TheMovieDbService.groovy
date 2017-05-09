@@ -20,15 +20,15 @@ class TheMovieDbService {
 
 
   def getSimilarMovies(movieId){
-    def JsonContent_similar = new URL(BASE_URL + "/movie/$movieId/similar?api_key=$API_KEY").text
-    def json_similar = new JsonSlurper().parseText(JsonContent_similar)
-    json_similar?.results?.each { item ->
-      def JsonContent_trailer = new URL(BASE_URL + "/movie/$item.id/videos?api_key=$API_KEY").text
-      def json_trailer = new JsonSlurper().parseText(JsonContent_trailer)
-      item.mediatype = "Movie"
-      item.trailerKey = json_trailer?.results[0]?.key
+    def JsonContentSimilarMovies = new URL(BASE_URL + "/movie/$movieId/similar?api_key=$API_KEY").text
+    def JsonSimilarMovies = new JsonSlurper().parseText(JsonContentSimilarMovies)
+    JsonSimilarMovies?.results?.each { SimilarMovie ->
+      def JsonContentTrailer = new URL(BASE_URL + "/movie/$SimilarMovie.id/videos?api_key=$API_KEY").text
+      def JsonTrailerData = new JsonSlurper().parseText(JsonContentTrailer)
+      SimilarMovie.mediatype = "Movie"
+      SimilarMovie.trailerKey = JsonTrailerData?.results[0]?.key
     }
-    return json_similar
+    return JsonSimilarMovies
   }
 
   def getExternalLinks(showId){
