@@ -4,7 +4,7 @@ angular.module('streama').controller('adminMovieCtrl', [
 	'$scope', 'apiService', '$stateParams', 'modalService', '$state', 'uploadService',
 	function ($scope, apiService, $stateParams, modalService, $state, uploadService) {
     $scope.loading = true;
-
+    $scope.loading_similiar = true;
 		apiService.movie.get($stateParams.movieId).success(function (data) {
 			$scope.movie = data;
       $scope.loading = false;
@@ -16,7 +16,6 @@ angular.module('streama').controller('adminMovieCtrl', [
         $scope.loading_similiar = false;
         $state.go('admin.movie');
       }
-
     });
 
     $scope.loadsimilar= function () {
