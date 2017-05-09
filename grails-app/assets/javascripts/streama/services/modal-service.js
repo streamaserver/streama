@@ -211,8 +211,8 @@ angular.module('streama').factory('modalService', ['$uibModal', '$state', functi
      * 				config.mediaId    						Integer				The id of the media, will be queried from REST endpoint. Requires mediaType
      * 				config.mediaType    					String				The name of the mediaType, can be one of TvShow|Movie|GenericVideo. Requires mediaId
      * 				config.isEditButtonHidden    	Boolean				Determines, whether the edit-Button should be hidden or not
-     * 			  mediaObject	                  Object        The media object
-     * 			  isApiMovie                    Boolean       Determines, if the movie is api-based or if it exists locally
+     * 			  config.mediaObject	          Object        The media object
+     * 			  config.isApiMovie             Boolean       Determines, if the movie is api-based or if it exists locally
      * @param callback
      */
 		mediaDetailModal: function (config, callback) {
