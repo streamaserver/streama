@@ -26,7 +26,13 @@ angular.module('streama').controller('adminMovieCtrl', [
       });
     };
 
-      $scope.openMovieModal = function () {
+    $scope.showDetails = function (media) {
+      $scope.media = media;
+      modalService.mediaDetailModal({isEditButtonHidden: true,mediaId: media.id, mediaType: media.mediaType, mediaObject: media});
+    };
+
+
+    $scope.openMovieModal = function () {
       modalService.movieModal($scope.movie, function (data) {
         angular.merge($scope.movie, data);
       });
