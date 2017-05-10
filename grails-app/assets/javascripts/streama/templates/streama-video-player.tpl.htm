@@ -132,6 +132,7 @@
       <div class="player-control-button player-fill-screen ion-android-wifi" ng-if="options.showSocketSession" ng-click="createNewPlayerSession()"></div>
 
       <div class="player-control-button player-fill-screen ion-android-textsms" ng-if="options.videoTrack" ng-class="{'inactive': !isTextTrackVisible}" ng-click="toggleTextTrack()"></div>
+      <div class="player-control-button player-fill-screen ion-android-globe" ng-if="options.videoTrack" ng-click="selectSubtitle()"></div>
 
       <div class="player-control-button player-fill-screen"
            ng-click="fullScreen()" ng-class="{'ion-arrow-shrink': isFullScreen, 'ion-arrow-expand': !isFullScreen}"></div>

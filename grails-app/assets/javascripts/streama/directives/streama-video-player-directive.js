@@ -28,6 +28,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				$scope.toggleSelectEpisodes = toggleSelectEpisodes;
 				$scope.createNewPlayerSession = createNewPlayerSession;
         $scope.toggleTextTrack = toggleTextTrack;
+        $scope.selectSubtitle = selectSubtitle;
         $scope.playerVolumeToggle = playerVolumeToggle;
 				$scope.play = play;
 				$scope.pause = pause;
@@ -339,6 +340,11 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						video.textTracks[0].mode = "hidden";
 					}
 				}
+
+        function selectSubtitle() {
+
+        }
+
 
 				//Changes the video player's volume. Takes the changing amount as a parameter.
 				function changeVolume(amount) {
