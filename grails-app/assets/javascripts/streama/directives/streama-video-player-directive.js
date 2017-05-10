@@ -342,7 +342,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				}
 
         function selectSubtitle() {
-
+          $scope.multipleSubtitleBrowser = !$scope.multipleSubtitleBrowser;
         }
 
 
