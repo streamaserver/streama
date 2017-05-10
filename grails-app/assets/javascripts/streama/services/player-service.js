@@ -44,6 +44,7 @@ angular.module('streama').factory('playerService',
 
         if(video.subtitles && video.subtitles.length){
           videoOptions.videoTrack = $sce.trustAsResourceUrl(video.subtitles[0].src);
+          videoOptions.subtitles = video.subtitles
         }
 
         videoOptions.isExternalLink = video.files[0].externalLink;
