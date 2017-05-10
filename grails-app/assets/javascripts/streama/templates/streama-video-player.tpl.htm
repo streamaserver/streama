@@ -147,7 +147,7 @@
   </div>
 
   <video ng-if="isInitialized" id="video" ng-src="{{options.videoSrc}}" type="{{options.videoType}}" ng-click="clickVideo()" >
-    <track ng-repeat="subtitle in options.subtitles" ng-if="options.videoTrack" ng-src={{subtitle.src}} kind="subtitles" srclang="en" label="English" class="ng-scope" src={{subtitle.src}}>
+    <track ng-repeat="subtitle in options.subtitles" ng-if="options.videoTrack" ng-src={{subtitle.src}} kind="subtitles" srclang={{subtitle.subtitleSrcLang}} label={{subtitle.subtitleLabel}} class="ng-scope" src={{subtitle.src}}>
   </video>
 
 </div>
