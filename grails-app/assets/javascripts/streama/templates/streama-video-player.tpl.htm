@@ -135,9 +135,8 @@
 
       <div  class="player-menu" ng-show="multipleSubtitleBrowser">
         <ul>
-          <li class="season" ng-click=""
-              ng-repeat="subtitle in options.subtitles">
-            <span>  {{subtitle.originalFilename}}</span>
+          <li class="season" ng-click="" ng-repeat="subtitle in options.subtitles">
+            <span ng-click="changeSubtitle(subtitle)">  {{subtitle.originalFilename}}</span>
           </li>
         </ul>
       </div>
