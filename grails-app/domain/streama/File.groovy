@@ -15,6 +15,8 @@ class File {
   Long size
   String externalLink
   String localFile
+  String subtitleLabel
+  String subtitleSrcLang
   String quality
   Boolean isPublic = false
 

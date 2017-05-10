@@ -51,6 +51,9 @@ class MarshallerService {
       returnArray['size'] = file.size
       returnArray['dateCreated'] = file.dateCreated
       returnArray['quality'] = file.quality
+      returnArray['subtitleLabel'] = file.subtitleLabel
+      returnArray['subtitleSrcLang'] = file.subtitleSrcLang
+
 
       return returnArray;
     }
