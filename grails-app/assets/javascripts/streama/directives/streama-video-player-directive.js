@@ -347,7 +347,16 @@ angular.module('streama').directive('streamaVideoPlayer', [
         }
 
         function changeSubtitle(subtitle) {
-          //placeholder
+          _.forEach(video.textTracks, function(value, key) {
+            if(value.language !== subtitle.subtitleSrcLang)
+            {
+              value.mode = 'hidden';
+            }
+            else if(value.language === subtitle.subtitleSrcLang)
+            {
+              value.mode = 'showing';
+            }
+          });
         }
 
 				//Changes the video player's volume. Takes the changing amount as a parameter.
