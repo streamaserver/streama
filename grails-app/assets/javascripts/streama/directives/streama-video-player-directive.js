@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').directive('streamaVideoPlayer', [
-  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http',
-  function (uploadService, localStorageService, $timeout, playerService, $http) {
+  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce',
+  function (uploadService, localStorageService, $timeout, playerService, $http, $sce) {
 
     return {
       restrict: 'AE',
@@ -29,6 +29,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				$scope.createNewPlayerSession = createNewPlayerSession;
         $scope.toggleTextTrack = toggleTextTrack;
         $scope.selectSubtitle = selectSubtitle;
+        $scope.changeSubtitle = changeSubtitle;
         $scope.playerVolumeToggle = playerVolumeToggle;
 				$scope.play = play;
 				$scope.pause = pause;
@@ -345,6 +346,9 @@ angular.module('streama').directive('streamaVideoPlayer', [
           $scope.multipleSubtitleBrowser = !$scope.multipleSubtitleBrowser;
         }
 
+        function changeSubtitle(subtitle) {
+          //placeholder
+        }
 
 				//Changes the video player's volume. Takes the changing amount as a parameter.
 				function changeVolume(amount) {
