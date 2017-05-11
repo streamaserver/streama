@@ -96,7 +96,9 @@ angular.module('streama').controller('modalFileCtrl', [
     };
 
     $scope.saveChanges = function (file) {
-    alert("placeholder");
+      apiService.file.save(file).success(function (data) {
+        alertify.success('File successfully saved.');
+      });
     };
 
 

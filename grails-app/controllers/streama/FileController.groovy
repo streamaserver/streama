@@ -1,6 +1,7 @@
 package streama
 
 import grails.converters.JSON
+import grails.transaction.Transactional
 
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -241,4 +242,24 @@ class FileController {
 
     render response as JSON
   }
+
+
+  def save(File file) {
+
+    if (file == null) {
+      render status: NOT_FOUND
+      return
+    }
+
+    file.validate()
+
+    if (file.hasErrors()) {
+      render status: NOT_ACCEPTABLE
+      return
+    }
+
+    file.save flush: true
+    respond file, [status: CREATED]
+  }
+
 }
