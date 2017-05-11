@@ -331,14 +331,26 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				function createNewPlayerSession() {
 					$scope.options.onSocketSessionCreate();
 				}
-
+        //bei hidden wirklich alle verstecken, und bei showing nur den anzeigen, der auch wirklich angezeigt werden soll, nicht immer index 0
 				function toggleTextTrack() {
+          console.log($scope.selectedLanguage);
 					$scope.isTextTrackVisible = !$scope.isTextTrackVisible;
 
 					if($scope.isTextTrackVisible){
-						video.textTracks[0].mode = "showing";
+					  _.forEach(video.textTracks, function(value, key) {
+					    if($scope.selectedLanguage){
+                if(value.language === $scope.selectedLanguage) {
+                  value.mode = 'showing';
+                }
+              }
+              else{
+                video.textTracks[0].mode = 'showing';
+              }
+            });
 					}else{
-						video.textTracks[0].mode = "hidden";
+            _.forEach(video.textTracks, function(value, key) {
+                value.mode = 'hidden';
+            });
 					}
 				}
 
@@ -348,13 +360,14 @@ angular.module('streama').directive('streamaVideoPlayer', [
 
         function changeSubtitle(subtitle) {
           _.forEach(video.textTracks, function(value, key) {
-            if(value.language !== subtitle.subtitleSrcLang)
-            {
+            if(value.language !== subtitle.subtitleSrcLang) {
               value.mode = 'hidden';
             }
-            else if(value.language === subtitle.subtitleSrcLang)
-            {
-              value.mode = 'showing';
+            else if(value.language === subtitle.subtitleSrcLang) {
+              if($scope.isTextTrackVisible) {
+                value.mode = 'showing';
+                $scope.selectedLanguage = value.language;
+              }
             }
           });
         }
