@@ -108,10 +108,15 @@
         <tr ng-repeat="file in video.subtitles">
           <td>{{file.originalFilename}}</td>
           <td>{{file.contentType}}</td>
-          <th>{{file.subtitleLabel}}</th>
-          <th>{{file.subtitleSrcLang}}</th>
+          <th>
+            <input value="{{file.subtitleLabel}}" placeholder="Country"></input>
+          </th>
+          <th>
+            <input value="{{file.subtitleSrcLang}}" placeholder="ISO-3166 Country Code"></input>
+          </th>
           <td style="padding: 6px;">
             <button title="Delete file" class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
+            <button title="" class="btn btn-xs btn-primary" ng-click="saveChanges(file)"><i class="ion-checkmark"></i></button>
           </td>
         </tr>
         </tbody>

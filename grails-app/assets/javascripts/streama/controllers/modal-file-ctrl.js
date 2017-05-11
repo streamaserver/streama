@@ -95,6 +95,10 @@ angular.module('streama').controller('modalFileCtrl', [
       });
     };
 
+    $scope.saveChanges = function (file) {
+    alert("placeholder");
+    };
+
 
     $scope.uploadStatus = {};
     $scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + video.id, function (data) {
