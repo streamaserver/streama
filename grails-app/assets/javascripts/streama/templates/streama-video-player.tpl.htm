@@ -131,16 +131,23 @@
 
       <div class="player-control-button player-fill-screen ion-android-wifi" ng-if="options.showSocketSession" ng-click="createNewPlayerSession()"></div>
 
-      <div class="player-control-button player-fill-screen ion-android-textsms" ng-if="options.videoTrack" ng-class="{'inactive': !isTextTrackVisible}" ng-click="toggleTextTrack()"></div>
+      <div class="player-control-button player-fill-screen ion-android-textsms" ng-if="options.videoTrack" ng-class="{'inactive': !isTextTrackVisible}" ng-click="toggleTextTrack()">
 
-      <div  class="player-menu" ng-show="multipleSubtitleBrowser">
-        <ul>
-          <li class="season" ng-click="" ng-repeat="subtitle in options.subtitles">
-            <span ng-click="changeSubtitle(subtitle)">  {{subtitle.originalFilename}}</span>
-          </li>
-        </ul>
+
       </div>
-      <div class="player-control-button player-fill-screen ion-android-globe" ng-if="options.videoTrack" ng-click="selectSubtitle()"></div>
+
+
+      <div class="player-control-button player-fill-screen ion-android-globe" ng-if="options.videoTrack" ng-click="selectSubtitle()">
+        <div ng-show="multipleSubtitleBrowser" class="multipleSubtitleBrowser">
+          <ul class="multipleSubtitleBrowser">
+            <li class="season" ng-click="" ng-repeat="subtitle in options.subtitles">
+              <span ng-click="changeSubtitle(subtitle)">  {{subtitle.originalFilename}}</span>
+            </li>
+          </ul>
+        </div>
+
+
+      </div>
       <div class="player-control-button player-fill-screen"
            ng-click="fullScreen()" ng-class="{'ion-arrow-shrink': isFullScreen, 'ion-arrow-expand': !isFullScreen}"></div>
     </section>

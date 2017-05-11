@@ -333,7 +333,6 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				}
         //bei hidden wirklich alle verstecken, und bei showing nur den anzeigen, der auch wirklich angezeigt werden soll, nicht immer index 0
 				function toggleTextTrack() {
-          console.log($scope.selectedLanguage);
 					$scope.isTextTrackVisible = !$scope.isTextTrackVisible;
 
 					if($scope.isTextTrackVisible){
