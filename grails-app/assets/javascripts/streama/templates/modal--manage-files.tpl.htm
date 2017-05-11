@@ -108,8 +108,8 @@
         <tr ng-repeat="file in video.subtitles">
           <td>{{file.originalFilename}}</td>
           <td>{{file.contentType}}</td>
-          <th>{{file.subtitle_label}}</th>
-          <th>{{file.subtitle_src_lang}}</th>
+          <th>{{file.subtitleLabel}}</th>
+          <th>{{file.subtitleSrcLang}}</th>
           <td style="padding: 6px;">
             <button title="Delete file" class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
           </td>

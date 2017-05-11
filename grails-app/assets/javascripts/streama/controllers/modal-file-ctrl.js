@@ -16,26 +16,6 @@ angular.module('streama').controller('modalFileCtrl', [
 
 
 		$scope.loadLocalFiles(localFileLastPath);
-
-
-    console.log($scope.video);
-    /*
-        in video.subtitles sind nicht die spracheinstellungen gespeichert, an dieser stelle aus video.files die daten übertragen an video.subtitles
-     */
-    _.forEach(video.files, function(file, fileKey) {
-      console.log("file");
-      console.log(file);
-        _.forEach(video.subtitles, function(subtitle, subtitleKey) {
-          console.log("subtitle");
-          console.log(subtitle);
-          if(file.id === subtitle.id){
-            console.log("gleiches file")
-            subtitle.subtitle_label = file.subtitle_label;
-            subtitle.subtitle_src_lang = file.subtitle_src_lang;
-          }
-        });
-    });
-    console.log($scope.video);
 		function loadLocalFiles(path) {
 			apiService.file.localFiles(path).success(function(data) {
 				localStorageService.set('localFileLastPath', path);
