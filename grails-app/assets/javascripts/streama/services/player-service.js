@@ -43,7 +43,6 @@ angular.module('streama').factory('playerService',
         videoOptions.videoType = video.files[0].contentType;
 
         if(video.subtitles && video.subtitles.length){
-          videoOptions.videoTrack = $sce.trustAsResourceUrl(video.subtitles[0].src);
           videoOptions.subtitles = video.subtitles;
         }
 
