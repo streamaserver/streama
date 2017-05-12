@@ -36,6 +36,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			GENRE: '장르',
 			TRAILER: '트레일러',
 			SEASON: '시즌',
+      NO_SUBTITLE: '부제 없음'
 		},
 
 		MESSAGES: {
