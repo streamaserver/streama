@@ -223,7 +223,7 @@
       }
     }
 
-    &.inactive{
+    &.inactive:before {
       opacity: 0.3;
     }
   }

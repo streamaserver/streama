@@ -1652,7 +1652,7 @@ streama-video-player.nocursor {
       color: #cacaca; }
       .player-wrapper .player-control-bar .player-control-button:before:hover {
         color: #fff; }
-    .player-wrapper .player-control-bar .player-control-button.inactive {
+    .player-wrapper .player-control-bar .player-control-button.inactive:before {
       opacity: 0.3; }
   .player-wrapper .player-control-bar.player-control-divider {
     -webkit-order: 5;
