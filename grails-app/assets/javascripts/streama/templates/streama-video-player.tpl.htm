@@ -142,10 +142,10 @@
           <div class="subtitle-selector-container">
               <div class="subtitle-list-container">
                 <ul class="subtitle-list">
-                  <li class="subtitle" ng-click="hideSubtitle()">
+                  <li ng-class="{'active':!selectedSubtitleId}" class="subtitle" ng-click="hideSubtitle()">
                     <span >{{'VIDEO.NO_SUBTITLE' | translate}}</span>
                   </li>
-                  <li ng-click="changeSubtitle(subtitle)" class="subtitle" ng-repeat="subtitle in options.subtitles">
+                  <li ng-class="{'active':selectedSubtitleId==subtitle.id}" ng-click="changeSubtitle(subtitle)" class="subtitle" ng-repeat="subtitle in options.subtitles">
                     <span >  {{subtitle.subtitleLabel || subtitle.originalFilename}}</span>
                   </li>
                 </ul>
