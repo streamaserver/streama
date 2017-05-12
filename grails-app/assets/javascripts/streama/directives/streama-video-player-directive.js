@@ -365,10 +365,10 @@ angular.module('streama').directive('streamaVideoPlayer', [
         }
         function changeSubtitle(subtitle) {
           _.forEach(video.textTracks, function(value, key) {
-            if(value.language !== subtitle.subtitleSrcLang) {
+            if(value.id !== 'subtitle-' + subtitle.id) {
               value.mode = 'hidden';
             }
-            else if(value.language === subtitle.subtitleSrcLang) {
+            else if(value.id === 'subtitle-' + subtitle.id) {
                 value.mode = 'showing';
                 $scope.selectedLanguage = value.language;
             }

@@ -180,7 +180,7 @@
   </div>
 
   <video ng-if="isInitialized" id="video" ng-src="{{options.videoSrc}}" type="{{options.videoType}}" ng-click="clickVideo()" >
-    <track ng-repeat="subtitle in options.subtitles" ng-src="{{subtitle.src}}" kind="subtitles"
+    <track ng-repeat="subtitle in options.subtitles" ng-src="{{subtitle.src}}" kind="subtitles" id="subtitle-{{subtitle.id}}"
            srclang="{{subtitle.subtitleSrcLang}}" label="{{subtitle.subtitleLabel}}" src="{{subtitle.src}}">
   </video>
 
