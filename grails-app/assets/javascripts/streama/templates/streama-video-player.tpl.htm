@@ -143,7 +143,7 @@
               <div class="subtitle-list-container">
                 <ul class="subtitle-list">
                   <li class="subtitle" ng-click="hideSubtitle()">
-                    <span >no subtitle</span>
+                    <span >{{'VIDEO.NO_SUBTITLE' | translate}}</span>
                   </li>
                   <li ng-click="changeSubtitle(subtitle)" class="subtitle" ng-repeat="subtitle in options.subtitles">
                     <span >  {{subtitle.originalFilename}} - {{subtitle.subtitleLabel}} - {{subtitle.subtitleSrcLang}}</span>
