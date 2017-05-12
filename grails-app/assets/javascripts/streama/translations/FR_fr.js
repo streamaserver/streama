@@ -32,7 +32,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			OVERVIEW: 'Résumé',
 			GENRE: 'Genre',
 			TRAILER: 'Bande annonce',
-			SEASON: 'Saison'
+			SEASON: 'Saison',
+      NO_SUBTITLE: 'Aucun sous-titre'
 		},
 
 		MESSAGES: {
@@ -57,7 +58,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LANGUAGE_pt: 'Portugais',
     LANGUAGE_ja: 'Japonais',
     LANGUAGE_it: 'Italien',
-	
+
     LANGUAGE_da: 'Danois',
 		PROFIlE: {
 			USERNAME: 'Nom d\'utilisateur',

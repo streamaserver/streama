@@ -66,4 +66,10 @@ class Video {
       return nextEpisode
     }
   }
+  def getVideoFiles(){
+    return this.files?.findAll{it.extension != '.srt' && it.extension != '.vtt'}
+  }
+  def getSubtitles(){
+    return this.files?.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+  }
 }

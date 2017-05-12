@@ -36,7 +36,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			OVERVIEW: 'Panoramica',
 			GENRE: 'Genere',
 			TRAILER: 'Rimorchio',
-			SEASON: 'Stagione'
+			SEASON: 'Stagione',
+      NO_SUBTITLE: 'Nessun sottotitolo'
 		},
 
 		MESSAGES: {
@@ -61,8 +62,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LANGUAGE_pt: 'Portoghese',
 		LANGUAGE_ja: 'Giapponese',
 		LANGUAGE_it: 'Italiano',
-		
-		
+
+
 		PROFIlE: {
 			USERNAME: 'Nome Utente',
 			FULL_NAME: 'Nome e cognome',

@@ -16,9 +16,6 @@ angular.module('streama').controller('modalFileCtrl', [
 
 
 		$scope.loadLocalFiles(localFileLastPath);
-
-
-
 		function loadLocalFiles(path) {
 			apiService.file.localFiles(path).success(function(data) {
 				localStorageService.set('localFileLastPath', path);
@@ -95,6 +92,12 @@ angular.module('streama').controller('modalFileCtrl', [
             }
           });
         }
+      });
+    };
+
+    $scope.saveChanges = function (file) {
+      apiService.file.save(file).success(function (data) {
+        alertify.success('File successfully saved.');
       });
     };
 

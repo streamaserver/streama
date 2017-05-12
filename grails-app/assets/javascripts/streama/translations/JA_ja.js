@@ -35,7 +35,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			OVERVIEW: '概要',
 			GENRE: 'ジャンル',
 			TRAILER: 'トレーラー',
-			SEASON: 'シーズン'
+			SEASON: 'シーズン',
+      NO_SUBTITLE: '字幕なし'
 		},
 
 		MESSAGES: {
@@ -60,7 +61,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LANGUAGE_pt: 'ポルトガル語',
 		LANGUAGE_ja: '日本語',
     LANGUAGE_it: 'イタリアの',
-		
+
 		PROFIlE: {
 			USERNAME: 'ユーザー名',
 			FULL_NAME: '完全な名前',
