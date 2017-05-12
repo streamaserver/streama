@@ -362,6 +362,9 @@ angular.module('streama').directive('streamaVideoPlayer', [
           _.forEach(video.textTracks, function(value, key) {
             value.mode = 'hidden';
           });
+          $scope.selectedSubtitleId = null;
+          $scope.selectedLanguage = null;
+
         }
         function changeSubtitle(subtitle) {
           _.forEach(video.textTracks, function(value, key) {
@@ -371,6 +374,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
             else if(value.id === 'subtitle-' + subtitle.id) {
                 value.mode = 'showing';
                 $scope.selectedLanguage = value.language;
+                $scope.selectedSubtitleId = subtitle.id;
             }
           });
         }
