@@ -369,10 +369,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
               value.mode = 'hidden';
             }
             else if(value.language === subtitle.subtitleSrcLang) {
-              if($scope.isTextTrackVisible) {
                 value.mode = 'showing';
                 $scope.selectedLanguage = value.language;
-              }
             }
           });
         }
