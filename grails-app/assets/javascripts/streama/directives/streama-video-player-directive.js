@@ -30,6 +30,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         $scope.toggleTextTrack = toggleTextTrack;
         $scope.selectSubtitle = selectSubtitle;
         $scope.changeSubtitle = changeSubtitle;
+        $scope.hideSubtitle = hideSubtitle;
         $scope.playerVolumeToggle = playerVolumeToggle;
 				$scope.play = play;
 				$scope.pause = pause;
@@ -357,6 +358,11 @@ angular.module('streama').directive('streamaVideoPlayer', [
           $scope.multipleSubtitleBrowser = !$scope.multipleSubtitleBrowser;
         }
 
+        function hideSubtitle() {
+          _.forEach(video.textTracks, function(value, key) {
+            value.mode = 'hidden';
+          });
+        }
         function changeSubtitle(subtitle) {
           _.forEach(video.textTracks, function(value, key) {
             if(value.language !== subtitle.subtitleSrcLang) {
