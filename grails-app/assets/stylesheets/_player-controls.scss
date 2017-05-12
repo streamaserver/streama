@@ -42,6 +42,10 @@
         background: rgba(0, 0, 0, 0.20);
       }
 
+      &.active {
+          background: rgba(0, 0, 0, 0.20);
+
+      }
       &.current{
         background: darken($primary, 45%);
         .episode-play{

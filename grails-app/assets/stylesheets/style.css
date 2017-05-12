@@ -1499,6 +1499,8 @@ streama-video-player.nocursor {
       border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
       #player-menu-subtitle-selector .subtitle-list li:hover {
         background: rgba(0, 0, 0, 0.2); }
+      #player-menu-subtitle-selector .subtitle-list li.active {
+        background: rgba(0, 0, 0, 0.2); }
       #player-menu-subtitle-selector .subtitle-list li.current {
         background: #1f779a; }
         #player-menu-subtitle-selector .subtitle-list li.current .episode-play {
