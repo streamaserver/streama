@@ -66,6 +66,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
 					initExternalTriggers();
 					initIsMobile();
 					$scope.volumeLevel = localStorageService.get('volumeLevel') || 5;
+
+
 					$scope.$on('$destroy', onDirectiveDestroy);
 					$scope.$on('$stateChangeSuccess', onStateChangeSuccess);
 
@@ -81,6 +83,11 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						video.addEventListener('ended', onVideoEnded);
 						$scope.scrubberOptions = generateScrupperOoptions();
 						$scope.volumeScrubberOptions = generateVolumeScrubberOptions();
+            var selectedSubtitleLanguage = localStorageService.get('selectedSubtitleLanguage');
+
+            if(selectedSubtitleLanguage){
+              changeSubtitle(_.find($scope.options.subtitles,{subtitleSrcLang: selectedSubtitleLanguage}));
+            }
 					});
 				}
 
@@ -375,6 +382,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
                 value.mode = 'showing';
                 $scope.selectedLanguage = value.language;
                 $scope.selectedSubtitleId = subtitle.id;
+                localStorageService.set('selectedSubtitleLanguage',value.language);
             }
           });
         }
