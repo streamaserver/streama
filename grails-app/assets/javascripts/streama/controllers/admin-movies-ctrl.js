@@ -56,7 +56,9 @@ angular.module('streama').controller('adminMoviesCtrl', ['$scope', 'apiService',
 
 	function createFromFiles() {
 		modalService.createFromFilesModal('movie').then(function (data) {
-			console.log('%c success createFromFilesModal', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
+			apiService.movie.list().success(function (data) {
+				angular.extend($scope.movies, data);
+			});
 		});
 	}
 

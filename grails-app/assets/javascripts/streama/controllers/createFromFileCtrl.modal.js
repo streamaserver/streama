@@ -17,7 +17,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	vm.loadLocalFiles = loadLocalFiles;
 	vm.backLocalDirectory = backLocalDirectory;
 	vm.openLocalDirectory = openLocalDirectory;
-	vm.cancel = cancel;
+	vm.close = close;
 	vm.toggleSelectAll = toggleSelectAll;
 	vm.runMatcher = runMatcher;
 	vm.toggleSelection = toggleSelection;
@@ -111,8 +111,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		});
 	}
 
-	function cancel() {
-		$uibModalInstance.dismiss('cancel');
+	function close() {
+		$uibModalInstance.close();
 	}
 
 	function removeFile(file) {
