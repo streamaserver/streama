@@ -4,7 +4,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
   '$scope', '$uibModalInstance', '$rootScope', 'config', '$state', 'apiService',
   function ($scope, $uibModalInstance, $rootScope, config, $state, apiService) {
 
-    var mediaType = config.mediaType;
+    $scope.mediaType = config.mediaType;
     var mediaId = config.mediaId;
     $scope.isEditButtonHidden = config.isEditButtonHidden;
 
@@ -12,13 +12,13 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
       $scope.media = config.mediaObject;
       $scope.isApiMovie = config.isApiMovie;
     }
-    else if(mediaId && mediaType){
+    else if(mediaId && $scope.mediaType){
 
       console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
-      apiService[mediaType].get(mediaId).success(function (data) {
+      apiService[$scope.mediaType].get(mediaId).success(function (data) {
         $scope.media = data;
 
-        if(mediaType == 'tvShow'){
+        if($scope.mediaType == 'tvShow'){
           $scope.currentSeason = 0;
           apiService.tvShow.episodesForTvShow($scope.media.id).success(function (data) {
             if(data.length){
@@ -32,7 +32,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
         }
       });
     }
-    else if(!config.mediaObject && !mediaId && !mediaType) {
+    else if(!config.mediaObject && !mediaId && !$scope.mediaType) {
       alertify.error('No data available');
     }
     $scope.cancel = function () {
