@@ -163,7 +163,11 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	}
 
   function addAllMatches() {
-    _.each(vm.matchResult, function(fileMatch) {
+		var allFoundMatches = _.filter(vm.matchResult, {status: 1});
+		if(allFoundMatches.length == 0){
+			alertify.success('Nothing to add.');
+		}
+		_.each(allFoundMatches, function(fileMatch) {
       if(fileMatch.type == "movie") {
         addMovie(fileMatch);
       } else if(fileMatch.type == "tv") {
