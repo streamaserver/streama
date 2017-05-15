@@ -168,23 +168,23 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 			alertify.success('Nothing to add.');
 		}
 		_.each(allFoundMatches, function(fileMatch) {
-      if(fileMatch.type == "movie") {
-        addMovie(fileMatch);
-      } else if(fileMatch.type == "tv" || fileMatch.type == "episode") {
-        addEpisodeToShow(fileMatch);
-      }
+			addSelectedMatch(fileMatch);
     });
   }
 
-  function addSelectedFile(file) {
+	function addSelectedFile(file) {
     var fileMatch = _.find(vm.matchResult, {"file": file.path});
-    if(fileMatch.type == "movie") {
-      addMovie(fileMatch);
-    } else if (fileMatch.type == "tv" || fileMatch.type == "episode") {
-      addEpisodeToShow(fileMatch);
-    }
+		addSelectedMatch(fileMatch);
+	}
+
+	function addSelectedMatch(fileMatch) {
+		if (fileMatch.type == "movie") {
+			addMovie(fileMatch);
+		} else if (fileMatch.type == "tv" || fileMatch.type == "episode") {
+			addEpisodeToShow(fileMatch);
+		}
 		fileMatch.status = 2; //added
-  }
+	}
 
   function addMovie(fileMatch) {
     apiService.movie.save(fileMatch).success(function (data) {
