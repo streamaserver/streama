@@ -69,6 +69,10 @@ class BulkCreateService {
 
         def movieResult = theMovieDbService.getFullMovieMeta(movieId)
 
+        Movie existingMovie = Movie.findByApiId(movieResult.id)
+        if(existingMovie){
+          fileResult.status = 2
+        }
         fileResult.apiId = movieResult.id
         fileResult.overview = movieResult.overview
         fileResult.release_date = movieResult.release_date
@@ -81,7 +85,7 @@ class BulkCreateService {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
       fileResult.title = name
     }
-    fileResult.status = 1
+    fileResult.status = fileResult.status ?: 1
     fileResult.message = 'match found'
     fileResult.type = type
   }
@@ -102,6 +106,14 @@ class BulkCreateService {
         def tvShowId = movieDbResults.id[0]
 
         def episodeResult = theMovieDbService.getEpisodeMeta(tvShowId, seasonNumber, episodeNumber)
+        TvShow existingTvShow = TvShow.findByApiId(tvShowId)
+        if(existingTvShow){
+
+        }
+        Episode existingEpisode = Episode.findByApiId(episodeResult.id)
+        if(existingEpisode){
+          fileResult.status = 2
+        }
 
         fileResult.tvShowApiId = tvShowId
         fileResult.tvShowOverview = movieDbResults.overview[0]
@@ -119,7 +131,7 @@ class BulkCreateService {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
       fileResult.name = name
     }
-    fileResult.status = 1
+    fileResult.status = fileResult.status ?: 1
     fileResult.message = 'match found'
     fileResult.type = type
     fileResult.season = seasonNumber
