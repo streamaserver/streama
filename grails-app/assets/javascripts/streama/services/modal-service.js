@@ -219,30 +219,38 @@ function modalService($uibModal, $state) {
 		});
 	}
 
-	function mediaDetailModal (mediaId, mediaType, callback) {
-		$state.go('dash', {mediaModal: mediaId, mediaType: mediaType});
+    /**
+     * opens mediaDetail Modal with Trailer, Genre, Description, Poster etc
+     * @param config
+     * 				config.mediaId    						Integer				The id of the media, will be queried from REST endpoint. Requires mediaType
+     * 				config.mediaType    					String				The name of the mediaType, can be one of TvShow|Movie|GenericVideo. Requires mediaId
+     * 				config.isEditButtonHidden    	Boolean				Determines, whether the edit-Button should be hidden or not
+     * 			  config.mediaObject	          Object        The media object
+     * 			  config.isApiMovie             Boolean       Determines, if the movie is api-based or if it exists locally
+     * @param callback
+     */
+		function mediaDetailModal (config, callback) {
+			$state.go($state.current.name, {isApiMovie: config.isApiMovie, isEditButtonHidden: true, mediaModal: config.mediaId, mediaType: config.mediaType});
 
-		var modalInstance = $uibModal.open({
-			templateUrl: '/streama/modal--media-detail.htm',
-			controller: 'modalMediaDetailCtrl as vm',
-			size: 'lg',
-			resolve: {
-				mediaId: function () {
-					return mediaId;
-				},
-				mediaType: function () {
-					return mediaType;
+			var modalInstance = $uibModal.open({
+				templateUrl: '/streama/modal--media-detail.htm',
+				controller: 'modalMediaDetailCtrl',
+				size: 'lg',
+				resolve: {
+					config: function () {
+						return config;
+					}
 				}
-			}
-		});
+			});
 
-		modalInstance.result.then(function (data) {
-			//$state.go('dash', {mediaModal: null, mediaType: null});
-			(callback || angular.noop)(data);
-		}, function () {
-			//$state.go('dash', {mediaModal: null, mediaType: null});
-		});
-	}
+			modalInstance.result.then(function (data) {
+				//$state.go('dash', {mediaModal: null, mediaType: null});
+				(callback || angular.noop)(data);
+			}, function () {
+				//$state.go('dash', {mediaModal: null, mediaType: null});
+			});
+		}
+
 
 	function createFromFilesModal(mediaType) {
 		var modalInstance = $uibModal.open({

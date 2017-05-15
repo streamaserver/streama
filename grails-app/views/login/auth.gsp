@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<title>Streama</title>
+	<title>${streama.Settings.findByName('title').value}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 	<style type="text/css">
@@ -23,6 +23,7 @@
 </head>
 
 <body >
+	<g:render template="/templates/header_simple"></g:render>
 	<div id='login' ng-app="streama.translations" class="ng-cloak">
 		<div class='inner'>
 			<div class='fheader'>{{'LOGIN.TITLE' | translate}}</div>

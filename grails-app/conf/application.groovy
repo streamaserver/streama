@@ -18,6 +18,9 @@ grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 grails.plugin.springsecurity.secureChannel.useHeaderCheckChannelSecurity = true
 grails.plugin.springsecurity.portMapper.httpPort = 80
 grails.plugin.springsecurity.portMapper.httpsPort = 443
+grails.plugin.springsecurity.rememberMe.cookieName = 'streama_remember_me'
+grails.plugin.springsecurity.rememberMe.alwaysRemember = true
+grails.plugin.springsecurity.rememberMe.key = 'streama_Rocks123!!RememberMe'
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
@@ -42,6 +45,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/dash/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag.json',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/settings/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
 
   [pattern:'/genericVideo/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/genre/**',  access :['ROLE_CONTENT_MANAGER']],
@@ -59,6 +63,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/monitoring/**',  access :['ROLE_ADMIN']],
 
 
+  [pattern:'/file/serve',  access :['permitAll']],
   [pattern:'/user/current',  access :['permitAll']],
   [pattern:'/invite/**',  access :['permitAll']],
   [pattern:'/assets/**',  access :['permitAll']],

@@ -20,44 +20,14 @@ environments:
             url: jdbc:mysql://localhost/streama
             username: root
             password:
-    development-no-mysql:
-            dataSource:
-                dbCreate: update
-                driverClassName:  'org.h2.Driver'
-                url: jdbc:h2:mem:streama;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     test:
         dataSource:
             dbCreate: update
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
-    production-no-mysql:
-        dataSource:
-            dbCreate: update
-            url: jdbc:h2:./streama;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
-            username: root
-            password:
-            properties:
-                jmxEnabled: true
-                initialSize: 5
-                maxActive: 50
-                minIdle: 5
-                maxIdle: 25
-                maxWait: 10000
-                maxAge: 600000
-                timeBetweenEvictionRunsMillis: 5000
-                minEvictableIdleTimeMillis: 60000
-                validationQuery: SELECT 1
-                validationQueryTimeout: 3
-                validationInterval: 15000
-                testOnBorrow: true
-                testWhileIdle: true
-                testOnReturn: false
-                jdbcInterceptors: ConnectionState
-                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
     production:
         dataSource:
             dbCreate: update
-            driverClassName:  'com.mysql.jdbc.Driver'
-            url: jdbc:mysql://localhost/streama
+            url: jdbc:h2:./streama;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
             username: root
             password:
             properties:

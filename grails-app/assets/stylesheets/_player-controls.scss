@@ -1,4 +1,74 @@
 
+#player-menu-subtitle-selector{
+  background-color: #262626;
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 12px;
+  width: 300px;
+  right: -2.7em;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.52);
+  .subtitle-selector-container{
+    width: 200%;
+    h2{
+      padding: 12px;
+    }
+  }
+
+  .subtitle-list{
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 100;
+    box-shadow: 0px -1px 0 0 rgba(0, 0, 0, 0.46);
+    max-height: 300px;
+    overflow: auto;
+
+    .flex-wrapper{
+      @include flexbox;
+      @include clearfix;
+    }
+
+    li{
+      color: white;
+      list-style: none;
+      padding: 0 12px;
+      border-top: 1px solid rgba(0, 0, 0, 0.27);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+      &:hover{
+        background: rgba(0, 0, 0, 0.20);
+      }
+
+      &.active {
+          background: rgba(0, 0, 0, 0.20);
+
+      }
+      &.current{
+        background: darken($primary, 45%);
+        .episode-play{
+          display: none;
+        }
+      }
+
+      &.no-files{
+        opacity: 0.7;
+      }
+    }
+  }
+
+
+  .subtitle-list{
+    li{
+      padding: 12px;
+    }
+  }
+}
+
+
+
 .player-wrapper button.button {
   padding: .5em 2em;
   color: #fff;
@@ -153,7 +223,7 @@
       }
     }
 
-    &.inactive{
+    &.inactive:before {
       opacity: 0.3;
     }
   }
@@ -4173,3 +4243,5 @@ body.mdx-active #mdx-control-view {
     }
   }
 }
+
+

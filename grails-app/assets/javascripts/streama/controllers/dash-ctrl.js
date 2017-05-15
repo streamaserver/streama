@@ -22,12 +22,13 @@ angular.module('streama').controller('dashCtrl',
 		};
 
 		$scope.showDetails = function (media) {
-			modalService.mediaDetailModal((media.tvShowId || media.id), media.mediaType);
+			//modalService.mediaDetailModal((media.tvShowId || media.id), media.mediaType); //{videoId: data.id}
+      modalService.mediaDetailModal({mediaId: (media.tvShowId || media.id), mediaType: media.mediaType, isApiMovie: false});
 		};
 
 
 		if ($stateParams.mediaModal) {
-			modalService.mediaDetailModal($stateParams.mediaModal, $stateParams.mediaType);
+      modalService.mediaDetailModal({mediaId: $stateParams.mediaModal, mediaType: $stateParams.mediaType, isApiMovie: false});
 		}
 
 		apiService.tag.list().success(function (data) {
@@ -95,6 +96,12 @@ angular.module('streama').controller('dashCtrl',
 		apiService.dash.listMovies().success(function (data) {
 			$scope.movies = data;
 			$scope.loadingMovies = false;
+		});
+
+		$scope.loadingRecommendations = true;
+		apiService.dash.listRecommendations().success(function (data) {
+			$scope.recommendations = data;
+			$scope.loadingRecommendations = false;
 		});
 
 		$scope.loadingGenericVideos = true;

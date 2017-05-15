@@ -16,7 +16,8 @@ class TvShowController {
 
   def index() {
     JSON.use('fullShow') {
-      respond TvShow.findAllByDeletedNotEqual(true), [status: OK]
+      response.setStatus(OK.value())
+      render (TvShow.findAllByDeletedNotEqual(true) as JSON)
     }
   }
 

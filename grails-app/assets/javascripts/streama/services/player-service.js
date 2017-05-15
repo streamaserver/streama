@@ -43,9 +43,10 @@ angular.module('streama').factory('playerService',
         videoOptions.videoType = video.files[0].contentType;
 
         if(video.subtitles && video.subtitles.length){
-          videoOptions.videoTrack = $sce.trustAsResourceUrl(video.subtitles[0].src);
+          videoOptions.subtitles = video.subtitles;
         }
 
+        videoOptions.isExternalLink = video.files[0].externalLink;
         videoOptions.videoMetaTitle = (video.show ? video.show.name : video.title);
         videoOptions.videoMetaSubtitle = (video.show ? video.episodeString + ' - ' + video.name : (video.release_date ? video.release_date.substring(0, 4) : ''));
         videoOptions.videoMetaDescription = video.overview;

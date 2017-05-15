@@ -160,7 +160,8 @@ class UserController {
       return [user: user]
     }
 
-    respond status: UNAUTHORIZED
+    response.setStatus(UNAUTHORIZED.value())
+    render 'Not logged in'
   }
 
   @Transactional

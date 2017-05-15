@@ -42,6 +42,11 @@ class TvShow {
       overview size: 1..5000
   }
 
+  def getFilteredEpisodes(){
+    def filteredEpisodes = episodes.findAll{!it.deleted}
+    return filteredEpisodes
+  }
+
   def getExternalLinks(){
     theMovieDbService.getExternalLinks(this.apiId)
   }
@@ -51,12 +56,24 @@ class TvShow {
   }
 
   def getFullTvShowMeta(){
-    try{
-      return theMovieDbService.getFullTvShowMeta(this.apiId)
-    }catch (e){
-      log.error("couldnt get FullTvShowMeta for ${this.apiId}")
-      log.error(e)
-      return null
+    return theMovieDbService.getFullTvShowMeta(this.apiId)
+  }
+
+
+  def getFirstEpisode(){
+    Episode firstEpisode = this.episodes?.find{it.files && it.season_number != "0"}
+
+    this.episodes.each{ Episode episode ->
+      if((episode.season_number == firstEpisode?.season_number) && (episode.episode_number < firstEpisode?.episode_number) && episode.files){
+        firstEpisode = episode
+      }
+      else if(episode.season_number < firstEpisode?.season_number && episode.files && episode.season_number != "0"){
+        firstEpisode = episode
+      }
+    }
+
+    if(firstEpisode && firstEpisode.files){
+      return firstEpisode
     }
   }
 }

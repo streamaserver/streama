@@ -10,14 +10,14 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.6.4"
 //        classpath "gradle.plugin.com.craigburke.gradle:karma-gradle:1.4.3"
-        classpath "gradle.plugin.com.craigburke.gradle:bower-installer-gradle:2.5.1"
+//        classpath "gradle.plugin.com.craigburke.gradle:bower-installer-gradle:2.5.1"
         classpath "org.grails.plugins:hibernate4:5.0.5"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.8.2"
         classpath "org.grails.plugins:views-gradle:1.0.12"
     }
 }
 
-version "0.1"
+version "1.1"
 group "streama"
 
 apply plugin:"eclipse"
@@ -26,7 +26,7 @@ apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.grails-gsp"
 //apply plugin:"com.craigburke.karma"
-apply plugin:"com.craigburke.bower-installer"
+//apply plugin:"com.craigburke.bower-installer"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.plugins.views-json"
 apply plugin: 'spring-boot'
@@ -98,23 +98,23 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
-bower {
-    'angular'('1.4.x') {
-        source 'angular.js'
-    }
-    'angular-resource'('1.4.x') {
-        source 'angular-resource.js' >> '/angular/'
-    }
-    'angular-mocks'('1.4.x') {
-        source 'angular-mocks.js' >> '/angular/'
-    }
-    'angular-bootstrap'('1.1.x') {
-        source 'ui-bootstrap-tpls.js' >> '/angular/'
-    }
-    'bootstrap'('3.x.x') {
-        source 'dist/css/bootstrap.css' >> '/bootstrap/'
-    }
-}
+//bower {
+//    'angular'('1.4.x') {
+//        source 'angular.js'
+//    }
+//    'angular-resource'('1.4.x') {
+//        source 'angular-resource.js' >> '/angular/'
+//    }
+//    'angular-mocks'('1.4.x') {
+//        source 'angular-mocks.js' >> '/angular/'
+//    }
+//    'angular-bootstrap'('1.1.x') {
+//        source 'ui-bootstrap-tpls.js' >> '/angular/'
+//    }
+//    'bootstrap'('3.x.x') {
+//        source 'dist/css/bootstrap.css' >> '/bootstrap/'
+//    }
+//}
 
 //karma {
 //    dependencies(['karma-wrap-preprocessor'])

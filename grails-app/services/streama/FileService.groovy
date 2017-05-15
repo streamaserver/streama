@@ -1,5 +1,7 @@
 package streama
 
+import grails.converters.JSON
+import static javax.servlet.http.HttpServletResponse.SC_NOT_ACCEPTABLE
 import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
@@ -20,8 +22,12 @@ class FileService {
     def rangeStart
 
     if(rangeHeader){
-      rangeStart = rangeHeader.split("\\D+")[1].toLong()
-      contentLength = fileLength - rangeStart
+      String[] range = rangeHeader.substring(6).split("-")
+      rangeStart = range[0].toLong()
+      if (range.length == 2)
+        rangeEnd = range[1].toLong()
+
+      contentLength = rangeEnd + 1 - rangeStart
     }
     //add html5 video headers
     response.addHeader("Accept-Ranges", "bytes")
@@ -37,10 +43,16 @@ class FileService {
     }
 
 
-
+    FileInputStream fis
 
     //Read and write bytes of file incrementally into the outputstream
-    FileInputStream fis = new FileInputStream(rawFile) //391694394
+    try{
+      fis = new FileInputStream(rawFile) //391694394
+    }catch(e){
+      response.setStatus(PRECONDITION_FAILED.value())
+      render ([message: e.message] as JSON)
+      return
+    }
     byte[] buffer = new byte[16000]
 
     if(rangeStart){
@@ -55,18 +67,26 @@ class FileService {
         }
         response.outputStream.write(buffer, 0, read)
       }
-      fis.close()
     }catch(Exception e){
+//      log.error('caught exception for video playback. ' + e.message)
 //      e.printStackTrace()
 //      e.getCause().printStackTrace()
+    }finally{
+//      response.outputStream.flush()
+      fis.close()
     }
   }
 
 
-  def fullyRemoveFile(File file){
-    if(file.externalLink || file.localFile){
-      // External and local files are not deleted
-      return
+  def Map fullyRemoveFile(File file){
+    if(!file){
+      return ResultHelper.generateErrorResult(SC_NOT_ACCEPTABLE, 'file', 'No valid file selected.')
+    }
+    if(file.localFile){
+      return ResultHelper.generateErrorResult(SC_NOT_ACCEPTABLE, 'local', 'cant delete file associated with the File-Browser.')
+    }
+    if(file.externalLink){
+      return ResultHelper.generateErrorResult(SC_NOT_ACCEPTABLE, 'external', 'cant delete file associated with an external Link.')
     }
     if(file.associatedVideosInclDeleted){
       file.associatedVideosInclDeleted.each{ video ->
@@ -95,5 +115,8 @@ class FileService {
     }
 
     file.delete(flush: true)
+
+
+    return ResultHelper.generateOkResult()
   }
 }

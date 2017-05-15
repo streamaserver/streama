@@ -1,7 +1,7 @@
 <div class="profile">
   <div class="profile-heading">
     <div class="btn-group pull-right">
-        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()">{{'CHANGE_PASSWORD' | translate}}</button>
+        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()" ng-if="!changePasswordIsActive">{{'CHANGE_PASSWORD' | translate}}</button>
     </div>
     <h1>
       <i class="ion-ios-arrow-thin-left" ng-if="changePasswordIsActive" ng-click="toggleChangePassword()"></i>
@@ -63,7 +63,7 @@
         </div>
         <div class="col-sm-9">
           <ul class="genre-list">
-            <li class="genre-tag" ng-class="{'active': isGenreSelected(genre)}" ng-repeat="genre in availableGenres" ng-click="toggleSelectGenre(genre)">
+            <li class="genre-tag" ng-class="{'active': isGenreSelected(genre)}" ng-repeat="genre in availableGenres | orderBy:'name'" ng-click="toggleSelectGenre(genre)">
               {{genre.name}}
             </li>
           </ul>
@@ -75,7 +75,7 @@
 
       <button class="btn btn-success pull-right" ng-show="profileForm.$dirty" ng-click="saveProfile()">{{'PROFIlE.SAVE' | translate}}</button>
 
-      
+
 
     </form>
 

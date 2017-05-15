@@ -51,6 +51,9 @@ class MarshallerService {
       returnArray['size'] = file.size
       returnArray['dateCreated'] = file.dateCreated
       returnArray['quality'] = file.quality
+      returnArray['subtitleLabel'] = file.subtitleLabel
+      returnArray['subtitleSrcLang'] = file.subtitleSrcLang
+
 
       return returnArray;
     }
@@ -181,8 +184,8 @@ class MarshallerService {
         returnArray['vote_count'] = tvShow.vote_count
         returnArray['imdb_id'] = tvShow.imdb_id
         returnArray['popularity'] = tvShow.popularity
-        returnArray['episodesWithFilesCount'] = tvShow.episodes.findAll{it.files}.size()
-        returnArray['episodesCount'] = tvShow.episodes.size()
+        returnArray['episodesWithFilesCount'] = tvShow.filteredEpisodes.findAll{it.files}.size()
+        returnArray['episodesCount'] = tvShow.filteredEpisodes.size()
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
         returnArray['genre'] = tvShow.genre
@@ -494,7 +497,8 @@ class MarshallerService {
         returnArray['name'] = episode.name
         returnArray['season_number'] = episode.season_number
         returnArray['episode_number'] = episode.episode_number
-        returnArray['files'] = episode.files
+        returnArray['files'] = episode.videoFiles?.collect{it.simpleInstance}
+        returnArray['subtitles'] = episode.subtitles?.collect{it.simpleInstance}
         returnArray['still_path'] = episode.still_path
         returnArray['intro_start'] = episode.intro_start
         returnArray['intro_end'] = episode.intro_end
@@ -595,6 +599,8 @@ class MarshallerService {
           returnArray['release_date'] = video.release_date
           returnArray['backdrop_path'] = video.backdrop_path
           returnArray['poster_path'] = video.poster_path
+          returnArray['trailerKey'] = video.trailerKey
+
         }
         if(video instanceof GenericVideo){
           returnArray['title'] = video.title

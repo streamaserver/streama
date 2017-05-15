@@ -3,9 +3,6 @@ package streama
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-/**
- * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
- */
 @TestFor(Video)
 class VideoSpec extends Specification {
 
@@ -28,5 +25,27 @@ class VideoSpec extends Specification {
       video0.validate() == true
       video1.validate() == true
       video2.validate() == false
+  }
+
+  void "test has files, with files"() {
+    given: 'The video has filed associated'
+      def video = new Video(files: [Stub(File), Stub(File)])
+
+    when: 'Method hasFiles is called'
+      def hasFiles = video.hasFiles()
+
+    then: 'The returned value is true'
+      hasFiles == true
+  }
+
+  void "test has files, without files"() {
+    given: 'The video has filed associated'
+      def video = new Video()
+
+    when: 'Method hasFiles is called'
+      def hasFiles = video.hasFiles()
+
+    then: 'The returned value is true'
+      hasFiles == false
   }
 }

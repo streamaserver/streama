@@ -1,6 +1,7 @@
 package streama
 
 import grails.converters.JSON
+import grails.transaction.Transactional
 
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -13,6 +14,7 @@ class FileController {
   def uploadService
   def fileService
   def srt2vttService
+  def springSecurityService
 
   def index(){
     def filter = params.filter
@@ -39,7 +41,7 @@ class FileController {
     }
 
     JSON.use('adminFileManager'){
-      respond responseObj
+      render (responseObj as JSON)
     }
   }
 
@@ -77,21 +79,46 @@ class FileController {
     }
 
     if(file){
-      fileService.fullyRemoveFile(file)
-    } else if(path){
+      Map result = fileService.fullyRemoveFile(file)
+      if(result.error){
+        response.setStatus(result.statusCode)
+        render (result as JSON)
+        return
+      }else{
+        respond status: OK
+      }
+    }
+
+
+    else if(path){
       java.io.File rawFile = new java.io.File(path)
       rawFile.delete()
+      respond status: OK
     }
-    respond status: NO_CONTENT
   }
 
   def removeMultipleFilesFromDisk() {
     def idBulk = params.list('id').collect({it.toLong()})
+    def result = [
+        successes: [],
+        errors: []
+    ]
     idBulk.each { id ->
       def file = File.get(id)
-      fileService.fullyRemoveFile(file)
+      def individualResult =fileService.fullyRemoveFile(file)
+
+      if(individualResult.error){
+        result.errors.add(id)
+      }else{
+        result.successes.add(id)
+      }
     }
-    respond status: NO_CONTENT
+    if(result.successes.size() > 0){
+      response.setStatus(OK.value())
+    }else{
+      response.setStatus(NOT_ACCEPTABLE.value())
+    }
+    render (result as JSON)
   }
 
   def cleanUpFiles(){
@@ -112,7 +139,6 @@ class FileController {
   }
 
   def serve() {
-
     if (!params.id) {
       return;
     }
@@ -121,6 +147,14 @@ class FileController {
     if(!file){
       response.setStatus(BAD_REQUEST.value())
       render ([messageCode: 'FILE_IN_DB_NOT_FOUND'] as JSON)
+      log.debug('FILE_IN_DB_NOT_FOUND')
+      return
+    }
+
+    if(!file.isPublic && !springSecurityService.isLoggedIn()){
+      response.setStatus(UNAUTHORIZED.value())
+      render ([messageCode: 'UNAUTHORIZED'] as JSON)
+      log.debug('UNAUTHORIZED')
       return
     }
 
@@ -129,6 +163,7 @@ class FileController {
     if(!filePath){
       response.setStatus(NOT_ACCEPTABLE.value())
       render ([messageCode: 'FILE_IN_FS_NOT_FOUND', data: file.sha256Hex] as JSON)
+      log.debug('FILE_IN_FS_NOT_FOUND')
       return
     }
 
@@ -143,6 +178,7 @@ class FileController {
 
     if(fileService.allowedVideoFormats.contains(file.extension)){
       fileService.serveVideo(request, response, rawFile, file)
+      return null
     }else if(file.extension == '.srt'){
       def vttResult = srt2vttService.convert(rawFile)
       render ( file: vttResult.getBytes('utf-8'), contentType: file.contentType, fileName: file.originalFilename.replace('.srt', '.vtt'))
@@ -153,7 +189,7 @@ class FileController {
   }
 
   def upload(){
-    def file = uploadService.upload(request)
+    def file = uploadService.upload(request, params)
     respond file
   }
 
@@ -186,7 +222,7 @@ class FileController {
     }
 
     def localPath = Paths.get(uploadService.localPath)
-    def dirPath = localPath.resolve(path).toAbsolutePath()
+    def dirPath = localPath.resolve( uploadService.localPath + path).toAbsolutePath()
 
     if (!dirPath.startsWith(localPath)) {
       result.code = "FileNotInLocalPath"
@@ -264,4 +300,24 @@ class FileController {
 
     render (result as JSON)
   }
+
+
+  def save(File file) {
+
+    if (file == null) {
+      render status: NOT_FOUND
+      return
+    }
+
+    file.validate()
+
+    if (file.hasErrors()) {
+      render status: NOT_ACCEPTABLE
+      return
+    }
+
+    file.save flush: true
+    respond file, [status: CREATED]
+  }
+
 }

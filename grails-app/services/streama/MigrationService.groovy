@@ -113,4 +113,17 @@ class MigrationService {
       tvShow.save(failOnError: true)
     }
   }
+
+  def fixLogoValue(){
+    Settings setting = Settings.findByName('logo')
+    if(!setting.value){
+      setting.value = '/assets/logo.png'
+      setting.save()
+    }
+
+    if(!setting.defaultValue){
+      setting.defaultValue = '/assets/logo.png'
+      setting.save()
+    }
+  }
 }
