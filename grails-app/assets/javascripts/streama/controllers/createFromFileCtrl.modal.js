@@ -41,7 +41,6 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		}).error(function(data) {
 			if (data.code == 'LocalFilesNotEnabled') {
 				vm.localFilesEnabled = false;
-				return;
 			}
 			alertify.error(data.message);
 		});
