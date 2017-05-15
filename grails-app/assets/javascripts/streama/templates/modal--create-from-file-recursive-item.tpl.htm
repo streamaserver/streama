@@ -32,13 +32,18 @@
     </span>
   </td>
   <td>
-    <span ng-if="vm.getMatchForPath(file.path)">
+    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 1">
       <a ng-click="vm.openMediaDetail(vm.getMatchForPath(file.path))"><i class="ion-ios-eye"></i> Preview Match</a>
+    </span>
+    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status != 1">
+      {{vm.getMatchForPath(file.path).message}}
     </span>
   </td>
   <td>
     <button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1"
             ng-click="vm.addSelectedFile(file)">Add this file
     </button>
+    <a ng-if="vm.getMatchForPath(file.path).status == 2" ng-click="vm.openAdminForm(vm.getMatchForPath(file.path))"
+       class="text-success">Open in new tab <i class="ion-android-open"></i></a>
   </td>
 </tr>

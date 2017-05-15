@@ -3,7 +3,7 @@
 angular.module('streama')
   .controller('modalCreateFromFileCtrl', modalCreateFromFileCtrl);
 
-function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadService, dialogOptions, modalService) {
+function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadService, dialogOptions, modalService, $state) {
   var vm = this;
 	vm.loading = false;
 	vm.localFilesEnabled = false;
@@ -26,6 +26,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
   vm.addAllMatches = addAllMatches;
   vm.addSelectedFile = addSelectedFile;
   vm.openMediaDetail = openMediaDetail;
+  vm.openAdminForm = openAdminForm;
 
 
 	init();
@@ -35,6 +36,10 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		loadLocalFiles('');
 	}
 
+	function openAdminForm(mediaObject) {
+		var url = $state.href('admin.' + mediaObject.importedType, {showId: mediaObject.importedId, movieId: mediaObject.importedId});
+		window.open(url,'_blank');
+	}
 
 	function openMediaDetail(mediaObject) {
 		modalService.mediaDetailModal({
@@ -168,17 +173,20 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
   }
 
   function addSelectedFile(file) {
-    var fileMatch = _.find(vm.matchResult, {"file": file.path})
+    var fileMatch = _.find(vm.matchResult, {"file": file.path});
     if(fileMatch.type == "movie") {
       addMovie(fileMatch);
     } else if (fileMatch.type == "tv") {
       addEpisodeToShow(fileMatch);
     }
+		fileMatch.status = 2; //added
   }
 
   function addMovie(fileMatch) {
     apiService.movie.save(fileMatch).success(function (data) {
       apiService.video.addLocalFile({id: data.id, localFile: fileMatch.file}).success(function (data) {
+				fileMatch.importedId = data.id;
+				fileMatch.importedType = 'movie';
         alertify.success(fileMatch.title + " has been added");
       });
 		});
@@ -203,7 +211,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
   }
 
   function addShow(fileMatch) {
-    var targetShow = {}
+    var targetShow = {};
     targetShow.apiId = fileMatch.tvShowApiId;
     targetShow.name = fileMatch.showName;
     targetShow.overview = fileMatch.tvShowOverview;
@@ -211,6 +219,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
     targetShow.backdrop_path = fileMatch.backdrop_path;
 
     apiService.tvShow.save(targetShow).success(function (data) {
+			fileMatch.importedId = data.id;
+			fileMatch.importedType = 'show';
       addEpisode(data, fileMatch);
     });
   }
@@ -224,6 +234,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
     episode.name = fileMatch.episodeName;
     episode.overview = fileMatch.episodeOverview;
     episode.still_path = fileMatch.still_path;
+		fileMatch.importedId = targetShow.id;
+		fileMatch.importedType = 'show';
     apiService.episode.save(episode).success(function (data) {
       apiService.video.addLocalFile({id: data.id, localFile: fileMatch.file}).success(function (data) {
         alertify.success(fileMatch.episodeName + " has been added");
