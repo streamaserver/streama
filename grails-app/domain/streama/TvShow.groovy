@@ -43,8 +43,12 @@ class TvShow {
   }
 
   def getFilteredEpisodes(){
-    def filteredEpisodes = episodes.findAll{!it.deleted}
+    def filteredEpisodes = Episode.findAllByShowAndDeletedNotEqual(this, true)
     return filteredEpisodes
+  }
+
+  def getEpisodes(){
+    return this.getFilteredEpisodes()
   }
 
   def getExternalLinks(){
