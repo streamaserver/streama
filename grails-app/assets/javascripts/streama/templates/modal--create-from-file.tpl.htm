@@ -1,9 +1,3 @@
-<script type="text/ng-template" id="tree_item.html">
-  <tr ng-if="file.directory"><td><input type="checkbox" ng-click="vm.toggleSelection(file)"></td><td><span ng-click="vm.openLocalDirectory(file)"><span class="ion-folder"></span> {{ file.name }} </span><table class="table table-striped" ng-if="file.showFiles"><tbody ng-repeat="file in file.localFiles | orderBy: ['-directory', 'name'] | filter:vm.localFileSearch" ng-include="'tree_item.html'"></tbody></table></td><td><span ng-if="vm.getMatchForPath(file.path)">{{vm.getMatchForPath(file.path).message}}</span></td><td><button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1" ng-click="vm.addSelectedFile()">Add this file</button></td></tr>
-
-   <tr ng-if="!file.directory"><td><input type="checkbox" ng-click="vm.toggleSelection(file)"></td><td><span><span class="ion-document"></span> {{ file.name }} </span></td><td><span ng-if="vm.getMatchForPath(file.path)">{{vm.getMatchForPath(file.path).message}}</span></td><td><button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1" ng-click="vm.addSelectedFile(file)">Add this file</button></td></tr>
-</script>
-
 <div class="modal-body">
   <legend>
     Create {{vm.mediaType}}s from Files
@@ -34,33 +28,8 @@
         <th>Action</th>
       </tr>
       </thead>
-      <tbody ng-repeat="file in vm.localFiles | orderBy: ['-directory', 'name'] | filter:vm.localFileSearch" ng-include="'tree_item.html'">
+      <tbody ng-repeat="file in vm.localFiles | orderBy: ['-directory', 'name'] | filter:vm.localFileSearch" ng-include="'/streama/modal--create-from-file-recursive-item.htm'">
       </tbody>
-      <!-- <tr ng-repeat="file in vm.localFiles | orderBy: ['-directory', 'name'] | filter:vm.localFileSearch">
-        <td>
-          <input type="checkbox" ng-click="vm.toggleSelection(file)">
-        </td>
-        <td>
-          <span ng-if="file.directory" ng-click="vm.openLocalDirectory(file)">
-            <span class="ion-folder"></span>
-            {{ file.name }}
-          </span>
-
-          <span ng-if="!file.directory">
-            <span class="ion-document"></span>
-            {{ file.name }}
-            </span>
-        </td>
-
-        <td>
-          <span ng-if="vm.getMatchForPath(file.path)">{{vm.getMatchForPath(file.path).message}}</span>
-        </td>
-        <td>
-          <button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1" ng-click="vm.addThisFile()">
-            Add this file
-          </button>
-        </td>
-      </tr> -->
     </table>
   </div>
 
