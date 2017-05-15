@@ -69,7 +69,7 @@ class BulkCreateService {
 
         def movieResult = theMovieDbService.getFullMovieMeta(movieId)
 
-        Movie existingMovie = Movie.findByApiId(movieResult.id)
+        Movie existingMovie = Movie.findByApiIdAndDeletedNotEqual(movieResult.id, true)
         if(existingMovie){
           fileResult.status = 2
           fileResult.importedId = existingMovie.id
@@ -107,17 +107,15 @@ class BulkCreateService {
         // Why do i need to access index 0? Worked just fine without before extracting to service
         def tvShowId = movieDbResults.id[0]
 
-        def episodeResult = theMovieDbService.getEpisodeMeta(tvShowId, seasonNumber, episodeNumber)
-        TvShow existingTvShow = TvShow.findByApiId(tvShowId)
-        if(existingTvShow){
+        if(!seasonNumber && !episodeNumber){
+          TvShow existingTvShow = TvShow.findByApiIdAndDeletedNotEqual(tvShowId, true)
+          if(existingTvShow){
+            fileResult.status = 2
+            fileResult.importedId =existingTvShow.id
+            fileResult.importedType = 'show'
+          }
+        }
 
-        }
-        Episode existingEpisode = Episode.findByApiId(episodeResult.id)
-        if(existingEpisode){
-          fileResult.status = 2
-          fileResult.importedId =existingEpisode.showId
-          fileResult.importedType = 'show'
-        }
 
         fileResult.tvShowApiId = tvShowId
         fileResult.tvShowOverview = movieDbResults.overview[0]
@@ -125,11 +123,22 @@ class BulkCreateService {
         fileResult.poster_path = movieDbResults.poster_path[0]
         fileResult.backdrop_path = movieDbResults.backdrop_path[0]
 
-        fileResult.episodeName = episodeResult.name
-        fileResult.first_air_date = episodeResult.air_date
-        fileResult.episodeApiId = episodeResult.id
-        fileResult.episodeOverview = episodeResult.overview
-        fileResult.still_path = episodeResult.still_path
+        if(seasonNumber && episodeNumber){
+          type = 'episode'
+          def episodeResult = theMovieDbService.getEpisodeMeta(tvShowId, seasonNumber, episodeNumber)
+          Episode existingEpisode = Episode.findByApiIdAndDeletedNotEqual(episodeResult.id, true)
+          if(existingEpisode){
+            fileResult.status = 2
+            fileResult.importedId =existingEpisode.showId
+            fileResult.importedType = 'episode'
+          }
+
+          fileResult.episodeName = episodeResult.name
+          fileResult.first_air_date = episodeResult.air_date
+          fileResult.episodeApiId = episodeResult.id
+          fileResult.episodeOverview = episodeResult.overview
+          fileResult.still_path = episodeResult.still_path
+        }
       }
     } catch (Exception ex) {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")

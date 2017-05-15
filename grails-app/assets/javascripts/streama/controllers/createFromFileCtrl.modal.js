@@ -45,7 +45,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		modalService.mediaDetailModal({
 			mediaObject: mediaObject,
 			isApiMovie: true,
-			mediaType: 'episode'
+			mediaType: mediaObject.type
 		});
 	}
 
@@ -170,7 +170,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		_.each(allFoundMatches, function(fileMatch) {
       if(fileMatch.type == "movie") {
         addMovie(fileMatch);
-      } else if(fileMatch.type == "tv") {
+      } else if(fileMatch.type == "tv" || fileMatch.type == "episode") {
         addEpisodeToShow(fileMatch);
       }
     });
@@ -180,7 +180,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
     var fileMatch = _.find(vm.matchResult, {"file": file.path});
     if(fileMatch.type == "movie") {
       addMovie(fileMatch);
-    } else if (fileMatch.type == "tv") {
+    } else if (fileMatch.type == "tv" || fileMatch.type == "episode") {
       addEpisodeToShow(fileMatch);
     }
 		fileMatch.status = 2; //added
@@ -188,8 +188,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 
   function addMovie(fileMatch) {
     apiService.movie.save(fileMatch).success(function (data) {
+			fileMatch.importedId = data.id;
       apiService.video.addLocalFile({id: data.id, localFile: fileMatch.file}).success(function (data) {
-				fileMatch.importedId = data.id;
 				fileMatch.importedType = 'movie';
         alertify.success(fileMatch.title + " has been added");
       });
