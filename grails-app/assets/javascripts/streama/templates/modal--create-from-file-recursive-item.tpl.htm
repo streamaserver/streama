@@ -35,7 +35,10 @@
     <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 1">
       <a ng-click="vm.openMediaDetail(vm.getMatchForPath(file.path))"><i class="ion-ios-eye"></i> Preview Match</a>
     </span>
-    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status != 1">
+    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 2">
+      already added
+    </span>
+    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 0">
       {{vm.getMatchForPath(file.path).message}}
     </span>
   </td>

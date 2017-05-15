@@ -72,6 +72,8 @@ class BulkCreateService {
         Movie existingMovie = Movie.findByApiId(movieResult.id)
         if(existingMovie){
           fileResult.status = 2
+          fileResult.importedId = existingMovie.id
+          fileResult.importedType = 'movie'
         }
         fileResult.apiId = movieResult.id
         fileResult.overview = movieResult.overview
@@ -113,6 +115,8 @@ class BulkCreateService {
         Episode existingEpisode = Episode.findByApiId(episodeResult.id)
         if(existingEpisode){
           fileResult.status = 2
+          fileResult.importedId =existingEpisode.showId
+          fileResult.importedType = 'show'
         }
 
         fileResult.tvShowApiId = tvShowId
