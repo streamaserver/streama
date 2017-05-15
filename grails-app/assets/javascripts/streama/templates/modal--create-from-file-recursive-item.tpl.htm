@@ -12,7 +12,9 @@
     </table>
   </td>
   <td>
-    <span ng-if="vm.getMatchForPath(file.path)">{{vm.getMatchForPath(file.path).message}}</span></td>
+    <span ng-if="vm.getMatchForPath(file.path)">
+      {{vm.getMatchForPath(file.path).message}}
+    </span></td>
   <td>
     <button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1"
             ng-click="vm.addSelectedFile()">Add this file
@@ -30,7 +32,9 @@
     </span>
   </td>
   <td>
-    <span ng-if="vm.getMatchForPath(file.path)">{{vm.getMatchForPath(file.path).message}}</span>
+    <span ng-if="vm.getMatchForPath(file.path)">
+      <a ng-click="vm.openMediaDetail(vm.getMatchForPath(file.path))"><i class="ion-ios-eye"></i> Preview Match</a>
+    </span>
   </td>
   <td>
     <button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1"

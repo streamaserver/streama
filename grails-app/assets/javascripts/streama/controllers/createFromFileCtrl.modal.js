@@ -3,7 +3,7 @@
 angular.module('streama')
   .controller('modalCreateFromFileCtrl', modalCreateFromFileCtrl);
 
-function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadService, dialogOptions) {
+function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadService, dialogOptions, modalService) {
   var vm = this;
 	vm.loading = false;
 	vm.localFilesEnabled = false;
@@ -25,6 +25,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	vm.selection = [];
   vm.addAllMatches = addAllMatches;
   vm.addSelectedFile = addSelectedFile;
+  vm.openMediaDetail = openMediaDetail;
 
 
 	init();
@@ -32,6 +33,15 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 
 	function init() {
 		loadLocalFiles('');
+	}
+
+
+	function openMediaDetail(mediaObject) {
+		modalService.mediaDetailModal({
+			mediaObject: mediaObject,
+			isApiMovie: true,
+			mediaType: 'episode'
+		});
 	}
 
 	function loadLocalFiles(path) {
