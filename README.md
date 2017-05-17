@@ -99,7 +99,7 @@ If you would like to contribute, I would be thrilled to review each and every PR
 
 ### Donations
 If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
-If you want to use paypal, use this link https://www.paypal.me/dularion
+If you want to use paypal, use this link https://www.paypal.me/AntoniaEngfors
 
 # Known Issues
 - There is no video-conversion currently, meaning you are reliant upon HTML5 browser compatibilities. I will implement server-side conversion soon which will enable this functionality. See Issue [#17](https://github.com/dularion/streama/issues/17)
