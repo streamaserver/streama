@@ -21,6 +21,7 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 - [Roadmap](#roadmap)
 - [Known Issues](#known-issues)
 - [Contributing](#contributing)
+- [Donations](#donations)
 - [License](#license)
 
 # Getting Started
@@ -97,7 +98,7 @@ If you want to contribute a translation, please follow [the guide here](https://
 ### PRs
 If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your effors on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
 
-### Donations
+# Donations
 If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
 If you want to use paypal, use this link https://www.paypal.me/AntoniaEngfors
 
