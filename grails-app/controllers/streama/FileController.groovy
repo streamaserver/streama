@@ -244,6 +244,9 @@ class FileController {
 
     def response = []
     Files.list(dirPath).each { file ->
+      if(Files.isHidden(file)){
+        return
+      }
       response << [
         name: file.getFileName().toString(),
         path: file.toAbsolutePath().toString(),
