@@ -1,6 +1,6 @@
 <tr ng-if="file.directory">
   <td>
-    <!--<input type="checkbox" ng-click="vm.toggleSelection(file)"></td>-->
+    <input type="checkbox" ng-click="vm.toggleDirectorySelection(file)"></td>
   <td>
     <span ng-click="vm.openLocalDirectory(file)">
       <span class="ion-folder"></span> {{ file.name }}
@@ -24,7 +24,7 @@
 
 <tr ng-if="!file.directory">
   <td>
-    <input type="checkbox" ng-click="vm.toggleSelection(file)">
+    <input type="checkbox" ng-click="vm.toggleSelection(file)" ng-checked="vm.isSelected(file)">
   </td>
   <td>
     <span>

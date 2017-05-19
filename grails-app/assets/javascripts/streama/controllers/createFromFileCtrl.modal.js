@@ -21,12 +21,14 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	vm.toggleSelectAll = toggleSelectAll;
 	vm.runMatcher = runMatcher;
 	vm.toggleSelection = toggleSelection;
+	vm.toggleDirectorySelection = toggleDirectorySelection;
 	vm.getMatchForPath = getMatchForPath;
 	vm.selection = [];
   vm.addAllMatches = addAllMatches;
   vm.addSelectedFile = addSelectedFile;
   vm.openMediaDetail = openMediaDetail;
   vm.openAdminForm = openAdminForm;
+  vm.isSelected = isSelected;
 
 
 	init();
@@ -67,16 +69,22 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		vm.loadLocalFiles(vm.localDir.join('/'));
 	}
 
-	function openLocalDirectory(dir) {
+	function openLocalDirectory(dir, forceOpen, onSuccess) {
 		// vm.localFiles = [];
 		// vm.localDir.push(dir.name);
 		// vm.loadLocalFiles(vm.localDir.join('/'));
-    dir.showFiles = dir.showFiles == true ? false : true;
-    dir.localFiles = [];
-    apiService.file.localFiles(dir.path).success(function(data) {
-      dir.localFiles = data;
-    });
-    console.log(dir);
+    dir.showFiles = (dir.showFiles == true && !forceOpen) ? false : true;
+    if(!dir.localFiles || !dir.localFiles.length){
+			dir.localFiles = [];
+			apiService.file.localFiles(dir.path).success(function(data) {
+				dir.localFiles = data;
+				(onSuccess || angular.noop)(data);
+			});
+			console.log(dir);
+		}else{
+			(onSuccess || angular.noop)(dir.localFiles);
+		}
+
 	}
 
 	function addExternalUrl(externalUrl) {
@@ -156,6 +164,20 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 
 	function toggleSelection(file) {
 		vm.selection = _.xorBy(vm.selection, [file], 'path');
+	}
+
+	function isSelected(file) {
+		return _.some(vm.selection, {path: file.path});
+	}
+
+	function toggleDirectorySelection(directory) {
+		console.log('%c toggleDirectorySelection', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
+		openLocalDirectory(directory, true, function () {
+			_.forEach(directory.localFiles, function (file) {
+				toggleSelection(file);
+			});
+		});
+
 	}
 
 	function getMatchForPath(path) {
