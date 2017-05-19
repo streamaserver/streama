@@ -155,7 +155,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 
 	function runMatcher() {
 		vm.isMatcherLoading = true;
-		apiService.file.matchMetaDataFromFiles(vm.selection).success(function (data) {
+		var fileSelection = _.filter(vm.selection, {directory: false});
+		apiService.file.matchMetaDataFromFiles(fileSelection).success(function (data) {
 			vm.isMatcherLoading = false;
 			vm.matchResult = data;
 			//console.log(data);
