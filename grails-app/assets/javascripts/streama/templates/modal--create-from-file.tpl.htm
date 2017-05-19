@@ -19,7 +19,7 @@
 
     <ul class="create-from-file-tree">
       <li ng-repeat="file in vm.localFiles | orderBy: ['-directory', 'name'] | filter:vm.localFileSearch"
-          ng-include="'/streama/modal--create-from-file-recursive-item2.htm'">
+          ng-include="'/streama/modal--create-from-file-recursive-item.htm'">
       </li>
     </ul>
   </div>

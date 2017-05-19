@@ -18,7 +18,7 @@
 
   <ul ng-if="file.showFiles">
     <li ng-repeat="file in file.localFiles | orderBy: ['-directory', 'name'] | filter:vm.localFileSearch"
-           ng-include="'/streama/modal--create-from-file-recursive-item2.htm'">
+           ng-include="'/streama/modal--create-from-file-recursive-item.htm'">
     </li>
   </ul>
 </div>
