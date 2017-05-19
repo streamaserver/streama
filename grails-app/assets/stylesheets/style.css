@@ -1240,6 +1240,17 @@ hr {
     .season-picker-list .season-picker-item.active {
       border: 1px solid white; }
 
+.create-from-file-tree {
+  background: #3d3d3d;
+  padding: 14px; }
+  .create-from-file-tree .checkbox-wrapper {
+    float: left;
+    padding: 0 0 0 16px; }
+  .create-from-file-tree li {
+    list-style: none;
+    padding: 7px 0;
+    border-top: 1px solid #555a5c; }
+
 .upload-poster {
   padding: 20px;
   border: 2px dashed gray;
