@@ -87,66 +87,10 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 
 	}
 
-	function addExternalUrl(externalUrl) {
-		apiService.video.addExternalUrl({id: vm.video.id, externalUrl: externalUrl}).success(function (data) {
-			alertify.success("External URL Added.");
-			vm.video.externalLink = null;
-
-			if(_.find(vm.video.files, {id: data.id})){
-				vm.video.files[_.indexOf(vm.video.files, {id: data.id})] = data;
-			}else{
-				vm.video.files = vm.video.files || [];
-				vm.video.files.push(data);
-				vm.video.hasFiles = true;
-			}
-		});
-	}
-
-	function addLocalFile(localFile) {
-		apiService.video.addLocalFile({id: vm.video.id, localFile: localFile}).success(function (data) {
-			alertify.success("Local File Added.");
-			vm.video.localFile = null;
-
-			if(_.find(vm.video.files, {id: data.id})){
-				vm.video.files[_.indexOf(vm.video.files, {id: data.id})] = data;
-			}else{
-				vm.video.files = vm.video.files || [];
-				vm.video.files.push(data);
-				vm.video.hasFiles = true;
-			}
-		}).error(function(data) {
-			alertify.error(data.message);
-		});
-	}
-
 	function close() {
 		$uibModalInstance.close();
 	}
 
-	function removeFile(file) {
-		alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
-		alertify.confirm('Are you sure you want to remove the file "'+file.originalFilename+'"?', function (confirmed) {
-			if(confirmed){
-				apiService.video.removeFile(vm.video.id, file.id).success(function () {
-					if(file.extension == '.srt' || file.extension == '.vtt'){
-						_.remove(vm.video.subtitles, {id: file.id});
-						alertify.success('Subtitles deleted.');
-					}else{
-						_.remove(vm.video.files, {id: file.id});
-						alertify.success('Video deleted.');
-					}
-				});
-			}
-		});
-	}
-
-
-
-	function getFilesForExtensions(extensions){
-		return _.filter(vm.video.files, function (file) {
-			return (extensions.indexOf(file.extension.toLowerCase()) > -1);
-		})
-	}
 
 
 	function toggleSelectAll() {
