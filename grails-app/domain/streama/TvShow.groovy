@@ -47,9 +47,9 @@ class TvShow {
     return filteredEpisodes
   }
 
-  def getEpisodes(){
-    return this.getFilteredEpisodes()
-  }
+//  def getEpisodes(){
+//    return this.getFilteredEpisodes()
+//  }
 
   def getExternalLinks(){
     theMovieDbService.getExternalLinks(this.apiId)
