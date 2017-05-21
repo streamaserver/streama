@@ -36,6 +36,8 @@ class User {
 	}
 
 	static mapping = {
+    //User is reserved keyword in some systems, like PostgreSQL
+    table 'users'
 		password column: '`password`'
 		cache true
 	}
