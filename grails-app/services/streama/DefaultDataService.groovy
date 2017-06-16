@@ -84,6 +84,38 @@ class DefaultDataService {
             description: 'Should the First-Time login info (admin/admin) be shown in the login screen?',
             settingsType: 'boolean'
         ],
+        [
+            settingsKey: 'Show Version Number',
+            name: 'show_version_num',
+            description: 'Should the Streama version number be shown in the header of the application',
+            settingsType: 'boolean',
+            value: 'true'
+        ],
+        [
+            settingsKey: 'Logo',
+            name: 'logo',
+            description: 'Upload your custom Streama Logo here',
+            settingsType: 'fileUpload',
+            value: '/assets/logo.png',
+            defaultValue: '/assets/logo.png'
+        ],
+        [
+            settingsKey: 'Favicon',
+            name: 'favicon',
+            description: 'Upload your custom Favicon here. For most compatibility, use 16x16 .ico file',
+            settingsType: 'fileUpload',
+            value: '/assets/favicon.ico',
+            defaultValue: '/assets/favicon.ico'
+        ],
+        [
+            settingsKey: 'Streama title',
+            name: 'title',
+            description: 'Change Name of Application',
+            settingsType: 'string',
+            value: 'Streama',
+            required: true,
+            validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',

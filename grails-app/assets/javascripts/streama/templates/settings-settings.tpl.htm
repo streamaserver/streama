@@ -1,4 +1,4 @@
-<button class="btn btn-primary pull-right btn-lg" ng-click="updateMultipleSettings(settings)" ng-disabled="anySettingsInvalid()">Save Settings</button>
+<button class="btn btn-primary pull-right" ng-click="updateMultipleSettings(settings)" ng-disabled="anySettingsInvalid()">Save Settings</button>
 
 <h1>
   Settings
@@ -29,11 +29,34 @@
 
         </div>
         <div class="col-sm-2">
-          <button type="button" class="btn btn-success btn-block" ng-click="validateSettings(setting)" ng-show="!setting.valid && setting.dirty">validate</button>
+          <button type="button" class="btn btn-success btn-block" ng-click="validateSettings(setting)" ng-show="!setting.valid && setting.dirty && setting.validationRequired !== false">validate</button>
         </div>
       </div>
       <div ng-switch-when="boolean" class="col-sm-2">
         <input type="checkbox" ng-model="setting.value" ng-init="setting.value = (setting.value == 'true')" />
+      </div>
+      <div ng-switch-when="fileUpload" class="col-sm-7">
+       <div class="row">
+         <div class="col-md-6">
+           <button ng-model="file"  class="btn btn-dark" ngf-drop
+                   ngf-drag-over-class="dragover-upload" ngf-change="upload(setting, $files)" ngf-select>
+             Drop or Select Logo <span ng-show="uploadStatus.percentage">{{uploadStatus.percentage}}%</span>
+           </button>
+         </div>
+         <div class="col-md-6">
+          <div>
+            <img class="pull-right" ng-show="setting.value" ng-src="{{setting.value}}" alt="Streama Logo">
+          </div>
+          <div>
+            <input class="form-control input-sm" type="text" ng-model="setting.value" />
+          </div>
+           <div>
+             <button class="btn btn-sm btn-dark" ng-click="setting.value = setting.defaultValue">
+               Reset to default
+             </button>
+           </div>
+         </div>
+       </div>
       </div>
 
     </div>
@@ -41,6 +64,8 @@
       <a ng-if="setting.settingsKey=='Base URL'" ng-click="resetBaseURL(setting)"> Reset to default value.</a>
       <p class="settings-description" ng-bind-html="setting.description"></p>
     </div>
+
+    <hr class="col-xs-12">
 
   </div>
 </form>

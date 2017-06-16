@@ -15,8 +15,10 @@ class File {
   Long size
   String externalLink
   String localFile
+  String subtitleLabel
+  String subtitleSrcLang
   String quality
-
+  Boolean isPublic = false
   static constraints = {
     sha256Hex maxSize: 64
     quality inList: ['720p', '480p', '360p']
@@ -82,7 +84,9 @@ class File {
         id: this.id,
         src: this.getSrc(),
         originalFilename: this.originalFilename,
-        contentType: this.contentType
+        contentType: this.contentType,
+        subtitleSrcLang: this.subtitleSrcLang,
+        subtitleLabel: this.subtitleLabel
     ]
   }
 }

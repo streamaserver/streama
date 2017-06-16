@@ -10,14 +10,14 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.6.4"
 //        classpath "gradle.plugin.com.craigburke.gradle:karma-gradle:1.4.3"
-        classpath "gradle.plugin.com.craigburke.gradle:bower-installer-gradle:2.5.1"
+//        classpath "gradle.plugin.com.craigburke.gradle:bower-installer-gradle:2.5.1"
         classpath "org.grails.plugins:hibernate4:5.0.5"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.8.2"
         classpath "org.grails.plugins:views-gradle:1.0.12"
     }
 }
 
-version "2.0"
+version "1.1"
 group "streama"
 
 
@@ -102,27 +102,21 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
-
-//clientDependencies {
-//    npm {
-//        'angular'('1.5.x', into: 'angular') {
-//            include 'angular.js'
-//        }
-//        'angular-mocks'('1.5.x', into: 'angular') {
-//            include 'angular-mocks.js'
-//        }
-//        'angular-resource'('1.5.x', into: 'angular') {
-//            include 'angular-resource.js'
-//        }
-//        'angular-ui-bootstrap'('1.3.x', into: 'angular') {
-//            include 'ui-bootstrap-tpls.js'
-//        }
-//        'angular-ui-router'('0.2.x', into: 'angular', from: 'release') {
-//            include 'angular-ui-router.js'
-//        }
-//        'bootstrap'('3.3.x', into: 'bootstrap', from: 'dist/css') {
-//            include 'bootstrap.css'
-//        }
+//bower {
+//    'angular'('1.4.x') {
+//        source 'angular.js'
+//    }
+//    'angular-resource'('1.4.x') {
+//        source 'angular-resource.js' >> '/angular/'
+//    }
+//    'angular-mocks'('1.4.x') {
+//        source 'angular-mocks.js' >> '/angular/'
+//    }
+//    'angular-bootstrap'('1.1.x') {
+//        source 'ui-bootstrap-tpls.js' >> '/angular/'
+//    }
+//    'bootstrap'('3.x.x') {
+//        source 'dist/css/bootstrap.css' >> '/bootstrap/'
 //    }
 //}
 

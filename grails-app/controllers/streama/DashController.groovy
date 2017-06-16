@@ -122,6 +122,7 @@ class DashController {
     }
   }
 
+
   def mediaDetail(){
     log.debug(params.mediaType)
     log.debug(params.id)

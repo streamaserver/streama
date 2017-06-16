@@ -1,6 +1,7 @@
 package streama
 
 import grails.transaction.Transactional
+import org.apache.commons.validator.routines.UrlValidator
 
 @Transactional
 class SettingsService {
@@ -57,12 +58,17 @@ class SettingsService {
 
   def validateURL(String url, resultValue) {
     try {
-        def actualUrl = new java.net.URL(url);
-        actualUrl.getContent();
-        resultValue.success = true;
+      UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_LOCAL_URLS)
+      if (urlValidator.isValid(url)) {
+        resultValue.success = true
         resultValue.message = "The entered url is valid."
+      } else {
+        resultValue.error = true
+        resultValue.message = "The entered url is invalid."
+      }
     }
     catch (Exception ex) {
+        log.error(ex.message)
         resultValue.error = true;
         resultValue.message = "The entered url is invalid."
     }

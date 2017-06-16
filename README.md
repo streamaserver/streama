@@ -1,4 +1,4 @@
-# streama v1.0.12
+# streama v1.1
 
 
 [![Build Status](https://travis-ci.org/dularion/streama.svg?branch=master)](https://travis-ci.org/dularion/streama) [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/dularion/streama/blob/master/LICENSE.md) [![Join the chat at https://gitter.im/dularion/streama](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dularion/streama?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -21,10 +21,11 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 - [Roadmap](#roadmap)
 - [Known Issues](#known-issues)
 - [Contributing](#contributing)
+- [Donations](#donations)
 - [License](#license)
 
 # Getting Started
-- [up and running with v1.x](https://github.com/dularion/streama/wiki/Getting-started-with-v1)
+- [up and running with Streama](https://github.com/dularion/streama/wiki/Getting-started)
 
 # The Application
 
@@ -97,9 +98,9 @@ If you want to contribute a translation, please follow [the guide here](https://
 ### PRs
 If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your effors on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
 
-### Donations
+# Donations
 If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
-If you want to use paypal, use this link https://www.paypal.me/dularion
+If you want to use paypal, use this link https://www.paypal.me/AntoniaEngfors
 
 # Known Issues
 - There is no video-conversion currently, meaning you are reliant upon HTML5 browser compatibilities. I will implement server-side conversion soon which will enable this functionality. See Issue [#17](https://github.com/dularion/streama/issues/17)

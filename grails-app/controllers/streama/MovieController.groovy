@@ -52,4 +52,11 @@ class MovieController {
     movieInstance.save failOnError: true, flush: true
     render status: NO_CONTENT
   }
+  def getsimilar(){
+    def movieId = params.id
+    Movie movie = Movie.get(movieId)
+    def similarMovies = movie.getSimilarMovies()
+    render(similarMovies.results as JSON)
+  }
+
 }

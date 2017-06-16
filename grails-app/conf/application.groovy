@@ -46,6 +46,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/player/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag.json',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/settings/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
 
   [pattern:'/genericVideo/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/genre/**',  access :['ROLE_CONTENT_MANAGER']],
@@ -62,6 +63,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/bulk/**',  access :['ROLE_ADMIN']],
   [pattern:'/monitoring/**',  access :['ROLE_ADMIN']],
 
+
+  [pattern:'/file/serve',  access :['permitAll']],
   [pattern:'/user/current',  access :['permitAll']],
   [pattern:'/invite/**',  access :['permitAll']],
   [pattern:'/assets/**',  access :['permitAll']],
