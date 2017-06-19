@@ -34,6 +34,11 @@ class DashController {
   }
 
 
+  def listEpisodesForShow(TvShow tvShow){
+    render (tvShow.getFilteredEpisodes() as JSON)
+  }
+
+
 
   def listRecommendations(){
     User currentUser = springSecurityService.currentUser

@@ -20,6 +20,7 @@ class UrlMappings {
         "/api/v1/dash/listNewReleases"(controller: 'dash', action: 'listNewReleases')
         "/api/v1/dash/listRecommendations"(controller: 'dash', action: 'listRecommendations')
         "/api/v1/dash/mediaDetail"(controller: 'dash', action: 'mediaDetail')
+        "/api/v1/dash/listEpisodesForShow"(controller: 'dash', action: 'listEpisodesForShow')
 
         "/api/v1/player/video/$id"(controller: 'player', action: 'video')
 
