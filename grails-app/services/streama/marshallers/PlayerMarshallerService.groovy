@@ -37,6 +37,7 @@ class PlayerMarshallerService {
         returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(video, springSecurityService.currentUser)
 
         if (video instanceof Episode) {
+          returnArray['mediaType'] = 'episode'
           returnArray['show'] = video.show
           returnArray['episodeString'] = video.episodeString
           returnArray['name'] = video.name
@@ -63,6 +64,7 @@ class PlayerMarshallerService {
           }
         }
         if (video instanceof Movie) {
+          returnArray['mediaType'] = 'movie'
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
           returnArray['backdrop_path'] = video.backdrop_path
@@ -71,6 +73,7 @@ class PlayerMarshallerService {
 
         }
         if (video instanceof GenericVideo) {
+          returnArray['mediaType'] = 'genericVideo'
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
           returnArray['backdrop_image_src'] = video.backdrop_image?.src
