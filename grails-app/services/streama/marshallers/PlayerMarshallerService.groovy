@@ -3,6 +3,7 @@ package streama.marshallers
 import grails.converters.JSON
 import grails.transaction.Transactional
 import streama.Episode
+import streama.File
 import streama.GenericVideo
 import streama.Movie
 import streama.Video
@@ -79,6 +80,29 @@ class PlayerMarshallerService {
           returnArray['backdrop_image_src'] = video.backdrop_image?.src
           returnArray['poster_image_src'] = video.poster_image?.src
         }
+
+        return returnArray;
+      }
+
+
+      cfg.registerObjectMarshaller(File) { File file ->
+        def returnArray = [:]
+
+        returnArray['id'] = file.id
+        returnArray['name'] = file.name
+        returnArray['sha256Hex'] = file.sha256Hex
+        returnArray['src'] = file.getSrc()
+        returnArray['externalLink'] = file.externalLink
+        returnArray['localFile'] = file.localFile
+        returnArray['originalFilename'] = file.originalFilename
+        returnArray['extension'] = file.extension
+        returnArray['contentType'] = file.contentType
+        returnArray['size'] = file.size
+        returnArray['dateCreated'] = file.dateCreated
+        returnArray['quality'] = file.quality
+        returnArray['subtitleLabel'] = file.subtitleLabel
+        returnArray['subtitleSrcLang'] = file.subtitleSrcLang
+
 
         return returnArray;
       }
