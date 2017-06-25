@@ -177,7 +177,7 @@ class FileController {
 
     if(fileService.allowedVideoFormats.contains(file.extension)){
       def result = fileService.serveVideo(request, response, rawFile, file)
-      if(result.error){
+      if(result?.error){
         render (result as JSON)
         return
       }
