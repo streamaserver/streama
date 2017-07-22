@@ -231,6 +231,18 @@ class FileController {
       return
     }
 
+    if(Files.notExists(dirPath)){
+      dirPath = localPath.resolve( uploadService.localPath).toAbsolutePath()
+    }
+
+    if(Files.notExists(dirPath)){
+      result.code = "DirectoryNotFound"
+      result.message = "The Local Files Directory could not be found."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
     def response = []
     Files.list(dirPath).each { file ->
       response << [
