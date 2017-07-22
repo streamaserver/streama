@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div ng-show="movie.release_date || movie.id || addManually">
+    <div ng-show="movie.apiId || addManually">
       <div class="form-group row-slim">
         <div class="col-sm-2">
           <label>Release Date</label>
@@ -126,7 +126,7 @@
     </div>
   </div>
 
-  <div class="modal-footer" ng-if="movie.release_date || movie.id || addManually">
+  <div class="modal-footer" ng-if="movie.apiId || addManually">
     <button class="btn btn-success" ng-click="saveMovie(movie)" ng-disabled="!movie.title">Save</button>
     <button class="btn btn-default" ng-click="cancel()">Cancel</button>
   </div>

@@ -34,6 +34,8 @@ angular.module('streama').controller('modalMovieCtrl', [
 		delete $item.id;
 		$scope.movie = $item;
 		$scope.movie.apiId = apiId;
+		$scope.addManually = false;
+		$scope.hasMovieDBKey = true;
 
 		$scope.formVisible = true;
 	};
