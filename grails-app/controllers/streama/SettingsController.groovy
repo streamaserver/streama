@@ -64,11 +64,17 @@ class SettingsController {
   @Transactional
   def updateMultiple() {
     def settings = request.JSON
-
     settings.each{ settingData ->
       Settings settingsInstance = Settings.get(settingData?.id)
       settingsInstance.properties = settingData
       settingsInstance.save failOnError: true
+      if (settingsInstance.name == 'anonymous_access') {
+        if (Boolean.valueOf(settingData.value)) {
+          settingsService.enableAnonymousUser()
+        } else {
+          settingsService.disableAnonymousUser()
+        }
+      }
     }
 
     respond settings

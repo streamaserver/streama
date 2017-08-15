@@ -10,6 +10,7 @@ import grails.transaction.Transactional
 class UserController {
 
   def validationService
+  def settingsService
   def mailService
   def springSecurityService
   def passwordEncoder
@@ -50,11 +51,17 @@ class UserController {
       return
     }
 
-    userInstance.deleted = true
-    userInstance.username = userInstance.username + (randomUUID() as String)
-    userInstance.accountExpired = true
+    /** the anonymous user is different, and disabled the anonymous_access property **/
+    if (userInstance.username == "anonymous") {
+      settingsService.disableAnonymousUser()
+      settingsService.changeAnonymousAccess("false")
+    } else {
+      userInstance.deleted = true
+      userInstance.username = userInstance.username + (randomUUID() as String)
+      userInstance.accountExpired = true
 
-    userInstance.save flush: true, failOnError: true
+      userInstance.save flush: true, failOnError: true
+    }
 
     render status: NO_CONTENT
   }
@@ -92,7 +99,7 @@ class UserController {
     }
 
 
-    if (!userInstance.invitationSent && userInstance.enabled && userInstance.username != "admin") {
+    if (!userInstance.invitationSent && userInstance.enabled && userInstance.username != "admin" && userInstance.username != "anonymous") {
       userInstance.uuid = randomUUID() as String
 
       try {
@@ -109,6 +116,9 @@ class UserController {
       userInstance.invitationSent = true
     }
 
+    if (userInstance.username == "anonymous") {
+      settingsService.changeAnonymousAccess(userInstance.enabled.toString())
+    }
 
     userInstance.save flush: true
 

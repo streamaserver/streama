@@ -12,6 +12,35 @@ class SettingsService {
     return Settings.findBySettingsKey('Base URL')?.value
   }
 
+  Boolean getAnonymousAccess() {
+    return Boolean.valueOf(Settings.findByName('anonymous_access')?.value)
+  }
+
+  def enableAnonymousUser() {
+    User anonymous = User.findByUsername("anonymous")
+    if (anonymous) {
+        anonymous.enabled = true
+        anonymous.deleted = false   /** If user has been previously mark as deleted, clear the field **/
+    } else {  /** If the user not exists, or has been deleted, create it **/
+        anonymous = new User(username: 'anonymous', password: 'anonymous', fullName: 'Anonymous', enabled: true)
+    }
+    anonymous.save failOnError: true
+  }
+
+  def changeAnonymousAccess(String value) {
+    Settings setting = Settings.findByName("anonymous_access" )
+    setting.value = value
+    setting.save failOnError: true
+  }
+
+  def disableAnonymousUser() {
+    /** Delete the user of the database */
+    User anonymous = User.findByUsername("anonymous")
+    if (anonymous) {
+      anonymous.delete failOnError: true
+    }
+  }
+
   def validate(Settings settingsInstance) {
     def resultValue = [:]
 
