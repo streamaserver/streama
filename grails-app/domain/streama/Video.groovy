@@ -41,11 +41,7 @@ class Video {
     }
     return false
   }
-
-  def setDeleted(val){
-      this.deleted = val
-  }
-
+  
   def getViewingStatus(){
     ViewingStatus.findByVideoAndUser(this, springSecurityService.currentUser)
   }
