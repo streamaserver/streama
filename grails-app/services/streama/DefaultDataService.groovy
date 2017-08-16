@@ -61,6 +61,14 @@ class DefaultDataService {
             required: true
         ],
         [
+          settingsKey: 'TheMovieDB API language',
+          description: "Language support on TMDb is based on the language query parameter you send along with your API key. " +
+            "For example, you could type es-ES for getting responses in spanish. Be careful with your country, es-ES is not the same as es-MX. " +
+            "More information at https://en.wikipedia.org/wiki/IETF_language_tag",
+          settingsType: 'string',
+          required: false
+        ],
+        [
             settingsKey: 'Base URL',
             value: 'http://localhost:8080',
             description: 'The Base-URL is used for the videos and the link in the invitation-email.',
