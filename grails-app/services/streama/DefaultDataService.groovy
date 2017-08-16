@@ -93,6 +93,13 @@ class DefaultDataService {
             settingsType: 'boolean'
         ],
         [
+            settingsKey: 'Allow anonymous access',
+            name: 'anonymous_access',
+            description: 'Allow to reproduce videos without login in the application',
+            settingsType: 'boolean',
+            value: 'false'
+        ],
+        [
             settingsKey: 'Show Version Number',
             name: 'show_version_num',
             description: 'Should the Streama version number be shown in the header of the application',
