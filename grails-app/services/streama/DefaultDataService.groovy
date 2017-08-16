@@ -27,6 +27,12 @@ class DefaultDataService {
             fullName: 'Administrator',
             enabled: true,
             roles: [Role.findByAuthority("ROLE_ADMIN"), Role.findByAuthority("ROLE_CONTENT_MANAGER")]
+        ],
+        [
+            username: 'anonymous',
+            password: 'anonymous',
+            fullName: 'Anonymous',
+            enabled: true
         ]
     ]
 
@@ -98,7 +104,7 @@ class DefaultDataService {
             name: 'anonymous_access',
             description: 'Allow to reproduce videos without login in the application',
             settingsType: 'boolean',
-            value: 'false'
+            value: 'true'
         ],
         [
             settingsKey: 'Show Version Number',
