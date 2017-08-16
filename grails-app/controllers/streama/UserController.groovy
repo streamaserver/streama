@@ -116,6 +116,10 @@ class UserController {
       userInstance.invitationSent = true
     }
 
+    if (userInstance.isDirty('username') && userInstance.getPersistentValue('username') == "anonymous") {
+      settingsService.changeAnonymousAccess("false")
+    }
+
     if (userInstance.username == "anonymous") {
       settingsService.changeAnonymousAccess(userInstance.enabled.toString())
     }

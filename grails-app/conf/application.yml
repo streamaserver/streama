@@ -19,7 +19,7 @@ environments:
             driverClassName:  'com.mysql.jdbc.Driver'
             url: jdbc:mysql://localhost/streama
             username: root
-            password:
+            password: root
     test:
         dataSource:
             dbCreate: update
