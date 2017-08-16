@@ -90,7 +90,8 @@ class DefaultDataService {
         [
             settingsKey: 'First Time Login Info',
             description: 'Should the First-Time login info (admin/admin) be shown in the login screen?',
-            settingsType: 'boolean'
+            settingsType: 'boolean',
+            value: 'true'
         ],
         [
             settingsKey: 'Allow anonymous access',
