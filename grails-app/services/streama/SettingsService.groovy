@@ -44,9 +44,6 @@ class SettingsService {
   def validate(Settings settingsInstance) {
     def resultValue = [:]
 
-    if (settingsInstance.settingsKey == 'Base URL') {
-        validateURL(settingsInstance.value, resultValue)
-    }
     if (settingsInstance.settingsKey == 'Upload Directory') {
       validateUploadDirectoryPermissions(settingsInstance.value + '/upload', resultValue)
     }
@@ -85,24 +82,6 @@ class SettingsService {
     catch (Exception io) {
       resultValue.error = true;
       resultValue.message = "The directory could not be accessed by the application. Please make sure that the directory exists and that you set the correct permissions.";
-    }
-  }
-
-  def validateURL(String url, resultValue) {
-    try {
-      UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_LOCAL_URLS)
-      if (urlValidator.isValid(url)) {
-        resultValue.success = true
-        resultValue.message = "The entered url is valid."
-      } else {
-        resultValue.error = true
-        resultValue.message = "The entered url is invalid."
-      }
-    }
-    catch (Exception ex) {
-        log.error(ex.message)
-        resultValue.error = true;
-        resultValue.message = "The entered url is invalid."
     }
   }
 
