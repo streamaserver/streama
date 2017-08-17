@@ -10,4 +10,4 @@ jdk:
   - oraclejdk8
 
 
-script: gradle check
+script: ./gradlew check
