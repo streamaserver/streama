@@ -67,7 +67,7 @@ class DefaultDataService {
             "More information at https://en.wikipedia.org/wiki/IETF_language_tag",
           settingsType: 'string',
           required: false,
-          default: 'en'
+          value: 'en',
         ],
         [
             settingsKey: 'Base URL',
