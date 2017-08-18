@@ -7,6 +7,8 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 
 [Visit the Promo-Website here!](http://dularion.github.io/streama/)
 
+[Visit my Patreon Page here](https://www.patreon.com/user?u=7362340)
+
 
 ## Table of contents:
 - [Getting Started](#getting-started)
