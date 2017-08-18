@@ -155,4 +155,35 @@ class DashController {
       render (media as JSON)
     }
   }
+
+
+  def cotinueWatching(TvShow tvShow){
+    def result
+
+    if(!tvShow){
+      render status: NOT_FOUND
+      return
+    }
+
+    User currentUser = springSecurityService.currentUser
+    ViewingStatus viewingStatus = ViewingStatus.withCriteria {
+      eq("user", currentUser)
+      eq("tvShow", tvShow)
+      video {
+        isNotEmpty("files")
+        ne("deleted", true)
+      }
+//      eq("completed", false)
+      order("lastUpdated", "desc")
+    }?.getAt(0)
+
+    if(viewingStatus?.video){
+      result = viewingStatus?.video
+    }else{
+      result = tvShow.firstEpisode
+    }
+    JSON.use('mediaDetail'){
+      render (result as JSON)
+    }
+  }
 }
