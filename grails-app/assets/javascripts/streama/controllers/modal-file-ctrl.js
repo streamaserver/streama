@@ -6,6 +6,7 @@ angular.module('streama').controller('modalFileCtrl', [
     $scope.loading = false;
     $scope.localFilesEnabled = false;
     $scope.localFiles = [];
+    $scope.activeTab = 'upload';
     var localFileLastPath = localStorageService.get('localFileLastPath')|| '';
 		$scope.localDir = localFileLastPath.split('/') || [];
     $scope.video = video;
