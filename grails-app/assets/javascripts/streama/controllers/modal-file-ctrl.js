@@ -7,6 +7,8 @@ angular.module('streama').controller('modalFileCtrl', [
     $scope.localFilesEnabled = false;
     $scope.localFiles = [];
     $scope.activeTab = localStorageService.get('activeFileModalTab')|| 'upload';
+    $scope.closeOnSelect = localStorageService.get('fileModal.closeOnSelect');
+    if($scope.closeOnSelect == null){$scope.closeOnSelect = true;}
 
     var localFileLastPath = localStorageService.get('localFileLastPath')|| '';
 		$scope.localDir = localFileLastPath.split('/') || [];
@@ -15,6 +17,7 @@ angular.module('streama').controller('modalFileCtrl', [
     $scope.loadLocalFiles = loadLocalFiles;
 		$scope.backLocalDirectory = backLocalDirectory;
 		$scope.openLocalDirectory = openLocalDirectory;
+		$scope.toggleCloseOnSelect = toggleCloseOnSelect;
 
 
 		$scope.loadLocalFiles(localFileLastPath);
@@ -77,6 +80,9 @@ angular.module('streama').controller('modalFileCtrl', [
           $scope.video.files.push(data);
 					$scope.video.hasFiles = true;
         }
+        if($scope.closeOnSelect){
+          $uibModalInstance.dismiss('cancel');
+        }
       }).error(function(data) {
         alertify.error(data.message);
       });
@@ -133,5 +139,9 @@ angular.module('streama').controller('modalFileCtrl', [
         return (extensions.indexOf(file.extension.toLowerCase()) > -1);
       })
     };
+
+    function toggleCloseOnSelect() {
+      localStorageService.set('fileModal.closeOnSelect', $scope.closeOnSelect);
+    }
 
   }]);
