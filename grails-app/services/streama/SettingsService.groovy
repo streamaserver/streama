@@ -62,6 +62,9 @@ class SettingsService {
     if (settingsInstance.settingsKey == 'TheMovieDB API key') {
       validateTheMovieDbAPI(settingsInstance, resultValue)
     }
+    if (settingsInstance.settingsKey == 'TheMovieDB API language') {
+      validateTheMovieDbLanguage(settingsInstance, resultValue)
+    }
 
     return resultValue;
   }
@@ -116,4 +119,13 @@ class SettingsService {
     }
   }
 
+  def validateTheMovieDbLanguage(Settings settingsInstance, resultValue) {
+    if (theMovieDbService.validateLanguage(settingsInstance.value)) {
+      resultValue.success = true;
+      resultValue.message = "The API-Language is valid and can be used!";
+    } else {
+      resultValue.error = true;
+      resultValue.message = "Invalid API language: The entered language is not an IETF language tag.";
+    }
+  }
 }
