@@ -50,7 +50,8 @@ class FileService {
       fis = new FileInputStream(rawFile) //391694394
     }catch(e){
       response.setStatus(PRECONDITION_FAILED.value())
-      return [error: true, message: e.message]
+      render ([message: e.message] as JSON)
+      return
     }
     byte[] buffer = new byte[16000]
 

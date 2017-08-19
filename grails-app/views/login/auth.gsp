@@ -24,8 +24,6 @@
 
 <body >
 	<g:render template="/templates/header_simple"></g:render>
-
-	<g:link controller="login" action="authAjax"></g:link>
 	<div id='login' ng-app="streama.translations" class="ng-cloak">
 		<div class='inner'>
 			<div class='fheader'>{{'LOGIN.TITLE' | translate}}</div>

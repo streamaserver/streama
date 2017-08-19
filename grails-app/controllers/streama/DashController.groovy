@@ -4,19 +4,26 @@ import grails.converters.JSON
 import static org.springframework.http.HttpStatus.*
 
 class DashController {
-  static responseFormats = ['json', 'xml']
 
   def springSecurityService
-  def videoService
 
   def listContinueWatching(){
     User currentUser = springSecurityService.currentUser
 
-    List<ViewingStatus> viewingStatusList = videoService.listContinueWatching(currentUser)
+    def continueWatching = ViewingStatus.withCriteria {
+      eq("user", currentUser)
+      video{
+        isNotEmpty("files")
+        ne("deleted", true)
+      }
+//      eq("completed", false)
+      order("lastUpdated", "desc")
+    }
 
-    return [viewingStatusList: viewingStatusList]
+    JSON.use ('dashViewingStatus') {
+      respond continueWatching
+    }
   }
-
 
   def listShows(){
     def tvShows = TvShow.withCriteria{
@@ -31,11 +38,6 @@ class DashController {
     JSON.use ('dashTvShow') {
       respond tvShows
     }
-  }
-
-
-  def listEpisodesForShow(TvShow tvShow){
-    render (tvShow.getFilteredEpisodes() as JSON)
   }
 
 
@@ -124,35 +126,6 @@ class DashController {
   def listNewReleases(){
     JSON.use('dashMovies'){
       respond NotificationQueue.findAllByType('newRelease').sort{new Random(System.nanoTime())}
-    }
-  }
-
-
-  def mediaDetail(){
-    log.debug(params.mediaType)
-    log.debug(params.id)
-    Integer id = params.int('id')
-    def media
-
-    if(params.mediaType == 'movie'){
-      media = Movie.get(id)
-    }
-    if(params.mediaType == 'tvShow'){
-      media = TvShow.get(id)
-    }
-    if(params.mediaType == 'episode'){
-      media = Episode.get(id)
-    }
-    if(params.mediaType == 'genericVideo'){
-      media = GenericVideo.get(id)
-    }
-    if(!media){
-      render status: NOT_FOUND
-      return
-    }
-
-    JSON.use('mediaDetail'){
-      render (media as JSON)
     }
   }
 }

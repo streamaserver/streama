@@ -66,19 +66,6 @@ class Video {
       return nextEpisode
     }
   }
-
-
-  String getTitle(){
-    if (this instanceof Movie) {
-      return this.title
-    }
-    if (this instanceof GenericVideo) {
-      return this.title
-    }
-    if (this instanceof Episode) {
-      return this.show?.name
-    }
-  }
   def getVideoFiles(){
     return this.files?.findAll{it.extension != '.srt' && it.extension != '.vtt'}
   }

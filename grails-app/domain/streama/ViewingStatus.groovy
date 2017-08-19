@@ -28,5 +28,4 @@ class ViewingStatus {
     currentPlayTime nullable: false
     video nullable: false
   }
-
 }
