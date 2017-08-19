@@ -22,7 +22,8 @@
     <div ng-switch="setting.settingsType">
       <div ng-switch-when="string">
         <div class="col-sm-7" ng-class="{'has-error has-feedback': setting.invalid, 'has-success has-feedback': setting.valid}">
-          <input ng-required="setting.required" type="text" class="form-control" ng-model="setting.value" placeholder="{{setting.settingsKey}}" ng-change="changeValue(setting)">
+          <input ng-required="setting.required" type="text" class="form-control" ng-model="setting.value" placeholder="{{setting.settingsKey}}" ng-change="changeValue(setting)" 
+        				ng-blur="(!setting.valid && setting.dirty && setting.validationRequired!==false)?validateSettings(setting):fasle">
 
           <span class="glyphicon ion-close form-control-feedback" ng-show="setting.invalid" aria-hidden="true"></span>
           <span class="glyphicon ion-checkmark form-control-feedback" ng-show="setting.valid" aria-hidden="true"></span>
