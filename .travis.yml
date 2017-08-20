@@ -7,7 +7,7 @@ language: groovy
 dist: precise
 
 jdk:
-  - oraclejdk8
+  - oraclejdk7
 
 
 script: ./gradlew check
