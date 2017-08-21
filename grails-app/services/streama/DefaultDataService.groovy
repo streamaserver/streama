@@ -66,14 +66,16 @@ class DefaultDataService {
             "For example, you could type es-ES for getting responses in spanish. Be careful with your country, es-ES is not the same as es-MX. " +
             "More information at https://en.wikipedia.org/wiki/IETF_language_tag",
           settingsType: 'string',
-          required: false
+          required: false,
+          value: 'en'
         ],
         [
             settingsKey: 'Base URL',
             value: 'http://localhost:8080',
             description: 'The Base-URL is used for the videos and the link in the invitation-email.',
             settingsType: 'string',
-            required: true
+            required: true,
+            validationRequired: false
         ],
         [
             settingsKey: 'Second Directory',
@@ -90,7 +92,8 @@ class DefaultDataService {
         [
             settingsKey: 'First Time Login Info',
             description: 'Should the First-Time login info (admin/admin) be shown in the login screen?',
-            settingsType: 'boolean'
+            settingsType: 'boolean',
+            value: 'true'
         ],
         [
             settingsKey: 'Allow anonymous access',

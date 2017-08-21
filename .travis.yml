@@ -4,7 +4,10 @@
 
 language: groovy
 
+dist: precise
+
 jdk:
   - oraclejdk7
 
-script: gradle check
+
+script: ./gradlew check

@@ -28,8 +28,8 @@
 		<div class='inner'>
 			<div class='fheader'>{{'LOGIN.TITLE' | translate}}</div>
 
-			<g:if test='${flash.message}'>
-				<div class='login_message'>${flash as grails.converters.JSON}</div>
+      <g:if test='${flash.message}'>
+			  <div class='login_message'>${flash.message}</div>
 			</g:if>
 
 			<form action='${postUrl}' method='POST' id='loginForm' class='cssform form-horizontal' autocomplete='off'>
