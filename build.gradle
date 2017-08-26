@@ -139,4 +139,8 @@ assets {
 bootRun {
     // local.config.location is just a random name. You can use yours.
     jvmArgs = ['-Dlocal.config.location=app-config.yml']
+    
+    tasks.withType(JavaExec).each { task ->
+    	task.systemProperties System.properties
+	}
 }
