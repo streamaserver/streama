@@ -119,11 +119,12 @@ class BulkCreateService {
             fileResult.importedId =existingTvShow.id
             fileResult.importedType = 'show'
           }
+          fileResult.apiId = tvShowId
         }
 
 
-        fileResult.tvShowApiId = tvShowId
         fileResult.tvShowOverview = movieDbResults.overview[0]
+        fileResult.tvShowId = tvShowId
         fileResult.showName = movieDbResults.name[0]
         fileResult.poster_path = movieDbResults.poster_path[0]
         fileResult.backdrop_path = movieDbResults.backdrop_path[0]
@@ -138,9 +139,9 @@ class BulkCreateService {
             fileResult.importedType = 'episode'
           }
 
+          fileResult.apiId = episodeResult.id
           fileResult.episodeName = episodeResult.name
           fileResult.first_air_date = episodeResult.air_date
-          fileResult.episodeApiId = episodeResult.id
           fileResult.episodeOverview = episodeResult.overview
           fileResult.still_path = episodeResult.still_path
         }
