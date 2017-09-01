@@ -172,7 +172,9 @@ class BulkCreateService {
       }
 
       def entity = theMovieDbService.createEntityFromApiId(type, fileMatcher.apiId, fileMatcher)
-
+      if(entity instanceof Video){
+        entity.addLocalFile(fileMatcher.file)
+      }
       fileMatcher.status = MATCHER_STATUS.EXISTING
       fileMatcher.importedId = entity.id
       fileMatcher.importedType = STREAMA_ROUTES[type]
