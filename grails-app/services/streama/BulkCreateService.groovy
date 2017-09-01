@@ -83,7 +83,7 @@ class BulkCreateService {
         if(existingMovie){
           fileResult.status = MATCHER_STATUS.EXISTING
           fileResult.importedId = existingMovie.id
-          fileResult.importedType = 'movie'
+          fileResult.importedType = STREAMA_ROUTES[type]
         }
         fileResult.apiId = movieResult.id
         fileResult.overview = movieResult.overview
@@ -122,7 +122,7 @@ class BulkCreateService {
           if(existingTvShow){
             fileResult.status = MATCHER_STATUS.EXISTING
             fileResult.importedId =existingTvShow.id
-            fileResult.importedType = 'show'
+            fileResult.importedType = STREAMA_ROUTES[type]
           }
           fileResult.apiId = tvShowId
         }
@@ -141,7 +141,7 @@ class BulkCreateService {
           if(existingEpisode){
             fileResult.status = MATCHER_STATUS.EXISTING
             fileResult.importedId =existingEpisode.showId
-            fileResult.importedType = 'episode'
+            fileResult.importedType = STREAMA_ROUTES[type]
           }
 
           fileResult.apiId = episodeResult.id
