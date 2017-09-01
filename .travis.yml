@@ -2,9 +2,19 @@
 # - http://docs.travis-ci.com/user/languages/groovy/
 # - http://blog.freeside.co/2013/02/26/grails-builds-on-travis-ci/
 
+sudo: required
+
 language: groovy
 
-jdk:
-  - oraclejdk7
+services: docker
 
-script: gradle check
+script: ./gradlew check
+
+after_success:
+  if [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    docker login -u="$DOCKER_USER" -p="$DOCKER_PASS";
+    docker build -t gkiko/streama:latest .;
+    docker tag gkiko/streama:latest gkiko/streama:$TRAVIS_TAG;
+    docker push gkiko/streama:latest;
+    docker push gkiko/streama:$TRAVIS_TAG;
+  fi

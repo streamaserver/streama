@@ -23,7 +23,12 @@
 </head>
 
 <body class="ng-cloak">
-    <g:render template="/templates/header"></g:render>
+    <g:if test="${sec.username() == 'anonymous'}">
+      <g:render template="/templates/header_anonymous"></g:render>
+    </g:if>
+    <g:else>
+      <g:render template="/templates/header"></g:render>
+    </g:else>
 
     <div class="content ng-cloak">
         <ui-view/>

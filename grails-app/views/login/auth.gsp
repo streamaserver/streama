@@ -15,7 +15,7 @@
 	<asset:stylesheet src="vendor.css"/>
 	<asset:stylesheet src="application.css"/>
 
-	<asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
+	<link rel="icon" href="${streama.Settings.findByName('favicon').value}" type="image/x-icon">
 
 	<script type="text/javascript">
 		window.contextPath = "${request.contextPath}";
@@ -28,8 +28,8 @@
 		<div class='inner'>
 			<div class='fheader'>{{'LOGIN.TITLE' | translate}}</div>
 
-			<g:if test='${flash.message}'>
-				<div class='login_message'>${flash as grails.converters.JSON}</div>
+      <g:if test='${flash.message}'>
+			  <div class='login_message'>${flash.message}</div>
 			</g:if>
 
 			<form action='${postUrl}' method='POST' id='loginForm' class='cssform form-horizontal' autocomplete='off'>

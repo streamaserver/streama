@@ -15,6 +15,7 @@ class BootStrap {
         migrationService.addGenresToMoviesAndShows()
         migrationService.setTheMovieDBKey()
         migrationService.fixLogoValue()   //2017-03-04
+        migrationService.urlvalidationFix()
     }
     def destroy = {
     }

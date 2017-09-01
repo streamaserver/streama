@@ -1,4 +1,4 @@
-angular.module('streama').run(function ($rootScope, $state, localStorageService, apiService, modalService, userService) {
+angular.module('streama').run(function ($window, $rootScope, $state, localStorageService, apiService, modalService, userService) {
 	apiService.currentUser().success(function (data) {
 		userService.setCurrentUser(data);
 	});
@@ -41,6 +41,10 @@ angular.module('streama').run(function ($rootScope, $state, localStorageService,
 		$state.go('dash', {genreId: (genre ? genre.id : null)});
 		$rootScope.$broadcast('changedGenre', genre);
 	};
+
+	$rootScope.loginUser = function () {
+	  $window.location.assign('/login/login');
+  }
 
 
 	$rootScope.$on('$stateChangeSuccess', function (e, toState) {

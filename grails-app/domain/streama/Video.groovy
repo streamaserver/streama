@@ -41,7 +41,7 @@ class Video {
     }
     return false
   }
-
+  
   def getViewingStatus(){
     ViewingStatus.findByVideoAndUser(this, springSecurityService.currentUser)
   }

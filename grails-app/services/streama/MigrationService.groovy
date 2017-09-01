@@ -126,4 +126,11 @@ class MigrationService {
       setting.save()
     }
   }
+  def urlvalidationFix(){
+    Settings setting = Settings.findBySettingsKey('Base URL')
+    if(setting.validationRequired){
+        setting.validationRequired = false
+        setting.save()
+    }
+  }
 }
