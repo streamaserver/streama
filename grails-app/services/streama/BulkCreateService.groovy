@@ -17,6 +17,11 @@ class BulkCreateService {
     MATCH_FOUND: 1,
     EXISTING: 2
   ]
+  final static STREAMA_ROUTES = [
+    movie: 'movie',
+    tv: 'show',
+    episode: 'show'
+  ]
 
 
   def matchMetaDataFromFiles(files) {
@@ -167,7 +172,11 @@ class BulkCreateService {
       }
 
       def entity = theMovieDbService.createEntityFromApiId(type, fileMatcher.apiId, fileMatcher)
-      result.add(entity)
+
+      fileMatcher.status = MATCHER_STATUS.EXISTING
+      fileMatcher.importedId = entity.id
+      fileMatcher.importedType = STREAMA_ROUTES[type]
+      result.add(fileMatcher)
     }
 
     return result
