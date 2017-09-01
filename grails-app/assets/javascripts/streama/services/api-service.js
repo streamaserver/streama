@@ -124,6 +124,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			matchMetaDataFromFiles: function (files) {
 				return $http.post('file/matchMetaDataFromFiles.json', {files: files});
 			},
+      bulkAddMediaFromFile: function (files) {
+				return $http.post('file/bulkAddMediaFromFile.json', {files: files});
+			},
       save: function(data) {
         return $http.post('file/save.json', data);
       }

@@ -289,6 +289,13 @@ class FileController {
     render (result as JSON)
   }
 
+  def bulkAddMediaFromFile(){
+    def files = request.JSON.files
+    def result = bulkCreateService.bulkAddMediaFromFile(files)
+
+    render (result as JSON)
+  }
+
 
   def save(File file) {
 

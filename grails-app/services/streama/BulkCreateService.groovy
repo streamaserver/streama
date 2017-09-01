@@ -156,4 +156,20 @@ class BulkCreateService {
     fileResult.season = seasonNumber
     fileResult.episodeNumber = episodeNumber
   }
+
+
+  def bulkAddMediaFromFile(List<Map> fileMatchers){
+    def result = []
+    fileMatchers.each{ fileMatcher ->
+      String type = fileMatcher.type
+      if(fileMatcher.status == MATCHER_STATUS.EXISTING){
+        return
+      }
+
+      def entity = theMovieDbService.createEntityFromApiId(type, fileMatcher.apiId, fileMatcher)
+      result.add(entity)
+    }
+
+    return result
+  }
 }
