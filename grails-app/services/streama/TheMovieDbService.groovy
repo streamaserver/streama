@@ -135,7 +135,11 @@ class TheMovieDbService {
       return getFullTvShowMeta(id)
     }
     if(type == 'episode' && data){
-      return getEpisodeMeta(data.tvShowId, data.seasonNumber, data.episodeNumber)
+      def result = getEpisodeMeta(data.tvShowId, data.season, data.episodeNumber)
+      result.tv_id = data.tvShowId
+      result.season_number = data.season
+      result.episode_number = data.episodeNumber
+      return result
     }
   }
 }
