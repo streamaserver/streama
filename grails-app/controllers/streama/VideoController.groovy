@@ -196,7 +196,7 @@ class VideoController {
   @Transactional
   def addLocalFile(Video videoInstance){
     def result = videoService.addLocalFile(videoInstance, params)
-    if(result.error){
+    if(result instanceof Map && result.error){
       response.setStatus(result.statusCode)
       respond result
       return
