@@ -195,37 +195,12 @@ class VideoController {
 
   @Transactional
   def addLocalFile(Video videoInstance){
-    def result = [:]
-
-    // The local path is configured?
-    if (!uploadService.localPath) {
-      result.message = "The Local Video Files setting is not configured."
-      response.setStatus(NOT_ACCEPTABLE.value)
+    def result = videoService.addLocalFile(videoInstance, params)
+    if(result.error){
+      response.setStatus(result.statusCode)
       respond result
       return
     }
-
-    // Check that the given file path is contained in the local files directory
-    def localPath = Paths.get(uploadService.localPath)
-    def givenPath = Paths.get(params.localFile).toAbsolutePath()
-    if (!givenPath.startsWith(localPath)) {
-      result.message = "The video file must be contained in the Local Video Files setting."
-      response.setStatus(NOT_ACCEPTABLE.value)
-      respond result
-      return
-    }
-
-    // Create the file in database
-    File file = File.findOrCreateByLocalFile(params.localFile)
-    file.localFile = params.localFile
-    file.originalFilename = givenPath.getFileName().toString()
-    file.contentType = Files.probeContentType(givenPath)
-    file.size = Files.size(givenPath)
-    def extensionIndex = params.localFile.lastIndexOf('.')
-    file.extension = params.localFile[extensionIndex..-1];
-    file.save(failOnError: true, flush: true)
-    videoInstance.addToFiles(file)
-    videoInstance.save(failOnError: true, flush: true)
-    respond file
+    respond result
   }
 }
