@@ -12,6 +12,11 @@ class BulkCreateService {
 
   final static STD_MOVIE_REGEX = /^(?<Name>.*)[_.]\(\d{4}\).*/
   final static STD_TVSHOW_REGEX = /^(?<Name>.+)[._]S(?<Season>\d{2})E(?<Episode>\d{2,3}).*/
+  final static MATCHER_STATUS = [
+    NO_MATCH: 0,
+    MATCH_FOUND: 1,
+    EXISTING: 2
+  ]
 
 
   def matchMetaDataFromFiles(files) {
@@ -48,7 +53,7 @@ class BulkCreateService {
     } else if (movieMatcher.matches()) {
       matchMovieFromFile(movieMatcher, fileResult)
     } else {
-      fileResult.status = 0
+      fileResult.status = MATCHER_STATUS.NO_MATCH
       fileResult.message = 'No match found'
     }
 
@@ -71,7 +76,7 @@ class BulkCreateService {
 
         Movie existingMovie = Movie.findByApiIdAndDeletedNotEqual(movieResult.id, true)
         if(existingMovie){
-          fileResult.status = 2
+          fileResult.status = MATCHER_STATUS.EXISTING
           fileResult.importedId = existingMovie.id
           fileResult.importedType = 'movie'
         }
@@ -87,7 +92,7 @@ class BulkCreateService {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
       fileResult.title = name
     }
-    fileResult.status = fileResult.status ?: 1
+    fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
     fileResult.message = 'match found'
     fileResult.type = type
   }
@@ -110,7 +115,7 @@ class BulkCreateService {
         if(!seasonNumber && !episodeNumber){
           TvShow existingTvShow = TvShow.findByApiIdAndDeletedNotEqual(tvShowId, true)
           if(existingTvShow){
-            fileResult.status = 2
+            fileResult.status = MATCHER_STATUS.EXISTING
             fileResult.importedId =existingTvShow.id
             fileResult.importedType = 'show'
           }
@@ -128,7 +133,7 @@ class BulkCreateService {
           def episodeResult = theMovieDbService.getEpisodeMeta(tvShowId, seasonNumber, episodeNumber)
           Episode existingEpisode = Episode.findByApiIdAndDeletedNotEqual(episodeResult.id, true)
           if(existingEpisode){
-            fileResult.status = 2
+            fileResult.status = MATCHER_STATUS.EXISTING
             fileResult.importedId =existingEpisode.showId
             fileResult.importedType = 'episode'
           }
@@ -144,7 +149,7 @@ class BulkCreateService {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
       fileResult.name = name
     }
-    fileResult.status = fileResult.status ?: 1
+    fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
     fileResult.message = 'match found'
     fileResult.type = type
     fileResult.season = seasonNumber
