@@ -126,4 +126,16 @@ class TheMovieDbService {
     def JsonContent = new URL(BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY).text
     return new JsonSlurper().parseText(JsonContent)
   }
+
+  def getEntryById(String type, id, data = [:]){
+    if(type == 'movie'){
+      return getFullMovieMeta(id)
+    }
+    if(type == 'tv' || type == 'tvShow'){
+      return getFullTvShowMeta(id)
+    }
+    if(type == 'episode' && data){
+      return getEpisodeMeta(data.tvShowId, data.seasonNumber, data.episodeNumber)
+    }
+  }
 }
