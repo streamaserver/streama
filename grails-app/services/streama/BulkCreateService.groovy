@@ -15,7 +15,8 @@ class BulkCreateService {
   final static MATCHER_STATUS = [
     NO_MATCH: 0,
     MATCH_FOUND: 1,
-    EXISTING: 2
+    EXISTING: 2,
+    CREATED: 3
   ]
   final static STREAMA_ROUTES = [
     movie: 'movie',
@@ -175,8 +176,8 @@ class BulkCreateService {
       if(entity instanceof Video){
         entity.addLocalFile(fileMatcher.file)
       }
-      fileMatcher.status = MATCHER_STATUS.EXISTING
-      fileMatcher.importedId = entity.id
+      fileMatcher.status = MATCHER_STATUS.CREATED
+      fileMatcher.importedId = entity instanceof Episode ? entity.showId : entity.id
       fileMatcher.importedType = STREAMA_ROUTES[type]
       result.add(fileMatcher)
     }
