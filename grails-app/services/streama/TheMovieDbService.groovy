@@ -142,4 +142,38 @@ class TheMovieDbService {
       return result
     }
   }
+
+  def createEntityFromApiId(type, id, data = [:]){
+    def apiData = getEntryById(type, id, data)
+    def entity = createEntityFromApiData(type, apiData)
+    return entity
+  }
+
+
+  def createEntityFromApiData(type, Map data){
+    def apiId = data.id
+    data.remove('id')
+    def entity
+
+    if(type == 'movie'){
+      entity = new Movie()
+    }
+    if(type == 'tv' || type == 'tvShow'){
+      entity = new TvShow()
+    }
+    if(type == 'episode'){
+      entity = new Episode()
+      TvShow tvShow = TvShow.findByApiId(data.tv_id)
+      if(!tvShow){
+        tvShow = createEntityFromApiId('tv', data.tv_id)
+      }
+      entity.show = tvShow
+      log.debug("epiosde data")
+    }
+
+    entity.properties = data
+    entity.apiId = apiId
+    entity.save(flush:true, failOnError:true)
+    return entity
+  }
 }
