@@ -26,15 +26,11 @@ class BulkCreateService {
 
 
   def matchMetaDataFromFiles(files) {
-    def config = grailsApplication.config
+    def regexConfig = grailsApplication.config.streama?.regex
 
-    def isMovieConfigAvailable = config.containsProperty("Movies.regex")
-    def isTvShowConfigAvailable = config.containsProperty("Shows.regex")
 
-    def movieRegex = isMovieConfigAvailable ?
-        config.getProperty("Movies.regex") : STD_MOVIE_REGEX
-    def tvShowRegex = isTvShowConfigAvailable ?
-        config.getProperty("Shows.regex") : STD_TVSHOW_REGEX
+    def movieRegex = regexConfig?.movies ?: STD_MOVIE_REGEX
+    def tvShowRegex = regexConfig?.shows ?: STD_TVSHOW_REGEX
 
     def result = []
     log.debug(files)
