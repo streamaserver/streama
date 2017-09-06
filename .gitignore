@@ -42,8 +42,8 @@
 .idea
 *.iml
 /classes
-/build
 *.log
+/build
 
 #gradle
 /.gradle

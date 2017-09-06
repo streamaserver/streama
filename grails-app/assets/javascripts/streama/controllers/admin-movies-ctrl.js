@@ -6,6 +6,8 @@ angular.module('streama').controller('adminMoviesCtrl', ['$scope', 'apiService',
   $scope.hasMovieDBKey = true;
   $scope.searchText = "Search Movie from collection or TheMovieDB...";
 
+  $scope.createFromFiles = createFromFiles;
+
   apiService.theMovieDb.hasKey().success(function (data) {
     if (!data.key) {
       $scope.hasMovieDBKey = false;
@@ -51,5 +53,13 @@ angular.module('streama').controller('adminMoviesCtrl', ['$scope', 'apiService',
 		console.log('%c movie', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', movie);
 		return movie.id && _.find($scope.movies, {apiId: movie.id.toString()});
 	};
+
+	function createFromFiles() {
+		modalService.createFromFilesModal('movie').then(function (data) {
+			apiService.movie.list().success(function (data) {
+				angular.extend($scope.movies, data);
+			});
+		});
+	}
 
 }]);

@@ -119,4 +119,61 @@ class TheMovieDbService {
     def JsonContent = new URL(BASE_URL + "/tv/$tvApiId/season/$seasonNumber/episode/$episodeNumber?$API_PARAMS").text
     return new JsonSlurper().parseText(JsonContent)
   }
+
+  def searchForEntry(type, name) {
+    def query = URLEncoder.encode(name, "UTF-8")
+
+    def JsonContent = new URL(BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY).text
+    return new JsonSlurper().parseText(JsonContent)
+  }
+
+  def getEntryById(String type, id, data = [:]){
+    if(type == 'movie'){
+      return getFullMovieMeta(id)
+    }
+    if(type == 'tv' || type == 'tvShow'){
+      return getFullTvShowMeta(id)
+    }
+    if(type == 'episode' && data){
+      def result = getEpisodeMeta(data.tvShowId, data.season, data.episodeNumber)
+      result.tv_id = data.tvShowId
+      result.season_number = data.season
+      result.episode_number = data.episodeNumber
+      return result
+    }
+  }
+
+  def createEntityFromApiId(type, id, data = [:]){
+    def apiData = getEntryById(type, id, data)
+    def entity = createEntityFromApiData(type, apiData)
+    return entity
+  }
+
+
+  def createEntityFromApiData(type, Map data){
+    def apiId = data.id
+    data.remove('id')
+    def entity
+
+    if(type == 'movie'){
+      entity = new Movie()
+    }
+    if(type == 'tv' || type == 'tvShow'){
+      entity = new TvShow()
+    }
+    if(type == 'episode'){
+      entity = new Episode()
+      TvShow tvShow = TvShow.findByApiId(data.tv_id)
+      if(!tvShow){
+        tvShow = createEntityFromApiId('tv', data.tv_id)
+      }
+      entity.show = tvShow
+      log.debug("epiosde data")
+    }
+
+    entity.properties = data
+    entity.apiId = apiId
+    entity.save(flush:true, failOnError:true)
+    return entity
+  }
 }
