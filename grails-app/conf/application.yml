@@ -119,5 +119,11 @@ grails:
             /dash/**: {}
             /player/**: {}
 
+streama:
+  regex:
+    movies: ^(?<Name>.*)[_.]\(\d{4}\).*
+    shows: ^(?<Name>.+)[._]S(?<Season>\d{2})E(?<Episode>\d{2,3}).*
+
+
 grails.controllers.upload.maxFileSize: 10000000000000 # 10TB
 grails.controllers.upload.maxRequestSize: 10000000000000 # 10TB

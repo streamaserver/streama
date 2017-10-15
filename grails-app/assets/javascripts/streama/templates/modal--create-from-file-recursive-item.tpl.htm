@@ -1,0 +1,56 @@
+<div ng-if="file.directory">
+  <div class="row">
+    <div class="checkbox-wrapper">
+      <input type="checkbox" ng-click="vm.toggleDirectorySelection(file)" ng-checked="vm.isSelected(file)">
+    </div>
+    <div class="col-md-8" ng-click="vm.openLocalDirectory(file)">
+      <i class="ion-folder"></i> {{ file.name }}
+    </div>
+    <div class="col-md-3">
+    <span ng-if="vm.getMatchForPath(file.path)">
+      {{vm.getMatchForPath(file.path).message}}
+    </span>
+      <button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1"
+              ng-click="vm.addSelectedFile()">Add this file
+      </button>
+    </div>
+  </div>
+
+  <ul ng-if="file.showFiles">
+    <li ng-repeat="file in file.localFiles | orderBy: ['-directory', 'name'] | filter:vm.localFileSearch"
+           ng-include="'/streama/modal--create-from-file-recursive-item.htm'">
+    </li>
+  </ul>
+</div>
+
+<div class="row" ng-if="!file.directory">
+  <div class="checkbox-wrapper">
+    <input type="checkbox" ng-click="vm.toggleSelection(file)" ng-checked="vm.isSelected(file)">
+  </div>
+  <div class="col-md-8">
+    <i class="ion-document"></i> {{ file.name }}
+  </div>
+  <div class="col-md-3">
+     <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 1">
+      <a ng-click="vm.openMediaDetail(vm.getMatchForPath(file.path))"><i class="ion-ios-eye"></i> Preview Match</a>
+    </span>
+    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 2">
+      already added
+    </span>
+    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 3">
+      created
+    </span>
+    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 0">
+      {{vm.getMatchForPath(file.path).message}}
+    </span>
+
+    <br>
+
+    <button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1"
+            ng-click="vm.addSelectedFile(file)">Add this file
+    </button>
+    <a ng-if="vm.getMatchForPath(file.path).status == 2 || vm.getMatchForPath(file.path).status == 3"
+       ng-click="vm.openAdminForm(vm.getMatchForPath(file.path))"
+       class="text-success">Open in new tab <i class="ion-android-open"></i></a>
+  </div>
+</div>

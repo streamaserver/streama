@@ -31,6 +31,8 @@ angular.module('streama').controller('modalTvShowCtrl', [
 		delete $item.id;
 		$scope.tvShow = $item;
 		$scope.tvShow.apiId = apiId;
+		$scope.hasMovieDBKey = true;
+		$scope.tvShow.manualInput = false;
 	};
 
 

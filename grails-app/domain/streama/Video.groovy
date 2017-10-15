@@ -3,6 +3,7 @@ package streama
 class Video {
 
   def springSecurityService
+  transient videoService
 
   Date dateCreated
   Date lastUpdated
@@ -84,5 +85,9 @@ class Video {
   }
   def getSubtitles(){
     return this.files?.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+  }
+
+  def addLocalFile(localFilePath){
+    return videoService.addLocalFile(this, [localFile: localFilePath])
   }
 }
