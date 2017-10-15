@@ -37,6 +37,10 @@ class MovieController {
   }
 
   def show(Movie movie) {
+    if(!movie){
+      render status: NOT_FOUND
+      return
+    }
     respond movie, [status: OK]
   }
 
