@@ -1,7 +1,18 @@
 #login {
-  margin: 15px 0px;
   padding: 0px;
   text-align: center;
+}
+
+.login-page{
+  background: url('/assets/bg.jpg');
+
+  background-size: cover;
+  background-position: center;
+}
+
+.auth-logo{
+  max-width: 350px;
+  margin-top: 55px;
 }
 
 #login .inner {
@@ -10,21 +21,17 @@
   padding-bottom: 6px;
   margin: 60px auto;
   text-align: left;
-  background-color: rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.11);
 
-  .fheader {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.11);
-    padding: 10px 20px;
-    color: $primary;
-    font-size: 18px;
+  .form-control {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
   }
 
   .cssform {
     padding: 16px;
     @include clearfix;
   }
-  
+
   input[type="text"],
   input[type="password"]{
     padding-left: 10px;

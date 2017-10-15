@@ -23,6 +23,7 @@
 </head>
 
 <body class="ng-cloak">
+  <div class="page-container">
     <g:if test="${sec.username() == 'anonymous'}">
       <g:render template="/templates/header_anonymous"></g:render>
     </g:if>
@@ -33,6 +34,11 @@
     <div class="content ng-cloak">
         <ui-view/>
     </div>
+
+    <div class="page-container-push"></div>
+  </div>
+
+  <g:render template="/templates/footer"></g:render>
 
     <asset:javascript src="vendor.js" />
     <asset:javascript src="streama/streama.js" />

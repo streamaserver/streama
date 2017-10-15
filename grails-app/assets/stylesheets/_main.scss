@@ -4,22 +4,43 @@ body{
   font-weight: 300;
 }
 
+html, body { height: 100%; }
+
 h1,h2,h3,h4,h5,h6{
   color: white;
 }
 
+
+.page-container{
+  min-height: 100%;
+  margin-bottom: -30px;
+}
+
+.page-container-push{
+  height: 30px;
+}
+
+.footer{
+  padding: 7px 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+}
+
+.version{
+  color: #717475;
+  font-size: 10px;
+}
+
 .logo{
-  float: left;
   padding: 6px 0;
   position: relative;
-  margin-right: 15px;
-  @include flexbox;
-  @include align-items(flex-end);
+  margin: 0 auto;
+  display: block;
+  width: 95px;
 
   img{
     max-width: 130px;
     max-height: 31px;
-    margin-right: 10px;
   }
   i{
     font-size: 0.85em;
@@ -38,10 +59,7 @@ h1,h2,h3,h4,h5,h6{
   display: block;
 }
 
-.version{
-  color: $primary;
-  font-size: 10px;
-}
+
 
 header.main{
   @include clearfix;

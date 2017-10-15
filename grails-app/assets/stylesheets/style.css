@@ -568,27 +568,37 @@ body {
   color: white;
   font-weight: 300; }
 
+html, body {
+  height: 100%; }
+
 h1, h2, h3, h4, h5, h6 {
   color: white; }
 
+.page-container {
+  min-height: 100%;
+  margin-bottom: -30px; }
+
+.page-container-push {
+  height: 30px; }
+
+.footer {
+  padding: 7px 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center; }
+
+.version {
+  color: #717475;
+  font-size: 10px; }
+
 .logo {
-  float: left;
   padding: 6px 0;
   position: relative;
-  margin-right: 15px;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-align: flex-end;
-  -ms-flex-align: flex-end;
-  -webkit-align-items: flex-end;
-  align-items: flex-end; }
+  margin: 0 auto;
+  display: block;
+  width: 95px; }
   .logo img {
     max-width: 130px;
-    max-height: 31px;
-    margin-right: 10px; }
+    max-height: 31px; }
   .logo i {
     font-size: 0.85em; }
   .logo .spinner {
@@ -600,10 +610,6 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-collapse.in {
   clear: both;
   display: block; }
-
-.version {
-  color: #B0DDEF;
-  font-size: 10px; }
 
 header.main {
   background: rgba(0, 0, 0, 0.15);
@@ -1124,23 +1130,27 @@ hr {
       font-weight: 100; }
 
 #login {
-  margin: 15px 0px;
   padding: 0px;
   text-align: center; }
+
+.login-page {
+  background: url("/assets/bg.jpg");
+  background-size: cover;
+  background-position: center; }
+
+.auth-logo {
+  max-width: 350px;
+  margin-top: 55px; }
 
 #login .inner {
   max-width: 540px;
   width: 100%;
   padding-bottom: 6px;
   margin: 60px auto;
-  text-align: left;
-  background-color: rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.11); }
-  #login .inner .fheader {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.11);
-    padding: 10px 20px;
-    color: #B0DDEF;
-    font-size: 18px; }
+  text-align: left; }
+  #login .inner .form-control {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white; }
   #login .inner .cssform {
     padding: 16px; }
     #login .inner .cssform:after {
