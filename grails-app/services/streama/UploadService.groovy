@@ -30,7 +30,7 @@ class UploadService {
   }
 
   def upload(request, params = [:]) {
-    log.debug(params)
+//    log.debug(params)
     def rawFile = request.getFile('file')
     def sha256Hex = DigestUtils.sha256Hex(rawFile.inputStream)
     def index = rawFile.originalFilename.lastIndexOf('.')
