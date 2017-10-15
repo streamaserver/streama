@@ -35,7 +35,7 @@ class DashController {
 
 
   def listEpisodesForShow(TvShow tvShow){
-    render (tvShow.getFilteredEpisodes() as JSON)
+    respond tvShow.getFilteredEpisodes()
   }
 
 

@@ -1,0 +1,10 @@
+import streama.Episode
+
+model {
+  Episode episode
+}
+
+
+json g.render(episode, [includes: ['id', 'season_number', 'name', 'episode_number', 'episodeString', 'overview']]) {
+  still_path episode.buildImagePath('still_path')
+}
