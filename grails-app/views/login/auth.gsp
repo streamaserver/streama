@@ -51,7 +51,7 @@
             </g:if>
             <input style="display: none;" type='checkbox' name='remember_me' id='remember_me' checked='checked'/>
 
-            <button class="btn btn-primary pull-right">{{'LOGIN.SUBMIT' | translate}} <i class="ion-arrow-right-a"></i></button></span>
+            <button class="btn btn-primary pull-right">{{'LOGIN.SUBMIT' | translate}} &nbsp; <i class="ion-chevron-right"></i></button></span>
         </form>
       </div>
     </div>
