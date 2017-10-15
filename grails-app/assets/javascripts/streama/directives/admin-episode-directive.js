@@ -43,7 +43,7 @@ angular.module('streama').directive('adminEpisode', [
 				$scope.uploadStatus.percentage = null;
 				$scope.episode.files = $scope.episode.files || [];
 				$scope.episode.files.push(data);
-			});
+			}, function () {});
 		}
 	}
 }]);

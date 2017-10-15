@@ -60,7 +60,7 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 				uploadService.doUpload($scope.uploadStatus, 'file/upload.json?isPublic=true', function (data) {
 					$scope.uploadStatus.percentage = null;
 					setting.value = data.src;
-				}, files);
+				}, function () {}, files);
 			}else{
 				alertify.error("You have to set and save Upload Directory first");
 			}

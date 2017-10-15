@@ -22,7 +22,7 @@ angular.module('streama').controller('modalGenericVideoCtrl', [
 			console.log('%c type', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', type);
 			$scope.video[type] = data;
 			$scope.video[type+'_src'] = data.src;
-		}, files);
+		}, function () {}, files);
 	};
 
 

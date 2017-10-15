@@ -54,7 +54,7 @@ angular.module('streama').controller('modalMovieCtrl', [
 				$scope.imageUpload.percentage = null;
 				$scope.movie[type] = data;
 				$scope.movie[type+'_src'] = data.src;
-			}, files);
+			}, function () {}, files);
 		};
 
 		$scope.onTagSelect = function (tag) {

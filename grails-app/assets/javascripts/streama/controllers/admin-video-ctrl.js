@@ -63,7 +63,7 @@ angular.module('streama').controller('adminVideoCtrl', [
 			$scope.uploadStatus.percentage = null;
 			$scope.video.files = $scope.video.files || [];
 			$scope.video.files.push(data);
-		});
+		}, function () {});
 
 
 

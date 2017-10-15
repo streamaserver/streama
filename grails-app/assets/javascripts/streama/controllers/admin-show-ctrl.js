@@ -190,6 +190,6 @@ angular.module('streama').controller('adminShowCtrl', [
 		apiService.tvShow.save($scope.show).success(function (data) {
 			$scope.show.poster_image_src = data.poster_image_src;
 		});
-	});
+	}, function () {});
 
 }]);
