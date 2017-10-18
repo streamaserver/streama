@@ -98,7 +98,7 @@ Btw, if you have any issues getting started, let me know. I will gladly help out
 If you want to contribute a translation, please follow [the guide here](https://github.com/dularion/streama/wiki/Translating-the-app). 
 
 ### PRs
-If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your effors on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
+If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your efforts on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
 
 # Donations
 If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
