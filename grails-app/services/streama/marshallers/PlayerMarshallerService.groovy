@@ -45,7 +45,7 @@ class PlayerMarshallerService {
           returnArray['air_date'] = video.air_date
           returnArray['season_number'] = video.season_number
           returnArray['episode_number'] = video.episode_number
-          returnArray['still_path'] = video.buildImagePath('still_path')
+          returnArray['still_path'] = video.buildImagePath('still_path', 1280)
           returnArray['intro_start'] = video.intro_start
           returnArray['intro_end'] = video.intro_end
           returnArray['outro_start'] = video.outro_start
@@ -68,7 +68,7 @@ class PlayerMarshallerService {
           returnArray['mediaType'] = 'movie'
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
-          returnArray['backdrop_path'] = video.backdrop_path
+          returnArray['backdrop_path'] = video.buildImagePath('backdrop_path', 1280)
           returnArray['poster_path'] = video.poster_path
           returnArray['trailerKey'] = video.trailerKey
 
