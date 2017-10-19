@@ -11,6 +11,10 @@ class PlayerController {
   def playerService
 
   def video(Video videoInstance){
+    if(!videoInstance){
+      render status: 404
+      return
+    }
     JSON.use('player') {
       render (videoInstance as JSON)
     }
