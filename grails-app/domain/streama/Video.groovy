@@ -106,7 +106,7 @@ class Video {
 
     String imagePath = this[propertyName]
 
-    if(imagePath.startsWith('/')){
+    if(imagePath?.startsWith('/')){
       return "https://image.tmdb.org/t/p/w$size$imagePath"
     }else{
       return imagePath
