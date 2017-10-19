@@ -66,7 +66,7 @@ angular.module('streama').controller('adminVideoCtrl', [
 			
 			$scope.video.files = $scope.video.files || [];
 			$scope.video.files.push(data);
-		});
+		}, function () {});
 
 
 

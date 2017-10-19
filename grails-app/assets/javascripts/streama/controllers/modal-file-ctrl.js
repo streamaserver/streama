@@ -135,7 +135,7 @@ angular.module('streama').controller('modalFileCtrl', [
         alertify.success('Video uploaded successfully.');
       }
 
-    });
+    }, function () {});
 
     $scope.getFilesForExtensions = function(extensions){
       return _.filter($scope.video.files, function (file) {

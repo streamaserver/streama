@@ -1,0 +1,8 @@
+import streama.Episode
+
+model {
+  Iterable<Episode> episodeList
+}
+
+
+json tmpl.episode(episodeList ?: [])

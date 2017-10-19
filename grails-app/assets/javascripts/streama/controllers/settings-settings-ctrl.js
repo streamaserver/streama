@@ -62,7 +62,7 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 					if(data.error) return
 					
 					setting.value = data.src;
-				}, files);
+				}, function () {}, files);
 			}else{
 				alertify.error("You have to set and save Upload Directory first");
 			}

@@ -21,6 +21,21 @@ class VideoService {
     video.save failOnError: true, flush: true
   }
 
+
+  public static List<ViewingStatus> listContinueWatching(User currentUser) {
+    List<ViewingStatus> continueWatching = ViewingStatus.withCriteria {
+      eq("user", currentUser)
+      video {
+        isNotEmpty("files")
+        ne("deleted", true)
+      }
+//      eq("completed", false)
+      order("lastUpdated", "desc")
+    }
+    return continueWatching
+  }
+
+
   @Transactional
   def addLocalFile(Video videoInstance, params){
     def result = [:]

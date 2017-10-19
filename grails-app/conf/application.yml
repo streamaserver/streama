@@ -58,6 +58,8 @@ grails:
     spring:
         transactionManagement:
             proxies: false
+
+
 info:
     app:
         name: '@info.app.name@'
@@ -109,7 +111,13 @@ grails:
         defaultScope: singleton
     converters:
         encoding: UTF-8
-
+    cors:
+        enabled: true
+        mappings:
+            /api/**: {}
+            /login/**: {}
+            /dash/**: {}
+            /player/**: {}
 
 streama:
   regex:
