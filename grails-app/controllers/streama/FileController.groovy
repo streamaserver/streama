@@ -199,7 +199,11 @@ class FileController {
 
   def upload(){
     def file = uploadService.upload(request, params)
-    respond file
+    if(file!=null){
+    	respond file
+    }else{
+    	render status: 415
+    }
   }
 
   def deletedUnusedFilesOnHardDrive(){

@@ -117,10 +117,16 @@ class VideoController {
     }
 
     def file = uploadService.upload(request)
-    videoInstance.addToFiles(file)
-    videoInstance.save flush: true, failOnError: true
+    
+    if(file!=null){
+    	videoInstance.addToFiles(file)
+    	videoInstance.save flush: true, failOnError: true
+    	respond file
+    }else{
+    	render status: 415
+    }
 
-    respond file
+    
 
   }
 
