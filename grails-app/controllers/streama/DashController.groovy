@@ -93,13 +93,13 @@ class DashController {
 
 
   def listGenericVideos(){
-    def videos = GenericVideo.withCriteria {
-      ne("deleted", true)
+    def videos = GenericVideo.where {
+      deleted != true
       isNotEmpty("files")
-    }
+    }.list()
 
     JSON.use('dashGenericVideo'){
-      respond videos
+      render (videos as JSON)
     }
   }
 
