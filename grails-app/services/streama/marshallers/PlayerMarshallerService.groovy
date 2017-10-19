@@ -45,7 +45,7 @@ class PlayerMarshallerService {
           returnArray['air_date'] = video.air_date
           returnArray['season_number'] = video.season_number
           returnArray['episode_number'] = video.episode_number
-          returnArray['still_path'] = video.still_path
+          returnArray['still_path'] = video.buildImagePath('still_path')
           returnArray['intro_start'] = video.intro_start
           returnArray['intro_end'] = video.intro_end
           returnArray['outro_start'] = video.outro_start
