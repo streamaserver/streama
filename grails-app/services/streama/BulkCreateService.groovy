@@ -33,7 +33,6 @@ class BulkCreateService {
     def tvShowRegex = regexConfig?.shows ?: STD_TVSHOW_REGEX
 
     def result = []
-    log.debug(files)
 
     files.each { file ->
       def fileResult = matchSingleFile(file, movieRegex, tvShowRegex)
