@@ -414,7 +414,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						video.currentTime -= longSkippingDuration;
 					}, 'keyup');
 
-					Mousetrap.bind('f', function (event) {
+					Mousetrap.bind('alt+enter', function (event) {
 						event.preventDefault();
 						$scope.fullScreen();
 					});
