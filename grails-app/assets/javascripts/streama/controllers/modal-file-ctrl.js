@@ -118,7 +118,10 @@ angular.module('streama').controller('modalFileCtrl', [
 
     $scope.uploadStatus = {};
     $scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + video.id, function (data) {
+    	
       $scope.uploadStatus.percentage = null;
+
+		if(data.error) return
 
       if(data.extension == '.srt' || data.extension == '.vtt'){
         $scope.video.subtitles = $scope.video.subtitles || [];

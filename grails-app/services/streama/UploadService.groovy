@@ -8,6 +8,7 @@ import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequ
 class UploadService {
 
   def settingsService
+  def grailsApplication
 
   def getStoragePaths(){
     def storages = []
@@ -32,17 +33,26 @@ class UploadService {
   def upload(request, params = [:]) {
     log.debug(params)
     def rawFile = request.getFile('file')
+    def mimetype = rawFile.contentType
     def sha256Hex = DigestUtils.sha256Hex(rawFile.inputStream)
     def index = rawFile.originalFilename.lastIndexOf('.')
     String extension = rawFile.originalFilename[index..-1];
     def originalFilenameNoExt = rawFile.originalFilename[0..(index-1)]
     def contentType = rawFile.contentType;
+	
+	def allowedTypes = grailsApplication.config.streama.uploadtypes
+
+	//If the file upload content type isn't in the upload types array, fail the upload.
+	if(!allowedTypes.contains(mimetype)){
+		return null
+	}
 
     java.io.File targetFile = new java.io.File(this.dir.uploadDir, sha256Hex+extension)
     rawFile.transferTo(targetFile)
 
     File file = createFileFromUpload(sha256Hex, rawFile, extension, originalFilenameNoExt + extension, contentType, params)
-
+	
+	log.debug(file)
     return file
   }
 

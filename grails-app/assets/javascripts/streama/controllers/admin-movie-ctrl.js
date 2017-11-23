@@ -104,6 +104,9 @@ angular.module('streama').controller('adminMovieCtrl', [
 
 		$scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + $stateParams.movieId, function (data) {
 			$scope.uploadStatus.percentage = null;
+			
+			if(data.error) return
+			
 			$scope.movie.files = $scope.movie.files || [];
 			$scope.movie.files.push(data);
 		});

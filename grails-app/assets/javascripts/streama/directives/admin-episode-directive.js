@@ -41,6 +41,8 @@ angular.module('streama').directive('adminEpisode', [
 
 			$scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + $scope.episode.id, function (data) {
 				$scope.uploadStatus.percentage = null;
+				if(data.error) return
+				
 				$scope.episode.files = $scope.episode.files || [];
 				$scope.episode.files.push(data);
 			});

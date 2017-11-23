@@ -59,6 +59,8 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 				//do upload
 				uploadService.doUpload($scope.uploadStatus, 'file/upload.json?isPublic=true', function (data) {
 					$scope.uploadStatus.percentage = null;
+					if(data.error) return
+					
 					setting.value = data.src;
 				}, files);
 			}else{
