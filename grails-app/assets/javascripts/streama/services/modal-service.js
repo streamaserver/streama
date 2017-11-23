@@ -17,7 +17,8 @@ function modalService($uibModal, $state) {
 		fileManagerModal: fileManagerModal,
 		newReleaseModal: newReleaseModal,
 		mediaDetailModal: mediaDetailModal,
-		createFromFilesModal: createFromFilesModal
+		createFromFilesModal: createFromFilesModal,
+    openImageChooser: openImageChooser
 	};
 
 	function tvShowModal (tvShow, callback) {
@@ -270,4 +271,22 @@ function modalService($uibModal, $state) {
 
 		return modalInstance.result;
 	}
+
+	function openImageChooser(mediaType, media) {
+    var modalInstance = $uibModal.open({
+      templateUrl: '/streama/modal--image-chooser.htm',
+      controller: 'imageChooserModalCtrl as vm',
+      size: 'lg',
+      resolve: {
+        dialogOptions: function () {
+          return {
+            mediaType: mediaType,
+            media: media
+          };
+        }
+      }
+    });
+
+    return modalInstance.result;
+  }
 }

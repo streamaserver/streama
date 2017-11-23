@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('streama').controller('modalMovieCtrl', [
-	'$scope', '$uibModalInstance', 'apiService', 'movie', '$state', 'uploadService',
-	function ($scope, $uibModalInstance, apiService, movie, $state, uploadService) {
+	'$scope', '$uibModalInstance', 'apiService', 'movie', '$state', 'uploadService', 'modalService',
+	function ($scope, $uibModalInstance, apiService, movie, $state, uploadService, modalService) {
 	$scope.loading = false;
 
 	$scope.movie = movie || {};
 	$scope.movieDB = true;
 	$scope.hasMovieDBKey = true;
+	$scope.chooseNewBackdrop = chooseNewBackdrop;
 
   apiService.theMovieDb.hasKey().success(function (data) {
     if (!data.key) {
@@ -53,7 +54,7 @@ angular.module('streama').controller('modalMovieCtrl', [
 			uploadService.doUpload($scope.imageUpload, 'file/upload.json', function (data) {
 				$scope.imageUpload.percentage = null;
 				if(data.error) return
-				
+
 				$scope.movie[type] = data;
 				$scope.movie[type+'_src'] = data.src;
 			}, function () {}, files);
@@ -97,4 +98,8 @@ angular.module('streama').controller('modalMovieCtrl', [
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
 	};
+
+	function chooseNewBackdrop() {
+    modalService.openImageChooser('movie', $scope.movie);
+  }
 }]);
