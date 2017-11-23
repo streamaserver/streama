@@ -122,4 +122,13 @@ class TheMovieDbController {
     migrationService.addGenresToMoviesAndShows()
   }
 
+  def imagesForMedia(){
+    String apiId = params.apiId
+    String type = params.type
+
+    def requestUrl = "${theMovieDbService.BASE_URL}/${type}/${apiId}/images?${theMovieDbService.API_PARAMS_WITHOUT_LANG}"
+    def JsonContent = new URL(requestUrl).text
+    render JsonContent
+  }
+
 }
