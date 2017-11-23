@@ -2,7 +2,7 @@
 
 angular.module('streama').factory('uploadService', function ($http, Upload, contextPath) {
 	return {
-		doUpload: function (uploadStatus, endpoint, callback, files) {
+		doUpload: function (uploadStatus, endpoint, callback, errCallback, files) {
 			if (files && files.length) {
 				for (var i = 0; i < files.length; i++) {
 					var file = files[i];
@@ -20,16 +20,11 @@ angular.module('streama').factory('uploadService', function ($http, Upload, cont
 
 						.success(callback || angular.noop)
 						.error(function (err) {
-            				console.log('%c err', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', arguments);
-            				console.log(err.status)
-            				if(err.status===415){
-            					alertify.error("File upload failed. File type is not allowed.")
-            					callback({error:"FILE_TYPE_BAD"})
-            				}else{
-            					alertify.error("File upload failed. Please close this popup and try again.")
-            				}
-            				
-            			});
+              console.log('%c err', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', arguments);
+              alertify.error("File upload failed. Please close this popup and try again.", 0);
+              uploadStatus.percentage = null;
+              (errCallback || angular.noop)(err);
+            });
 
 				}
 			}

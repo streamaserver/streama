@@ -37,15 +37,18 @@ angular.module('streama').directive('adminEpisode', [
 			};
 
 
+      var uploadUrl = 'video/uploadFile.json?id=' + $scope.episode.id;
+      $scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, uploadUrl, uploadSuccess, uploadError);
 
+      function uploadSuccess (data) {
+        $scope.uploadStatus.percentage = null;
+        $scope.episode.files = $scope.episode.files || [];
+        $scope.episode.files.push(data);
+      }
 
-			$scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + $scope.episode.id, function (data) {
-				$scope.uploadStatus.percentage = null;
-				if(data.error) return
-				
-				$scope.episode.files = $scope.episode.files || [];
-				$scope.episode.files.push(data);
-			});
+      function uploadError(err) {
+        //TODO remove upload-overlay on error
+      }
 		}
 	}
 }]);

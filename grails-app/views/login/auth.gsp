@@ -23,14 +23,14 @@
 </head>
 
 <body >
-
-  <div class="page-container login-page">
+	<div class="page-container login-page">
     <div id='login' ng-app="streama.translations" class="ng-cloak">
-      <img class="auth-logo" src="${streama.Settings.findByName('logo').value == '/assets/logo.png' ? '/assets/logo_lg.png' : streama.Settings.findByName('logo').value}" alt="Streama">
-      <div class='inner'>
-        <g:if test='${flash.message}'>
-          <div class='login_message'>${flash.message}</div>
-        </g:if>
+		<img class="auth-logo" src="${streama.Settings.findByName('logo').value == '/assets/logo.png' ? '/assets/logo_lg.png' : streama.Settings.findByName('logo').value}" alt="Streama">
+			<div class='inner'>
+
+      <g:if test='${flash.message}'>
+			  <div class='login_message'>${flash.message}</div>
+			</g:if>
 
         <form action='${postUrl}' method='POST' id='loginForm' class='cssform form-horizontal' autocomplete='off'>
 

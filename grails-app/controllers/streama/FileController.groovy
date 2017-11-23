@@ -182,7 +182,11 @@ class FileController {
 
 
     if(fileService.allowedVideoFormats.contains(file.extension)){
-      fileService.serveVideo(request, response, rawFile, file)
+      def result = fileService.serveVideo(request, response, rawFile, file)
+      if(result?.error){
+        render (result as JSON)
+        return
+      }
       return null
     }else if(file.extension == '.srt'){
       def vttResult = srt2vttService.convert(rawFile)

@@ -109,7 +109,7 @@ angular.module('streama').controller('adminMovieCtrl', [
 			
 			$scope.movie.files = $scope.movie.files || [];
 			$scope.movie.files.push(data);
-		});
+		}, function () {});
 
 
 
