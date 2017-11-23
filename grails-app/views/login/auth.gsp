@@ -23,42 +23,43 @@
 </head>
 
 <body >
-	<g:render template="/templates/header_simple"></g:render>
-
-	<g:link controller="login" action="authAjax"></g:link>
-	<div id='login' ng-app="streama.translations" class="ng-cloak">
-		<div class='inner'>
-			<div class='fheader'>{{'LOGIN.TITLE' | translate}}</div>
+	<div class="page-container login-page">
+    <div id='login' ng-app="streama.translations" class="ng-cloak">
+		<img class="auth-logo" src="${streama.Settings.findByName('logo').value == '/assets/logo.png' ? '/assets/logo_lg.png' : streama.Settings.findByName('logo').value}" alt="Streama">
+			<div class='inner'>
 
       <g:if test='${flash.message}'>
 			  <div class='login_message'>${flash.message}</div>
 			</g:if>
 
-			<form action='${postUrl}' method='POST' id='loginForm' class='cssform form-horizontal' autocomplete='off'>
+        <form action='${postUrl}' method='POST' id='loginForm' class='cssform form-horizontal' autocomplete='off'>
 
-				<div class="form-group">
-					<label for="inputEmail" class="col-lg-2 control-label">{{'LOGIN.USERNAME' | translate}}</label>
-					<div class="col-lg-10">
-						<input type="text" name="username" class="form-control" placeholder="{{'LOGIN.USERNAME' | translate}}">
-					</div>
-				</div>
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="text" name="username" class="form-control" placeholder="{{'LOGIN.USERNAME' | translate}}">
+            </div>
+          </div>
 
-				<div class="form-group">
-					<label for="inputPassword" class="col-lg-2 control-label">{{'LOGIN.PASSWORD' | translate}}</label>
-					<div class="col-lg-10">
-						<input type="password" name='password' class="form-control" placeholder="{{'LOGIN.PASSWORD' | translate}}">
-					</div>
-				</div>
-				<span>
-					<g:if test="${streama.Settings.findBySettingsKey('First Time Login Info')?.value == 'true'}">
-						{{'LOGIN.FIRST_TIME_HINT' | translate}}
-					</g:if>
-				<input style="display: none;" type='checkbox' name='remember_me' id='remember_me' checked='checked'/>
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="password" name='password' class="form-control" placeholder="{{'LOGIN.PASSWORD' | translate}}">
+            </div>
+          </div>
+          <span>
+            <g:if test="${streama.Settings.findBySettingsKey('First Time Login Info')?.value == 'true'}">
+              {{'LOGIN.FIRST_TIME_HINT' | translate}}
+            </g:if>
+            <input style="display: none;" type='checkbox' name='remember_me' id='remember_me' checked='checked'/>
 
-				<button class="btn btn-primary pull-right">{{'LOGIN.SUBMIT' | translate}}</button></span>
-			</form>
-		</div>
-	</div>
+            <button class="btn btn-primary pull-right">{{'LOGIN.SUBMIT' | translate}} &nbsp; <i class="ion-chevron-right"></i></button></span>
+        </form>
+      </div>
+    </div>
+    <div class="page-container-push"></div>
+  </div>
+
+  <g:render template="/templates/footer"></g:render>
+
 	<script type='text/javascript'>
 		<!--
 		(function() {

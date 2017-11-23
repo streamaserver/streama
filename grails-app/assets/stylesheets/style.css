@@ -126,6 +126,8 @@ label {
   .form-control[disabled] {
     background-color: rgba(255, 255, 255, 0.12);
     opacity: 0.5; }
+  .form-control option {
+    color: black; }
 
 [ui-sref],
 [ng-click],
@@ -566,17 +568,37 @@ body {
   color: white;
   font-weight: 300; }
 
+html, body {
+  height: 100%; }
+
 h1, h2, h3, h4, h5, h6 {
   color: white; }
 
+.page-container {
+  min-height: 100%;
+  margin-bottom: -30px; }
+
+.page-container-push {
+  height: 30px; }
+
+.footer {
+  padding: 7px 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center; }
+
+.version {
+  color: #717475;
+  font-size: 10px; }
+
 .logo {
-  float: left;
   padding: 6px 0;
   position: relative;
-  width: 170px;
-  margin-right: 15px; }
+  margin: 0 auto;
+  display: block;
+  width: 95px; }
   .logo img {
-    width: 130px; }
+    max-width: 130px;
+    max-height: 31px; }
   .logo i {
     font-size: 0.85em; }
   .logo .spinner {
@@ -588,13 +610,6 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-collapse.in {
   clear: both;
   display: block; }
-
-.version {
-  position: absolute;
-  top: 22px;
-  left: 137px;
-  color: #B0DDEF;
-  font-size: 10px; }
 
 header.main {
   background: rgba(0, 0, 0, 0.15);
@@ -1115,23 +1130,27 @@ hr {
       font-weight: 100; }
 
 #login {
-  margin: 15px 0px;
   padding: 0px;
   text-align: center; }
+
+.login-page {
+  background: url("/assets/bg.jpg");
+  background-size: cover;
+  background-position: center; }
+
+.auth-logo {
+  max-width: 350px;
+  margin-top: 55px; }
 
 #login .inner {
   max-width: 540px;
   width: 100%;
   padding-bottom: 6px;
   margin: 60px auto;
-  text-align: left;
-  background-color: rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.11); }
-  #login .inner .fheader {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.11);
-    padding: 10px 20px;
-    color: #B0DDEF;
-    font-size: 18px; }
+  text-align: left; }
+  #login .inner .form-control {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white; }
   #login .inner .cssform {
     padding: 16px; }
     #login .inner .cssform:after {
@@ -1459,12 +1478,65 @@ streama-video-player.nocursor {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: auto; }
+  width: auto;
+  margin-left: -48px; }
   .player-wrapper .spinner > div {
     background: #B0DDEF;
     width: 20px;
     height: 20px;
     margin-right: 12px; }
+
+#player-menu-subtitle-selector {
+  background-color: #262626;
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 12px;
+  width: 300px;
+  right: -2.7em;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.52); }
+  #player-menu-subtitle-selector .subtitle-selector-container {
+    width: 200%; }
+    #player-menu-subtitle-selector .subtitle-selector-container h2 {
+      padding: 12px; }
+  #player-menu-subtitle-selector .subtitle-list {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 100;
+    box-shadow: 0px -1px 0 0 rgba(0, 0, 0, 0.46);
+    max-height: 300px;
+    overflow: auto; }
+    #player-menu-subtitle-selector .subtitle-list .flex-wrapper {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex; }
+      #player-menu-subtitle-selector .subtitle-list .flex-wrapper:after {
+        content: "";
+        display: table;
+        clear: both; }
+    #player-menu-subtitle-selector .subtitle-list li {
+      color: white;
+      list-style: none;
+      padding: 0 12px;
+      border-top: 1px solid rgba(0, 0, 0, 0.27);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+      #player-menu-subtitle-selector .subtitle-list li:hover {
+        background: rgba(0, 0, 0, 0.2); }
+      #player-menu-subtitle-selector .subtitle-list li.active {
+        background: rgba(0, 0, 0, 0.2); }
+      #player-menu-subtitle-selector .subtitle-list li.current {
+        background: #1f779a; }
+        #player-menu-subtitle-selector .subtitle-list li.current .episode-play {
+          display: none; }
+      #player-menu-subtitle-selector .subtitle-list li.no-files {
+        opacity: 0.7; }
+  #player-menu-subtitle-selector .subtitle-list li {
+    padding: 12px; }
 
 .player-wrapper button.button {
   padding: .5em 2em;
@@ -1608,7 +1680,7 @@ streama-video-player.nocursor {
       color: #cacaca; }
       .player-wrapper .player-control-bar .player-control-button:before:hover {
         color: #fff; }
-    .player-wrapper .player-control-bar .player-control-button.inactive {
+    .player-wrapper .player-control-bar .player-control-button.inactive:before {
       opacity: 0.3; }
   .player-wrapper .player-control-bar.player-control-divider {
     -webkit-order: 5;
