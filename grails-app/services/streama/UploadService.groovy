@@ -31,7 +31,7 @@ class UploadService {
   }
 
   def upload(request, params = [:]) {
-//    log.debug(params)
+    //log.debug(params)
     def rawFile = request.getFile('file')
     def mimetype = rawFile.contentType
     def sha256Hex = DigestUtils.sha256Hex(rawFile.inputStream)
@@ -52,7 +52,7 @@ class UploadService {
 
     File file = createFileFromUpload(sha256Hex, rawFile, extension, originalFilenameNoExt + extension, contentType, params)
 	
-	log.debug(file)
+	  //log.debug(file)
     return file
   }
 
