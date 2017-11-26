@@ -186,4 +186,11 @@ class DashController {
       render (result as JSON)
     }
   }
+
+  def markAsCompleted(Video video){
+    ViewingStatus.where{
+      video == video
+    }.deleteAll()
+    render "OK"
+  }
 }
