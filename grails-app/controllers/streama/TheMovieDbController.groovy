@@ -122,4 +122,16 @@ class TheMovieDbController {
     migrationService.addGenresToMoviesAndShows()
   }
 
+  def imagesForMedia(){
+    String apiId = params.apiId
+    String type = params.type
+    String imageType = params.imageType ?: 'backdrops'
+
+    def requestUrl = "${theMovieDbService.BASE_URL}/${type}/${apiId}/images?${theMovieDbService.API_PARAMS_WITHOUT_LANG}"
+    def JsonContent = new URL(requestUrl).text
+    def json = new JsonSlurper().parseText(JsonContent)
+
+    render (json?."$imageType" as JSON)
+  }
+
 }

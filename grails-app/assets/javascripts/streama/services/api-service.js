@@ -259,6 +259,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
 			countNewEpisodesForSeason: function (params) {
 				return $http.get('theMovieDb/countNewEpisodesForSeason', {params: params});
+			},
+      imagesForMedia: function (params) {
+				return $http.get('theMovieDb/imagesForMedia', {params: params});
 			}
 		},
 

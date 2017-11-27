@@ -11,6 +11,9 @@ class TheMovieDbService {
   def getAPI_PARAMS(){
     return "api_key=$API_KEY&language=$API_LANGUAGE"
   }
+  def getAPI_PARAMS_WITHOUT_LANG(){
+    return "api_key=$API_KEY"
+  }
 
   def getAPI_KEY(){
     return Settings.findBySettingsKey('TheMovieDB API key')?.value
