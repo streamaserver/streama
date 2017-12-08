@@ -60,39 +60,43 @@ angular.module('streama').controller('dashCtrl',
     function initMovies() {
       var movieConfig = {
         total: 0,
+        currentSort: {sort: 'title', order: 'ASC'},
         list: [],
         currentOffset: 0,
         isLoading: true,
-        sorter: null,
+        sorter: _.getterSetter(setSort, getSort),
         filter: {
           tags: null,
           genre: null,
           title: null,
           execute: executeFilter
         },
+        fetch: apiService.dash.listMovies,
         loadMore: loadMore,
         getThumbnail: getThumbnail
       };
 
-      fetchData();
+      fetchData(movieConfig);
 
       return movieConfig;
+
+      function getSort() {
+        return movieConfig.currentSort;
+      }
+
+      function setSort(sort) {
+        movieConfig.currentSort = sort;
+        movieConfig.currentOffset = 0;
+        fetchData(movieConfig);
+      }
 
       function executeFilter(item) {
         return applyFilter(item, movieConfig.filter);
       }
 
-      function fetchData() {
-        apiService.dash.listMovies({max: LIST_MAX, offset: movieConfig.currentOffset}).success(function (response) {
-          movieConfig.total = response.total;
-          movieConfig.list = _.unionBy(movieConfig.list, response.list, 'id');
-          movieConfig.isLoading = false;
-        });
-      }
-
       function loadMore() {
         movieConfig.currentOffset += LIST_MAX;
-        fetchData();
+        fetchData(movieConfig);
       }
 
       function getThumbnail(movie) {
@@ -116,30 +120,35 @@ angular.module('streama').controller('dashCtrl',
      */
     function initTvShows() {
       var tvShowConfig = {
+        total: 0,
         list: [],
+        currentSort: {sort: 'name', order: 'ASC'},
         currentOffset: 0,
         isLoading: true,
-        sorter: null,
+        sorter: _.getterSetter(setSort, getSort),
         filter: {
           tags: null,
           genre: null,
           name: null,
           execute: executeFilter
         },
+        fetch: apiService.dash.listShows,
         loadMore: loadMore,
         getThumbnail: getThumbnail
       };
 
-      fetchData();
+      fetchData(tvShowConfig);
 
       return tvShowConfig;
 
-      function fetchData() {
-        apiService.dash.listShows({max: LIST_MAX, offset: tvShowConfig.currentOffset}).success(function (response) {
-          tvShowConfig.total = response.total;
-          tvShowConfig.list = _.unionBy(tvShowConfig.list, response.list, 'id');
-          tvShowConfig.isLoading = false;
-        });
+      function getSort() {
+        return tvShowConfig.currentSort;
+      }
+
+      function setSort(sort) {
+        tvShowConfig.currentSort = sort;
+        tvShowConfig.currentOffset = 0;
+        fetchData(tvShowConfig);
       }
 
       function executeFilter(item) {
@@ -148,7 +157,7 @@ angular.module('streama').controller('dashCtrl',
 
       function loadMore() {
         tvShowConfig.currentOffset += LIST_MAX;
-        fetchData();
+        fetchData(tvShowConfig);
       }
 
       function getThumbnail(tvShow) {
@@ -164,6 +173,18 @@ angular.module('streama').controller('dashCtrl',
         }
 
       }
+    }
+
+    function fetchData(mediaConfig) {
+      mediaConfig.fetch({max: LIST_MAX, offset: mediaConfig.currentOffset, sort: mediaConfig.currentSort.sort, order: mediaConfig.currentSort.order}).success(function (response) {
+        mediaConfig.total = response.total;
+        if(mediaConfig.currentOffset > 0){
+          mediaConfig.list = _.unionBy(mediaConfig.list, response.list, 'id');
+        }else{
+          mediaConfig.list = response.list;
+        }
+        mediaConfig.isLoading = false;
+      });
     }
 
     function onContinueWatchingLoaded(data) {

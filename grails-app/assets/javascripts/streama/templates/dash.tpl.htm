@@ -112,7 +112,7 @@
     <div class="row dash-filter">
       <div class="col-md-3 col-lg-3 col-sm-4">
         {{'DASHBOARD.SORT' | translate}}
-        <video-sort-order-dropdown current-sort="vm.tvShow.sorter" dropdown-type="'tvShow'"></video-sort-order-dropdown>
+        <video-sort-order-dropdown ng-model="vm.tvShow.sorter" ng-model-options="{getterSetter:true}" dropdown-type="'tvShow'"></video-sort-order-dropdown>
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
@@ -133,7 +133,7 @@
     </p>
 
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="tvShow in vm.tvShow.list | orderBy:vm.tvShow.sorter.sort |filter: vm.tvShow.filter.execute">
+      <div class="media-list-item media-poster-item" ng-repeat="tvShow in vm.tvShow.list | filter: vm.tvShow.filter.execute">
         <div class="media-item" >
           <img ng-src="{{::vm.tvShow.getThumbnail(tvShow)}}">
 
@@ -164,7 +164,7 @@
     <div class="row dash-filter" ng-hide="!vm.movie.filter && !vm.movie.list.length">
       <div class="col-md-3 col-lg-3 col-sm-4">
         {{'DASHBOARD.SORT' | translate}}
-        <video-sort-order-dropdown current-sort="vm.movie.sorter" dropdown-type="'movie'"></video-sort-order-dropdown>
+        <video-sort-order-dropdown ng-model="vm.movie.sorter" ng-model-options="{getterSetter:true}" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
       <div class="col-md-2 col-lg-2 col-sm-2">
         <ui-select class="tag-select" multiple ng-model="vm.movie.filter.tags" theme="bootstrap" title="Filter by Tag">
@@ -228,7 +228,7 @@
     <div class="row dash-filter">
       <div class="col-md-3 col-lg-3 col-sm-4">
         {{'DASHBOARD.SORT' | translate}}
-        <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
+        <video-sort-order-dropdown ng-model="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
