@@ -159,13 +159,13 @@
       <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>
      </h3>
 
-    <div class="row dash-filter" ng-hide="!vm.dashFilter.movie && !vm.movies.length">
+    <div class="row dash-filter" ng-hide="!vm.movie.filter && !vm.movie.list.length">
       <div class="col-md-3 col-lg-3 col-sm-4">
         {{'DASHBOARD.SORT' | translate}}
-        <video-sort-order-dropdown current-sort="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
+        <video-sort-order-dropdown current-sort="vm.movie.sorter" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
       <div class="col-md-2 col-lg-2 col-sm-2">
-        <ui-select class="tag-select" multiple ng-model="vm.dashFilter.movie.tags" theme="bootstrap" title="Filter by Tag">
+        <ui-select class="tag-select" multiple ng-model="vm.movie.filter.tags" theme="bootstrap" title="Filter by Tag">
           <ui-select-match placeholder="{{'DASHBOARD.FILTER_BY_TAG' | translate}}">{{$item.name}}</ui-select-match>
           <ui-select-choices repeat="tag in tags | propsFilter: {name: $select.search}">
             <div class="tag-wrapper">
@@ -176,25 +176,25 @@
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
-        <input class="form-control input-sm" type="text" ng-model="vm.dashFilter.movie.title"
+        <input class="form-control input-sm" type="text" ng-model="vm.movie.filter.title"
                placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" />
       </div>
     </div>
     <br>
 
-    <div class="spinner" ng-show="vm.loadingMovies">
+    <div class="spinner" ng-show="vm.movie.isLoading">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
       <div class="bounce3"></div>
     </div>
 
-    <p class="no-episodes-yet" ng-show="!vm.movies.length">
+    <p class="no-episodes-yet" ng-show="!vm.movie.list.length">
 
       {{'DASHBOARD.NO_MOVIES_FOUND' | translate}}
     </p>
 
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="movie in vm.movies | orderBy:movieSort.sort |filter: vm.dashFilter.movieFilter">
+      <div class="media-list-item media-poster-item" ng-repeat="movie in vm.movie.list | orderBy:vm.movie.sorter.sort |filter: vm.movie.filter.execute">
         <div class="media-item" >
 
           <img ng-if="!movie.poster_path && !movie.poster_image_src" ng-src="{{$root.basePath}}assets/poster-not-found.png"/>
@@ -211,6 +211,11 @@
         </div>
       </div>
     </div>
+
+    <div class="text-center">
+      <button class="btn btn-primary btn-outline" ng-click="vm.movie.loadMore()">Load more ...</button>
+    </div>
+
   </div>
 
 
