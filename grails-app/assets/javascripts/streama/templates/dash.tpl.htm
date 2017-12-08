@@ -135,10 +135,7 @@
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="tvShow in vm.tvShow.list | orderBy:vm.tvShow.sorter.sort |filter: vm.tvShow.filter.execute">
         <div class="media-item" >
-          <img ng-if="tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{::tvShow.poster_path}}"/>
-          <img ng-if="!tvShow.poster_path && !tvShow.manualInput" ng-src="{{$root.basePath}}assets/poster-not-found.png"/>
-
-          <img ng-show="tvShow.manualInput && tvShow.poster_image_src" ng-src="{{::tvShow.poster_image_src}}">
+          <img ng-src="{{::vm.tvShow.getThumbnail(tvShow)}}">
 
           <div class="play-text">
             <h4 ng-bind="::tvShow.name"></h4>

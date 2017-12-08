@@ -106,7 +106,8 @@ angular.module('streama').controller('dashCtrl',
           name: null,
           execute: executeFilter
         },
-        loadMore: loadMore
+        loadMore: loadMore,
+        getThumbnail: getThumbnail
       };
 
       apiService.dash.listShows().success(onTvShowsLoaded);
@@ -125,6 +126,20 @@ angular.module('streama').controller('dashCtrl',
 
       function loadMore() {
         //WIP
+      }
+
+      function getThumbnail(tvShow) {
+        if(tvShow.poster_path){
+          return 'https://image.tmdb.org/t/p/w300/' + tvShow.poster_path;
+        }
+        if(!tvShow.poster_path && !tvShow.manualInput){
+          return $rootScope.basePath + 'assets/poster-not-found.png';
+        }
+
+        if(tvShow.manualInput && tvShow.poster_image_src){
+          return tvShow.poster_image_src;
+        }
+
       }
     }
 
