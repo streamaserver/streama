@@ -112,28 +112,28 @@
     <div class="row dash-filter">
       <div class="col-md-3 col-lg-3 col-sm-4">
         {{'DASHBOARD.SORT' | translate}}
-        <video-sort-order-dropdown current-sort="showSort" dropdown-type="'tvShow'"></video-sort-order-dropdown>
+        <video-sort-order-dropdown current-sort="vm.tvShow.sorter" dropdown-type="'tvShow'"></video-sort-order-dropdown>
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
-        <input class="form-control input-sm" type="text" ng-model="vm.dashFilter.tvShow.name"
+        <input class="form-control input-sm" type="text" ng-model="vm.tvShow.filter.name"
                placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" />
       </div>
     </div>
     <br>
 
-    <div class="spinner" ng-show="loadingTvShows">
+    <div class="spinner" ng-show="vm.tvShow.isLoading">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
       <div class="bounce3"></div>
     </div>
 
-    <p class="no-episodes-yet" ng-show="!vm.tvShows.length">
+    <p class="no-episodes-yet" ng-show="!vm.tvShow.list.length">
       {{'DASHBOARD.NO_TVSHOWS_FOUND' | translate}}
     </p>
 
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="tvShow in vm.tvShows | orderBy:showSort.sort |filter: vm.dashFilter.showFilter">
+      <div class="media-list-item media-poster-item" ng-repeat="tvShow in vm.tvShow.list | orderBy:vm.tvShow.sorter.sort |filter: vm.tvShow.filter.execute">
         <div class="media-item" >
           <img ng-if="tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{::tvShow.poster_path}}"/>
           <img ng-if="!tvShow.poster_path && !tvShow.manualInput" ng-src="{{$root.basePath}}assets/poster-not-found.png"/>

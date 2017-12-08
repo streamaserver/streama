@@ -28,15 +28,15 @@ angular.module('streama').controller('dashCtrl',
         modalService.mediaDetailModal({mediaId: $stateParams.mediaModal, mediaType: $stateParams.mediaType, isApiMovie: false});
       }
 
-      vm.dashFilter = initDashFilter();
+      vm.movie = initMovies();
+      vm.tvShow = initTvShows();
+
       apiService.tag.list().success(onTagsLoaded);
       apiService.dash.listNewReleases().success(onNewReleasesLoaded);
       apiService.dash.listContinueWatching().success(onContinueWatchingLoaded);
-      apiService.dash.listShows().success(onTvShowsLoaded);
       apiService.dash.listRecommendations().success(onRecommendedLoaded);
       apiService.dash.listGenericVideos().success(onGenericVideosLoaded);
       apiService.dash.listGenres().success(onGenreLoaded);
-      vm.movie = initMovies();
     }
 
 
@@ -90,10 +90,42 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
+    /**
+     * Create TvShow Config for vm, with its own properties for list, isLoading, filter, etc
+     * @returns {{list: Array, currentOffset: number, isLoading: boolean, sorter: {}, filter: {tags: Array, genre: Array, name: string, execute: executeFilter}, loadMore: loadMore}}
+     */
+    function initTvShows() {
+      var tvShowConfig = {
+        list: [],
+        currentOffset: 0,
+        isLoading: true,
+        sorter: null,
+        filter: {
+          tags: null,
+          genre: null,
+          name: null,
+          execute: executeFilter
+        },
+        loadMore: loadMore
+      };
 
-    function onTvShowsLoaded(data) {
-      vm.tvShows = data;
-      vm.loadingTvShows = false;
+      apiService.dash.listShows().success(onTvShowsLoaded);
+
+      return tvShowConfig;
+
+
+      function onTvShowsLoaded(data) {
+        tvShowConfig.list = data;
+        tvShowConfig.isLoading = false;
+      }
+
+      function executeFilter(item) {
+        return applyFilter(item, tvShowConfig.filter);
+      }
+
+      function loadMore() {
+        //WIP
+      }
     }
 
     function onContinueWatchingLoaded(data) {
@@ -113,19 +145,8 @@ angular.module('streama').controller('dashCtrl',
       if ($stateParams.genreId) {
         $rootScope.selectedGenre = _.find(data, {id: parseInt($stateParams.genreId)});
         vm.movie.filter.genre = [$rootScope.selectedGenre];
-        vm.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
+        vm.tvShow.filter.genre = [$rootScope.selectedGenre];
       }
-    }
-
-
-    function initDashFilter() {
-      return {
-        tvShow: {},
-
-        showFilter: function (item) {
-          return applyFilter(item, vm.dashFilter.tvShow);
-        }
-      };
     }
 
     function showInitialSettingsWarning() {
@@ -144,10 +165,10 @@ angular.module('streama').controller('dashCtrl',
       $rootScope.selectedGenre = genre;
       if ($rootScope.selectedGenre) {
         vm.movie.filter.genre = [$rootScope.selectedGenre];
-        vm.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
+        vm.tvShow.filter.genre = [$rootScope.selectedGenre];
       } else {
         vm.movie.filter.genre = [];
-        vm.dashFilter.tvShow.genre = [];
+        vm.tvShow.filter.genre = [];
       }
     }
 
