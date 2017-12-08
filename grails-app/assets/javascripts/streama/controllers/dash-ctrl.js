@@ -69,7 +69,8 @@ angular.module('streama').controller('dashCtrl',
           title: null,
           execute: executeFilter
         },
-        loadMore: loadMore
+        loadMore: loadMore,
+        getThumbnail: getThumbnail
       };
 
       apiService.dash.listMovies().success(onMoviesLoaded);
@@ -87,6 +88,20 @@ angular.module('streama').controller('dashCtrl',
 
       function loadMore() {
         //WIP
+      }
+
+      function getThumbnail(movie) {
+        if(!movie.poster_path && !movie.poster_image_src){
+          return $rootScope.basePath + 'assets/poster-not-found.png';
+        }
+        if(movie.poster_path){
+          return 'https://image.tmdb.org/t/p/w300/' + movie.poster_path;
+        }
+
+        if(movie.poster_image_src){
+          return movie.poster_image_src;
+        }
+
       }
     }
 
