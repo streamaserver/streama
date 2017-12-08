@@ -8,8 +8,6 @@ angular.module('streama').controller('dashCtrl',
 		vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
     vm.showDetails = showDetails;
     vm.markCompleted = markCompleted;
-    vm.loadingTvShows = true;
-    vm.loadingMovies = true;
     vm.loadingRecommendations = true;
     vm.loadingGenericVideos = true;
 
