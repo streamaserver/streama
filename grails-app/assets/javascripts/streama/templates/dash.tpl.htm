@@ -103,6 +103,8 @@
     <hr/>
   </div>
 
+  <!--   --------------- TV SHOWS ---------------------  -->
+
   <div>
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_SHOWS' | translate}}</span>
@@ -154,6 +156,9 @@
 
     <hr/>
   </div>
+
+
+  <!--   --------------- MOVIES ---------------------  -->
 
   <div >
     <h3>
@@ -219,7 +224,9 @@
   </div>
 
 
-  <div ng-if="vm.genericVideos.length">
+  <!--   --------------- GENERIC VIDEOS ---------------------  -->
+
+  <div ng-if="vm.genericVideo.list.length">
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_OTHER_VIDEOS' | translate}}</span>
       <span ng-show="$root.selectedGenre">{{::$root.selectedGenre.name}} Videos</span>
@@ -228,16 +235,16 @@
     <div class="row dash-filter">
       <div class="col-md-3 col-lg-3 col-sm-4">
         {{'DASHBOARD.SORT' | translate}}
-        <video-sort-order-dropdown ng-model="movieSort" dropdown-type="'movie'"></video-sort-order-dropdown>
+        <video-sort-order-dropdown ng-model="vm.genericVideo.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
-        <input class="form-control input-sm" type="text" ng-model="vm.dashFilter.genericVideo.title" placeholder="Search by Title..." />
+        <input class="form-control input-sm" type="text" ng-model="vm.genericVideo.filter.title" placeholder="Search by Title..." />
       </div>
     </div>
     <br>
 
-    <div class="spinner" ng-show="vm.loadingGenericVideos">
+    <div class="spinner" ng-show="vm.genericVideo.isLoading">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
       <div class="bounce3"></div>
@@ -246,10 +253,9 @@
 
 
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="movie in vm.genericVideos | orderBy:movieSort.sort |filter: vm.dashFilter.genericVideo.title">
+      <div class="media-list-item media-poster-item" ng-repeat="movie in vm.genericVideo.list  |filter: vm.genericVideo.filter.title">
         <div class="media-item" >
-          <img ng-if="!movie.poster_image_src" ng-src="{{$root.basePath}}assets/poster-not-found.png"/>
-          <img ng-show="movie.poster_image_src" ng-src="{{::movie.poster_image_src}}">
+          <img ng-src="{{::vm.genericVideo.getThumbnail(movie)}}">
           <div class="play-text">
             <h4 ng-bind="::movie.title"></h4>
             <p ng-bind="::movie.release_date.substring(0,4)"></p>

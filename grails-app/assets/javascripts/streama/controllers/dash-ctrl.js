@@ -9,7 +9,6 @@ angular.module('streama').controller('dashCtrl',
     vm.showDetails = showDetails;
     vm.markCompleted = markCompleted;
     vm.loadingRecommendations = true;
-    vm.loadingGenericVideos = true;
 
     $scope.$on('changedGenre', onChangedGenre);
 
@@ -28,22 +27,18 @@ angular.module('streama').controller('dashCtrl',
 
       vm.movie = initMovies();
       vm.tvShow = initTvShows();
+      vm.genericVideo = initGenericVideos();
 
       apiService.tag.list().success(onTagsLoaded);
       apiService.dash.listNewReleases().success(onNewReleasesLoaded);
       apiService.dash.listContinueWatching().success(onContinueWatchingLoaded);
       apiService.dash.listRecommendations().success(onRecommendedLoaded);
-      apiService.dash.listGenericVideos().success(onGenericVideosLoaded);
       apiService.dash.listGenres().success(onGenreLoaded);
     }
 
 
     // HOISTED FUNCTIONS BELOW
 
-    function onGenericVideosLoaded(data) {
-      vm.genericVideos = data;
-      vm.loadingGenericVideos = false;
-    }
 
     function onRecommendedLoaded(data) {
       vm.recommendations = data;
@@ -172,6 +167,66 @@ angular.module('streama').controller('dashCtrl',
 
       }
     }
+
+
+    /**
+     * Create Movie Config for vm, with its own properties for list, isLoading, filter, etc
+     * @returns {{list: Array, currentOffset: number, isLoading: boolean, sorter: {}, filter: {tags: Array, genre: Array, title: string, execute: executeFilter}, loadMore: loadMore}}
+     */
+    function initGenericVideos() {
+      var genericVideoConfig = {
+        total: 0,
+        currentSort: {sort: 'title', order: 'ASC'},
+        list: [],
+        currentOffset: 0,
+        isLoading: true,
+        sorter: _.getterSetter(setSort, getSort),
+        filter: {
+          tags: null,
+          genre: null,
+          title: null,
+          execute: executeFilter
+        },
+        fetch: apiService.dash.listGenericVideos,
+        loadMore: loadMore,
+        getThumbnail: getThumbnail
+      };
+
+      fetchData(genericVideoConfig);
+
+      return genericVideoConfig;
+
+      function getSort() {
+        return genericVideoConfig.currentSort;
+      }
+
+      function setSort(sort) {
+        genericVideoConfig.currentSort = sort;
+        genericVideoConfig.currentOffset = 0;
+        fetchData(genericVideoConfig);
+      }
+
+      function executeFilter(item) {
+        return applyFilter(item, genericVideoConfig.filter);
+      }
+
+      function loadMore() {
+        genericVideoConfig.currentOffset += LIST_MAX;
+        fetchData(genericVideoConfig);
+      }
+
+      function getThumbnail(movie) {
+        if(!movie.poster_image_src){
+          return $rootScope.basePath + 'assets/poster-not-found.png';
+        }
+
+        if(movie.poster_image_src){
+          return movie.poster_image_src;
+        }
+
+      }
+    }
+
 
     function fetchData(mediaConfig) {
       mediaConfig.fetch({max: LIST_MAX, offset: mediaConfig.currentOffset, sort: mediaConfig.currentSort.sort, order: mediaConfig.currentSort.order}).success(function (response) {

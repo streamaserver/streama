@@ -115,13 +115,20 @@ class DashController {
 
 
   def listGenericVideos(){
-    def videos = GenericVideo.where {
+    def genericVideoQuery = GenericVideo.where {
       deleted != true
       isNotEmpty("files")
-    }.list()
+    }
+    def sort = params.sort
+    def order = params.order
+
+    def videos = genericVideoQuery.list(sort: sort, order: order)
+    def total = genericVideoQuery.count()
+
+    def result = [total: total, list: videos]
 
     JSON.use('dashGenericVideo'){
-      render (videos as JSON)
+      render (result as JSON)
     }
   }
 
