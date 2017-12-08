@@ -207,7 +207,7 @@
       </div>
     </div>
 
-    <div class="text-center">
+    <div class="text-center" ng-if="vm.movie.total > vm.movie.list.length">
       <button class="btn btn-primary btn-outline" ng-click="vm.movie.loadMore()">Load more ...</button>
     </div>
 

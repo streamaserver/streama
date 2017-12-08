@@ -81,13 +81,20 @@ class DashController {
   }
 
   def listMovies(){
-    def movies = Movie.withCriteria {
-      ne("deleted", true)
+    def max = params.int('max', 50)
+    def offset = params.int('offset', 0)
+
+    def movieQuery = Movie.where {
+      deleted != true
       isNotEmpty("files")
     }
+    def movies =  movieQuery.list(max: max, offset: offset)
+    def totalMovieCount = movieQuery.count()
+
+    def result = [total: totalMovieCount, list: movies]
 
     JSON.use('dashMovies'){
-      respond movies
+      respond result
     }
   }
 

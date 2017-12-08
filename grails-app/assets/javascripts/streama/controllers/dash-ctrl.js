@@ -4,7 +4,7 @@ angular.module('streama').controller('dashCtrl',
 	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams ) {
   var vm = this;
 
-
+    var LIST_MAX = 30;
 		vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
     vm.showDetails = showDetails;
     vm.markCompleted = markCompleted;
@@ -59,6 +59,7 @@ angular.module('streama').controller('dashCtrl',
      */
     function initMovies() {
       var movieConfig = {
+        total: 0,
         list: [],
         currentOffset: 0,
         isLoading: true,
@@ -73,21 +74,25 @@ angular.module('streama').controller('dashCtrl',
         getThumbnail: getThumbnail
       };
 
-      apiService.dash.listMovies().success(onMoviesLoaded);
+      fetchData();
 
       return movieConfig;
-
-      function onMoviesLoaded(data) {
-        movieConfig.list = data;
-        movieConfig.isLoading = false;
-      }
 
       function executeFilter(item) {
         return applyFilter(item, movieConfig.filter);
       }
 
+      function fetchData() {
+        apiService.dash.listMovies({max: LIST_MAX, offset: movieConfig.currentOffset}).success(function (response) {
+          movieConfig.total = response.total;
+          movieConfig.list = _.unionBy(movieConfig.list, response.list, 'id');
+          movieConfig.isLoading = false;
+        });
+      }
+
       function loadMore() {
-        //WIP
+        movieConfig.currentOffset += LIST_MAX;
+        fetchData();
       }
 
       function getThumbnail(movie) {
