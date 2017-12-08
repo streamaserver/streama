@@ -130,14 +130,16 @@ angular.module('streama').controller('dashCtrl',
         getThumbnail: getThumbnail
       };
 
-      apiService.dash.listShows().success(onTvShowsLoaded);
+      fetchData();
 
       return tvShowConfig;
 
-
-      function onTvShowsLoaded(data) {
-        tvShowConfig.list = data;
-        tvShowConfig.isLoading = false;
+      function fetchData() {
+        apiService.dash.listShows({max: LIST_MAX, offset: tvShowConfig.currentOffset}).success(function (response) {
+          tvShowConfig.total = response.total;
+          tvShowConfig.list = _.unionBy(tvShowConfig.list, response.list, 'id');
+          tvShowConfig.isLoading = false;
+        });
       }
 
       function executeFilter(item) {
@@ -145,7 +147,8 @@ angular.module('streama').controller('dashCtrl',
       }
 
       function loadMore() {
-        //WIP
+        tvShowConfig.currentOffset += LIST_MAX;
+        fetchData();
       }
 
       function getThumbnail(tvShow) {

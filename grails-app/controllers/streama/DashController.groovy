@@ -19,17 +19,28 @@ class DashController {
 
 
   def listShows(){
-    def tvShows = TvShow.withCriteria{
-      ne("deleted", true)
-      isNotEmpty("episodes")
+    def max = params.int('max', 50)
+    def offset = params.int('offset', 0)
+
+    def tvShowQuery = TvShow.where{
+      def tv1 = TvShow
+      deleted != true
+      exists Episode.where{
+        def ep = Episode
+        def tv2 = show
+        tv1.id == tv2.id
+        isNotEmpty("files")
+      }.id()
+
     }
 
-    tvShows = tvShows.findAll{ tvShow->
-      return tvShow.hasFiles
-    }
+    def tvShows = tvShowQuery.list(max: max, offset: offset)
+    def totalTvShowsCount = tvShowQuery.count()
+
+    def result = [total: totalTvShowsCount, list: tvShows]
 
     JSON.use ('dashTvShow') {
-      respond tvShows
+      respond result
     }
   }
 

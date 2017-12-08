@@ -278,8 +278,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/listMovies.json', {params: params});
 			},
 
-			listShows: function () {
-				return $http.get('dash/listShows.json');
+			listShows: function (params) {
+				return $http.get('dash/listShows.json', {params: params});
 			},
 
 			firstEpisodeForShow: function (id) {
