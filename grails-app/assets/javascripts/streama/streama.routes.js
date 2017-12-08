@@ -9,7 +9,7 @@ angular.module('streama').config(function ($stateProvider) {
 		.state('dash', {
 			url: '/dash?genreId?mediaModal?mediaType',
 			templateUrl: '/streama/dash.htm',
-			controller: 'dashCtrl',
+			controller: 'dashCtrl as vm',
 			reloadOnSearch: false,
 			resolve: {
 				currentUser: resolveCurrentUser

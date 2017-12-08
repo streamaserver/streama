@@ -2,6 +2,7 @@
 
 angular.module('streama').controller('dashCtrl',
 	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams ) {
+  var vm = this;
 
 		if ($rootScope.currentUser.isAdmin) {
 			apiService.settings.list().success(function (data) {
@@ -15,13 +16,13 @@ angular.module('streama').controller('dashCtrl',
 			});
 		}
 
-		$scope.fetchFirstEpisodeAndPlay = function (tvShow) {
+		vm.fetchFirstEpisodeAndPlay = function (tvShow) {
 			apiService.dash.firstEpisodeForShow(tvShow.id).success(function (data) {
 				$state.go('player', {videoId: data.id});
 			});
 		};
 
-		$scope.showDetails = function (media) {
+		vm.showDetails = function (media) {
 			//modalService.mediaDetailModal((media.tvShowId || media.id), media.mediaType); //{videoId: data.id}
       modalService.mediaDetailModal({mediaId: (media.tvShowId || media.id), mediaType: media.mediaType, isApiMovie: false});
 		};
@@ -32,11 +33,11 @@ angular.module('streama').controller('dashCtrl',
 		}
 
 		apiService.tag.list().success(function (data) {
-			$scope.tags = data;
+			vm.tags = data;
 		});
 
 		apiService.dash.listNewReleases().success(function (data) {
-			$scope.newReleases = data;
+			vm.newReleases = data;
 		});
 
 		var applyFilter = function (item, filterObj) {
@@ -57,57 +58,57 @@ angular.module('streama').controller('dashCtrl',
 			return (showItemArray.indexOf(false) < 0);
 		};
 
-		$scope.dashFilter = {
+		vm.dashFilter = {
 			movie: {},
 			tvShow: {},
 
 			movieFilter: function (item) {
-				return applyFilter(item, $scope.dashFilter.movie);
+				return applyFilter(item, vm.dashFilter.movie);
 			},
 
 			showFilter: function (item) {
-				return applyFilter(item, $scope.dashFilter.tvShow);
+				return applyFilter(item, vm.dashFilter.tvShow);
 			}
 		};
 
 
-		$scope.markCompleted = function (viewingStatus) {
+		vm.markCompleted = function (viewingStatus) {
 			alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
 			alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
 				if (confirmed) {
 					apiService.viewingStatus.delete(viewingStatus.id).success(function (data) {
-						_.remove($scope.continueWatching, {'id': viewingStatus.id});
+						_.remove(vm.continueWatching, {'id': viewingStatus.id});
 					});
 				}
 			})
 		};
 
 		apiService.dash.listContinueWatching().success(function (data) {
-			$scope.continueWatching = data;
+			vm.continueWatching = data;
 		});
 
-		$scope.loadingTvShows = true;
+		vm.loadingTvShows = true;
 		apiService.dash.listShows().success(function (data) {
-			$scope.tvShows = data;
-			$scope.loadingTvShows = false;
+			vm.tvShows = data;
+			vm.loadingTvShows = false;
 		});
 
-		$scope.loadingMovies = true;
+		vm.loadingMovies = true;
 		apiService.dash.listMovies().success(function (data) {
-			$scope.movies = data;
-			$scope.loadingMovies = false;
+			vm.movies = data;
+			vm.loadingMovies = false;
 		});
 
-		$scope.loadingRecommendations = true;
+		vm.loadingRecommendations = true;
 		apiService.dash.listRecommendations().success(function (data) {
-			$scope.recommendations = data;
-			$scope.loadingRecommendations = false;
+			vm.recommendations = data;
+			vm.loadingRecommendations = false;
 		});
 
-		$scope.loadingGenericVideos = true;
+		vm.loadingGenericVideos = true;
 		apiService.dash.listGenericVideos().success(function (data) {
-			$scope.genericVideos = data;
-			$scope.loadingGenericVideos = false;
+			vm.genericVideos = data;
+			vm.loadingGenericVideos = false;
 		});
 
 
@@ -116,8 +117,8 @@ angular.module('streama').controller('dashCtrl',
 
 			if ($stateParams.genreId) {
 				$rootScope.selectedGenre = _.find(data, {id: parseInt($stateParams.genreId)});
-				$scope.dashFilter.movie.genre = [$rootScope.selectedGenre];
-				$scope.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
+				vm.dashFilter.movie.genre = [$rootScope.selectedGenre];
+				vm.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
 			}
 		});
 
@@ -125,11 +126,11 @@ angular.module('streama').controller('dashCtrl',
 		$scope.$on('changedGenre', function (e, genre) {
 			$rootScope.selectedGenre = genre;
 			if ($rootScope.selectedGenre) {
-				$scope.dashFilter.movie.genre = [$rootScope.selectedGenre];
-				$scope.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
+				vm.dashFilter.movie.genre = [$rootScope.selectedGenre];
+				vm.dashFilter.tvShow.genre = [$rootScope.selectedGenre];
 			} else {
-				$scope.dashFilter.movie.genre = [];
-				$scope.dashFilter.tvShow.genre = [];
+				vm.dashFilter.movie.genre = [];
+				vm.dashFilter.tvShow.genre = [];
 			}
 		});
 
