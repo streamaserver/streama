@@ -2,7 +2,7 @@
   <div class="col-md-6">
     <h1>
       Shows
-      <video-sort-order-dropdown current-sort="currentSort" dropdown-type="'tvShow'"/>
+      <video-sort-order-dropdown ng-model="currentSort" dropdown-type="'tvShow'"/>
     </h1>
   </div>
 
@@ -33,7 +33,7 @@
 
 <div class="media-list">
   <div class="media-list-item media-poster-item"  ng-class="{'no-files': !show.episodesWithFilesCount}"
-       ng-repeat="show in shows | filter:search | orderBy:currentSort.sort"
+       ng-repeat="show in shows | filter:search | orderBy:(currentSort.order == 'DESC' ? '-' : '' + currentSort.sort)"
        ui-sref="admin.show({showId: show.id})">
     <div class="media-item" >
       <img ng-if="show.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{show.poster_path}}"/>
