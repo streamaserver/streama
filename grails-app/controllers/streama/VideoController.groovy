@@ -117,7 +117,7 @@ class VideoController {
     }
 
     def file = uploadService.upload(request)
-    
+
     if(file!=null){
     	videoInstance.addToFiles(file)
     	videoInstance.save flush: true, failOnError: true
@@ -126,7 +126,7 @@ class VideoController {
     	render status: 415
     }
 
-    
+
 
   }
 
@@ -175,7 +175,6 @@ class VideoController {
       return
     }
 
-    log.debug(episode.movieDbMeta)
     bindData(episode, episode.movieDbMeta, [exclude: 'id'])
     episode.save flush: true, failOnError: true
 
