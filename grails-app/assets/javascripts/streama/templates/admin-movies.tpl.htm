@@ -29,10 +29,7 @@
     <div class="media-list-item media-poster-item" ng-class="{'no-files': !movie.hasFiles}"
          ng-repeat="movie in vm.movie.list" ui-sref="admin.movie({movieId: movie.id})">
       <div class="media-item" >
-        <img ng-if="!movie.poster_path && !movie.poster_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
-        <img ng-if="movie.poster_path" ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"/>
-        <img ng-if="movie.poster_image_src" ng-src="{{movie.poster_image_src}}"/>
-
+        <img ng-src="{{::vm.movie.getThumbnail(movie)}}"/>
 
 
         <div class="play-text">

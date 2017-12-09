@@ -47,9 +47,13 @@ angular.module('streama').factory('mediaListService', function () {
         fetchData(mediaListConfig);
       }
 
+
       function getThumbnail(movie) {
-        if(!movie.poster_image_src){
+        if(!movie.poster_path && !movie.poster_image_src){
           return $rootScope.basePath + 'assets/poster-not-found.png';
+        }
+        if(movie.poster_path){
+          return 'https://image.tmdb.org/t/p/w300/' + movie.poster_path;
         }
 
         if(movie.poster_image_src){
