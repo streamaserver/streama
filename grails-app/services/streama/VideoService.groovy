@@ -1,6 +1,7 @@
 package streama
 
 import grails.transaction.Transactional
+import grails.web.servlet.mvc.GrailsParameterMap
 
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -78,6 +79,27 @@ class VideoService {
     videoInstance.addToFiles(file)
     videoInstance.save(failOnError: true, flush: true)
     return file
+  }
+
+
+  def listMovies(GrailsParameterMap params, Map options){
+    def max = params.int('max', 50)
+    def offset = params.int('offset', 0)
+    def sort = params.sort
+    def order = params.order
+
+    def movieQuery = Movie.where {
+      deleted != true
+      if(!options.includeEmpty){
+        isNotEmpty("files")
+      }
+    }
+    def movies =  movieQuery.list(max: max, offset: offset, sort: sort, order: order)
+    def totalMovieCount = movieQuery.count()
+
+    def result = [total: totalMovieCount, list: movies]
+
+    return result
   }
 
 }

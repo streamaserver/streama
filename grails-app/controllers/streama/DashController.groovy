@@ -94,22 +94,8 @@ class DashController {
   }
 
   def listMovies(){
-    def max = params.int('max', 50)
-    def offset = params.int('offset', 0)
-    def sort = params.sort
-    def order = params.order
-
-    def movieQuery = Movie.where {
-      deleted != true
-      isNotEmpty("files")
-    }
-    def movies =  movieQuery.list(max: max, offset: offset, sort: sort, order: order)
-    def totalMovieCount = movieQuery.count()
-
-    def result = [total: totalMovieCount, list: movies]
-
     JSON.use('dashMovies'){
-      respond result
+      respond videoService.listMovies(params, [:])
     }
   }
 
