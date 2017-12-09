@@ -58,7 +58,7 @@ angular.module('streama').config(function ($stateProvider) {
 		.state('admin.movies', {
 			url: '/movies',
 			templateUrl: '/streama/admin-movies.htm',
-			controller: 'adminMoviesCtrl'
+			controller: 'adminMoviesCtrl as vm'
 		})
 		.state('admin.movie', {
 			url: '/movie/:movieId',

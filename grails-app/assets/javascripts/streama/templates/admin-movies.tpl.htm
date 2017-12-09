@@ -1,16 +1,16 @@
 <div class="row">
   <div class="col-md-6">
     <h1>
-      Movies <video-sort-order-dropdown ng-model="currentSort" dropdown-type="'movie'"/>
+      Movies <video-sort-order-dropdown ng-model="vm.currentSort" dropdown-type="'movie'"/>
     </h1>
 
-    <input placeholder="{{searchText}}" type="text" ng-model="search" ng-change="doSearch(search)" class="form-control input-sm" />
+    <input placeholder="{{vm.searchText}}" type="text" ng-model="vm.search" ng-change="vm.doSearch(vm.search)" ng-model-options="{debounce: 333}" class="form-control input-sm" />
   </div>
   <div class="col-md-6">
     <br>
     <div class="btn-group pull-right">
-      <button class="btn btn-primary" ng-click="createFromFiles()">Bulk-Create from file(s)</button>
-      <button class="btn btn-primary" ng-click="openMovieModal()">Create new Movie</button>
+      <button class="btn btn-primary" ng-click="vm.createFromFiles()">Bulk-Create from file(s)</button>
+      <button class="btn btn-primary" ng-click="vm.openMovieModal()">Create new Movie</button>
     </div>
   </div>
 </div>
@@ -21,11 +21,11 @@
   <div class="bounce3"></div>
 </div>
 
-<div ng-show="movies.length">
+<div ng-show="vm.movies.length">
   <hr/>
 
   <div class="media-list-item media-poster-item" ng-class="{'no-files': !movie.hasFiles}"
-       ng-repeat="movie in movies | filter:search | orderBy:(currentSort.order == 'DESC' ? '-' : '' + currentSort.sort)" ui-sref="admin.movie({movieId: movie.id})">
+       ng-repeat="movie in vm.movies | filter:vm.search | orderBy:(vm.currentSort.order == 'DESC' ? '-' : '' + vm.currentSort.sort)" ui-sref="admin.movie({movieId: movie.id})">
     <div class="media-item" >
       <img ng-if="!movie.poster_path && !movie.poster_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
       <img ng-if="movie.poster_path" ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"/>
@@ -46,15 +46,15 @@
 
 
 
-<div ng-if="suggestedMovies.length">
+<div ng-if="vm.suggestedMovies.length">
   <hr>
   <h3>Want to add a new Movie?</h3>
   <div class="media-list similar-media">
-    <div class="media-list-item" ng-repeat="movie in suggestedMovies | filter:search | orderBy: '-vote_count'" ng-if="!alreadyAdded(movie)">
+    <div class="media-list-item" ng-repeat="movie in vm.suggestedMovies | filter:vm.search | orderBy: '-vote_count'" ng-if="!vm.alreadyAdded(movie)">
       <div class="hover-overlay">
         <div>
-          <button class="btn btn-primary btn-sm btn-block" ng-click="addFromSuggested(movie, true)">Add and Open</button>
-          <button class="btn btn-primary btn-sm btn-block" ng-click="addFromSuggested(movie, false)">Add and Continue</button>
+          <button class="btn btn-primary btn-sm btn-block" ng-click="vm.addFromSuggested(movie, true)">Add and Open</button>
+          <button class="btn btn-primary btn-sm btn-block" ng-click="vm.addFromSuggested(movie, false)">Add and Continue</button>
         </div>
       </div>
       <div class="media-item" >

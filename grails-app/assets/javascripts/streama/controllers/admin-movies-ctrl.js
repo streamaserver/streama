@@ -1,40 +1,44 @@
 
 
-angular.module('streama').controller('adminMoviesCtrl', ['$scope', 'apiService', 'modalService', '$state', function ($scope, apiService, modalService, $state) {
+angular.module('streama').controller('adminMoviesCtrl', [
+  'apiService', 'modalService', '$state',
+  function (apiService, modalService, $state) {
+  var vm = this;
 
-	$scope.loading = true;
-  $scope.hasMovieDBKey = true;
-  $scope.searchText = "Search Movie from collection or TheMovieDB...";
+	vm.loading = true;
+  vm.hasMovieDBKey = true;
+  vm.searchText = "Search Movie from collection or TheMovieDB...";
 
-  $scope.createFromFiles = createFromFiles;
+  vm.createFromFiles = createFromFiles;
+
 
   apiService.theMovieDb.hasKey().success(function (data) {
     if (!data.key) {
-      $scope.hasMovieDBKey = false;
-      $scope.searchText = "Search Movie from collection...";
+      vm.hasMovieDBKey = false;
+      vm.searchText = "Search Movie from collection...";
     }
   });
 
 	apiService.movie.list().success(function (data) {
-		$scope.movies = data;
-		$scope.loading = false;
+		vm.movies = data;
+		vm.loading = false;
 	});
 
-	$scope.openMovieModal = function () {
+	vm.openMovieModal = function () {
 		modalService.movieModal(null, function (data) {
 			$state.go('admin.movie', {movieId: data.id});
 		});
 	};
 
-	$scope.doSearch = function (query) {
-    if ($scope.hasMovieDBKey) {
+	vm.doSearch = function (query) {
+    if (vm.hasMovieDBKey) {
       return apiService.theMovieDb.search('movie', query).then(function (data) {
-        $scope.suggestedMovies = data.data;
+        vm.suggestedMovies = data.data;
       });
     }
 	};
 
-	$scope.addFromSuggested = function (movie, redirect) {
+	vm.addFromSuggested = function (movie, redirect) {
 		var tempMovie = angular.copy(movie);
 		var apiId = tempMovie.id;
 		delete tempMovie.id;
@@ -44,20 +48,20 @@ angular.module('streama').controller('adminMoviesCtrl', ['$scope', 'apiService',
 			if(redirect){
 				$state.go('admin.movie', {movieId: data.id});
 			}else{
-				$scope.movies.push(data);
+				vm.movies.push(data);
 			}
 		});
 	};
 
-	$scope.alreadyAdded = function (movie) {
+	vm.alreadyAdded = function (movie) {
 		console.log('%c movie', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', movie);
-		return movie.id && _.find($scope.movies, {apiId: movie.id.toString()});
+		return movie.id && _.find(vm.movies, {apiId: movie.id.toString()});
 	};
 
 	function createFromFiles() {
 		modalService.createFromFilesModal('movie').then(function (data) {
 			apiService.movie.list().success(function (data) {
-				angular.extend($scope.movies, data);
+				angular.extend(vm.movies, data);
 			});
 		});
 	}
