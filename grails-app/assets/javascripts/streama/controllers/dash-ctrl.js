@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('streama').controller('dashCtrl',
-	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams ) {
+	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService ) {
   var vm = this;
 
     var LIST_MAX = 30;
@@ -25,9 +25,9 @@ angular.module('streama').controller('dashCtrl',
         modalService.mediaDetailModal({mediaId: $stateParams.mediaModal, mediaType: $stateParams.mediaType, isApiMovie: false});
       }
 
-      vm.movie = initMovies();
-      vm.tvShow = initTvShows();
-      vm.genericVideo = initGenericVideos();
+      vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'});
+      vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'});
+      vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'});
 
       apiService.tag.list().success(onTagsLoaded);
       apiService.dash.listNewReleases().success(onNewReleasesLoaded);
@@ -43,188 +43,6 @@ angular.module('streama').controller('dashCtrl',
     function onRecommendedLoaded(data) {
       vm.recommendations = data;
       vm.loadingRecommendations = false;
-    }
-
-
-    /**
-     * Create Movie Config for vm, with its own properties for list, isLoading, filter, etc
-     * @returns {{list: Array, currentOffset: number, isLoading: boolean, sorter: {}, filter: {tags: Array, genre: Array, title: string, execute: executeFilter}, loadMore: loadMore}}
-     */
-    function initMovies() {
-      var movieConfig = {
-        total: 0,
-        currentSort: {sort: 'title', order: 'ASC'},
-        list: [],
-        currentOffset: 0,
-        isLoading: true,
-        sorter: _.getterSetter(setSort, getSort),
-        filter: {
-          tags: null,
-          genre: null,
-          title: null,
-          execute: executeFilter
-        },
-        fetch: apiService.dash.listMovies,
-        loadMore: loadMore,
-        getThumbnail: getThumbnail
-      };
-
-      fetchData(movieConfig);
-
-      return movieConfig;
-
-      function getSort() {
-        return movieConfig.currentSort;
-      }
-
-      function setSort(sort) {
-        movieConfig.currentSort = sort;
-        movieConfig.currentOffset = 0;
-        fetchData(movieConfig);
-      }
-
-      function executeFilter(item) {
-        return applyFilter(item, movieConfig.filter);
-      }
-
-      function loadMore() {
-        movieConfig.currentOffset += LIST_MAX;
-        fetchData(movieConfig);
-      }
-
-      function getThumbnail(movie) {
-        if(!movie.poster_path && !movie.poster_image_src){
-          return $rootScope.basePath + 'assets/poster-not-found.png';
-        }
-        if(movie.poster_path){
-          return 'https://image.tmdb.org/t/p/w300/' + movie.poster_path;
-        }
-
-        if(movie.poster_image_src){
-          return movie.poster_image_src;
-        }
-
-      }
-    }
-
-    /**
-     * Create TvShow Config for vm, with its own properties for list, isLoading, filter, etc
-     * @returns {{list: Array, currentOffset: number, isLoading: boolean, sorter: {}, filter: {tags: Array, genre: Array, name: string, execute: executeFilter}, loadMore: loadMore}}
-     */
-    function initTvShows() {
-      var tvShowConfig = {
-        total: 0,
-        list: [],
-        currentSort: {sort: 'name', order: 'ASC'},
-        currentOffset: 0,
-        isLoading: true,
-        sorter: _.getterSetter(setSort, getSort),
-        filter: {
-          tags: null,
-          genre: null,
-          name: null,
-          execute: executeFilter
-        },
-        fetch: apiService.dash.listShows,
-        loadMore: loadMore,
-        getThumbnail: getThumbnail
-      };
-
-      fetchData(tvShowConfig);
-
-      return tvShowConfig;
-
-      function getSort() {
-        return tvShowConfig.currentSort;
-      }
-
-      function setSort(sort) {
-        tvShowConfig.currentSort = sort;
-        tvShowConfig.currentOffset = 0;
-        fetchData(tvShowConfig);
-      }
-
-      function executeFilter(item) {
-        return applyFilter(item, tvShowConfig.filter);
-      }
-
-      function loadMore() {
-        tvShowConfig.currentOffset += LIST_MAX;
-        fetchData(tvShowConfig);
-      }
-
-      function getThumbnail(tvShow) {
-        if(tvShow.poster_path){
-          return 'https://image.tmdb.org/t/p/w300/' + tvShow.poster_path;
-        }
-        if(!tvShow.poster_path && !tvShow.manualInput){
-          return $rootScope.basePath + 'assets/poster-not-found.png';
-        }
-
-        if(tvShow.manualInput && tvShow.poster_image_src){
-          return tvShow.poster_image_src;
-        }
-
-      }
-    }
-
-
-    /**
-     * Create Movie Config for vm, with its own properties for list, isLoading, filter, etc
-     * @returns {{list: Array, currentOffset: number, isLoading: boolean, sorter: {}, filter: {tags: Array, genre: Array, title: string, execute: executeFilter}, loadMore: loadMore}}
-     */
-    function initGenericVideos() {
-      var genericVideoConfig = {
-        total: 0,
-        currentSort: {sort: 'title', order: 'ASC'},
-        list: [],
-        currentOffset: 0,
-        isLoading: true,
-        sorter: _.getterSetter(setSort, getSort),
-        filter: {
-          tags: null,
-          genre: null,
-          title: null,
-          execute: executeFilter
-        },
-        fetch: apiService.dash.listGenericVideos,
-        loadMore: loadMore,
-        getThumbnail: getThumbnail
-      };
-
-      fetchData(genericVideoConfig);
-
-      return genericVideoConfig;
-
-      function getSort() {
-        return genericVideoConfig.currentSort;
-      }
-
-      function setSort(sort) {
-        genericVideoConfig.currentSort = sort;
-        genericVideoConfig.currentOffset = 0;
-        fetchData(genericVideoConfig);
-      }
-
-      function executeFilter(item) {
-        return applyFilter(item, genericVideoConfig.filter);
-      }
-
-      function loadMore() {
-        genericVideoConfig.currentOffset += LIST_MAX;
-        fetchData(genericVideoConfig);
-      }
-
-      function getThumbnail(movie) {
-        if(!movie.poster_image_src){
-          return $rootScope.basePath + 'assets/poster-not-found.png';
-        }
-
-        if(movie.poster_image_src){
-          return movie.poster_image_src;
-        }
-
-      }
     }
 
 

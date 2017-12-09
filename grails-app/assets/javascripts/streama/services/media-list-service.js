@@ -4,10 +4,10 @@ angular.module('streama').factory('mediaListService', function () {
   var LIST_MAX = 30;
 
   return{
-    init: function (enpoint) {
+    init: function (endpoint, defaultSort) {
       var mediaListConfig = {
         total: 0,
-        currentSort: {sort: 'title', order: 'ASC'},
+        currentSort: defaultSort || {sort: 'title', order: 'ASC'},
         list: [],
         currentOffset: 0,
         isLoading: true,
@@ -17,7 +17,7 @@ angular.module('streama').factory('mediaListService', function () {
           genre: null,
           title: null
         },
-        fetch: enpoint,
+        fetch: endpoint,
         search: search,
         loadMore: loadMore,
         getThumbnail: getThumbnail
