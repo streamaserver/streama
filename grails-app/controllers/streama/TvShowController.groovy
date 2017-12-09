@@ -17,28 +17,28 @@ class TvShowController {
   def index() {
     JSON.use('fullShow') {
       response.setStatus(OK.value())
-      render (TvShow.findAllByDeletedNotEqual(true) as JSON)
+      render videoService.listShows(params, [includeEmpty: true]) as JSON
     }
   }
 
   @Transactional
   def save() {
     def data = request.JSON
-	
+
     if (data == null) {
       render status: NOT_FOUND
       return
     }
-    
+
     TvShow tvShow
 	if(data.apiId != null){
       tvShow = TvShow.findByApiId(data.apiId)
 	}
-	
+
 	if(tvShow == null){
       tvShow = new TvShow()
     }
-    
+
     tvShow.properties = data
     tvShow.deleted = false
 
@@ -51,9 +51,9 @@ class TvShowController {
       render status: NOT_ACCEPTABLE
       return
     }
-	
+
     tvShow.save flush: true
-    
+
     respond tvShow, [status: CREATED]
   }
 

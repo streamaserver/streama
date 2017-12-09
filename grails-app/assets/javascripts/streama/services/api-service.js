@@ -16,8 +16,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			delete: function (id) {
 				return $http.delete('tvShow/delete.json', {params: {id: id}});
 			},
-			list: function () {
-				return $http.get('tvShow.json');
+			list: function (params) {
+				return $http.get('tvShow.json', {params: params});
 			},
 			episodesForTvShow: function (id) {
 				return $http.get('tvShow/episodesForTvShow.json', {params: {id: id}});

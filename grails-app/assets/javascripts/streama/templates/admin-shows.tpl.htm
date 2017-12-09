@@ -2,7 +2,7 @@
   <div class="col-md-6">
     <h1>
       Shows
-      <video-sort-order-dropdown ng-model="currentSort" dropdown-type="'tvShow'"/>
+      <video-sort-order-dropdown ng-model="tvShow.sorter"  ng-model-options="{getterSetter: true}" dropdown-type="'tvShow'"/>
     </h1>
   </div>
 
@@ -18,12 +18,12 @@
 
 <div class="row">
   <div class="col-md-5">
-    <input placeholder="{{searchText}}" type="text" ng-model="search" ng-change="doSearch(search)"
+    <input placeholder="{{searchText}}" type="text" ng-model="tvShow.filter.name" ng-change="doSearch(tvShow.filter.name)"
            ng-model-options="{debounce: 333}" class="form-control input-sm" />
   </div>
 </div>
 
-<div class="spinner big" ng-show="loading">
+<div class="spinner big" ng-show="tvShow.isLoading">
   <div class="bounce1"></div>
   <div class="bounce2"></div>
   <div class="bounce3"></div>
@@ -33,7 +33,7 @@
 
 <div class="media-list">
   <div class="media-list-item media-poster-item"  ng-class="{'no-files': !show.episodesWithFilesCount}"
-       ng-repeat="show in shows | filter:search | orderBy:(currentSort.order == 'DESC' ? '-' : '' + currentSort.sort)"
+       ng-repeat="show in tvShow.list"
        ui-sref="admin.show({showId: show.id})">
     <div class="media-item" >
       <img ng-if="show.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{show.poster_path}}"/>
@@ -50,6 +50,10 @@
       <i class="warning-icon ion-alert-circled" ng-show="!show.episodesWithFilesCount"></i>
     </div>
   </div>
+</div>
+
+<div class="text-center" ng-if="tvShow.total > tvShow.list.length">
+  <button class="btn btn-primary btn-outline" ng-click="tvShow.loadMore()">Load more ...</button>
 </div>
 
 

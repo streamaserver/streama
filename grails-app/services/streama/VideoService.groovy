@@ -115,6 +115,7 @@ class VideoService {
     def tvShowQuery = TvShow.where{
       def tv1 = TvShow
       deleted != true
+
       if(!options.includeEmpty) {
         exists Episode.where {
           def ep = Episode
@@ -122,6 +123,10 @@ class VideoService {
           tv1.id == tv2.id
           isNotEmpty("files")
         }.id()
+      }
+
+      if(params.name){
+        name =~ "%${params.name}%"
       }
 
     }
