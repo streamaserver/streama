@@ -160,8 +160,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			delete: function (id) {
 				return $http.delete('movie/delete.json', {params: {id: id}});
 			},
-			list: function () {
-				return $http.get('movie.json');
+			list: function (params) {
+				return $http.get('movie.json', {params: params});
 			}
 		},
 

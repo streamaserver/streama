@@ -18,6 +18,7 @@ angular.module('streama').factory('mediaListService', function () {
           title: null
         },
         fetch: enpoint,
+        search: search,
         loadMore: loadMore,
         getThumbnail: getThumbnail
       };
@@ -25,6 +26,11 @@ angular.module('streama').factory('mediaListService', function () {
       fetchData(mediaListConfig);
 
       return mediaListConfig;
+
+
+      function search() {
+        fetchData(mediaListConfig);
+      }
 
       function getSort() {
         return mediaListConfig.currentSort;
@@ -56,7 +62,15 @@ angular.module('streama').factory('mediaListService', function () {
 
 
   function fetchData(mediaConfig) {
-    mediaConfig.fetch({max: LIST_MAX, offset: mediaConfig.currentOffset, sort: mediaConfig.currentSort.sort, order: mediaConfig.currentSort.order}).success(function (response) {
+    var params = {
+      max: LIST_MAX,
+      offset: mediaConfig.currentOffset,
+      sort: mediaConfig.currentSort.sort,
+      order: mediaConfig.currentSort.order
+    };
+    angular.extend(params, mediaConfig.filter);
+
+    mediaConfig.fetch(params).success(function (response) {
       mediaConfig.total = response.total;
       if(mediaConfig.currentOffset > 0){
         mediaConfig.list = _.unionBy(mediaConfig.list, response.list, 'id');

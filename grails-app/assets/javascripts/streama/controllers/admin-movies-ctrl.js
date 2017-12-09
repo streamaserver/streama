@@ -1,11 +1,10 @@
 
 
 angular.module('streama').controller('adminMoviesCtrl', [
-  'apiService', 'modalService', '$state',
-  function (apiService, modalService, $state) {
+  'apiService', 'modalService', '$state', 'mediaListService',
+  function (apiService, modalService, $state, mediaListService) {
   var vm = this;
 
-	vm.loading = true;
   vm.hasMovieDBKey = true;
   vm.searchText = "Search Movie from collection or TheMovieDB...";
 
@@ -18,16 +17,12 @@ angular.module('streama').controller('adminMoviesCtrl', [
   init();
 
   function init() {
+    vm.movie = mediaListService.init(apiService.movie.list);
     apiService.theMovieDb.hasKey().success(function (data) {
       if (!data.key) {
         vm.hasMovieDBKey = false;
         vm.searchText = "Search Movie from collection...";
       }
-    });
-
-    apiService.movie.list().success(function (data) {
-      vm.movies = data;
-      vm.loading = false;
     });
   }
 
@@ -39,6 +34,7 @@ angular.module('streama').controller('adminMoviesCtrl', [
   }
 
   function doSearch(query) {
+    vm.movie.search();
     if (vm.hasMovieDBKey) {
       return apiService.theMovieDb.search('movie', query).then(function (data) {
         vm.suggestedMovies = data.data;
@@ -56,21 +52,21 @@ angular.module('streama').controller('adminMoviesCtrl', [
       if(redirect){
         $state.go('admin.movie', {movieId: data.id});
       }else{
-        vm.movies.push(data);
+        vm.movie.list.push(data);
       }
     });
   }
 
   function alreadyAdded(movie) {
     console.log('%c movie', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', movie);
-    return movie.id && _.find(vm.movies, {apiId: movie.id.toString()});
+    return movie.id && _.find(vm.movie.list, {apiId: movie.id.toString()});
   }
 
 
   function createFromFiles() {
     modalService.createFromFilesModal('movie').then(function (data) {
       apiService.movie.list().success(function (data) {
-        angular.extend(vm.movies, data);
+        angular.extend(vm.movie.list, data);
       });
     });
   }

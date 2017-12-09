@@ -93,6 +93,9 @@ class VideoService {
       if(!options.includeEmpty){
         isNotEmpty("files")
       }
+      if(params.title){
+        title =~ "%${params.title}%"
+      }
     }
     def movies =  movieQuery.list(max: max, offset: offset, sort: sort, order: order)
     def totalMovieCount = movieQuery.count()
