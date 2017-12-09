@@ -19,30 +19,8 @@ class DashController {
 
 
   def listShows(){
-    def max = params.int('max', 50)
-    def offset = params.int('offset', 0)
-    def sort = params.sort
-    def order = params.order
-
-    def tvShowQuery = TvShow.where{
-      def tv1 = TvShow
-      deleted != true
-      exists Episode.where{
-        def ep = Episode
-        def tv2 = show
-        tv1.id == tv2.id
-        isNotEmpty("files")
-      }.id()
-
-    }
-
-    def tvShows = tvShowQuery.list(max: max, offset: offset, sort: sort, order: order)
-    def totalTvShowsCount = tvShowQuery.count()
-
-    def result = [total: totalTvShowsCount, list: tvShows]
-
     JSON.use ('dashTvShow') {
-      respond result
+      respond videoService.listShows(params, [:])
     }
   }
 
