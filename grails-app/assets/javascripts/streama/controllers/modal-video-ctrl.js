@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalVideoCtrl', [
-	'$scope', '$uibModalInstance', 'apiService', 'video', 'isManual', 'tvShow',
-	function ($scope, $uibModalInstance, apiService, video, isManual, tvShow) {
+	'$scope', '$uibModalInstance', 'apiService', 'video', 'isManual', 'tvShow', 'uploadService',
+	function ($scope, $uibModalInstance, apiService, video, isManual, tvShow, uploadService) {
 	$scope.loading = false;
 	$scope.addManually = isManual;
 
@@ -25,7 +25,19 @@ angular.module('streama').controller('modalVideoCtrl', [
 			});
 	};
 
-	$scope.deleteVideo = function(video){
+  $scope.imageUpload = {};
+  $scope.uploadImage = function (files, type) {
+    uploadService.doUpload($scope.imageUpload, 'file/upload.json', function (data) {
+      $scope.imageUpload.percentage = null;
+      if(data.error) return
+
+      $scope.episode[type] = data;
+      $scope.episode[type+'_src'] = data.src;
+    }, function () {}, files);
+  };
+
+
+    $scope.deleteVideo = function(video){
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm("Are you sure you want to delete this Episode?", function (confirmed) {
 			if(confirmed){

@@ -27,7 +27,9 @@
   <h3 class="media-title">{{episode.name}}</h3>
   <div class="media-item" >
     <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.still_path}}"/>
-    <div ng-if="!episode.still_path" class="fallback-image"></div>
+    <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>
+    <div ng-if="!episode.still_path && !episode.still_image_src" class="fallback-image"></div>
+
     <a ng-show="episode.files.length" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
   </div>
 
