@@ -110,7 +110,11 @@ angular.module('streama').controller('dashCtrl',
     }
     function showDetails(media) {
       //modalService.mediaDetailModal((media.tvShowId || media.id), media.mediaType); //{videoId: data.id}
-      modalService.mediaDetailModal({mediaId: (media.tvShowId || media.id), mediaType: media.mediaType, isApiMovie: false});
+      if(media.mediaType === 'episode'){
+        modalService.mediaDetailModal({mediaId: media.tvShowId, mediaType: 'tvShow', isApiMovie: false});
+      }else{
+        modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false});
+      }
     }
 
     function applyFilter(item, filterObj) {
