@@ -11,6 +11,7 @@ class UrlMappings {
 
 
         "/api/v1/validateDomain"(controller: 'api', action: 'validateDomain')
+        "/api/v1/getInfo"(controller: 'api', action: 'getInfo')
         "/api/v1/currentUser"(controller: 'api', action: 'currentUser')
 
         "/api/v1/dash/listContinueWatching"(controller: 'dash', action: 'listContinueWatching')
