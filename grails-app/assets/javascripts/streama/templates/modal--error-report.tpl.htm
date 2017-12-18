@@ -1,5 +1,5 @@
 <div class="modal-body">
- <p>{{vm.errorCode()}}</p>
+ <p>{{'MESSAGES.' + vm.errorCode | translate}}</p>
 </div>
 <div class="modal-footer">
   <button class="btn btn-sm" ng-click="vm.close('withReport', vm.videoId)">Send Report</button>
