@@ -140,6 +140,10 @@ angular.module('streama').factory('playerService',
 
 
       onVideoError: function (errorCode) {
+        if ($state.current.name !== 'player') {
+          return;
+        }
+        console.log('onVideoError');
         errorCode = errorCode || 'CODEC_PROBLEM';
         var modalInstance = $uibModal.open({
         templateUrl: '/streama/modal--error-report.htm',
@@ -164,7 +168,7 @@ angular.module('streama').factory('playerService',
 
       // onVideoError: function (errorCode) {
       //   var that = this;
-		  // 		errorCode = errorCode || 'CODEC_PROBLEM';
+		//   		errorCode = errorCode || 'CODEC_PROBLEM';
       //   console.log('%c onVideoError', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
       //
       //
