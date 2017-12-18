@@ -78,7 +78,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						video.oncanplay = oncanplay;
 						video.onwaiting = onwaiting;
 						video.onplaying = onplaying;
-						video.onerror = onerror;
+						video.addEventListener('error', onerror, true);
 						video.ontimeupdate = ontimeupdate;
 						video.addEventListener('ended', onVideoEnded);
 						$scope.scrubberOptions = generateScrupperOoptions();
