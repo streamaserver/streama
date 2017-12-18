@@ -208,4 +208,23 @@ class VideoController {
     }
     respond result
   }
+
+  def sendErrorReport () {
+    def jsonData = request.JSON
+    log.debug(jsonData.errorCode)
+    Video currentVideo = Video.get(jsonData.videoId)
+    String errorCode = jsonData.errorCode
+    User currentUser = springSecurityService.currentUser
+    Report newReport = new Report()
+    newReport.errorCode = errorCode
+    newReport.createdBy = currentUser
+    newReport.dateCreated = new Date()
+    newReport.video = currentVideo
+    newReport.resolved = false
+    newReport.save()
+    respond newReport
+  }
+//  def fetchCurrentVideo () {
+//    Video currentVideo = video
+//  }
 }
