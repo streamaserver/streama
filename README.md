@@ -29,7 +29,6 @@ If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7S
 - [Roadmap](#roadmap)
 - [Known Issues](#known-issues)
 - [Contributing](#contributing)
-- [Donations](#donations)
 - [License](#license)
 
 # Getting Started
