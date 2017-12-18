@@ -7,7 +7,13 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 
 [Visit the Promo-Website here!](http://dularion.github.io/streama/)
 
-[Visit my Patreon Page here](https://www.patreon.com/user?u=7362340)
+
+## Donate
+<span class="badge-patreon"><a href="https://www.patreon.com/user?u=7362340" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a></span>
+<span class="badge-paypal"><a href="https://www.paypal.me/AntoniaEngfors" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate button" /></a></span>
+
+If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
+
 
 
 ## Table of contents:
@@ -100,9 +106,6 @@ If you want to contribute a translation, please follow [the guide here](https://
 ### PRs
 If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your efforts on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
 
-# Donations
-If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7SUDnGCpcWq  
-If you want to use paypal, use this link https://www.paypal.me/AntoniaEngfors
 
 # Known Issues
 - There is no video-conversion currently, meaning you are reliant upon HTML5 browser compatibilities. I will implement server-side conversion soon which will enable this functionality. See Issue [#17](https://github.com/dularion/streama/issues/17)
