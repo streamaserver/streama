@@ -114,6 +114,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
       addLocalFile: function (params) {
         return $http.get('video/addLocalFile.json', {params: params});
+      },
+      sendErrorReport: function (videoId, errorCode) {
+        return $http.put('video/sendErrorReport.json', {videoId: videoId, errorCode: errorCode});
       }
 		},
 
