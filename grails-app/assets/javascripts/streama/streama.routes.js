@@ -100,6 +100,12 @@ angular.module('streama').config(function ($stateProvider) {
 			templateUrl: '/streama/admin-show.htm',
 			controller: 'adminShowCtrl'
 		})
+    .state('admin.reports', {
+      url: '/reports',
+      templateUrl: '/streama/admin-reports.htm',
+      controller: 'adminReportsCtrl',
+      controllerAs: "vm"
+    })
 
 
 

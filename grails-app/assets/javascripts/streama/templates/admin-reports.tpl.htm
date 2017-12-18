@@ -1,0 +1,36 @@
+<h1>Reports</h1>
+
+  <button class="btn btn-danger btn-sm pull-right resolve-reports-button" ng-click="resolveReports()">
+    Resolve Reports
+  </button>
+
+<p>Here you can see the reports users have made.</p>
+
+<div >
+  <table class="table table-striped table-reports">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Report ID</th>
+      <th>User</th>
+      <th>Video</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="report in vm.reports">
+      <td><input type="checkbox" ng-click="vm.addOrRemoveFromSelection($event, file)"/></td>
+
+      <td>
+        {{report.id}}
+      </td>
+
+      <td>
+        {{report.createdBy.id}}
+      </td>
+
+      <td>
+        {{report.video.id}}
+      </td>
+
+    </tr>
+  </table>
+</div>
