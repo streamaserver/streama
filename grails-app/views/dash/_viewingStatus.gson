@@ -29,6 +29,7 @@ json g.render(viewingStatus, [includes: ['id', 'dateCreated', 'lastUpdated', 'cu
         release_date movie.release_date
         poster_path movie.poster_path
         backdrop_path movie.backdrop_path
+        poster_image_src movie.poster_image?.src
       }
       if (viewingStatus.video instanceof GenericVideo) {
         GenericVideo genericVideo = viewingStatus.video as GenericVideo
@@ -45,6 +46,7 @@ json g.render(viewingStatus, [includes: ['id', 'dateCreated', 'lastUpdated', 'cu
         isEpisode true
         backdrop_path episode.still_path
         poster_path episode.show?.poster_path
+        poster_image_src episode.show?.poster_image?.src
         episodeString episode.episodeString
         tvShowId episode.show?.id
         intro_start episode.intro_start

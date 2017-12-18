@@ -16,8 +16,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			delete: function (id) {
 				return $http.delete('tvShow/delete.json', {params: {id: id}});
 			},
-			list: function () {
-				return $http.get('tvShow.json');
+			list: function (params) {
+				return $http.get('tvShow.json', {params: params});
 			},
 			episodesForTvShow: function (id) {
 				return $http.get('tvShow/episodesForTvShow.json', {params: {id: id}});
@@ -160,8 +160,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			delete: function (id) {
 				return $http.delete('movie/delete.json', {params: {id: id}});
 			},
-			list: function () {
-				return $http.get('movie.json');
+			list: function (params) {
+				return $http.get('movie.json', {params: params});
 			}
 		},
 
@@ -274,12 +274,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/listContinueWatching.json');
 			},
 
-			listMovies: function () {
-				return $http.get('dash/listMovies.json');
+			listMovies: function (params) {
+				return $http.get('dash/listMovies.json', {params: params});
 			},
 
-			listShows: function () {
-				return $http.get('dash/listShows.json');
+			listShows: function (params) {
+				return $http.get('dash/listShows.json', {params: params});
 			},
 
 			firstEpisodeForShow: function (id) {
@@ -290,8 +290,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/listGenres.json');
 			},
 
-			listGenericVideos: function () {
-				return $http.get('dash/listGenericVideos.json');
+			listGenericVideos: function (params) {
+				return $http.get('dash/listGenericVideos.json', {params: params});
 			},
 
 			listNewReleases: function () {
