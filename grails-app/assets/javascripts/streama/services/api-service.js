@@ -98,7 +98,7 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.delete('file/removeFileFromDisk.json', {params: {id: id, path: path}});
 			},
       removeMultipleFilesFromDisk: function(bulk) {
-        return $http.delete('file/removeMultipleFilesFromDisk.json', {params: {id: bulk}})
+        return $http.delete('file/removeMultipleFilesFromDisk.json', {params: {id: bulk}});
       },
 			cleanUpFiles: function (type) {
 				return $http.delete('file/cleanUpFiles.json', {params: {type: type}});
@@ -117,6 +117,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
       },
       sendErrorReport: function (videoId, errorCode) {
         return $http.put('video/sendErrorReport.json', {videoId: videoId, errorCode: errorCode});
+      },
+      getErrorReports: function () {
+        return $http.get('video/getErrorReports.json');
+      },
+      resolveReports: function(bulk) {
+        return $http.delete('file/resolveReports.json', {params: {id: bulk}});
       }
 		},
 

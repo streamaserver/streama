@@ -1329,6 +1329,10 @@ hr {
   word-break: break-word;
   font-size: 12px; }
 
+.resolve-reports-button{
+  margin-bottom: 10px;
+}
+
 .spinner {
   width: 38px;
   text-align: center;

@@ -238,8 +238,10 @@ class VideoController {
     respond newReport
   }
 
-  def getErrorReport () {
-
+  def getErrorReports () {
+    def reports = Report.findAllByResolved(false)
+    respond reports
+    return
   }
 //  def fetchCurrentVideo () {
 //    Video currentVideo = video
