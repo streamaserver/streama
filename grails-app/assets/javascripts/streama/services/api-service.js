@@ -122,7 +122,7 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
         return $http.get('video/getErrorReports.json');
       },
       resolveReports: function(bulk) {
-        return $http.delete('file/resolveReports.json', {params: {id: bulk}});
+        return $http.post('video/resolveReports.json', {ids: bulk});
       }
 		},
 

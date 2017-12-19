@@ -33,26 +33,28 @@ class VideoController {
 
     def continueWatching = ViewingStatus.withCriteria {
       eq("user", currentUser)
-      video{
+      video {
         isNotEmpty("files")
         ne("deleted", true)
       }
       eq("completed", false)
       order("lastUpdated", "desc")
     }
-    def movies = Movie.findAllByDeletedNotEqual(true).findAll{ Movie movie ->
-      return (!continueWatching.find{it.video.id == movie.id} && movie.files)
+    def movies = Movie.findAllByDeletedNotEqual(true).findAll { Movie movie ->
+      return (!continueWatching.find { it.video.id == movie.id } && movie.files)
     }
 
-    result.tvShowsForDash = tvShows.findAll{tvShow->
-      return (!(continueWatching.find{(it.video instanceof Episode) && it.video.show?.id == tvShow?.id}) && tvShow.hasFiles)
+    result.tvShowsForDash = tvShows.findAll { tvShow ->
+      return (!(continueWatching.find {
+        (it.video instanceof Episode) && it.video.show?.id == tvShow?.id
+      }) && tvShow.hasFiles)
     }
 
-    JSON.use('dashMovies'){
+    JSON.use('dashMovies') {
       result.movies = JSON.parse((movies as JSON).toString())
     }
 
-    JSON.use ('dashViewingStatus') {
+    JSON.use('dashViewingStatus') {
       result.continueWatching = JSON.parse((continueWatching as JSON).toString())
     }
 
@@ -69,12 +71,12 @@ class VideoController {
       render status: NOT_FOUND
       return
     }
-    if(!data.id){
-      if(data.image){
+    if (!data.id) {
+      if (data.image) {
         data.image = thetvdbService.BASE_PATH_GRAPHICS + data.image
       }
       videoInstance = new Video()
-    }else{
+    } else {
       videoInstance = Video.get(data.id)
     }
 
@@ -86,13 +88,13 @@ class VideoController {
       return
     }
 
-    videoInstance.save flush:true
+    videoInstance.save flush: true
     respond videoInstance, [status: CREATED]
   }
 
-  def show(Video videoInstance){
+  def show(Video videoInstance) {
     JSON.use('player') {
-      render (videoInstance as JSON)
+      render(videoInstance as JSON)
     }
   }
 
@@ -118,14 +120,13 @@ class VideoController {
 
     def file = uploadService.upload(request)
 
-    if(file!=null){
-    	videoInstance.addToFiles(file)
-    	videoInstance.save flush: true, failOnError: true
-    	respond file
-    }else{
-    	render status: 415
+    if (file != null) {
+      videoInstance.addToFiles(file)
+      videoInstance.save flush: true, failOnError: true
+      respond file
+    } else {
+      render status: 415
     }
-
 
 
   }
@@ -149,6 +150,7 @@ class VideoController {
     respond status: OK
 
   }
+
   @Transactional
   def addFile() {
     Video video = Video.get(params.getInt('videoId'))
@@ -186,7 +188,7 @@ class VideoController {
   def videoExtensionRegex = ~/(?:.(?![^a-zA-Z0-9]))(mp4|webm|ogg|srt|vtt)/
 
   @Transactional
-  def addExternalUrl(Video videoInstance){
+  def addExternalUrl(Video videoInstance) {
     File file = File.findOrCreateByExternalLink(params.externalUrl)
     file.originalFilename = params.externalUrl
     def matcher = params.externalUrl =~ videoExtensionRegex
@@ -199,9 +201,9 @@ class VideoController {
   }
 
   @Transactional
-  def addLocalFile(Video videoInstance){
+  def addLocalFile(Video videoInstance) {
     def result = videoService.addLocalFile(videoInstance, params)
-    if(result instanceof Map && result.error){
+    if (result instanceof Map && result.error) {
       response.setStatus(result.statusCode)
       respond result
       return
@@ -209,7 +211,7 @@ class VideoController {
     respond result
   }
 
-  def sendErrorReport () {
+  def sendErrorReport() {
     def jsonData = request.JSON
     log.debug(jsonData.errorCode)
     Video currentVideo = Video.get(jsonData.videoId)
@@ -239,10 +241,20 @@ class VideoController {
 
   def getErrorReports () {
     def reports = Report.findAllByResolved(false)
-    respond reports
-    return
+      return [reportList:reports]
   }
-//  def fetchCurrentVideo () {
-//    Video currentVideo = video
-//  }
+
+  @Transactional
+  def resolveReports() {
+    def jsonData = request.JSON
+    def resolvedReports = []
+    jsonData.ids.each { id ->
+      def report = Report.get(id)
+      report.resolved = true
+      report.lastUpdated = new Date()
+      report.save()
+      resolvedReports.add(id)
+    }
+    respond resolvedReports
+  }
 }
