@@ -1,0 +1,19 @@
+import streama.Report
+
+model {
+  Report report
+}
+
+json g.render(report,[includes: []]) {
+  id report.id
+  dateCreated report.dateCreated
+  resolved report.resolved
+  userId report.createdBy.id
+  userName report.createdBy.username
+
+  videoId report.video.id
+  videoTitle report.video.title
+//  videoTest report.video.vote_count
+//  videoSeason report.video.season_number
+//  videoEpisode report.video.episode_number
+}

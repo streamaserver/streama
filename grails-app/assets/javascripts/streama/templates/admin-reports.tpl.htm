@@ -1,6 +1,6 @@
 <h1>Reports</h1>
 
-  <button class="btn btn-danger btn-sm pull-right resolve-reports-button" ng-click="resolveReports()">
+  <button class="btn btn-danger btn-sm pull-right resolve-reports-button" ng-click="vm.resolveReports()">
     Resolve Reports
   </button>
 
@@ -13,22 +13,27 @@
       <th></th>
       <th>Report ID</th>
       <th>User</th>
-      <th>Video</th>
+      <th>Title</th>
+      <th>Video ID</th>
     </tr>
     </thead>
     <tr ng-repeat="report in vm.reports">
-      <td><input type="checkbox" ng-click="vm.addOrRemoveFromSelection($event, file)"/></td>
+      <td><input type="checkbox" ng-click="vm.addOrRemoveFromSelection($event, report)"/></td>
 
       <td>
         {{report.id}}
       </td>
 
       <td>
-        {{report.createdBy.id}}
+        {{report.userName}}
       </td>
 
       <td>
-        {{report.video.id}}
+        {{report.videoTitle}}
+      </td>
+
+      <td >
+        <a ui-sref="player({videoId: report.videoId})">{{report.videoId}}</a>
       </td>
 
     </tr>
