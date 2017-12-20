@@ -47,7 +47,7 @@
       <th></th>
     </tr>
     </thead>
-    <tr ng-repeat="report in vm.reports | orderBy:'-resolved' :true | filter: vm.showReports">
+    <tr ng-repeat="report in vm.reports | filter: vm.showReports">
 
       <td>
         <input type="checkbox" ng-if="report.resolved == false" ng-click="vm.addOrRemoveFromSelection($event, report)">
