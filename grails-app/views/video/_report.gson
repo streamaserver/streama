@@ -8,7 +8,7 @@ model {
 json g.render(report,[includes: []]) {
   id report.id
   dateCreated report.dateCreated
-  lstUpdated report.lastUpdated
+  lastUpdated report.lastUpdated
   resolved report.resolved
   userId report.createdBy.id
   userName report.createdBy.username
