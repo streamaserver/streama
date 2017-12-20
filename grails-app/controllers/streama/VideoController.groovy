@@ -213,19 +213,18 @@ class VideoController {
 
   def sendErrorReport() {
     def jsonData = request.JSON
-    log.debug(jsonData.errorCode)
     Video currentVideo = Video.get(jsonData.videoId)
     String errorCode = jsonData.errorCode
     User currentUser = springSecurityService.currentUser
-    def preExistingReports = Report.where {
+    Integer preExistingReportCount = Report.where {
       and {
         eq('video', currentVideo)
         eq('createdBy', currentUser)
         ne('resolved', true)
         eq('errorCode', errorCode)
       }
-    }
-    if (preExistingReports.size() > 0) {
+    }.count()
+    if (preExistingReportCount > 0) {
       render(status: 412, text: 'Report already sent.')
       return
     }
@@ -240,7 +239,7 @@ class VideoController {
   }
 
   def getErrorReports () {
-    def reports = Report.findAllByResolved(false)
+    def reports  = Report.list()
       return [reportList:reports]
   }
 
