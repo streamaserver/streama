@@ -1,9 +1,10 @@
 //= wrapped
 
 angular.module('streama').controller('adminReportsCtrl', [
-  'apiService', '$state', '$rootScope', function (apiService, $state, $rootScope) {
+  'apiService', '$state', '$rootScope', '$filter', '$filter', function (apiService, $state, $rootScope, $filter) {
     var vm = this;
     vm.selectedReports = [];
+    vm.showReports = {};
     vm.resolveReports = resolveReports;
     vm.addOrRemoveFromSelection = addOrRemoveFromSelection;
     apiService.video.getErrorReports().then(function (reports) {
@@ -11,7 +12,7 @@ angular.module('streama').controller('adminReportsCtrl', [
     });
 
     function addOrRemoveFromSelection($event, report) {
-      if($event.target.checked) {
+      if($event.target.checked && report.resolved === false) {
         vm.selectedReports.push(report.id);
       } else {
         _.remove(vm.selectedReports, function(id) {
@@ -41,7 +42,7 @@ angular.module('streama').controller('adminReportsCtrl', [
             });
           }
         });
-      }
+      } else alertify.error('No reports selected.');
     }
   }]);
 
