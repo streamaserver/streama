@@ -244,7 +244,29 @@ class VideoController {
   }
 
   @Transactional
-  def resolveReports() {
+  def resolveReport() {
+    def jsonData = request.JSON
+    def report = Report.get(jsonData.reportId)
+    report.resolved = true
+    report.lastUpdated = new Date()
+    report.save()
+
+    respond report
+  }
+
+  @Transactional
+  def unresolveReport() {
+    def jsonData = request.JSON
+    def report = Report.get(jsonData.reportId)
+    report.resolved = false
+    report.lastUpdated = new Date()
+    report.save()
+
+    respond report
+  }
+
+  @Transactional
+  def resolveMultipleReports() {
     def jsonData = request.JSON
     def resolvedReports = []
     jsonData.ids.each { id ->
@@ -252,7 +274,10 @@ class VideoController {
       report.resolved = true
       report.lastUpdated = new Date()
       report.save()
-      resolvedReports.add(id)
+      resolvedReports.add([
+        id:id,
+        resolved:report.resolved
+      ])
     }
     respond resolvedReports
   }

@@ -5,7 +5,9 @@ angular.module('streama').controller('adminReportsCtrl', [
     var vm = this;
     vm.selectedReports = [];
     vm.showReports = {};
-    vm.resolveReports = resolveReports;
+    vm.resolveMultipleReports = resolveMultipleReports;
+    vm.resolveReport = resolveReport;
+    vm.unresolveReport = unresolveReport;
     vm.addOrRemoveFromSelection = addOrRemoveFromSelection;
     apiService.video.getErrorReports().then(function (reports) {
       vm.reports = reports.data;
@@ -21,18 +23,55 @@ angular.module('streama').controller('adminReportsCtrl', [
       }
     }
 
-    function resolveReports() {
+    function resolveReport(oldReport) {
+      var confirmText = "This will resolve the selected report. Do you want to proceed?";
+      alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
+      alertify.confirm(confirmText, function (confirmed) {
+        if (confirmed) {
+          apiService.video.resolveReport(oldReport.id).then
+          (function (response) {
+              var newReport = response.data;
+              oldReport.resolved = newReport.resolved;
+            alertify.success('Selected report has been resolved.');
+          }, function () {
+            alertify.error('Report could not be resolved.');
+          });
+        }
+      });
+    }
+
+    function unresolveReport(oldReport) {
+      var confirmText = "This will unresolve the selected report. Do you want to proceed?";
+      alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
+      alertify.confirm(confirmText, function (confirmed) {
+        if (confirmed) {
+          apiService.video.unresolveReport(oldReport.id).then
+          (function (response) {
+              var newReport = response.data;
+              oldReport.resolved = newReport.resolved;
+            alertify.success('Selected report has been unresolved.');
+          }, function () {
+            alertify.error('Report could not be unresolved.');
+          });
+        }
+      });
+    }
+
+    function resolveMultipleReports() {
       if(vm.selectedReports.length > 0) {
         var confirmText = "This will resolve all selected reports. Do you want to proceed?";
         alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
         alertify.confirm(confirmText, function (confirmed) {
           if(confirmed){
-            apiService.video.resolveReports(vm.selectedReports).then
+            apiService.video.resolveMultipleReports(vm.selectedReports).then
             (function (response) {
-              var ids = response.data;
-              _.forEach(ids, function (id) {
-                _.remove(vm.reports, function(report) {
-                  return report.id === id;
+              console.log(response.data);
+              var newReports = response.data;
+              _.forEach(newReports, function (newReport) {
+                _.forEach(vm.reports, function (oldReport) {
+                  if (newReport.id === oldReport.id) {
+                    oldReport.resolved = newReport.resolved;
+                  }
                 });
               });
               vm.selectedReports = [];

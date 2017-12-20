@@ -121,8 +121,14 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
       getErrorReports: function () {
         return $http.get('video/getErrorReports.json');
       },
-      resolveReports: function(bulk) {
-        return $http.post('video/resolveReports.json', {ids: bulk});
+      resolveReport: function (reportId) {
+        return $http.post('video/resolveReport.json', {reportId: reportId});
+      },
+      unresolveReport: function (reportId) {
+        return $http.post('video/unresolveReport.json', {reportId: reportId});
+      },
+      resolveMultipleReports: function(bulk) {
+        return $http.post('video/resolveMultipleReports.json', {ids: bulk});
       }
 		},
 
