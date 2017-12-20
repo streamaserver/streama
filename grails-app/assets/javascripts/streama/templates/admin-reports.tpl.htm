@@ -6,19 +6,30 @@
 
 <p>Here you can see the reports users have made.</p>
 
+<button class="btn btn-default btn-sm pull-left show-reports-button" ng-click="vm.showReports = {}">
+  All
+</button>
+
+<button class="btn btn-default btn-sm pull-left show-reports-button" ng-click="vm.showReports.resolved = false">
+  Only unresolved Reports
+</button>
+
+<button class="btn btn-default btn-sm pull-left show-reports-button" ng-click="vm.showReports.resolved = true">
+  Only resolved Reports
+</button>
+
 <div >
   <table class="table table-striped table-reports">
     <thead>
     <tr>
-      <th></th>
       <th>Report ID</th>
       <th>User</th>
       <th>Title</th>
       <th>Video ID</th>
+      <th>Resolved</th>
     </tr>
     </thead>
-    <tr ng-repeat="report in vm.reports">
-      <td><input type="checkbox" ng-click="vm.addOrRemoveFromSelection($event, report)"/></td>
+    <tr ng-repeat="report in vm.reports | orderBy:'-resolved' :true | filter: vm.showResolved">
 
       <td>
         {{report.id}}
@@ -34,6 +45,10 @@
 
       <td >
         <a ui-sref="player({videoId: report.videoId})">{{report.videoId}}</a>
+      </td>
+
+      <td>
+        <input type="checkbox" ng-checked="{{report.resolved}}" ng-click="vm.addOrRemoveFromSelection($event, report)">
       </td>
 
     </tr>
