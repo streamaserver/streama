@@ -65,7 +65,6 @@ angular.module('streama').controller('adminReportsCtrl', [
           if(confirmed){
             apiService.video.resolveMultipleReports(vm.selectedReports).then
             (function (response) {
-              console.log(response.data);
               var newReports = response.data;
               _.forEach(newReports, function (newReport) {
                 _.forEach(vm.reports, function (oldReport) {

@@ -40,6 +40,7 @@
     <tr>
       <th></th>
       <th>Report ID</th>
+      <th>Date Created/Updated</th>
       <th>User</th>
       <th>Title</th>
       <th>Video ID</th>
@@ -57,11 +58,16 @@
       </td>
 
       <td>
+        <p ng-if="report.lastUpdated">{{report.lastUpdated}}</p>
+        <p ng-if="!report.lastUpdated">{{report.dateCreated}}</p>
+      </td>
+
+      <td>
         {{report.userName}}
       </td>
 
       <td>
-        {{report.videoTitle}}
+        {{report.videoTitle}}<p ng-if="report.episodeString">({{report.episodeString}})</p>
       </td>
 
       <td >
