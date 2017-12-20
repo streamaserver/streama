@@ -11,7 +11,6 @@ angular.module('streama').controller('modalErrorReportCtrl', [
               closeModalAndRedirect();
               alertify.success('Report sent successfully.');
           }, function (error) {
-            console.log(error);
             closeModalAndRedirect();
             alertify.error(error.data);
           });
