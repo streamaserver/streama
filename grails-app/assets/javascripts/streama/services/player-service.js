@@ -150,6 +150,7 @@ angular.module('streama').factory('playerService',
         controller: 'modalErrorReportCtrl',
         controllerAs: 'vm',
         size: 'lg',
+        backdrop: 'static',
         resolve: {
           errorCode: function () {
             return errorCode;
