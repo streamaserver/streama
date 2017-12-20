@@ -14,7 +14,7 @@ json g.render(report,[includes: []]) {
   userName report.createdBy.username
   if (report.video instanceof Episode) {
     Episode episode = report.video as Episode
-    season episode.season_number
+    episodeString episode.episodeString
   }
   videoId report.video.id
   videoTitle report.video.title
