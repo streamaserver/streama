@@ -9,6 +9,7 @@ angular.module('streama').controller('adminReportsCtrl', [
     vm.resolveReport = resolveReport;
     vm.unresolveReport = unresolveReport;
     vm.addOrRemoveFromSelection = addOrRemoveFromSelection;
+    vm.sorting = 'dateCreated';
     apiService.video.getErrorReports().then(function (reports) {
       vm.reports = reports.data;
     });
