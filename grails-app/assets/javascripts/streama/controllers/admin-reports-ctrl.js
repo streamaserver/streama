@@ -33,6 +33,7 @@ angular.module('streama').controller('adminReportsCtrl', [
           (function (response) {
               var newReport = response.data;
               oldReport.resolved = newReport.resolved;
+              oldReport.lastUpdated = newReport.lastUpdated;
             alertify.success('Selected report has been resolved.');
           }, function () {
             alertify.error('Report could not be resolved.');
@@ -50,6 +51,7 @@ angular.module('streama').controller('adminReportsCtrl', [
           (function (response) {
               var newReport = response.data;
               oldReport.resolved = newReport.resolved;
+              oldReport.lastUpdated = newReport.lastUpdated;
             alertify.success('Selected report has been unresolved.');
           }, function () {
             alertify.error('Report could not be unresolved.');
@@ -71,6 +73,7 @@ angular.module('streama').controller('adminReportsCtrl', [
                 _.forEach(vm.reports, function (oldReport) {
                   if (newReport.id === oldReport.id) {
                     oldReport.resolved = newReport.resolved;
+                    oldReport.lastUpdated = newReport.lastUpdated;
                   }
                 });
               });
