@@ -77,8 +77,8 @@ Sort By Date Created
       </td>
 
       <td>
-        <p ng-if="report.lastUpdated">{{report.lastUpdated | date : 'short'}}</p>
-        <p ng-if="!report.lastUpdated">-</p>
+        <p ng-if="report.lastUpdated != report.dateCreated">{{report.lastUpdated | date : 'short'}}</p>
+        <p ng-if="report.lastUpdated == report.dateCreated">-</p>
       </td>
 
       <td>
