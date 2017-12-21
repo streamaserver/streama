@@ -15,13 +15,13 @@
     </button>
 
     <button class="btn btn-default btn-sm pull-left show-reports-button"
-            ng-class="{'btn-primary': vm.showReports.resolved == false}"
+            ng-class="{'btn-primary': vm.showReports.resolved === false}"
             ng-click="vm.showReports.resolved = false">
       Only Unresolved Reports
     </button>
 
     <button class="btn btn-default btn-sm pull-left show-reports-button"
-            ng-class="{'btn-primary': vm.showReports.resolved == true}"
+            ng-class="{'btn-primary': vm.showReports.resolved === true}"
             ng-click="vm.showReports.resolved = true">
       Only Resolved Reports
     </button>
@@ -34,20 +34,35 @@
   </div>
 </div>
 
+<div class="btn-group">
+  <button class="btn btn-default btn-sm pull-left show-reports-button"
+          ng-class="{'btn-primary': vm.sorting === 'dateCreated'}"
+          ng-click="vm.sorting = 'dateCreated'">
+Sort By Date Created
+  </button>
+
+  <button class="btn btn-default btn-sm pull-left show-reports-button"
+          ng-class="{'btn-primary': vm.sorting === 'lastUpdated'}"
+          ng-click="vm.sorting = 'lastUpdated'">
+    Sort By Date Last Updated
+  </button>
+</div>
+
 <div >
   <table class="table table-striped table-reports">
     <thead>
     <tr>
       <th></th>
       <th>Report ID</th>
-      <th>Date Created/Updated</th>
+      <th>Date Created</th>
+      <th>Last Updated</th>
       <th>User</th>
       <th>Title</th>
       <th>Video ID</th>
       <th></th>
     </tr>
     </thead>
-    <tr ng-repeat="report in vm.reports | filter: vm.showReports">
+    <tr ng-repeat="report in vm.reports | orderBy: vm.sorting :true | filter: vm.showReports">
 
       <td>
         <input type="checkbox" ng-if="report.resolved == false" ng-click="vm.addOrRemoveFromSelection($event, report)">
@@ -58,8 +73,12 @@
       </td>
 
       <td>
-        <p ng-if="report.lastUpdated">{{report.lastUpdated}}</p>
-        <p ng-if="!report.lastUpdated">{{report.dateCreated}}</p>
+        {{report.dateCreated | date : 'short'}}
+      </td>
+
+      <td>
+        <p ng-if="report.lastUpdated">{{report.lastUpdated | date : 'short'}}</p>
+        <p ng-if="!report.lastUpdated">-</p>
       </td>
 
       <td>
