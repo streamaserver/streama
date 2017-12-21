@@ -1,0 +1,9 @@
+import streama.Report
+
+model {
+	Iterable<Report> reportList
+
+}
+
+json tmpl.report(reportList ?: [])
+
