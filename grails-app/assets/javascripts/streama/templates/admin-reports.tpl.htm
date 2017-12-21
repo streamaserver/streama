@@ -57,8 +57,8 @@ Sort By Date Created
       <th>Date Created</th>
       <th>Last Updated</th>
       <th>User</th>
-      <th>Title</th>
-      <th>Video ID</th>
+      <th>Play</th>
+      <th>Edit Page</th>
       <th></th>
     </tr>
     </thead>
@@ -85,13 +85,17 @@ Sort By Date Created
         {{report.userName}}
       </td>
 
+      <td >
+        <a class="ion-android-arrow-dropright-circle" style="font-size: 30px; padding: -30px" ui-sref="player({videoId: report.videoId})"></a>
+      </td>
       <td>
-        {{report.videoTitle}}<p ng-if="report.episodeString">({{report.episodeString}})</p>
+        <a ng-if="report.showId" ui-sref="admin.show({showId: report.showId})">{{report.videoTitle}}</a>
+        <a ng-if="!report.showId" ui-sref="admin.movie({movieId: report.videoId})">{{report.videoTitle}}</a>
+        <p ng-if="report.episodeString">
+          ({{report.episodeString}})
+        </p>
       </td>
 
-      <td >
-        <a ui-sref="player({videoId: report.videoId})">{{report.videoId}}</a>
-      </td>
 
       <td>
         <button ng-if="report.resolved == false" title="Resolve report" class="btn btn-xs btn-success" ng-click="vm.resolveReport(report)"><i class="ion-checkmark"></i></button>
