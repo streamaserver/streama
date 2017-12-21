@@ -1,0 +1,22 @@
+import streama.Episode
+import streama.Report
+
+model {
+  Report report
+}
+
+json g.render(report,[includes: []]) {
+  id report.id
+  dateCreated report.dateCreated
+  lastUpdated report.lastUpdated
+  resolved report.resolved
+  userId report.createdBy.id
+  userName report.createdBy.username
+  if (report.video instanceof Episode) {
+    Episode episode = report.video as Episode
+    episodeString episode.episodeString
+    showId episode.showId
+  }
+  videoId report.video.id
+  videoTitle report.video.title
+}

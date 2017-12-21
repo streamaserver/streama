@@ -114,23 +114,26 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
       addLocalFile: function (params) {
         return $http.get('video/addLocalFile.json', {params: params});
-      },
-      sendErrorReport: function (videoId, errorCode) {
-        return $http.put('video/sendErrorReport.json', {videoId: videoId, errorCode: errorCode});
-      },
-      getErrorReports: function () {
-        return $http.get('video/getErrorReports.json');
-      },
-      resolveReport: function (reportId) {
-        return $http.post('video/resolveReport.json', {reportId: reportId});
-      },
-      unresolveReport: function (reportId) {
-        return $http.post('video/unresolveReport.json', {reportId: reportId});
-      },
-      resolveMultipleReports: function(bulk) {
-        return $http.post('video/resolveMultipleReports.json', {ids: bulk});
       }
 		},
+
+    report: {
+      list: function () {
+        return $http.get('report.json');
+      },
+      save: function (videoId, errorCode) {
+        return $http.put('report/save.json', {videoId: videoId, errorCode: errorCode});
+      },
+      resolve: function (reportId) {
+        return $http.post('report/resolve.json', {reportId: reportId});
+      },
+      unresolve: function (reportId) {
+        return $http.post('report/unresolve.json', {reportId: reportId});
+      },
+      resolveMultiple: function(bulk) {
+        return $http.post('report/resolveMultiple.json', {ids: bulk});
+      }
+    },
 
     file: {
       localFiles: function(path) {

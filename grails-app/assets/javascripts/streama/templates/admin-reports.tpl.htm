@@ -27,7 +27,7 @@
     </button>
   </div>
 
-  <button class="btn btn-success btn-sm pull-right resolve-reports-button" ng-click="vm.resolveMultipleReports()">
+  <button class="btn btn-success btn-sm pull-right resolve-reports-button" ng-click="vm.resolveMultiple()">
     Resolve Multiple Reports
   </button>
 
@@ -98,8 +98,8 @@ Sort By Date Created
 
 
       <td>
-        <button ng-if="report.resolved == false" title="Resolve report" class="btn btn-xs btn-success" ng-click="vm.resolveReport(report)"><i class="ion-checkmark"></i></button>
-        <button ng-if="report.resolved == true" title="Unesolve report" class="btn btn-xs btn-danger" ng-click="vm.unresolveReport(report)"><i class="ion-close"></i></button>
+        <button ng-if="report.resolved == false" title="Resolve report" class="btn btn-xs btn-success" ng-click="vm.resolve(report)"><i class="ion-checkmark"></i></button>
+        <button ng-if="report.resolved == true" title="Unesolve report" class="btn btn-xs btn-danger" ng-click="vm.unresolve(report)"><i class="ion-close"></i></button>
       </td>
 
 

@@ -7,7 +7,7 @@ angular.module('streama').controller('modalErrorReportCtrl', [
     vm.errorCode = errorCode;
     function close(data) {
       if (data === 'withReport') {
-          apiService.video.sendErrorReport(videoData.id, errorCode).then(function () {
+          apiService.report.save(videoData.id, errorCode).then(function () {
               closeModalAndRedirect();
               alertify.success('Report sent successfully.');
           }, function (error) {

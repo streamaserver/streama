@@ -5,12 +5,12 @@ angular.module('streama').controller('adminReportsCtrl', [
     var vm = this;
     vm.selectedReports = [];
     vm.showReports = {};
-    vm.resolveMultipleReports = resolveMultipleReports;
-    vm.resolveReport = resolveReport;
-    vm.unresolveReport = unresolveReport;
+    vm.resolveMultiple = resolveMultiple;
+    vm.resolve = resolve;
+    vm.unresolve = unresolve;
     vm.addOrRemoveFromSelection = addOrRemoveFromSelection;
     vm.sorting = 'dateCreated';
-    apiService.video.getErrorReports().then(function (reports) {
+    apiService.report.list().then(function (reports) {
       vm.reports = reports.data;
     });
 
@@ -24,12 +24,12 @@ angular.module('streama').controller('adminReportsCtrl', [
       }
     }
 
-    function resolveReport(oldReport) {
+    function resolve(oldReport) {
       var confirmText = "This will resolve the selected report. Do you want to proceed?";
       alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
       alertify.confirm(confirmText, function (confirmed) {
         if (confirmed) {
-          apiService.video.resolveReport(oldReport.id).then
+          apiService.report.resolve(oldReport.id).then
           (function (response) {
               var newReport = response.data;
               oldReport.resolved = newReport.resolved;
@@ -42,12 +42,12 @@ angular.module('streama').controller('adminReportsCtrl', [
       });
     }
 
-    function unresolveReport(oldReport) {
+    function unresolve(oldReport) {
       var confirmText = "This will unresolve the selected report. Do you want to proceed?";
       alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
       alertify.confirm(confirmText, function (confirmed) {
         if (confirmed) {
-          apiService.video.unresolveReport(oldReport.id).then
+          apiService.report.unresolve(oldReport.id).then
           (function (response) {
               var newReport = response.data;
               oldReport.resolved = newReport.resolved;
@@ -60,13 +60,13 @@ angular.module('streama').controller('adminReportsCtrl', [
       });
     }
 
-    function resolveMultipleReports() {
+    function resolveMultiple() {
       if(vm.selectedReports.length > 0) {
         var confirmText = "This will resolve all selected reports. Do you want to proceed?";
         alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
         alertify.confirm(confirmText, function (confirmed) {
           if(confirmed){
-            apiService.video.resolveMultipleReports(vm.selectedReports).then
+            apiService.report.resolveMultiple(vm.selectedReports).then
             (function (response) {
               var newReports = response.data;
               _.forEach(newReports, function (newReport) {
