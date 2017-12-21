@@ -232,7 +232,6 @@ class VideoController {
     Report newReport = new Report()
     newReport.errorCode = errorCode
     newReport.createdBy = currentUser
-    newReport.dateCreated = new Date()
     newReport.video = currentVideo
     newReport.resolved = false
     newReport.save()
