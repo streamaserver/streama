@@ -24,21 +24,21 @@ class TvShowController {
   @Transactional
   def save() {
     def data = request.JSON
-	
+
     if (data == null) {
       render status: NOT_FOUND
       return
     }
-    
+
     TvShow tvShow
 	if(data.apiId != null){
       tvShow = TvShow.findByApiId(data.apiId)
 	}
-	
+
 	if(tvShow == null){
       tvShow = new TvShow()
     }
-    
+
     tvShow.properties = data
     tvShow.deleted = false
 
@@ -51,9 +51,9 @@ class TvShowController {
       render status: NOT_ACCEPTABLE
       return
     }
-	
+
     tvShow.save flush: true
-    
+
     respond tvShow, [status: CREATED]
   }
 
@@ -69,9 +69,16 @@ class TvShowController {
     }
   }
 
+  @Transactional
   def adminEpisodesForTvShow(TvShow tvShowInstance) {
     JSON.use('adminEpisodesForTvShow') {
-      respond Episode.findAllByShowAndDeletedNotEqual(tvShowInstance, true), [status: OK]
+      def episodes = Episode.findAllByShowAndDeletedNotEqual(tvShowInstance, true)
+      episodes.each { episode ->
+        def reports = Report.findAllByVideo(episode)
+        episode.reportCount = reports.size()
+        episode.save()
+      }
+      render episodes as JSON
     }
   }
 

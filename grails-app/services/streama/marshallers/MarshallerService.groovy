@@ -522,6 +522,7 @@ class MarshallerService {
         returnArray['vote_average'] = episode.vote_average
         returnArray['apiId'] = episode.apiId
         returnArray['episodeString'] = episode.episodeString
+        returnArray['reportCount'] = episode.reportCount
 
         return returnArray;
       }
