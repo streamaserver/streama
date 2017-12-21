@@ -69,9 +69,16 @@ class TvShowController {
     }
   }
 
+  @Transactional
   def adminEpisodesForTvShow(TvShow tvShowInstance) {
     JSON.use('adminEpisodesForTvShow') {
-      respond Episode.findAllByShowAndDeletedNotEqual(tvShowInstance, true), [status: OK]
+      def episodes = Episode.findAllByShowAndDeletedNotEqual(tvShowInstance, true)
+      episodes.each { episode ->
+        def reports = Report.findAllByVideo(episode)
+        episode.reportCount = reports.size()
+        episode.save()
+      }
+      render episodes as JSON
     }
   }
 
