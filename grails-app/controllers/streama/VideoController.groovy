@@ -275,7 +275,8 @@ class VideoController {
       report.save()
       resolvedReports.add([
         id:id,
-        resolved:report.resolved
+        resolved:report.resolved,
+        lastUpdated:report.lastUpdated
       ])
     }
     respond resolvedReports
