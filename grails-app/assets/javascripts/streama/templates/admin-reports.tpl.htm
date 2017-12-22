@@ -110,4 +110,10 @@
 
     </tr>
   </table>
+
+  <ul uib-pagination ng-if="vm.reportsCount > vm.maxPerPage && vm.reports.length < reportsCount"
+      max-size="7" force-ellipses="true"
+      boundary-links="true" total-items="vm.reportsCount"
+      ng-model="vm.pagination.currentPage" ng-change="vm.pageChanged()"></ul>
+
 </div>
