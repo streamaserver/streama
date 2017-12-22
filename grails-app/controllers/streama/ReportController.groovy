@@ -12,7 +12,7 @@ import grails.transaction.Transactional
 class ReportController {
 
   static responseFormats = ['json', 'xml']
-//  static allowedMethods = [save: "POST", delete: "DELETE"]
+  static allowedMethods = [save: "POST", delete: "DELETE"]
 
   def springSecurityService
 
@@ -85,5 +85,15 @@ class ReportController {
       ])
     }
     respond resolvedReports
+  }
+
+  @Transactional
+  def reportsById() {
+    def videoId = params.long('videoId')
+    def video = Video.get(videoId)
+    def reports = Report.findAllByVideoAndResolved(video, false)
+    def reportCount = [:]
+    reportCount.reportCount = reports.size()
+    respond reportCount
   }
 }
