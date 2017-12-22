@@ -118,8 +118,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 		},
 
     report: {
-      list: function () {
-        return $http.get('report.json');
+      list: function (params) {
+        return $http.get('report.json', {params: params});
       },
       reportsById: function (videoId) {
         return $http.get('report/reportsById.json', {params: {videoId: videoId}});

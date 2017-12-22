@@ -91,6 +91,7 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 		$scope.filesCount = 0;
 		apiService.video.listAllFiles(params)
 			.success(function (data) {
+			  console.log(data);
 				$scope.loading = false;
 				$scope.files = data.files;
 				$scope.filesCount = data.count;

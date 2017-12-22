@@ -17,6 +17,11 @@ class ReportController {
   def springSecurityService
 
   def index () {
+    def jsonData = request.JSON
+
+    if (jsonData) {
+
+    }
     def reports  = Report.list()
     return [reportList:reports]
   }

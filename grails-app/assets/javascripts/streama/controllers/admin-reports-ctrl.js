@@ -5,13 +5,49 @@ angular.module('streama').controller('adminReportsCtrl', [
     var vm = this;
     vm.selectedReports = [];
     vm.showReports = {};
+    vm.maxPerPage = 5;
+    vm.offset = 0;
+    vm.pagination = {};
     vm.resolveMultiple = resolveMultiple;
     vm.resolve = resolve;
     vm.unresolve = unresolve;
+    vm.pageChanged = pageChanged;
+    vm.refreshList = refreshList;
+    vm.initialLoad = initialLoad;
+    vm.loadReports = loadReports;
     vm.addOrRemoveFromSelection = addOrRemoveFromSelection;
-    apiService.report.list().then(function (reports) {
-      vm.reports = reports.data;
-    });
+
+    function pageChanged () {
+      var newOffset = vm.maxPerPage*(vm.pagination.currentPage-1);
+      vm.loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: newOffset});
+    }
+
+    function refreshList (filter) {
+      vm.listFilter = filter;
+      loadReports({max: vm.maxPerPage, filter: filter, offset: vm.offset});
+    }
+
+    function initialLoad () {
+      apiService.report.list()
+        .then(function (reports) {
+          console.log(reports);
+          vm.reports = reports.data;
+          vm.reportsCount = vm.reports.length;
+        }, function () {
+          alertify.error('An error occurred.');
+        });
+    }
+
+    function loadReports (params) {
+      vm.reports = [];
+      apiService.report.list(params)
+        .then(function (reports) {
+          console.log(reports);
+          vm.reports = reports.data;
+        }, function () {
+          alertify.error('An error occurred.');
+        });
+    }
 
     function addOrRemoveFromSelection($event, report) {
       if($event.target.checked && report.resolved === false) {
@@ -73,6 +109,7 @@ angular.module('streama').controller('adminReportsCtrl', [
         });
       } else alertify.error('No reports selected.');
     }
+    vm.initialLoad();
   }]);
 
 
