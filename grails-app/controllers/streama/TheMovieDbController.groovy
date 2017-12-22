@@ -22,6 +22,11 @@ class TheMovieDbController {
     String type = params.type
     String name = params.name
 
+    if(!name){
+      render 'name required'
+      return
+    }
+
     def query = URLEncoder.encode(name, "UTF-8")
 
     def JsonContent = new URL(theMovieDbService.BASE_URL + '/search/' + type + '?query=' + query + '&' + theMovieDbService.API_PARAMS).text

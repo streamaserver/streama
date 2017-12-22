@@ -4,6 +4,7 @@ model {
 	Movie movie
 }
 
-json g.render(movie, [deep:true]){
+json g.render(movie, [deep:true, excludes: ['poster_image']]){
 	hasFiles movie.files ? true : false
+  poster_image_src movie.poster_image?.src
 }

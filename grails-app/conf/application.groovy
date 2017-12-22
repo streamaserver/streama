@@ -78,6 +78,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 
   [pattern:'/api/validateDomain',  access :['permitAll']],
+  [pattern:'/api/getInfo',  access :['permitAll']],
   [pattern:'/api/currentUser',  access :['permitAll']],
   [pattern:'/api/v1/dash/**',  access :['IS_AUTHENTICATED_REMEMBERED']]
 ]

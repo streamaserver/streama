@@ -499,6 +499,7 @@ class MarshallerService {
         returnArray['intro_end'] = episode.intro_end
         returnArray['outro_start'] = episode.outro_start
         returnArray['videoType'] = 'episode'
+        returnArray['still_image_src'] = episode.still_image?.src
 
         return returnArray;
       }
@@ -523,6 +524,7 @@ class MarshallerService {
         returnArray['apiId'] = episode.apiId
         returnArray['episodeString'] = episode.episodeString
         returnArray['reportCount'] = episode.reportCount
+        returnArray['still_image_src'] = episode.still_image?.src
 
         return returnArray;
       }

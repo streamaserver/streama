@@ -8,11 +8,11 @@ angular.module('streama').controller('modalMovieCtrl', [
 	$scope.movie = movie || {};
 	$scope.movieDB = true;
 	$scope.hasMovieDBKey = true;
+  $scope.addManually = ($scope.movie.id && !$scope.movie.apiId);
 	$scope.chooseNewBackdrop = chooseNewBackdrop;
 
   apiService.theMovieDb.hasKey().success(function (data) {
     if (!data.key) {
-      $scope.addManually = true;
       $scope.hasMovieDBKey = false;
     }
   });

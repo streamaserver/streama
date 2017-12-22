@@ -13,6 +13,7 @@ class Episode extends Video{
   String still_path
 
   TvShow show
+  File still_image
 
   static constraints = {
   }

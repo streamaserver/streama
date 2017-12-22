@@ -129,6 +129,7 @@ class VideoController {
     }
 
 
+
   }
 
   @Transactional
@@ -177,7 +178,6 @@ class VideoController {
       return
     }
 
-    log.debug(episode.movieDbMeta)
     bindData(episode, episode.movieDbMeta, [exclude: 'id'])
     episode.save flush: true, failOnError: true
 

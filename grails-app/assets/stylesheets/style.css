@@ -563,6 +563,17 @@ a {
   top: 3px;
   margin-right: 10px; }
 
+.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
+  background-color: #414c50; }
+
+.pagination > li > a, .pagination > li > span {
+  background-color: #2487af; }
+  .pagination > li > a:hover, .pagination > li > span:hover {
+    background-color: #1f779a; }
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+  background-color: #1b6785; }
+
 body {
   background-color: #25292B;
   color: white;

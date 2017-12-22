@@ -19,17 +19,8 @@ class DashController {
 
 
   def listShows(){
-    def tvShows = TvShow.withCriteria{
-      ne("deleted", true)
-      isNotEmpty("episodes")
-    }
-
-    tvShows = tvShows.findAll{ tvShow->
-      return tvShow.hasFiles
-    }
-
     JSON.use ('dashTvShow') {
-      respond tvShows
+      respond videoService.listShows(params, [:])
     }
   }
 
@@ -81,25 +72,27 @@ class DashController {
   }
 
   def listMovies(){
-    def movies = Movie.withCriteria {
-      ne("deleted", true)
-      isNotEmpty("files")
-    }
-
     JSON.use('dashMovies'){
-      respond movies
+      respond videoService.listMovies(params, [:])
     }
   }
 
 
   def listGenericVideos(){
-    def videos = GenericVideo.where {
+    def genericVideoQuery = GenericVideo.where {
       deleted != true
       isNotEmpty("files")
-    }.list()
+    }
+    def sort = params.sort
+    def order = params.order
+
+    def videos = genericVideoQuery.list(sort: sort, order: order)
+    def total = genericVideoQuery.count()
+
+    def result = [total: total, list: videos]
 
     JSON.use('dashGenericVideo'){
-      render (videos as JSON)
+      render (result as JSON)
     }
   }
 

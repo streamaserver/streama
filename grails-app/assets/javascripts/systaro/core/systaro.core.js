@@ -1,6 +1,8 @@
 //= wrapped
 
 //= require_self
+//= require lodashMixins.js
+
 //= require_tree services
 //= require_tree controllers
 //= require_tree directives
