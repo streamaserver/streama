@@ -26,7 +26,11 @@
             <a ng-show="movie.hasFiles" class="ion-android-arrow-dropright-circle" ui-sref="player({videoId: movie.id})"></a>
           </h1>
           <span class="label label-danger" ng-click="manageFiles(movie)" ng-show="!movie.hasFiles"><i class="ion-alert-circled"></i> No Video File yet!</span>
-        </div>
+          <a ui-sref="admin.reports" class="label label-danger" ng-show="movie.hasFiles && movie.reportCount">
+            <i class="ion-alert-circled"></i>
+            <span ng-if="movie.reportCount == 1" >1 Report!</span>
+            <span ng-if="movie.reportCount > 1" >{{movie.reportCount}} Reports!</span>
+          </a>        </div>
 
         <div class="col-md-1">
           <div class="btn-group pull-right">
