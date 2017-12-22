@@ -24,38 +24,26 @@ angular.module('streama').controller('adminReportsCtrl', [
     }
 
     function resolve(oldReport) {
-      var confirmText = "This will resolve the selected report. Do you want to proceed?";
-      alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
-      alertify.confirm(confirmText, function (confirmed) {
-        if (confirmed) {
-          apiService.report.resolve(oldReport.id).then
-          (function (response) {
-              var newReport = response.data;
-              oldReport.resolved = newReport.resolved;
-              oldReport.lastUpdated = newReport.lastUpdated;
-            alertify.success('Selected report has been resolved.');
-          }, function () {
-            alertify.error('Report could not be resolved.');
-          });
-        }
+      apiService.report.resolve(oldReport.id).then
+      (function (response) {
+          var newReport = response.data;
+          oldReport.resolved = newReport.resolved;
+          oldReport.lastUpdated = newReport.lastUpdated;
+        alertify.success('Selected report has been resolved.');
+      }, function () {
+        alertify.error('Report could not be resolved.');
       });
-    }
+      }
 
     function unresolve(oldReport) {
-      var confirmText = "This will unresolve the selected report. Do you want to proceed?";
-      alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
-      alertify.confirm(confirmText, function (confirmed) {
-        if (confirmed) {
-          apiService.report.unresolve(oldReport.id).then
-          (function (response) {
-              var newReport = response.data;
-              oldReport.resolved = newReport.resolved;
-              oldReport.lastUpdated = newReport.lastUpdated;
-            alertify.success('Selected report has been unresolved.');
-          }, function () {
-            alertify.error('Report could not be unresolved.');
-          });
-        }
+      apiService.report.unresolve(oldReport.id).then
+      (function (response) {
+          var newReport = response.data;
+          oldReport.resolved = newReport.resolved;
+          oldReport.lastUpdated = newReport.lastUpdated;
+        alertify.success('Selected report has been unresolved.');
+      }, function () {
+        alertify.error('Report could not be unresolved.');
       });
     }
 
