@@ -9,7 +9,6 @@ angular.module('streama').controller('adminReportsCtrl', [
     vm.resolve = resolve;
     vm.unresolve = unresolve;
     vm.addOrRemoveFromSelection = addOrRemoveFromSelection;
-    vm.sorting = 'dateCreated';
     apiService.report.list().then(function (reports) {
       vm.reports = reports.data;
     });

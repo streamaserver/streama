@@ -34,19 +34,24 @@
   </div>
 </div>
 
-<div class="btn-group">
-  <button class="btn btn-default btn-sm pull-left show-reports-button"
-          ng-class="{'btn-primary': vm.sorting === 'dateCreated'}"
-          ng-click="vm.sorting = 'dateCreated'">
-Sort By Date Created
-  </button>
-
-  <button class="btn btn-default btn-sm pull-left show-reports-button"
-          ng-class="{'btn-primary': vm.sorting === 'lastUpdated'}"
-          ng-click="vm.sorting = 'lastUpdated'">
-    Sort By Date Last Updated
-  </button>
+<div class="report-sorter">
+  {{'DASHBOARD.SORT' | translate}}
+  <video-sort-order-dropdown current-sort="vm.sorting" dropdown-type="'report'"></video-sort-order-dropdown>
 </div>
+
+<!--<div class="btn-group">-->
+  <!--<button class="btn btn-default btn-sm pull-left show-reports-button"-->
+          <!--ng-class="{'btn-primary': vm.sorting === 'dateCreated'}"-->
+          <!--ng-click="vm.sorting = 'dateCreated'">-->
+<!--Sort By Date Created-->
+  <!--</button>-->
+
+  <!--<button class="btn btn-default btn-sm pull-left show-reports-button"-->
+          <!--ng-class="{'btn-primary': vm.sorting === 'lastUpdated'}"-->
+          <!--ng-click="vm.sorting = 'lastUpdated'">-->
+    <!--Sort By Date Last Updated-->
+  <!--</button>-->
+<!--</div>-->
 
 <div >
   <table class="table table-striped table-reports">
@@ -62,7 +67,7 @@ Sort By Date Created
       <th></th>
     </tr>
     </thead>
-    <tr ng-repeat="report in vm.reports | orderBy: vm.sorting :true | filter: vm.showReports">
+    <tr ng-repeat="report in vm.reports | orderBy: vm.sorting.sort :true | filter: vm.showReports">
 
       <td>
         <input type="checkbox" ng-if="report.resolved == false" ng-click="vm.addOrRemoveFromSelection($event, report)">
