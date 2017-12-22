@@ -90,7 +90,11 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEWEST_RELEASED: 'Latest Release',
 			OLDEST_RELEASED: 'Oldest Release',
 			NEWEST_AIRED: 'Most Recently Aired',
-			OLDEST_AIRED: 'Oldest Air-Date'
+			OLDEST_AIRED: 'Oldest Air-Date',
+      NEWEST_REPORTED: 'Most Recently Reported',
+      OLDEST_REPORTED: 'Oldest Report',
+      NEWEST_UPDATED: 'Most Recently Updated',
+      OLDEST_UPDATED: 'Oldest Update'
 		},
 
 		FAQ: {

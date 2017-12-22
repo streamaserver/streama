@@ -1336,7 +1336,9 @@ hr {
 .show-reports-button{
   margin-bottom: 10px;
 }
-
+.report-sorter{
+  margin-bottom: 10px;
+}
 .spinner {
   width: 38px;
   text-align: center;
