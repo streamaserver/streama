@@ -79,9 +79,16 @@ class DashController {
 
 
   def listGenericVideos(){
+    def genreId = params.long('genreId')
+
     def genericVideoQuery = GenericVideo.where {
       deleted != true
       isNotEmpty("files")
+      if(genreId){
+        genre{
+          id == genreId
+        }
+      }
     }
     def sort = params.sort
     def order = params.order
@@ -111,7 +118,14 @@ class DashController {
 
 
   def listGenres(){
-    respond Genre.list()
+    def genres = Genre.list()
+    genres = genres.findAll{Genre currentGenre ->
+      def isUsedForMovie = Movie.where{genre{id == currentGenre.id}}.count() > 0
+      def isUsedForTvShow = TvShow.where{genre{id == currentGenre.id}}.count() > 0
+      def isUsedForGenericVideo = GenericVideo.where{genre{id == currentGenre.id}}.count() > 0
+      return (isUsedForMovie || isUsedForTvShow || isUsedForGenericVideo)
+    }
+    respond genres
   }
 
   def listNewReleases(){

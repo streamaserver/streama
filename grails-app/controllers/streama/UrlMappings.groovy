@@ -24,6 +24,7 @@ class UrlMappings {
         "/api/v1/dash/listEpisodesForShow"(controller: 'dash', action: 'listEpisodesForShow')
         "/api/v1/dash/cotinueWatching"(controller: 'dash', action: 'cotinueWatching')
         "/api/v1/dash/markAsCompleted"(controller: 'dash', action: 'markAsCompleted')
+        "/api/v1/dash/listGenres"(controller: 'dash', action: 'listGenres')
 
         "/api/v1/player/video/$id"(controller: 'player', action: 'video')
         "/api/v1/player/updateViewingStatus"(controller: 'player', action: 'updateViewingStatus')

@@ -87,6 +87,7 @@ class VideoService {
     def offset = params.int('offset', 0)
     def sort = params.sort
     def order = params.order
+    def genreId = params.long('genreId')
 
     def movieQuery = Movie.where {
       deleted != true
@@ -95,6 +96,11 @@ class VideoService {
       }
       if(params.title){
         title =~ "%${params.title}%"
+      }
+      if(genreId){
+        genre{
+          id == genreId
+        }
       }
     }
     def movies =  movieQuery.list(max: max, offset: offset, sort: sort, order: order)
@@ -111,6 +117,7 @@ class VideoService {
     def offset = params.int('offset', 0)
     def sort = params.sort
     def order = params.order
+    def genreId = params.long('genreId')
 
     def tvShowQuery = TvShow.where{
       def tv1 = TvShow
@@ -129,6 +136,11 @@ class VideoService {
         name =~ "%${params.name}%"
       }
 
+      if(genreId){
+        genre{
+          id == genreId
+        }
+      }
     }
 
     def tvShows = tvShowQuery.list(max: max, offset: offset, sort: sort, order: order)
