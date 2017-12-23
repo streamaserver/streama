@@ -17,7 +17,7 @@ buildscript {
     }
 }
 
-version "1.4.1RC3"
+version "1.4.2"
 group "streama"
 
 
