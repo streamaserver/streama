@@ -12,18 +12,32 @@ import grails.transaction.Transactional
 class ReportController {
 
   static responseFormats = ['json', 'xml']
-  static allowedMethods = [save: "PUT"]
+//  static allowedMethods = [save: "PUT"]
 
   def springSecurityService
 
   def index () {
-    def jsonData = request.JSON
+    def filter = params.filter
+    def responseObj = [
+      reports: [],
+      count: 0
+    ]
 
-    if (jsonData) {
-
+    if(filter == 'all'){
+      responseObj.reports = Report.list(params)
+      responseObj.count = Report.count()
     }
-    def reports  = Report.list()
-    return [reportList:reports]
+    if(filter == 'unresolved'){
+      responseObj.reports = Report.list().findAll{!it.resolved}
+      responseObj.count = responseObj.reports?.size()
+    }
+    if(filter == 'resolved'){
+      responseObj.reports = Report.list().findAll{it.resolved}
+      responseObj.count = responseObj.reports?.size()
+    }
+    JSON.use('adminReports'){
+      render (responseObj as JSON)
+    }
   }
 
   def save() {
