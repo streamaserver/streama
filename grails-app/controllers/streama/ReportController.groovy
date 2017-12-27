@@ -12,7 +12,7 @@ import grails.transaction.Transactional
 class ReportController {
 
   static responseFormats = ['json', 'xml']
-  static allowedMethods = [save: "POST", delete: "DELETE"]
+  static allowedMethods = [save: "PUT"]
 
   def springSecurityService
 
