@@ -20,8 +20,8 @@ angular.module('streama').directive('videoSortOrderDropdown', [function () {
 						{sort: 'title', order: 'DESC', label: 'SORT_OPTIONS.ZA'},
 						{sort: 'release_date', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_RELEASED'},
 						{sort: 'release_date', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_RELEASED'},
-                        {sort: 'dateCreated', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_ADDED'},
-                        {sort: 'dateCreated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_ADDED'}
+            {sort: 'dateCreated', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_ADDED'},
+            {sort: 'dateCreated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_ADDED'}
 					])
 				}
 
@@ -31,8 +31,8 @@ angular.module('streama').directive('videoSortOrderDropdown', [function () {
 						{sort: 'name', order: 'DESC', label: 'SORT_OPTIONS.ZA'},
 						{sort: 'first_air_date', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_AIRED'},
 						{sort: 'first_air_date', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_AIRED'},
-                        {sort: 'dateCreated', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_ADDED'},
-                        {sort: 'dateCreated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_ADDED'}
+            {sort: 'dateCreated', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_ADDED'},
+            {sort: 'dateCreated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_ADDED'}
 					])
 				}
 
