@@ -9,20 +9,20 @@
 
   <div class="btn-group">
     <button class="btn btn-default btn-sm pull-left show-reports-button"
-            ng-class="{'btn-primary': vm.showReports.resolved == undefined}"
-            ng-click="vm.showReports = {}">
+            ng-class="{'btn-primary': vm.listFilter == 'all'}"
+            ng-click="vm.refreshList('all')">
       All
     </button>
 
     <button class="btn btn-default btn-sm pull-left show-reports-button"
-            ng-class="{'btn-primary': vm.showReports.resolved === false}"
-            ng-click="vm.showReports.resolved = false">
+            ng-class="{'btn-primary': vm.listFilter === 'unresolved'}"
+            ng-click="vm.refreshList('unresolved')">
       Only Unresolved Reports
     </button>
 
     <button class="btn btn-default btn-sm pull-left show-reports-button"
-            ng-class="{'btn-primary': vm.showReports.resolved === true}"
-            ng-click="vm.showReports.resolved = true">
+            ng-class="{'btn-primary': vm.listFilter === 'resolved'}"
+            ng-click="vm.refreshList('resolved')">
       Only Resolved Reports
     </button>
   </div>
@@ -91,7 +91,9 @@
       </td>
 
       <td >
-        <a class="ion-android-arrow-dropright-circle" style="font-size: 30px" ui-sref="player({videoId: report.videoId})"></a>
+        <a class="ion-android-arrow-dropright-circle"
+           style="font-size: 30px"
+           ui-sref="player({videoId: report.videoId})"></a>
       </td>
       <td>
         <a ng-if="report.showId" ui-sref="admin.show({showId: report.showId})">{{report.videoTitle}}</a>
@@ -111,9 +113,9 @@
     </tr>
   </table>
 
-  <ul uib-pagination ng-if="vm.reportsCount > vm.maxPerPage && vm.reports.length < reportsCount"
+  <ul uib-pagination ng-if="vm.reportsCount > vm.maxPerPage"
       max-size="7" force-ellipses="true"
       boundary-links="true" total-items="vm.reportsCount"
-      ng-model="vm.pagination.currentPage" ng-change="vm.pageChanged()"></ul>
+      ng-model="vm.pagination.currentPage" items-per-page="vm.maxPerPage" ng-change="vm.pageChanged()"></ul>
 
 </div>

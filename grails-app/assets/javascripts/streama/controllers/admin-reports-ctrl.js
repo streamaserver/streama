@@ -5,7 +5,7 @@ angular.module('streama').controller('adminReportsCtrl', [
     var vm = this;
     vm.selectedReports = [];
     vm.showReports = {};
-    vm.maxPerPage = 5;
+    vm.maxPerPage = 15;
     vm.offset = 0;
     vm.pagination = {};
     vm.resolveMultiple = resolveMultiple;
@@ -13,37 +13,27 @@ angular.module('streama').controller('adminReportsCtrl', [
     vm.unresolve = unresolve;
     vm.pageChanged = pageChanged;
     vm.refreshList = refreshList;
-    vm.initialLoad = initialLoad;
     vm.loadReports = loadReports;
     vm.addOrRemoveFromSelection = addOrRemoveFromSelection;
 
     function pageChanged () {
+
       var newOffset = vm.maxPerPage*(vm.pagination.currentPage-1);
       vm.loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: newOffset});
     }
 
     function refreshList (filter) {
       vm.listFilter = filter;
-      loadReports({max: vm.maxPerPage, filter: filter, offset: vm.offset});
-    }
-
-    function initialLoad () {
-      apiService.report.list()
-        .then(function (reports) {
-          console.log(reports);
-          vm.reports = reports.data;
-          vm.reportsCount = vm.reports.length;
-        }, function () {
-          alertify.error('An error occurred.');
-        });
+      vm.loadReports({max: vm.maxPerPage, filter: filter, offset: vm.offset});
     }
 
     function loadReports (params) {
       vm.reports = [];
+      vm.reportsCount = 0;
       apiService.report.list(params)
-        .then(function (reports) {
-          console.log(reports);
-          vm.reports = reports.data;
+        .then(function (response) {
+          vm.reports = response.data.reports;
+          vm.reportsCount = response.data.count;
         }, function () {
           alertify.error('An error occurred.');
         });
@@ -109,7 +99,7 @@ angular.module('streama').controller('adminReportsCtrl', [
         });
       } else alertify.error('No reports selected.');
     }
-    vm.initialLoad();
+    vm.refreshList('all');
   }]);
 
 
