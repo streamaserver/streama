@@ -78,5 +78,9 @@ angular.module('streama').controller('settingsUsersCtrl', ['$scope', 'apiService
 		return _.find(user.authorities, {authority: 'ROLE_ADMIN'});
 	};
 
+	$scope.isContentManager = function (user) {
+		return _.find(user.authorities, {authority: 'ROLE_CONTENT_MANAGER'});
+	};
+
 
 }]);
