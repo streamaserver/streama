@@ -20,12 +20,15 @@ angular.module('streama').controller('modalErrorReportCtrl', [
     }
 
     function closeModalAndRedirect() {
-      if ($rootScope.currentUser.isAdmin) {
+      if ($rootScope.currentUser.isAdmin || $rootScope.currentUser.isContentManager) {
         if (videoData.show) {
           $state.go('admin.show', {showId: videoData.show.id});
         } else {
           $state.go('admin.movie', {movieId: videoData.id});
         }
+        $uibModalInstance.close();
+      } else {
+        $state.go('dash');
         $uibModalInstance.close();
       }
     }
