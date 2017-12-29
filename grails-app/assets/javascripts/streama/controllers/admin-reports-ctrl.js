@@ -6,7 +6,10 @@ angular.module('streama').controller('adminReportsCtrl', [
     vm.selectedReports = [];
     vm.maxPerPage = 15;
     vm.pagination = {};
-    vm.sortAndOrderBy = {};
+    vm.sortAndOrderBy = {
+      sort: 'dateCreated',
+      order: 'DESC'
+    };
 
     var currentOffset = 0;
 
