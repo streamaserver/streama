@@ -38,10 +38,10 @@ angular.module('streama').directive('videoSortOrderDropdown', [function () {
 
 				if($scope.dropdownType == 'report'){
 					$scope.sortOrders = $scope.sortOrders.concat([
-						{sort: 'dateCreated', order: 'ASC',label: 'SORT_OPTIONS.NEWEST_REPORTED'},
-						{sort: 'dateCreated', order: 'DESC', label: 'SORT_OPTIONS.OLDEST_REPORTED'},
-						{sort: 'lastUpdated', order: 'ASC', label: 'SORT_OPTIONS.NEWEST_UPDATED'},
-						{sort: 'lastUpdated', order: 'DESC', label: 'SORT_OPTIONS.OLDEST_UPDATED'}
+						{sort: 'dateCreated', order: 'DESC',label: 'SORT_OPTIONS.NEWEST_REPORTED'},
+						{sort: 'dateCreated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_REPORTED'},
+						{sort: 'lastUpdated', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_UPDATED'},
+						{sort: 'lastUpdated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_UPDATED'}
 					]);
 				}
 
