@@ -28,12 +28,16 @@ class ReportController {
       responseObj.count = Report.count()
     }
     if(filter == 'unresolved'){
-      responseObj.reports = Report.list().findAll{!it.resolved}
-      responseObj.count = responseObj.reports?.size()
+      responseObj.reports = Report.where {
+        resolved != true
+      }.list(params)
+      responseObj.count = Report.countByResolvedNotEqual(true)
     }
     if(filter == 'resolved'){
-      responseObj.reports = Report.list().findAll{it.resolved}
-      responseObj.count = responseObj.reports?.size()
+      responseObj.reports = Report.where {
+        resolved == true
+      }.list(params)
+      responseObj.count = Report.countByResolved(true)
     }
     JSON.use('adminReports'){
       render (responseObj as JSON)

@@ -6,8 +6,11 @@ angular.module('streama').controller('adminReportsCtrl', [
     vm.selectedReports = [];
     vm.showReports = {};
     vm.maxPerPage = 15;
-    vm.offset = 0;
     vm.pagination = {};
+    vm.sortAndOrderBy = {};
+
+    var currentOffset = 0;
+
     vm.resolveMultiple = resolveMultiple;
     vm.resolve = resolve;
     vm.unresolve = unresolve;
@@ -18,13 +21,15 @@ angular.module('streama').controller('adminReportsCtrl', [
 
     function pageChanged () {
 
-      var newOffset = vm.maxPerPage*(vm.pagination.currentPage-1);
-      vm.loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: newOffset});
+      currentOffset = vm.maxPerPage*(vm.pagination.currentPage-1);
+      vm.loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
     }
 
     function refreshList (filter) {
-      vm.listFilter = filter;
-      vm.loadReports({max: vm.maxPerPage, filter: filter, offset: vm.offset});
+      if (filter) {
+        vm.listFilter = filter;
+      }
+      vm.loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
     }
 
     function loadReports (params) {
