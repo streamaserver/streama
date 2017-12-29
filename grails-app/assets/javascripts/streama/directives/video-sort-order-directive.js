@@ -19,10 +19,10 @@ angular.module('streama').directive('videoSortOrderDropdown', [function () {
 						{sort: 'title', order: 'ASC', label: 'SORT_OPTIONS.AZ'},
 						{sort: 'title', order: 'DESC', label: 'SORT_OPTIONS.ZA'},
 						{sort: 'release_date', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_RELEASED'},
-						{sort: 'release_date', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_RELEASED'}
+						{sort: 'release_date', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_RELEASED'},
             {sort: 'dateCreated', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_ADDED'},
             {sort: 'dateCreated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_ADDED'}
-          ])
+					])
 				}
 
 				if($scope.dropdownType == 'tvShow'){
@@ -30,20 +30,20 @@ angular.module('streama').directive('videoSortOrderDropdown', [function () {
 						{sort: 'name', order: 'ASC', label: 'SORT_OPTIONS.AZ'},
 						{sort: 'name', order: 'DESC', label: 'SORT_OPTIONS.ZA'},
 						{sort: 'first_air_date', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_AIRED'},
-						{sort: 'first_air_date', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_AIRED'}
+						{sort: 'first_air_date', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_AIRED'},
             {sort: 'dateCreated', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_ADDED'},
             {sort: 'dateCreated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_ADDED'}
-          ])
+					])
 				}
 
-        if($scope.dropdownType == 'report'){
-          $scope.sortOrders = $scope.sortOrders.concat([
-            {sort: 'dateCreated', order: 'ASC', label: 'SORT_OPTIONS.NEWEST_REPORTED'},
-            {sort: 'dateCreated', order: 'DESC', label: 'SORT_OPTIONS.OLDEST_REPORTED'},
-            {sort: 'lastUpdated', order: 'ASC', label: 'SORT_OPTIONS.NEWEST_UPDATED'},
-            {sort: 'lastUpdated', order: 'DESC', label: 'SORT_OPTIONS.OLDEST_UPDATED'}
-          ]);
-        }
+				if($scope.dropdownType == 'report'){
+					$scope.sortOrders = $scope.sortOrders.concat([
+						{sort: 'dateCreated', order: 'DESC',label: 'SORT_OPTIONS.NEWEST_REPORTED'},
+						{sort: 'dateCreated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_REPORTED'},
+						{sort: 'lastUpdated', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_UPDATED'},
+						{sort: 'lastUpdated', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_UPDATED'}
+					]);
+				}
 
 
         function formatter(value) {
