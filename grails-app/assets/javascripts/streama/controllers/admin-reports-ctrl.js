@@ -59,9 +59,9 @@ angular.module('streama').controller('adminReportsCtrl', [
     function resolve(oldReport) {
       apiService.report.resolve(oldReport.id).then
       (function (response) {
-          var newReport = response.data;
-          oldReport.resolved = newReport.resolved;
-          oldReport.lastUpdated = newReport.lastUpdated;
+        var newReport = response.data;
+        oldReport.resolved = newReport.resolved;
+        oldReport.lastUpdated = newReport.lastUpdated;
         alertify.success('Selected report has been resolved.');
       }, function () {
         alertify.error('Report could not be resolved.');
@@ -71,9 +71,9 @@ angular.module('streama').controller('adminReportsCtrl', [
     function unresolve(oldReport) {
       apiService.report.unresolve(oldReport.id).then
       (function (response) {
-          var newReport = response.data;
-          oldReport.resolved = newReport.resolved;
-          oldReport.lastUpdated = newReport.lastUpdated;
+        var newReport = response.data;
+        oldReport.resolved = newReport.resolved;
+        oldReport.lastUpdated = newReport.lastUpdated;
         alertify.success('Selected report has been unresolved.');
       }, function () {
         alertify.error('Report could not be unresolved.');
