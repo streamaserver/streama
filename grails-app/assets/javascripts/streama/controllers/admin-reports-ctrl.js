@@ -4,7 +4,6 @@ angular.module('streama').controller('adminReportsCtrl', [
   'apiService', '$state', '$rootScope', '$filter', '$filter', function (apiService, $state, $rootScope, $filter) {
     var vm = this;
     vm.selectedReports = [];
-    vm.showReports = {};
     vm.maxPerPage = 15;
     vm.pagination = {};
     vm.sortAndOrderBy = {};
