@@ -12,7 +12,6 @@ import grails.transaction.Transactional
 class ReportController {
 
   static responseFormats = ['json', 'xml']
-//  static allowedMethods = [save: "PUT"]
 
   def springSecurityService
 
