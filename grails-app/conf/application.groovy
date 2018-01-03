@@ -63,6 +63,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/bulk/**',  access :['ROLE_ADMIN']],
   [pattern:'/monitoring/**',  access :['ROLE_ADMIN']],
 
+  [pattern:'/dbconsole/**', access :['ROLE_ADMIN']],
 
   [pattern:'/file/serve',  access :['permitAll']],
   [pattern:'/user/current',  access :['permitAll']],
@@ -95,4 +96,10 @@ grails.mail.default.from = "Streama <info@streama.com>"
 
 grails.gorm.default.constraints = {
   '*'(nullable: true)
+}
+
+environments {
+  development{
+    grails.dbconsole.enabled = true
+  }
 }

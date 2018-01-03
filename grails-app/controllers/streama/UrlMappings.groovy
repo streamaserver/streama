@@ -1,6 +1,7 @@
 package streama
 
 class UrlMappings {
+    static excludes = ["/dbconsole*"]
 
     static mappings = {
         "/$controller/$action?/$id?(.$format)?"{
