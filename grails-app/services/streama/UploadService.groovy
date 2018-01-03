@@ -39,7 +39,7 @@ class UploadService {
     String extension = rawFile.originalFilename[index..-1];
     def originalFilenameNoExt = rawFile.originalFilename[0..(index-1)]
     def contentType = rawFile.contentType;
-	
+
 	def allowedTypes = grailsApplication.config.streama.uploadtypes
 
 	//If the file upload content type isn't in the upload types array, fail the upload.
@@ -51,7 +51,7 @@ class UploadService {
     rawFile.transferTo(targetFile)
 
     File file = createFileFromUpload(sha256Hex, rawFile, extension, originalFilenameNoExt + extension, contentType, params)
-	
+
 	  //log.debug(file)
     return file
   }
@@ -108,8 +108,6 @@ class UploadService {
   }
 
   def getFileSrc(File file){
-    def baseUrl = settingsService.baseUrl
-    baseUrl = baseUrl.replaceAll('/$', '')
-    return baseUrl  + "/file/serve/" + file.id + file.extension
+    return "file/serve/" + file.id + file.extension
   }
 }
