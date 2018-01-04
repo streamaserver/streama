@@ -21,6 +21,18 @@ class FileController {
   def theMovieDbService
   def bulkCreateService
 
+  def getURL(){
+    if (!params.id) {
+      return
+    }
+    def file = File.get(params.getInt('id'))
+
+    def responseObj = [url: file.getSrc()]
+
+    render (responseObj as JSON)
+
+  }
+
   def index(){
     def filter = params.filter
     def responseObj = [
