@@ -3,7 +3,8 @@
 angular.module('streama').controller('adminReportsCtrl', [
   'apiService', '$state', '$rootScope', '$filter', '$filter', function (apiService, $state, $rootScope, $filter) {
     var vm = this;
-    vm.selectedReports = [];
+    var selectedReports = [];
+
     vm.maxPerPage = 15;
     vm.pagination = {};
     vm.sortAndOrderBy = {
@@ -18,20 +19,19 @@ angular.module('streama').controller('adminReportsCtrl', [
     vm.unresolve = unresolve;
     vm.pageChanged = pageChanged;
     vm.refreshList = refreshList;
-    vm.loadReports = loadReports;
     vm.addOrRemoveFromSelection = addOrRemoveFromSelection;
 
     function pageChanged () {
 
       currentOffset = vm.maxPerPage*(vm.pagination.currentPage-1);
-      vm.loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
+      loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
     }
 
     function refreshList (filter) {
       if (filter) {
         vm.listFilter = filter;
       }
-      vm.loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
+      loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
     }
 
     function loadReports (params) {
@@ -48,9 +48,9 @@ angular.module('streama').controller('adminReportsCtrl', [
 
     function addOrRemoveFromSelection($event, report) {
       if($event.target.checked && report.resolved === false) {
-        vm.selectedReports.push(report.id);
+        selectedReports.push(report.id);
       } else {
-        _.remove(vm.selectedReports, function(id) {
+        _.remove(selectedReports, function(id) {
           return id === report.id;
         });
       }
@@ -81,12 +81,12 @@ angular.module('streama').controller('adminReportsCtrl', [
     }
 
     function resolveMultiple() {
-      if(vm.selectedReports.length > 0) {
+      if(selectedReports.length > 0) {
         var confirmText = "This will resolve all selected reports. Do you want to proceed?";
         alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
         alertify.confirm(confirmText, function (confirmed) {
           if(confirmed){
-            apiService.report.resolveMultiple(vm.selectedReports).then
+            apiService.report.resolveMultiple(selectedReports).then
             (function (response) {
               var newReports = response.data;
               _.forEach(newReports, function (newReport) {
@@ -97,7 +97,7 @@ angular.module('streama').controller('adminReportsCtrl', [
                   }
                 });
               });
-              vm.selectedReports = [];
+              selectedReports = [];
               alertify.success('Selected reports have been resolved.');
             }, function () {
               alertify.error('Reports could not be resolved.');
@@ -106,7 +106,7 @@ angular.module('streama').controller('adminReportsCtrl', [
         });
       } else alertify.error('No reports selected.');
     }
-    vm.refreshList('all');
+    refreshList('all');
   }]);
 
 
