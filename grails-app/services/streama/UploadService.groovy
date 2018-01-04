@@ -108,6 +108,14 @@ class UploadService {
   }
 
   def getFileSrc(File file){
-    return "file/serve/" + file.id + file.extension
+    def uploadPrefix = grailsApplication.config.streama.uploadPrefix
+
+    if(uploadPrefix){
+      uploadPrefix = uploadPrefix.replaceAll('/$', '')
+    }else {
+      uploadPrefix = ""
+    }
+
+    return uploadPrefix + "/file/serve/" + file.id + file.extension
   }
 }
