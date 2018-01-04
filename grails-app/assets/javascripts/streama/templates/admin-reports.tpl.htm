@@ -44,12 +44,12 @@
     <thead>
     <tr>
       <th></th>
+      <th>Edit Page</th>
+      <th>Play</th>
       <th>Report ID</th>
       <th>Reported On</th>
       <th>Last Updated</th>
       <th>User</th>
-      <th>Play</th>
-      <th>Edit Page</th>
       <th>Resolved</th>
       <th></th>
     </tr>
@@ -58,6 +58,20 @@
 
       <td>
         <input type="checkbox" ng-if="report.resolved == false" ng-click="vm.addOrRemoveFromSelection($event, report)">
+      </td>
+
+      <td>
+        <a ng-if="report.showId" ui-sref="admin.show({showId: report.showId})">{{report.videoTitle}}</a>
+        <a ng-if="!report.showId" ui-sref="admin.movie({movieId: report.videoId})">{{report.videoTitle}}</a>
+        <p ng-if="report.episodeString">
+          ({{report.episodeString}})
+        </p>
+      </td>
+
+      <td >
+        <a class="ion-android-arrow-dropright-circle"
+           style="font-size: 30px"
+           ui-sref="player({videoId: report.videoId})"></a>
       </td>
 
       <td>
@@ -75,20 +89,6 @@
       <td>
         {{report.userName}}
       </td>
-
-      <td >
-        <a class="ion-android-arrow-dropright-circle"
-           style="font-size: 30px"
-           ui-sref="player({videoId: report.videoId})"></a>
-      </td>
-      <td>
-        <a ng-if="report.showId" ui-sref="admin.show({showId: report.showId})">{{report.videoTitle}}</a>
-        <a ng-if="!report.showId" ui-sref="admin.movie({movieId: report.videoId})">{{report.videoTitle}}</a>
-        <p ng-if="report.episodeString">
-          ({{report.episodeString}})
-        </p>
-      </td>
-
 
       <td>
         <button ng-if="report.resolved == true" title="Resolved" class="btn btn-xs btn-success"><i class="ion-checkmark"></i></button>
