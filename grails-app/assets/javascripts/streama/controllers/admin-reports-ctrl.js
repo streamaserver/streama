@@ -30,6 +30,8 @@ angular.module('streama').controller('adminReportsCtrl', [
     function refreshList (filter) {
       if (filter) {
         vm.listFilter = filter;
+        vm.pagination.currentPage = 1;
+        currentOffset = 0;
       }
       loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
     }
