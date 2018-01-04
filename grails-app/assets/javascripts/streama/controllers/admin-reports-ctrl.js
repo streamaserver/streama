@@ -1,7 +1,7 @@
 //= wrapped
 
 angular.module('streama').controller('adminReportsCtrl', [
-  'apiService', '$state', '$rootScope', '$filter', '$filter', function (apiService, $state, $rootScope, $filter) {
+  'apiService', '$state', '$rootScope', '$filter', function (apiService, $state, $rootScope, $filter) {
     var vm = this;
     var selectedReports = [];
 
