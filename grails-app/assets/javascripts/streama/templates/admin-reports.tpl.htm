@@ -50,6 +50,7 @@
       <th>User</th>
       <th>Play</th>
       <th>Edit Page</th>
+      <th>Resolved</th>
       <th></th>
     </tr>
     </thead>
@@ -90,8 +91,13 @@
 
 
       <td>
-        <button ng-if="report.resolved == false" title="Resolve report" class="btn btn-xs btn-success" ng-click="vm.resolve(report)"><i class="ion-checkmark"></i></button>
-        <button ng-if="report.resolved == true" title="Unesolve report" class="btn btn-xs btn-danger" ng-click="vm.unresolve(report)"><i class="ion-close"></i></button>
+        <button ng-if="report.resolved == true" title="Resolved" class="btn btn-xs btn-success"><i class="ion-checkmark"></i></button>
+        <button ng-if="report.resolved == false" title="Unesolved" class="btn btn-xs btn-danger"><i class="ion-close"></i></button>
+      </td>
+
+      <td>
+        <button ng-if="report.resolved == false" class="btn btn-xs" ng-click="vm.resolve(report)">Resolve</button>
+        <button ng-if="report.resolved == true" class="btn btn-xs" ng-click="vm.unresolve(report)">Unresolve</button>
       </td>
 
 
