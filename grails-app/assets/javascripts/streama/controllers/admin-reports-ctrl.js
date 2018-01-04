@@ -106,7 +106,9 @@ angular.module('streama').controller('adminReportsCtrl', [
             });
           }
         });
-      } else alertify.error('No reports selected.');
+      } else {
+        alertify.error('No reports selected.');
+      }
     }
     refreshList('all');
   }]);
