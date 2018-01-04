@@ -129,6 +129,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
       save: function(data) {
         return $http.post('file/save.json', data);
+      },
+      getURL: function (id) {
+        return $http.get('file/getURL.json', {params: {id: id}});
       }
     },
 

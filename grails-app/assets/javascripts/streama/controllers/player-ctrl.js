@@ -8,9 +8,8 @@ angular.module('streama').controller('playerCtrl', [
 			$scope.video = data;
 
 			var missingFileError = playerService.handleMissingFileError($scope.video);
-			var wrongBasePathError = playerService.handleWrongBasepathError($scope.video);
 
-			if(!missingFileError && !wrongBasePathError){
+			if(!missingFileError){
 				$scope.videoOptions = playerService.setVideoOptions($scope.video);
 			}
 

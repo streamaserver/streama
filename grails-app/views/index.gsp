@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>${streama.Settings.findByName('title').value}</title>
+    <title>${Settings.findByName('title').value}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <style type="text/css">
@@ -15,7 +15,7 @@
 
     <asset:stylesheet src="vendor.css"/>
     <asset:stylesheet src="application.css"/>
-    <link rel="icon" href="${streama.Settings.findByName('favicon').value}" type="image/x-icon">
+    <g:linkRelIconSetting setting="${Settings.findByName('favicon').value}"></g:linkRelIconSetting>
 
     <script type="text/javascript">
         window.contextPath = "${request.contextPath}";

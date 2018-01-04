@@ -1,6 +1,10 @@
 'use strict';
 
-angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiService', '$sce', 'uploadService', function ($scope, apiService, $sce, uploadService) {
+angular.module('streama').controller('settingsSettingsCtrl',
+      ['$scope', 'apiService', '$sce', 'uploadService', 'fileService',
+      function ($scope, apiService, $sce, uploadService, fileService) {
+
+  $scope.fileService = fileService;
 
   apiService.settings.list().success(function (data) {
     $scope.settings = data;
@@ -60,8 +64,9 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 				uploadService.doUpload($scope.uploadStatus, 'file/upload.json?isPublic=true', function (data) {
 					$scope.uploadStatus.percentage = null;
 					if(data.error) return
-					
-					setting.value = data.src;
+
+					setting.value = "upload:" + data.id;
+					fileService.getAssetFromSetting(setting);
 				}, function () {}, files);
 			}else{
 				alertify.error("You have to set and save Upload Directory first");
