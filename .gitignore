@@ -47,3 +47,9 @@
 
 #gradle
 /.gradle
+
+#sass
+.asscache
+/.jruby-container
+/.sass-cache
+/.sass-work

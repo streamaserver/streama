@@ -85,6 +85,7 @@ dependencies {
     profile "org.grails.profiles:angular"
     runtime "com.h2database:h2"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
+    assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.11.6'
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testCompile "org.grails:grails-datastore-rest-client"

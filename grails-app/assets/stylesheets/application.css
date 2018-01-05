@@ -8,7 +8,7 @@
 * compiled file, but it's generally better to create a new file per style scope.
 *
 
-
+*= require icomoon/style
 *= require style
 *= require lato_font
 *= require_self
