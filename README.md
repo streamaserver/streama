@@ -1,5 +1,5 @@
 ![Streama Banner](design/banner2.png)
-# STREAMA v1.4.1
+# STREAMA
 
 
 [![Build Status](https://travis-ci.org/dularion/streama.svg?branch=master)](https://travis-ci.org/dularion/streama) [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/dularion/streama/blob/master/LICENSE.md) [![Join the chat at https://gitter.im/dularion/streama](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dularion/streama?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -21,6 +21,7 @@ If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7S
 
 ## Table of contents:
 - [Getting Started](#getting-started)
+- [Downloads](#downloads)
 - [The Application](#the-application)
   - [Settings](#settings)
   - [The Dashboard](#the-dashboard)
@@ -35,7 +36,13 @@ If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7S
 - [License](#license)
 
 # Getting Started
-- [up and running with Streama](https://github.com/dularion/streama/wiki/Getting-started)
+- [Installation and first-time setup](https://github.com/dularion/streama/wiki/Getting-started)
+
+If you have any issues getting started, free free to [chat with us on Gitter](https://gitter.im/dularion/streama). We are more than happy to assist and then improve the docs accordingly. 
+
+# Downloads
+- **Stable and beta** versions see the GitHub [releases](https://github.com/dularion/streama/releases)
+- **Unstable/alpha** builds see [StreamaBuilds](http://streamabuilds.s3-website-us-east-1.amazonaws.com/)
 
 # The Application
 
@@ -85,32 +92,30 @@ Uploading video-files for each episode is as easy as drag-and-drop!
 Users can be invited and managed in the admin-panel. By default, they are non-admins, meaning they can only view videos, not create them. You can make them admins with the press of a button. Since there is user-administration in place, I plan on expanding on this a lot! Another feature I want to add is the ability for users to add and administer some form of playlists. There is a lot of potential to make this even better!
 
 # Technical Details
-This application is web-based and is programmed with [Grails 2.4.4](https://grails.org/) and MySQL. For login & user-handling [SpringSecurity](http://projects.spring.io/spring-security/) is used. For the most part, Grails is only there to generate REST-endpoints for the frontend. For all the front-end components, [AngularJS](https://angularjs.org/) is used. The player is completely HTML5-based, meaning there are limitations as to which file-types can be played at the moment.
+This application is web-based, the server-side is written on [Grails 3](https://grails.org/) with [SpringSecurity](http://projects.spring.io/spring-security/) for login & user-handling. For all the front-end components, [AngularJS](https://angularjs.org/) is used and the player is completely HTML5-based. The application is essentially split into Grails for a REST-API, and AngularJS for the frontend.
 
-The application uses Grails for the REST-API, and AngularJS for the frontend. If you don't like grails, you can also just use the frontend components and add your own REST-API for handling all the data :)
-
-As an API for all the movies and shows I used the [awesome API](https://www.themoviedb.org/documentation/api) from [theMovieDatabase](https://www.themoviedb.org).
+Streama uses the [awesome API](https://www.themoviedb.org/documentation/api) from [theMovieDatabase](https://www.themoviedb.org) for all media-metadata.
 
 # Changelog
-Please refer to [Change Log](https://github.com/dularion/streama/blob/master/CHANGELOG.md)
+Please refer to description of each [release](https://github.com/dularion/streama/releases) or the git log.
 
 # Roadmap
-These [enhancement-issues](https://github.com/dularion/streama/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement) are the features that I will be working on in the near future.
+Streama is still very much a work-in-progress. We will be adding new features and bug-fixes often, but this is a hobby project for the core-contributers, so the time that we can spend on it is limited.
 
-At this point I would like to mention that this project is still very much a work-in-progress. I will be adding new features and bugfixes often and quickly, but this is first and foremost a hobby project, so the time that I can spend on it is limited. If you want to contribute, feel free! I will be honored by each and every Pull request :)
+For all our feature and bug tracking we use the [Issues Section](https://github.com/dularion/streama/issues). Streama's 'roadmap' is currently to work though the feature requests and improvements that are in the issue tracker.  Take a look at the milestones for what we intend to add for upcoming releases.
 
-Btw, if you have any issues getting started, let me know. I will gladly help out and then improve the docs accordingly. 
 
 # Contributing
+### Features, Improvements, and Bugfixes
+Streama currently only has ~2-3 core-contributers so we are grateful for any extra contributions. Send though a Pull Request and we will review it ASAP.
+
+If you're not sure what to work on, take a look at the [issues](https://github.com/dularion/streama/issues). There's lots to do!
+
 ### Translations
 If you want to contribute a translation, please follow [the guide here](https://github.com/dularion/streama/wiki/Translating-the-app). 
 
-### PRs
-If you would like to contribute, I would be thrilled to review each and every PR coming this way! However, please focus your efforts on the grails3 branch of this project, development on the master has mostly halted in favor of the more modern grails3 setup. 
-
-
 # Known Issues
-- There is no video-conversion currently, meaning you are reliant upon HTML5 browser compatibilities. I will implement server-side conversion soon which will enable this functionality. See Issue [#17](https://github.com/dularion/streama/issues/17)
+- There is no video-conversion currently, meaning you are reliant upon HTML5 browser compatibilities. Server-side conversion is on our roadmap. See Issue [#440](https://github.com/dularion/streama/issues/440)
 
 # License
 Streama is distributed under the terms of the MIT license.
