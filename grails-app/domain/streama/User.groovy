@@ -23,6 +23,7 @@ class User {
 	String uuid
 	String language = 'en'
   String fullName
+  Integer amountOfMediaEntries
 
 	static transients = ['springSecurityService']
 
