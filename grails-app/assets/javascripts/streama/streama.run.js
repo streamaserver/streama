@@ -1,4 +1,4 @@
-angular.module('streama').run(function ($window, $rootScope, $state, localStorageService, apiService, modalService, userService) {
+angular.module('streama').run(function ($window, $rootScope, $state, localStorageService, apiService, modalService, userService, fileService) {
 	apiService.currentUser().success(function (data) {
 		userService.setCurrentUser(data);
 	});
@@ -21,6 +21,12 @@ angular.module('streama').run(function ($window, $rootScope, $state, localStorag
 	$rootScope.getSetting = function (name) {
 		return _.find($rootScope.settings, {name: name}) || _.find($rootScope.settings, {settingsKey: name});
 	};
+
+  $rootScope.getSettingAsAsset = function (name){
+	  var setting = this.getSetting(name);
+    fileService.getAssetFromSetting(setting);
+    return setting
+  };
 
 	$rootScope.selectFromSearch = function (item) {
     modalService.mediaDetailModal({mediaId: item.id, mediaType: item.mediaType});

@@ -46,7 +46,7 @@
          </div>
          <div class="col-md-6">
           <div>
-            <img class="pull-right" ng-show="setting.value" ng-init="fileService.getAssetFromSetting(setting)" ng-src="{{setting.src}}" alt="Streama Logo">
+            <img class="pull-right" ng-show="fileService.getAssetFromSetting(setting)" ng-src="{{setting.src}}" alt="Streama Logo">
           </div>
           <div>
             <input class="form-control input-sm" type="text" ng-model="setting.value" />
