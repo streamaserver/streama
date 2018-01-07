@@ -141,7 +141,11 @@ angular.module('streama').config(function ($stateProvider) {
 				$rootScope.currentUser = data;
 				return data;
 			}
-		});
+		}).error(function (err, status) {
+      if(status === 401){
+        location.href = '/login/auth?sessionExpired=true'
+      }
+    });
 	}
 
 	function checkPermissionAdmin(apiService, $rootScope, $state) {
