@@ -6,7 +6,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USERNAME: 'Nom d\'utilisateur',
 			PASSWORD: 'Mot de passe',
 			FIRST_TIME_HINT: 'Première connexion ? Connectez-vous avec \'admin\'/\'admin\'.',
-			SUBMIT: 'Connexion'
+			SUBMIT: 'Connexion',
+      SESSION_EXPIRED: 'Votre session a expiré depuis votre dernière activité. Veuillez vous reconnecter.'
 		},
 		DASHBOARD: {
 			TITLE: 'Tableau de bord',

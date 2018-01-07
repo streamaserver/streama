@@ -9,7 +9,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USERNAME: 'Brugernavn',
 			PASSWORD: 'Kodeord',
 			FIRST_TIME_HINT: 'Første gang du logger ind? Prøv \'admin\' i begge felter.',
-			SUBMIT: 'Log Ind'
+			SUBMIT: 'Log Ind',
+      SESSION_EXPIRED: 'Din session er udløbet siden din sidste aktivitet. Venligst log ind igen.'
 		},
 		DASHBOARD: {
 			TITLE: 'Betjeningspanel',
