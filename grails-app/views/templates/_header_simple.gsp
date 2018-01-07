@@ -3,9 +3,6 @@
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
       <g:imgSetting setting="${Settings.findByName('logo').value}"></g:imgSetting>
-      <g:if test="${Settings.findByName('show_version_num').value == 'true'}">
-        <div class="version">v${grailsApplication.metadata.getApplicationVersion()}</div>
-      </g:if>
     </a>
   </div>
 
