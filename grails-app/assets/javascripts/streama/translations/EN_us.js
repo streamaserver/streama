@@ -70,6 +70,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LANGUAGE: 'Language',
 			PAUSE_ON_CLICK: 'Pause Video on Click',
 			FAVORITE_GENRES: 'Favorite Genres',
+      AMOUNT_OF_MEDIA_ENTRIES: 'Amount of Videos on Dashboard (Before "Load More")',
 			SAVE: 'Save Profile',
 			PASS: 'Password',
 			OLD_PASS: 'Old Password',

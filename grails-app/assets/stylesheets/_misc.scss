@@ -15,6 +15,9 @@
   }
 }
 
+.form-horizontal .control-label{
+  text-align: left;
+}
 
 .pagination>.disabled>span, .pagination>.disabled>span:hover, .pagination>.disabled>span:focus, .pagination>.disabled>a, .pagination>.disabled>a:hover, .pagination>.disabled>a:focus{
   background-color: $grey-blue;
