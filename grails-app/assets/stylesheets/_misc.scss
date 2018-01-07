@@ -3,3 +3,32 @@
   border: 1px solid #222;
   margin-bottom: 20px;
 }
+
+
+.btn.button-icon{
+  i{
+    margin-left: 10px;
+    line-height: 0;
+    position: relative;
+    top: 3px;
+    margin-right: 10px;
+  }
+}
+
+
+.pagination>.disabled>span, .pagination>.disabled>span:hover, .pagination>.disabled>span:focus, .pagination>.disabled>a, .pagination>.disabled>a:hover, .pagination>.disabled>a:focus{
+  background-color: $grey-blue;
+}
+.pagination>li>a, .pagination>li>span{
+  background-color: darken($primary, 40%);
+
+  &:hover{
+    background-color: darken($primary, 45%);
+  }
+}
+
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{
+  background-color: darken($primary, 50%);
+}
+
+

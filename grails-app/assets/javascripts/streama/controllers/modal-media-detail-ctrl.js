@@ -1,41 +1,50 @@
 'use strict';
 
 angular.module('streama').controller('modalMediaDetailCtrl', [
-	'$scope', '$uibModalInstance', '$rootScope', 'mediaId', '$state', 'apiService', 'mediaType',
-	function ($scope, $uibModalInstance, $rootScope, mediaId, $state, apiService, mediaType) {
+  '$scope', '$uibModalInstance', '$rootScope', 'config', '$state', 'apiService',
+  function ($scope, $uibModalInstance, $rootScope, config, $state, apiService) {
 
-	console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
+    $scope.mediaType = config.mediaType;
+    var mediaId = config.mediaId;
+    $scope.isEditButtonHidden = config.isEditButtonHidden;
 
-		apiService[mediaType].get(mediaId).success(function (data) {
-			$scope.media = data;
+    if(config.mediaObject) {
+      $scope.media = config.mediaObject;
+      $scope.isApiMovie = config.isApiMovie;
+    }
+    else if(mediaId && $scope.mediaType){
 
-			if(mediaType == 'tvShow'){
-				$scope.currentSeason = 0;
+      console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
+      apiService[$scope.mediaType].get(mediaId).success(function (data) {
+        $scope.media = data;
 
-				apiService.tvShow.episodesForTvShow($scope.media.id).success(function (data) {
-					if(data.length){
-						$scope.seasons = _.groupBy(data, 'season_number');
-						$scope.currentSeason = _.min(data, 'season_number').season_number;
-					}
-				});
+        if($scope.mediaType == 'tvShow'){
+          $scope.currentSeason = 0;
+          apiService.tvShow.episodesForTvShow($scope.media.id).success(function (data) {
+            if(data.length){
+              $scope.seasons = _.groupBy(data, 'season_number');
+              $scope.currentSeason = _.min(data, 'season_number').season_number;
+            }
+          });
+          apiService.dash.firstEpisodeForShow($scope.media.id).success(function (data) {
+            $scope.firstEpisode = data;
+          });
+        }
+      });
+    }
+    else if(!config.mediaObject && !mediaId && !$scope.mediaType) {
+      alertify.error('No data available');
+    }
+    $scope.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
+      if($state.current.name === 'dash'){
+        $state.go('dash', {mediaModal: null, mediaType: null});
 
-				apiService.dash.firstEpisodeForShow($scope.media.id).success(function (data) {
-					$scope.firstEpisode = data;
-				});
-			}
-		});
-
-
-
-	$scope.cancel = function () {
-		$uibModalInstance.dismiss('cancel');
-		$state.go('dash', {mediaModal: null, mediaType: null});
+      }
 	};
-
 	$scope.setCurrentSeason = function (index) {
 		$scope.currentSeason = index;
 	};
-
 	$scope.editMedia = function (media) {
 		if($rootScope.currentUser.isContentManager){
 			console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', media);
@@ -54,5 +63,5 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 
 		$scope.$on('$stateChangeStart', function () {
 			$uibModalInstance.dismiss('cancel');
-		})
+		});
 }]);

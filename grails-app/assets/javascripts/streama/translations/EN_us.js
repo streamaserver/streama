@@ -9,7 +9,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USERNAME: 'Username',
 			PASSWORD: 'Password',
 			FIRST_TIME_HINT: 'First time logging in? Try \'admin\' for both fields.',
-			SUBMIT: 'Login'
+			SUBMIT: 'Login',
+      SESSION_EXPIRED: 'Your session expired since your last activity. Please login again.'
 		},
 		DASHBOARD: {
 			TITLE: 'Dashboard',
@@ -36,7 +37,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			OVERVIEW: 'Overview',
 			GENRE: 'Genre',
 			TRAILER: 'Trailer',
-			SEASON: 'Season'
+			SEASON: 'Season',
+      NO_SUBTITLE: 'No Subtitle'
 		},
 
 		MESSAGES: {
@@ -55,13 +57,14 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		CHANGE_PASSWORD: 'Change Password',
 		LANGUAGE_en: 'English',
 		LANGUAGE_de: 'German',
-    	LANGUAGE_fr: 'French',
+		LANGUAGE_fr: 'French',
 		LANGUAGE_es: 'Spanish',
 		LANGUAGE_kr: 'Korean',
 		LANGUAGE_nl: 'Dutch',
 		LANGUAGE_pt: 'Portuguese',
-    LANGUAGE_da: 'Danish',
-
+    LANGUAGE_ja: 'Japanese',
+    LANGUAGE_it: 'Italian',
+		LANGUAGE_da: 'Danish',
 		PROFIlE: {
 			USERNAME: 'Username',
 			FULL_NAME: 'Full Name',
@@ -76,7 +79,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			REPEAT_PASS: 'Repeat Password',
 			PASS_ERROR_EMPTY: 'The password can not be empty',
 			PASS_ERROR_LENGTH: 'The password must be at least 6 characters long',
-			PASS_ERROR_REPEAT: 'The passwords need to match'
+			PASS_ERROR_REPEAT: 'The passwords need to match',
+			SAVE_PASS: 'Set new password'
 		},
 
 		SORT_OPTIONS: {

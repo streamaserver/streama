@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').directive('streamaVideoPlayer', [
-  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http',
-  function (uploadService, localStorageService, $timeout, playerService, $http) {
+  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce',
+  function (uploadService, localStorageService, $timeout, playerService, $http, $sce) {
 
     return {
       restrict: 'AE',
@@ -28,6 +28,9 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				$scope.toggleSelectEpisodes = toggleSelectEpisodes;
 				$scope.createNewPlayerSession = createNewPlayerSession;
         $scope.toggleTextTrack = toggleTextTrack;
+        $scope.selectSubtitle = selectSubtitle;
+        $scope.changeSubtitle = changeSubtitle;
+        $scope.hideSubtitle = hideSubtitle;
         $scope.playerVolumeToggle = playerVolumeToggle;
 				$scope.play = play;
 				$scope.pause = pause;
@@ -63,6 +66,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
 					initExternalTriggers();
 					initIsMobile();
 					$scope.volumeLevel = localStorageService.get('volumeLevel') || 5;
+
+
 					$scope.$on('$destroy', onDirectiveDestroy);
 					$scope.$on('$stateChangeSuccess', onStateChangeSuccess);
 
@@ -78,6 +83,11 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						video.addEventListener('ended', onVideoEnded);
 						$scope.scrubberOptions = generateScrupperOoptions();
 						$scope.volumeScrubberOptions = generateVolumeScrubberOptions();
+            var selectedSubtitleLanguage = localStorageService.get('selectedSubtitleLanguage');
+
+            if(selectedSubtitleLanguage){
+              changeSubtitle(_.find($scope.options.subtitles,{subtitleSrcLang: selectedSubtitleLanguage}));
+            }
 					});
 				}
 
@@ -329,16 +339,53 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				function createNewPlayerSession() {
 					$scope.options.onSocketSessionCreate();
 				}
-
+        //bei hidden wirklich alle verstecken, und bei showing nur den anzeigen, der auch wirklich angezeigt werden soll, nicht immer index 0
 				function toggleTextTrack() {
 					$scope.isTextTrackVisible = !$scope.isTextTrackVisible;
 
 					if($scope.isTextTrackVisible){
-						video.textTracks[0].mode = "showing";
+					  _.forEach(video.textTracks, function(value, key) {
+					    if($scope.selectedLanguage){
+                if(value.language === $scope.selectedLanguage) {
+                  value.mode = 'showing';
+                }
+              }
+              else{
+                video.textTracks[0].mode = 'showing';
+              }
+            });
 					}else{
-						video.textTracks[0].mode = "hidden";
+            _.forEach(video.textTracks, function(value, key) {
+                value.mode = 'hidden';
+            });
 					}
 				}
+
+        function selectSubtitle() {
+          $scope.multipleSubtitleBrowser = !$scope.multipleSubtitleBrowser;
+        }
+
+        function hideSubtitle() {
+          _.forEach(video.textTracks, function(value, key) {
+            value.mode = 'hidden';
+          });
+          $scope.selectedSubtitleId = null;
+          $scope.selectedLanguage = null;
+
+        }
+        function changeSubtitle(subtitle) {
+          _.forEach(video.textTracks, function(value, key) {
+            if(value.id !== 'subtitle-' + subtitle.id) {
+              value.mode = 'hidden';
+            }
+            else if(value.id === 'subtitle-' + subtitle.id) {
+                value.mode = 'showing';
+                $scope.selectedLanguage = value.language;
+                $scope.selectedSubtitleId = subtitle.id;
+                localStorageService.set('selectedSubtitleLanguage',value.language);
+            }
+          });
+        }
 
 				//Changes the video player's volume. Takes the changing amount as a parameter.
 				function changeVolume(amount) {

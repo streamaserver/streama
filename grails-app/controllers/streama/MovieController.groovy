@@ -7,12 +7,13 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class MovieController {
+  def videoService
 
   static responseFormats = ['json', 'xml']
   static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
   def index() {
-    respond Movie.findAllByDeletedNotEqual(true), [status: OK]
+    return videoService.listMovies(params, [includeEmpty: true])
   }
 
   @Transactional
@@ -37,6 +38,10 @@ class MovieController {
   }
 
   def show(Movie movie) {
+    if(!movie){
+      render status: NOT_FOUND
+      return
+    }
     respond movie, [status: OK]
   }
 
@@ -52,4 +57,11 @@ class MovieController {
     movieInstance.save failOnError: true, flush: true
     render status: NO_CONTENT
   }
+  def getsimilar(){
+    def movieId = params.id
+    Movie movie = Movie.get(movieId)
+    def similarMovies = movie.getSimilarMovies()
+    render(similarMovies.results as JSON)
+  }
+
 }

@@ -120,16 +120,25 @@
 
 <br/>
 <hr/>
+<div >
+  <div class="spinner" ng-show="LoadingSimilar">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+</div>
 
 <div ng-show="movie.similarMovies">
   <h3>Similar Movies</h3>
   <h5>Suggested by TheMovieDb.org</h5>
   <div class="media-list similar-media">
-    <div class="media-list-item" ng-repeat="movie in movie.similarMovies.results">
+    <div class="media-list-item" ng-repeat="movie in movie.similarMovies">
       <div class="hover-overlay">
         <div>
           <button class="btn btn-primary btn-sm btn-block" ng-click="addSimilarMovieToStreama(movie, true)">Add and Open</button>
           <button class="btn btn-primary btn-sm btn-block" ng-click="addSimilarMovieToStreama(movie, false)">Add and Continue</button>
+          <button class="btn btn-primary btn-sm btn-block" ng-click="showDetails(movie)">Trailer & Details<!-- {{movie.trailerKey}}--></button>
+
         </div>
       </div>
       <div class="media-item" >

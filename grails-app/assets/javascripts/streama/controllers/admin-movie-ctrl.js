@@ -4,16 +4,35 @@ angular.module('streama').controller('adminMovieCtrl', [
 	'$scope', 'apiService', '$stateParams', 'modalService', '$state', 'uploadService',
 	function ($scope, apiService, $stateParams, modalService, $state, uploadService) {
     $scope.loading = true;
-
+    $scope.LoadingSimilar = true;
 		apiService.movie.get($stateParams.movieId).success(function (data) {
 			$scope.movie = data;
       $scope.loading = false;
 			$scope.highlightOnDashboard = modalService.newReleaseModal.bind(modalService, $scope.movie,'movie');
-		});
+      if($scope.movie.hasOwnProperty('apiId')){//if the data came from moviedb
+        $scope.loadsimilar();
+      }
+      else{
+        $scope.LoadingSimilar = false;
+      }
+    });
+
+    $scope.loadsimilar= function () {
+      apiService.movie.getsimilar($stateParams.movieId).success(function (data) {
+        $scope.LoadingSimilar = false;
+        $scope.movie.similarMovies = data;
+      });
+    };
+
+    $scope.showDetails = function (media) {
+      $scope.media = media;
+      modalService.mediaDetailModal({isEditButtonHidden: true,mediaId: media.id, mediaType: media.mediaType, mediaObject: media, isApiMovie: true});
+    };
+
 
     $scope.openMovieModal = function () {
       modalService.movieModal($scope.movie, function (data) {
-        angular.merge($scope.movie, data)
+        angular.merge($scope.movie, data);
       });
     };
 
@@ -85,9 +104,12 @@ angular.module('streama').controller('adminMovieCtrl', [
 
 		$scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + $stateParams.movieId, function (data) {
 			$scope.uploadStatus.percentage = null;
+			
+			if(data.error) return
+			
 			$scope.movie.files = $scope.movie.files || [];
 			$scope.movie.files.push(data);
-		});
+		}, function () {});
 
 
 

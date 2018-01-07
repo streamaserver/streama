@@ -1,17 +1,18 @@
 'use strict';
 
 angular.module('streama').controller('modalMovieCtrl', [
-	'$scope', '$uibModalInstance', 'apiService', 'movie', '$state', 'uploadService',
-	function ($scope, $uibModalInstance, apiService, movie, $state, uploadService) {
+	'$scope', '$uibModalInstance', 'apiService', 'movie', '$state', 'uploadService', 'modalService',
+	function ($scope, $uibModalInstance, apiService, movie, $state, uploadService, modalService) {
 	$scope.loading = false;
 
 	$scope.movie = movie || {};
 	$scope.movieDB = true;
 	$scope.hasMovieDBKey = true;
+  $scope.addManually = ($scope.movie.id && !$scope.movie.apiId);
+	$scope.chooseNewBackdrop = chooseNewBackdrop;
 
   apiService.theMovieDb.hasKey().success(function (data) {
     if (!data.key) {
-      $scope.addManually = true;
       $scope.hasMovieDBKey = false;
     }
   });
@@ -34,6 +35,8 @@ angular.module('streama').controller('modalMovieCtrl', [
 		delete $item.id;
 		$scope.movie = $item;
 		$scope.movie.apiId = apiId;
+		$scope.addManually = false;
+		$scope.hasMovieDBKey = true;
 
 		$scope.formVisible = true;
 	};
@@ -50,9 +53,11 @@ angular.module('streama').controller('modalMovieCtrl', [
 		$scope.uploadImage = function (files, type) {
 			uploadService.doUpload($scope.imageUpload, 'file/upload.json', function (data) {
 				$scope.imageUpload.percentage = null;
+				if(data.error) return
+
 				$scope.movie[type] = data;
 				$scope.movie[type+'_src'] = data.src;
-			}, files);
+			}, function () {}, files);
 		};
 
 		$scope.onTagSelect = function (tag) {
@@ -93,4 +98,8 @@ angular.module('streama').controller('modalMovieCtrl', [
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
 	};
+
+	function chooseNewBackdrop() {
+    modalService.openImageChooser('movie', $scope.movie);
+  }
 }]);

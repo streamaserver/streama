@@ -1,0 +1,56 @@
+--------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+Thanks for reporting an issue for Streama, please review the instructions below before submitting the 
+issue. 
+
+*****YOUR ISSUE WILL BE CLOSED IF IT DOES NOT USE THIS TEMPLATE OR IT IS INCOMPLETE!*****
+
+Feature requetes can be done without this template.  
+If you have multiple things to report please create one issue per item.  
+Please use english when reporting issues.  
+
+If you are unsure about something and the issue is more of a question a better 
+place to ask questions is on [gitter](https://gitter.im/dularion/streama).
+DO NOT use the issue tracker to ask questions.
+
+Please fill out the sections below the header and review the task list below.  
+Task List:
+- [ ] Issue description provided
+- [ ] Steps to reproduce provided
+- [ ] Stacktrace (if present) provided
+- [ ] Screenshots (if UI related) provided
+- [ ] Full description of the issue provided
+
+
+**PLEASE REMOVE THIS HEADER SECTION BEFORE SUBMISSION**
+--------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+
+
+### Issue description
+
+
+### Steps to Reproduce
+
+1. TODO
+2. TODO
+3. TODO
+
+### Expected Behaviour
+
+Tell us what should happen
+
+### Actual Behaviour
+
+Tell us what happens instead
+
+### Environment Information
+
+- **Operating System**: TODO
+- **Streama version**: TODO
+- **Custom streama build, describe customizations or provide link to fork (If Applicable)**: TODO
+- **Container Version (If Applicable):** TODO
+
+### Example Application / access to your live version
+
+If avalible

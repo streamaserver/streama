@@ -16,8 +16,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			delete: function (id) {
 				return $http.delete('tvShow/delete.json', {params: {id: id}});
 			},
-			list: function () {
-				return $http.get('tvShow.json');
+			list: function (params) {
+				return $http.get('tvShow.json', {params: params});
 			},
 			episodesForTvShow: function (id) {
 				return $http.get('tvShow/episodesForTvShow.json', {params: {id: id}});
@@ -120,6 +120,18 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
     file: {
       localFiles: function(path) {
         return $http.get('file/localFiles.json', {params: {path: path}});
+      },
+			matchMetaDataFromFiles: function (files) {
+				return $http.post('file/matchMetaDataFromFiles.json', {files: files});
+			},
+      bulkAddMediaFromFile: function (files) {
+				return $http.post('file/bulkAddMediaFromFile.json', {files: files});
+			},
+      save: function(data) {
+        return $http.post('file/save.json', data);
+      },
+      getURL: function (id) {
+        return $http.get('file/getURL.json', {params: {id: id}});
       }
     },
 
@@ -142,14 +154,17 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			get: function (id) {
 				return $http.get('movie/show.json', {params: {id: id}});
 			},
+      getsimilar: function (id) {
+        return $http.get('movie/getsimilar.json', {params: {id: id}});
+      },
 			save: function (data) {
 				return $http.post('movie/save.json', data);
 			},
 			delete: function (id) {
 				return $http.delete('movie/delete.json', {params: {id: id}});
 			},
-			list: function () {
-				return $http.get('movie.json');
+			list: function (params) {
+				return $http.get('movie.json', {params: params});
 			}
 		},
 
@@ -247,6 +262,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
 			countNewEpisodesForSeason: function (params) {
 				return $http.get('theMovieDb/countNewEpisodesForSeason', {params: params});
+			},
+      imagesForMedia: function (params) {
+				return $http.get('theMovieDb/imagesForMedia', {params: params});
 			}
 		},
 
@@ -259,12 +277,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/listContinueWatching.json');
 			},
 
-			listMovies: function () {
-				return $http.get('dash/listMovies.json');
+			listMovies: function (params) {
+				return $http.get('dash/listMovies.json', {params: params});
 			},
 
-			listShows: function () {
-				return $http.get('dash/listShows.json');
+			listShows: function (params) {
+				return $http.get('dash/listShows.json', {params: params});
 			},
 
 			firstEpisodeForShow: function (id) {
@@ -275,8 +293,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/listGenres.json');
 			},
 
-			listGenericVideos: function () {
-				return $http.get('dash/listGenericVideos.json');
+			listGenericVideos: function (params) {
+				return $http.get('dash/listGenericVideos.json', {params: params});
 			},
 
 			listNewReleases: function () {

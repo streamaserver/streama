@@ -1,15 +1,16 @@
 <header class="main" ng-if="!isCurrentState('player')">
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
-      <img ng-show="$root.getSetting('logo')" ng-src="{{$root.getSetting('logo').value}}" src="/assets/logo.png" alt="${streama.Settings.findByName('title').value}">
-      <div ng-show="$root.getSetting('show_version_num').value == true" class="version">v${grailsApplication.metadata.getApplicationVersion()}</div>
+      <img ng-show="$root.getSettingAsAsset('logo')" ng-src="{{$root.getSetting('logo').src}}" src="/assets/logo.png" alt="${streama.Settings.findByName('title').value}">
       <div class="spinner" ng-show="baseData.loading">
         <div class="bounce1"></div>
         <div class="bounce2"></div>
         <div class="bounce3"></div>
       </div>
     </a>
-
+    <g:if test="${streama.Settings.findByName('show_version_num').value == 'true'}">
+      <div class="version">v${grailsApplication.metadata.getApplicationVersion()}</div>
+    </g:if>
     <div class="browse-genres" ng-if="isCurrentState('dash') && genres.length">
       <button class="btn btn-link toggle-menu" ng-click="toggleGenreMenu()">
         <span ng-if="selectedGenre" ng-bind="selectedGenre.name"></span>

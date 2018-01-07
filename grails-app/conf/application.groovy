@@ -13,7 +13,7 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'streama.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'streama.UserRole'
 grails.plugin.springsecurity.authority.className = 'streama.Role'
 
-grails.plugin.springsecurity.rejectIfNoRule = false
+grails.plugin.springsecurity.rejectIfNoRule = true
 grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 grails.plugin.springsecurity.secureChannel.useHeaderCheckChannelSecurity = true
 grails.plugin.springsecurity.portMapper.httpPort = 80
@@ -43,6 +43,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/theMovieDb/availableGenres',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/user/loginTarget',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/dash/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/player/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag.json',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/settings/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
@@ -62,6 +63,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/bulk/**',  access :['ROLE_ADMIN']],
   [pattern:'/monitoring/**',  access :['ROLE_ADMIN']],
 
+  [pattern:'/dbconsole/**', access :['ROLE_ADMIN']],
 
   [pattern:'/file/serve',  access :['permitAll']],
   [pattern:'/user/current',  access :['permitAll']],
@@ -70,7 +72,14 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/**/js/**',  access :['permitAll']],
   [pattern:'/**/css/**',  access :['permitAll']],
   [pattern:'/**/images/**',  access :['permitAll']],
-  [pattern:'/**/favicon.ico', access :['permitAll']]
+  [pattern:'/**/favicon.ico', access :['permitAll']],
+
+
+
+  [pattern:'/api/validateDomain',  access :['permitAll']],
+  [pattern:'/api/getInfo',  access :['permitAll']],
+  [pattern:'/api/currentUser',  access :['permitAll']],
+  [pattern:'/api/v1/dash/**',  access :['IS_AUTHENTICATED_REMEMBERED']]
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [
@@ -87,4 +96,10 @@ grails.mail.default.from = "Streama <info@streama.com>"
 
 grails.gorm.default.constraints = {
   '*'(nullable: true)
+}
+
+environments {
+  development{
+    grails.dbconsole.enabled = true
+  }
 }

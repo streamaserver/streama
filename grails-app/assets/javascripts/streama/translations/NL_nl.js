@@ -10,6 +10,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Wachtwoord',
 			FIRST_TIME_HINT: 'Eerste keer inloggen? Probeer \'admin\' voor gebruikersnaam en wachtwoord.',
 			SUBMIT: 'Login',
+      SESSION_EXPIRED: 'Je sessie is verlopen sinds je laatste activiteit. Log alsjeblieft nogmaals in.'
 		},
 		DASHBOARD: {
 			TITLE: 'Dashboard',
@@ -36,6 +37,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			GENRE: 'Genre',
 			TRAILER: 'Trailer',
 			SEASON: 'Seizoen',
+      NO_SUBTITLE: 'Geen ondertiteling'
 		},
 
 		MESSAGES: {
@@ -58,8 +60,9 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LANGUAGE_kr: 'Koreaans',
 		LANGUAGE_nl: 'Nederlands',
 		LANGUAGE_pt: 'Portugees',
+    LANGUAGE_ja: 'Japans',
+    LANGUAGE_it: 'Italiaans',
     LANGUAGE_da: 'Deens',
-
 		PROFIlE: {
 			USERNAME: 'Gebruikersnaam',
 			FULL_NAME: 'Volledige naam',

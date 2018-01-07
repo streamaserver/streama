@@ -43,7 +43,7 @@ angular.module('streama').factory('playerService',
         videoOptions.videoType = video.files[0].contentType;
 
         if(video.subtitles && video.subtitles.length){
-          videoOptions.videoTrack = $sce.trustAsResourceUrl(video.subtitles[0].src);
+          videoOptions.subtitles = video.subtitles;
         }
 
         videoOptions.isExternalLink = video.files[0].externalLink;
@@ -198,26 +198,6 @@ angular.module('streama').factory('playerService',
           });
         }
 
-        return hasError;
-      },
-
-      handleWrongBasepathError: function (video) {
-        var hasError = false;
-        var videoSource = video.files[0].src;
-        var externalLink = video.files[0].externalLink;
-        var basePath = location.origin + contextPath;
-
-        if(videoSource && videoSource.indexOf(basePath) == -1 && !externalLink){
-          hasError = true;
-          alertify.alert($filter('translate')('MESSAGES.WRONG_BASEPATH', {basePath: basePath}), function () {
-            if(_.find($rootScope.currentUser.authorities, {authority: "ROLE_ADMIN"})){
-              $state.go('settings.settings');
-            }else{
-              $state.go('dash', {});
-            }
-
-          });
-        }
         return hasError;
       },
 

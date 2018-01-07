@@ -10,6 +10,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Contraseña',
 			FIRST_TIME_HINT: '¿Es tu primera vez? Prueba \'admin\' en ambos campos.',
 			SUBMIT: 'Identificarse',
+      SESSION_EXPIRED: 'Su sesión expiró desde su última actividad. Por favor inicie sesión de nuevo.'
 		},
 		DASHBOARD: {
 			TITLE: 'Panel de control',
@@ -36,6 +37,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			GENRE: 'Género',
 			TRAILER: 'Trailer',
 			SEASON: 'Temporada',
+      NO_SUBTITLE: 'Sin subtítulos'
 		},
 
 		MESSAGES: {
@@ -53,13 +55,14 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		CHANGE_PASSWORD: 'Cambiar Contraseña',
 		LANGUAGE_en: 'Inglés',
 		LANGUAGE_de: 'Alemán',
-		LANGUAGE_fr: 'Erancés',
+		LANGUAGE_fr: 'Francés',
 		LANGUAGE_es: 'Español',
 		LANGUAGE_kr: 'Coreano',
 		LANGUAGE_nl: 'Holandés',
 		LANGUAGE_pt: 'Portugués',
+    LANGUAGE_ja: 'Japonés',
+    LANGUAGE_it: 'Italiano',
     LANGUAGE_da: 'Danés',
-
 		PROFIlE: {
 			USERNAME: 'Nombre de usuario',
 			FULL_NAME: 'Nombre completo',

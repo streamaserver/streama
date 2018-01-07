@@ -73,11 +73,31 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" ng-if="episode.still_path && episode.id">
         <div class="col-sm-6">
           <label>Image</label>
           <br/>
           <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w500/{{episode.still_path}}"/>
+        </div>
+      </div>
+
+      <div class="form-group" ng-if="!episode.still_path && episode.id">
+        <div class="col-sm-12">
+          <label>Episode Image</label>
+          <br/>
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="upload-poster" ng-class="{'update-poster': episode.still_image_src}" ng-model="manualImage" class="btn btn-primary btn-block btn-lg"
+                   ngf-change="uploadImage($files, 'still_image')" ngf-select ngf-drop ngf-drag-over-class="dragover">
+                <span class="main-text">Upload Episode Image</span>
+                <span class="size-info">(recommended: 1000x563 px)</span>
+                <span ng-show="imageUpload.percentage">{{imageUpload.percentage}}%</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <img ng-show="episode.still_image || episode.still_image_src" ng-src="{{episode.still_image.src || movie.still_image_src}}"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -19,10 +19,13 @@ angular.module('streama').controller('modalGenericVideoCtrl', [
 	$scope.uploadImage = function (files, type) {
 		uploadService.doUpload($scope.imageUpload, 'file/upload.json', function (data) {
 			$scope.imageUpload.percentage = null;
+			
+			if(data.error) return
+			
 			console.log('%c type', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', type);
 			$scope.video[type] = data;
 			$scope.video[type+'_src'] = data.src;
-		}, files);
+		}, function () {}, files);
 	};
 
 

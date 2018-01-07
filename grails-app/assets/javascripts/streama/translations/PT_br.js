@@ -9,10 +9,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USERNAME: 'Usuário',
 			PASSWORD: 'Senha',
 			FIRST_TIME_HINT: 'Primeira vez fazendo login? Tente \'admin\' nos dois campos.',
-			SUBMIT: 'Login'
+			SUBMIT: 'Entrar',
+      SESSION_EXPIRED: 'Sua sessão expirou desde sua última atividade. Por favor faça login novamente.'
 		},
 		DASHBOARD: {
 			TITLE: 'Painel',
+			RECOMMENDATIONS: 'Sugestões para você',
 			NEW_RELEASES: 'Novos lançamentos',
 			CONTINUE_WATCHING: 'Continue assistindo',
 			DISCOVER_SHOWS: 'Descubra séries',
@@ -35,14 +37,16 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			OVERVIEW: 'Visão Geral',
 			GENRE: 'Gênero',
 			TRAILER: 'Trailer',
-			SEASON: 'Temporada'
+			SEASON: 'Temporada',
+      NO_SUBTITLE: 'Nenhum subtítulo'
 		},
 
 		MESSAGES: {
 			SHARE_SOCKET: 'Ao criar uma nova sessão você será redirecionado de volta para esse player, mas dessa vez você terá um ID de sessão único na url. Compartilhe isso com seus amigos e tenha uma experiência sincronizada com eles!',
-			FILE_MISSING: 'Houve um problema com esse conteúdo. Parece que você removeu o arquivo de vídeo associado a ele.. Compartilhe isso com seus amigos e tenha uma experiência sincronizada com eles!',
+			FILE_MISSING: 'Houve um problema com esse conteúdo. Parece que você removeu o arquivo de vídeo associado a ele.',
 			CODEC_PROBLEM: 'Parece que houve um problema ao adicionar o arquivo de vídeo ao player. Isso aconteceu provavelmente por causa de um problema de codec. Tente converter o vídeo para um codec compatível com HTML5, remova o arquivo de vídeo atual e re-adicione ele. Se os codecs estão ok, cheque o log de erros do servidor e a URL base nas configurações.',
-			WRONG_BASEPATH: 'Seu vídeo foi incluído usando o caminho base errado, mas você está navegando na página via "{{basePath}}". Verifique se você usou o caminho base correto nas configurações e que você está usando ele para navegar na aplicação.'
+			WRONG_BASEPATH: 'Seu vídeo foi incluído usando o caminho base errado, mas você está navegando na página via "{{basePath}}". Verifique se você usou o caminho base correto nas configurações e que você está usando ele para navegar na aplicação.',
+			FILE_IN_FS_NOT_FOUND: 'Seu vídeo não pode ser encontrado em nenhum dos locais disponíveis para o aplicativo. Por favor, verifique suas configurações e seus arquivos de sistema para ter certeza de que os arquivos estão acessíveis para o programa.'
 		},
 		MANAGE_CONTENT: 'Gerenciar Conteúdo',
 		ADMIN: 'Admin',
@@ -53,13 +57,14 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		CHANGE_PASSWORD: 'Mudar Senha',
 		LANGUAGE_en: 'Inglês',
 		LANGUAGE_de: 'Alemão',
-    	LANGUAGE_fr: 'Francês',
+		LANGUAGE_fr: 'Francês',
 		LANGUAGE_es: 'Espanhol',
 		LANGUAGE_kr: 'Coreano',
 		LANGUAGE_nl: 'Holandês',
 		LANGUAGE_pt: 'Português',
-    LANGUAGE_da: 'dinamarquês',
-
+    LANGUAGE_ja: 'Japonês',
+    LANGUAGE_it: 'italiano',
+		LANGUAGE_da: 'dinamarquês',
 		PROFIlE: {
 			USERNAME: 'Usuário',
 			FULL_NAME: 'Nome completo',
@@ -70,11 +75,11 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASS: 'Senha',
 			OLD_PASS: 'Senha Antiga',
 			NEW_PASS: 'Senha Nova',
-			NEW_PASS_PLACEHOLDER: 'Senha Nova  (min. 6 caracteres)',
+			NEW_PASS_PLACEHOLDER: 'Senha Nova (min. 6 caracteres)',
 			REPEAT_PASS: 'Repita a Senha',
 			PASS_ERROR_EMPTY: 'A senha não pode estar vazia',
 			PASS_ERROR_LENGTH: 'A senha tem que ter pelo menos 6 caracteres',
-			PASS_ERROR_REPEAT: 'As senhas tem que coincidir'
+			PASS_ERROR_REPEAT: 'As senhas têm que coincidir'
 		},
 
 		SORT_OPTIONS: {
@@ -110,7 +115,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			SUBTITLES: {
 				TITLE: 'Como eu adiciono legendas para os vídeos?',
 				TEXT: "Você pode adicionar legendas para os vídeos clicando no botão Gerenciar Arquivos, que fica na página de informações do vídeo. Você pode arrastar e soltar" +
-				" o arquivo das legendas lá. Antigamente vocÊ tinha que manualmente converter a legenda para um formato compatível, mas não mais! Agora a aplicação converte pra você."
+				" o arquivo das legendas lá. Antigamente você tinha que manualmente converter a legenda para um formato compatível, mas não mais! Agora a aplicação converte para você."
 			},
 			INVITE_USERS: {
 				TITLE: 'Como eu convido meus amigos para assistir meus vídeos hosteados?',
@@ -124,7 +129,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			},
 			NOTIFICATIONS: {
 				TITLE: "O que são notificações?",
-				TEXT: "Você pode notificar seus amigos conviados sobre vídeos enviados mandando notificações para eles. Você pode enviar notificações adicionando eles a fila de notificações ao clicar" +
+				TEXT: "Você pode notificar seus amigos que foram convidados sobre vídeos enviados mandando notificações para eles. Você pode enviar notificações adicionando eles a fila de notificações ao clicar" +
 				" Add Notification button which is in your video's information page and going to the Notifications menu and clicking Send Queue button."
 			},
 			VIDEO_PLAYER_SHORTCUTS: {
@@ -134,7 +139,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 				" delete ou backspace."
 			},
 			FAVORITE_GENRES: {
-				TITLE: "Como os gênereos favoritos do usuário afetam o Streama?",
+				TITLE: "Como os gêneros favoritos do usuário afetam o Streama?",
 				TEXT: "Em breve..."
 			},
 			USEFUL_LINKS: {

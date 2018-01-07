@@ -4,40 +4,29 @@ import grails.converters.JSON
 import static org.springframework.http.HttpStatus.*
 
 class DashController {
+  static responseFormats = ['json', 'xml']
 
   def springSecurityService
+  def videoService
 
   def listContinueWatching(){
     User currentUser = springSecurityService.currentUser
 
-    def continueWatching = ViewingStatus.withCriteria {
-      eq("user", currentUser)
-      video{
-        isNotEmpty("files")
-        ne("deleted", true)
-      }
-//      eq("completed", false)
-      order("lastUpdated", "desc")
-    }
+    List<ViewingStatus> viewingStatusList = videoService.listContinueWatching(currentUser)
 
-    JSON.use ('dashViewingStatus') {
-      respond continueWatching
+    return [viewingStatusList: viewingStatusList]
+  }
+
+
+  def listShows(){
+    JSON.use ('dashTvShow') {
+      respond videoService.listShows(params, [:])
     }
   }
 
-  def listShows(){
-    def tvShows = TvShow.withCriteria{
-      ne("deleted", true)
-      isNotEmpty("episodes")
-    }
 
-    tvShows = tvShows.findAll{ tvShow->
-      return tvShow.hasFiles
-    }
-
-    JSON.use ('dashTvShow') {
-      respond tvShows
-    }
+  def listEpisodesForShow(TvShow tvShow){
+    respond tvShow.getFilteredEpisodes()
   }
 
 
@@ -83,25 +72,34 @@ class DashController {
   }
 
   def listMovies(){
-    def movies = Movie.withCriteria {
-      ne("deleted", true)
-      isNotEmpty("files")
-    }
-
     JSON.use('dashMovies'){
-      respond movies
+      respond videoService.listMovies(params, [:])
     }
   }
 
 
   def listGenericVideos(){
-    def videos = GenericVideo.withCriteria {
-      ne("deleted", true)
+    def genreId = params.long('genreId')
+
+    def genericVideoQuery = GenericVideo.where {
+      deleted != true
       isNotEmpty("files")
+      if(genreId){
+        genre{
+          id == genreId
+        }
+      }
     }
+    def sort = params.sort
+    def order = params.order
+
+    def videos = genericVideoQuery.list(sort: sort, order: order)
+    def total = genericVideoQuery.count()
+
+    def result = [total: total, list: videos]
 
     JSON.use('dashGenericVideo'){
-      respond videos
+      render (result as JSON)
     }
   }
 
@@ -120,12 +118,86 @@ class DashController {
 
 
   def listGenres(){
-    respond Genre.list()
+    def genres = Genre.list()
+    genres = genres.findAll{Genre currentGenre ->
+      def isUsedForMovie = Movie.where{genre{id == currentGenre.id}}.count() > 0
+      def isUsedForTvShow = TvShow.where{genre{id == currentGenre.id}}.count() > 0
+      def isUsedForGenericVideo = GenericVideo.where{genre{id == currentGenre.id}}.count() > 0
+      return (isUsedForMovie || isUsedForTvShow || isUsedForGenericVideo)
+    }
+    respond genres
   }
 
   def listNewReleases(){
     JSON.use('dashMovies'){
       respond NotificationQueue.findAllByType('newRelease').sort{new Random(System.nanoTime())}
     }
+  }
+
+
+  def mediaDetail(){
+    log.debug(params.mediaType)
+    log.debug(params.id)
+    Integer id = params.int('id')
+    def media
+
+    if(params.mediaType == 'movie'){
+      media = Movie.get(id)
+    }
+    if(params.mediaType == 'tvShow'){
+      media = TvShow.get(id)
+    }
+    if(params.mediaType == 'episode'){
+      media = Episode.get(id)
+    }
+    if(params.mediaType == 'genericVideo'){
+      media = GenericVideo.get(id)
+    }
+    if(!media){
+      render status: NOT_FOUND
+      return
+    }
+
+    JSON.use('mediaDetail'){
+      render (media as JSON)
+    }
+  }
+
+
+  def cotinueWatching(TvShow tvShow){
+    def result
+
+    if(!tvShow){
+      render status: NOT_FOUND
+      return
+    }
+
+    User currentUser = springSecurityService.currentUser
+    ViewingStatus viewingStatus = ViewingStatus.withCriteria {
+      eq("user", currentUser)
+      eq("tvShow", tvShow)
+      video {
+        isNotEmpty("files")
+        ne("deleted", true)
+      }
+//      eq("completed", false)
+      order("lastUpdated", "desc")
+    }?.getAt(0)
+
+    if(viewingStatus?.video){
+      result = viewingStatus?.video
+    }else{
+      result = tvShow.firstEpisode
+    }
+    JSON.use('mediaDetail'){
+      render (result as JSON)
+    }
+  }
+
+  def markAsCompleted(Video video){
+    ViewingStatus.where{
+      video == video
+    }.deleteAll()
+    render "OK"
   }
 }

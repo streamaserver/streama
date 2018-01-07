@@ -1,0 +1,58 @@
+import streama.Episode
+import streama.GenericVideo
+import streama.Movie
+import streama.ViewingStatus
+
+model {
+  ViewingStatus viewingStatus
+}
+
+
+json g.render(viewingStatus, [includes: ['id', 'dateCreated', 'lastUpdated', 'currentPlayTime', 'runtime']]) {
+  if (viewingStatus.video) {
+    video {
+      id viewingStatus.video.id
+      dateCreated viewingStatus.video.dateCreated
+      lastUpdated viewingStatus.video.lastUpdated
+      overview viewingStatus.video.overview
+      imdb_id viewingStatus.video.imdb_id
+      vote_average viewingStatus.video.vote_average
+      vote_count viewingStatus.video.vote_count
+      popularity viewingStatus.video.popularity
+      original_language viewingStatus.video.original_language
+      title viewingStatus.video.getTitle()
+
+      if (viewingStatus.video instanceof Movie) {
+        Movie movie = viewingStatus.video as Movie
+
+        mediaType 'movie'
+        release_date movie.release_date
+        poster_path movie.poster_path
+        backdrop_path movie.backdrop_path
+        poster_image_src movie.poster_image?.src
+      }
+      if (viewingStatus.video instanceof GenericVideo) {
+        GenericVideo genericVideo = viewingStatus.video as GenericVideo
+
+        mediaType 'genericVideo'
+        release_date genericVideo.release_date
+        poster_image_src genericVideo.poster_image?.src
+      }
+
+      if (viewingStatus.video instanceof Episode) {
+        Episode episode = viewingStatus.video as Episode
+
+        mediaType 'episode'
+        isEpisode true
+        backdrop_path episode.still_path
+        poster_path episode.show?.poster_path
+        poster_image_src episode.show?.poster_image?.src
+        episodeString episode.episodeString
+        tvShowId episode.show?.id
+        intro_start episode.intro_start
+        intro_end episode.intro_end
+        outro_start episode.outro_start
+      }
+    }
+  }
+}
