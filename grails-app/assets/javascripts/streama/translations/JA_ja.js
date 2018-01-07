@@ -9,7 +9,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USERNAME: 'ユーザー名',
 			PASSWORD: 'パスワード',
 			FIRST_TIME_HINT: '最初のログイン ? ログイン \'admin\' ユーザー名とパスワード。',
-			SUBMIT: 'ログイン'
+			SUBMIT: 'ログイン',
+      SESSION_EXPIRED: 'あなたの最後の活動以来あなたのセッションは期限切れです。もう一度ログインしてください。'
 		},
 		DASHBOARD: {
 			TITLE: 'ダッシュ ボード',

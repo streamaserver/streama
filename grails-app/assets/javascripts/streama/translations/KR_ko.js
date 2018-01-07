@@ -10,6 +10,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: '비밀번호',
 			FIRST_TIME_HINT: '처음 로그인 하시나요? \'admin\'를 입력해보세요!',
 			SUBMIT: '로그인',
+      SESSION_EXPIRED: '마지막 활동 이후 세션이 만료되었습니다. 다시 로그인하십시오.'
 		},
 		DASHBOARD: {
 			TITLE: '대시보드',

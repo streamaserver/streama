@@ -10,6 +10,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Wachtwoord',
 			FIRST_TIME_HINT: 'Eerste keer inloggen? Probeer \'admin\' voor gebruikersnaam en wachtwoord.',
 			SUBMIT: 'Login',
+      SESSION_EXPIRED: 'Je sessie is verlopen sinds je laatste activiteit. Log alsjeblieft nogmaals in.'
 		},
 		DASHBOARD: {
 			TITLE: 'Dashboard',
