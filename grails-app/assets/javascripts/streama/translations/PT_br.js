@@ -79,7 +79,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			REPEAT_PASS: 'Repita a Senha',
 			PASS_ERROR_EMPTY: 'A senha não pode estar vazia',
 			PASS_ERROR_LENGTH: 'A senha tem que ter pelo menos 6 caracteres',
-			PASS_ERROR_REPEAT: 'As senhas têm que coincidir'
+			PASS_ERROR_REPEAT: 'As senhas têm que coincidir',
+      AMOUNT_OF_MEDIA_ENTRIES: 'Quantidade de Vídeos no Painel de Controle (Antes de "Load More")'
 		},
 
 		SORT_OPTIONS: {

@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('streama').factory('mediaListService', function () {
-  var LIST_MAX = 30;
+  var LIST_MAX;
 
   return{
-    init: function (endpoint, defaultSort) {
+    init: function (endpoint, defaultSort, currentUser) {
+      LIST_MAX = _.get(currentUser, 'amountOfMediaEntries', 30);
       var mediaListConfig = {
         total: 0,
         currentSort: defaultSort || {sort: 'title', order: 'ASC'},

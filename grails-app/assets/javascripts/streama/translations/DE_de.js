@@ -75,7 +75,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEW_PASS: 'Neues Passwort',
 			NEW_PASS_PLACEHOLDER: 'Neues Passwort  (min. 6 Zeichen)',
 			REPEAT_PASS: 'Passwort wiederholen',
-			SAVE_PASS: 'Neues Passwort setzen'
+			SAVE_PASS: 'Neues Passwort setzen',
+      AMOUNT_OF_MEDIA_ENTRIES: 'Menge an Videos für das Dashboard (Vor "Load More")'
 		},
 
 		SORT_OPTIONS: {
