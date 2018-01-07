@@ -78,7 +78,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			REPEAT_PASS: 'Ripeti la password',
 			PASS_ERROR_EMPTY: 'La password non può essere vuoto',
 			PASS_ERROR_LENGTH: 'La password deve essere lunga almeno 6 caratteri',
-			PASS_ERROR_REPEAT: 'Le password devono corrispondere'
+			PASS_ERROR_REPEAT: 'Le password devono corrispondere',
+      AMOUNT_OF_MEDIA_ENTRIES: 'Quantità di video su Dashboard (prima di "Load More")'
 		},
 
 		SORT_OPTIONS: {

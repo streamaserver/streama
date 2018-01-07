@@ -77,6 +77,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASS_ERROR_LENGTH: 'パスワードは少なくとも 6 文字の長さにする必要があります',
 			PASS_ERROR_REPEAT: 'パスワードは一致する必要があります',
 			SAVE_PASS: 'パスワードを保存します',
+      AMOUNT_OF_MEDIA_ENTRIES: 'ダッシュボード上のビデオの量（前 "Load More")'
 		},
 
 		SORT_OPTIONS: {
