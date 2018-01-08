@@ -5,6 +5,7 @@ angular.module('streama').controller('adminReportsCtrl', [
     var vm = this;
     var selectedReports = [];
 
+    vm.isResolvedFilter = 'all';
     vm.maxPerPage = 15;
     vm.pagination = {};
     vm.sortAndOrderBy = {

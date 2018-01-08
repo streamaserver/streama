@@ -9,19 +9,19 @@
 
   <div class="btn-group">
     <button class="btn btn-default btn-sm pull-left show-reports-button"
-            ng-class="{'btn-primary': vm.listFilter == 'all'}"
-            ng-click="vm.refreshList()">
+            ng-class="{'btn-primary': vm.isResolvedFilter == 'all'}"
+            ng-click="vm.refreshList('all')">
       All
     </button>
 
     <button class="btn btn-default btn-sm pull-left show-reports-button"
-            ng-class="{'btn-primary': vm.listFilter === 'unresolved'}"
+            ng-class="{'btn-primary': vm.isResolvedFilter === 'false'}"
             ng-click="vm.refreshList('false')">
       Only Unresolved Reports
     </button>
 
     <button class="btn btn-default btn-sm pull-left show-reports-button"
-            ng-class="{'btn-primary': vm.listFilter === 'resolved'}"
+            ng-class="{'btn-primary': vm.isResolvedFilter === 'true'}"
             ng-click="vm.refreshList('true')">
       Only Resolved Reports
     </button>
