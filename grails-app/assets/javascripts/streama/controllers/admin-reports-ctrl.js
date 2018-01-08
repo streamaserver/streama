@@ -92,12 +92,8 @@ angular.module('streama').controller('adminReportsCtrl', [
             (function (response) {
               var newReports = response.data;
               _.forEach(newReports, function (newReport) {
-                _.forEach(vm.reports, function (oldReport) {
-                  if (newReport.id === oldReport.id) {
-                    oldReport.resolved = newReport.resolved;
-                    oldReport.lastUpdated = newReport.lastUpdated;
-                  }
-                });
+                  var vmReport = _.find(vm.reports, {id: newReport.id});
+                  _.set(vmReport, 'resolved', true);
               });
               selectedReports = [];
               alertify.success('Selected reports have been resolved.');
