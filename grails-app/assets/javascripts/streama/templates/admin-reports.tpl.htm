@@ -91,8 +91,9 @@
       </td>
 
       <td>
-        <button ng-if="report.resolved == true" title="Resolved" class="btn btn-xs btn-success"><i class="ion-checkmark"></i></button>
-        <button ng-if="report.resolved == false" title="Unesolved" class="btn btn-xs btn-danger"><i class="ion-close"></i></button>
+        <i ng-if="report.resolved == true" title="Resolved" class="ion-checkmark bg-success report-status-icon"></i>
+        <i ng-if="report.resolved == false" title="Unesolved" class="ion-close bg-danger report-status-icon"></i>
+        <!--<button ng-if="report.resolved == false" title="Unesolved" class="btn btn-xs btn-danger"><i class="ion-close"></i></button>-->
       </td>
 
       <td>
