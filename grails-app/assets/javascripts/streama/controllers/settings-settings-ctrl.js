@@ -1,10 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('settingsSettingsCtrl',
-      ['$scope', 'apiService', '$sce', 'uploadService', 'fileService',
-      function ($scope, apiService, $sce, uploadService, fileService) {
-
-  $scope.fileService = fileService;
+      ['$scope', 'apiService', '$sce', 'uploadService',
+      function ($scope, apiService, $sce, uploadService) {
 
   apiService.settings.list().success(function (data) {
     $scope.settings = data;
@@ -67,10 +65,10 @@ angular.module('streama').controller('settingsSettingsCtrl',
 				//do upload
 				uploadService.doUpload($scope.uploadStatus, 'file/upload.json?isPublic=true', function (data) {
 					$scope.uploadStatus.percentage = null;
-					if(data.error) return
+					if(data.error) return;
 
 					setting.value = "upload:" + data.id;
-					fileService.getAssetFromSetting(setting);
+          $scope.getAssetFromSetting(setting);
 				}, function () {}, files);
 			}else{
 				alertify.error("You have to set and save Upload Directory first");
@@ -78,6 +76,32 @@ angular.module('streama').controller('settingsSettingsCtrl',
 		});
 	};
 
+	$scope.getAssetFromSetting = function (setting) {
+    if(typeof setting === "undefined")return false;
+    var assetURL = setting.value;
+
+    if(assetURL !== setting.prevValue) {
+      setting.prevValue = assetURL;
+
+      if (assetURL.startsWith("upload:")) {
+
+        var id = assetURL.split(":")[1];
+        apiService.file.getURL(id)
+          .success(function (data) {
+            setting.src = data.url
+            return true;
+          })
+
+      } else {
+        setting.src = assetURL;
+        return true;
+      }
+
+    }else{
+      return true;
+    }
+
+  }
 
   $scope.anySettingsInvalid = function () {
     return _.find($scope.settings, function (setting) {
