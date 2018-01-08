@@ -21,7 +21,11 @@ class AssetSettingTagLib {
 
     def imgSetting = { attribs ->
       def setting = attribs['setting']
+      def alt = attribs['alt']
 
-      out << '<img src="'+getAssetFromSetting(setting)+'" alt="Streama">'
+      def altText = ""
+      if(alt) altText = 'alt="'+alt+'"'
+
+      out << '<img src="'+getAssetFromSetting(setting)+'" '+altText+'>'
     }
 }
