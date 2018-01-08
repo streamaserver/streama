@@ -50,11 +50,11 @@ class SettingsService {
     if (settingsInstance.settingsKey == 'Second Directory') {
       def additionalReadStorages = settingsInstance.value?.split(/\|/)
       additionalReadStorages.each{ value ->
-        validateUploadDirectoryPermissions(value + '/upload', resultValue)
+        validateLocalDirectoryPermissions(value + '/upload', resultValue)
       }
     }
     if (settingsInstance.settingsKey == 'Local Video Files') {
-      validateUploadDirectoryPermissions(settingsInstance.value, resultValue)
+      validateLocalDirectoryPermissions(settingsInstance.value, resultValue)
     }
     if (settingsInstance.settingsKey == 'TheMovieDB API key') {
       validateTheMovieDbAPI(settingsInstance, resultValue)
@@ -66,6 +66,23 @@ class SettingsService {
     return resultValue;
   }
 
+  def validateLocalDirectoryPermissions(String path, resultValue) {
+    def uploadDir = new java.io.File(path)
+    try {
+      uploadDir.mkdirs()
+      if (uploadDir.canRead()) {
+        resultValue.success = true;
+        resultValue.message = "The directory was successfully accessed by the application";
+      } else {
+        resultValue.error = true;
+        resultValue.message = "The directory could not be accessed by the application. Please make sure that the directory exists and that you set the correct permissions.";
+      }
+    }
+    catch (Exception io) {
+      resultValue.error = true;
+      resultValue.message = "The directory could not be accessed by the application. Please make sure that the directory exists and that you set the correct permissions.";
+    }
+  }
 
   def validateUploadDirectoryPermissions(String path, resultValue) {
     def uploadDir = new java.io.File(path)
