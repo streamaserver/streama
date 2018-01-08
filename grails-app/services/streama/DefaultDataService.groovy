@@ -72,7 +72,7 @@ class DefaultDataService {
         [
             settingsKey: 'Base URL',
             value: 'http://localhost:8080',
-            description: 'The Base-URL is used for the videos and the link in the invitation-email.',
+            description: 'The Base-URL is used for the link in the invitation-email.',
             settingsType: 'string',
             required: true,
             validationRequired: false

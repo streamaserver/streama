@@ -133,4 +133,12 @@ class MigrationService {
         setting.save()
     }
   }
+  def updateBaseUrlHelp(){
+    def newval = 'The Base-URL is used for the link in the invitation-email.'
+    Settings setting = Settings.findBySettingsKey('Base URL')
+    if(setting.description!=newval){
+      setting.description = newval;
+      setting.save()
+    }
+  }
 }
