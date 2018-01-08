@@ -72,7 +72,7 @@
     })();
 
     angular.module('streama.translations').controller('authController', function ($translate) {
-      var sessionExpired = ${params.sessionExpired};
+      var sessionExpired = ${params.sessionExpired?"true":"false"};
       if(sessionExpired){
         alertify.log($translate.instant('LOGIN.SESSION_EXPIRED'));
       }
