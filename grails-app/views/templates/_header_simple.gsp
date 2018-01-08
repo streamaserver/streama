@@ -2,7 +2,7 @@
 <header class="main" ng-if="!isCurrentState('player')">
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
-      <g:imgSetting setting="${Settings.findByName('logo').value}"></g:imgSetting>
+      <g:imgSetting setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>
     </a>
   </div>
 

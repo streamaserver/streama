@@ -1,7 +1,8 @@
+<%@ page import="streama.Settings" %>
 <header class="main" ng-if="!isCurrentState('player')">
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
-      <img ng-show="$root.getSettingAsAsset('logo')" ng-src="{{$root.getSetting('logo').src}}" src="/assets/logo.png" alt="${streama.Settings.findByName('title').value}">
+      <g:imgSetting setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>
       <div class="spinner" ng-show="baseData.loading">
         <div class="bounce1"></div>
         <div class="bounce2"></div>
