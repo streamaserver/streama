@@ -8,6 +8,7 @@ import streama.File
 import streama.GenericVideo
 import streama.Movie
 import streama.NotificationQueue
+import streama.Report
 import streama.TvShow
 import streama.User
 import streama.Video
@@ -483,6 +484,28 @@ class MarshallerService {
       }
     }
 
+    JSON.createNamedConfig('adminReports') { cfg ->
+      cfg.registerObjectMarshaller(Report) { Report report ->
+        def returnArray = [:]
+
+        returnArray['id'] = report.id
+        returnArray['dateCreated'] = report.dateCreated
+        returnArray['lastUpdated'] = report.lastUpdated
+        returnArray['resolved'] = report.resolved
+        returnArray['userId'] = report.createdBy.id
+        returnArray['userName'] = report.createdBy.username
+        if (report.video instanceof Episode) {
+          Episode episode = report.video as Episode
+          returnArray['episodeString'] = episode.episodeString
+          returnArray['showId'] = episode.showId
+        }
+
+        returnArray['videoId'] = report.video.id
+        returnArray['videoTitle'] = report.video.title
+
+        return returnArray;
+      }
+    }
 
     JSON.createNamedConfig('episodesForTvShow') {  cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
@@ -523,6 +546,7 @@ class MarshallerService {
         returnArray['vote_average'] = episode.vote_average
         returnArray['apiId'] = episode.apiId
         returnArray['episodeString'] = episode.episodeString
+        returnArray['reportCount'] = episode.reportCount
         returnArray['still_image_src'] = episode.still_image?.src
 
         return returnArray;

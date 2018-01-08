@@ -98,7 +98,7 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.delete('file/removeFileFromDisk.json', {params: {id: id, path: path}});
 			},
       removeMultipleFilesFromDisk: function(bulk) {
-        return $http.delete('file/removeMultipleFilesFromDisk.json', {params: {id: bulk}})
+        return $http.delete('file/removeMultipleFilesFromDisk.json', {params: {id: bulk}});
       },
 			cleanUpFiles: function (type) {
 				return $http.delete('file/cleanUpFiles.json', {params: {type: type}});
@@ -116,6 +116,27 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
         return $http.get('video/addLocalFile.json', {params: params});
       }
 		},
+
+    report: {
+      list: function (params) {
+        return $http.get('report.json', {params: params});
+      },
+      reportsById: function (videoId) {
+        return $http.get('report/reportsById.json', {params: {videoId: videoId}});
+      },
+      save: function (videoId, errorCode) {
+        return $http.put('report/save.json', {videoId: videoId, errorCode: errorCode});
+      },
+      resolve: function (reportId) {
+        return $http.post('report/resolve.json', {reportId: reportId});
+      },
+      unresolve: function (reportId) {
+        return $http.post('report/unresolve.json', {reportId: reportId});
+      },
+      resolveMultiple: function(bulk) {
+        return $http.post('report/resolveMultiple.json', {ids: bulk});
+      }
+    },
 
     file: {
       localFiles: function(path) {

@@ -11,9 +11,14 @@ angular.module('streama').directive('adminEpisode', [
 		link: function ($scope, $elem, $attrs) {
 			$scope.uploadStatus = {};
 
+      $scope.reportsForEpisode= function () {
+        apiService.report.reportsById($scope.episode.id).then(function (response) {
+          $scope.episode.reportCount = response.data.reportCount;
+        });
+      }();
 
 
-			$scope.editEpisode = function(episode){
+      $scope.editEpisode = function(episode){
 				modalService.videoModal(episode, null, null, function (data) {
 					if(data.deleted){
 						episode.deleted = true;

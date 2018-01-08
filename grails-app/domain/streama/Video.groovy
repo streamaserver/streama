@@ -18,6 +18,7 @@ class Video {
   Integer intro_start
   Integer intro_end
   Integer outro_start
+  Integer reportCount
   Boolean deleted = false
   String imdb_id
 
