@@ -1,6 +1,7 @@
 package streama
 
 import grails.converters.JSON
+import grails.gorm.DetachedCriteria
 
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -16,28 +17,26 @@ class ReportController {
   def springSecurityService
 
   def index () {
-    def filter = params.filter
+
+    Boolean resolved = params.boolean('resolved')
+    String sort = params.sort
+    String order = params.order
+    Integer max = params.int('max', 30)
+    Integer offset = params.int('offset', 0)
+
     def responseObj = [
       reports: [],
       count: 0
     ]
 
-    if(filter == 'all'){
-      responseObj.reports = Report.list(params)
-      responseObj.count = Report.count()
+    DetachedCriteria reportQuery = Report.where {
+      if (resolved != null) {
+        resolved == resolved
+      }
     }
-    if(filter == 'unresolved'){
-      responseObj.reports = Report.where {
-        resolved != true
-      }.list(params)
-      responseObj.count = Report.countByResolvedNotEqual(true)
-    }
-    if(filter == 'resolved'){
-      responseObj.reports = Report.where {
-        resolved == true
-      }.list(params)
-      responseObj.count = Report.countByResolved(true)
-    }
+    responseObj.reports = reportQuery.list(sort: sort, order: order, max: max, offset: offset)
+    responseObj.count = reportQuery.count()
+
     JSON.use('adminReports'){
       render (responseObj as JSON)
     }

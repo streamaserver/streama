@@ -27,13 +27,13 @@ angular.module('streama').controller('adminReportsCtrl', [
       loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
     }
 
-    function refreshList (filter) {
-      if (filter) {
-        vm.listFilter = filter;
+    function refreshList (isResolved) {
+      if (isResolved) {
+        vm.isResolvedFilter = isResolved;
         vm.pagination.currentPage = 1;
         currentOffset = 0;
       }
-      loadReports({max: vm.maxPerPage, filter: vm.listFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
+      loadReports({max: vm.maxPerPage, resolved: vm.isResolvedFilter, offset: currentOffset, sort: vm.sortAndOrderBy.sort, order: vm.sortAndOrderBy.order});
     }
 
     function loadReports (params) {
@@ -110,7 +110,7 @@ angular.module('streama').controller('adminReportsCtrl', [
         alertify.error('No reports selected.');
       }
     }
-    refreshList('all');
+    refreshList();
   }]);
 
 
