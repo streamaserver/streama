@@ -26,6 +26,10 @@ angular.module('streama').controller('settingsSettingsCtrl',
 
 
   $scope.validateSettings = function (settings) {
+    if($scope.loading === true){
+      return
+    }
+
     $scope.changeValue(settings);
     $scope.loading = true;
 
