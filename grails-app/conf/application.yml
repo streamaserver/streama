@@ -126,7 +126,7 @@ streama:
   uploadtypes: ['video/h264', 'video/mp4', 'video/mpeg', 'video/quicktime', 'video/webm', 'video/x-ms-wm', 'video/x-ms-wmv',
               'video/x-msvideo', 'image/bmp', 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/svg+xml',
               'image/x-icon', 'image/x-png', 'application/x-subrip', 'text/plain', 'text/vtt', 'text/plain',
-              'application/octet-stream', 'video/x-matroska', 'image/vnd.microsoft.icon']
+              'application/octet-stream', 'video/x-matroska', 'image/vnd.microsoft.icon', 'video/mp2t']
 
 
 grails.controllers.upload.maxFileSize: 10000000000000 # 10TB
