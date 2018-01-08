@@ -69,7 +69,6 @@ class SettingsService {
   def validateLocalDirectoryPermissions(String path, resultValue) {
     def uploadDir = new java.io.File(path)
     try {
-      uploadDir.mkdirs()
       if (uploadDir.canRead()) {
         resultValue.success = true;
         resultValue.message = "The directory was successfully accessed by the application";
