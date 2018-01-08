@@ -10,6 +10,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: '비밀번호',
 			FIRST_TIME_HINT: '처음 로그인 하시나요? \'admin\'를 입력해보세요!',
 			SUBMIT: '로그인',
+      SESSION_EXPIRED: '마지막 활동 이후 세션이 만료되었습니다. 다시 로그인하십시오.'
 		},
 		DASHBOARD: {
 			TITLE: '대시보드',
@@ -25,7 +26,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: '장르를 보고있습니다.',
 			MARK_COMPLETED: '선택 완료',
 			NO_TVSHOWS_FOUND: '해당 드라마를 찾지 못했습니다.',
-			NO_MOVIES_FOUND: '해당 영화를 찾지 못했습니다.',
+			NO_MOVIES_FOUND: '해당 영화를 찾지 못했습니다.'
 		},
 		VIDEO: {
 			RELEASED: '출시',
@@ -74,6 +75,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEW_PASS_PLACEHOLDER: '새 비밀번호 (최소 6글자)',
 			REPEAT_PASS: '비밀번호 재입력',
 			SAVE_PASS: '새 비밀번호 설정',
+      AMOUNT_OF_MEDIA_ENTRIES: '대시 보드의 비디오 양 (이전 "Load More")'
 		},
 
 		SORT_OPTIONS: {

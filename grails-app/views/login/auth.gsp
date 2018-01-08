@@ -1,3 +1,4 @@
+<%@ page import="grails.converters.JSON" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -24,7 +25,7 @@
 
 <body >
 	<div class="page-container login-page">
-    <div id='login' ng-app="streama.translations" class="ng-cloak">
+    <div id='login' ng-app="streama.translations" class="ng-cloak" ng-controller="authController">
 		<img class="auth-logo" src="${streama.Settings.findByName('logo').value == '/assets/logo.png' ? '/assets/logo_lg.png' : streama.Settings.findByName('logo').value}" alt="Streama">
 			<div class='inner'>
 
@@ -60,17 +61,24 @@
 
   <g:render template="/templates/footer"></g:render>
 
-	<script type='text/javascript'>
-		<!--
-		(function() {
-			document.forms['loginForm'].elements['username'].focus();
-		})();
-		// -->
-	</script>
-
 
 	<asset:javascript src="vendor.js" />
 	<asset:javascript src="/streama/streama.translations.js" />
+
+  <script type='text/javascript'>
+    <!--
+    (function() {
+      document.forms['loginForm'].elements['username'].focus();
+    })();
+
+    angular.module('streama.translations').controller('authController', function ($translate) {
+      var sessionExpired = ${params.sessionExpired};
+      if(sessionExpired){
+        alertify.log($translate.instant('LOGIN.SESSION_EXPIRED'));
+      }
+    })
+    // -->
+  </script>
 
 </body>
 </html>

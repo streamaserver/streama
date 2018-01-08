@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('streama').controller('dashCtrl',
-	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService ) {
+	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService, currentUser ) {
   var vm = this;
 
     var LIST_MAX = 30;
@@ -25,9 +25,9 @@ angular.module('streama').controller('dashCtrl',
         modalService.mediaDetailModal({mediaId: $stateParams.mediaModal, mediaType: $stateParams.mediaType, isApiMovie: false});
       }
 
-      vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'});
-      vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'});
-      vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'});
+      vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser.data);
+      vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser.data);
+      vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser.data);
 
       apiService.tag.list().success(onTagsLoaded);
       apiService.dash.listNewReleases().success(onNewReleasesLoaded);

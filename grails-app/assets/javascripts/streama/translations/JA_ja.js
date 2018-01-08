@@ -9,7 +9,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USERNAME: 'ユーザー名',
 			PASSWORD: 'パスワード',
 			FIRST_TIME_HINT: '最初のログイン ? ログイン \'admin\' ユーザー名とパスワード。',
-			SUBMIT: 'ログイン'
+			SUBMIT: 'ログイン',
+      SESSION_EXPIRED: 'あなたの最後の活動以来あなたのセッションは期限切れです。もう一度ログインしてください。'
 		},
 		DASHBOARD: {
 			TITLE: 'ダッシュ ボード',
@@ -77,6 +78,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASS_ERROR_LENGTH: 'パスワードは少なくとも 6 文字の長さにする必要があります',
 			PASS_ERROR_REPEAT: 'パスワードは一致する必要があります',
 			SAVE_PASS: 'パスワードを保存します',
+      AMOUNT_OF_MEDIA_ENTRIES: 'ダッシュボード上のビデオの量（前 "Load More")'
 		},
 
 		SORT_OPTIONS: {

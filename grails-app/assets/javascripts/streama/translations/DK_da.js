@@ -9,7 +9,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USERNAME: 'Brugernavn',
 			PASSWORD: 'Kodeord',
 			FIRST_TIME_HINT: 'Første gang du logger ind? Prøv \'admin\' i begge felter.',
-			SUBMIT: 'Log Ind'
+			SUBMIT: 'Log Ind',
+      SESSION_EXPIRED: 'Din session er udløbet siden din sidste aktivitet. Venligst log ind igen.'
 		},
 		DASHBOARD: {
 			TITLE: 'Betjeningspanel',
@@ -77,7 +78,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			REPEAT_PASS: 'Gentag Kodeord',
 			PASS_ERROR_EMPTY: 'Kodeordet kan ikke være tomt',
 			PASS_ERROR_LENGTH: 'Kodeordet skal være mindst 6 tegn langt',
-			PASS_ERROR_REPEAT: 'Kodeordene skal være ens.'
+			PASS_ERROR_REPEAT: 'Kodeordene skal være ens.',
+      AMOUNT_OF_MEDIA_ENTRIES: 'Antal videoer på Dashboard (Før "Load More")'
 		},
 
 		SORT_OPTIONS: {

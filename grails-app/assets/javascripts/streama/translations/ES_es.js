@@ -10,6 +10,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Contraseña',
 			FIRST_TIME_HINT: '¿Es tu primera vez? Prueba \'admin\' en ambos campos.',
 			SUBMIT: 'Identificarse',
+      SESSION_EXPIRED: 'Su sesión expiró desde su última actividad. Por favor inicie sesión de nuevo.'
 		},
 		DASHBOARD: {
 			TITLE: 'Panel de control',
@@ -25,7 +26,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Estás viendo el género:',
 			MARK_COMPLETED: 'Marca Completada',
 			NO_TVSHOWS_FOUND: 'No hay Shows de TV Disponibles',
-			NO_MOVIES_FOUND: 'No hay Películas Disponibles',
+			NO_MOVIES_FOUND: 'No hay Películas Disponibles'
 		},
 		VIDEO: {
 			RELEASED: 'Publicado',
@@ -74,6 +75,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEW_PASS_PLACEHOLDER: 'Nueva Contraseña  (min. 6 Caracteres)',
 			REPEAT_PASS: 'Repite tu Contraseña',
 			SAVE_PASS: 'Guardar Nueva Contraseña',
+      AMOUNT_OF_MEDIA_ENTRIES: 'Cantidad de videos en el panel de instrumentos (antes de "Load More")'
 		},
 
 		SORT_OPTIONS: {

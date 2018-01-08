@@ -10,6 +10,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Wachtwoord',
 			FIRST_TIME_HINT: 'Eerste keer inloggen? Probeer \'admin\' voor gebruikersnaam en wachtwoord.',
 			SUBMIT: 'Login',
+      SESSION_EXPIRED: 'Je sessie is verlopen sinds je laatste activiteit. Log alsjeblieft nogmaals in.'
 		},
 		DASHBOARD: {
 			TITLE: 'Dashboard',
@@ -25,7 +26,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Je zoekt op genre',
 			MARK_COMPLETED: 'Markeer als bekeken',
 			NO_TVSHOWS_FOUND: 'Geen series beschikbaar',
-			NO_MOVIES_FOUND: 'Geen films beschikbaar',
+			NO_MOVIES_FOUND: 'Geen films beschikbaar'
 		},
 		VIDEO: {
 			RELEASED: 'Uitgebracht op',
@@ -74,6 +75,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEW_PASS_PLACEHOLDER: 'Nieuw wachtwoord (minimaal 6 karakters',
 			REPEAT_PASS: 'Herhaal wachtwoord',
 			SAVE_PASS: 'Opslaan',
+      AMOUNT_OF_MEDIA_ENTRIES: 'Aantal video\'s op dashboard (voorheen "Load More")'
 		},
 
 		SORT_OPTIONS: {
