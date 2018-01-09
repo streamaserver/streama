@@ -116,7 +116,8 @@
                     <div class="extra-episode-info" ng-if="visible || (episode.episode_number == video.episode_number && episode.season_number == video.season_number)">
                       <div class="image-wrapper">
                         <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w92/{{episode.still_path}}"/>
-                        <div ng-if="!episode.still_path" class="fallback-image"></div>
+                        <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>
+                        <div ng-if="!episode.still_path && !episode.still_image_src" class="fallback-image"></div>
                       </div>
 
                       <p>{{episode.overview.length > 250 ? (episode.overview.substring(0, 250) + '...') : episode.overview}}</p>
@@ -128,19 +129,60 @@
           </div>
         </div>
       </div>
-
       <div class="player-control-button player-fill-screen ion-android-wifi" ng-if="options.showSocketSession" ng-click="createNewPlayerSession()"></div>
+      <!--<div class="player-control-button player-fill-screen ion-android-textsms" ng-if="options.videoTrack" ng-class="{'inactive': !isTextTrackVisible}" ng-click="toggleTextTrack()"></div>-->
 
-      <div class="player-control-button player-fill-screen ion-android-textsms" ng-if="options.videoTrack" ng-class="{'inactive': !isTextTrackVisible}" ng-click="toggleTextTrack()"></div>
+
+
+
+
+
+
+      <div ng-class="{'inactive': !selectedSubtitleId}" class="player-control-button player-fill-screen ion-android-textsms" ng-if="options.subtitles.length" ng-click="selectSubtitle()">
+        <div id="player-menu-subtitle-selector" ng-show="multipleSubtitleBrowser" >
+          <div class="subtitle-selector-container">
+              <div class="subtitle-list-container">
+                <ul class="subtitle-list">
+                  <li ng-class="{'active':!selectedSubtitleId}" class="subtitle" ng-click="hideSubtitle()">
+                    <span >{{'VIDEO.NO_SUBTITLE' | translate}}</span>
+                  </li>
+                  <li ng-class="{'active':selectedSubtitleId==subtitle.id}" ng-click="changeSubtitle(subtitle)" class="subtitle" ng-repeat="subtitle in options.subtitles | orderBy:'subtitleSrcLang'">
+                    <span >  {{subtitle.subtitleLabel || subtitle.originalFilename}}</span>
+                  </li>
+                </ul>
+              </div>
+        </div>
+      </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div class="player-control-button player-fill-screen"
            ng-click="fullScreen()" ng-class="{'ion-arrow-shrink': isFullScreen, 'ion-arrow-expand': !isFullScreen}"></div>
     </section>
   </div>
 
-
-  <video ng-if="isInitialized" id="video" ng-src="{{options.videoSrc}}" type="{{options.videoType}}" ng-click="clickVideo()">
-    <track ng-if="options.videoTrack" ng-src="{{options.videoTrack}}" kind="subtitles" srclang="en" label="English">
+  <video ng-if="isInitialized" id="video" ng-src="{{options.videoSrc}}" type="{{options.videoType}}" ng-click="clickVideo()" >
+    <track ng-repeat="subtitle in options.subtitles" ng-src="{{subtitle.src}}" kind="subtitles" id="subtitle-{{subtitle.id}}"
+           srclang="{{subtitle.subtitleSrcLang}}" label="{{subtitle.subtitleLabel}}" src="{{subtitle.src}}">
   </video>
 
 </div>

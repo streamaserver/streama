@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('streama').factory('playerService',
-  function ($stateParams, $sce, $state, $rootScope, socketService, apiService, $interval, $filter, contextPath) {
+  function ($stateParams, $sce, $state, $rootScope, socketService, apiService, $interval, $filter, contextPath, $uibModal) {
 
     var videoData = null;
     var videoOptions;
@@ -43,7 +43,7 @@ angular.module('streama').factory('playerService',
         videoOptions.videoType = video.files[0].contentType;
 
         if(video.subtitles && video.subtitles.length){
-          videoOptions.videoTrack = $sce.trustAsResourceUrl(video.subtitles[0].src);
+          videoOptions.subtitles = video.subtitles;
         }
 
         videoOptions.isExternalLink = video.files[0].externalLink;
@@ -138,26 +138,56 @@ angular.module('streama').factory('playerService',
         $state.go('dash', {});
       },
 
+
       onVideoError: function (errorCode) {
-        var that = this;
-				errorCode = errorCode || 'CODEC_PROBLEM';
-        console.log('%c onVideoError', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
-
-        if($state.current.name == 'player'){
-          alertify.alert($filter('translate')('MESSAGES.' + errorCode), function () {
-            if($rootScope.currentUser.authorities.length){
-              if(videoData.show){
-                $state.go('admin.show', {showId: videoData.show.id});
-              }else{
-                $state.go('admin.movie', {movieId: videoData.id});
-              }
-            }else{
-              $state.go('dash', {});
-            }
-
-          });
+        if ($state.current.name !== 'player') {
+          return;
         }
-      },
+        console.log('onVideoError');
+        errorCode = errorCode || 'CODEC_PROBLEM';
+        var modalInstance = $uibModal.open({
+        templateUrl: '/streama/modal--error-report.htm',
+        controller: 'modalErrorReportCtrl',
+        controllerAs: 'vm',
+        size: 'lg',
+        backdrop: 'static',
+        resolve: {
+          errorCode: function () {
+            return errorCode;
+          },
+          videoData: function () {
+            return videoData;
+          }
+        }
+
+      });
+
+      modalInstance.result.then(function (data) {
+        // (callback || angular.noop)(data);
+      });
+    },
+
+      // onVideoError: function (errorCode) {
+      //   var that = this;
+		//   		errorCode = errorCode || 'CODEC_PROBLEM';
+      //   console.log('%c onVideoError', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
+      //
+      //
+      //   if($state.current.name == 'player'){
+      //     alertify.alert($filter('translate')('MESSAGES.' + errorCode), function () {
+      //       if($rootScope.currentUser.authorities.length){
+      //         if(videoData.show){
+      //           $state.go('admin.show', {showId: videoData.show.id});
+      //         }else{
+      //           $state.go('admin.movie', {movieId: videoData.id});
+      //         }
+      //       }else{
+      //         $state.go('dash', {});
+      //       }
+      //
+      //     });
+      //   }
+      // },
 
       onVideoTimeChange: function (slider, duration) {
         var params = {videoId: videoData.id, currentTime: slider.value, runtime: duration};

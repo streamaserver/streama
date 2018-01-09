@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiService', '$sce', 'uploadService', function ($scope, apiService, $sce, uploadService) {
+angular.module('streama').controller('settingsSettingsCtrl',
+      ['$scope', 'apiService', '$sce', 'uploadService',
+      function ($scope, apiService, $sce, uploadService) {
 
   apiService.settings.list().success(function (data) {
     $scope.settings = data;
@@ -22,6 +24,10 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 
 
   $scope.validateSettings = function (settings) {
+    if($scope.loading === true){
+      return
+    }
+
     $scope.changeValue(settings);
     $scope.loading = true;
 
@@ -52,12 +58,50 @@ angular.module('streama').controller('settingsSettingsCtrl', ['$scope', 'apiServ
 
 	$scope.uploadStatus = {};
 	$scope.upload = function (setting, files) {
-		uploadService.doUpload($scope.uploadStatus, 'file/upload.json?isPublic=true', function (data) {
-			$scope.uploadStatus.percentage = null;
-			setting.value = data.src;
-		}, files);
+		//check if upload dir is set
+		apiService.settings.list().success(function (setlist) {
+			var uploadDir = _.find(setlist, {settingsKey: 'Upload Directory'});
+			if (uploadDir.value) {
+				//do upload
+				uploadService.doUpload($scope.uploadStatus, 'file/upload.json?isPublic=true', function (data) {
+					$scope.uploadStatus.percentage = null;
+					if(data.error) return;
+
+					setting.value = "upload:" + data.id;
+          $scope.getAssetFromSetting(setting);
+				}, function () {}, files);
+			}else{
+				alertify.error("You have to set and save Upload Directory first");
+			}
+		});
 	};
 
+	$scope.getAssetFromSetting = function (setting) {
+    if(typeof setting === "undefined")return false;
+    var assetURL = setting.value;
+
+    if(assetURL !== setting.prevValue) {
+      setting.prevValue = assetURL;
+
+      if (assetURL.startsWith("upload:")) {
+
+        var id = assetURL.split(":")[1];
+        apiService.file.getURL(id)
+          .success(function (data) {
+            setting.src = data.url
+            return true;
+          })
+
+      } else {
+        setting.src = assetURL;
+        return true;
+      }
+
+    }else{
+      return true;
+    }
+
+  }
 
   $scope.anySettingsInvalid = function () {
     return _.find($scope.settings, function (setting) {

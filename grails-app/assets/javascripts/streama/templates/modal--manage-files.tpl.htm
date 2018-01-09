@@ -3,8 +3,14 @@
     Video and subtitles for "{{video.name || video.title}}"
   </legend>
 
-  <uib-tabset ng-init="tabActive == (video.externalVideoUrl ? true : false)">
-    <uib-tab heading="Upload">
+  <ul class="nav nav-tabs">
+    <li ng-class="{'active': activeTab == 'upload'}" ng-click="activeTab = 'upload'"><a>Upload</a></li>
+    <li ng-class="{'active': activeTab == 'url'}" ng-click="activeTab = 'url'"><a>External URL</a></li>
+    <li ng-class="{'active': activeTab == 'local'}" ng-click="activeTab = 'local'"><a>Local File</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane" ng-class="{'active': activeTab == 'upload'}">
       <button ng-model="file"  class="btn btn-dropzone btn-block btn-lg"
               ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)" ngf-select>
 
@@ -19,8 +25,8 @@
         </span>
       </button>
 
-    </uib-tab>
-    <uib-tab active="tabActive" heading="External URL">
+    </div>
+    <div class="tab-pane" ng-class="{'active': activeTab == 'url'}">
       <div>
         <div class="form-group">
           <input type="url" ng-model="video.externalLink" class="form-control input-sm" placeholder="External URL">
@@ -29,8 +35,9 @@
 
       <button class="btn btn-success btn-sm" ng-click="addExternalUrl(video.externalLink)" ng-disabled="!video.externalLink">Add External URL</button>
 
-    </uib-tab>
-    <uib-tab active="tabActive" heading="Local File" ng-if="localFilesEnabled">
+
+    </div>
+    <div class="tab-pane" ng-class="{'active': activeTab == 'local'}">
 
       <div>
         <div class="form-group">
@@ -66,8 +73,14 @@
           </tr>
         </table>
       </div>
-    </uib-tab>
-  </uib-tabset>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="closeOnSelect" ng-click="toggleCloseOnSelect()"> Close Modal on Select
+        </label>
+      </div>
+    </div>
+  </div>
 
 
     <table class="table table-striped" style="font-size: 14px;" ng-show="video.files.length">
@@ -99,6 +112,8 @@
         <tr>
           <th>Name</th>
           <th>Type</th>
+          <th>Label</th>
+          <th>Language</th>
           <th style="width: 10px;"></th>
         </tr>
         </thead>
@@ -106,8 +121,15 @@
         <tr ng-repeat="file in video.subtitles">
           <td>{{file.originalFilename}}</td>
           <td>{{file.contentType}}</td>
+          <th>
+            <input class="form-control" value="{{file.subtitleLabel}}" placeholder="Country" ng-change="subtitleLabel" ng-model="file.subtitleLabel"></input>
+          </th>
+          <th>
+            <input class="form-control" value="{{file.subtitleSrcLang}}" placeholder="ISO-3166 Country Code" ng-change="subtitleSrcLang" ng-model="file.subtitleSrcLang"></input>
+          </th>
           <td style="padding: 6px;">
             <button title="Delete file" class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
+            <button title="" class="btn btn-xs btn-primary" ng-click="saveChanges(file)" ><i class="ion-checkmark"></i></button>
           </td>
         </tr>
         </tbody>

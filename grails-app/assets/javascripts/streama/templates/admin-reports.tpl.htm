@@ -1,0 +1,113 @@
+<h1>Reports</h1>
+
+
+
+<p>Here you can see the reports users have made.</p>
+
+<div class="row">
+  <div class="col-md-12">
+
+  <div class="btn-group">
+    <button class="btn btn-default btn-sm pull-left show-reports-button"
+            ng-class="{'btn-primary': vm.isResolvedFilter == 'all'}"
+            ng-click="vm.refreshList('all')">
+      All
+    </button>
+
+    <button class="btn btn-default btn-sm pull-left show-reports-button"
+            ng-class="{'btn-primary': vm.isResolvedFilter === 'false'}"
+            ng-click="vm.refreshList('false')">
+      Only Unresolved Reports
+    </button>
+
+    <button class="btn btn-default btn-sm pull-left show-reports-button"
+            ng-class="{'btn-primary': vm.isResolvedFilter === 'true'}"
+            ng-click="vm.refreshList('true')">
+      Only Resolved Reports
+    </button>
+  </div>
+
+  <button class="btn btn-success btn-sm pull-right resolve-reports-button" ng-click="vm.resolveMultiple()">
+    Resolve Multiple Reports
+  </button>
+
+  </div>
+</div>
+
+<div class="report-sorter">
+  {{'DASHBOARD.SORT' | translate}}
+  <video-sort-order-dropdown  ng-model="vm.sortAndOrderBy" ng-change="vm.refreshList()"  dropdown-type="'report'"></video-sort-order-dropdown>
+</div>
+
+<div >
+  <table class="table table-striped table-reports">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Edit Page</th>
+      <th>Play</th>
+      <th>Report ID</th>
+      <th>Reported On</th>
+      <th>Last Updated</th>
+      <th>User</th>
+      <th>Resolved</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tr ng-repeat="report in vm.reports | filter: vm.showReports">
+
+      <td>
+        <input type="checkbox" ng-if="report.resolved == false" ng-click="vm.addOrRemoveFromSelection($event, report)">
+      </td>
+
+      <td>
+        <a ng-if="report.showId" ui-sref="admin.show({showId: report.showId})">{{report.videoTitle}}</a>
+        <a ng-if="!report.showId" ui-sref="admin.movie({movieId: report.videoId})">{{report.videoTitle}}</a>
+        <p ng-if="report.episodeString">
+          ({{report.episodeString}})
+        </p>
+      </td>
+
+      <td >
+        <a class="ion-android-arrow-dropright-circle"
+           style="font-size: 30px"
+           ui-sref="player({videoId: report.videoId})"></a>
+      </td>
+
+      <td>
+        {{report.id}}
+      </td>
+
+      <td>
+        {{report.dateCreated | date : 'short'}}
+      </td>
+
+      <td>
+        {{report.lastUpdated | date : 'short'}}
+      </td>
+
+      <td>
+        {{report.userName}}
+      </td>
+
+      <td>
+        <i ng-if="report.resolved == true" title="Resolved" class="ion-checkmark bg-success report-status-icon"></i>
+        <i ng-if="report.resolved == false" title="Unesolved" class="ion-close bg-danger report-status-icon"></i>
+        <!--<button ng-if="report.resolved == false" title="Unesolved" class="btn btn-xs btn-danger"><i class="ion-close"></i></button>-->
+      </td>
+
+      <td>
+        <button ng-if="report.resolved == false" class="btn btn-xs" ng-click="vm.resolve(report)">Resolve</button>
+        <button ng-if="report.resolved == true" class="btn btn-xs" ng-click="vm.unresolve(report)">Unresolve</button>
+      </td>
+
+
+    </tr>
+  </table>
+
+  <ul uib-pagination ng-if="vm.reportsCount > vm.maxPerPage"
+      max-size="7" force-ellipses="true"
+      boundary-links="true" total-items="vm.reportsCount"
+      ng-model="vm.pagination.currentPage" items-per-page="vm.maxPerPage" ng-change="vm.pageChanged()"></ul>
+
+</div>

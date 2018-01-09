@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div ng-show="tvShow.overview || tvShow.manualInput">
+    <div ng-show="tvShow.apiId || tvShow.manualInput">
       <div class="form-group row-slim">
         <div class="col-sm-2">
           <label>Release Date</label>
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div class="modal-footer" ng-show="tvShow.overview || tvShow.manualInput">
+  <div class="modal-footer" ng-show="tvShow.apiId || tvShow.manualInput">
     <button class="btn btn-success" ng-click="saveShow(tvShow)">Save Show</button>
     <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
   </div>

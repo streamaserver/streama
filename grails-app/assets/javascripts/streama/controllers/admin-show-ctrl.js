@@ -185,11 +185,14 @@ angular.module('streama').controller('adminShowCtrl', [
 	$scope.uploadPoster = uploadService.doUpload.bind(uploadService, $scope.imageUpload, 'file/upload.json', function (data) {
 		console.log('%c test', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
 		$scope.imageUpload.percentage = null;
+		
+		if(data.error) return
+		
 		$scope.show.poster_image = data.id;
 
 		apiService.tvShow.save($scope.show).success(function (data) {
 			$scope.show.poster_image_src = data.poster_image_src;
 		});
-	});
+	}, function () {});
 
 }]);

@@ -6,7 +6,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USERNAME: 'Nom d\'utilisateur',
 			PASSWORD: 'Mot de passe',
 			FIRST_TIME_HINT: 'Première connexion ? Connectez-vous avec \'admin\'/\'admin\'.',
-			SUBMIT: 'Connexion'
+			SUBMIT: 'Connexion',
+      SESSION_EXPIRED: 'Votre session a expiré depuis votre dernière activité. Veuillez vous reconnecter.'
 		},
 		DASHBOARD: {
 			TITLE: 'Tableau de bord',
@@ -32,7 +33,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			OVERVIEW: 'Résumé',
 			GENRE: 'Genre',
 			TRAILER: 'Bande annonce',
-			SEASON: 'Saison'
+			SEASON: 'Saison',
+      NO_SUBTITLE: 'Aucun sous-titre'
 		},
 
 		MESSAGES: {
@@ -55,8 +57,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LANGUAGE_kr: 'Coréen',
 		LANGUAGE_nl: 'Néerlandais',
 		LANGUAGE_pt: 'Portugais',
-    LANGUAGE_da: 'Danois',
+    LANGUAGE_ja: 'Japonais',
+    LANGUAGE_it: 'Italien',
 
+    LANGUAGE_da: 'Danois',
 		PROFIlE: {
 			USERNAME: 'Nom d\'utilisateur',
 			FULL_NAME: 'Nom complet',
@@ -68,7 +72,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEW_PASS: 'Nouveau mot de passe',
 			NEW_PASS_PLACEHOLDER: 'Nouveau mot de pass (min. 6 caractères)',
 			REPEAT_PASS: 'Répétez le mot de passe',
-			SAVE_PASS: 'Enregistrer le nouveau mot de passe'
+			SAVE_PASS: 'Enregistrer le nouveau mot de passe',
+      AMOUNT_OF_MEDIA_ENTRIES: 'Nombre de vidéos sur le tableau de bord (avant "Load More")'
 		},
 
 		SORT_OPTIONS: {

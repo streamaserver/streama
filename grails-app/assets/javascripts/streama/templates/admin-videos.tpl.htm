@@ -2,7 +2,7 @@
 
 <h1>
   Other Videos
-  <video-sort-order-dropdown current-sort="currentSort" dropdown-type="'movie'"/>
+  <video-sort-order-dropdown ng-model="currentSort" dropdown-type="'movie'"/>
 </h1>
 
 <div class="row">
@@ -21,7 +21,7 @@
   <hr/>
 
   <div class="media-list-item media-poster-item" ng-class="{'no-files': !video.hasFiles}"
-       ng-repeat="video in videos | filter:search | orderBy:currentSort.sort"
+       ng-repeat="video in videos | filter:search | orderBy:(currentSort.order == 'DESC' ? '-' : '' + currentSort.sort)"
        ui-sref="admin.video({videoId: video.id})">
     <div class="media-item" >
       <img ng-show="video.poster_image_src" ng-src="{{video.poster_image_src}}">

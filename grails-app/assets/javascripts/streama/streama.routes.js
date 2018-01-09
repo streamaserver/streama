@@ -9,7 +9,7 @@ angular.module('streama').config(function ($stateProvider) {
 		.state('dash', {
 			url: '/dash?genreId?mediaModal?mediaType',
 			templateUrl: '/streama/dash.htm',
-			controller: 'dashCtrl',
+			controller: 'dashCtrl as vm',
 			reloadOnSearch: false,
 			resolve: {
 				currentUser: resolveCurrentUser
@@ -58,7 +58,7 @@ angular.module('streama').config(function ($stateProvider) {
 		.state('admin.movies', {
 			url: '/movies',
 			templateUrl: '/streama/admin-movies.htm',
-			controller: 'adminMoviesCtrl'
+			controller: 'adminMoviesCtrl as vm'
 		})
 		.state('admin.movie', {
 			url: '/movie/:movieId',
@@ -100,6 +100,12 @@ angular.module('streama').config(function ($stateProvider) {
 			templateUrl: '/streama/admin-show.htm',
 			controller: 'adminShowCtrl'
 		})
+    .state('admin.reports', {
+      url: '/reports',
+      templateUrl: '/streama/admin-reports.htm',
+      controller: 'adminReportsCtrl',
+      controllerAs: "vm"
+    })
 
 
 
@@ -141,7 +147,11 @@ angular.module('streama').config(function ($stateProvider) {
 				$rootScope.currentUser = data;
 				return data;
 			}
-		});
+		}).error(function (err, status) {
+      if(status === 401){
+        location.href = '/login/auth?sessionExpired=true'
+      }
+    });
 	}
 
 	function checkPermissionAdmin(apiService, $rootScope, $state) {

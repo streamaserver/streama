@@ -3,18 +3,18 @@
   <div class="row">
     <div class="col-xs-10">
       <legend>
-        {{media.name || media.title}}
+        {{media.name || media.title || media.showName}}
       </legend>
     </div>
     <div class="col-xs-2">
       <div class="pull-right">
-        <button ng-if="currentUser.isContentManager" class="btn btn-primary btn-xs pull-left" style="margin-right: 15px;" ng-click="editMedia(media)">edit</button>
+        <button ng-if="currentUser.isContentManager && !isEditButtonHidden && !isApiMovie" class="btn btn-primary btn-xs pull-left" style="margin-right: 15px;" ng-click="editMedia(media)">edit</button>
         <i class="ion-close pull-left" ng-click="cancel()"></i>
       </div>
     </div>
   </div>
 
-  <a class="icon-play ion-android-arrow-dropright-circle" ui-sref="player({videoId: (firstEpisode.id || media.id)})"></a>
+  <a ng-if="!isApiMovie" class="icon-play ion-android-arrow-dropright-circle" ui-sref="player({videoId: (firstEpisode.id || media.id)})"></a>
 
 
   <hr>
@@ -31,27 +31,48 @@
  <div ng-show="media">
    <div class="row">
      <div class="col-sm-8">
-       <ul class="info-list">
-         <li><strong>{{'VIDEO.RELEASED' | translate}}: </strong> {{media.release_date.substring(0,4) || media.first_air_date.substring(0,4)}}</li>
-         <li><strong>{{'VIDEO.IMDB' | translate}}: </strong>
-           <a target="_blank" href="http://www.imdb.com/title/{{media.imdb_id}}">{{media.name || media.title}}</a>
-         </li>
-         <li><strong>{{'VIDEO.RATING' | translate}}: </strong>
-           {{media.vote_average}}/10 ({{media.vote_count}} {{'VIDEO.VOTES' | translate}})
-         </li>
-       </ul>
 
-       <hr/>
+       <div ng-if="mediaType != 'episode'">
+         <ul class="info-list">
+           <li><strong>{{'VIDEO.RELEASED' | translate}}: </strong> {{media.release_date.substring(0,4) || media.first_air_date.substring(0,4)}}</li>
+           <li><strong>{{'VIDEO.IMDB' | translate}}: </strong>
+             <a target="_blank" href="http://www.imdb.com/title/{{media.imdb_id}}">{{media.name || media.title}}</a>
+           </li>
+           <li><strong>{{'VIDEO.RATING' | translate}}: </strong>
+             {{media.vote_average}}/10 ({{media.vote_count}} {{'VIDEO.VOTES' | translate}})
+           </li>
+         </ul>
+
+         <hr/>
+       </div>
+
+
+
+       <div ng-if="mediaType == 'episode'">
+         <h3>S{{media.season | padnumber:2}}E{{media.episodeNumber | padnumber:2}} - {{media.episodeName}}</h3>
+
+         <ul class="info-list">
+           <li><strong>Air Date: </strong> {{media.first_air_date}}</li>
+         </ul>
+
+
+
+       </div>
        <h4>{{'VIDEO.OVERVIEW' | translate}}</h4>
-       <p class="overview-text">{{media.overview}}</p>
+       <p class="overview-text">{{media.overview || media.episodeOverview}}</p>
 
 
-       <h4>{{'VIDEO.GENRE' | translate}}</h4>
-       <ul class="genre-list">
-         <li class="genre-tag interactive" ng-repeat="genre in media.genre" ui-sref="dash({genreId: genre.id})">
-           {{genre.name}}
-         </li>
-       </ul>
+       <div ng-if="media.genre.length">
+         <h4>{{'VIDEO.GENRE' | translate}}</h4>
+         <ul class="genre-list">
+           <li class="genre-tag interactive" ng-repeat="genre in media.genre" ui-sref="dash({genreId: genre.id})">
+             {{genre.name}}
+           </li>
+         </ul>
+       </div>
+
+
+       <img ng-if="media.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{media.still_path}}"/>
 
        <div ng-if="media.trailerKey">
          <h4>{{'VIDEO.TRAILER' | translate}}</h4>
@@ -61,7 +82,7 @@
      </div>
      <div class="col-sm-4">
        <img ng-show="media.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{media.poster_path}}"/>
-       <img ng-show="media.manualInput && media.poster_image_src" ng-src="{{media.poster_image_src}}"/>
+       <img ng-show=" media.poster_image_src" ng-src="{{media.poster_image_src}}"/>
      </div>
    </div>
 
@@ -84,7 +105,8 @@
        <h3 class="media-title">{{episode.name}}</h3>
        <div class="media-item" >
          <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.still_path}}"/>
-         <div ng-if="!episode.still_path" class="fallback-image"></div>
+         <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>
+         <div ng-if="!episode.still_path && !episode.still_image_src" class="fallback-image"></div>
          <a ng-show="episode.hasFile" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
        </div>
      </div>

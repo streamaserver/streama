@@ -18,6 +18,11 @@
   </div>
 
   <span class="label label-danger pull-right" ng-show="!episode.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
+  <a ui-sref="admin.reports" class="label label-danger pull-right" ng-show="episode.files.length && episode.reportCount">
+    <i class="ion-alert-circled"></i>
+    <span ng-if="episode.reportCount == 1" >1 Report!</span>
+    <span ng-if="episode.reportCount > 1" >{{episode.reportCount}} Reports!</span>
+  </a>
 
 
   <h3 class="media-episode-string">
@@ -27,7 +32,9 @@
   <h3 class="media-title">{{episode.name}}</h3>
   <div class="media-item" >
     <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.still_path}}"/>
-    <div ng-if="!episode.still_path" class="fallback-image"></div>
+    <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>
+    <div ng-if="!episode.still_path && !episode.still_image_src" class="fallback-image"></div>
+
     <a ng-show="episode.files.length" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
   </div>
 

@@ -3,7 +3,7 @@
   <div class="modal-body">
     <legend>
       Movie
-      <button class="btn btn-sm btn-white btn-outline pull-right" ng-show="hasKey" ng-click="toggleAddManually()">
+      <button class="btn btn-sm btn-white btn-outline pull-right" ng-show="hasMovieDBKey" ng-click="toggleAddManually()">
         <span ng-show="!addManually && !movie.id">Add Manually</span>
         <span ng-show="addManually">Add Automatically</span>
       </button>
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div ng-show="movie.release_date || movie.id || addManually">
+    <div ng-show="movie.apiId || addManually">
       <div class="form-group row-slim">
         <div class="col-sm-2">
           <label>Release Date</label>
@@ -96,6 +96,9 @@
           <label>Image</label>
           <br/>
           <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}"/>
+          <br>
+          <br>
+          <button class="btn btn-default btn-sm" ng-click="chooseNewBackdrop()">Choose another image</button>
         </div>
       </div>
 
@@ -126,7 +129,7 @@
     </div>
   </div>
 
-  <div class="modal-footer" ng-if="movie.release_date || movie.id || addManually">
+  <div class="modal-footer" ng-if="movie.apiId || addManually">
     <button class="btn btn-success" ng-click="saveMovie(movie)" ng-disabled="!movie.title">Save</button>
     <button class="btn btn-default" ng-click="cancel()">Cancel</button>
   </div>

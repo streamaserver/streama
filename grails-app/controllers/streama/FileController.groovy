@@ -1,9 +1,14 @@
 package streama
 
 import grails.converters.JSON
+import grails.transaction.Transactional
+import grails.config.Config
+
+import groovy.json.JsonSlurper
 
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.regex.Pattern
 
 import static org.springframework.http.HttpStatus.*
 
@@ -13,6 +18,20 @@ class FileController {
   def fileService
   def srt2vttService
   def springSecurityService
+  def theMovieDbService
+  def bulkCreateService
+
+  def getURL(){
+    if (!params.id) {
+      return
+    }
+    def file = File.get(params.getInt('id'))
+
+    def responseObj = [url: file.getSrc()]
+
+    render (responseObj as JSON)
+
+  }
 
   def index(){
     def filter = params.filter
@@ -175,7 +194,11 @@ class FileController {
 
 
     if(fileService.allowedVideoFormats.contains(file.extension)){
-      fileService.serveVideo(request, response, rawFile, file)
+      def result = fileService.serveVideo(request, response, rawFile, file)
+      if(result?.error){
+        render (result as JSON)
+        return
+      }
       return null
     }else if(file.extension == '.srt'){
       def vttResult = srt2vttService.convert(rawFile)
@@ -188,7 +211,11 @@ class FileController {
 
   def upload(){
     def file = uploadService.upload(request, params)
-    respond file
+    if(file!=null){
+    	respond file
+    }else{
+    	render status: 415
+    }
   }
 
   def deletedUnusedFilesOnHardDrive(){
@@ -220,7 +247,12 @@ class FileController {
     }
 
     def localPath = Paths.get(uploadService.localPath)
-    def dirPath = localPath.resolve( uploadService.localPath + path).toAbsolutePath()
+    def dirPath
+    if(path.contains(uploadService.localPath)){
+      dirPath = localPath.resolve(path).toAbsolutePath()
+    }else{
+      dirPath = localPath.resolve( uploadService.localPath + path).toAbsolutePath()
+    }
 
     if (!dirPath.startsWith(localPath)) {
       result.code = "FileNotInLocalPath"
@@ -230,8 +262,23 @@ class FileController {
       return
     }
 
+    if(Files.notExists(dirPath)){
+      dirPath = localPath.resolve( uploadService.localPath).toAbsolutePath()
+    }
+
+    if(Files.notExists(dirPath)){
+      result.code = "DirectoryNotFound"
+      result.message = "The Local Files Directory could not be found."
+      response.setStatus(NOT_ACCEPTABLE.value)
+      respond result
+      return
+    }
+
     def response = []
     Files.list(dirPath).each { file ->
+      if(Files.isHidden(file)){
+        return
+      }
       response << [
         name: file.getFileName().toString(),
         path: file.toAbsolutePath().toString(),
@@ -241,4 +288,51 @@ class FileController {
 
     render response as JSON
   }
+
+
+  def matchMetaDataFromFiles(){
+//      Shows:
+//      American.Crime.Story.S01E02.720p.BluRay.x264.ShAaNiG.mkv
+//      master.chef.us.603.hdtv-lol.mp4
+//      Silicon.Valley.S02E01.HDTV.x264-ASAP.mp4
+//      Vikings_S03E06_HDTV_x264-KILLERS.srt
+//      Seinfeld.S01E03.The.Robbery.720p.HULU.WEBRip.AAC2.0.H.264-NTb.mkv
+
+//      Movies:
+//      Pulp.Fiction.(1994).avi
+//      The_Avengers_:_Age_of_Ultron_(2015).mp4
+//      Green.Lantern.(2011).H.264.mkv
+
+    def files = request.JSON.files
+    def result = bulkCreateService.matchMetaDataFromFiles(files)
+
+    render (result as JSON)
+  }
+
+  def bulkAddMediaFromFile(){
+    def files = request.JSON.files
+    def result = bulkCreateService.bulkAddMediaFromFile(files)
+
+    render (result as JSON)
+  }
+
+
+  def save(File file) {
+
+    if (file == null) {
+      render status: NOT_FOUND
+      return
+    }
+
+    file.validate()
+
+    if (file.hasErrors()) {
+      render status: NOT_ACCEPTABLE
+      return
+    }
+
+    file.save flush: true
+    respond file, [status: CREATED]
+  }
+
 }

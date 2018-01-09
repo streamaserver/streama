@@ -17,7 +17,7 @@ class TvShowController {
   def index() {
     JSON.use('fullShow') {
       response.setStatus(OK.value())
-      render (TvShow.findAllByDeletedNotEqual(true) as JSON)
+      render videoService.listShows(params, [includeEmpty: true]) as JSON
     }
   }
 
@@ -30,11 +30,15 @@ class TvShowController {
       return
     }
 
-    TvShow tvShow = TvShow.findByApiId(data.apiId)
+    TvShow tvShow
+	if(data.apiId != null){
+      tvShow = TvShow.findByApiId(data.apiId)
+	}
 
-    if (tvShow == null) {
+	if(tvShow == null){
       tvShow = new TvShow()
     }
+
     tvShow.properties = data
     tvShow.deleted = false
 
@@ -49,6 +53,7 @@ class TvShowController {
     }
 
     tvShow.save flush: true
+
     respond tvShow, [status: CREATED]
   }
 
@@ -64,9 +69,10 @@ class TvShowController {
     }
   }
 
+  @Transactional
   def adminEpisodesForTvShow(TvShow tvShowInstance) {
     JSON.use('adminEpisodesForTvShow') {
-      respond Episode.findAllByShowAndDeletedNotEqual(tvShowInstance, true), [status: OK]
+      render Episode.findAllByShowAndDeletedNotEqual(tvShowInstance, true) as JSON
     }
   }
 

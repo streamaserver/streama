@@ -33,26 +33,28 @@ class VideoController {
 
     def continueWatching = ViewingStatus.withCriteria {
       eq("user", currentUser)
-      video{
+      video {
         isNotEmpty("files")
         ne("deleted", true)
       }
       eq("completed", false)
       order("lastUpdated", "desc")
     }
-    def movies = Movie.findAllByDeletedNotEqual(true).findAll{ Movie movie ->
-      return (!continueWatching.find{it.video.id == movie.id} && movie.files)
+    def movies = Movie.findAllByDeletedNotEqual(true).findAll { Movie movie ->
+      return (!continueWatching.find { it.video.id == movie.id } && movie.files)
     }
 
-    result.tvShowsForDash = tvShows.findAll{tvShow->
-      return (!(continueWatching.find{(it.video instanceof Episode) && it.video.show?.id == tvShow?.id}) && tvShow.hasFiles)
+    result.tvShowsForDash = tvShows.findAll { tvShow ->
+      return (!(continueWatching.find {
+        (it.video instanceof Episode) && it.video.show?.id == tvShow?.id
+      }) && tvShow.hasFiles)
     }
 
-    JSON.use('dashMovies'){
+    JSON.use('dashMovies') {
       result.movies = JSON.parse((movies as JSON).toString())
     }
 
-    JSON.use ('dashViewingStatus') {
+    JSON.use('dashViewingStatus') {
       result.continueWatching = JSON.parse((continueWatching as JSON).toString())
     }
 
@@ -69,12 +71,12 @@ class VideoController {
       render status: NOT_FOUND
       return
     }
-    if(!data.id){
-      if(data.image){
+    if (!data.id) {
+      if (data.image) {
         data.image = thetvdbService.BASE_PATH_GRAPHICS + data.image
       }
       videoInstance = new Video()
-    }else{
+    } else {
       videoInstance = Video.get(data.id)
     }
 
@@ -86,13 +88,13 @@ class VideoController {
       return
     }
 
-    videoInstance.save flush:true
+    videoInstance.save flush: true
     respond videoInstance, [status: CREATED]
   }
 
-  def show(Video videoInstance){
+  def show(Video videoInstance) {
     JSON.use('player') {
-      render (videoInstance as JSON)
+      render(videoInstance as JSON)
     }
   }
 
@@ -117,10 +119,15 @@ class VideoController {
     }
 
     def file = uploadService.upload(request)
-    videoInstance.addToFiles(file)
-    videoInstance.save flush: true, failOnError: true
 
-    respond file
+    if (file != null) {
+      videoInstance.addToFiles(file)
+      videoInstance.save flush: true, failOnError: true
+      respond file
+    } else {
+      render status: 415
+    }
+
 
   }
 
@@ -143,6 +150,7 @@ class VideoController {
     respond status: OK
 
   }
+
   @Transactional
   def addFile() {
     Video video = Video.get(params.getInt('videoId'))
@@ -169,7 +177,6 @@ class VideoController {
       return
     }
 
-    log.debug(episode.movieDbMeta)
     bindData(episode, episode.movieDbMeta, [exclude: 'id'])
     episode.save flush: true, failOnError: true
 
@@ -181,7 +188,7 @@ class VideoController {
   def videoExtensionRegex = ~/(?:.(?![^a-zA-Z0-9]))(mp4|webm|ogg|srt|vtt)/
 
   @Transactional
-  def addExternalUrl(Video videoInstance){
+  def addExternalUrl(Video videoInstance) {
     File file = File.findOrCreateByExternalLink(params.externalUrl)
     file.originalFilename = params.externalUrl
     def matcher = params.externalUrl =~ videoExtensionRegex
@@ -194,38 +201,14 @@ class VideoController {
   }
 
   @Transactional
-  def addLocalFile(Video videoInstance){
-    def result = [:]
-
-    // The local path is configured?
-    if (!uploadService.localPath) {
-      result.message = "The Local Video Files setting is not configured."
-      response.setStatus(NOT_ACCEPTABLE.value)
+  def addLocalFile(Video videoInstance) {
+    def result = videoService.addLocalFile(videoInstance, params)
+    if (result instanceof Map && result.error) {
+      response.setStatus(result.statusCode)
       respond result
       return
     }
-
-    // Check that the given file path is contained in the local files directory
-    def localPath = Paths.get(uploadService.localPath)
-    def givenPath = Paths.get(params.localFile).toAbsolutePath()
-    if (!givenPath.startsWith(localPath)) {
-      result.message = "The video file must be contained in the Local Video Files setting."
-      response.setStatus(NOT_ACCEPTABLE.value)
-      respond result
-      return
-    }
-
-    // Create the file in database
-    File file = File.findOrCreateByLocalFile(params.localFile)
-    file.localFile = params.localFile
-    file.originalFilename = givenPath.getFileName().toString()
-    file.contentType = Files.probeContentType(givenPath)
-    file.size = Files.size(givenPath)
-    def extensionIndex = params.localFile.lastIndexOf('.')
-    file.extension = params.localFile[extensionIndex..-1];
-    file.save(failOnError: true, flush: true)
-    videoInstance.addToFiles(file)
-    videoInstance.save(failOnError: true, flush: true)
-    respond file
+    respond result
   }
+
 }
