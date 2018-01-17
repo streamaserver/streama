@@ -24,7 +24,7 @@ class TheMovieDbService {
   }
 
   def validateApiKey(apiKey){
-    def JsonContent = new URL(BASE_URL + '/configuration?api_key=' + apiKey).text
+    def JsonContent = new URL(BASE_URL + '/configuration?api_key=' + apiKey).getText("UTF-8")
     return new JsonSlurper().parseText(JsonContent)
   }
 
@@ -34,10 +34,10 @@ class TheMovieDbService {
   }
 
   def getSimilarMovies(movieId){
-    def JsonContentSimilarMovies = new URL(BASE_URL + "/movie/$movieId/similar?$API_PARAMS").text
+    def JsonContentSimilarMovies = new URL(BASE_URL + "/movie/$movieId/similar?$API_PARAMS").getText("UTF-8")
     def JsonSimilarMovies = new JsonSlurper().parseText(JsonContentSimilarMovies)
     JsonSimilarMovies?.results?.each { SimilarMovie ->
-      def JsonContentTrailer = new URL(BASE_URL + "/movie/$SimilarMovie.id/videos?$API_PARAMS").text
+      def JsonContentTrailer = new URL(BASE_URL + "/movie/$SimilarMovie.id/videos?$API_PARAMS").getText("UTF-8")
       def JsonTrailerData = new JsonSlurper().parseText(JsonContentTrailer)
       SimilarMovie.mediatype = "Movie"
       SimilarMovie.trailerKey = JsonTrailerData?.results[0]?.key
@@ -46,7 +46,7 @@ class TheMovieDbService {
   }
 
   def getExternalLinks(showId){
-    def JsonContent = new URL(BASE_URL + "/tv/$showId/external_ids?$API_PARAMS").text
+    def JsonContent = new URL(BASE_URL + "/tv/$showId/external_ids?$API_PARAMS").getText("UTF-8")
     return new JsonSlurper().parseText(JsonContent)
   }
 
@@ -55,7 +55,7 @@ class TheMovieDbService {
       return []
     }
     try{
-      def JsonContent = new URL(BASE_URL + "/genre/movie/list?$API_PARAMS").text
+      def JsonContent = new URL(BASE_URL + "/genre/movie/list?$API_PARAMS").getText("UTF-8")
       def genres =  new JsonSlurper().parseText(JsonContent).genres
 
       genres?.each{ genre ->
@@ -76,7 +76,7 @@ class TheMovieDbService {
       return []
     }
     try{
-      def JsonContent = new URL(BASE_URL + "/genre/tv/list?$API_PARAMS").text
+      def JsonContent = new URL(BASE_URL + "/genre/tv/list?$API_PARAMS").getText("UTF-8")
       def genres =  new JsonSlurper().parseText(JsonContent).genres
 
       genres?.each{ genre ->
@@ -92,7 +92,7 @@ class TheMovieDbService {
   }
 
   def getTrailerForMovie(movieId){
-    def JsonContent = new URL(BASE_URL + "/movie/$movieId/videos?$API_PARAMS").text
+    def JsonContent = new URL(BASE_URL + "/movie/$movieId/videos?$API_PARAMS").getText("UTF-8")
     def videos =  new JsonSlurper().parseText(JsonContent).results
 
     def trailer = videos.findAll{it.type == "Trailer"}.max{it.size}
@@ -101,7 +101,7 @@ class TheMovieDbService {
 
   def getFullMovieMeta(movieId){
     try{
-      def JsonContent = new URL(BASE_URL + "/movie/$movieId?$API_PARAMS").text
+      def JsonContent = new URL(BASE_URL + "/movie/$movieId?$API_PARAMS").getText("UTF-8")
       return new JsonSlurper().parseText(JsonContent)
     }catch (e){
       log.warn("could not load fullMeta for Movie this time, " + e.message)
@@ -111,7 +111,7 @@ class TheMovieDbService {
 
   def getFullTvShowMeta(tvId){
     try{
-      def JsonContent = new URL(BASE_URL + "/tv/$tvId?$API_PARAMS").text
+      def JsonContent = new URL(BASE_URL + "/tv/$tvId?$API_PARAMS").getText("UTF-8")
       return new JsonSlurper().parseText(JsonContent)
     }catch (e){
       log.warn("could not load fullMeta for TV SHOW this time, " + e.message)
@@ -119,14 +119,14 @@ class TheMovieDbService {
   }
 
   def getEpisodeMeta(tvApiId, seasonNumber, episodeNumber){
-    def JsonContent = new URL(BASE_URL + "/tv/$tvApiId/season/$seasonNumber/episode/$episodeNumber?$API_PARAMS").text
+    def JsonContent = new URL(BASE_URL + "/tv/$tvApiId/season/$seasonNumber/episode/$episodeNumber?$API_PARAMS").getText("UTF-8")
     return new JsonSlurper().parseText(JsonContent)
   }
 
   def searchForEntry(type, name) {
     def query = URLEncoder.encode(name, "UTF-8")
 
-    def JsonContent = new URL(BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY).text
+    def JsonContent = new URL(BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY).getText("UTF-8")
     return new JsonSlurper().parseText(JsonContent)
   }
 
