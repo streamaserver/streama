@@ -66,7 +66,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_ja: 'Japanese',
     LANGUAGE_it: 'Italian',
 		LANGUAGE_da: 'Danish',
-    LANGUAGE_ar: 'Arabian',
+    LANGUAGE_ar: 'Arabic',
 		PROFIlE: {
 			USERNAME: 'Логин',
 			FULL_NAME: 'Имя',
