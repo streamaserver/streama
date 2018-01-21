@@ -1,10 +1,11 @@
 <%@ page import="grails.converters.JSON" %>
+<%@ page import="streama.Settings" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<title>${streama.Settings.findByName('title').value}</title>
+	<title>${Settings.findByName('title').value}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 	<style type="text/css">
@@ -26,7 +27,7 @@
 <body >
 	<div class="page-container login-page">
     <div id='login' ng-app="streama.translations" class="ng-cloak" ng-controller="authController">
-		<img class="auth-logo" src="${streama.Settings.findByName('logo').value == '/assets/logo.png' ? '/assets/logo_lg.png' : streama.Settings.findByName('logo').value}" alt="Streama">
+      <g:imgSetting setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>
 			<div class='inner'>
 
       <g:if test='${flash.message}'>
