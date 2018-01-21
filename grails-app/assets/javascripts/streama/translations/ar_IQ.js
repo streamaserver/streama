@@ -56,6 +56,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LOGOUT: 'تسجيل الخروج',
 		CHANGE_PASSWORD: 'تعديل الرمز',
 		LANGUAGE_en: 'English',
+    LANGUAGE_ru: 'Русский',
 		LANGUAGE_de: 'German',
 		LANGUAGE_fr: 'French',
 		LANGUAGE_es: 'Spanish',
