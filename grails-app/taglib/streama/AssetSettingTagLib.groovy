@@ -28,4 +28,15 @@ class AssetSettingTagLib {
 
       out << '<img src="'+getAssetFromSetting(setting)+'" '+altText+'>'
     }
+
+    def cssBackgroundSetting = { attribs ->
+      def setting = attribs['setting']
+      def selector = attribs['selector']
+
+      out << '<style>'
+      out << selector
+      out << '{ background-image: url('
+      out << getAssetFromSetting(setting)
+      out << ');}</style>'
+    }
 }
