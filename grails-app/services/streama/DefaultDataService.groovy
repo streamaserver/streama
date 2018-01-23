@@ -126,6 +126,14 @@ class DefaultDataService {
             defaultValue: '/assets/favicon.ico'
         ],
         [
+          settingsKey: 'loginBG',
+          name: 'loginBackground',
+          description: 'Upload your custom login background',
+          settingsType: 'fileUpload',
+          value: '/assets/bg.jpg',
+          defaultValue: '/assets/bg.jpg'
+        ],
+        [
             settingsKey: 'Streama title',
             name: 'title',
             description: 'Change Name of Application',
