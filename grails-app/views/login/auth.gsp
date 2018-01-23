@@ -17,7 +17,7 @@
 	<asset:stylesheet src="vendor.css"/>
 	<asset:stylesheet src="application.css"/>
 
-	<link rel="icon" href="${streama.Settings.findByName('favicon').value}" type="image/x-icon">
+  <g:linkRelIconSetting setting="${Settings.findByName('favicon').value}"></g:linkRelIconSetting>
 
 	<script type="text/javascript">
 		window.contextPath = "${request.contextPath}";
