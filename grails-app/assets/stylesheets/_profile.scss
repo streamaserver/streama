@@ -15,17 +15,34 @@
   margin: 0 auto;
   @include vendor-property('transition', 'transform .5s');
 
+  .profile-data-form{
+    @include vendor-property('transition', 'opacity .5s');
+    opacity: 1;
+  }
+
+  .password-form{
+    opacity: 0;
+    @include vendor-property('transition', 'opacity .5s');
+    @include vendor-property('transform', 'translate3d(150%, 0, 0)');
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+
   &.password-active{
     @include vendor-property('transform', 'translate3d(-150%, 0, 0)');
+
+    .profile-data-form{
+      opacity: 0;
+    }
+    .password-form{
+      opacity: 1;
+    }
   }
+
 }
 
 
-.password-form{
-  @include vendor-property('transform', 'translate3d(150%, 0, 0)');
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
