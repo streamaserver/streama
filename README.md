@@ -27,6 +27,7 @@ If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7S
   - [The Dashboard](#the-dashboard)
   - [The Player](#the-player)
   - [The Admin-Panel](#the-admin-panel)
+  - [Accessing existing files](#accessing-existing-files)
   - [The Users](#the-users) 
 - [Technical Details](#technical-details)
 - [Changelog](#changelog)
@@ -85,7 +86,44 @@ For example, creating a new TV-show and the episodes for the first season looks 
 
 Uploading video-files for each episode is as easy as drag-and-drop!
 
-![Streama Uploading Episode](http://i.imgur.com/StgES0S.gif)
+![Streama Uploading Episode](http://i.imgur.com/StgES0S.gif)  
+
+### Accessing existing files
+If you want to avoid uploading every file, use our new and improved "Local File" Feature instead. You can define a local directory (I use one directly in which I created symlinks to all my mounted drives) and then you can either use the local file browser for individual movies / tv-Shows or you can use the bulk-create feature. 
+
+#### The local file browser
+You can access the local file browser from any movie or TV-show (anywhere where you would otherwise upload a file). Note: You need to first define the local directory in the settings.
+![Movie Detail](https://files.gitter.im/dularion/streama/2Al4/image.png)
+![Local File directory](https://files.gitter.im/dularion/streama/wY2h/image.png)
+
+#### Bulk-Create from File
+This MR addresses the issue "Batch Add Files #241".
+Note: the TV-Show does not have to be present in order for this to work. Everything will be created by the backend. 
+
+##### Running matcher & previewing result
+![sep-02-2017 01-24-34](https://user-images.githubusercontent.com/936076/29990709-8f34e8f8-8f7d-11e7-9d9b-955236bf2251.gif)
+
+##### adding single matched file 
+![sep-02-2017 01-24-12](https://user-images.githubusercontent.com/936076/29990718-a28e2af4-8f7d-11e7-9821-eba309b04011.gif)
+
+##### adding files in bulk
+![sep-02-2017 01-24-26](https://user-images.githubusercontent.com/936076/29990720-aa6dcb08-8f7d-11e7-8f1c-59cdadee10d6.gif)
+
+
+##### Customizing the Matcher
+Just like in Emby or Kodi, the matcher-regex can be altered. The two defaults are 
+**Movie**: `/^(?<Name>.*)[_.]\(\d{4}\).*/`  
+**TvShow/Episode**: `/^(?<Name>.+)[._]S(?<Season>\d{2})E(?<Episode>\d{2,3}).*/`   
+
+In order to customize the regex, just add the regex in the bottom of the application.yml like so:
+```yml
+streama:
+  regex:
+    movies: ^(?<Name>.*)[_.]\(\d{4}\).*
+    shows: ^(?<Name>.+)[._]S(?<Season>\d{2})E(?<Episode>\d{2,3}).*
+
+```
+
 
 ### The Users
 ![Streama User Management](http://new.tinygrab.com/d9072ef564717c22dde948c726144b1b707a607adc.png)
