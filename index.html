@@ -353,7 +353,7 @@ make
         <h4>Run Docker Image & Linked MySQL-Container</h4>
 
         <p>Dependencies: docker</p>
-        <pre>docker run --rm -it --name="streama" -p 8055:8080 -p 4000:4000 --link mysql:mysql -e “MYSQL_HOST=mysqlhost” -e “MYSQL_port=3306” -e “MYSQL_DB=streama” -e “MYSQL_USER=streama” -e “MYSQL_PASSWORD=streama” whatever/streama</pre>
+        <pre>docker run --rm -it --name=streama -p 8055:8080 -p 4000:4000 --link mysql:mysql -e “MYSQL_HOST=mysqlhost” -e “MYSQL_port=3306” -e “MYSQL_DB=streama” -e “MYSQL_USER=streama” -e “MYSQL_PASSWORD=streama” whatever/streama</pre>
 
 
       </div>
