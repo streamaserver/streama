@@ -314,7 +314,7 @@ make
         <h3>Run Docker Image</h3>
 
         <p>Dependencies: docker, MySQL</p>
-        <pre>docker run -d --name=“streama” -p 8080:8080 -p 4000:4000 -v /data:/data -e “MYSQL_HOST=mysqlhost” -e “MYSQL_PORT=3306” -e “MYSQL_DB=streama” -e “MYSQL_USER=streama” -e “MYSQL_PASSWORD=streama” whatever/streama</pre>
+        <pre>docker run -d --name=streama -p 8080:8080 -p 4000:4000 -v /data:/data -e “MYSQL_HOST=mysqlhost” -e “MYSQL_PORT=3306” -e “MYSQL_DB=streama” -e “MYSQL_USER=streama” -e “MYSQL_PASSWORD=streama” whatever/streama</pre>
         <p>Parameters</p>
         <ul>
           <li>
