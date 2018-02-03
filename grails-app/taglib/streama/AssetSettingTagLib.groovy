@@ -22,11 +22,12 @@ class AssetSettingTagLib {
     def imgSetting = { attribs ->
       def setting = attribs['setting']
       def alt = attribs['alt']
+      def classNames = attribs['class']
 
       def altText = ""
       if(alt) altText = 'alt="'+alt+'"'
 
-      out << '<img src="'+getAssetFromSetting(setting)+'" '+altText+'>'
+      out << '<img class="'+classNames+'" src="'+getAssetFromSetting(setting)+'" '+altText+'>'
     }
 
     def cssBackgroundSetting = { attribs ->
