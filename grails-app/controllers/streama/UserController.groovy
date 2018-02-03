@@ -1,5 +1,6 @@
 package streama
 
+import grails.converters.JSON
 import grails.transaction.Transactional
 
 import static java.util.UUID.randomUUID
@@ -91,10 +92,10 @@ class UserController {
     }
 
     userInstance.properties = data
-
     userInstance.validate()
     if (userInstance.hasErrors()) {
-      render status: NOT_ACCEPTABLE
+      response.setStatus(NOT_ACCEPTABLE.value())
+      render (userInstance.errors as JSON)
       return
     }
 

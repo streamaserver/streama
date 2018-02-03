@@ -78,9 +78,15 @@ angular.module('streama').controller('modalUserCtrl', [
 					$uibModalInstance.close(data);
 					$scope.loading = false;
 				})
-				.error(function () {
+				.error(function (response) {
 					$scope.loading = false;
-					alertify.error('There was an error saving the user.');
+					if(_.get(response, 'errors')){
+					  _.forEach(response.errors, function(error){
+              alertify.error('Error: ' + error.message);
+            });
+          }else{
+            alertify.error('There was an error saving the user.');
+          }
 				});
 		};
 
