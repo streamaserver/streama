@@ -55,6 +55,10 @@ angular.module('streama').factory('playerService',
           console.log('%c showNextButton', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
           videoOptions.showNextButton = true;
         }
+        if(videoData.nextVideo){
+          console.log('%c showNextButton', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
+          videoOptions.showNextButton = true;
+        }
 
         if(videoData.show){
           videoOptions.showEpisodeBrowser = true;
@@ -283,7 +287,11 @@ angular.module('streama').factory('playerService',
 
 
       onNext: function () {
-        $state.go('player', {videoId: videoData.nextEpisode.id});
+        if(typeof videoData.nextEpisode !== 'undefined'){
+          $state.go('player', {videoId: videoData.nextEpisode.id});
+        }else if(typeof  videoData.nextVideo !== 'undefined'){
+          $state.go('player', {videoId: videoData.nextVideo});
+        }
       },
 
 
