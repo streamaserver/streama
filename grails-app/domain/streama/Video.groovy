@@ -113,4 +113,30 @@ class Video {
       return imagePath
     }
   }
+
+
+  def suggestNextVideo(){
+    if (this instanceof Movie) {
+
+      Movie tmp_movie=Movie.find{
+        ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id > this.id)}
+      if(tmp_movie == null){
+        return Movie.find{ ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id < this.id)}?.id
+      }else{
+        return tmp_movie?.id
+      }
+    }
+    if (this instanceof Episode) {
+      if(this.show?.genre){
+        TvShow tmp
+        tmp=TvShow.find{ genre.id in (this.show?.genre.id) && id!=this.show.id && id > this.show.id}
+        if(tmp == null){
+          return TvShow.find{ genre.id in (this.show?.genre.id) && id!=this.show.id && id < this.show.id}?.getFirstEpisode()?.id
+        }else{
+          return tmp?.getFirstEpisode()?.id
+        }
+      }
+    }
+    return
+  }
 }

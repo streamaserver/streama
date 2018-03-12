@@ -49,6 +49,7 @@ class PlayerMarshallerService {
           returnArray['intro_start'] = video.intro_start
           returnArray['intro_end'] = video.intro_end
           returnArray['outro_start'] = video.outro_start
+          returnArray['nextVideo'] = video.suggestNextVideo()
           Video nextEpisode
 
           nextEpisode = video.show.episodes?.find {
@@ -71,6 +72,7 @@ class PlayerMarshallerService {
           returnArray['backdrop_path'] = video.buildImagePath('backdrop_path', 1280)
           returnArray['poster_path'] = video.poster_path
           returnArray['trailerKey'] = video.trailerKey
+          returnArray['nextVideo'] = video.suggestNextVideo()
 
         }
         if (video instanceof GenericVideo) {
