@@ -17,8 +17,28 @@
   </div>
 
   <i class="ion-android-arrow-back player-back" ng-class="{'visible': controlsVisible}" ng-click="closeVideo()"></i>
+  <div ng-if="isMobile">
+    <div ng-show="nextVideoCountdown" style="position: absolute;top: 8%;left: 50%;width: auto;z-index:999">
+      <div style="position: relative; left: -50%";>
+        <h3 style="max-width:200px">Up next playing in {{CountdownSecond}} Seconds:</h3>
 
-
+        <img ng-src="https://image.tmdb.org/t/p/w200/{{options.nextVideoData.poster}}">
+        <h4>{{options.nextVideoData.title}}</h4>
+        <div style="width:200px;overflow-x: hidden"><span class="label label-primary" ng-repeat="genre in options.nextVideoData.genre">{{genre}}</span></div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="!isMobile">
+    <div ng-show="nextVideoCountdown" style="position: absolute;top: 15%;left: 50%;width: auto;z-index:999">
+      <div style="position: relative; left: -50%";>
+        <h2>Up Next playing in {{CountdownSecond}} Seconds:</h2>
+        <img ng-src="https://image.tmdb.org/t/p/w300/{{options.nextVideoData.poster}}">
+        <h3>{{options.nextVideoData.title}}</h3>
+        <div style="width:300px;overflow-x: hidden"><span class="label label-primary" ng-repeat="genre in options.nextVideoData.genre">{{genre}}</span></div>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="spinner" ng-show="loading">
     <div class="bounce1"></div>
     <div class="bounce2"></div>

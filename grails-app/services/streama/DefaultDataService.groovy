@@ -110,6 +110,13 @@ class DefaultDataService {
             value: 'true'
         ],
         [
+          settingsKey: 'Autoplay Next Video',
+          name: 'autoplay_next_video',
+          description: 'Allow Streama auto play the next movie or tv show',
+          settingsType: 'boolean',
+          value: 'false'
+        ],
+        [
             settingsKey: 'Logo',
             name: 'logo',
             description: 'Upload your custom Streama Logo here',
