@@ -28,7 +28,8 @@ angular.module('streama').factory('playerService',
       onPause: angular.noop,
       onClose: angular.noop,
       onNext: angular.noop,
-      onVideoClick: angular.noop
+      onVideoClick: angular.noop,
+      nextVideoData:{}
     };
 
     return {
@@ -83,6 +84,10 @@ angular.module('streama').factory('playerService',
           videoOptions.customStartingTime = video.viewedStatus.currentPlayTime;
         }else{
           videoOptions.customStartingTime = 0;
+        }
+
+        if(video.nextVideo){
+          videoOptions.nextVideoData=video.nextVideo;
         }
 
         videoOptions.onPlay = this.onVideoPlay.bind(videoOptions);
@@ -289,8 +294,8 @@ angular.module('streama').factory('playerService',
       onNext: function () {
         if(typeof videoData.nextEpisode !== 'undefined'){
           $state.go('player', {videoId: videoData.nextEpisode.id});
-        }else if(typeof  videoData.nextVideo !== 'undefined'){
-          $state.go('player', {videoId: videoData.nextVideo});
+        }else if(typeof  videoData.nextVideo !== 'undefined' && $rootScope.getSetting('autoplay_next_video').value=== 'true'){
+          $state.go('player', {videoId: videoData.nextVideo.id});
         }
       },
 

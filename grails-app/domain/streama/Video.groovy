@@ -117,13 +117,15 @@ class Video {
 
   def suggestNextVideo(){
     if (this instanceof Movie) {
+      if(this.genre?.id){
+        Movie tmp_movie=Movie.find{
+          ((id!=this.id) && (genre.id in this.genre?.id ) && deleted==this?.deleted && id != this?.id &&  id > this?.id)}
+        if(tmp_movie == null){
+          return Movie.find{ ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id < this.id)}
 
-      Movie tmp_movie=Movie.find{
-        ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id > this.id)}
-      if(tmp_movie == null){
-        return Movie.find{ ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id < this.id)}?.id
-      }else{
-        return tmp_movie?.id
+        }else{
+          return tmp_movie
+        }
       }
     }
     if (this instanceof Episode) {
@@ -131,9 +133,9 @@ class Video {
         TvShow tmp
         tmp=TvShow.find{ genre.id in (this.show?.genre.id) && id!=this.show.id && id > this.show.id}
         if(tmp == null){
-          return TvShow.find{ genre.id in (this.show?.genre.id) && id!=this.show.id && id < this.show.id}?.getFirstEpisode()?.id
+          return TvShow.find{ genre.id in (this.show?.genre.id) && id!=this.show.id && id < this.show.id}
         }else{
-          return tmp?.getFirstEpisode()?.id
+          return tmp
         }
       }
     }
