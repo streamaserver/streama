@@ -8,6 +8,8 @@ class TheMovieDbService {
 
   def BASE_URL = "https://api.themoviedb.org/3"
 
+  def apiCacheData = [:]
+
   def getAPI_PARAMS(){
     return "api_key=$API_KEY&language=$API_LANGUAGE"
   }
@@ -124,10 +126,18 @@ class TheMovieDbService {
   }
 
   def searchForEntry(type, name) {
+
+    def cachedApiData = apiCacheData."$type:$name"
+    if(cachedApiData){
+      return cachedApiData
+    }
     def query = URLEncoder.encode(name, "UTF-8")
 
     def JsonContent = new URL(BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY).getText("UTF-8")
-    return new JsonSlurper().parseText(JsonContent)
+    def data = new JsonSlurper().parseText(JsonContent)
+    apiCacheData["$type:$name"] = data
+
+    return data
   }
 
   def getEntryById(String type, id, data = [:]){
