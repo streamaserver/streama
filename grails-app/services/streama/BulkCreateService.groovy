@@ -105,14 +105,14 @@ class BulkCreateService {
     def name = tvShowMatcher.group('Name').replaceAll(/[._]/, " ")
     def seasonNumber = tvShowMatcher.group('Season').toInteger()
     def episodeNumber = tvShowMatcher.group('Episode').toInteger()
-    def type = "tv"
+    fileResult.type = "tv"
 
     try {
       TvShow existingTvShow
       def tvShowData
       def tvShowId
 
-      def json = theMovieDbService.searchForEntry(type, name)
+      def json = theMovieDbService.searchForEntry(fileResult.type, name)
       tvShowData = json?.results[0]
       tvShowId = tvShowData.id
       existingTvShow = TvShow.findByApiIdAndDeletedNotEqual(tvShowId, true)
@@ -127,7 +127,7 @@ class BulkCreateService {
         if(existingTvShow){
           fileResult.status = MATCHER_STATUS.EXISTING
           fileResult.importedId =existingTvShow.id
-          fileResult.importedType = STREAMA_ROUTES[type]
+          fileResult.importedType = STREAMA_ROUTES[fileResult.type]
         }
         fileResult.apiId = tvShowId
       } else {
@@ -140,13 +140,13 @@ class BulkCreateService {
     }
     fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
     fileResult.message = 'match found'
-    fileResult.type = type
+    fileResult.type = fileResult.type
     fileResult.season = seasonNumber
     fileResult.episodeNumber = episodeNumber
   }
 
   private extractDataForEpisode(TvShow existingTvShow, seasonNumber, episodeNumber, fileResult, tvShowId) {
-    String type = 'episode'
+    fileResult.type = 'episode'
     Episode existingEpisode
 
     if (existingTvShow) {
@@ -161,7 +161,7 @@ class BulkCreateService {
     if (existingEpisode) {
       fileResult.status = MATCHER_STATUS.EXISTING
       fileResult.importedId = existingEpisode.showId
-      fileResult.importedType = STREAMA_ROUTES[type]
+      fileResult.importedType = STREAMA_ROUTES[fileResult.type]
       fileResult.apiId = existingEpisode.apiId
     }
     else {
@@ -170,7 +170,7 @@ class BulkCreateService {
       if (existingEpisode) {
         fileResult.status = MATCHER_STATUS.EXISTING
         fileResult.importedId = existingEpisode.showId
-        fileResult.importedType = STREAMA_ROUTES[type]
+        fileResult.importedType = STREAMA_ROUTES[fileResult.type]
       }
 
       fileResult.apiId = episodeResult.id
@@ -192,6 +192,11 @@ class BulkCreateService {
       }
 
       def entity = theMovieDbService.createEntityFromApiId(type, fileMatcher.apiId, fileMatcher)
+      if(!entity){
+        fileMatcher.status = MATCHER_STATUS.LIMIT_REACHED
+        result.add(fileMatcher)
+        return
+      }
       if(entity instanceof Video){
         entity.addLocalFile(fileMatcher.file)
       }
