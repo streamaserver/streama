@@ -142,6 +142,15 @@ class DefaultDataService {
             required: true,
             validationRequired: false
         ],
+        [
+            settingsKey: 'User Activity Rotation',
+            name: 'user_activity_rotation',
+            description: 'Input a number here. Limits the amount of stored User Activity entries in the database to the amount supplied here. If none is given, all records will be stored without deletion. ',
+            settingsType: 'integer',
+            value: '',
+            required: false,
+            validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',
