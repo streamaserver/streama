@@ -21,6 +21,8 @@ grails.plugin.springsecurity.portMapper.httpsPort = 443
 grails.plugin.springsecurity.rememberMe.cookieName = 'streama_remember_me'
 grails.plugin.springsecurity.rememberMe.alwaysRemember = true
 grails.plugin.springsecurity.rememberMe.key = 'streama_Rocks123!!RememberMe'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = "/user/loginTarget"
+grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
