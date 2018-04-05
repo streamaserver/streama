@@ -16,7 +16,8 @@ class BulkCreateService {
     NO_MATCH: 0,
     MATCH_FOUND: 1,
     EXISTING: 2,
-    CREATED: 3
+    CREATED: 3,
+    LIMIT_REACHED: 4
   ]
   final static STREAMA_ROUTES = [
     movie: 'movie',
@@ -91,6 +92,7 @@ class BulkCreateService {
       }
     } catch (Exception ex) {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+      fileResult.status = MATCHER_STATUS.LIMIT_REACHED
       fileResult.title = name
     }
     fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
@@ -149,6 +151,7 @@ class BulkCreateService {
       }
     } catch (Exception ex) {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+      fileResult.status = MATCHER_STATUS.LIMIT_REACHED
       fileResult.name = name
     }
     fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND

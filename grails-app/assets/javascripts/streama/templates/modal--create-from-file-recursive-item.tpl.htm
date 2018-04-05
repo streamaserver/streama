@@ -43,6 +43,9 @@
     <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 0">
       {{vm.getMatchForPath(file.path).message}}
     </span>
+    <span class="text-danger" ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 4">
+      TheMovieDB Limit reached
+    </span>
 
     <br>
 
