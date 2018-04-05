@@ -1,0 +1,10 @@
+import streama.UserActivity
+
+model {
+	UserActivity userActivity
+}
+
+json g.render(userActivity, [excludes: ['user']]){
+  userId userActivity.userId
+  username userActivity.user.username
+}
