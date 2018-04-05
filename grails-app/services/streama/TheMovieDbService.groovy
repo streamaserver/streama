@@ -158,7 +158,12 @@ class TheMovieDbService {
 
   def createEntityFromApiId(type, id, data = [:]){
     def apiData = getEntryById(type, id, data)
-    def entity = createEntityFromApiData(type, apiData)
+    def entity
+    try{
+      entity = createEntityFromApiData(type, apiData)
+    }catch (e){
+      log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+    }
     return entity
   }
 
