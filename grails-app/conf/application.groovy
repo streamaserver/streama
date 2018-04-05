@@ -21,6 +21,8 @@ grails.plugin.springsecurity.portMapper.httpsPort = 443
 grails.plugin.springsecurity.rememberMe.cookieName = 'streama_remember_me'
 grails.plugin.springsecurity.rememberMe.alwaysRemember = true
 grails.plugin.springsecurity.rememberMe.key = 'streama_Rocks123!!RememberMe'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = "/user/loginTarget"
+grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
@@ -60,6 +62,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/report/**',  access :['ROLE_CONTENT_MANAGER']],
 
   [pattern:'/user/**',  access :['ROLE_ADMIN']],
+  [pattern:'/userActivity/**',  access :['ROLE_ADMIN']],
   [pattern:'/notificationQueue/**',  access :['ROLE_ADMIN']],
   [pattern:'/settings/**',  access :['ROLE_ADMIN']],
   [pattern:'/bulk/**',  access :['ROLE_ADMIN']],

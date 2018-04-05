@@ -1,0 +1,8 @@
+import streama.UserActivity
+
+model {
+	Iterable<UserActivity> userActivityList
+}
+
+json tmpl.userActivity(userActivityList ?: [])
+

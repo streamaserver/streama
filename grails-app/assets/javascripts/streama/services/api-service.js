@@ -59,6 +59,11 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.post('user/changePassword.json', data);
 			}
 		},
+    userActivity: {
+      list: function () {
+        return $http.get('userActivity.json');
+      }
+    },
 
 		tag:{
 			save: function (data) {
