@@ -12,6 +12,23 @@ class SettingsService {
     return Settings.findBySettingsKey('Base URL')?.value
   }
 
+  def getValueForName(String name){
+    def setting = Settings.findByName(name)
+    if(!setting){
+      return
+    }
+
+    if(setting.settingsType == 'boolean'){
+      return setting.value == 'true'
+    }
+    else if(setting.settingsType == 'integer'){
+      return setting.value.isNumber() ? setting.value as Integer : null
+    }
+    else{
+      return setting.value
+    }
+  }
+
   Boolean getAnonymousAccess() {
     return Boolean.valueOf(Settings.findByName('anonymous_access')?.value)
   }
