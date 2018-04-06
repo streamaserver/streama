@@ -22,7 +22,7 @@ class SettingsService {
       return setting.value == 'true'
     }
     else if(setting.settingsType == 'integer'){
-      return setting.value.isNumber() ? setting.value as Integer : null
+      return setting.value?.isNumber() ? setting.value as Integer : null
     }
     else{
       return setting.value
