@@ -2,7 +2,10 @@
 # STREAMA
 
 
-[![Build Status](https://travis-ci.org/dularion/streama.svg?branch=master)](https://travis-ci.org/dularion/streama) [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/dularion/streama/blob/master/LICENSE.md) [![Join the chat at https://gitter.im/dularion/streama](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dularion/streama?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://img.shields.io/travis/dularion/streama/master.svg?style=for-the-badge)](https://travis-ci.org/dularion/streama) 
+[![Downloads](https://img.shields.io/github/downloads/dularion/streama/total.svg?style=for-the-badge)](https://github.com/dularion/streama/releases)
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=for-the-badge)](https://github.com/dularion/streama/blob/master/LICENSE.md) 
+[![Discord](https://img.shields.io/discord/432358302496849931.svg?style=for-the-badge)](https://discord.gg/CJEHWX9)
 
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal Netflix for just such a purpose!
 
