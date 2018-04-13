@@ -2,9 +2,9 @@
 # STREAMA
 
 
-[![Build Status](https://img.shields.io/travis/dularion/streama/master.svg?style=for-the-badge)](https://travis-ci.org/dularion/streama) 
-[![Downloads](https://img.shields.io/github/downloads/dularion/streama/total.svg?style=for-the-badge)](https://github.com/dularion/streama/releases)
-[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=for-the-badge)](https://github.com/dularion/streama/blob/master/LICENSE.md) 
+[![Build Status](https://img.shields.io/travis/streamaserver/streama/master.svg?style=for-the-badge)](https://travis-ci.org/streamaserver/streama) 
+[![Downloads](https://img.shields.io/github/downloads/streamaserver/streama/total.svg?style=for-the-badge)](https://github.com/streamaserver/streamaserver/releases)
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=for-the-badge)](https://github.com/streamaserver/streama/blob/master/LICENSE.md) 
 [![Discord](https://img.shields.io/discord/432358302496849931.svg?style=for-the-badge)](https://discord.gg/CJEHWX9)
 
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal Netflix for just such a purpose!
@@ -40,12 +40,12 @@ If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7S
 - [License](#license)
 
 # Getting Started
-- [Installation and first-time setup](https://github.com/dularion/streama/wiki/Getting-started)
+- [Installation and first-time setup](https://github.com/streamaserver/streama/wiki/Getting-started)
 
 If you have any issues getting started, free free to [chat with us on Discord](https://discord.gg/CJEHWX9). We are more than happy to assist and then improve the docs accordingly. 
 
 # Downloads
-- **Stable and beta** versions see the GitHub [releases](https://github.com/dularion/streama/releases)
+- **Stable and beta** versions see the GitHub [releases](https://github.com/streamaserver/streama/releases)
 - **Unstable/alpha** builds see [StreamaBuilds](http://streamabuilds.s3-website-us-east-1.amazonaws.com/)
 
 # The Application
@@ -138,26 +138,26 @@ This application is web-based, the server-side is written on [Grails 3](https://
 Streama uses the [awesome API](https://www.themoviedb.org/documentation/api) from [theMovieDatabase](https://www.themoviedb.org) for all media-metadata.
 
 # Changelog
-Please refer to description of each [release](https://github.com/dularion/streama/releases) or the git log.
+Please refer to description of each [release](https://github.com/streamaserver/streama/releases) or the git log.
 
 # Roadmap
 Streama is still very much a work-in-progress. We will be adding new features and bug-fixes often, but this is a hobby project for the core-contributers, so the time that we can spend on it is limited.
 
-For all our feature and bug tracking we use the [Issues Section](https://github.com/dularion/streama/issues). Streama's 'roadmap' is currently to work though the feature requests and improvements that are in the issue tracker.  Take a look at the milestones for what we intend to add for upcoming releases.
+For all our feature and bug tracking we use the [Issues Section](https://github.com/streamaserver/streama/issues). Streama's 'roadmap' is currently to work though the feature requests and improvements that are in the issue tracker.  Take a look at the milestones for what we intend to add for upcoming releases.
 
 
 # Contributing
 ### Features, Improvements, and Bugfixes
 Streama currently only has ~2-3 core-contributers so we are grateful for any extra contributions. Send though a Pull Request and we will review it ASAP.
 
-If you're not sure what to work on, take a look at the [issues](https://github.com/dularion/streama/issues). There's lots to do!
+If you're not sure what to work on, take a look at the [issues](https://github.com/streamaserver/streama/issues). There's lots to do!
 
 ### Translations
-If you want to contribute a translation, please follow [the guide here](https://github.com/dularion/streama/wiki/Translating-the-app). 
+If you want to contribute a translation, please follow [the guide here](https://github.com/streamaserver/streama/wiki/Translating-the-app). 
 
 # Known Issues
-- There is no video-conversion currently, meaning you are reliant upon HTML5 browser compatibilities. Server-side conversion is on our roadmap. See Issue [#440](https://github.com/dularion/streama/issues/440)
+- There is no video-conversion currently, meaning you are reliant upon HTML5 browser compatibilities. Server-side conversion is on our roadmap. See Issue [#440](https://github.com/streamaserver/streama/issues/440)
 
 # License
 Streama is distributed under the terms of the MIT license.
-See [LICENSE.md](https://github.com/dularion/streama/blob/master/LICENSE.md) for details.
+See [LICENSE.md](https://github.com/streamaserver/streama/blob/master/LICENSE.md) for details.
