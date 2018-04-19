@@ -76,7 +76,7 @@ class VideoService {
     def extensionIndex = params.localFile.lastIndexOf('.')
     file.extension = params.localFile[extensionIndex..-1];
     file.save(failOnError: true, flush: true)
-    videoInstance.addToFiles(file)
+    videoInstance.importFile(file)
     videoInstance.save(failOnError: true, flush: true)
     return file
   }

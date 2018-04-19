@@ -79,6 +79,10 @@ class File {
     }
   }
 
+  boolean isVideo() {
+    return extension != '.srt' && extension != '.vtt';
+  }
+
   def getSimpleInstance(){
     return [
         id: this.id,

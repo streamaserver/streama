@@ -121,7 +121,7 @@ class VideoController {
     def file = uploadService.upload(request)
 
     if (file != null) {
-      videoInstance.addToFiles(file)
+      videoInstance.importFile(file)
       videoInstance.save flush: true, failOnError: true
       respond file
     } else {
@@ -161,7 +161,7 @@ class VideoController {
       return
     }
 
-    video.addToFiles(file)
+    video.importFile(file)
     video.save flush: true, failOnError: true
 
     respond status: OK
@@ -196,7 +196,7 @@ class VideoController {
       file.extension = matcher[0][0]
     }
     file.save()
-    videoInstance.addToFiles(file)
+    videoInstance.importFile(file)
     respond file
   }
 

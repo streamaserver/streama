@@ -3,6 +3,7 @@ package streama
 class Video {
 
   def springSecurityService
+  def transcodeService
   transient videoService
 
   Date dateCreated
@@ -112,6 +113,19 @@ class Video {
     }else{
       return imagePath
     }
+  }
+
+  def importFile(File f) {
+    def filesToImport = [f]
+
+    if (f.isVideo() && TranscodeService.canTranscode()) {
+      transcodeService.transcodeSubtitles(f).each {
+        it.save()
+        filesToImport.add(it)
+      }
+    }
+
+    filesToImport.each { this.addToFiles(it) }
   }
 
 
