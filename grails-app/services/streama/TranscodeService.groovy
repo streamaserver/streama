@@ -57,7 +57,8 @@ class TranscodeService {
     System.out.println(subStreams)
 
     subStreams.each {
-      def finalPath = subtitlePath + java.io.File.separatorChar + fileIdent + '_s-' + it.index + '.vtt'
+      def fileName = fileIdent + '_s-' + it.index + '.vtt'
+      def finalPath = subtitlePath + java.io.File.separatorChar + fileName
       System.out.println('transcoding ' + finalPath +'!')
       def ffMpegCmd = ['ffmpeg', '-i', videoFile.localFile, '-map', '0:' + it.index, '-f', 'webvtt', finalPath]
       def ffProc = ffMpegCmd.execute()
@@ -66,10 +67,11 @@ class TranscodeService {
         System.out.println("Successfully converted " + finalPath + "!")
         def newFile = new File()
         newFile.localFile = finalPath
-        newFile.originalFilename = finalPath
+        newFile.originalFilename = fileName
         newFile.contentType = "text/vtt"
-        newFile.subtitleLabel = it.title
-        newFile.subtitleSrcLang = it.language
+        // These may not be reliable... depends on who encoded the file.
+        newFile.subtitleLabel = it.tags.title == null ? "Embedded Subtitles" : it.tags.title
+        newFile.subtitleSrcLang = it.tags.language
         newFile.size = Files.size(Paths.get(finalPath))
         newFile.extension = ".vtt"
         returnFiles.add(newFile)
