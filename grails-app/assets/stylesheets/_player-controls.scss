@@ -47,7 +47,7 @@
 
       }
       &.current{
-        background: darken($primary, 45%);
+        background: $secondary;
         .episode-play{
           display: none;
         }
@@ -476,7 +476,7 @@
       }
 
       &.current{
-        background: darken($primary, 45%);
+        background: $secondary;
         .episode-play{
           display: none;
         }

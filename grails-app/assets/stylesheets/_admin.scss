@@ -32,7 +32,7 @@
 
         &:hover a,
         &.active a{
-          background: darken($primary, 40%);
+          background: $secondary;
           color: white;
         }
 
