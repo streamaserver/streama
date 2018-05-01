@@ -18,4 +18,17 @@ class Settings {
     static mapping = {
         description sqlType:"text"
     }
+
+
+    def getParsedValue(){
+      if(this.settingsType == 'boolean'){
+        return this.value == 'true'
+      }
+      else if(this.settingsType == 'integer'){
+        return this.value?.isNumber() ? this.value as Integer : null
+      }
+      else{
+        return this.value
+      }
+    }
 }
