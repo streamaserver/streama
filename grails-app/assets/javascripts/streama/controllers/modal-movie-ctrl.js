@@ -62,7 +62,6 @@ angular.module('streama').controller('modalMovieCtrl', [
 
 		$scope.onTagSelect = function (tag) {
 			apiService.tag.save(tag);
-			apiService.movie.save($scope.movie);
 		};
 
 		$scope.tagTransform = function (newTag) {

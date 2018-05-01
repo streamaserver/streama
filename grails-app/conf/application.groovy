@@ -1,8 +1,8 @@
 grails.databinding.dateFormats = [
     "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", // javascript format in json
     "yyyy-MM-dd HH:mm:ss.S",
-    "yyyy-MM-dd'T'hh:mm:ss'Z'",
-    "yyyy-MM-dd'T'hh:mm:ssZ",
+    "yyyy-MM-dd'T'HH:mm:ss'Z'",
+    "yyyy-MM-dd'T'HH:mm:ssZ",
     "dd.MM.yyyy"
 ]
 
