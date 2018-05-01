@@ -9,6 +9,7 @@ import streama.GenericVideo
 import streama.Movie
 import streama.NotificationQueue
 import streama.Report
+import streama.Settings
 import streama.TvShow
 import streama.User
 import streama.Video
@@ -26,6 +27,24 @@ class MarshallerService {
   def init() {
     mediaDetailMarshallerService.init()
     playerMarshallerService.init()
+
+
+    JSON.registerObjectMarshaller(Settings) { Settings setting ->
+      def returnArray = [:]
+
+      returnArray['id'] = setting.id
+      returnArray['description'] = setting.description
+      returnArray['defaultValue'] = setting.defaultValue
+      returnArray['name'] = setting.name
+      returnArray['required'] = setting.required
+      returnArray['settingsKey'] = setting.settingsKey
+      returnArray['settingsType'] = setting.settingsType
+      returnArray['validationRequired'] = setting.validationRequired
+      returnArray['value'] = setting.value
+      returnArray['parsedValue'] = setting.getParsedValue()
+
+      return returnArray
+    }
 
 
     JSON.registerObjectMarshaller(User) { User user ->
