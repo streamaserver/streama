@@ -20,15 +20,16 @@ class Settings {
     }
 
 
-    def getParsedValue(){
+    def getParsedValue(String propertyName = 'value'){
+      String _value = this[propertyName]
       if(this.settingsType == 'boolean'){
-        return this.value == 'true'
+        return _value == 'true'
       }
       else if(this.settingsType == 'integer'){
-        return this.value?.isNumber() ? this.value as Integer : null
+        return _value?.isNumber() ? _value as Integer : null
       }
       else{
-        return this.value
+        return _value
       }
     }
 }
