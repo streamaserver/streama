@@ -80,6 +80,8 @@
         <span>{{options.videoMetaSubtitle}}</span>
       </div>
 
+      <a class="player-control-button player-next-episode ion-ios-cloud-download" ng-if="options.showDownloadButton" href="{{options.videoSrc}}" download></a>
+
       <div class="player-control-button player-next-episode ion-ios-skipforward" ng-if="options.showNextButton" ng-click="next()"></div>
 
       <div class="player-control-button player-episode-selector" ng-if="options.showEpisodeBrowser">

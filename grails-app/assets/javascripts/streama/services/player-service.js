@@ -18,6 +18,7 @@ angular.module('streama').factory('playerService',
       showEpisodeBrowser: false,
       showNextButton: false,
       showSocketSession: true,
+      showDownloadButton: false,
       episodeList: [],
       selectedEpisodes: [],
       currentEpisode: {},
@@ -36,11 +37,12 @@ angular.module('streama').factory('playerService',
       {
         return videoOptions;
       },
-      setVideoOptions: function (video) {
+      setVideoOptions: function (video, settings) {
         videoOptions = angular.copy(defaultVideoOptions);
         videoData = video;
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src || video.files[0].externalLink);
         videoOptions.videoType = video.files[0].contentType;
+        videoOptions.showDownloadButton = _.find(settings, {name: 'player_showDownloadButton'}).parsedValue;
 
         if(video.subtitles && video.subtitles.length){
           videoOptions.subtitles = video.subtitles;

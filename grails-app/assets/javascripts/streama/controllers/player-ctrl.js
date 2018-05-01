@@ -10,7 +10,7 @@ angular.module('streama').controller('playerCtrl', [
 			var missingFileError = playerService.handleMissingFileError($scope.video);
 
 			if(!missingFileError){
-				$scope.videoOptions = playerService.setVideoOptions($scope.video);
+				$scope.videoOptions = playerService.setVideoOptions($scope.video, $rootScope.settings);
 			}
 
 			playerService.registerSocketListener();
