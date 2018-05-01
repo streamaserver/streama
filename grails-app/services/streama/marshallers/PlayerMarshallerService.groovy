@@ -50,17 +50,8 @@ class PlayerMarshallerService {
           returnArray['intro_end'] = video.intro_end
           returnArray['outro_start'] = video.outro_start
           returnArray['nextVideo'] = video.suggestNextVideo()
-          Video nextEpisode
 
-          nextEpisode = video.show.episodes?.find {
-            return (it.episode_number == video.episode_number + 1 && it.season_number == video.season_number)
-          }
-          if (!nextEpisode) {
-            video.show.episodes?.find {
-              return (it.season_number == video.season_number + 1 && it.episode_number == 1)
-            }
-          }
-
+          Video nextEpisode = video.getNextEpisode()
           if (nextEpisode && nextEpisode.files) {
             returnArray['nextEpisode'] = [id: nextEpisode?.id]
           }
