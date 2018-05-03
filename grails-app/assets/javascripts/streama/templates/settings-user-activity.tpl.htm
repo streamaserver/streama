@@ -1,0 +1,42 @@
+<h1>User Activity</h1>
+
+<div class="spinner big" ng-show="vm.loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<hr/>
+
+<h4>Filter</h4>
+<div class="row">
+  <div class="col-sm-4">
+    <select class="form-control input-sm" ng-model="vm.filter.user" ng-options="user as user.username for user in vm.users">
+      <option value="">---All Users---</option>
+    </select>
+  </div>
+</div>
+
+<br>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>User</td>
+    <td>date Created</td>
+    <td>Device</td>
+    <td>Operating System</td>
+    <td>Browser</td>
+    <td>IP Address</td>
+  </tr>
+  </thead>
+  <tr ng-repeat="activity in vm.userActivity | filter:{userId: vm.filter.user.id}">
+    <td>{{activity.username}} <span class="opacity-50 text-sm">(id: {{activity.userId}})</span></td>
+    <td>{{activity.dateCreated | date:'short'}}</td>
+    <td>{{activity.device}}</td>
+    <td>{{activity.operatingSystem}}</td>
+    <td>{{activity.browser}}</td>
+    <td>{{activity.ipAddress}}</td>
+  </tr>
+</table>
+

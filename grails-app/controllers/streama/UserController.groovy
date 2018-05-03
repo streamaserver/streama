@@ -15,6 +15,7 @@ class UserController {
   def mailService
   def springSecurityService
   def passwordEncoder
+  def userActivityService
 
   static responseFormats = ['json', 'xml']
   static allowedMethods = [save: "POST", delete: "DELETE"]
@@ -250,6 +251,7 @@ class UserController {
   }
 
   def loginTarget() {
+    userActivityService.createActivityEntry(request)
     redirect(uri: '/')
   }
 

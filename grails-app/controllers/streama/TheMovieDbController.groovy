@@ -104,6 +104,7 @@ class TheMovieDbController {
       if(Episode.findByShowAndSeason_numberAndEpisode_numberAndDeletedNotEqual(tvShow, season, episodeData.episode_number, true)){
         return
       }
+      episodeData.apiId = episodeData.id
       result.add(episodeData)
     }
 

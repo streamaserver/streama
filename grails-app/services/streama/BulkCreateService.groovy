@@ -16,7 +16,8 @@ class BulkCreateService {
     NO_MATCH: 0,
     MATCH_FOUND: 1,
     EXISTING: 2,
-    CREATED: 3
+    CREATED: 3,
+    LIMIT_REACHED: 4
   ]
   final static STREAMA_ROUTES = [
     movie: 'movie',
@@ -91,6 +92,7 @@ class BulkCreateService {
       }
     } catch (Exception ex) {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+      fileResult.status = MATCHER_STATUS.LIMIT_REACHED
       fileResult.title = name
     }
     fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
@@ -103,59 +105,81 @@ class BulkCreateService {
     def name = tvShowMatcher.group('Name').replaceAll(/[._]/, " ")
     def seasonNumber = tvShowMatcher.group('Season').toInteger()
     def episodeNumber = tvShowMatcher.group('Episode').toInteger()
-    def type = "tv"
+    fileResult.type = "tv"
 
     try {
-      def json = theMovieDbService.searchForEntry(type, name)
-      def movieDbResults = json?.results
+      TvShow existingTvShow
+      def tvShowData
+      def tvShowId
 
-      if (movieDbResults) {
-        // Why do i need to access index 0? Worked just fine without before extracting to service
-        def tvShowId = movieDbResults.id[0]
+      def json = theMovieDbService.searchForEntry(fileResult.type, name)
+      tvShowData = json?.results[0]
+      tvShowId = tvShowData.id
+      existingTvShow = TvShow.findByApiIdAndDeletedNotEqual(tvShowId, true)
 
-        if(!seasonNumber && !episodeNumber){
-          TvShow existingTvShow = TvShow.findByApiIdAndDeletedNotEqual(tvShowId, true)
-          if(existingTvShow){
-            fileResult.status = MATCHER_STATUS.EXISTING
-            fileResult.importedId =existingTvShow.id
-            fileResult.importedType = STREAMA_ROUTES[type]
-          }
-          fileResult.apiId = tvShowId
+      fileResult.tvShowOverview = tvShowData.overview
+      fileResult.tvShowId = tvShowId
+      fileResult.showName = tvShowData.name
+      fileResult.poster_path = tvShowData.poster_path
+      fileResult.backdrop_path = tvShowData.backdrop_path
+
+      if(!seasonNumber && !episodeNumber){
+        if(existingTvShow){
+          fileResult.status = MATCHER_STATUS.EXISTING
+          fileResult.importedId =existingTvShow.id
+          fileResult.importedType = STREAMA_ROUTES[fileResult.type]
         }
-
-
-        fileResult.tvShowOverview = movieDbResults.overview[0]
-        fileResult.tvShowId = tvShowId
-        fileResult.showName = movieDbResults.name[0]
-        fileResult.poster_path = movieDbResults.poster_path[0]
-        fileResult.backdrop_path = movieDbResults.backdrop_path[0]
-
-        if(seasonNumber && episodeNumber){
-          type = 'episode'
-          def episodeResult = theMovieDbService.getEpisodeMeta(tvShowId, seasonNumber, episodeNumber)
-          Episode existingEpisode = Episode.findByApiIdAndDeletedNotEqual(episodeResult.id, true)
-          if(existingEpisode){
-            fileResult.status = MATCHER_STATUS.EXISTING
-            fileResult.importedId =existingEpisode.showId
-            fileResult.importedType = STREAMA_ROUTES[type]
-          }
-
-          fileResult.apiId = episodeResult.id
-          fileResult.episodeName = episodeResult.name
-          fileResult.first_air_date = episodeResult.air_date
-          fileResult.episodeOverview = episodeResult.overview
-          fileResult.still_path = episodeResult.still_path
-        }
+        fileResult.apiId = tvShowId
+      } else {
+        fileResult = extractDataForEpisode(existingTvShow, seasonNumber, episodeNumber, fileResult, tvShowId)
       }
     } catch (Exception ex) {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+      fileResult.status = MATCHER_STATUS.LIMIT_REACHED
       fileResult.name = name
     }
     fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
     fileResult.message = 'match found'
-    fileResult.type = type
+    fileResult.type = fileResult.type
     fileResult.season = seasonNumber
     fileResult.episodeNumber = episodeNumber
+  }
+
+  private extractDataForEpisode(TvShow existingTvShow, seasonNumber, episodeNumber, fileResult, tvShowId) {
+    fileResult.type = 'episode'
+    Episode existingEpisode
+
+    if (existingTvShow) {
+      existingEpisode = Episode.where {
+        show == existingTvShow
+        season_number == seasonNumber
+        episode_number == episodeNumber
+        deleted != true
+      }.get()
+    }
+
+    if (existingEpisode) {
+      fileResult.status = MATCHER_STATUS.EXISTING
+      fileResult.importedId = existingEpisode.showId
+      fileResult.importedType = STREAMA_ROUTES[fileResult.type]
+      fileResult.apiId = existingEpisode.apiId
+    }
+    else {
+      def episodeResult = theMovieDbService.getEpisodeMeta(tvShowId, seasonNumber, episodeNumber)
+      existingEpisode = Episode.findByApiIdAndDeletedNotEqual(episodeResult.id, true)
+      if (existingEpisode) {
+        fileResult.status = MATCHER_STATUS.EXISTING
+        fileResult.importedId = existingEpisode.showId
+        fileResult.importedType = STREAMA_ROUTES[fileResult.type]
+      }
+
+      fileResult.apiId = episodeResult.id
+      fileResult.episodeName = episodeResult.name
+      fileResult.first_air_date = episodeResult.air_date
+      fileResult.episodeOverview = episodeResult.overview
+      fileResult.still_path = episodeResult.still_path
+    }
+    return fileResult
   }
 
 
@@ -168,6 +192,11 @@ class BulkCreateService {
       }
 
       def entity = theMovieDbService.createEntityFromApiId(type, fileMatcher.apiId, fileMatcher)
+      if(!entity){
+        fileMatcher.status = MATCHER_STATUS.LIMIT_REACHED
+        result.add(fileMatcher)
+        return
+      }
       if(entity instanceof Video){
         entity.addLocalFile(fileMatcher.file)
       }

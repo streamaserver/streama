@@ -7,6 +7,9 @@
       <li ng-class="{'active': isCurrentState('settings.users')}" ng-if="$root.currentUser.isAdmin">
         <a ui-sref="settings.users">Users</a>
       </li>
+      <li ng-class="{'active': isCurrentState('settings.userActivity')}" ng-if="$root.currentUser.isAdmin">
+        <a ui-sref="settings.userActivity">User Activity</a>
+      </li>
     </ul>
   </div>
 

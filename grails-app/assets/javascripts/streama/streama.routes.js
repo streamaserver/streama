@@ -118,6 +118,15 @@ angular.module('streama').config(function ($stateProvider) {
 				currentUser: checkPermissionAdmin
 			}
 		})
+		.state('settings.userActivity', {
+			url: '/user-activity',
+			templateUrl: '/streama/settings-user-activity.htm',
+			controller: 'settingsUserActivityCtrl',
+      controllerAs: 'vm',
+			resolve: {
+				currentUser: checkPermissionAdmin
+			}
+		})
 		.state('settings.settings', {
 			url: '/settings',
 			templateUrl: '/streama/settings-settings.htm',
