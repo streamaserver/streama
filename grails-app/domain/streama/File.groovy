@@ -28,7 +28,7 @@ class File implements SimpleInstance {
   }
   static transients = ['uploadService']
 
-  static simpleInstanceFields = ['id', 'src', 'originalFilename', 'contentType', 'subtitleSrcLang', 'subtitleLabel']
+  static simpleInstanceFields = ['id', 'src', 'originalFilename', 'contentType', 'subtitleSrcLang', 'subtitleLabel', 'externalLink']
 
   def getImagePath(){
     uploadService.getPath(this)
