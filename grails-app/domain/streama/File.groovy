@@ -1,6 +1,8 @@
 package streama
 
-class File {
+import streama.traits.SimpleInstance
+
+class File implements SimpleInstance {
 
   def uploadService
 
@@ -19,11 +21,14 @@ class File {
   String subtitleSrcLang
   String quality
   Boolean isPublic = false
+
   static constraints = {
     sha256Hex maxSize: 64
     quality inList: ['720p', '480p', '360p']
   }
   static transients = ['uploadService']
+
+  static simpleInstanceFields = ['id', 'src', 'originalFilename', 'contentType', 'subtitleSrcLang', 'subtitleLabel']
 
   def getImagePath(){
     uploadService.getPath(this)
@@ -77,16 +82,5 @@ class File {
     else if(TvShow.findByDeletedNotEqualAndPoster_image(true, this)){
       return true
     }
-  }
-
-  def getSimpleInstance(){
-    return [
-        id: this.id,
-        src: this.getSrc(),
-        originalFilename: this.originalFilename,
-        contentType: this.contentType,
-        subtitleSrcLang: this.subtitleSrcLang,
-        subtitleLabel: this.subtitleLabel
-    ]
   }
 }
