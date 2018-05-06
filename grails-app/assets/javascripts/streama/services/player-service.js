@@ -41,6 +41,7 @@ angular.module('streama').factory('playerService',
         videoOptions = angular.copy(defaultVideoOptions);
         videoData = video;
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src || video.files[0].externalLink);
+        videoOptions.originalFilename = video.files[0].originalFilename;
         videoOptions.videoType = video.files[0].contentType;
         videoOptions.showDownloadButton = _.find(settings, {name: 'player_showDownloadButton'}).parsedValue;
 
