@@ -30,8 +30,8 @@ class PlayerMarshallerService {
         returnArray['original_language'] = video.original_language
         returnArray['apiId'] = video.apiId
 
-        returnArray['files'] = video.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }
-        returnArray['subtitles'] = video.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }
+        returnArray['files'] = video.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }*.getSimpleInstance()
+        returnArray['subtitles'] = video.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }*.getSimpleInstance()
 
         returnArray['hasFiles'] = video.hasFiles()
 
@@ -39,7 +39,7 @@ class PlayerMarshallerService {
 
         if (video instanceof Episode) {
           returnArray['mediaType'] = 'episode'
-          returnArray['show'] = video.show
+          returnArray['show'] = video.show?.getSimpleInstance()
           returnArray['episodeString'] = video.episodeString
           returnArray['name'] = video.name
           returnArray['air_date'] = video.air_date
