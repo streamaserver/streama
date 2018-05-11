@@ -118,8 +118,8 @@
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
-        <input class="form-control input-sm" type="text" ng-model="vm.tvShow.filter.name"
-               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" />
+        <input class="form-control input-sm" type="text" ng-model="vm.tvShow.filter.name" ng-model-options="{debounce: 400}"
+               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" ng-change="vm.tvShow.setFilter()" />
       </div>
     </div>
     <br>
@@ -183,8 +183,8 @@
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
-        <input class="form-control input-sm" type="text" ng-model="vm.movie.filter.title"
-               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" />
+        <input class="form-control input-sm" type="text" ng-model="vm.movie.filter.title" ng-model-options="{debounce: 400}"
+               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" ng-change="vm.movie.setFilter()" />
       </div>
     </div>
     <br>
@@ -239,7 +239,8 @@
       </div>
 
       <div class="col-md-2 col-lg-2 col-sm-2">
-        <input class="form-control input-sm" type="text" ng-model="vm.genericVideo.filter.title" placeholder="Search by Title..." />
+        <input class="form-control input-sm" type="text" ng-model="vm.genericVideo.filter.title" placeholder="Search by Title..."
+               ng-model-options="{debounce: 400}"  ng-change="vm.genericVideo.setFilter()"/>
       </div>
     </div>
     <br>
