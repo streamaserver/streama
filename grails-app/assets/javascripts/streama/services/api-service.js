@@ -60,8 +60,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			}
 		},
     userActivity: {
-      list: function () {
-        return $http.get('userActivity.json');
+      list: function (params) {
+        return $http.get('userActivity.json', {params: params});
       }
     },
 
