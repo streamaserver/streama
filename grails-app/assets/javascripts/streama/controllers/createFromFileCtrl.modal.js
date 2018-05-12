@@ -105,6 +105,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 			vm.isMatcherLoading = false;
 			vm.matchResult = data;
 			//console.log(data);
+      deselectByStatus(2);
 		});
 	}
 
@@ -112,17 +113,27 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		vm.selection = _.xorBy(vm.selection, [file], 'path');
 	}
 
+	function deselect(file) {
+	  _.remove(vm.selection, {path: file.path});
+	}
+
 	function isSelected(file) {
 		return _.some(vm.selection, {path: file.path});
 	}
 
 	function toggleDirectorySelection(directory) {
-		console.log('%c toggleDirectorySelection', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
-		openLocalDirectory(directory, true, function () {
-			_.forEach(directory.localFiles, function (file) {
-				toggleSelection(file);
-			});
-		});
+	  if(directory.isSelected){
+      openLocalDirectory(directory, true, function () {
+        _.forEach(directory.localFiles, function (file) {
+          toggleSelection(file);
+        });
+      });
+    }else{
+      _.forEach(directory.localFiles, function (file) {
+        deselect(file);
+        directory.showFiles = false;
+      });
+    }
 
 	}
 
@@ -140,7 +151,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 
     apiService.file.bulkAddMediaFromFile(allFoundMatches).success(function (result) {
       if(_.some(result, {status: 4})){
-        alertify.log("not all files were added unfortunately. This is due to TheMovieDB API LIMIT constraints. We are sorry and we hope to have a fix soon. ")
+        alertify.log("not all files were added unfortunately. This is due to TheMovieDB API LIMIT constraints. Just try again in a couple of seconds :). ")
       }else{
         alertify.success("All matches have been added to the database and files connected");
       }
@@ -153,7 +164,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
     var fileMatch = _.find(vm.matchResult, {"file": file.path});
     apiService.file.bulkAddMediaFromFile([fileMatch]).success(function (result) {
       if(_.some(result, {status: 4})){
-        alertify.log("not all files were added unfortunately. This is due to TheMovieDB API LIMIT constraints. We are sorry and we hope to have a fix soon. ")
+        alertify.log("not all files were added unfortunately. This is due to TheMovieDB API LIMIT constraints. Just try again in a couple of seconds :) ")
       }else{
         alertify.success(fileMatch.title || fileMatch.episodeName + " has been added");
       }
@@ -161,10 +172,19 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
     });
 	}
 
-
   function mergeMatchResults(result) {
     vm.matchResult = _.map(vm.matchResult, function (match) {
       return _.find(result, {file: match.file}) || match;
+    });
+
+    deselectByStatus(3);
+  }
+
+
+  function deselectByStatus(status) {
+    _.forEach(_.filter(vm.matchResult, {status: status}), function (file) {
+      var localFile = _.find(vm.selection, {path: file.file});
+      toggleSelection(localFile);
     });
   }
 
