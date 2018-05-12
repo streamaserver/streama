@@ -65,7 +65,14 @@
     }
   }
 
+  admin-episode{
+    &.highlight .media-list-item{
+      box-shadow: 0 0 3px 1px #B0DDEF;
+    }
+  }
+
   .media-list-item{
+    transition: box-shadow 0.5s;
     margin-top: 15px;
   }
 }

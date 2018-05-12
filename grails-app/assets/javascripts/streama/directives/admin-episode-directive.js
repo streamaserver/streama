@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('streama').directive('adminEpisode', [
-	'uploadService', 'modalService', 'apiService', function (uploadService, modalService, apiService) {
+	'uploadService', 'modalService', 'apiService', '$stateParams', function (uploadService, modalService, apiService, $stateParams) {
 	return {
 		restrict: 'AE',
 		templateUrl: '/streama/directive--admin-episode.htm',
@@ -10,6 +10,18 @@ angular.module('streama').directive('adminEpisode', [
 		},
 		link: function ($scope, $elem, $attrs) {
 			$scope.uploadStatus = {};
+
+			if(parseInt($stateParams.episodeId) === $scope.episode.id){
+			  setTimeout(function () {
+			    var HEADER_HEIGHT = 55;
+          jQuery('.admin-content').scrollTop($elem.offset().top - HEADER_HEIGHT);
+          $elem.addClass('highlight');
+        },400);
+
+        setTimeout(function () {
+          $elem.removeClass('highlight');
+        }, 2000);
+      }
 
       $scope.reportsForEpisode= function () {
         apiService.report.reportsById($scope.episode.id).then(function (response) {
