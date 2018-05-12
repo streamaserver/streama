@@ -187,7 +187,7 @@ class TheMovieDbService {
         tvShow = createEntityFromApiId('tv', data.tv_id)
       }
       entity.show = tvShow
-      log.debug("epiosde data")
+//      log.debug("epiosde data")
     }
 
     entity.properties = data

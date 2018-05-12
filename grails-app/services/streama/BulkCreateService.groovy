@@ -207,6 +207,9 @@ class BulkCreateService {
       if(entity instanceof Video){
         entity.addLocalFile(fileMatcher.file)
       }
+
+      log.debug("creating entity of type ${entity.getClass().canonicalName} with id ${entity.id}")
+
       fileMatcher.status = MATCHER_STATUS.CREATED
       fileMatcher.importedId = entity instanceof Episode ? entity.showId : entity.id
       fileMatcher.importedType = STREAMA_ROUTES[type]
