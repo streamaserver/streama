@@ -29,7 +29,8 @@ angular.module('streama').factory('playerService',
       onPause: angular.noop,
       onClose: angular.noop,
       onNext: angular.noop,
-      onVideoClick: angular.noop
+      onVideoClick: angular.noop,
+      onEditVideo: angular.noop
     };
 
     return {
@@ -96,6 +97,7 @@ angular.module('streama').factory('playerService',
         videoOptions.onNext = this.onNext.bind(videoOptions);
         videoOptions.onVideoClick = this.onVideoClick.bind(videoOptions);
         videoOptions.onSocketSessionCreate = this.onSocketSessionCreate.bind(videoOptions);
+        videoOptions.onEditVideo = this.onEditVideo.bind(videoData, videoOptions);
 
         return videoOptions;
       },
@@ -214,6 +216,14 @@ angular.module('streama').factory('playerService',
             $state.go($state.current, $stateParams, {reload: true});
           }
         });
+      },
+
+      onEditVideo: function () {
+        if(videoData.show){
+          $state.go('admin.show', {showId: videoData.show.id, episodeId: videoData.id, season: videoData.season_number});
+        }else{
+          $state.go('admin.movie', {movieId: videoData.id});
+        }
       },
 
       handleMissingFileError: function (video) {
