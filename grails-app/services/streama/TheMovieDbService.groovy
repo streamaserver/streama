@@ -156,6 +156,7 @@ class TheMovieDbService {
     }
   }
 
+  @Transactional
   def createEntityFromApiId(type, id, data = [:]){
     def apiData = getEntryById(type, id, data)
     def entity

@@ -1,5 +1,6 @@
 package streama
 
+import grails.transaction.NotTransactional
 import grails.transaction.Transactional
 
 import java.util.regex.Matcher
@@ -183,6 +184,7 @@ class BulkCreateService {
   }
 
 
+  @NotTransactional
   def bulkAddMediaFromFile(List<Map> fileMatchers){
     def result = []
     fileMatchers.each{ fileMatcher ->
