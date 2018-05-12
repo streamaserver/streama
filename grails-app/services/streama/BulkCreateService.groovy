@@ -134,7 +134,7 @@ class BulkCreateService {
       } else {
         fileResult = extractDataForEpisode(existingTvShow, seasonNumber, episodeNumber, fileResult, tvShowId)
       }
-    } catch (Exception ex) {
+    } catch (ex) {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
       fileResult.status = MATCHER_STATUS.LIMIT_REACHED
       fileResult.name = name
@@ -189,11 +189,16 @@ class BulkCreateService {
     def result = []
     fileMatchers.each{ fileMatcher ->
       String type = fileMatcher.type
+      def entity
       if(fileMatcher.status == MATCHER_STATUS.EXISTING){
         return
       }
 
-      def entity = theMovieDbService.createEntityFromApiId(type, fileMatcher.apiId, fileMatcher)
+      try{
+        entity = theMovieDbService.createEntityFromApiId(type, fileMatcher.apiId, fileMatcher)
+      }catch (e){
+        log.error(e.message)
+      }
       if(!entity){
         fileMatcher.status = MATCHER_STATUS.LIMIT_REACHED
         result.add(fileMatcher)
