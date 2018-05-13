@@ -32,7 +32,7 @@ class BulkCreateService {
 
 
     def movieRegex = regexConfig?.movies ?: STD_MOVIE_REGEX
-    def tvShowRegex = regexConfig?.shows ?: STD_TVSHOW_REGEX
+    def tvShowRegex = regexConfig?.shows ?: [STD_TVSHOW_REGEX]
 
     def result = []
 
@@ -44,22 +44,35 @@ class BulkCreateService {
     return result
   }
 
-  private matchSingleFile(file, movieRegex, tvShowRegex) {
+  private matchSingleFile(file, movieRegex, List tvShowRegexList) {
     def fileResult = [file: file.path]
+    def foundMatch = false
 
     String fileName = file.name
-    def tvShowMatcher = fileName =~ tvShowRegex
-    def movieMatcher = fileName =~ movieRegex
 
-    if (tvShowMatcher.matches()) {
-      matchTvShowFromFile(tvShowMatcher, fileResult)
-    } else if (movieMatcher.matches()) {
-      matchMovieFromFile(movieMatcher, fileResult)
-    } else {
-      fileResult.status = MATCHER_STATUS.NO_MATCH
-      fileResult.message = 'No match found'
+    tvShowRegexList.each{ tvShowRegex ->
+      def tvShowMatcher = fileName =~ tvShowRegex
+
+      if (tvShowMatcher.matches()) {
+        matchTvShowFromFile(tvShowMatcher, fileResult)
+        foundMatch = true
+        return fileResult
+      }
     }
 
+    if(foundMatch){
+      return fileResult
+    }
+
+    def movieMatcher = fileName =~ movieRegex
+    if (movieMatcher.matches()) {
+      matchMovieFromFile(movieMatcher, fileResult)
+      foundMatch = true
+      return fileResult
+    }
+
+    fileResult.status = MATCHER_STATUS.NO_MATCH
+    fileResult.message = 'No match found'
     return fileResult
   }
 
