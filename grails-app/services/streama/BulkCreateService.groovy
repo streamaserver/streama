@@ -32,12 +32,13 @@ class BulkCreateService {
 
 
     def movieRegex = regexConfig?.movies ?: STD_MOVIE_REGEX
-    def tvShowRegex = regexConfig?.shows ?: [STD_TVSHOW_REGEX]
+    def tvShowRegex = regexConfig?.shows ?: STD_TVSHOW_REGEX
+    def tvShowRegexList = tvShowRegex instanceof List ? tvShowRegex : [tvShowRegex]
 
     def result = []
 
     files.each { file ->
-      def fileResult = matchSingleFile(file, movieRegex, tvShowRegex)
+      def fileResult = matchSingleFile(file, movieRegex, tvShowRegexList)
       result.add(fileResult)
     }
 
