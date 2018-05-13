@@ -11,17 +11,7 @@ angular.module('streama').directive('adminEpisode', [
 		link: function ($scope, $elem, $attrs) {
 			$scope.uploadStatus = {};
 
-			if(parseInt($stateParams.episodeId) === $scope.episode.id){
-			  setTimeout(function () {
-			    var HEADER_HEIGHT = 55;
-          jQuery('.admin-content').scrollTop($elem.offset().top - HEADER_HEIGHT);
-          $elem.addClass('highlight');
-        },400);
-
-        setTimeout(function () {
-          $elem.removeClass('highlight');
-        }, 2000);
-      }
+      addHighlighting();
 
       $scope.reportsForEpisode= function () {
         apiService.report.reportsById($scope.episode.id).then(function (response) {
@@ -65,6 +55,21 @@ angular.module('streama').directive('adminEpisode', [
 
       function uploadError(err) {
         //TODO remove upload-overlay on error
+      }
+
+      function addHighlighting() {
+        if (parseInt($stateParams.episodeId) === $scope.episode.id) {
+          setTimeout(function () {
+            var HEADER_HEIGHT = 55;
+            var offsetTop = $elem.find('.media-list-item').offset().top;
+            jQuery('.admin-content').scrollTop(offsetTop - HEADER_HEIGHT);
+            $elem.addClass('highlight');
+          }, 400);
+
+          setTimeout(function () {
+            $elem.removeClass('highlight');
+          }, 2000);
+        }
       }
 		}
 	}
