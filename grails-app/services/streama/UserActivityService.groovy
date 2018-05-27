@@ -14,7 +14,7 @@ class UserActivityService {
       UserActivity userActivity = new UserActivity()
       UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader('user-agent'))
       userActivity.user = springSecurityService.currentUser
-      userActivity.ipAddress = request.remoteHost
+      userActivity.ipAddress = request.getHeader('x-forwarded-for') ?: request.remoteHost
       userActivity.operatingSystem = userAgent.operatingSystem.name
       userActivity.device = userAgent.operatingSystem.deviceType.name
       userActivity.browser = userAgent.browser.name
