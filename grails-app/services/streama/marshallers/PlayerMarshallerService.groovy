@@ -39,7 +39,7 @@ class PlayerMarshallerService {
 
         if (video instanceof Episode) {
           returnArray['mediaType'] = 'episode'
-          returnArray['show'] = video.show?.getSimpleInstance()
+          returnArray['show'] = video.show?.getSimpleInstance(['imdb_id', 'apiId'])
           returnArray['episodeString'] = video.episodeString
           returnArray['name'] = video.name
           returnArray['air_date'] = video.air_date
