@@ -37,6 +37,8 @@ angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'api
     function loadList() {
       apiService.userActivity.list({offset: getOffset(), max: MAX_PER_PAGE, userId: _.get(vm.filter, 'user.id')}).success(function (data) {
         vm.userActivity = data;
+        vm.userActivityLogin = _.filter(data.list, function (activity) {return (activity.video == null);});
+        vm.userActivityVideo = _.filter(data.list, function (activity) {return (activity.video != null);});
       });
     }
 

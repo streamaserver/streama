@@ -6,6 +6,7 @@
   <div class="bounce3"></div>
 </div>
 
+
 <hr/>
 
 <h4>Filter</h4>
@@ -20,29 +21,70 @@
 
 <br>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <td>User</td>
-    <td>date Created</td>
-    <td>Device</td>
-    <td>Operating System</td>
-    <td>Browser</td>
-    <td>IP Address</td>
-  </tr>
-  </thead>
-  <tr ng-repeat="activity in vm.userActivity.list">
-    <td>{{activity.username}} <span class="opacity-50 text-sm">(id: {{activity.userId}})</span></td>
-    <td>{{activity.dateCreated | date:'short'}}</td>
-    <td>{{activity.device}}</td>
-    <td>{{activity.operatingSystem}}</td>
-    <td>{{activity.browser}}</td>
-    <td>{{activity.ipAddress}}</td>
-  </tr>
-</table>
+<uib-tabset active="activePill">
+  <uib-tab index="0" heading="Login Activity">
 
-<ul uib-pagination ng-if="vm.userActivity.list.length < vm.userActivity.total"
-    max-size="7" force-ellipses="true"
-    boundary-links="true" total-items="vm.userActivity.total"
-    ng-model="vm.pagination.currentPage" ng-change="vm.pagination.onChange()"></ul>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <td>User</td>
+        <td>date Created</td>
+        <td>Device</td>
+        <td>Operating System</td>
+        <td>Browser</td>
+        <td>IP Address</td>
+      </tr>
+      </thead>
+      <tr ng-repeat="activity in vm.userActivityLogin">
+        <td>{{activity.username}} <span class="opacity-50 text-sm">(id: {{activity.userId}})</span></td>
+        <td>{{activity.dateCreated | date:'short'}}</td>
+        <td>{{activity.device}}</td>
+        <td>{{activity.operatingSystem}}</td>
+        <td>{{activity.browser}}</td>
+        <td>{{activity.ipAddress}}</td>
+      </tr>
+    </table>
+
+    <ul uib-pagination ng-if="vm.userActivity.list.length < vm.userActivity.total"
+        max-size="7" force-ellipses="true"
+        boundary-links="true" total-items="vm.userActivity.total"
+        ng-model="vm.pagination.currentPage" ng-change="vm.pagination.onChange()"></ul>
+
+  </uib-tab>
+  <uib-tab index="1" heading="Video Activity">
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <td>User</td>
+        <td>last viewed</td>
+        <td>Video</td>
+        <td>Device</td>
+        <td>Operating System</td>
+        <td>Browser</td>
+        <td>IP Address</td>
+      </tr>
+      </thead>
+      <tr ng-repeat="activity in vm.userActivityVideo">
+        <td>{{activity.username}} <span class="opacity-50 text-sm">(id: {{activity.userId}})</span></td>
+        <td>{{(activity.lastUpdated || activity.dateCreated) | date:'short'}}</td>
+        <td>{{activity.video}}</td>
+        <td>{{activity.device}}</td>
+        <td>{{activity.operatingSystem}}</td>
+        <td>{{activity.browser}}</td>
+        <td>{{activity.ipAddress}}</td>
+      </tr>
+    </table>
+
+    <ul uib-pagination ng-if="vm.userActivity.list.length < vm.userActivity.total"
+        max-size="7" force-ellipses="true"
+        boundary-links="true" total-items="vm.userActivity.total"
+        ng-model="vm.pagination.currentPage" ng-change="vm.pagination.onChange()"></ul>
+
+  </uib-tab>
+</uib-tabset>
+
+
+
+
 
