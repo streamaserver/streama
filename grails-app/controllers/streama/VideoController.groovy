@@ -19,6 +19,7 @@ class VideoController {
   def springSecurityService
   def fileService
   def videoService
+  def userActivityService
 
 
   def index() {
@@ -93,6 +94,8 @@ class VideoController {
   }
 
   def show(Video videoInstance) {
+    userActivityService.createActivityEntry(request, 'video', videoInstance)
+
     JSON.use('player') {
       render(videoInstance as JSON)
     }

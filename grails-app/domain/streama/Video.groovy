@@ -1,6 +1,8 @@
 package streama
 
-class Video {
+import streama.traits.SimpleInstance
+
+class Video implements SimpleInstance{
 
   def springSecurityService
   transient videoService

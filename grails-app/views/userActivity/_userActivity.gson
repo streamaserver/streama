@@ -1,3 +1,4 @@
+import streama.Episode
 import streama.UserActivity
 
 model {
@@ -7,4 +8,11 @@ model {
 json g.render(userActivity, [excludes: ['user']]){
   userId userActivity.userId
   username userActivity.user.username
+  def videoData = userActivity.video?.getSimpleInstance(['poster_path', 'release_date', 'episode_number', 'season_number'])
+  if(userActivity.video instanceof Episode && userActivity.video.show){
+    videoData.show = userActivity.video.show?.getSimpleInstance(['name', 'id', 'poster_path', 'first_air_date'])
+  }
+
+  video videoData
+
 }
