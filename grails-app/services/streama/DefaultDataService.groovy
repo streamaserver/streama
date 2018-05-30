@@ -160,6 +160,13 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+        [
+          settingsKey: 'Autoplay Next Video',
+          name: 'autoplay_next_video',
+          description: 'Allow Streama auto play the next movie or tv show',
+          settingsType: 'boolean',
+          value: 'false'
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',
