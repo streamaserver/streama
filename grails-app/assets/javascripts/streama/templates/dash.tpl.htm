@@ -1,6 +1,6 @@
 
 <div class="dashboard">
-  <div ng-if="vm.newReleases.length && !vm.selectedGenre">
+  <div ng-if="vm.newReleases.length && !vm.selectedGenre && !vm.isDashSectionHidden('new-releases')">
     <h3>{{'DASHBOARD.NEW_RELEASES' | translate}}</h3>
 
 
@@ -28,7 +28,7 @@
 
   <h2 class="genre-display" ng-if="$root.selectedGenre">{{'DASHBOARD.LOOKING_AT_GENRE' | translate}} <strong ng-bind="$root.selectedGenre.name"></strong></h2>
 
-  <div ng-if="vm.continueWatching.length && !$root.selectedGenre">
+  <div ng-if="vm.continueWatching.length && !$root.selectedGenre && !vm.isDashSectionHidden('continue-watching')">
     <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}</h3>
 
 
