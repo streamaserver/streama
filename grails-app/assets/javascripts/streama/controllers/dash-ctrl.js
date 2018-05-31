@@ -9,6 +9,7 @@ angular.module('streama').controller('dashCtrl',
     vm.showDetails = showDetails;
     vm.markCompleted = markCompleted;
     vm.loadingRecommendations = true;
+    vm.isDashSectionHidden = isDashSectionHidden;
 
     $scope.$on('changedGenre', onChangedGenre);
 
@@ -81,6 +82,7 @@ angular.module('streama').controller('dashCtrl',
 
     function showInitialSettingsWarning() {
       apiService.settings.list().success(function (data) {
+        $scope.settings = data;
         var TheMovieDbAPI = _.find(data, {settingsKey: 'Upload Directory'});
 
         if (!TheMovieDbAPI.value) {
@@ -144,6 +146,13 @@ angular.module('streama').controller('dashCtrl',
           });
         }
       })
+    }
+
+    function isDashSectionHidden(sectionName) {
+      var hiddenDashSectionSetting = _.find($scope.settings, {name: 'hidden_dash_sections'});
+      var hiddenDashSections = hiddenDashSectionSetting.value.split(',');
+      return (hiddenDashSections.indexOf(sectionName) > -1);
+
     }
 
 	});
