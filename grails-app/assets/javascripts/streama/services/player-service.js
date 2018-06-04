@@ -18,6 +18,7 @@ angular.module('streama').factory('playerService',
       showEpisodeBrowser: false,
       showNextButton: false,
       showSocketSession: true,
+      showDownloadButton: false,
       episodeList: [],
       selectedEpisodes: [],
       currentEpisode: {},
@@ -29,6 +30,7 @@ angular.module('streama').factory('playerService',
       onClose: angular.noop,
       onNext: angular.noop,
       onVideoClick: angular.noop,
+      onEditVideo: angular.noop,
       nextVideoData:{}
     };
 
@@ -37,11 +39,13 @@ angular.module('streama').factory('playerService',
       {
         return videoOptions;
       },
-      setVideoOptions: function (video) {
+      setVideoOptions: function (video, settings) {
         videoOptions = angular.copy(defaultVideoOptions);
         videoData = video;
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src || video.files[0].externalLink);
+        videoOptions.originalFilename = video.files[0].originalFilename;
         videoOptions.videoType = video.files[0].contentType;
+        videoOptions.showDownloadButton = _.find(settings, {name: 'player_showDownloadButton'}).parsedValue;
 
         if(video.subtitles && video.subtitles.length){
           videoOptions.subtitles = video.subtitles;
@@ -98,6 +102,7 @@ angular.module('streama').factory('playerService',
         videoOptions.onNext = this.onNext.bind(videoOptions);
         videoOptions.onVideoClick = this.onVideoClick.bind(videoOptions);
         videoOptions.onSocketSessionCreate = this.onSocketSessionCreate.bind(videoOptions);
+        videoOptions.onEditVideo = this.onEditVideo.bind(videoData, videoOptions);
 
         return videoOptions;
       },
@@ -218,6 +223,14 @@ angular.module('streama').factory('playerService',
         });
       },
 
+      onEditVideo: function () {
+        if(videoData.show){
+          $state.go('admin.show', {showId: videoData.show.id, episodeId: videoData.id, season: videoData.season_number});
+        }else{
+          $state.go('admin.movie', {movieId: videoData.id});
+        }
+      },
+
       handleMissingFileError: function (video) {
         var hasError = false;
 
@@ -294,8 +307,8 @@ angular.module('streama').factory('playerService',
       onNext: function () {
         if(typeof videoData.nextEpisode !== 'undefined'){
           $state.go('player', {videoId: videoData.nextEpisode.id});
-        }else if(typeof  videoData.nextVideo !== 'undefined' && $rootScope.getSetting('autoplay_next_video').value=== 'true'){
-          $state.go('player', {videoId: videoData.nextVideo.id});
+        }else if(typeof  videoData.nextVideo !== 'undefined'){
+          $state.go('player', {videoId: videoData.nextVideo});
         }
       },
 

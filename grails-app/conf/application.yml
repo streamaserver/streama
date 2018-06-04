@@ -122,7 +122,9 @@ grails:
 streama:
   regex:
     movies: ^(?<Name>.*)[._ ]\(\d{4}\).*
-    shows: ^(?<Name>.+)[._ ]S(?<Season>\d{2})E(?<Episode>\d{2,3}).*
+    shows:
+      - ^(?<Name>.+)[._ ]S(?<Season>\d{2})E(?<Episode>\d{2,3}).*
+      - ^(?<Name>.+)[._ ](?<Season>\d{1,2})x(?<Episode>\d{2,3}).*
   uploadtypes: ['video/h264', 'video/mp4', 'video/mpeg', 'video/quicktime', 'video/webm', 'video/x-ms-wm', 'video/x-ms-wmv',
               'video/x-msvideo', 'image/bmp', 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/svg+xml',
               'image/x-icon', 'image/x-png', 'application/x-subrip', 'text/plain', 'text/vtt', 'text/plain',

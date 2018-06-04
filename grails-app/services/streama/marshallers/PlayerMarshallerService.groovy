@@ -30,8 +30,8 @@ class PlayerMarshallerService {
         returnArray['original_language'] = video.original_language
         returnArray['apiId'] = video.apiId
 
-        returnArray['files'] = video.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }
-        returnArray['subtitles'] = video.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }
+        returnArray['files'] = video.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }*.getSimpleInstance()
+        returnArray['subtitles'] = video.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }*.getSimpleInstance()
 
         returnArray['hasFiles'] = video.hasFiles()
 
@@ -39,7 +39,7 @@ class PlayerMarshallerService {
 
         if (video instanceof Episode) {
           returnArray['mediaType'] = 'episode'
-          returnArray['show'] = video.show
+          returnArray['show'] = video.show?.getSimpleInstance(['imdb_id', 'apiId'])
           returnArray['episodeString'] = video.episodeString
           returnArray['name'] = video.name
           returnArray['air_date'] = video.air_date
@@ -49,18 +49,9 @@ class PlayerMarshallerService {
           returnArray['intro_start'] = video.intro_start
           returnArray['intro_end'] = video.intro_end
           returnArray['outro_start'] = video.outro_start
-          returnArray['nextVideo'] = [ id: video.suggestNextVideo()?.getFirstEpisode()?.id ,title: video.suggestNextVideo()?.name, genre:video.suggestNextVideo()?.genre?.name, poster:video.suggestNextVideo()?.poster_path ]
-          Video nextEpisode
+          returnArray['nextVideo'] = video.suggestNextVideo()
 
-          nextEpisode = video.show.episodes?.find {
-            return (it.episode_number == video.episode_number + 1 && it.season_number == video.season_number)
-          }
-          if (!nextEpisode) {
-            video.show.episodes?.find {
-              return (it.season_number == video.season_number + 1 && it.episode_number == 1)
-            }
-          }
-
+          Video nextEpisode = video.getNextEpisode()
           if (nextEpisode && nextEpisode.files) {
             returnArray['nextEpisode'] = [id: nextEpisode?.id]
           }
@@ -72,7 +63,7 @@ class PlayerMarshallerService {
           returnArray['backdrop_path'] = video.buildImagePath('backdrop_path', 1280)
           returnArray['poster_path'] = video.poster_path
           returnArray['trailerKey'] = video.trailerKey
-          returnArray['nextVideo'] = [ id: video.suggestNextVideo()?.id ,title: video.suggestNextVideo()?.title, genre:video.suggestNextVideo()?.genre?.name, poster:video.suggestNextVideo()?.poster_path ]
+          returnArray['nextVideo'] = video.suggestNextVideo()
 
         }
         if (video instanceof GenericVideo) {

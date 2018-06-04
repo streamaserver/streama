@@ -136,7 +136,7 @@
         <button ng-click="deleteSeason(currentSeason)" class="btn btn-danger btn-xs">Delete Season</button>
       </div>
       <div class="media-list">
-        <admin-episode episode="episode" ng-repeat="episode in seasons[currentSeason] | orderBy:'episode_number'" ></admin-episode>
+        <admin-episode episode-id="{{episode.id}}" episode="episode" ng-repeat="episode in seasons[currentSeason] | orderBy:'episode_number'" ></admin-episode>
       </div>
     </div>
   </div>

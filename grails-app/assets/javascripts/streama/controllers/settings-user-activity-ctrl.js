@@ -1,17 +1,55 @@
-
-
 angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'apiService', 'modalService', '$rootScope',
   function ($scope, apiService, modalService, $rootScope) {
-  var vm = this;
-  vm.loading = true;
+    var MAX_PER_PAGE = 10;
+    var vm = this;
+    vm.currentOffset = 0;
+    vm.loading = true;
+    vm.maxPerPage = MAX_PER_PAGE;
+    vm.userIdFilter = null;
+    vm.currentType = 'login';
+    vm.changeType = changeType;
+    vm.filter = {
+      user: null
+    };
 
-	apiService.userActivity.list().success(function (data) {
-    vm.userActivity = data;
-	});
+    vm.onUserSelect = onUserSelect;
 
-	apiService.user.list().success(function (data) {
-    vm.users = data;
-    vm.loading = false;
-	});
+    vm.pagination = {
+      currentPage: 1,
+      onChange: function () {
+        loadList();
+      }
+    };
 
-}]);
+    init();
+
+    function init() {
+      loadList();
+
+      apiService.user.list().success(function (data) {
+        vm.users = data;
+        vm.loading = false;
+      });
+    }
+
+    function changeType(type) {
+      vm.currentType = type;
+      loadList();
+    }
+
+    function onUserSelect() {
+      loadList();
+    }
+
+    function loadList() {
+      apiService.userActivity.list({offset: getOffset(), max: MAX_PER_PAGE, userId: _.get(vm.filter, 'user.id'), type: vm.currentType}).success(function (data) {
+        vm.userActivity = data;
+      });
+    }
+
+    function getOffset() {
+      return vm.pagination.currentPage === 1 ? 0 : (vm.pagination.currentPage - 1) * MAX_PER_PAGE;
+    }
+
+
+  }]);

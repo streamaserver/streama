@@ -156,6 +156,7 @@ class TheMovieDbService {
     }
   }
 
+  @Transactional
   def createEntityFromApiId(type, id, data = [:]){
     def apiData = getEntryById(type, id, data)
     def entity
@@ -186,7 +187,7 @@ class TheMovieDbService {
         tvShow = createEntityFromApiId('tv', data.tv_id)
       }
       entity.show = tvShow
-      log.debug("epiosde data")
+//      log.debug("epiosde data")
     }
 
     entity.properties = data
