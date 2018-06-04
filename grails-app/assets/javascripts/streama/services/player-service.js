@@ -30,7 +30,8 @@ angular.module('streama').factory('playerService',
       onClose: angular.noop,
       onNext: angular.noop,
       onVideoClick: angular.noop,
-      onEditVideo: angular.noop
+      onEditVideo: angular.noop,
+      nextVideoData:{}
     };
 
     return {
@@ -87,6 +88,10 @@ angular.module('streama').factory('playerService',
           videoOptions.customStartingTime = video.viewedStatus.currentPlayTime;
         }else{
           videoOptions.customStartingTime = 0;
+        }
+
+        if(video.nextVideo){
+          videoOptions.nextVideoData=video.nextVideo;
         }
 
         videoOptions.onPlay = this.onVideoPlay.bind(videoOptions);

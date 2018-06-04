@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').directive('streamaVideoPlayer', [
-  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce',
-  function (uploadService, localStorageService, $timeout, playerService, $http, $sce) {
+  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce','$interval','$rootScope',
+  function (uploadService, localStorageService, $timeout, playerService, $http, $sce, $interval,$rootScope) {
 
     return {
       restrict: 'AE',
@@ -41,6 +41,9 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				$scope.isInitialized = false;
 				$scope.loading = true;
 				$scope.initialPlay = false;
+        $scope.nextVideoCountdown = false;
+        $scope.CountdownSecond = 5;
+
 
 				if(!$scope.options.isExternalLink){
 					$http.head(videoSrc)
@@ -264,6 +267,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				}
 
 				function ontimeupdate(event){
+          dismissNextVideo();
 					$scope.currentTime = video.currentTime;
 					$scope.$apply();
 					if(skipIntro)
@@ -280,9 +284,19 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				}
 
 				function onVideoEnded() {
-					if($scope.options.showNextButton){
-						$scope.options.onNext();
-					}
+          $scope.options.videoOverlayEnabled=false;
+          console.log($rootScope);
+          if($rootScope.getSetting('autoplay_next_video').value=== 'true' && $scope.options.showNextButton){
+            $scope.counting=$interval(function(){
+              $scope.nextVideoCountdown=true;
+              $scope.CountdownSecond--;
+              if($scope.CountdownSecond===0){
+                $scope.options.onNext();
+              }
+            }, 1000, 5);
+          }else if($scope.options.showNextButton){
+            $scope.options.onNext();
+          }
 				}
 
 				function onerror(){
@@ -324,6 +338,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				}
 
 				function pause(socketData) {
+
 					video.pause();
 					$scope.playing = false;
 					$scope.options.onPause(video, socketData);
@@ -335,6 +350,13 @@ angular.module('streama').directive('streamaVideoPlayer', [
 					$scope.options.onPlay(video, socketData);
 					$scope.overlayVisible = false;
 				}
+
+				function dismissNextVideo(){
+          $scope.options.videoOverlayEnabled=true;
+          $interval.cancel($scope.counting);
+          $scope.nextVideoCountdown=false;
+          $scope.CountdownSecond=5;
+        }
 
 				function createNewPlayerSession() {
 					$scope.options.onSocketSessionCreate();
