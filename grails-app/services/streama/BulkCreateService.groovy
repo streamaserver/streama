@@ -1,5 +1,6 @@
 package streama
 
+import grails.transaction.NotTransactional
 import grails.transaction.Transactional
 
 import java.util.regex.Matcher
@@ -32,33 +33,47 @@ class BulkCreateService {
 
     def movieRegex = regexConfig?.movies ?: STD_MOVIE_REGEX
     def tvShowRegex = regexConfig?.shows ?: STD_TVSHOW_REGEX
+    def tvShowRegexList = tvShowRegex instanceof List ? tvShowRegex : [tvShowRegex]
 
     def result = []
 
     files.each { file ->
-      def fileResult = matchSingleFile(file, movieRegex, tvShowRegex)
+      def fileResult = matchSingleFile(file, movieRegex, tvShowRegexList)
       result.add(fileResult)
     }
 
     return result
   }
 
-  private matchSingleFile(file, movieRegex, tvShowRegex) {
+  private matchSingleFile(file, movieRegex, List tvShowRegexList) {
     def fileResult = [file: file.path]
+    def foundMatch = false
 
     String fileName = file.name
-    def tvShowMatcher = fileName =~ tvShowRegex
-    def movieMatcher = fileName =~ movieRegex
 
-    if (tvShowMatcher.matches()) {
-      matchTvShowFromFile(tvShowMatcher, fileResult)
-    } else if (movieMatcher.matches()) {
-      matchMovieFromFile(movieMatcher, fileResult)
-    } else {
-      fileResult.status = MATCHER_STATUS.NO_MATCH
-      fileResult.message = 'No match found'
+    tvShowRegexList.each{ tvShowRegex ->
+      def tvShowMatcher = fileName =~ '(?i)' + tvShowRegex
+
+      if (tvShowMatcher.matches()) {
+        matchTvShowFromFile(tvShowMatcher, fileResult)
+        foundMatch = true
+        return fileResult
+      }
     }
 
+    if(foundMatch){
+      return fileResult
+    }
+
+    def movieMatcher = fileName =~ '(?i)' + movieRegex
+    if (movieMatcher.matches()) {
+      matchMovieFromFile(movieMatcher, fileResult)
+      foundMatch = true
+      return fileResult
+    }
+
+    fileResult.status = MATCHER_STATUS.NO_MATCH
+    fileResult.message = 'No match found'
     return fileResult
   }
 
@@ -133,7 +148,7 @@ class BulkCreateService {
       } else {
         fileResult = extractDataForEpisode(existingTvShow, seasonNumber, episodeNumber, fileResult, tvShowId)
       }
-    } catch (Exception ex) {
+    } catch (ex) {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
       fileResult.status = MATCHER_STATUS.LIMIT_REACHED
       fileResult.name = name
@@ -183,15 +198,21 @@ class BulkCreateService {
   }
 
 
+  @NotTransactional
   def bulkAddMediaFromFile(List<Map> fileMatchers){
     def result = []
     fileMatchers.each{ fileMatcher ->
       String type = fileMatcher.type
+      def entity
       if(fileMatcher.status == MATCHER_STATUS.EXISTING){
         return
       }
 
-      def entity = theMovieDbService.createEntityFromApiId(type, fileMatcher.apiId, fileMatcher)
+      try{
+        entity = theMovieDbService.createEntityFromApiId(type, fileMatcher.apiId, fileMatcher)
+      }catch (e){
+        log.error(e.message)
+      }
       if(!entity){
         fileMatcher.status = MATCHER_STATUS.LIMIT_REACHED
         result.add(fileMatcher)
@@ -200,6 +221,9 @@ class BulkCreateService {
       if(entity instanceof Video){
         entity.addLocalFile(fileMatcher.file)
       }
+
+      log.debug("creating entity of type ${entity.getClass().canonicalName} with id ${entity.id}")
+
       fileMatcher.status = MATCHER_STATUS.CREATED
       fileMatcher.importedId = entity instanceof Episode ? entity.showId : entity.id
       fileMatcher.importedType = STREAMA_ROUTES[type]

@@ -1,6 +1,8 @@
 package streama
 
-class TvShow {
+import streama.traits.SimpleInstance
+
+class TvShow implements SimpleInstance {
 
   transient theMovieDbService
 

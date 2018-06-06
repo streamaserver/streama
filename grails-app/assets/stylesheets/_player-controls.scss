@@ -47,7 +47,7 @@
 
       }
       &.current{
-        background: darken($primary, 45%);
+        background: $secondary;
         .episode-play{
           display: none;
         }
@@ -208,6 +208,7 @@
     &:hover{
       background: transparent;
       color: #fff;
+      text-decoration: none;
 
       &:before{
         font-size: 1.1em;
@@ -476,7 +477,7 @@
       }
 
       &.current{
-        background: darken($primary, 45%);
+        background: $secondary;
         .episode-play{
           display: none;
         }

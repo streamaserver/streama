@@ -10,8 +10,9 @@ class ViewingStatusController {
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [delete: "DELETE"]
-    
+
     def springSecurityService
+    def viewingStatusService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -20,38 +21,20 @@ class ViewingStatusController {
 
     @Transactional
     def save() {
-        User currentUser = springSecurityService.currentUser
-        Video video = Video.get(params.getInt('videoId'))
-        Double currentTime = params.getDouble('currentTime');
-        Double runtime = params.getDouble('runtime');
-        ViewingStatus viewingStatus
-        
-        if (!video || !currentTime) {
-            render status: NOT_ACCEPTABLE
-            return
-        }
-        
-        if(video instanceof Episode){
-            viewingStatus = ViewingStatus.findOrCreateByTvShowAndUser(video.show, currentUser)
-            viewingStatus.tvShow = video.show
-        }else{
-            viewingStatus = ViewingStatus.findOrCreateByVideoAndUser(video, currentUser)
-        }
+      def result = [:]
+      try{
+        result = viewingStatusService.createNew(params)
+      }catch(e){
+        log.error(e.message)
+        result.hasError = true
+        result.code = NOT_ACCEPTABLE
+      }
 
-        viewingStatus.video = video
-        viewingStatus.currentPlayTime = currentTime
-        viewingStatus.runtime = runtime
-        viewingStatus.user = currentUser
-
-
-        viewingStatus.validate()
-        if (viewingStatus.hasErrors()) {
-            render status: NOT_ACCEPTABLE
-            return
-        }
-
-        viewingStatus.save flush:true
-        respond viewingStatus, [status: CREATED]
+      if(result instanceof Map && result.hasError){
+        render status: result.code
+        return
+      }
+      respond result, [status: CREATED]
     }
 
     def show(ViewingStatus viewingStatusInstance){

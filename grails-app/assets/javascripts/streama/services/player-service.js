@@ -18,6 +18,7 @@ angular.module('streama').factory('playerService',
       showEpisodeBrowser: false,
       showNextButton: false,
       showSocketSession: true,
+      showDownloadButton: false,
       episodeList: [],
       selectedEpisodes: [],
       currentEpisode: {},
@@ -28,7 +29,8 @@ angular.module('streama').factory('playerService',
       onPause: angular.noop,
       onClose: angular.noop,
       onNext: angular.noop,
-      onVideoClick: angular.noop
+      onVideoClick: angular.noop,
+      onEditVideo: angular.noop
     };
 
     return {
@@ -36,11 +38,13 @@ angular.module('streama').factory('playerService',
       {
         return videoOptions;
       },
-      setVideoOptions: function (video) {
+      setVideoOptions: function (video, settings) {
         videoOptions = angular.copy(defaultVideoOptions);
         videoData = video;
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src || video.files[0].externalLink);
+        videoOptions.originalFilename = video.files[0].originalFilename;
         videoOptions.videoType = video.files[0].contentType;
+        videoOptions.showDownloadButton = _.find(settings, {name: 'player_showDownloadButton'}).parsedValue;
 
         if(video.subtitles && video.subtitles.length){
           videoOptions.subtitles = video.subtitles;
@@ -93,6 +97,7 @@ angular.module('streama').factory('playerService',
         videoOptions.onNext = this.onNext.bind(videoOptions);
         videoOptions.onVideoClick = this.onVideoClick.bind(videoOptions);
         videoOptions.onSocketSessionCreate = this.onSocketSessionCreate.bind(videoOptions);
+        videoOptions.onEditVideo = this.onEditVideo.bind(videoData, videoOptions);
 
         return videoOptions;
       },
@@ -211,6 +216,14 @@ angular.module('streama').factory('playerService',
             $state.go($state.current, $stateParams, {reload: true});
           }
         });
+      },
+
+      onEditVideo: function () {
+        if(videoData.show){
+          $state.go('admin.show', {showId: videoData.show.id, episodeId: videoData.id, season: videoData.season_number});
+        }else{
+          $state.go('admin.movie', {movieId: videoData.id});
+        }
       },
 
       handleMissingFileError: function (video) {

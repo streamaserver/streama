@@ -151,6 +151,24 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+        [
+            settingsKey: 'Let users download Videos',
+            name: 'player_showDownloadButton',
+            description: 'When this value is set to true, the player-interface will get an additional download-button for all users. This will download the raw movie file. ',
+            settingsType: 'boolean',
+            value: 'false',
+            required: false,
+            validationRequired: false
+        ],
+        [
+            settingsKey: 'Hidden Dash sections',
+            name: 'hidden_dash_sections',
+            description: 'You can here add a comma-separted list of all the dash sections you would like to hide. To find out the name, check for vm.isDashSectionHidden(\'SECTION-NAME\'). example value: "continue-watching,new-releases"',
+            settingsType: 'string',
+            value: '',
+            required: false,
+            validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',

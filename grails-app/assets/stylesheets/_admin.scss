@@ -8,7 +8,7 @@
 
 
 
-  .nav{
+  > .nav{
     width: 300px;
     background: rgba(0, 0, 0, 0.15);
     border-right: 1px solid rgba(255, 255, 255, 0.11);
@@ -32,7 +32,7 @@
 
         &:hover a,
         &.active a{
-          background: darken($primary, 40%);
+          background: $secondary;
           color: white;
         }
 
@@ -65,7 +65,14 @@
     }
   }
 
+  admin-episode{
+    &.highlight .media-list-item{
+      box-shadow: 0 0 3px 1px $secondary;
+    }
+  }
+
   .media-list-item{
+    transition: box-shadow 0.5s;
     margin-top: 15px;
   }
 }

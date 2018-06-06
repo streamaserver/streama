@@ -13,9 +13,10 @@ angular.module('streama').factory('mediaListService', function () {
         currentOffset: 0,
         isLoading: true,
         sorter: _.getterSetter(setSort, getSort),
+        setFilter: setFilter,
         filter: {
           tags: null,
-          genre: null,
+          genre: [],
           title: null
         },
         fetch: endpoint,
@@ -28,6 +29,10 @@ angular.module('streama').factory('mediaListService', function () {
 
       return mediaListConfig;
 
+
+      function setFilter() {
+        fetchData(mediaListConfig);
+      }
 
       function search() {
         fetchData(mediaListConfig);

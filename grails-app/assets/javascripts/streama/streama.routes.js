@@ -96,7 +96,7 @@ angular.module('streama').config(function ($stateProvider) {
 			controller: 'adminShowsCtrl'
 		})
 		.state('admin.show', {
-			url: '/show/:showId',
+			url: '/show/:showId?episodeId?season',
 			templateUrl: '/streama/admin-show.htm',
 			controller: 'adminShowCtrl'
 		})

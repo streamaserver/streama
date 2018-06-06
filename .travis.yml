@@ -8,12 +8,12 @@ language: groovy
 
 services: docker
 
-script: ./gradlew check
+script: ./gradlew build
 
 after_success:
   if [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     docker login -u="$DOCKER_USER" -p="$DOCKER_PASS";
-    docker build -t gkiko/streama:latest .;
+    docker build -t gkiko/streama:latest -f docker/Dockerfile .;
     docker tag gkiko/streama:latest gkiko/streama:$TRAVIS_TAG;
     docker push gkiko/streama:latest;
     docker push gkiko/streama:$TRAVIS_TAG;

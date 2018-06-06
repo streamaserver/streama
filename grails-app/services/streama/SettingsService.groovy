@@ -14,19 +14,7 @@ class SettingsService {
 
   def getValueForName(String name){
     def setting = Settings.findByName(name)
-    if(!setting){
-      return
-    }
-
-    if(setting.settingsType == 'boolean'){
-      return setting.value == 'true'
-    }
-    else if(setting.settingsType == 'integer'){
-      return setting.value?.isNumber() ? setting.value as Integer : null
-    }
-    else{
-      return setting.value
-    }
+    return setting?.getParsedValue()
   }
 
   Boolean getAnonymousAccess() {

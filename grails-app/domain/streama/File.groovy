@@ -1,6 +1,8 @@
 package streama
 
-class File {
+import streama.traits.SimpleInstance
+
+class File implements SimpleInstance {
 
   def uploadService
 
@@ -19,11 +21,14 @@ class File {
   String subtitleSrcLang
   String quality
   Boolean isPublic = false
+
   static constraints = {
     sha256Hex maxSize: 64
     quality inList: ['720p', '480p', '360p']
   }
   static transients = ['uploadService']
+
+  static simpleInstanceFields = ['id', 'src', 'originalFilename', 'contentType', 'subtitleSrcLang', 'subtitleLabel', 'externalLink']
 
   def getImagePath(){
     uploadService.getPath(this)
@@ -78,7 +83,7 @@ class File {
       return true
     }
   }
-
+  
   boolean isVideo() {
     return extension != '.srt' && extension != '.vtt';
   }
