@@ -101,7 +101,7 @@ dependencies {
     compile group: 'eu.bitwalker', name: 'UserAgentUtils', version: '1.20'
     runtime 'mysql:mysql-connector-java:5.1.36'
     //compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
-    runtime 'org.postgresql:postgresql:42.2.2'
+    runtime 'org.postgresql:postgresql:42.2.3'
     // as per instructions @ https://github.com/kaleidos/grails-postgresql-extensions/blob/master/README.md
     //compile 'org.grails.plugins:postgresql-extensions:5.2.0'
     //provided 'org.postgresql:postgresql:42.1.4'
