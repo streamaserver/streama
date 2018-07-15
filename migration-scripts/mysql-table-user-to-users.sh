@@ -8,7 +8,7 @@ echo input mysql user password for streama database:
 read -s PASS
 echo ''
 echo input mysql database name for streama database:
-read -s D
+read -s DB
 echo ''
 
 # check for 'user'/'users' table
