@@ -28,6 +28,10 @@ angular.module('streama').controller('settingsUsersCtrl', ['$scope', 'apiService
   };
 
   $scope.openUserCreateModal = function (user) {
+    if(user==null){
+      user = {}
+    }
+    user.language = "en";
     modalService.userCreateModal(user, function (data) {
       if(!_.find($scope.users, {id: data.id})){
         $scope.users.push(data);
