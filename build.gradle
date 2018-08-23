@@ -151,3 +151,6 @@ bootRun {
 	}
 }
 
+grails {
+  pathingJar = true
+}
