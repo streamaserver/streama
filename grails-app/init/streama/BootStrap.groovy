@@ -1,3 +1,5 @@
+package streama
+
 class BootStrap {
 
     def marshallerService
