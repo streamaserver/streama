@@ -21,8 +21,7 @@ angular.module('streama').factory('mediaListService', function () {
         },
         fetch: endpoint,
         search: search,
-        loadMore: loadMore,
-        getThumbnail: getThumbnail
+        loadMore: loadMore
       };
 
       fetchData(mediaListConfig);
@@ -51,21 +50,6 @@ angular.module('streama').factory('mediaListService', function () {
       function loadMore() {
         mediaListConfig.currentOffset += LIST_MAX;
         fetchData(mediaListConfig);
-      }
-
-
-      function getThumbnail(movie) {
-        if(!movie.poster_path && !movie.poster_image_src){
-          return $rootScope.basePath + 'assets/poster-not-found.png';
-        }
-        if(movie.poster_path){
-          return 'https://image.tmdb.org/t/p/w300/' + movie.poster_path;
-        }
-
-        if(movie.poster_image_src){
-          return movie.poster_image_src;
-        }
-
       }
     }
   };

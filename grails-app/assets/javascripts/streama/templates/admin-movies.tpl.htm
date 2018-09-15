@@ -29,7 +29,9 @@
     <div class="media-list-item media-poster-item" ng-class="{'no-files': !movie.hasFiles}"
          ng-repeat="movie in vm.movie.list" ui-sref="admin.movie({movieId: movie.id})">
       <div class="media-item" >
-        <img ng-src="{{::vm.movie.getThumbnail(movie)}}"/>
+
+
+        <streama-video-image type="poster" size="300" video="movie"></streama-video-image>
 
 
         <div class="play-text">
