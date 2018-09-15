@@ -17,6 +17,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         var overlayTimeout;
         var volumeChangeTimeout;
         var currentTimeChangeTimeout;
+        var isTimeScrubbingActive = false;
 				var currEpisode = null;
         var skippingDuration = 20;  //Skipping duration for holding an arrow key to left or right.
         var longSkippingDuration = 60; //Skipping duration for holding ctrl + arrow key.
@@ -125,7 +126,11 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						change: function (e, slider) {
 							angular.element('#playerDurationSlider .ui-slider-handle').blur();
 						},
+            start: function(){
+              isTimeScrubbingActive = true;
+            },
 						stop: function (e, slider) {
+              isTimeScrubbingActive = false;
 							angular.element('#playerDurationSlider .ui-slider-handle').blur();
 							video.currentTime = slider.value;
 							$scope.currentTime = slider.value;
@@ -264,6 +269,9 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				}
 
 				function ontimeupdate(event){
+          if(isTimeScrubbingActive){
+            return;
+          }
 					$scope.currentTime = video.currentTime;
 					$scope.$apply();
 					if(skipIntro)
