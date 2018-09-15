@@ -53,7 +53,7 @@ class PlayerMarshallerService {
 
           Video nextEpisode = video.getNextEpisode()
           if (nextEpisode && nextEpisode.files) {
-            returnArray['nextEpisode'] = [id: nextEpisode?.id]
+            returnArray['nextEpisode'] = nextEpisode.getSimpleInstance(['overview', 'still_path', 'poster_path:show.poster_path', 'fullTitle'])
           }
         }
         if (video instanceof Movie) {

@@ -39,13 +39,12 @@
   <div class="next-video-overlay" ng-if="isNextVideoShowing">
       <div class="row next-video-overlay-inner">
         <div class="col-xs-3">
-          <streama-video-image video="options.nextVideo" type="poster" size="300"></streama-video-image>
-          <img src="https://image.tmdb.org/t/p/w300//47EIfjYrT80AOfpAIkvSxdpwGOv.jpg">
+          <streama-video-image video="options.nextVideo" type="poster" size="154"></streama-video-image>
         </div>
         <div class="col-xs-8">
           <h4>Up next...</h4>
-          <h3>{{options.nextVideo.videoMetaTitle}} S13e15 - Live Quarter Finals Results</h3>
-          <p>{{options.nextVideo.videoMetaDescription}} The second 12 of the final 36 acts take the stage live to compete for America's vote.</p>
+          <h3>{{options.nextVideo.fullTitle}}</h3>
+          <p>{{options.nextVideo.overview}}</p>
 
           <button class="play-button with-label" ng-click="next()"> <span class="play-label">play now</span> <i class="ion-ios-play"></i></button>
         </div>

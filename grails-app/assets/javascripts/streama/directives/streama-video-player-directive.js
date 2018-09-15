@@ -21,7 +21,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				var currEpisode = null;
         var skippingDuration = 20;  //Skipping duration for holding an arrow key to left or right.
         var longSkippingDuration = 60; //Skipping duration for holding ctrl + arrow key.
-        var END_OF_VIDEO = 200;
+        var END_OF_VIDEO = 30;
         var skipIntro = true;         //Userflag intro should be skipped
         var minimizeOnOutro = true;   //Userflag skip to next episode on outro
 				var videoSrc = $scope.options.videoSrc.toString();

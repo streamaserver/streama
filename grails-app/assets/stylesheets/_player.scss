@@ -35,6 +35,7 @@ streama-video-player{
     }
   }
   .next-video-overlay{
+    @include vendor-property('transition', 'padding 0.2s');
     position: absolute;
     bottom: 0;
     left: 0;
@@ -49,6 +50,7 @@ streama-video-player{
       float: right;
 
       h4{
+        margin-top: 0px;
         color: #bfbfbf;
         font-weight: 300;
       }

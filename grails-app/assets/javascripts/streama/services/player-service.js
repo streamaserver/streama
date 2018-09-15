@@ -22,6 +22,7 @@ angular.module('streama').factory('playerService',
       episodeList: [],
       selectedEpisodes: [],
       currentEpisode: {},
+      nextVideo: {},
       onSocketSessionCreate: angular.noop,
       onTimeChange: angular.noop,
       onError: angular.noop,
@@ -55,12 +56,9 @@ angular.module('streama').factory('playerService',
         videoOptions.videoMetaSubtitle = (video.show ? video.episodeString + ' - ' + video.name : (video.release_date ? video.release_date.substring(0, 4) : ''));
         videoOptions.videoMetaDescription = video.overview;
 
-        if(videoData.nextEpisode){
-          console.log('%c showNextButton', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
-          videoOptions.showNextButton = true;
-        }
-        if(videoData.nextVideo){
-          console.log('%c showNextButton', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
+        videoOptions.nextVideo = videoData.nextEpisode || videoData.nextVideo;
+
+        if(videoOptions.nextVideo){
           videoOptions.showNextButton = true;
         }
 

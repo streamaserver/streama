@@ -83,6 +83,15 @@ class Video implements SimpleInstance{
       return this.show?.name
     }
   }
+
+  String getFullTitle(){
+    if(this instanceof Episode){
+      return this.episodeString + ' - ' + this.name
+    }else{
+      return this.title + (this.release_date?.substring(0, 4))
+    }
+  }
+
   def getVideoFiles(){
     return this.files?.findAll{it.extension != '.srt' && it.extension != '.vtt'}
   }
