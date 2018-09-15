@@ -21,6 +21,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				var currEpisode = null;
         var skippingDuration = 20;  //Skipping duration for holding an arrow key to left or right.
         var longSkippingDuration = 60; //Skipping duration for holding ctrl + arrow key.
+        var END_OF_VIDEO = 200;
         var skipIntro = true;         //Userflag intro should be skipped
         var minimizeOnOutro = true;   //Userflag skip to next episode on outro
 				var videoSrc = $scope.options.videoSrc.toString();
@@ -40,6 +41,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				$scope.fullScreen = toggleFullScreen;
 				$scope.next = $scope.options.onNext;
 				$scope.isInitialized = false;
+				$scope.isNextVideoShowing = false;
 				$scope.loading = true;
 				$scope.initialPlay = false;
 
@@ -268,16 +270,17 @@ angular.module('streama').directive('streamaVideoPlayer', [
 					$elem.find('video').remove().length = 0;
 				}
 
-				function ontimeupdate(event){
+        function ontimeupdate(event){
           if(isTimeScrubbingActive){
             return;
           }
 					$scope.currentTime = video.currentTime;
-					$scope.$apply();
+          determineNextVideoShowing();
+          $scope.$apply();
+
 					if(skipIntro)
 					{
-						if(currEpisode == null)
-						{
+						if(currEpisode == null){
 							currEpisode = playerService.getVideoOptions().currentEpisode;
 						}
 						if(currEpisode.intro_start < this.currentTime && this.currentTime < currEpisode.intro_end)
@@ -286,6 +289,15 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						}
 					}
 				}
+
+        function determineNextVideoShowing() {
+          if(currEpisode == null){
+            currEpisode = playerService.getVideoOptions().currentEpisode;
+          }
+				  var endOfVideo = _.get(currEpisode, 'outro_start') || END_OF_VIDEO;
+          var remainingDurationSeconds = video.duration - video.currentTime;
+          $scope.isNextVideoShowing = ($scope.options.showNextButton && remainingDurationSeconds < endOfVideo);
+        }
 
 				function onVideoEnded() {
 					if($scope.options.showNextButton){
