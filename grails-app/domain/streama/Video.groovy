@@ -25,6 +25,7 @@ class Video implements SimpleInstance{
   String imdb_id
 
   static hasMany = [files: File]
+  static simpleInstanceFields = ['overview', 'poster_path:posterPath', 'fullTitle']
 
   static mapping = {
     cache true
@@ -149,5 +150,14 @@ class Video implements SimpleInstance{
       }
     }
     return
+  }
+
+
+  def getPosterPath(){
+    if(this instanceof Episode){
+      return this.show.poster_path
+    }else{
+      return this.poster_path
+    }
   }
 }
