@@ -291,16 +291,18 @@ angular.module('streama').directive('streamaVideoPlayer', [
 				}
 
         function determineNextVideoShowing() {
-          if(currEpisode == null){
-            currEpisode = playerService.getVideoOptions().currentEpisode;
+          var videoOutroStart = $scope.options.outro_start;
+          if(videoOutroStart){
+            $scope.isNextVideoShowing = ($scope.options.showNextButton && video.currentTime > videoOutroStart);
           }
-				  var endOfVideo = _.get(currEpisode, 'outro_start') || END_OF_VIDEO;
-          var remainingDurationSeconds = video.duration - video.currentTime;
-          $scope.isNextVideoShowing = ($scope.options.showNextButton && remainingDurationSeconds < endOfVideo);
+          else{
+            var remainingDurationSeconds = video.duration - video.currentTime;
+            $scope.isNextVideoShowing = ($scope.options.showNextButton && remainingDurationSeconds < END_OF_VIDEO);
+          }
         }
 
 				function onVideoEnded() {
-					if($scope.options.showNextButton){
+					if($scope.options.showNextButton && $scope.options.isAutoplayNextActive){
 						$scope.options.onNext();
 					}
 				}
