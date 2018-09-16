@@ -292,12 +292,13 @@ angular.module('streama').directive('streamaVideoPlayer', [
 
         function determineNextVideoShowing() {
           var videoOutroStart = $scope.options.outro_start;
+          var nextVideoId = _.get($scope.options, 'nextVideo.id');
           if(videoOutroStart){
-            $scope.isNextVideoShowing = ($scope.options.showNextButton && video.currentTime > videoOutroStart);
+            $scope.isNextVideoShowing = (nextVideoId && video.currentTime > videoOutroStart);
           }
           else{
             var remainingDurationSeconds = video.duration - video.currentTime;
-            $scope.isNextVideoShowing = ($scope.options.showNextButton && remainingDurationSeconds < END_OF_VIDEO);
+            $scope.isNextVideoShowing = (nextVideoId && remainingDurationSeconds < END_OF_VIDEO);
           }
         }
 
