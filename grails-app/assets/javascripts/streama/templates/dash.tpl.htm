@@ -36,11 +36,7 @@
       <div class="media-list-item media-poster-item" ng-repeat="viewingStatus in vm.continueWatching">
         <div class="media-item" >
 
-          <img ng-if="viewingStatus.video.poster_image_src" ng-src="{{::viewingStatus.video.poster_image_src}}"/>
-          <img ng-if="!viewingStatus.video.poster_image_src && viewingStatus.video.poster_path"
-               ng-src="https://image.tmdb.org/t/p/w300/{{::viewingStatus.video.poster_path}}"/>
-          <img ng-if="!viewingStatus.video.poster_path && !viewingStatus.video.poster_image_src"
-               ng-src="{{$root.basePath}}assets/poster-not-found.png"/>
+          <streama-video-image type="poster" video="viewingStatus.video"></streama-video-image>
 
           <div class="play-text">
             <h4>Continue "<span ng-bind="::(viewingStatus.video.title || viewingStatus.video.show.name)"></span>"</h4>
@@ -82,11 +78,7 @@
       <div class="media-list-item media-poster-item" ng-repeat="video in vm.recommendations track by video.id">
         <div class="media-item" >
 
-          <img ng-if="video.poster_image_src" ng-src="{{::video.poster_image_src}}"/>
-          <img ng-if="!video.poster_image_src && video.poster_path"
-               ng-src="https://image.tmdb.org/t/p/w300/{{::video.poster_path}}"/>
-          <img ng-if="!video.poster_path && !video.poster_image_src"
-               ng-src="{{$root.basePath}}assets/poster-not-found.png"/>
+          <streama-video-image type="poster" video="video"></streama-video-image>
 
           <div class="play-text">
             <h4 ng-bind="::(video.title || video.show.name)"></h4>
@@ -148,7 +140,7 @@
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="tvShow in vm.tvShow.list | filter: vm.tvShow.filter.execute">
         <div class="media-item" >
-          <img ng-src="{{::vm.tvShow.getThumbnail(tvShow)}}">
+          <streama-video-image type="poster" size="300" video="tvShow"></streama-video-image>
 
           <div class="play-text">
             <h4 ng-bind="::tvShow.name"></h4>
@@ -216,7 +208,7 @@
       <div class="media-list-item media-poster-item" ng-repeat="movie in vm.movie.list | orderBy:vm.movie.sorter.sort |filter: vm.movie.filter.execute">
         <div class="media-item" >
 
-          <img ng-src="{{::vm.movie.getThumbnail(movie)}}">
+          <streama-video-image type="poster" size="300" video="movie"></streama-video-image>
 
           <div class="play-text">
             <h4 ng-bind="::movie.title"></h4>
@@ -268,7 +260,10 @@
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="movie in vm.genericVideo.list  |filter: vm.genericVideo.filter.title">
         <div class="media-item" >
-          <img ng-src="{{::vm.genericVideo.getThumbnail(movie)}}">
+
+
+          <streama-video-image type="poster" size="300" video="movie"></streama-video-image>
+
           <div class="play-text">
             <h4 ng-bind="::movie.title"></h4>
             <p ng-bind="::movie.release_date.substring(0,4)"></p>

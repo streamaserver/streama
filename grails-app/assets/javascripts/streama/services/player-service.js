@@ -19,9 +19,12 @@ angular.module('streama').factory('playerService',
       showNextButton: false,
       showSocketSession: true,
       showDownloadButton: false,
+      isAutoplayNextActive: false,
       episodeList: [],
       selectedEpisodes: [],
       currentEpisode: {},
+      nextVideo: {},
+      outro_start: null,
       onSocketSessionCreate: angular.noop,
       onTimeChange: angular.noop,
       onError: angular.noop,
@@ -55,12 +58,11 @@ angular.module('streama').factory('playerService',
         videoOptions.videoMetaSubtitle = (video.show ? video.episodeString + ' - ' + video.name : (video.release_date ? video.release_date.substring(0, 4) : ''));
         videoOptions.videoMetaDescription = video.overview;
 
-        if(videoData.nextEpisode){
-          console.log('%c showNextButton', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
-          videoOptions.showNextButton = true;
-        }
-        if(videoData.nextVideo){
-          console.log('%c showNextButton', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
+        videoOptions.nextVideo = videoData.nextEpisode || videoData.nextVideo;
+        videoOptions.isAutoplayNextActive = !!videoData.nextEpisode;
+        videoOptions.outro_start = videoData.outro_start;
+
+        if(videoOptions.nextVideo){
           videoOptions.showNextButton = true;
         }
 
@@ -74,8 +76,7 @@ angular.module('streama').factory('playerService',
               episode: videoData.episode_number,
               season: videoData.season_number,
               intro_start: videoData.intro_start,
-              intro_end: videoData.intro_end,
-              outro_start: videoData.outro_start
+              intro_end: videoData.intro_end
             };
           });
         }
@@ -303,7 +304,7 @@ angular.module('streama').factory('playerService',
         if(typeof videoData.nextEpisode !== 'undefined'){
           $state.go('player', {videoId: videoData.nextEpisode.id});
         }else if(typeof  videoData.nextVideo !== 'undefined'){
-          $state.go('player', {videoId: videoData.nextVideo});
+          $state.go('player', {videoId: videoData.nextVideo.id});
         }
       },
 

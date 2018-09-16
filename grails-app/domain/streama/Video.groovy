@@ -25,6 +25,7 @@ class Video implements SimpleInstance{
   String imdb_id
 
   static hasMany = [files: File]
+  static simpleInstanceFields = ['overview', 'poster_path:posterPath', 'fullTitle']
 
   static mapping = {
     cache true
@@ -83,6 +84,15 @@ class Video implements SimpleInstance{
       return this.show?.name
     }
   }
+
+  String getFullTitle(){
+    if(this instanceof Episode){
+      return this.episodeString + ' - ' + this.name
+    }else{
+      return this.title + (this.release_date?.substring(0, 4))
+    }
+  }
+
   def getVideoFiles(){
     return this.files?.findAll{it.extension != '.srt' && it.extension != '.vtt'}
   }
@@ -117,15 +127,17 @@ class Video implements SimpleInstance{
   }
 
 
-  def suggestNextVideo(){
+  Video suggestNextVideo(){
+    def result
+
     if (this instanceof Movie) {
 
       Movie tmp_movie=Movie.find{
         ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id > this.id)}
       if(tmp_movie == null){
-        return Movie.find{ ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id < this.id)}?.id
+        result =  Movie.find{ ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id < this.id)}
       }else{
-        return tmp_movie?.id
+        result =  tmp_movie
       }
     }
     if (this instanceof Episode) {
@@ -133,12 +145,22 @@ class Video implements SimpleInstance{
         TvShow tmp
         tmp=TvShow.find{ genre.id in (this.show?.genre.id) && id!=this.show.id && id > this.show.id}
         if(tmp == null){
-          return TvShow.find{ genre.id in (this.show?.genre.id) && id!=this.show.id && id < this.show.id}?.getFirstEpisode()?.id
+          result = TvShow.find{ genre.id in (this.show?.genre.id) && id!=this.show.id && id < this.show.id}?.getFirstEpisode()
         }else{
-          return tmp?.getFirstEpisode()?.id
+          result = tmp?.getFirstEpisode()
         }
       }
     }
-    return
+
+    return result
+  }
+
+
+  def getPosterPath(){
+    if(this instanceof Episode){
+      return this.show.poster_path
+    }else{
+      return this.poster_path
+    }
   }
 }

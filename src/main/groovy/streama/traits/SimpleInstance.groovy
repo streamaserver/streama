@@ -34,7 +34,7 @@ trait SimpleInstance {
     if (instance instanceof Number) {
       instance = findById(instance)
       if (!instance) {
-          return null
+        return null
       }
     }
 
@@ -48,8 +48,14 @@ trait SimpleInstance {
 
     def optionsList = generateOptionsListFromMap(options, (instance.class?.simpleInstanceFields ?: simpleInstanceFields))
     optionsList.each { String property ->
-      if (instance.hasEmbeddedProperty(property)) {
-        instance.setEmbeddedPropertyValue(result, property, instance.getEmbeddedProperty(property))
+      def path = property
+      if (property ==~ /[a-zA-Z0-9_]*?:.*/) {
+        (path, property) = property.split(':', 2)
+      }
+      def value = instance.getEmbeddedProperty(property)
+      if (value != null) {
+
+        instance.setEmbeddedPropertyValue(result, path, value)
       }
     }
     return result

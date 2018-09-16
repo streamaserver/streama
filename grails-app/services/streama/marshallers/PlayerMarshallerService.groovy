@@ -36,6 +36,7 @@ class PlayerMarshallerService {
         returnArray['hasFiles'] = video.hasFiles()
 
         returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(video, springSecurityService.currentUser)
+        returnArray['outro_start'] = video.outro_start ? video.outro_start * 60 : null  //convert to seconds
 
         if (video instanceof Episode) {
           returnArray['mediaType'] = 'episode'
@@ -48,12 +49,11 @@ class PlayerMarshallerService {
           returnArray['still_path'] = video.buildImagePath('still_path', 1280)
           returnArray['intro_start'] = video.intro_start
           returnArray['intro_end'] = video.intro_end
-          returnArray['outro_start'] = video.outro_start
-          returnArray['nextVideo'] = video.suggestNextVideo()
+          returnArray['nextVideo'] = video.suggestNextVideo().getSimpleInstance()
 
           Video nextEpisode = video.getNextEpisode()
           if (nextEpisode && nextEpisode.files) {
-            returnArray['nextEpisode'] = [id: nextEpisode?.id]
+            returnArray['nextEpisode'] = nextEpisode.getSimpleInstance()
           }
         }
         if (video instanceof Movie) {
@@ -63,7 +63,7 @@ class PlayerMarshallerService {
           returnArray['backdrop_path'] = video.buildImagePath('backdrop_path', 1280)
           returnArray['poster_path'] = video.poster_path
           returnArray['trailerKey'] = video.trailerKey
-          returnArray['nextVideo'] = video.suggestNextVideo()
+          returnArray['nextVideo'] = video.suggestNextVideo().getSimpleInstance()
 
         }
         if (video instanceof GenericVideo) {
