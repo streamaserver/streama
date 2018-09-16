@@ -49,11 +49,12 @@ class PlayerMarshallerService {
           returnArray['still_path'] = video.buildImagePath('still_path', 1280)
           returnArray['intro_start'] = video.intro_start
           returnArray['intro_end'] = video.intro_end
-          returnArray['nextVideo'] = video.suggestNextVideo().getSimpleInstance()
 
           Video nextEpisode = video.getNextEpisode()
           if (nextEpisode && nextEpisode.files) {
             returnArray['nextEpisode'] = nextEpisode.getSimpleInstance()
+          }else{
+            returnArray['nextVideo'] = video.suggestNextVideo().getSimpleInstance()
           }
         }
         if (video instanceof Movie) {
