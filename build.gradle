@@ -99,6 +99,14 @@ dependencies {
     compile "org.grails.plugins:grails-spring-websocket:2.3.0"
     compile group: 'eu.bitwalker', name: 'UserAgentUtils', version: '1.20'
     runtime 'mysql:mysql-connector-java:5.1.36'
+    // runtime for postgresql works fine
+    // but compile group kept for testing as per closed pull request #368
+    //compile group: 'org.postgresql', name: 'postgresql', version: '42.2.3'
+    //runtime 'org.postgresql:postgresql:42.2.3'
+    // as per instructions @ https://github.com/kaleidos/grails-postgresql-extensions/blob/master/README.md
+    // streama seems to work fine without it though
+    //compile 'org.grails.plugins:postgresql-extensions:5.2.0'
+
 }
 
 task wrapper(type: Wrapper) {
