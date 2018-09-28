@@ -17,7 +17,7 @@ buildscript {
     }
 }
 
-version "1.6.0-RC8"
+version "1.6.0-RC9"
 group "streama"
 
 

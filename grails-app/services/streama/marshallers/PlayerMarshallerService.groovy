@@ -52,9 +52,9 @@ class PlayerMarshallerService {
 
           Video nextEpisode = video.getNextEpisode()
           if (nextEpisode && nextEpisode.files) {
-            returnArray['nextEpisode'] = nextEpisode.getSimpleInstance()
+            returnArray['nextEpisode'] = nextEpisode?.getSimpleInstance()
           }else{
-            returnArray['nextVideo'] = video.suggestNextVideo().getSimpleInstance()
+            returnArray['nextVideo'] = video.suggestNextVideo()?.getSimpleInstance()
           }
         }
         if (video instanceof Movie) {
@@ -64,7 +64,7 @@ class PlayerMarshallerService {
           returnArray['backdrop_path'] = video.buildImagePath('backdrop_path', 1280)
           returnArray['poster_path'] = video.poster_path
           returnArray['trailerKey'] = video.trailerKey
-          returnArray['nextVideo'] = video.suggestNextVideo().getSimpleInstance()
+          returnArray['nextVideo'] = video.suggestNextVideo()?.getSimpleInstance()
 
         }
         if (video instanceof GenericVideo) {
