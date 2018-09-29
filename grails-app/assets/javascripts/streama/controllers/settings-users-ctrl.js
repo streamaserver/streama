@@ -86,5 +86,8 @@ angular.module('streama').controller('settingsUsersCtrl', ['$scope', 'apiService
 		return _.find(user.authorities, {authority: 'ROLE_CONTENT_MANAGER'});
 	};
 
+  $scope.isTrustedUser = function (user) {
+    return _.find(user.authorities, {authority: 'ROLE_TRUSTED_USER'});
+  };
 
 }]);

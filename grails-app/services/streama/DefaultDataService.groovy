@@ -9,6 +9,7 @@ class DefaultDataService {
     def roles = [
       [authority: "ROLE_ADMIN", displayName: "Admin"],
       [authority: "ROLE_CONTENT_MANAGER", displayName: "Content Manager"],
+      [authority: "ROLE_TRUSTED_USER", displayName: "Trusted User"],
     ]
 
     roles.each { role ->
@@ -26,7 +27,7 @@ class DefaultDataService {
             password: 'admin',
             fullName: 'Administrator',
             enabled: true,
-            roles: [Role.findByAuthority("ROLE_ADMIN"), Role.findByAuthority("ROLE_CONTENT_MANAGER")]
+            roles: [Role.findByAuthority("ROLE_ADMIN"), Role.findByAuthority("ROLE_CONTENT_MANAGER"),Role.findByAuthority(authority: "ROLE_TRUSTED_USER")]
         ]
     ]
 
