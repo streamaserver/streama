@@ -61,6 +61,7 @@ class MarshallerService {
       returnArray['favoriteGenres'] = user.favoriteGenres
       returnArray['isAdmin'] = (user.authorities.find{it.authority == 'ROLE_ADMIN'} ? true : false)
       returnArray['isContentManager'] = (user.authorities.find{it.authority == 'ROLE_CONTENT_MANAGER'} ? true : false)
+      returnArray['isTrustedUser'] = (user.authorities.find{it.authority == 'ROLE_TRUSTED_USER'} ? true : false)
       returnArray['pauseVideoOnClick'] = user.pauseVideoOnClick
 
       if(user.invitationSent && user.uuid){

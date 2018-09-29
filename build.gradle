@@ -17,7 +17,7 @@ buildscript {
     }
 }
 
-version "1.6.0-RC9"
+version "1.6.0-RC10"
 group "streama"
 
 
@@ -98,7 +98,7 @@ dependencies {
     compile "org.grails.plugins:mail:2.0.0.RC4"
     compile "org.grails.plugins:grails-spring-websocket:2.3.0"
     compile group: 'eu.bitwalker', name: 'UserAgentUtils', version: '1.20'
-    runtime 'mysql:mysql-connector-java:5.1.36'
+    runtime 'mysql:mysql-connector-java:8.0.12'
 }
 
 task wrapper(type: Wrapper) {
