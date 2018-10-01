@@ -1,4 +1,4 @@
-# Place this file next to the streama-[version].war on deployment
+# Place this file next to the streama-[version].war and rename to application.yml with your own settings
 environments:
     production:
         dataSource:
