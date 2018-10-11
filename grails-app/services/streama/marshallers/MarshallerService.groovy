@@ -544,6 +544,12 @@ class MarshallerService {
         returnArray['videoType'] = 'episode'
         returnArray['still_image_src'] = episode.still_image?.src
 
+        ViewingStatus viewingStatus = episode.getViewingStatus()
+        if(viewingStatus){
+          returnArray['isInProgress'] = true
+          returnArray['currentPlayTime'] = viewingStatus.currentPlayTime
+          returnArray['runtime'] = viewingStatus.runtime
+        }
         return returnArray;
       }
     }
