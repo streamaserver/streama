@@ -53,7 +53,7 @@ class VideoService {
           }
         }
       } else {
-        result.add(continueWatching)
+        result.add(continueWatchingItem)
       }
     }
 
