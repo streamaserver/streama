@@ -96,7 +96,8 @@
    </div>
 
    <div class="media-list">
-     <div class="media-list-item episode-wrapper" ng-repeat="episode in seasons[currentSeason] | orderBy:'episode_number'"
+     <div class="media-list-item episode-wrapper" style="padding-bottom: 8px;"
+          ng-repeat="episode in seasons[currentSeason] | orderBy:'episode_number'"
           ng-class="{'no-files': !episode.hasFile}">
        <h3 class="media-episode-string">
          <span ng-show="episode.episodeString">{{episode.episodeString}}</span>
@@ -109,6 +110,8 @@
          <div ng-if="!episode.still_path && !episode.still_image_src" class="fallback-image"></div>
          <a ng-show="episode.hasFile" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
        </div>
+       <streama-progress-bar video="episode" ng-if="episode.isInProgress"></streama-progress-bar>
+       <div style="height: 35px;" ng-if="!episode.isInProgress"></div>
      </div>
 
    </div>

@@ -192,13 +192,15 @@
     text-overflow: ellipsis;
   }
   .media-progress{
-    margin-top: 5px;
-    height: 3px;
+    margin-top: 3px;
+    height: 7px;
     background: rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    overflow: hidden;
   }
 
   .progress-inner{
-    height: 3px;
+    height: 7px;
     background-color: $primary;
   }
 }
