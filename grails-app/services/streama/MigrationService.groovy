@@ -141,4 +141,15 @@ class MigrationService {
       setting.save()
     }
   }
+
+  def migrateMergedSeasonEpisode(){
+    List episodes = Episode.where{
+      seasonEpisodeMerged == null
+    }.list()
+
+    episodes.each{ Episode episode ->
+      episode.createMergedSeasonEpisode()
+      episode.save(flush: true)
+    }
+  }
 }

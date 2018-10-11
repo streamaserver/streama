@@ -20,6 +20,7 @@ class BootStrap {
         migrationService.fixLogoValue()   //2017-03-04
         migrationService.urlvalidationFix()
         migrationService.updateBaseUrlHelp()
+        migrationService.migrateMergedSeasonEpisode()
     }
     def destroy = {
     }
