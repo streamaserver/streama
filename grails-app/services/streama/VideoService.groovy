@@ -41,7 +41,7 @@ class VideoService {
     def result = []
     continueWatching.each { continueWatchingItem ->
       if (continueWatchingItem.video instanceof Episode) {
-        def previousShowEntry = result.find { it.video.show?.id == continueWatchingItem.video.show?.id }
+        def previousShowEntry = result.find { it.video instanceof Episode && it.video.show?.id == continueWatchingItem.video.show?.id }
 
         if (!previousShowEntry) {
           result.add(continueWatchingItem)
