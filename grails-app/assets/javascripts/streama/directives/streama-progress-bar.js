@@ -5,7 +5,8 @@ angular.module('streama').directive('streamaProgressBar', function () {
     restrict: 'E',
     templateUrl: '/streama/directive--streama-progress-bar.htm',
     scope: {
-      video: '='
+      video: '=',
+      hideTime: '@'
     },
     link: function ($scope, $elem, $attrs) {
       // $scope.videoObject = angular.merge({}, $scope.video);

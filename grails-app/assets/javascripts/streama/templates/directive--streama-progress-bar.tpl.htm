@@ -4,7 +4,7 @@
   </div>
   <div class="progress-info" ng-show="!video.isEpisode" ng-bind="::video.title"></div>
 
-  <div class="progress-time"><span ng-bind="::(video.currentPlayTime | secondsToDateTime | date:'mm:ss')"></span> min</div>
+  <div class="progress-time" ng-if="!hideTime"><span ng-bind="(video.currentPlayTime | secondsToDateTime | date:'mm:ss')"></span> min</div>
 
   <div class="media-progress" ng-if="video.runtime">
     <div class="progress-inner" style="width: {{video.currentPlayTime / video.runtime * 100}}%;"></div>

@@ -380,6 +380,11 @@
       &.slide-left{
         @include vendor-property('transform', 'translate3d(-100%, 0, 0)');
       }
+
+      .media-progress-wrapper{
+        margin-top: 0;
+        margin-bottom: 8px;
+      }
     }
 
     h2{

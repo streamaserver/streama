@@ -132,6 +132,8 @@
                       <span class="episode-name" ng-click="visible = !visible">{{episode.name}}</span>
                       <span class="episode-play" ng-if="episode.hasFile" ui-sref="player({videoId: episode.id})"><i class="ion-play"></i></span>
                     </div>
+                    <streama-progress-bar ng-if="episode.currentPlayTime" video="episode" hide-time="true"></streama-progress-bar>
+
 
                     <div class="extra-episode-info" ng-if="visible || (episode.episode_number == video.episode_number && episode.season_number == video.season_number)">
                       <div class="image-wrapper">
