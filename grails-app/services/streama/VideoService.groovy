@@ -33,7 +33,31 @@ class VideoService {
 //      eq("completed", false)
       order("lastUpdated", "desc")
     }
-    return continueWatching
+
+    return reduceContinueWatchingEps(continueWatching)
+  }
+
+  private static List<ViewingStatus> reduceContinueWatchingEps(List<ViewingStatus> continueWatching) {
+    def result = []
+    continueWatching.each { continueWatchingItem ->
+      if (continueWatchingItem.video instanceof Episode) {
+        def previousShowEntry = result.find { it.video.show?.id == continueWatchingItem.video.show?.id }
+
+        if (!previousShowEntry) {
+          result.add(continueWatchingItem)
+        } else {
+          def previousIsLower = (previousShowEntry.video.seasonEpisodeMerged < continueWatchingItem.video.seasonEpisodeMerged)
+          if (previousShowEntry && previousIsLower) {
+            result.removeAll { it.id == previousShowEntry.id }
+            result.add(continueWatchingItem)
+          }
+        }
+      } else {
+        result.add(continueWatching)
+      }
+    }
+
+    return result
   }
 
 

@@ -20,11 +20,13 @@ class ViewingStatusService {
       return [hasError: true, code: NOT_ACCEPTABLE]
     }
 
-    if(video instanceof Episode){
-      viewingStatus = ViewingStatus.findOrCreateByTvShowAndUser(video.show, currentUser)
-      viewingStatus.tvShow = video.show
-    }else{
-      viewingStatus = ViewingStatus.findOrCreateByVideoAndUser(video, currentUser)
+    viewingStatus = ViewingStatus.where{
+      user == currentUser
+      video == video
+    }.get()
+
+    if(!viewingStatus){
+      viewingStatus = new ViewingStatus(tvShow: video?.show, user: currentUser, video: video)
     }
 
     viewingStatus.video = video
