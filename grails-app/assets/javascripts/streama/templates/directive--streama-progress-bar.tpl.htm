@@ -1,0 +1,12 @@
+<div class="media-progress-wrapper">
+  <div class="progress-info" ng-show="video.isEpisode">
+    <span ng-bind="::video.episodeString"></span> - <span ng-bind="::video.title"></span>
+  </div>
+  <div class="progress-info" ng-show="!video.isEpisode" ng-bind="::video.title"></div>
+
+  <div class="progress-time"><span ng-bind="::(video.currentPlayTime | secondsToDateTime | date:'mm:ss')"></span> min</div>
+
+  <div class="media-progress" ng-if="video.runtime">
+    <div class="progress-inner" style="width: {{video.currentPlayTime / video.runtime * 100}}%;"></div>
+  </div>
+</div>
