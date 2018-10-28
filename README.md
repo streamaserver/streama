@@ -42,7 +42,7 @@ If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7S
 # Getting Started
 - [Installation and first-time setup](https://github.com/streamaserver/streama/wiki/Getting-started)
 
-If you have any issues getting started, fell free to [chat with us on Discord](https://discord.gg/CJEHWX9). We are more than happy to assist and then improve the docs accordingly. 
+If you have any issues getting started, feel free to [chat with us on Discord](https://discord.gg/CJEHWX9). We are more than happy to assist and then improve the docs accordingly. 
 
 # Downloads
 - **Stable and beta** versions see the GitHub [releases](https://github.com/streamaserver/streama/releases)
