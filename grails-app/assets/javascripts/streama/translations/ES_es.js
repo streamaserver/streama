@@ -44,7 +44,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			SHARE_SOCKET: 'Creando una sesión nueva, seras redirigido de vuelta a este reproductor, pero esta vez tendrás un código de sesión único en la URL. ¡Comparte éste enlace con tus amigos para tener una experiencia de visión sincronizada con ellos!',
 			FILE_MISSING: 'Hay un problema con este contenido. Parece que has eliminado el archivo asociado al mismo.',
 			CODEC_PROBLEM: 'Parece que hay un problema añadiendo el archivo de vídeo al reproductor. La causa suele ser debida a un problema con los códecs. Prueba convirtiéndolo a un códec HTML5 compatible, elimina el fichero adjunto, y añádelo de nuevo. Si los códecs son los correctos, comprueba el registro del servidor y la URL en las opciones.',
-			WRONG_BASEPATH: 'Tu vídeo ha sido incluido usando una ruta incorrecta, pero estás accediendo a la página a traves de la ruta "{{basePath}}". Asegúrate de escribir la ruta correcta en las propiedades y de que estás usándola para acceder a la aplicación.',
+			WRONG_BASEPATH: 'Tu vídeo ha sido incluido usando una ruta incorrecta, pero estás accediendo a la página a traves de la ruta "{{basePath}}". Asegúrate de escribir la ruta correcta en las propiedades y de que estás usándola para acceder a la aplicación.'
 		},
 		MANAGE_CONTENT: 'Gestionar Contenido',
 		ADMIN: 'Admin',
@@ -53,17 +53,18 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		PROFILE_SETTINGS: 'Opciones de Perfil',
 		LOGOUT: 'Salir',
 		CHANGE_PASSWORD: 'Cambiar Contraseña',
-		LANGUAGE_en: 'Inglés',
-    LANGUAGE_ru: 'Русский',
-		LANGUAGE_de: 'Alemán',
-		LANGUAGE_fr: 'Francés',
-		LANGUAGE_es: 'Español',
-		LANGUAGE_kr: 'Coreano',
-		LANGUAGE_nl: 'Holandés',
-		LANGUAGE_pt: 'Portugués',
-    LANGUAGE_ja: 'Japonés',
-    LANGUAGE_it: 'Italiano',
-    LANGUAGE_da: 'Danés',
+    LANGUAGE_en: 'English/Inglés',
+    LANGUAGE_ru: 'Русский/Ruso',
+    LANGUAGE_de: 'Deutsch/Alemán',
+    LANGUAGE_fr: 'Français/Francés',
+    LANGUAGE_es: 'Español',
+    LANGUAGE_kr: '한국어/Coreano',
+    LANGUAGE_nl: 'Nederlands/Holandés',
+    LANGUAGE_pt: 'Português/Portugués',
+    LANGUAGE_ja: '日本語/Japonés',
+    LANGUAGE_it: 'Italiano/Italiano',
+    LANGUAGE_da: 'Dansk/Danés',
+    LANGUAGE_ar: 'عربى/Arábica',
 		PROFIlE: {
 			USERNAME: 'Nombre de usuario',
 			FULL_NAME: 'Nombre completo',
@@ -87,7 +88,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEWEST_RELEASED: 'Últimos Publicados',
 			OLDEST_RELEASED: 'Primeros Publicados',
 			NEWEST_AIRED: 'Transmitidos Recientemente',
-			OLDEST_AIRED: 'Transmitidos Primero',
+			OLDEST_AIRED: 'Transmitidos Primero'
 		},
 
 		FAQ: {
@@ -142,7 +143,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USEFUL_LINKS: {
 				TITLE: "Enlaces útiles",
 				TEXT: "Próximamente..."
-			},
+			}
 		}
 	});
 });
