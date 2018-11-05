@@ -44,7 +44,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			SHARE_SOCKET: '새로운 세션을 만들면 이 플레이어로 다시 돌아오지만, 지금은 URL에 유니크 세션 ID가 있습니다. 세션 ID를 친구들과 공유해서 동시에 시청해보세요!',
 			FILE_MISSING: '비디오 파일이 찾을 수 없습니다. 친구들과 공유해서 동시에 시청해보세요!',
 			CODEC_PROBLEM: '비디오 파일을 플레이어에 추가하는데 문제가 발생했습니다. 코덱의 문제일 가능성이 높습니다. 호환 가능한 HTML5 코덱으로 변경하고, 현재 파일을 삭제하고 다시 추가해보세요. 만약 코덱에 문제가 없다면 환경설정에서 에러 로그와 base URL를 확인해보세요.',
-			WRONG_BASEPATH: '잘못된 경로입니다, 현재 페이지는 "{{basePath}}" 입니다. 올바른 경로로 설정해주세요.',
+			WRONG_BASEPATH: '잘못된 경로입니다, 현재 페이지는 "{{basePath}}" 입니다. 올바른 경로로 설정해주세요.'
 		},
 		MANAGE_CONTENT: '컨텐츠 관리',
 		ADMIN: '관리자',
@@ -53,17 +53,18 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		PROFILE_SETTINGS: '프로필 설정',
 		LOGOUT: '로그아웃',
 		CHANGE_PASSWORD: '비밀번호 변경',
-		LANGUAGE_en: '영어',
-    LANGUAGE_ru: 'Русский',
-		LANGUAGE_de: '독일어',
-		LANGUAGE_fr: '프랑스의',
-		LANGUAGE_es: '스페인어',
-		LANGUAGE_kr: '한국어',
-		LANGUAGE_nl: '네덜란드',
-		LANGUAGE_pt: '포르투갈어',
-    LANGUAGE_ja: '일본어',
-    LANGUAGE_it: '이탈리아 사람',
-    LANGUAGE_da: '덴마크 말',
+    LANGUAGE_en: 'English/영어',
+    LANGUAGE_ru: 'Русский/러시아인',
+    LANGUAGE_de: 'Deutsch/독일어',
+    LANGUAGE_fr: 'Français/프랑스의',
+    LANGUAGE_es: 'Español/스페인어',
+    LANGUAGE_kr: '한국어',
+    LANGUAGE_nl: 'Nederlands/네덜란드',
+    LANGUAGE_pt: 'Português/포르투갈어',
+    LANGUAGE_ja: '日本語/일본어',
+    LANGUAGE_it: 'Italiano/이탈리아 사람',
+    LANGUAGE_da: 'Dansk/덴마크 말',
+    LANGUAGE_ar: 'عربى/아라비아 말',
 		PROFIlE: {
 			USERNAME: '아이디',
 			FULL_NAME: '이름',
@@ -87,7 +88,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NEWEST_RELEASED: '최근 출시된 순 ',
 			OLDEST_RELEASED: '늦게 출시된 순',
 			NEWEST_AIRED: '최근에 방영된 순',
-			OLDEST_AIRED: '늦게 방영된 순 ',
+			OLDEST_AIRED: '늦게 방영된 순 '
 		},
 
 		FAQ: {
@@ -140,7 +141,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			USEFUL_LINKS: {
 				TITLE: "유용한 링크",
 				TEXT: "Coming soon..."
-			},
+			}
 		}
 	});
 });
