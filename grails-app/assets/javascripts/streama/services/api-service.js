@@ -336,6 +336,14 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			triggerPlayerAction: function (params) {
 				return $http.get('websocket/triggerPlayerAction.json', {params: params});
 			}
-		}
+		},
+
+    profile: {
+		  save: function (params) {
+        console.log('api-serv');
+        return $http.post('profile/save',  params)
+      }
+    }
+
 	};
 });

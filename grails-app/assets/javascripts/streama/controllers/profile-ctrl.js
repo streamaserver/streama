@@ -65,4 +65,25 @@ angular.module('streama').controller('profileCtrl', function ($scope, apiService
       });
   };
 
+  $scope.addNewSubProfile = function() {
+    var sub = {
+      profile_name: 'sub1',
+      profile_language: 'ENG',
+      isKid: true
+    };
+
+    apiService.profile.save(sub)
+      .success(function () {
+        console.log('Succss func');
+        alertify.success('Succss func.');
+        $scope.loading = false;
+
+      })
+      .error(function (data) {
+        alertify.error(data.message);
+        $scope.loading = false;
+      });
+
+  }
+
 });
