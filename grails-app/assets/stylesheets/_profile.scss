@@ -45,4 +45,37 @@
 
 }
 
+.subprofiles-table {
+ width: 100%;
 
+  thead {
+    border-bottom: 1px solid white;
+  }
+
+  tr{
+    height: 30px;
+  }
+
+  td,th{
+    min-width: 25%;
+    max-width: 25%;
+    div {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      button {
+        height: 25px;
+        padding: 0 10px;
+      }
+    }
+
+    padding: 3px 0;
+  }
+
+  tbody {
+    tr:hover {
+      background-color: #6a6a6a;
+    }
+  }
+}

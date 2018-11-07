@@ -2,7 +2,7 @@
   <div class="profile-heading">
     <div class="btn-group pull-right">
       <button type="button" style="margin-right:5px;" class="btn btn-secondary" ng-click="toggleCreateSubProfile()"
-              ng-if="!isCreatingNewProfile && !changePasswordIsActive">Create new profile</button>
+              ng-if="!changePasswordIsActive">Create new profile</button>
       <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()" ng-if="!changePasswordIsActive">{{'CHANGE_PASSWORD' | translate}}</button>
     </div>
     <h1>
@@ -86,6 +86,28 @@
       <hr/>
 
     </form>
+
+    <div class="sub-profiles-container" ng-if="existingProfiles.length && !isCreatingNewProfile">
+      <h3>Available profiles</h3>
+      <table class="subprofiles-table">
+        <thead>
+          <tr>
+            <th><div>Profile Name</div></th>
+            <th><div>Is Kid</div></th>
+            <th><div>Language</div></th>
+            <th><div>Edit</div></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="subp in existingProfiles">
+            <td><div>{{subp.profile_name}}</div></td>
+            <td><div>{{subp.isKid ? 'Yes' : 'No'}}</div></td>
+            <td><div>{{subp.profile_language}}</div></td>
+            <td><div><button class="btn btn-primary" ng-click="editSubProfile(subp)">Edit</button></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <form name="subProfileForm" class="form-horizontal profile-data-form" ng-if="isCreatingNewProfile">
       <h3>Create new profile</h3>
