@@ -53,7 +53,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     ADMIN: 'Admin',
     HELP: 'Help',
     HELP_FAQ: 'HELP / FAQ',
-    PROFILE_SETTINGS: 'Profile Settings',
+    PROFILE_SETTINGS: 'User Settings',
     LOGOUT: 'Logout',
     CHANGE_PASSWORD: 'Change Password',
     LANGUAGE_en: 'English',
