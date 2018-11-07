@@ -341,6 +341,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
     profile: {
 		  save: function (params) {
         return $http.post('profile/save',  params)
+      },
+      getUserProfiles: function () {
+        return $http.get('profile/getUserProfiles.json')
       }
     }
 
