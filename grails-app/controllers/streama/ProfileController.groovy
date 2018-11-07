@@ -10,12 +10,13 @@ class ProfileController {
 	static responseFormats = ['json', 'xml']
 
   static allowedMethods = [save: "POST", delete: "DELETE"]
-	
+
+  def springSecurityService
+
     def index() { }
 
   def save(Profile profileInstance) {
-    System.out.println('Save Subprofile')
-    System.out.println(profileInstance)
+    profileInstance.user = springSecurityService.getCurrentUser()
     profileInstance.save()
     respond profileInstance, [status: CREATED]
   }

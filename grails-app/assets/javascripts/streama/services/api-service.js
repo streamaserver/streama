@@ -340,7 +340,6 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 
     profile: {
 		  save: function (params) {
-        console.log('api-serv');
         return $http.post('profile/save',  params)
       }
     }
