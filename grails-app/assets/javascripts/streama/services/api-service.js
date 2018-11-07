@@ -342,6 +342,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 		  save: function (params) {
         return $http.post('profile/save',  params)
       },
+		  update: function (params) {
+        return $http.put('profile/update.json',  params)
+      },
+		  delete: function (params) {
+        return $http.delete('profile/delete.json',  params)
+      },
       getUserProfiles: function () {
         return $http.get('profile/getUserProfiles.json')
       }
