@@ -1,0 +1,177 @@
+$grey-text: #a6a6a6;
+$light-gray: lighten($grey-text, 40%);
+$avatar-width: 130px;
+$background-color: #25292B;
+
+.sub-profile-page-container {
+  width: 100%;
+  height: calc(100vh - 84px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profiles-container {
+  max-width: 62%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.who-watching-header {
+  font-size: 32px;
+  color: white;
+}
+
+.manage-profiles-btn {
+  text-transform: uppercase;
+  color: $grey-text;
+  border: 1px solid $grey-text;
+  height: 40px;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  background-color: transparent;
+
+  &:hover {
+    color: $light-gray;
+    border: 1px solid $light-gray;
+    cursor: pointer;
+  }
+
+}
+
+.done-btn {
+  @extend  .manage-profiles-btn;
+  color: $background-color;
+  background-color: white;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #2898c5;
+    border: 1px solid #2898c5;
+    color: $background-color;
+  }
+}
+
+.select-profile-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.item-profile-container {
+  width: $avatar-width;
+  display: flex;
+  flex-direction: column;
+  margin: 0 5px;
+
+  .avatar {
+    box-sizing: border-box;
+    min-width: 100%;
+    border: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: $avatar-width;
+    img {
+      z-index: 100;
+      width: $avatar-width;
+    }
+
+    p.add {
+      font-size: 40px;
+      font-weight: 600;
+    }
+  }
+
+
+
+  .profile-name {
+    margin-top: 10px;
+    color: $grey-text;
+    font-size: 13px;
+    min-width: 100%;
+    text-align: center;
+  }
+
+  &:hover {
+    cursor: pointer;
+    .avatar {
+      border: 3px solid $light-gray;
+    }
+
+    .profile-name {
+      color: $light-gray;
+    }
+
+  }
+}
+
+.add-profile {
+  @extend .item-profile-container;
+  &:hover{
+    .avatar {
+      background-color: $light-gray !important;
+      p.add{
+        color: $background-color !important;
+      }
+    }
+
+  }
+}
+
+
+.item-editable-container {
+  @extend .item-profile-container;
+  position: relative;
+
+  &:hover {
+    .grey-editable-avatar {
+      border: 3px solid $light-gray;
+      opacity: .8;
+    }
+
+    .edit-label-container {
+      p {
+        display: flex;
+        color: $light-gray;
+      }
+    }
+
+  }
+
+  .grey-editable-avatar {
+    z-index: 200;
+    box-sizing: border-box;
+    border: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $avatar-width;
+    height: $avatar-width;
+    position: absolute;
+    background-color: #000;
+    opacity: .4;
+  }
+
+  .edit-label-container {
+    z-index: 400;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: $avatar-width;
+    height: $avatar-width;
+    justify-content: center;
+    p {
+      color: $grey-text;
+      display: none;
+      text-transform: uppercase;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+    }
+  }
+}

@@ -8,8 +8,11 @@ angular.module('streama').controller('subProfilesCtrl',
       profile_language: 'en',
       isKid: false
     };
+    $scope.mycolor = '002300';
     $scope.existingProfiles = [];
     $scope.loading = true;
+    $scope.isManageProfiles = true;
+    $scope.isEditOrCreateProfile = false;
 
     apiService.profile.getUserProfiles()
       .success(function (data) {
@@ -17,4 +20,17 @@ angular.module('streama').controller('subProfilesCtrl',
         console.log('Profiles list:', $scope.existingProfiles);
       });
 
+
+    $scope.toggleManageProfiles = function(){
+      $scope.isManageProfiles = !$scope.isManageProfiles;
+    };
+
+    $scope.editProfile = function(profile){
+      $scope.isEditOrCreateProfile = !$scope.isEditOrCreateProfile;
+
+    };
+
+    $scope.createProfile = function(){
+      $scope.isEditOrCreateProfile = !$scope.isEditOrCreateProfile;
+    };
   });

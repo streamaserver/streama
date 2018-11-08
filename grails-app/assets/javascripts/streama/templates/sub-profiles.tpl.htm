@@ -1,3 +1,62 @@
-<div class="sub-profile-container">
-  Hello!
+<div class="sub-profile-page-container">
+  <div class="profiles-container" ng-if="!isManageProfiles && !isEditOrCreateProfile">
+    <p class="who-watching-header">Who's watching?</p>
+
+    <div class="select-profile-container" ng-if="existingProfiles.length">
+
+      <div class="item-profile-container" ng-repeat="subp in existingProfiles">
+        <div class="avatar" ng-style="{'background-color': '#'+mycolor}">
+          <img src="/assets/streama-profile-smiley.png" alt="">
+        </div>
+        <p class="profile-name">{{subp.profile_name}}</p>
+      </div>
+
+      <div class="add-profile" ng-click="createProfile()">
+        <div class="avatar">
+          <p class="add">+</p>
+        </div>
+        <p class="profile-name">Add Profile</p>
+      </div>
+
+    </div>
+
+    <button class="manage-profiles-btn" ng-click="toggleManageProfiles()">Manage profiles</button>
+  </div>
+
+  <!-- Manage Profiles -->
+  <div class="profiles-container" ng-if="isManageProfiles && !isEditOrCreateProfile">
+    <p class="who-watching-header">Manage profiles:</p>
+
+    <div class="select-profile-container" ng-if="existingProfiles.length">
+
+      <div class="item-editable-container" ng-repeat="subp in existingProfiles">
+        <div class="avatar" ng-style="{'background-color': '#'+mycolor}">
+          <img src="/assets/streama-profile-smiley.png" alt="">
+        </div>
+        <div class="grey-editable-avatar"></div>
+        <div class="edit-label-container"><p>Edit</p></div>
+        <p class="profile-name">{{subp.profile_name}}</p>
+      </div>
+
+      <div class="add-profile" ng-click="createProfile()">
+        <div class="avatar">
+          <p class="add">+</p>
+        </div>
+        <p class="profile-name">Add Profile</p>
+      </div>
+
+    </div>
+
+    <button class="manage-profiles-btn done-btn" ng-click="toggleManageProfiles()">Done</button>
+  </div>
+
+
+  <!-- Edit - create profile -->
+  <div class="profiles-container" ng-if="isEditOrCreateProfile">
+
+
+    <button class="manage-profiles-btn done-btn" ng-click="toggleManageProfiles()">Save</button>
+    <button class="manage-profiles-btn " ng-click="toggleManageProfiles()">Cancel</button>
+  </div>
+
 </div>
