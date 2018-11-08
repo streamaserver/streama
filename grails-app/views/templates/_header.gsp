@@ -67,6 +67,7 @@
                 uib-dropdown-menu role="menu" aria-labelledby="single-button">
               <li role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>
               <li role="menuitem"><a ui-sref="profile">{{'PROFILE_SETTINGS' | translate}}</a></li>
+              <li role="menuitem"><a ui-sref="sub-profiles">Manage profiles</a></li>
               <li class="divider"></li>
               <li><g:link uri="/logoff">{{'LOGOUT' | translate}}</g:link></li>
             </ul>

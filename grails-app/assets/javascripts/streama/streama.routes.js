@@ -24,6 +24,11 @@ angular.module('streama').config(function ($stateProvider) {
 				currentUser: resolveCurrentUser
 			}
 		})
+		.state('sub-profiles', {
+			url: '/sub-profiles',
+			templateUrl: '/streama/sub-profiles.htm',
+			controller: 'subProfilesCtrl'
+		})
 
 		.state('profile', {
 			url: '/profile',
