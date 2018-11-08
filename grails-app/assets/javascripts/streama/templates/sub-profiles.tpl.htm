@@ -5,7 +5,7 @@
     <div class="select-profile-container" ng-if="existingProfiles.length">
 
       <div class="item-profile-container" ng-repeat="subp in existingProfiles">
-        <div class="avatar" ng-style="{'background-color': '#'+mycolor}">
+        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standartColor)}">
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
         <p class="profile-name">{{subp.profile_name}}</p>
@@ -30,7 +30,7 @@
     <div class="select-profile-container" ng-if="existingProfiles.length">
 
       <div class="item-editable-container" ng-repeat="subp in existingProfiles" ng-click="goToEditProfile(subp)">
-        <div class="avatar" ng-style="{'background-color': '#'+mycolor}">
+        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standartColor)}">
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
         <div class="grey-editable-avatar"></div>
@@ -57,8 +57,14 @@
 
     <div class="form-container">
       <div class="choose-avatar-color">
-        <div class="form-avatar" ng-style="{'background-color': '#' + currentSelectedColor}">
+        <div class="form-avatar" ng-style="{'background-color': '#' + profile.avatar_color}">
           <img src="/assets/streama-profile-smiley.png" alt="">
+        </div>
+        <div class="colors-container">
+          <div class="single-color"
+               ng-repeat="col in avaliabeColors"
+               ng-style="{'background-color': '#'+col}"
+               ng-click="setProfileColor(col)"></div>
         </div>
       </div>
       <input type="text" class="form-control"
@@ -68,7 +74,8 @@
         <input type="checkbox" ng-model="profile.isKid">
         <p>Kid?</p>
       </div>
-      <select class="form-control" ng-model="profile.profile_language" ng-options="lang as ('LANGUAGE_'+lang | translate) for lang in $root.availableLanguages"></select>
+      <select class="form-control" ng-model="profile.profile_language"
+              ng-options="lang as ('LANGUAGE_'+lang | translate) for lang in $root.availableLanguages"></select>
 
 
     </div>

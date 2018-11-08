@@ -3,7 +3,8 @@ $border-color: rgba(166, 166, 166, 0.3);
 $light-gray: lighten($grey-text, 40%);
 $avatar-width: 130px;
 $background-color: #25292B;
-$logo-color:#b0ddef;
+$logo-color: #b0ddef;
+$color-box-size: 30px;
 
 .sub-profile-page-container {
   width: 100%;
@@ -45,7 +46,7 @@ $logo-color:#b0ddef;
 }
 
 .done-btn {
-  @extend  .manage-profiles-btn;
+  @extend .manage-profiles-btn;
   color: $background-color;
   background-color: white;
   font-weight: bold;
@@ -91,8 +92,6 @@ $logo-color:#b0ddef;
     }
   }
 
-
-
   .profile-name {
     margin-top: 10px;
     color: $grey-text;
@@ -116,17 +115,16 @@ $logo-color:#b0ddef;
 
 .add-profile {
   @extend .item-profile-container;
-  &:hover{
+  &:hover {
     .avatar {
       background-color: $light-gray !important;
-      p.add{
+      p.add {
         color: $background-color !important;
       }
     }
 
   }
 }
-
 
 .item-editable-container {
   @extend .item-profile-container;
@@ -180,7 +178,6 @@ $logo-color:#b0ddef;
   }
 }
 
-
 .btns-container {
   display: flex;
   justify-content: flex-start;
@@ -200,7 +197,7 @@ $logo-color:#b0ddef;
   border-bottom: 1px solid $border-color;
   border-top: 1px solid $border-color;
 
-  >* {
+  > * {
     margin-bottom: 10px;
   }
 
@@ -219,6 +216,26 @@ $logo-color:#b0ddef;
       img {
         z-index: 100;
         max-width: $avatar-width;
+      }
+    }
+    .colors-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 200px;
+      height: $avatar-width;
+
+      .single-color {
+        width: $color-box-size;
+        height: $color-box-size;
+        margin: 3px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+
       }
     }
   }

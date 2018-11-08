@@ -6,22 +6,30 @@ angular.module('streama').controller('subProfilesCtrl',
     $scope.profile = {
       profile_name: '',
       profile_language: 'en',
-      isKid: false
+      isKid: false,
+      avatar_color: '0b74b2'
     };
-    $scope.mycolor = '002300';
-    $scope.currentSelectedColor = 'ba1c56';
+    $scope.standartColor = '0b74b2';
     $scope.existingProfiles = [];
     $scope.loading = true;
     $scope.isManageProfiles = false;
     $scope.isEditProfile = false;
     $scope.isCreateProfile = false;
+    $scope.avaliabeColors = [
+      '0b74b2','ba1c56','099166','d1b805','c03da7',
+      '488f16','d36e10','4b4b4b','3a328b','b81f1f'
+    ];
+
 
     apiService.profile.getUserProfiles()
       .success(function (data) {
         $scope.existingProfiles = data;
-        console.log('Profiles list:', $scope.existingProfiles);
       });
 
+
+    $scope.setProfileColor = function(color){
+      $scope.profile.avatar_color = color;
+    };
 
     $scope.toggleManageProfiles = function(){
       $scope.isManageProfiles = !$scope.isManageProfiles;
