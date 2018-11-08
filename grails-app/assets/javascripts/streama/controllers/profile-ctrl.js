@@ -6,18 +6,8 @@ angular.module('streama').controller('profileCtrl', function ($scope, apiService
   $scope.passwordData = {};
   $scope.passwordsInvalid = true;
   $scope.languages = true;
-  $scope.profile = {
-    profile_name: '',
-    profile_language: 'en',
-    isKid: false
-  };
-  $scope.existingProfiles = [];
-  $scope.isCreatingNewProfile = false;
-  apiService.profile.getUserProfiles()
-    .success(function (data) {
-      $scope.existingProfiles = data;
-      console.log('Profiles list:', $scope.existingProfiles);
-    });
+
+
   apiService.theMovieDb.availableGenres().success(function (data) {
     $scope.availableGenres = data;
     $scope.loading = false;
@@ -51,9 +41,9 @@ angular.module('streama').controller('profileCtrl', function ($scope, apiService
   };
 
   $scope.validatePasswords = function () {
-    if ($scope.passwordData.newPassword != $scope.passwordData.repeatPassword || $scope.passwordData.newPassword.length < 6) {
+    if($scope.passwordData.newPassword != $scope.passwordData.repeatPassword || $scope.passwordData.newPassword.length < 6){
       $scope.passwordsInvalid = true;
-    } else {
+    }else{
       $scope.passwordsInvalid = false;
     }
   };
@@ -74,56 +64,5 @@ angular.module('streama').controller('profileCtrl', function ($scope, apiService
         $scope.loading = false;
       });
   };
-
-  $scope.toggleCreateSubProfile = function () {
-    $scope.isCreatingNewProfile = !$scope.isCreatingNewProfile;
-  };
-
-  $scope.addNewSubProfile = function () {
-    if (!$scope.profile.profile_name) {
-      return;
-    }
-    if ($scope.profile.id) {
-      apiService.profile.update($scope.profile)
-        .success(function () {
-          alertify.success('Profile Updated!');
-          $scope.getAllProfiles();
-          $scope.loading = false;
-          $scope.isCreatingNewProfile = false;
-        })
-        .error(function (data) {
-          alertify.error(data.message);
-          $scope.loading = false;
-        });
-      return;
-    }
-    apiService.profile.save($scope.profile)
-      .success(function () {
-        alertify.success('Profile created!');
-        $scope.getAllProfiles();
-        $scope.loading = false;
-        $scope.isCreatingNewProfile = false;
-      })
-      .error(function (data) {
-        alertify.error(data.message);
-        $scope.loading = false;
-      });
-  };
-
-  $scope.getAllProfiles = function () {
-    apiService.profile.getUserProfiles()
-      .success(function (data) {
-        $scope.existingProfiles = data;
-      })
-      .error(function (data) {
-        alertify.error(data.message);
-        $scope.loading = false;
-      });
-  };
-
-  $scope.editSubProfile = function (profile) {
-    $scope.profile = profile;
-    $scope.toggleCreateSubProfile();
-  }
 
 });
