@@ -1,7 +1,9 @@
 $grey-text: #a6a6a6;
+$border-color: rgba(166, 166, 166, 0.3);
 $light-gray: lighten($grey-text, 40%);
 $avatar-width: 130px;
 $background-color: #25292B;
+$logo-color:#b0ddef;
 
 .sub-profile-page-container {
   width: 100%;
@@ -32,6 +34,7 @@ $background-color: #25292B;
   font-size: 15px;
   letter-spacing: 1.5px;
   background-color: transparent;
+  padding: 0 20px;
 
   &:hover {
     color: $light-gray;
@@ -48,8 +51,8 @@ $background-color: #25292B;
   font-weight: bold;
 
   &:hover {
-    background-color: #2898c5;
-    border: 1px solid #2898c5;
+    background-color: $logo-color;
+    border: 1px solid $logo-color;
     color: $background-color;
   }
 }
@@ -82,6 +85,7 @@ $background-color: #25292B;
     }
 
     p.add {
+      color: $grey-text;
       font-size: 40px;
       font-weight: 600;
     }
@@ -175,3 +179,62 @@ $background-color: #25292B;
     }
   }
 }
+
+
+.btns-container {
+  display: flex;
+  justify-content: flex-start;
+  button {
+    margin-right: 10px;
+  }
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px 0;
+  padding: 15px 0;
+  border-bottom: 1px solid $border-color;
+  border-top: 1px solid $border-color;
+
+  >* {
+    margin-bottom: 10px;
+  }
+
+  .choose-avatar-color {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .form-avatar {
+      width: $avatar-width;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: $avatar-width;
+
+      img {
+        z-index: 100;
+        max-width: $avatar-width;
+      }
+    }
+  }
+}
+
+.is-kid-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  input {
+    margin: 0 15px 0 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 18px;
+  }
+}
+

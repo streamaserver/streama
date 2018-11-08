@@ -9,10 +9,12 @@ angular.module('streama').controller('subProfilesCtrl',
       isKid: false
     };
     $scope.mycolor = '002300';
+    $scope.currentSelectedColor = 'ba1c56';
     $scope.existingProfiles = [];
     $scope.loading = true;
-    $scope.isManageProfiles = true;
-    $scope.isEditOrCreateProfile = false;
+    $scope.isManageProfiles = false;
+    $scope.isEditProfile = false;
+    $scope.isCreateProfile = false;
 
     apiService.profile.getUserProfiles()
       .success(function (data) {
@@ -25,12 +27,84 @@ angular.module('streama').controller('subProfilesCtrl',
       $scope.isManageProfiles = !$scope.isManageProfiles;
     };
 
-    $scope.editProfile = function(profile){
-      $scope.isEditOrCreateProfile = !$scope.isEditOrCreateProfile;
-
+    $scope.goToEditProfile = function(profile){
+      $scope.isEditProfile = !$scope.isEditProfile;
+      $scope.profile = profile;
     };
 
-    $scope.createProfile = function(){
-      $scope.isEditOrCreateProfile = !$scope.isEditOrCreateProfile;
+    $scope.goToCreateProfile = function(){
+      $scope.isCreateProfile = !$scope.isCreateProfile;
+      $scope.profile = {
+        profile_name: '',
+        profile_language: 'en',
+        isKid: false
+      }
+    };
+
+    $scope.deleteProfile = function(){
+      if($scope.existingProfiles.length == 1){
+        alertify.error("You must have at least ONE profile!");
+        return;
+      }
+      if(!$scope.profile.id){
+        return;
+      }
+      apiService.profile.delete($scope.profile.id)
+        .success(function () {
+          alertify.success('Profile Deleted!');
+          $scope.getAllProfiles();
+          $scope.loading = false;
+          $scope.refreshStates();
+        })
+        .error(function (data) {
+          alertify.error(data.message);
+          $scope.loading = false;
+        });
+    };
+
+    $scope.refreshStates = function(){
+      $scope.isEditProfile = false;
+      $scope.isCreateProfile = false;
+    };
+
+    $scope.saveProfile = function(){
+      if (!$scope.profile.profile_name) {
+        return;
+      }
+      if ($scope.profile.id) {
+        apiService.profile.update($scope.profile)
+          .success(function () {
+            alertify.success('Profile Updated!');
+            $scope.getAllProfiles();
+            $scope.loading = false;
+          })
+          .error(function (data) {
+            alertify.error(data.message);
+            $scope.loading = false;
+          });
+        return;
+      }
+      apiService.profile.save($scope.profile)
+        .success(function () {
+          alertify.success('Profile Created!');
+          $scope.getAllProfiles();
+          $scope.loading = false;
+        })
+        .error(function (data) {
+          alertify.error(data.message);
+          $scope.loading = false;
+        });
+    };
+
+    $scope.getAllProfiles = function () {
+      apiService.profile.getUserProfiles()
+        .success(function (data) {
+          $scope.existingProfiles = data;
+          $scope.refreshStates();
+        })
+        .error(function (data) {
+          alertify.error(data.message);
+          $scope.loading = false;
+        });
     };
   });

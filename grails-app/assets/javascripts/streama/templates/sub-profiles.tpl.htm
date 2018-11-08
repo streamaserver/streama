@@ -1,5 +1,5 @@
 <div class="sub-profile-page-container">
-  <div class="profiles-container" ng-if="!isManageProfiles && !isEditOrCreateProfile">
+  <div class="profiles-container" ng-if="!isManageProfiles && !(isEditProfile || isCreateProfile)">
     <p class="who-watching-header">Who's watching?</p>
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
@@ -11,7 +11,7 @@
         <p class="profile-name">{{subp.profile_name}}</p>
       </div>
 
-      <div class="add-profile" ng-click="createProfile()">
+      <div class="add-profile" ng-click="goToCreateProfile()">
         <div class="avatar">
           <p class="add">+</p>
         </div>
@@ -24,12 +24,12 @@
   </div>
 
   <!-- Manage Profiles -->
-  <div class="profiles-container" ng-if="isManageProfiles && !isEditOrCreateProfile">
+  <div class="profiles-container" ng-if="isManageProfiles && !(isEditProfile || isCreateProfile)">
     <p class="who-watching-header">Manage profiles:</p>
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
 
-      <div class="item-editable-container" ng-repeat="subp in existingProfiles">
+      <div class="item-editable-container" ng-repeat="subp in existingProfiles" ng-click="goToEditProfile(subp)">
         <div class="avatar" ng-style="{'background-color': '#'+mycolor}">
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
@@ -38,7 +38,7 @@
         <p class="profile-name">{{subp.profile_name}}</p>
       </div>
 
-      <div class="add-profile" ng-click="createProfile()">
+      <div class="add-profile" ng-click="goToCreateProfile()">
         <div class="avatar">
           <p class="add">+</p>
         </div>
@@ -52,11 +52,34 @@
 
 
   <!-- Edit - create profile -->
-  <div class="profiles-container" ng-if="isEditOrCreateProfile">
+  <div class="profiles-container" ng-if="isEditProfile || isCreateProfile">
+    <p class="who-watching-header">{{isEditProfile ? "Edit Profile" : "Create Profile"}}</p>
+
+    <div class="form-container">
+      <div class="choose-avatar-color">
+        <div class="form-avatar" ng-style="{'background-color': '#' + currentSelectedColor}">
+          <img src="/assets/streama-profile-smiley.png" alt="">
+        </div>
+      </div>
+      <input type="text" class="form-control"
+             ng-model="profile.profile_name" placeholder="Enter name">
+
+      <div class="is-kid-container">
+        <input type="checkbox" ng-model="profile.isKid">
+        <p>Kid?</p>
+      </div>
+      <select class="form-control" ng-model="profile.profile_language" ng-options="lang as ('LANGUAGE_'+lang | translate) for lang in $root.availableLanguages"></select>
 
 
-    <button class="manage-profiles-btn done-btn" ng-click="toggleManageProfiles()">Save</button>
-    <button class="manage-profiles-btn " ng-click="toggleManageProfiles()">Cancel</button>
+    </div>
+
+    <div class="btns-container">
+      <button class="manage-profiles-btn done-btn" ng-click="saveProfile()">
+        {{isEditProfile ? "Save" : "Create" }}
+      </button>
+      <button class="manage-profiles-btn " ng-click="refreshStates()">Cancel</button>
+      <button class="manage-profiles-btn " ng-if="isEditProfile" ng-click="deleteProfile()">Delete</button>
+    </div>
   </div>
 
 </div>
