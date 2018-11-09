@@ -22,6 +22,9 @@ class ViewingStatusController {
     @Transactional
     def save() {
       def result = [:]
+      Long profileId = request.getHeader('profileId')?.toLong()
+      Profile profile = Profile.findById(profileId)
+      params['profile'] = profile
       try{
         result = viewingStatusService.createNew(params)
       }catch(e){

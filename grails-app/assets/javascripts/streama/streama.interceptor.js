@@ -6,13 +6,14 @@ angular.module('streama').config(function ($httpProvider) {
 });
 
 
-angular.module('streama').factory('httpInterceptor', function ($rootScope, $q) {
+angular.module('streama').factory('httpInterceptor', function ($rootScope, $q, localStorageService) {
 	return {
 		request: function (config) {
 			config.params = config.params || {};
 			if(config.params.socketSessionId){
 				config.params.browserSocketUUID = $rootScope.browserSocketUUID;
 			}
+			config.headers.profileId = localStorageService.get('currentProfile').id || 0;
 			return config || $q.when(config);
 		},
 		response: function (response) {

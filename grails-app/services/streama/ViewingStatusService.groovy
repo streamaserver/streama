@@ -26,7 +26,7 @@ class ViewingStatusService {
     }.get()
 
     if(!viewingStatus){
-      viewingStatus = new ViewingStatus(tvShow: video?.show, user: currentUser, video: video)
+      viewingStatus = new ViewingStatus(tvShow: video?.show, user: currentUser, video: video, profile: params.profile)
     }
 
     viewingStatus.video = video
