@@ -97,8 +97,22 @@ angular.module('streama').controller('modalUserCtrl', [
       apiService.user.saveAndCreateUser(dateObj)
 
         .success(function (data) {
-          $uibModalInstance.close(data);
-          $scope.loading = false;
+          var basicProfile = {
+            profile_name: data.username,
+            profile_language: data.language,
+            isKid: false,
+            user: data
+          };
+          apiService.profile.save(basicProfile)
+            .success(function () {
+              alertify.success('Profile Created!');
+              $uibModalInstance.close(data);
+              $scope.loading = false;
+            })
+            .error(function (data) {
+              alertify.error(data.message);
+              $scope.loading = false;
+            });
         })
         .error(function () {
           $scope.loading = false;

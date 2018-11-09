@@ -32,7 +32,9 @@ class ProfileController {
             respond profile.errors, view:'create'
             return
         }
-        profile.user = springSecurityService.getCurrentUser()
+        if(!profile.user){
+          profile.user = springSecurityService.getCurrentUser()
+        }
         profile.save flush:true
 
         respond profile, [status: CREATED, view:"show"]
