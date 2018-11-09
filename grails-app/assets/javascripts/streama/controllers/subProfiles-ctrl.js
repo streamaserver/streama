@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('streama').controller('subProfilesCtrl',
-  function ($scope, apiService, $rootScope, userService) {
+  function ($scope, apiService, $rootScope, userService, localStorageService,$state) {
 
     $scope.profile = {
       profile_name: '',
@@ -26,6 +26,10 @@ angular.module('streama').controller('subProfilesCtrl',
         $scope.existingProfiles = data;
       });
 
+    $scope.setCurrentProfile = function(profile) {
+      localStorageService.set('currentProfile', profile);
+      $state.go('dash');
+    };
 
     $scope.setProfileColor = function(color){
       $scope.profile.avatar_color = color;

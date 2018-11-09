@@ -3,8 +3,7 @@
     <p class="who-watching-header">Who's watching?</p>
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
-
-      <div class="item-profile-container" ng-repeat="subp in existingProfiles">
+      <div class="item-profile-container" ng-repeat="subp in existingProfiles" ng-click="setCurrentProfile(subp)">
         <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standartColor)}">
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
@@ -17,8 +16,16 @@
         </div>
         <p class="profile-name">Add Profile</p>
       </div>
-
     </div>
+    <div class="select-profile-container" ng-if="!existingProfiles.length">
+      <div class="add-profile" ng-click="goToCreateProfile()">
+        <div class="avatar">
+          <p class="add">+</p>
+        </div>
+        <p class="profile-name">Add Profile</p>
+      </div>
+    </div>
+
 
     <button class="manage-profiles-btn" ng-click="toggleManageProfiles()">Manage profiles</button>
   </div>
@@ -28,7 +35,6 @@
     <p class="who-watching-header">Manage profiles:</p>
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
-
       <div class="item-editable-container" ng-repeat="subp in existingProfiles" ng-click="goToEditProfile(subp)">
         <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standartColor)}">
           <img src="/assets/streama-profile-smiley.png" alt="">
@@ -44,7 +50,14 @@
         </div>
         <p class="profile-name">Add Profile</p>
       </div>
-
+    </div>
+    <div class="select-profile-container" ng-if="!existingProfiles.length">
+      <div class="add-profile" ng-click="goToCreateProfile()">
+        <div class="avatar">
+          <p class="add">+</p>
+        </div>
+        <p class="profile-name">Add Profile</p>
+      </div>
     </div>
 
     <button class="manage-profiles-btn done-btn" ng-click="toggleManageProfiles()">Done</button>
