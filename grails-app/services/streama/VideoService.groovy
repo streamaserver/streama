@@ -23,9 +23,10 @@ class VideoService {
   }
 
 
-  public static List<ViewingStatus> listContinueWatching(User currentUser) {
+  public static List<ViewingStatus> listContinueWatching(User currentUser, Profile profile) {
     List<ViewingStatus> continueWatching = ViewingStatus.withCriteria {
       eq("user", currentUser)
+      eq("profile", profile)
       video {
         isNotEmpty("files")
         ne("deleted", true)
