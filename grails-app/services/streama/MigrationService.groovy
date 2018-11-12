@@ -152,4 +152,24 @@ class MigrationService {
       episode.save(flush: true)
     }
   }
+
+  def setupBasicSubProfiles() {
+    List<User> users = User.getAll()
+
+    users.each {
+      User u = it
+      List<Profile> profiles = Profile.findAllByUser(u)
+      if(profiles.size() == 0) {
+        Profile p = new Profile(
+          user: u,
+          profile_name: u.username,
+          profile_language: u.language,
+          isKid: false
+        )
+        p.save()
+      }
+    }
+  }
+
+
 }

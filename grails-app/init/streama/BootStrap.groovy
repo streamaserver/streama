@@ -21,6 +21,7 @@ class BootStrap {
         migrationService.urlvalidationFix()
         migrationService.updateBaseUrlHelp()
         migrationService.migrateMergedSeasonEpisode()
+        migrationService.setupBasicSubProfiles()
     }
     def destroy = {
     }
