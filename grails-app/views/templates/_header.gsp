@@ -59,15 +59,23 @@
       <sec:ifLoggedIn>
         <li>
           <div class="btn-group" uib-dropdown is-open="status.isopen" style="margin: 4px 0;">
-            <button id="single-button" type="button" class="btn btn-primary btn-sm"
+            <button id="single-button" type="button" class="btn btn-primary btn-sm header-btn"
                     uib-dropdown-toggle ng-disabled="disabled">
-              {{$root.currentUser.fullName || $root.currentUser.username}} <span class="caret"></span>
+              <div class="avatar-in-header" ng-style="{'background-color': '#'+($root.currentProfile.avatar_color || '0b74b2')}">
+                <img src="/assets/streama-profile-smiley.png" alt="">
+              </div>
+              {{$root.currentProfile.profile_name || $root.currentUser.fullName || $root.currentUser.username}}
+              <span class="caret"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-right"
                 uib-dropdown-menu role="menu" aria-labelledby="single-button">
+              <li role="menuitem" ng-repeat="prof in $root.usersProfiles"
+                  ng-click="$root.setCurrentSubProfile(prof)"><a>{{prof.profile_name}}</a></li>
+              <li class="divider"></li>
+              <li role="menuitem"><a ui-sref="sub-profiles">Manage profiles</a></li>
+              <li class="divider"></li>
               <li role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>
               <li role="menuitem"><a ui-sref="profile">{{'PROFILE_SETTINGS' | translate}}</a></li>
-              <li role="menuitem"><a ui-sref="sub-profiles">Manage profiles</a></li>
               <li class="divider"></li>
               <li><g:link uri="/logoff">{{'LOGOUT' | translate}}</g:link></li>
             </ul>

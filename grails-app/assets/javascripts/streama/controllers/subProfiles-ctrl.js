@@ -28,6 +28,7 @@ angular.module('streama').controller('subProfilesCtrl',
 
     $scope.setCurrentProfile = function(profile) {
       localStorageService.set('currentProfile', profile);
+      $rootScope.currentProfile = profile;
       $state.go('dash');
     };
 

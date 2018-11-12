@@ -3,6 +3,23 @@ angular.module('streama').run(function ($window, $rootScope, $state, localStorag
 		userService.setCurrentUser(data);
 	});
 
+  apiService.profile.getUserProfiles().success(function(data) {
+    $rootScope.usersProfiles = data;
+      if(!localStorageService.get('currentProfile')){
+        localStorageService.set('currentProfile', data[0]);
+        $rootScope.currentProfile = data[0];
+      }
+    }
+  ).error(function (data) {
+    console.warn(data.message);
+  });
+
+  $rootScope.setCurrentSubProfile = function(profile) {
+    $rootScope.currentProfile = profile;
+    localStorageService.set('currentProfile', profile)
+    $state.go('dash',{},{reload:true});
+  };
+
 	$rootScope.baseData = {};
 	$rootScope.isCurrentState = function (stateName) {
 		return ($state.current.name == stateName);
