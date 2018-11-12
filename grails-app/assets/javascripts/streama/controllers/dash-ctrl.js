@@ -13,8 +13,17 @@ angular.module('streama').controller('dashCtrl',
 
     $scope.$on('changedGenre', onChangedGenre);
 
-
-    init();
+    if(!localStorageService.get('currentProfile')){
+      apiService.profile.getUserProfiles().success(function(data) {
+          localStorageService.set('currentProfile', data[0]);
+          init();
+        }
+      ).error(function (data) {
+        alertify.error(data.message);
+      });
+    } else {
+      init();
+    }
 
 
     function init() {

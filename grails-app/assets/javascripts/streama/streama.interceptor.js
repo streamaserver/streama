@@ -13,7 +13,9 @@ angular.module('streama').factory('httpInterceptor', function ($rootScope, $q, l
 			if(config.params.socketSessionId){
 				config.params.browserSocketUUID = $rootScope.browserSocketUUID;
 			}
-			config.headers.profileId = localStorageService.get('currentProfile').id || 0;
+			if (localStorageService.get('currentProfile')){
+        config.headers.profileId = localStorageService.get('currentProfile').id || 0;
+      }
 			return config || $q.when(config);
 		},
 		response: function (response) {
