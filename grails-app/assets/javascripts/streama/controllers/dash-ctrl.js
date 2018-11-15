@@ -13,18 +13,7 @@ angular.module('streama').controller('dashCtrl',
 
     $scope.$on('changedGenre', onChangedGenre);
 
-    if(!localStorageService.get('currentProfile')){
-      apiService.profile.getUserProfiles().success(function(data) {
-          localStorageService.set('currentProfile', data[0]);
-          init();
-        }
-      ).error(function (data) {
-        alertify.error(data.message);
-      });
-    } else {
-      init();
-    }
-
+    init();
 
     function init() {
       if ($rootScope.currentUser.isAdmin) {
@@ -33,6 +22,15 @@ angular.module('streama').controller('dashCtrl',
 
       if ($stateParams.mediaModal) {
         modalService.mediaDetailModal({mediaId: $stateParams.mediaModal, mediaType: $stateParams.mediaType, isApiMovie: false});
+      }
+
+      if(!localStorageService.get('currentProfile')){
+        apiService.profile.getUserProfiles().success(function(data) {
+            localStorageService.set('currentProfile', data[0]);
+          }
+        ).error(function (data) {
+          alertify.error(data.message);
+        });
       }
 
       vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser.data);

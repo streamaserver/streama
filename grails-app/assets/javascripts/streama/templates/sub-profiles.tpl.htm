@@ -1,10 +1,10 @@
 <div class="sub-profile-page-container">
-  <div class="profiles-container" ng-if="!isManageProfiles && !(isEditProfile || isCreateProfile)">
+  <div class="profiles-container" ng-if="showPreviewProfiles()">
     <p class="who-watching-header">Who's watching?</p>
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
       <div class="item-profile-container" ng-repeat="subp in existingProfiles" ng-click="setCurrentProfile(subp)">
-        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standartColor)}">
+        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standardColor)}">
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
         <p class="profile-name">{{subp.profile_name}}</p>
@@ -31,12 +31,12 @@
   </div>
 
   <!-- Manage Profiles -->
-  <div class="profiles-container" ng-if="isManageProfiles && !(isEditProfile || isCreateProfile)">
+  <div class="profiles-container" ng-if="showEditProfiles()">
     <p class="who-watching-header">Manage profiles:</p>
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
       <div class="item-editable-container" ng-repeat="subp in existingProfiles" ng-click="goToEditProfile(subp)">
-        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standartColor)}">
+        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standardColor)}">
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
         <div class="grey-editable-avatar"></div>
@@ -75,7 +75,7 @@
         </div>
         <div class="colors-container">
           <div class="single-color"
-               ng-repeat="col in avaliabeColors"
+               ng-repeat="col in availableColors"
                ng-style="{'background-color': '#'+col}"
                ng-click="setProfileColor(col)"></div>
         </div>

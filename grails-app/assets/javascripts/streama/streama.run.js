@@ -1,24 +1,14 @@
-angular.module('streama').run(function ($window, $rootScope, $state, localStorageService, apiService, modalService, userService) {
+angular.module('streama').run(function ($window, $rootScope, $state, localStorageService, apiService, modalService, userService, profileService) {
 	apiService.currentUser().success(function (data) {
 		userService.setCurrentUser(data);
 	});
 
-  apiService.profile.getUserProfiles().success(function(data) {
-    $rootScope.usersProfiles = data;
-      if(!localStorageService.get('currentProfile')){
-        localStorageService.set('currentProfile', data[0]);
-        $rootScope.currentProfile = data[0];
-      }
-    }
-  ).error(function (data) {
-    console.warn(data.message);
-  });
-
-  $rootScope.setCurrentSubProfile = function(profile) {
-    $rootScope.currentProfile = profile;
-    localStorageService.set('currentProfile', profile)
-    $state.go('dash',{},{reload:true});
-  };
+   profileService.getUserProfiles().success(
+    function(data) {
+      $rootScope.usersProfiles = data;
+      $rootScope.currentProfile = profileService.getCurrentProfile() || $rootScope.usersProfiles[0];
+    });
+  $rootScope.setCurrentSubProfile = profileService.setCurrentProfile;
 
 	$rootScope.baseData = {};
 	$rootScope.isCurrentState = function (stateName) {
