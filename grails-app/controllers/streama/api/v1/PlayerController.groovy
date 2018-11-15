@@ -2,6 +2,7 @@ package streama.api.v1
 
 import grails.converters.JSON
 import grails.transaction.NotTransactional
+import streama.Profile
 import streama.Video
 
 class PlayerController {
@@ -23,6 +24,9 @@ class PlayerController {
 
   @NotTransactional
   def updateViewingStatus(){
+    Long profileId = request.getHeader('profileId')?.toLong()
+    Profile profile = Profile.findById(profileId)
+    params['profile'] = profile
     def result = playerService.updateViewingStatus(params)
     if(result.error){
       render status: result.statusCode

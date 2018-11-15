@@ -25,6 +25,7 @@ class ViewingStatusController {
       Long profileId = request.getHeader('profileId')?.toLong()
       Profile profile = Profile.findById(profileId)
       params['profile'] = profile
+      log.debug("profile: ${profile}")
       try{
         result = viewingStatusService.createNew(params)
       }catch(e){

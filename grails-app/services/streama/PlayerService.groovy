@@ -34,6 +34,7 @@ class PlayerService {
         viewingStatus.currentPlayTime = currentTime
         viewingStatus.runtime = runtime
         viewingStatus.user = currentUser
+        viewingStatus.profile = params.profile
 
 
         viewingStatus.validate()
