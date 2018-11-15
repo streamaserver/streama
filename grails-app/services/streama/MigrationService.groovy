@@ -157,16 +157,36 @@ class MigrationService {
     List<User> users = User.getAll()
 
     users.each {
-      User u = it
-      List<Profile> profiles = Profile.findAllByUser(u)
-      if(profiles.size() == 0) {
-        Profile p = new Profile(
-          user: u,
-          profile_name: u.username,
-          profile_language: u.language,
-          isKid: false
-        )
-        p.save()
+      User user = it
+      List<Profile> profiles = Profile.findAllByUser(user)
+      if(profiles.size() > 0) {
+        return
+      }
+      Profile p = new Profile(
+        user: user,
+        profile_name: user.username,
+        profile_language: user.language,
+        isKid: false
+      )
+      p.save()
+    }
+  }
+
+  def addProfilesToViewingStatusRecords() {
+    List<User> users = User.getAll()
+
+    users.each { User user ->
+      List<ViewingStatus> views = ViewingStatus.findAllByUser(user)
+      if(views.size() == 0) {
+        return
+      }
+
+      views.each { ViewingStatus vs ->
+        if(vs.profile){
+          return
+        }
+        vs.profile = Profile.findByUser(user)
+        vs.save()
       }
     }
   }
