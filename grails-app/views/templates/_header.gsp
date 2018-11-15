@@ -64,7 +64,7 @@
               <div class="avatar-in-header" ng-style="{'background-color': '#'+($root.currentProfile.avatar_color || '0b74b2')}">
                 <img src="/assets/streama-profile-smiley.png" alt="">
               </div>
-              {{$root.currentProfile.profile_name || $root.currentUser.fullName || $root.currentUser.username}}
+              <p>{{$root.currentProfile.profile_name || $root.currentUser.fullName || $root.currentUser.username}}</p>
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-right"

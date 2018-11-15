@@ -82,6 +82,20 @@ header.main{
       }
     }
   }
+
+  .avatar-in-header {
+    width: 30px;
+    height: 30px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      z-index: 100;
+      width: 30px;
+    }
+  }
 }
 
 

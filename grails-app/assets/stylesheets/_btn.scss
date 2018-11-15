@@ -119,6 +119,18 @@
 }
 
 
-.margin-bottom-for-btn {
-  margin-bottom: 10px;
+.header-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-color: transparent;
+  p {
+    margin: 0 4px;
+  }
+
+  &:hover, &:focus {
+    background-color: rgba(255,255,255, 0.12);
+    border-color: transparent;
+  }
 }
