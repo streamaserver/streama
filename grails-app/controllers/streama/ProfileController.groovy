@@ -53,7 +53,7 @@ class ProfileController {
             return
         }
 
-        profile.save flush:true
+        profile.save()
 
         respond profile, [status: OK]
     }
@@ -67,14 +67,18 @@ class ProfileController {
             return
         }
 
-        profile.delete
+        profile.isDeleted = true
+        profile.save()
 
         render status: NO_CONTENT
     }
 
     @Transactional
     def getUserProfiles() {
-      def result = Profile.findAllByUser(springSecurityService.getCurrentUser())
+      def result = Profile.where {
+        user == springSecurityService.getCurrentUser()
+        isDeleted != true
+      }.list()
       respond(result, [status: OK])
     }
 }
