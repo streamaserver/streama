@@ -55,6 +55,10 @@ angular.module('streama').controller('subProfilesCtrl',
         alertify.error("You must have at least ONE profile!");
         return;
       }
+      if($scope.profile.id === profileService.getCurrentProfile().id){
+        alertify.error("You currently use this profile! Change profile first");
+        return;
+      }
       if(!$scope.profile.id){
         return;
       }
