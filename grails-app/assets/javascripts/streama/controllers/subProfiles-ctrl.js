@@ -4,10 +4,10 @@ angular.module('streama').controller('subProfilesCtrl',
   function ($scope, apiService, $rootScope, userService, localStorageService, $state, profileService) {
 
     $scope.profile = {
-      profile_name: '',
-      profile_language: 'en',
-      isKid: false,
-      avatar_color: '0b74b2'
+      profileName: '',
+      profileLanguage: 'en',
+      isChild: false,
+      avatarColor: '0b74b2'
     };
     $scope.standardColor = '0b74b2';
     $scope.existingProfiles = [];
@@ -28,7 +28,7 @@ angular.module('streama').controller('subProfilesCtrl',
     $scope.setCurrentProfile = profileService.setCurrentProfile;
 
     $scope.setProfileColor = function(color){
-      $scope.profile.avatar_color = color;
+      $scope.profile.avatarColor = color;
     };
 
     $scope.toggleManageProfiles = function(){
@@ -43,14 +43,15 @@ angular.module('streama').controller('subProfilesCtrl',
     $scope.goToCreateProfile = function(){
       $scope.isCreateProfile = !$scope.isCreateProfile;
       $scope.profile = {
-        profile_name: '',
-        profile_language: 'en',
-        isKid: false
+        profileName: '',
+        profileLanguage: 'en',
+        isChild: false,
+        avatarColor: '0b74b2'
       }
     };
 
     $scope.deleteProfile = function(){
-      if($scope.existingProfiles.length == 1){
+      if($scope.existingProfiles.length === 1){
         alertify.error("You must have at least ONE profile!");
         return;
       }
@@ -76,7 +77,7 @@ angular.module('streama').controller('subProfilesCtrl',
     };
 
     $scope.saveProfile = function(){
-      if (!$scope.profile.profile_name) {
+      if (!$scope.profile.profileName) {
         return;
       }
       if ($scope.profile.id) {

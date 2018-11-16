@@ -76,9 +76,9 @@ angular.module('streama').controller('modalUserCtrl', [
 
 				.success(function (data) {
           var basicProfile = {
-            profile_name: data.username,
-            profile_language: data.language,
-            isKid: false,
+            profileName: data.username,
+            profileLanguage: data.language,
+            isChild: false,
             user: data
           };
           apiService.profile.save(basicProfile)
@@ -112,9 +112,9 @@ angular.module('streama').controller('modalUserCtrl', [
 
         .success(function (data) {
           var basicProfile = {
-            profile_name: data.username,
-            profile_language: data.language,
-            isKid: false,
+            profileName: data.username,
+            profileLanguage: data.language,
+            isChild: false,
             user: data
           };
           apiService.profile.save(basicProfile)

@@ -29,15 +29,14 @@ class ProfileController {
 
         if (profile.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond profile.errors, view:'create'
+            respond profile.errors
             return
         }
         if(!profile.user){
           profile.user = springSecurityService.getCurrentUser()
         }
-        profile.save flush:true
-
-        respond profile, [status: CREATED, view:"show"]
+        profile.save()
+        respond profile, [status: CREATED]
     }
 
     @Transactional
@@ -50,13 +49,13 @@ class ProfileController {
 
         if (profile.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond profile.errors, view:'edit'
+            respond profile.errors
             return
         }
 
         profile.save flush:true
 
-        respond profile, [status: OK, view:"show"]
+        respond profile, [status: OK]
     }
 
     @Transactional
@@ -68,7 +67,7 @@ class ProfileController {
             return
         }
 
-        profile.delete flush:true
+        profile.delete
 
         render status: NO_CONTENT
     }

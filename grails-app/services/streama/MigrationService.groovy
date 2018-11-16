@@ -164,9 +164,9 @@ class MigrationService {
       }
       Profile p = new Profile(
         user: user,
-        profile_name: user.username,
-        profile_language: user.language,
-        isKid: false
+        profileName: user.username,
+        profileLanguage: user.language,
+        isChild: false
       )
       p.save()
     }

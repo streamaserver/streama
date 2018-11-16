@@ -2,10 +2,11 @@ package streama
 
 class Profile {
 
-  String profile_name
-  String profile_language
-  Boolean isKid
-  String avatar_color
+  String profileName
+  String profileLanguage
+  Boolean isChild
+  Boolean isDeleted = false
+  String avatarColor
 
   static belongsTo = [user: User]
 

@@ -4,10 +4,10 @@
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
       <div class="item-profile-container" ng-repeat="subp in existingProfiles" ng-click="setCurrentProfile(subp)">
-        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standardColor)}">
+        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatarColor || standardColor)}">
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
-        <p class="profile-name">{{subp.profile_name}}</p>
+        <p class="profile-name">{{subp.profileName}}</p>
       </div>
 
       <div class="add-profile" ng-click="goToCreateProfile()">
@@ -36,12 +36,12 @@
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
       <div class="item-editable-container" ng-repeat="subp in existingProfiles" ng-click="goToEditProfile(subp)">
-        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatar_color || standardColor)}">
+        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatarColor || standardColor)}">
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
         <div class="grey-editable-avatar"></div>
         <div class="edit-label-container"><p>Edit</p></div>
-        <p class="profile-name">{{subp.profile_name}}</p>
+        <p class="profile-name">{{subp.profileName}}</p>
       </div>
 
       <div class="add-profile" ng-click="goToCreateProfile()">
@@ -70,7 +70,7 @@
 
     <div class="form-container">
       <div class="choose-avatar-color">
-        <div class="form-avatar" ng-style="{'background-color': '#' + profile.avatar_color || standardColor}">
+        <div class="form-avatar" ng-style="{'background-color': '#' + profile.avatarColor || standardColor}">
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
         <div class="colors-container">
@@ -81,13 +81,13 @@
         </div>
       </div>
       <input type="text" class="form-control"
-             ng-model="profile.profile_name" placeholder="Enter name">
+             ng-model="profile.profileName" placeholder="Enter name">
 
       <div class="is-kid-container">
-        <input type="checkbox" ng-model="profile.isKid">
-        <p>Kid?</p>
+        <input type="checkbox" ng-model="profile.isChild">
+        <p>Child?</p>
       </div>
-      <select class="form-control" ng-model="profile.profile_language"
+      <select class="form-control" ng-model="profile.profileLanguage"
               ng-options="lang as ('LANGUAGE_'+lang | translate) for lang in $root.availableLanguages"></select>
 
 
