@@ -70,11 +70,15 @@ angular.module('streama').controller('modalUserCtrl', [
 
 		$scope.saveAndInviteUser = function (user) {
 			$scope.loading = true;
-
-			var dateObj = angular.copy(user);
+      var dateObj = angular.copy(user);
 			apiService.user.saveAndInviteUser(dateObj)
-
 				.success(function (data) {
+				  if(user.id){
+            alertify.success('User Updated!');
+            $uibModalInstance.close(data);
+            $scope.loading = false;
+            return;
+          }
           var basicProfile = {
             profileName: data.username,
             profileLanguage: data.language,
@@ -106,7 +110,6 @@ angular.module('streama').controller('modalUserCtrl', [
 
     $scope.saveAndCreateUser = function (user) {
       $scope.loading = true;
-
       var dateObj = angular.copy(user);
       apiService.user.saveAndCreateUser(dateObj)
 
