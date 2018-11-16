@@ -69,8 +69,10 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-right"
                 uib-dropdown-menu role="menu" aria-labelledby="single-button">
-              <li role="menuitem" ng-repeat="prof in $root.usersProfiles"
-                  ng-click="$root.setCurrentSubProfile(prof)">
+              <li role="menuitem" class="header-profile-item" ng-repeat="prof in $root.usersProfiles" ng-click="$root.setCurrentSubProfile(prof)">
+                <div class="avatar-in-header" ng-style="{'background-color': '#'+(prof.avatarColor || '0b74b2')}">
+                  <img src="/assets/streama-profile-smiley.png" alt="">
+                </div>
                 <a>{{prof.profileName}}</a>
               </li>
               <li class="divider"></li>

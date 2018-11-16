@@ -96,6 +96,19 @@ header.main{
       width: 30px;
     }
   }
+  .header-profile-item {
+    padding: 3px 20px;
+    display: flex;
+    align-items: center;
+
+    a {
+      padding-left: 4px;
+      &:hover {
+        background-color: unset;
+      }
+    }
+  }
+
 }
 
 
