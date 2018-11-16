@@ -154,14 +154,18 @@ class MigrationService {
   }
 
   def setupBasicSubProfiles() {
-    List<User> users = User.getAll()
-
-    users.each {
-      User user = it
-      List<Profile> profiles = Profile.findAllByUser(user)
-      if(profiles.size() > 0) {
-        return
+    List<User> users = User.where {
+      def currentUser = User
+      not{
+        exists Profile.where {
+          def profile = Profile
+          def profileUser = user
+          currentUser.id == profileUser.id
+        }.id()
       }
+    }.list()
+
+    users.each { User user ->
       Profile p = new Profile(
         user: user,
         profileName: user.username,
