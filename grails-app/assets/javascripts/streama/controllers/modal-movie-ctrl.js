@@ -14,6 +14,7 @@ angular.module('streama').controller('modalMovieCtrl', [
   apiService.theMovieDb.hasKey().success(function (data) {
     if (!data.key) {
       $scope.hasMovieDBKey = false;
+      $scope.addManually = true;
     }
   });
 
