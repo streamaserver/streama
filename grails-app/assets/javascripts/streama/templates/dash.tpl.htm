@@ -70,7 +70,7 @@
   </div>
 
 
-  <div ng-if="vm.recommendations.length && !$root.selectedGenre">
+  <div ng-if="vm.recommendations.length && !$root.selectedGenre && !vm.isDashSectionHidden('recommends')">
     <h3>{{'DASHBOARD.RECOMMENDATIONS' | translate}}</h3>
 
 
@@ -97,7 +97,7 @@
 
   <!--   --------------- TV SHOWS ---------------------  -->
 
-  <div>
+  <div ng-if="!vm.isDashSectionHidden('discover-shows')">
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_SHOWS' | translate}}</span>
       <span ng-show="$root.selectedGenre">{{::$root.selectedGenre.name}} TV Shows</span>
@@ -163,7 +163,7 @@
 
   <!--   --------------- MOVIES ---------------------  -->
 
-  <div >
+  <div ng-if="!vm.isDashSectionHidden('discover-movies')">
     <h3>
       <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_MOVIES' | translate}}</span>
       <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>
@@ -230,7 +230,7 @@
 
   <!--   --------------- GENERIC VIDEOS ---------------------  -->
 
-  <div ng-if="vm.genericVideo.list.length">
+  <div ng-if="vm.genericVideo.list.length && !vm.isDashSectionHidden('discover-generic')">
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_OTHER_VIDEOS' | translate}}</span>
       <span ng-show="$root.selectedGenre">{{::$root.selectedGenre.name}} Videos</span>
