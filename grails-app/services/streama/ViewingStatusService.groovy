@@ -23,6 +23,7 @@ class ViewingStatusService {
     viewingStatus = ViewingStatus.where{
       user == currentUser
       video == video
+      profile == params.profile
     }.get()
 
     if(!viewingStatus){

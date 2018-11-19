@@ -177,7 +177,14 @@ class MigrationService {
   }
 
   def addProfilesToViewingStatusRecords() {
-    List<User> users = User.getAll()
+    List<User> users = User.where{
+      def currentUser = User
+      exists ViewingStatus.where {
+        def viewingStatus = ViewingStatus
+        def viewingStatusUser = user
+        currentUser.id == viewingStatusUser.id
+      }.id()
+    }.list()
 
     users.each { User user ->
       List<ViewingStatus> views = ViewingStatus.findAllByUser(user)
