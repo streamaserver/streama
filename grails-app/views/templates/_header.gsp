@@ -77,7 +77,7 @@
               </li>
               <li class="divider"></li>
               <li role="menuitem">
-                <a ui-sref="sub-profiles">Manage profiles</a>
+                <a ui-sref="sub-profiles">{{'MANAGE_SUB_PROFILES' | translate}}</a>
               </li>
               <li class="divider"></li>
               <li role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>

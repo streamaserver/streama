@@ -1,6 +1,6 @@
 <div class="sub-profile-page-container">
   <div class="profiles-container" ng-if="showPreviewProfiles()">
-    <p class="who-watching-header">Who's watching?</p>
+    <p class="who-watching-header">{{'WHOS_WATCHING' | translate}}</p>
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
       <div class="item-profile-container" ng-repeat="subp in existingProfiles" ng-click="setCurrentProfile(subp)">
@@ -14,7 +14,7 @@
         <div class="avatar">
           <p class="add">+</p>
         </div>
-        <p class="profile-name">Add Profile</p>
+        <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
       </div>
     </div>
     <div class="select-profile-container" ng-if="!existingProfiles.length">
@@ -22,17 +22,17 @@
         <div class="avatar">
           <p class="add">+</p>
         </div>
-        <p class="profile-name">Add Profile</p>
+        <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
       </div>
     </div>
 
 
-    <button class="manage-profiles-btn" ng-click="toggleManageProfiles()">Manage profiles</button>
+    <button class="manage-profiles-btn" ng-click="toggleManageProfiles()">{{'MANAGE_SUB_PROFILES' | translate}}</button>
   </div>
 
   <!-- Manage Profiles -->
   <div class="profiles-container" ng-if="showEditProfiles()">
-    <p class="who-watching-header">Manage profiles:</p>
+    <p class="who-watching-header">{{'MANAGE_SUB_PROFILES' | translate}}:</p>
 
     <div class="select-profile-container" ng-if="existingProfiles.length">
       <div class="item-editable-container" ng-repeat="subp in existingProfiles" ng-click="goToEditProfile(subp)">
@@ -40,7 +40,7 @@
           <img src="/assets/streama-profile-smiley.png" alt="">
         </div>
         <div class="grey-editable-avatar"></div>
-        <div class="edit-label-container"><p>Edit</p></div>
+        <div class="edit-label-container"><p>{{'EDIT_BTN' | translate}}</p></div>
         <p class="profile-name">{{subp.profileName}}</p>
       </div>
 
@@ -48,7 +48,7 @@
         <div class="avatar">
           <p class="add">+</p>
         </div>
-        <p class="profile-name">Add Profile</p>
+        <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
       </div>
     </div>
     <div class="select-profile-container" ng-if="!existingProfiles.length">
@@ -56,17 +56,17 @@
         <div class="avatar">
           <p class="add">+</p>
         </div>
-        <p class="profile-name">Add Profile</p>
+        <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
       </div>
     </div>
 
-    <button class="manage-profiles-btn done-btn" ng-click="toggleManageProfiles()">Done</button>
+    <button class="manage-profiles-btn done-btn" ng-click="toggleManageProfiles()">{{'DONE_BTN' | translate}}</button>
   </div>
 
 
   <!-- Edit - create profile -->
   <div class="profiles-container" ng-if="isEditProfile || isCreateProfile">
-    <p class="who-watching-header">{{isEditProfile ? "Edit Profile" : "Create Profile"}}</p>
+    <p class="who-watching-header">{{isEditProfile ? ('EDIT_PROFILE' | translate) : ('CREATE_PROFILE' | translate) }}</p>
 
     <div class="form-container">
       <div class="choose-avatar-color">
@@ -81,7 +81,7 @@
         </div>
       </div>
       <input type="text" class="form-control"
-             ng-model="profile.profileName" placeholder="Enter name">
+             ng-model="profile.profileName" placeholder="{{'ENTER_NAME' | translate}}">
 
       <div class="is-kid-container">
         <input type="checkbox" ng-model="profile.isChild">
@@ -95,10 +95,10 @@
 
     <div class="btns-container">
       <button class="manage-profiles-btn done-btn" ng-click="saveProfile()">
-        {{isEditProfile ? "Save" : "Create" }}
+        {{isEditProfile ? ('SAVE_BTN' | translate) : ('CREATE_BTN' | translate) }}
       </button>
-      <button class="manage-profiles-btn " ng-click="refreshStates()">Cancel</button>
-      <button class="manage-profiles-btn " ng-if="isEditProfile" ng-click="deleteProfile()">Delete</button>
+      <button class="manage-profiles-btn " ng-click="refreshStates()">{{'CANCEL_BTN' | translate}}</button>
+      <button class="manage-profiles-btn " ng-if="isEditProfile" ng-click="deleteProfile()">{{'DELETE_BTN' | translate}}</button>
     </div>
   </div>
 
