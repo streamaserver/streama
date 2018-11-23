@@ -27,12 +27,17 @@ angular.module('streama').controller('dashCtrl',
       if(!localStorageService.get('currentProfile')){
         apiService.profile.getUserProfiles().success(function(data) {
             localStorageService.set('currentProfile', data[0]);
+            initMedia();
           }
         ).error(function (data) {
           alertify.error(data.message);
         });
+      } else {
+        initMedia();
       }
+    }
 
+    function initMedia() {
       vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser.data);
       vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser.data);
       vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser.data);
@@ -43,7 +48,6 @@ angular.module('streama').controller('dashCtrl',
       apiService.dash.listRecommendations().success(onRecommendedLoaded);
       apiService.dash.listGenres().success(onGenreLoaded);
     }
-
 
     // HOISTED FUNCTIONS BELOW
 
