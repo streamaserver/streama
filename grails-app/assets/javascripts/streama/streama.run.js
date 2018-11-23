@@ -51,7 +51,7 @@ angular.module('streama').run(function ($window, $rootScope, $state, localStorag
 
 	$rootScope.loginUser = function () {
 	  $window.location.assign('/login/login');
-  }
+  };
 
 
 	$rootScope.$on('$stateChangeSuccess', function (e, toState) {

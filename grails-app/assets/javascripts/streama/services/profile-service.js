@@ -9,10 +9,7 @@ angular.module('streama').factory('profileService', function (localStorageServic
   }
 
   function getCurrentProfile() {
-    if (localStorageService.get('currentProfile')) {
-      return localStorageService.get('currentProfile');
-    }
-    return null;
+      return localStorageService.get('currentProfile') || null;
   }
 
   function getUserProfiles() {
