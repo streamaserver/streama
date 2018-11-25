@@ -448,7 +448,11 @@ angular.module('streama').directive('streamaVideoPlayer', [
 
 
 				function initMouseWheel() {
+				  var isMouseWheelVolumeCtrlActive = true;
 					jQuery($elem).mousewheel(function (event) {
+					  if (!isMouseWheelVolumeCtrlActive) {
+					    return;
+					  }
 						if (event.deltaY > 0) {
 							changeVolume(1);
 						} else if (event.deltaY < 0) {
@@ -456,6 +460,13 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						}
 						$scope.showControls();
 					});
+				  var playerMenu = document.querySelector('#player-menu-episode-selector');
+				  playerMenu.addEventListener('mouseenter', function (event) {
+				    isMouseWheelVolumeCtrlActive = false;
+				  });
+				  playerMenu.addEventListener('mouseleave', function (event) {
+				    isMouseWheelVolumeCtrlActive = true;
+				  });
 				}
 
 				function initMousetrap() {
