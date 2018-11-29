@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('streama').controller('profileCtrl', function ($scope, apiService, $rootScope, userService) {
+angular.module('streama').controller('userSettingsCtrl', function ($scope, apiService, $rootScope, userService) {
   $scope.user = angular.copy($rootScope.currentUser);
   $scope.loading = true;
   $scope.passwordData = {};
