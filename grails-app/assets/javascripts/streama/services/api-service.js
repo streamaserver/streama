@@ -336,6 +336,22 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			triggerPlayerAction: function (params) {
 				return $http.get('websocket/triggerPlayerAction.json', {params: params});
 			}
-		}
+		},
+
+    profile: {
+		  save: function (params) {
+        return $http.post('profile/save',  params)
+      },
+		  update: function (params) {
+        return $http.put('profile/update.json',  params)
+      },
+		  delete: function (id) {
+        return $http.delete('profile/delete.json',  {params: {id: id}})
+      },
+      getUserProfiles: function () {
+        return $http.get('profile/getUserProfiles.json')
+      }
+    }
+
 	};
 });

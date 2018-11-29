@@ -70,13 +70,31 @@ angular.module('streama').controller('modalUserCtrl', [
 
 		$scope.saveAndInviteUser = function (user) {
 			$scope.loading = true;
-
-			var dateObj = angular.copy(user);
+      var dateObj = angular.copy(user);
 			apiService.user.saveAndInviteUser(dateObj)
-
 				.success(function (data) {
-					$uibModalInstance.close(data);
-					$scope.loading = false;
+				  if(user.id){
+            alertify.success('User Updated!');
+            $uibModalInstance.close(data);
+            $scope.loading = false;
+            return;
+          }
+          var basicProfile = {
+            profileName: data.username,
+            profileLanguage: data.language,
+            isChild: false,
+            user: data
+          };
+          apiService.profile.save(basicProfile)
+            .success(function () {
+              alertify.success('Profile Created!');
+              $uibModalInstance.close(data);
+              $scope.loading = false;
+            })
+            .error(function (data) {
+              alertify.error(data.message);
+              $scope.loading = false;
+            });
 				})
 				.error(function (response) {
 					$scope.loading = false;
@@ -92,13 +110,26 @@ angular.module('streama').controller('modalUserCtrl', [
 
     $scope.saveAndCreateUser = function (user) {
       $scope.loading = true;
-
       var dateObj = angular.copy(user);
       apiService.user.saveAndCreateUser(dateObj)
 
         .success(function (data) {
-          $uibModalInstance.close(data);
-          $scope.loading = false;
+          var basicProfile = {
+            profileName: data.username,
+            profileLanguage: data.language,
+            isChild: false,
+            user: data
+          };
+          apiService.profile.save(basicProfile)
+            .success(function () {
+              alertify.success('Profile Created!');
+              $uibModalInstance.close(data);
+              $scope.loading = false;
+            })
+            .error(function (data) {
+              alertify.error(data.message);
+              $scope.loading = false;
+            });
         })
         .error(function () {
           $scope.loading = false;

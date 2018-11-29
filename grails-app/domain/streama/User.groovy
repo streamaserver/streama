@@ -27,7 +27,7 @@ class User {
 
 	static transients = ['springSecurityService']
 
-  static hasMany = [favoriteGenres: Genre]
+  static hasMany = [favoriteGenres: Genre, profiles: Profile]
 
 	static constraints = {
 		username blank: false, unique: true

@@ -2,10 +2,12 @@ package streama.marshallers
 
 import grails.converters.JSON
 import grails.transaction.Transactional
+import org.grails.web.util.WebUtils
 import streama.Episode
 import streama.File
 import streama.GenericVideo
 import streama.Movie
+import streama.Profile
 import streama.Video
 import streama.ViewingStatus
 
@@ -18,6 +20,10 @@ class PlayerMarshallerService {
     JSON.createNamedConfig('player') { cfg ->
       cfg.registerObjectMarshaller(Video) { Video video ->
         def returnArray = [:]
+
+        def request = WebUtils.retrieveGrailsWebRequest()?.getCurrentRequest()
+        def profileId = request.getHeader("profileId")
+        Profile profile = Profile.findById(profileId)
 
         returnArray['id'] = video.id
         returnArray['dateCreated'] = video.dateCreated
@@ -35,7 +41,7 @@ class PlayerMarshallerService {
 
         returnArray['hasFiles'] = video.hasFiles()
 
-        returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(video, springSecurityService.currentUser)
+        returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUserAndProfile(video, springSecurityService.currentUser, profile)
         returnArray['outro_start'] = video.outro_start ? video.outro_start * 60 : null  //convert to seconds
 
         if (video instanceof Episode) {
