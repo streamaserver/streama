@@ -86,7 +86,7 @@
 							<ul class="dropdown-menu dropdown-menu-right"
 									uib-dropdown-menu role="menu" aria-labelledby="single-button">
 								<li role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>
-								<li role="menuitem"><a ui-sref="profile">{{'PROFILE_SETTINGS' | translate}}</a></li>
+								<li role="menuitem"><a ui-sref="userSettings">{{'PROFILE_SETTINGS' | translate}}</a></li>
 								<li class="divider"></li>
 								<li><g:link uri="/j_spring_security_logout">{{'LOGOUT' | translate}}</g:link></li>
 							</ul>
