@@ -84,22 +84,15 @@ angular.module('streama').controller('subProfilesCtrl',
       if (!$scope.profile.profileName) {
         return;
       }
+      var saveProfileEndpoint;
       if ($scope.profile.id) {
-        apiService.profile.update($scope.profile)
-          .success(function () {
-            alertify.success('Profile Updated!');
-            $scope.getAllProfiles();
-            $scope.loading = false;
-          })
-          .error(function (data) {
-            alertify.error(data.message);
-            $scope.loading = false;
-          });
-        return;
+        saveProfileEndpoint = apiService.profile.update;
+      }else {
+        saveProfileEndpoint = apiService.profile.save;
       }
-      apiService.profile.save($scope.profile)
+      saveProfileEndpoint($scope.profile)
         .success(function () {
-          alertify.success('Profile Created!');
+          alertify.success($scope.profile.id ? 'Profile Updated!' : 'Profile Created!');
           $scope.getAllProfiles();
           $scope.loading = false;
         })
