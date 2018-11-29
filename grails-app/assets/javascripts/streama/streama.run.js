@@ -40,6 +40,8 @@ angular.module('streama')
 		}
 	};
 
+  $rootScope.$on('streama.profiles.onChange', loadAndInitProfiles);
+
 
 	$rootScope.changeGenre = function (genre) {
 		$rootScope.toggleGenreMenu(true);

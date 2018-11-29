@@ -95,6 +95,7 @@ angular.module('streama').controller('subProfilesCtrl',
           alertify.success($scope.profile.id ? 'Profile Updated!' : 'Profile Created!');
           $scope.getAllProfiles();
           $scope.loading = false;
+          $rootScope.$broadcast('streama.profiles.onChange');
         })
         .error(function (data) {
           alertify.error(data.message);
