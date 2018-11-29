@@ -88,7 +88,9 @@
         <p>Child?</p>
       </div>
       <select class="form-control" ng-model="profile.profileLanguage"
-              ng-options="lang as ('LANGUAGE_'+lang | translate) for lang in $root.availableLanguages"></select>
+              ng-options="lang as ('LANGUAGE_'+lang | translate) for lang in $root.availableLanguages">
+        <option value="">Select Language</option>
+      </select>
 
 
     </div>
