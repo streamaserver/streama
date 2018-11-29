@@ -1,15 +1,12 @@
-angular.module('streama').run(function ($window, $rootScope, $state, localStorageService, apiService, modalService, userService, profileService, $translate) {
+angular.module('streama')
+  .run(function ($window, $rootScope, $state, localStorageService, apiService, modalService,
+                 userService, profileService, $translate) {
+
   apiService.currentUser().success(function (data) {
 		userService.setCurrentUser(data);
 	});
 
-   profileService.getUserProfiles().success(
-    function(data) {
-      $rootScope.usersProfiles = data;
-      $rootScope.currentProfile = profileService.getCurrentProfile() || $rootScope.usersProfiles[0];
-      $translate.use(_.get($rootScope, 'currentProfile.profileLanguage') || _.get($rootScope, 'currentUser.language') || 'en')
-    });
-  $rootScope.setCurrentSubProfile = profileService.setCurrentProfile;
+  loadAndInitProfiles();
 
 	$rootScope.baseData = {};
 	$rootScope.isCurrentState = function (stateName) {
@@ -61,4 +58,15 @@ angular.module('streama').run(function ($window, $rootScope, $state, localStorag
 			localStorageService.set('originUrl', location.href);
 		}
 	});
+
+
+	function loadAndInitProfiles() {
+    profileService.getUserProfiles().success(
+      function(data) {
+        $rootScope.usersProfiles = data;
+        $rootScope.currentProfile = profileService.getCurrentProfile() || $rootScope.usersProfiles[0];
+        $translate.use(_.get($rootScope, 'currentProfile.profileLanguage') || _.get($rootScope, 'currentUser.language') || 'en')
+      });
+    $rootScope.setCurrentSubProfile = profileService.setCurrentProfile;
+  }
 });
