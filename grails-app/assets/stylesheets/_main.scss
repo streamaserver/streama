@@ -97,9 +97,13 @@ header.main{
     }
   }
   .header-profile-item {
-    padding: 3px 20px;
+    padding: 5px 20px;
     display: flex;
     align-items: center;
+
+    &:hover{
+      background: #424242;
+    }
 
     a {
       padding-left: 4px;
