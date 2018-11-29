@@ -59,7 +59,7 @@
       <sec:ifLoggedIn>
         <li>
           <div class="btn-group" uib-dropdown is-open="status.isopen" style="margin: 4px 0;">
-            <button id="single-button" type="button" class="btn btn-primary btn-sm header-btn"
+            <button id="single-button" type="button" class="btn btn-primary btn-sm header-btn profile-select-dropdown"
                     uib-dropdown-toggle ng-disabled="disabled">
               <div class="avatar-in-header" ng-style="{'background-color': '#'+($root.currentProfile.avatarColor || '0b74b2')}">
                 <img src="/assets/streama-profile-smiley.png" alt="">
