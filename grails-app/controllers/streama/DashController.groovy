@@ -11,8 +11,10 @@ class DashController {
 
   def listContinueWatching(){
     User currentUser = springSecurityService.currentUser
+    Long profileId = request.getHeader('profileId')?.toLong()
+    Profile profile = Profile.findById(profileId)
 
-    List<ViewingStatus> viewingStatusList = videoService.listContinueWatching(currentUser)
+    List<ViewingStatus> viewingStatusList = videoService.listContinueWatching(currentUser, profile)
 
     return [viewingStatusList: viewingStatusList]
   }
@@ -79,14 +81,18 @@ class DashController {
 
 
   def listGenericVideos(){
-    def genreId = params.long('genreId')
+    List<Long> genreIds = params.list('genreId')*.toLong() ?: []
+    Profile currentProfile = User.getProfileFromRequest()
+    if(currentProfile?.isChild){
+      genreIds += Genre.findAllByNameInList(['Kids', 'Family'])*.id
+    }
 
     def genericVideoQuery = GenericVideo.where {
       deleted != true
       isNotEmpty("files")
-      if(genreId){
+      if(genreIds){
         genre{
-          id == genreId
+          id in genreIds
         }
       }
     }
@@ -129,8 +135,33 @@ class DashController {
   }
 
   def listNewReleases(){
+    List<Long> genreIds
+    Profile currentProfile = User.getProfileFromRequest()
+    if(currentProfile?.isChild){
+      genreIds = Genre.findAllByNameInList(['Kids', 'Family'])*.id
+    }
+    List<NotificationQueue> newReleasesList = NotificationQueue.where{
+      type == 'newRelease'
+
+      if(genreIds){
+        or{
+          tvShow{
+            genre{
+              'in'('id', genreIds)
+            }
+          }
+          movie{
+            genre{
+              'in'('id', genreIds)
+            }
+          }
+        }
+      }
+    }.list()
+    newReleasesList = newReleasesList.sort { new Random(System.nanoTime()) }
+
     JSON.use('dashMovies'){
-      respond NotificationQueue.findAllByType('newRelease').sort{new Random(System.nanoTime())}
+      respond newReleasesList
     }
   }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('streama').controller('profileCtrl', function ($scope, apiService, $rootScope, userService) {
+angular.module('streama').controller('userSettingsCtrl', function ($scope, apiService, $rootScope, userService) {
   $scope.user = angular.copy($rootScope.currentUser);
   $scope.loading = true;
   $scope.passwordData = {};
@@ -14,8 +14,8 @@ angular.module('streama').controller('profileCtrl', function ($scope, apiService
   });
 
   $scope.toggleSelectGenre = function (genre) {
-		$scope.user.favoriteGenres = _.xorBy($scope.user.favoriteGenres, [genre], 'apiId');
-		$scope.profileForm.$setDirty();
+    $scope.user.favoriteGenres = _.xorBy($scope.user.favoriteGenres, [genre], 'apiId');
+    $scope.profileForm.$setDirty();
   };
 
   $scope.isGenreSelected = function (genre) {

@@ -1,7 +1,12 @@
-angular.module('streama').run(function ($window, $rootScope, $state, localStorageService, apiService, modalService, userService) {
-	apiService.currentUser().success(function (data) {
+angular.module('streama')
+  .run(function ($window, $rootScope, $state, localStorageService, apiService, modalService,
+                 userService, profileService, $translate) {
+
+  apiService.currentUser().success(function (data) {
 		userService.setCurrentUser(data);
 	});
+
+  loadAndInitProfiles();
 
 	$rootScope.baseData = {};
 	$rootScope.isCurrentState = function (stateName) {
@@ -35,6 +40,8 @@ angular.module('streama').run(function ($window, $rootScope, $state, localStorag
 		}
 	};
 
+  $rootScope.$on('streama.profiles.onChange', loadAndInitProfiles);
+
 
 	$rootScope.changeGenre = function (genre) {
 		$rootScope.toggleGenreMenu(true);
@@ -44,7 +51,7 @@ angular.module('streama').run(function ($window, $rootScope, $state, localStorag
 
 	$rootScope.loginUser = function () {
 	  $window.location.assign('/login/login');
-  }
+  };
 
 
 	$rootScope.$on('$stateChangeSuccess', function (e, toState) {
@@ -53,4 +60,15 @@ angular.module('streama').run(function ($window, $rootScope, $state, localStorag
 			localStorageService.set('originUrl', location.href);
 		}
 	});
+
+
+	function loadAndInitProfiles() {
+    profileService.getUserProfiles().success(
+      function(data) {
+        $rootScope.usersProfiles = data;
+        $rootScope.currentProfile = profileService.getCurrentProfile() || $rootScope.usersProfiles[0];
+        $translate.use(_.get($rootScope, 'currentProfile.profileLanguage') || _.get($rootScope, 'currentUser.language') || 'en')
+      });
+    $rootScope.setCurrentSubProfile = profileService.setCurrentProfile;
+  }
 });

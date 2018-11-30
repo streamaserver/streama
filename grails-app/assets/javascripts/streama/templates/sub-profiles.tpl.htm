@@ -1,0 +1,107 @@
+<div class="sub-profile-page-container">
+  <div class="profiles-container" ng-if="showPreviewProfiles()">
+    <p class="who-watching-header">{{'WHOS_WATCHING' | translate}}</p>
+
+    <div class="select-profile-container" ng-if="existingProfiles.length">
+      <div class="item-profile-container" ng-repeat="subp in existingProfiles" ng-click="setCurrentProfile(subp)">
+        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatarColor || standardColor)}">
+          <img src="/assets/streama-profile-smiley.png" alt="">
+        </div>
+        <p class="profile-name">{{subp.profileName}}</p>
+      </div>
+
+      <div class="add-profile" ng-click="goToCreateProfile()">
+        <div class="avatar">
+          <p class="add">+</p>
+        </div>
+        <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
+      </div>
+    </div>
+    <div class="select-profile-container" ng-if="!existingProfiles.length">
+      <div class="add-profile" ng-click="goToCreateProfile()">
+        <div class="avatar">
+          <p class="add">+</p>
+        </div>
+        <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
+      </div>
+    </div>
+
+
+    <button class="manage-profiles-btn" ng-click="toggleManageProfiles()">{{'MANAGE_SUB_PROFILES' | translate}}</button>
+  </div>
+
+  <!-- Manage Profiles -->
+  <div class="profiles-container" ng-if="showEditProfiles()">
+    <p class="who-watching-header">{{'MANAGE_SUB_PROFILES' | translate}}:</p>
+
+    <div class="select-profile-container" ng-if="existingProfiles.length">
+      <div class="item-editable-container" ng-repeat="subp in existingProfiles" ng-click="goToEditProfile(subp)">
+        <div class="avatar" ng-style="{'background-color': '#'+(subp.avatarColor || standardColor)}">
+          <img src="/assets/streama-profile-smiley.png" alt="">
+        </div>
+        <div class="grey-editable-avatar"></div>
+        <div class="edit-label-container"><p>{{'EDIT_BTN' | translate}}</p></div>
+        <p class="profile-name">{{subp.profileName}}</p>
+      </div>
+
+      <div class="add-profile" ng-click="goToCreateProfile()">
+        <div class="avatar">
+          <p class="add">+</p>
+        </div>
+        <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
+      </div>
+    </div>
+    <div class="select-profile-container" ng-if="!existingProfiles.length">
+      <div class="add-profile" ng-click="goToCreateProfile()">
+        <div class="avatar">
+          <p class="add">+</p>
+        </div>
+        <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
+      </div>
+    </div>
+
+    <button class="manage-profiles-btn done-btn" ng-click="toggleManageProfiles()">{{'DONE_BTN' | translate}}</button>
+  </div>
+
+
+  <!-- Edit - create profile -->
+  <div class="profiles-container" ng-if="isEditProfile || isCreateProfile">
+    <p class="who-watching-header">{{isEditProfile ? ('EDIT_PROFILE' | translate) : ('CREATE_PROFILE' | translate) }}</p>
+
+    <div class="form-container">
+      <div class="choose-avatar-color">
+        <div class="form-avatar" ng-style="{'background-color': '#' + profile.avatarColor || standardColor}">
+          <img src="/assets/streama-profile-smiley.png" alt="">
+        </div>
+        <div class="colors-container">
+          <div class="single-color"
+               ng-repeat="col in availableColors"
+               ng-style="{'background-color': '#'+col}"
+               ng-click="setProfileColor(col)"></div>
+        </div>
+      </div>
+      <input type="text" class="form-control"
+             ng-model="profile.profileName" placeholder="{{'ENTER_NAME' | translate}}">
+
+      <div class="is-kid-container">
+        <input type="checkbox" ng-model="profile.isChild">
+        <p>Child?</p>
+      </div>
+      <select class="form-control" ng-model="profile.profileLanguage"
+              ng-options="lang as ('LANGUAGE_'+lang | translate) for lang in $root.availableLanguages">
+        <option value="">Select Language</option>
+      </select>
+
+
+    </div>
+
+    <div class="btns-container">
+      <button class="manage-profiles-btn done-btn" ng-click="saveProfile()">
+        {{isEditProfile ? ('SAVE_BTN' | translate) : ('CREATE_BTN' | translate) }}
+      </button>
+      <button class="manage-profiles-btn " ng-click="refreshStates()">{{'CANCEL_BTN' | translate}}</button>
+      <button class="manage-profiles-btn " ng-if="isEditProfile" ng-click="deleteProfile()">{{'DELETE_BTN' | translate}}</button>
+    </div>
+  </div>
+
+</div>

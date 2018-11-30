@@ -1,7 +1,7 @@
 <div class="profile">
   <div class="profile-heading">
     <div class="btn-group pull-right">
-        <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()" ng-if="!changePasswordIsActive">{{'CHANGE_PASSWORD' | translate}}</button>
+      <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()" ng-if="!changePasswordIsActive">{{'CHANGE_PASSWORD' | translate}}</button>
     </div>
     <h1>
       <i class="ion-ios-arrow-thin-left" ng-if="changePasswordIsActive" ng-click="toggleChangePassword()"></i>
@@ -35,15 +35,6 @@
         </div>
         <div class="col-sm-9">
           <input type="text" class="form-control" ng-model="user.fullName" placeholder="{{'PROFIlE.FULL_NAME' | translate}}">
-        </div>
-      </div>
-
-      <div class="form-group" >
-        <div class="col-sm-3">
-          <label class="control-label">{{'PROFIlE.LANGUAGE' | translate}}</label>
-        </div>
-        <div class="col-sm-9">
-          <select class="form-control" ng-model="user.language" ng-options="lang as ('LANGUAGE_'+lang | translate) for lang in $root.availableLanguages"></select>
         </div>
       </div>
 
