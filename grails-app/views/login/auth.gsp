@@ -27,7 +27,7 @@
 <body >
   <g:cssBackgroundSetting selector=".login-page" setting="${Settings.findByName('loginBackground').value}"></g:cssBackgroundSetting>
 	<div class="page-container login-page">
-    <div id='login' ng-app="streama.translations" class="ng-cloak" ng-controller="authController">
+    <div id='login' ng-app="streama.auth" class="ng-cloak" ng-controller="authController">
       <g:imgSetting class="auth-logo"  setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>
 			<div class='inner'>
 
@@ -73,7 +73,10 @@
       document.forms['loginForm'].elements['username'].focus();
     })();
 
-    angular.module('streama.translations').controller('authController', function ($translate) {
+    angular.module('streama.auth', ['streama.translations', 'LocalStorageModule']);
+
+    angular.module('streama.auth').controller('authController', function ($translate, localStorageService) {
+      localStorageService.remove('currentProfile');
       var sessionExpired = ${params.sessionExpired?"true":"false"};
       if(sessionExpired){
         alertify.log($translate.instant('LOGIN.SESSION_EXPIRED'));
