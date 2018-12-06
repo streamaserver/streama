@@ -460,13 +460,15 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						}
 						$scope.showControls();
 					});
-				  var playerMenu = document.querySelector('#player-menu-episode-selector');
-				  playerMenu.addEventListener('mouseenter', function (event) {
-				    isMouseWheelVolumeCtrlActive = false;
-				  });
-				  playerMenu.addEventListener('mouseleave', function (event) {
-				    isMouseWheelVolumeCtrlActive = true;
-				  });
+				  var episodeSelector = document.querySelector('#player-menu-episode-selector');
+				  if(episodeSelector){
+            episodeSelector.addEventListener('mouseenter', function (event) {
+              isMouseWheelVolumeCtrlActive = false;
+            });
+            episodeSelector.addEventListener('mouseleave', function (event) {
+              isMouseWheelVolumeCtrlActive = true;
+            });
+          }
 				}
 
 				function initMousetrap() {
