@@ -46,7 +46,6 @@ If you have any issues getting started, feel free to [chat with us on Discord](h
 
 # Downloads
 - **Stable and beta** versions see the GitHub [releases](https://github.com/streamaserver/streama/releases)
-- **Unstable/alpha** builds see [StreamaBuilds](http://streamabuilds.s3-website-us-east-1.amazonaws.com/)
 
 # The Application
 
