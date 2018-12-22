@@ -27,7 +27,16 @@ class ViewingStatusService {
     }.get()
 
     if(!viewingStatus){
-      viewingStatus = new ViewingStatus(tvShow: video?.show, user: currentUser, video: video, profile: params.profile)
+
+      TvShow show
+
+      if(video.hasProperty('show')){
+        show = video.show
+      }else{
+        show = null
+      }
+
+      viewingStatus = new ViewingStatus(tvShow: show, user: currentUser, video: video, profile: params.profile)
     }
 
     viewingStatus.video = video
