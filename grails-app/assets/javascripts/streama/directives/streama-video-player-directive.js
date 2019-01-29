@@ -68,7 +68,6 @@ angular.module('streama').directive('streamaVideoPlayer', [
 					initMousetrap();
 					initExternalTriggers();
 					initIsMobile();
-					$scope.volumeLevel = localStorageService.get('volumeLevel') || 5;
 
 
 					$scope.$on('$destroy', onDirectiveDestroy);
@@ -85,7 +84,9 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						video.ontimeupdate = ontimeupdate;
 						video.addEventListener('ended', onVideoEnded);
 						$scope.scrubberOptions = generateScrupperOoptions();
-						$scope.volumeScrubberOptions = generateVolumeScrubberOptions();
+            $scope.volumeScrubberOptions = generateVolumeScrubberOptions();
+            $scope.volumeLevel = localStorageService.get('volumeLevel') || 5;
+            setVolume($scope.volumeLevel);
             var selectedSubtitleLanguage = localStorageService.get('selectedSubtitleLanguage');
 
             if(selectedSubtitleLanguage){
@@ -147,11 +148,11 @@ angular.module('streama').directive('streamaVideoPlayer', [
 						orientation: 'vertical',
 						range: 'min',
 						change: function (e, slider) {
-							setVolume(slider);
+							setVolume(slider.value);
 							angular.element('#playerVolumeSlider .ui-slider-handle').blur();
 						},
 						slide: function (e, slider) {
-							setVolume(slider);
+							setVolume(slider.value);
 							angular.element('#playerVolumeSlider .ui-slider-handle').blur();
 						}
 					};
@@ -213,9 +214,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
 					}
 				}
 
-				function setVolume(slider) {
-					var volume = slider.value / 10;
-					video.volume = volume;
+				function setVolume(value) {
+					video.volume = value / 10;
 					if($scope.options.rememberVolumeSetting){
 						localStorageService.set('volumeLevel', $scope.volumeLevel);
 					}
