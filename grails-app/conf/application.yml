@@ -161,6 +161,8 @@ streama:
               'image/x-icon', 'image/x-png', 'application/x-subrip', 'text/plain', 'text/vtt', 'text/plain',
               'application/octet-stream', 'video/x-matroska', 'image/vnd.microsoft.icon', 'video/mp2t']
 
+server:
+    use-forward-headers: true
 
 grails.controllers.upload.maxFileSize: 10000000000000 # 10TB
 grails.controllers.upload.maxRequestSize: 10000000000000 # 10TB
