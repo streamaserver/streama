@@ -13,7 +13,12 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 [![Live Demo](design/live-demo-button.png)](https://demo.streamaserver.org/) 
 [![Streama on Google Play store](design/google-play-badge.jpg)](https://play.google.com/store/apps/details?id=dularion.streama) 
 
-*Live-demo credentials: username: demoUser | password: demoUser*
+## Live-Demo
+https://demo.streamaserver.org/  
+**credentials: username: demoUser | password: demoUser**
+Feel free to play around there as much as you like (everything is reset at night)
+We will keep this demo updated with our newest releases as they come, so that you can check out new features there first before deciding to deploy them in your own environments. 
+
 
 
 ## Donate
