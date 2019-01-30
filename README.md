@@ -15,8 +15,8 @@ Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize th
 
 ## Live-Demo
 https://demo.streamaserver.org/  
-**credentials: username: demoUser | password: demoUser**
-Feel free to play around there as much as you like (everything is reset at night)
+**credentials: username: demoUser | password: demoUser**  
+Feel free to play around there as much as you like (everything is reset at night)  
 We will keep this demo updated with our newest releases as they come, so that you can check out new features there first before deciding to deploy them in your own environments. 
 
 
