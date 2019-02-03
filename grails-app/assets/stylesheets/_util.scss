@@ -1,6 +1,6 @@
 .flex-row{
   @include flexbox;
-  margin-bottom: 10px;
+  margin: 0 -10px 10px;
 
   &.center{
     align-items: center;
@@ -8,6 +8,20 @@
 
   .col{
     margin: 0 10px;
+
+    @each $size in 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 {
+      &.size-#{$size} {
+        @include flex($size);
+      }
+
+      &.size-min-#{$size * 100} {
+        min-width: $size * 100px;
+      }
+    }
+  }
+
+  label{
+    margin: 0;
   }
 
   >*{

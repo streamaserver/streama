@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').directive('streamaVideoPlayer', [
-  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce',
-  function (uploadService, localStorageService, $timeout, playerService, $http, $sce) {
+  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http', 'modalService',
+  function (uploadService, localStorageService, $timeout, playerService, $http, modalService) {
 
     return {
       restrict: 'AE',
@@ -39,6 +39,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         $scope.closeVideo = closeVideo;
         $scope.clickVideo = clickVideo;
         $scope.fullScreen = toggleFullScreen;
+        $scope.openSubtitleSearch = openSubtitleSearch;
         $scope.next = $scope.options.onNext;
         $scope.isInitialized = false;
         $scope.isNextVideoShowing = false;
@@ -536,6 +537,12 @@ angular.module('streama').directive('streamaVideoPlayer', [
           });
         }
 
+        function openSubtitleSearch() {
+          $scope.pause();
+          modalService.openSubtitleSearch($scope.options.videoData).then(function (data) {
+
+          });
+        }
 
       }
     }

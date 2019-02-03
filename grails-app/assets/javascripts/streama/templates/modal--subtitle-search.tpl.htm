@@ -1,0 +1,76 @@
+<div class="modal-body">
+  <legend>
+    Subtitle Search
+  </legend>
+
+
+  <div class="flex-row center">
+    <div class="col size-1">
+      <label>Title</label>
+    </div>
+    <div class="col size-4">
+      <input type="text" class="form-control input-sm" ng-model="vm.subtitleSearch.query"/>
+    </div>
+  </div>
+
+
+  <div class="flex-row center">
+    <div class="col size-1">
+      <label>Language</label>
+    </div>
+    <div class="col size-4">
+      <select ng-model="vm.subtitleSearch.language"></select>
+    </div>
+  </div>
+
+  <div class="flex-row center" ng-if="vm.videoData.show">
+    <div class="col size-1">
+      <label>Season</label>
+    </div>
+    <div class="col size-4">
+      <input type="text" class="form-control input-sm" ng-model="vm.subtitleSearch.season" placeholder="{{vm.videoData.season_number}}"/>
+    </div>
+  </div>
+
+  <div class="flex-row center" ng-if="vm.videoData.show">
+    <div class="col size-1">
+      <label>Episode</label>
+    </div>
+    <div class="col size-4">
+      <input type="text" class="form-control input-sm" ng-model="vm.subtitleSearch.episode" placeholder="{{vm.videoData.episode_number}}"/>
+    </div>
+  </div>
+
+  <div class="flex-row center">
+    <div class="col size-1"></div>
+    <div class="col size-4">
+      <div class="flex-row center">
+        <div class="col size-0">
+          <button ng-click="vm.search()" class="btn btn-success">Search</button>
+        </div>
+        <div class="col size-1">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="hasHashSearch" ng-model="vm.subtitleSearch.hasHashSearch">
+            <label class="form-check-label" for="hasHashSearch"> &nbsp;Search by hash</label>
+          </div>
+        </div>
+        <div class="col size-2"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <table class="table table-striped" ng-if="vm.subtitles.length">
+    <tr ng-repeat="subtitle in vm.subtitles" ng-click="vm.selectSubtitle(subtitle)">
+      <td>{{subtitle | json}}</td>
+    </tr>
+  </table>
+
+
+
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-success" ng-click="vm.submit()" ng-if="vm.selectedSubtitle">Choose Subtitle</button>
+  <button class="btn btn-default" ng-click="vm.close()">Close</button>
+</div>

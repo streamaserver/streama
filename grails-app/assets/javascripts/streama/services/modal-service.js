@@ -18,7 +18,8 @@ function modalService($uibModal, $state) {
 		newReleaseModal: newReleaseModal,
 		mediaDetailModal: mediaDetailModal,
 		createFromFilesModal: createFromFilesModal,
-    openImageChooser: openImageChooser
+    openImageChooser: openImageChooser,
+		openSubtitleSearch: openSubtitleSearch
 	};
 
 	function tvShowModal (tvShow, callback) {
@@ -289,4 +290,21 @@ function modalService($uibModal, $state) {
 
     return modalInstance.result;
   }
+
+  function openSubtitleSearch(videoData) {
+		var modalInstance = $uibModal.open({
+			templateUrl: '/streama/modal--subtitle-search.htm',
+			controller: 'subtitleSearchModalCtrl as vm',
+			size: 'lg',
+			resolve: {
+				dialogOptions: function () {
+					return {
+						videoData: videoData
+					};
+				}
+			}
+		});
+
+		return modalInstance.result;
+	}
 }

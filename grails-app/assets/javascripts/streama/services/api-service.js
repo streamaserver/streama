@@ -119,7 +119,10 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
       addLocalFile: function (params) {
         return $http.get('video/addLocalFile.json', {params: params});
-      }
+      },
+			searchSubtitles: function (params) {
+				return $http.get('video/searchSubtitles.json', {params: params});
+			}
 		},
 
     report: {
