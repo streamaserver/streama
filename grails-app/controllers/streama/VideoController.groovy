@@ -20,6 +20,7 @@ class VideoController {
   def fileService
   def videoService
   def userActivityService
+  def subtitleApiService
 
 
   def index() {
@@ -212,6 +213,19 @@ class VideoController {
       return
     }
     respond result
+  }
+
+
+  def searchSubtitles(Video videoInstance){
+    File videoFile = videoInstance.getVideoFiles()[0]  //TODO: gets first and only video file. Should be extended if multi-file is added
+    Map options = [
+        hash: params.hasHashSearch ? OpenSubtitlesHasher.computeHash(videoFile.getRawFile()) : null,
+        movieByteSize: params.hasHashSearch ? videoFile.size: null,
+        query: params.query ?: videoFile.name,
+        language: params.language
+    ]
+
+    subtitleApiService.search(options)
   }
 
 }
