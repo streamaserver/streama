@@ -19,7 +19,7 @@
       <label>Language</label>
     </div>
     <div class="col size-4">
-      <select ng-model="vm.subtitleSearch.language"></select>
+      <select class="form-control input-sm" ng-model="vm.subtitleSearch.language" ng-options="lang.id as lang.label for lang in vm.languages"></select>
     </div>
   </div>
 
@@ -60,13 +60,14 @@
   </div>
 
 
-  <table class="table table-striped" ng-if="vm.subtitles.length">
-    <tr ng-repeat="subtitle in vm.subtitles" ng-click="vm.selectSubtitle(subtitle)">
-      <td>{{subtitle | json}}</td>
-    </tr>
-  </table>
-
-
+  <div class="subtitle-results">
+    <table class="table table-striped" ng-if="vm.subtitles.length">
+      <tr ng-repeat="subtitle in vm.subtitles" ng-click="vm.selectSubtitle(subtitle)">
+        <td>{{subtitle.SubFileName}}</td>
+        <td>{{subtitle.LanguageName}}</td>
+      </tr>
+    </table>
+  </div>
 
 </div>
 

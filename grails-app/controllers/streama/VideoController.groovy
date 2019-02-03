@@ -215,6 +215,10 @@ class VideoController {
     respond result
   }
 
+  def listOpenSubtitleLanguages(){
+    render (OpenSubtitleLanguage.languages as JSON)
+  }
+
 
   def searchSubtitles(Video videoInstance){
     File videoFile = videoInstance.getVideoFiles()[0]  //TODO: gets first and only video file. Should be extended if multi-file is added
@@ -225,7 +229,7 @@ class VideoController {
         language: params.language
     ]
 
-    subtitleApiService.search(options)
+    render (subtitleApiService.search(options) as JSON)
   }
 
 }

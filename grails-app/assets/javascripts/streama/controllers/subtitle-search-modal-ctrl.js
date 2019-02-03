@@ -7,8 +7,10 @@ function subtitleSearchModalCtrl($uibModalInstance, dialogOptions, apiService) {
   var vm = this;
   vm.videoData = dialogOptions.videoData;
   vm.subtitles = [];
+  vm.languages = [];
   vm.selectedSubtitle = null;
   vm.subtitleSearch = {
+    language: 'eng',
     id: vm.videoData.id,
     query: _.get(vm.videoData, 'files[0].originalFilename')
   };
@@ -21,11 +23,14 @@ function subtitleSearchModalCtrl($uibModalInstance, dialogOptions, apiService) {
 
 
   function init() {
+    apiService.video.listOpenSubtitleLanguages().then(function (data) {
+      vm.languages = data.data;
+    });
   }
 
   function search() {
     apiService.video.searchSubtitles(vm.subtitleSearch).then(function (data) {
-      vm.subtitles = data;
+      vm.subtitles = data.data;
     });
   }
 

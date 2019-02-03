@@ -122,6 +122,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
       },
 			searchSubtitles: function (params) {
 				return $http.get('video/searchSubtitles.json', {params: params});
+			},
+			listOpenSubtitleLanguages: function (params) {
+				return $http.get('video/listOpenSubtitleLanguages.json', {params: params});
 			}
 		},
 

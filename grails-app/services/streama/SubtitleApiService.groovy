@@ -6,6 +6,7 @@ class SubtitleApiService {
   static String BASE_URL = 'https://rest.opensubtitles.org/search/'
 
   def search(Map options){
+    System.setProperty("http.agent", "")
     List optionsList = []
 
     if(options.episode){
@@ -31,10 +32,11 @@ class SubtitleApiService {
 
     URL url = new URL(BASE_URL + urlString)
     URLConnection hc = url.openConnection()
-    hc.setRequestProperty("User-Agent", "TemporaryUserAgent")  //TODO: doesnt work yet...
+    hc.setRequestProperty("User-Agent", "TemporaryUserAgent")
     def jsonResult = url.getText("UTF-8")
 
     def result = new JsonSlurper().parseText(jsonResult)
+    return result
   }
 
 }
