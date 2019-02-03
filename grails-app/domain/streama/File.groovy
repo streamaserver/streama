@@ -51,6 +51,14 @@ class File implements SimpleInstance {
     }
   }
 
+  java.io.File getRawFile(){
+    if(this.imagePath){
+      return
+    }
+    java.io.File rawFile = new java.io.File(this.imagePath)
+    return rawFile
+  }
+
   def getAssociatedVideos(){
     def videos = Video.withCriteria {
       ne("deleted", true)
