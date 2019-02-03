@@ -11,6 +11,7 @@ angular.module('streama').factory('playerService',
       videoMetaTitle: '',
       videoMetaSubtitle: '',
       videoMetaDescription: '',
+      videoData: {},
       videoSrc: '',
       videoType: '',
       videoTrack: '',
@@ -44,6 +45,7 @@ angular.module('streama').factory('playerService',
       setVideoOptions: function (video, settings) {
         videoOptions = angular.copy(defaultVideoOptions);
         videoData = video;
+        videoOptions.videoData = videoData;
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src || video.files[0].externalLink);
         videoOptions.originalFilename = video.files[0].originalFilename;
         videoOptions.videoType = video.files[0].contentType;
