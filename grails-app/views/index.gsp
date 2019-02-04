@@ -42,5 +42,7 @@
 
     <asset:javascript src="vendor.js" />
     <asset:javascript src="streama/streama.js" />
+
+    <g:googleAnalytics/>
 </body>
 </html>
