@@ -31,10 +31,13 @@ class UserActivityService {
 
       def userActivityRotation = settingsService.getValueForName('user_activity_rotation')
       if(userActivityRotation && type == 'login'){
-        UserActivity.where{
+        def allUserActivity = UserActivity.where{
           user == springSecurityService.currentUser
           video == null
-        }.list(offset: userActivityRotation, sort: 'id', order: 'DESC')*.delete(flush: true)
+        }.list(offset: userActivityRotation, sort: 'id', order: 'DESC')
+        if(allUserActivity){
+          allUserActivity*.delete(flush: true)
+        }
       }
 
 
