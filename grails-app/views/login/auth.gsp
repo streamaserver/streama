@@ -85,5 +85,8 @@
     // -->
   </script>
 
+
+  <g:googleAnalytics/>
+
 </body>
 </html>
