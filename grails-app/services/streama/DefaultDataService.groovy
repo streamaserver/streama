@@ -170,6 +170,37 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+        [
+            settingsKey: 'OpenSubtitles.org Enabled?',
+            name: 'open_subtitles_enabled',
+            description: 'If you enable this, users will be able to download subtitles on-the-fly during video playback.',
+            settingsType: 'boolean',
+            value: 'false',
+            required: false,
+            validationRequired: false
+        ],
+        [
+            settingsKey: 'OpenSubtitles.org UserAgent',
+            name: 'open_subtitles_user_agent',
+            description: 'In order for users to download subtitles using openSubtitles.org, please first register a Free User Agent. Visit http://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst',
+            settingsType: 'string',
+            metaData: [activeFor: 'open_subtitles_enabled'],
+            value: '',
+            required: false,
+            validationRequired: false
+        ],
+        [
+            settingsKey: 'OpenSubtitles.org implementation',
+            name: 'open_subtitles_implementation',
+            description: 'You can choose between several options: <br> <strong>"localStorage only"</strong>: subtitles will only be stored in the current browser for each user. <br>\n' +
+                '<strong>"localStorage/Content Manager"</strong>: Non-Content Mangers will use localStorage, Content-Managers will get an extra Checkbox which allows them to add the subs to the main video data <br>\n' +
+                '<strong>"Always Add to content"</strong>: All users, whether they are Content-Managers or not, will be able to upload the subs to the main content using this API.',
+            settingsType: 'radio',
+            metaData: [activeFor: 'open_subtitles_enabled', radioOptions: ['localStorage Only', 'localStorage/Content Manager', 'Always Add to content']],
+            value: 'false',
+            required: false,
+            validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',
