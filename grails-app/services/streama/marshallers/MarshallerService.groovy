@@ -41,7 +41,7 @@ class MarshallerService {
       returnArray['settingsType'] = setting.settingsType
       returnArray['validationRequired'] = setting.validationRequired
       returnArray['value'] = setting.value
-      returnArray['parsedValue'] = setting.getParsedValue()
+      returnArray['metaData'] = setting.metaData
 
       return returnArray
     }

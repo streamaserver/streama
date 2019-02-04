@@ -15,7 +15,7 @@
 <hr/>
 
 <form name="settings-form" class="settings-form">
-  <div class="form-group row-slim" ng-repeat="setting in settings">
+  <div class="form-group row-slim" ng-repeat="setting in settings" ng-if="!setting.metaData.activeFor || isSettingActive(setting.metaData.activeFor)">
     <div class="col-sm-3">
       <label class="control-label">{{setting.settingsKey}} <span ng-if="setting.required" style="color:red">*</span></label>
     </div>
@@ -62,6 +62,17 @@
          </div>
        </div>
       </div>
+      
+      <div ng-switch-when="radio" class="col-sm-4">
+        <div class="form-group">
+          <div class="radio" ng-repeat="radioOption in setting.metaData.radioOptions">
+            <label>
+              <input type="radio" value="{{radioOption}}" ng-model="setting.value">
+              {{radioOption}}
+            </label>
+          </div>
+        </div>
+      </div>
 
     </div>
     <div class="col-sm-7 col-sm-offset-3">
@@ -72,6 +83,8 @@
     <hr class="col-xs-12">
 
   </div>
+
+  <button class="btn btn-primary pull-right" ng-click="updateMultipleSettings(settings)" ng-disabled="anySettingsInvalid()">Save Settings</button>
 </form>
 <p style="color:red">* required field</p>
 

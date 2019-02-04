@@ -4,6 +4,8 @@ angular.module('streama').controller('settingsSettingsCtrl',
       ['$scope', 'apiService', '$sce', 'uploadService',
       function ($scope, apiService, $sce, uploadService) {
 
+  $scope.isSettingActive = isSettingActive;
+
   apiService.settings.list().success(function (data) {
     $scope.settings = data;
 
@@ -112,6 +114,14 @@ angular.module('streama').controller('settingsSettingsCtrl',
   $scope.resetBaseURL = function (settings) {
     settings.value = 'http://localhost:8080';
     settings.valid = true;
+  }
+
+  function isSettingActive(settingKey) {
+    var settingForKey = _.find($scope.settings, {name: settingKey});
+    if(!settingForKey){
+      return false;
+    }
+    return (settingForKey.value !== 'false') && settingForKey.value;
   }
 
 }]);
