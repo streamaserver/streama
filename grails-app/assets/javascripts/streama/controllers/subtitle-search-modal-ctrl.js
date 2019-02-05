@@ -29,8 +29,11 @@ function subtitleSearchModalCtrl($uibModalInstance, dialogOptions, apiService) {
   }
 
   function search() {
-    apiService.video.searchSubtitles(vm.subtitleSearch).then(function (data) {
+    apiService.video.searchSubtitles(vm.subtitleSearch).then(
+      function (data) {
       vm.subtitles = data.data;
+    }, function (response) {
+      alertify.error('Using OpenSubtitles.org API is not allowed yet. Please contact the administrator of this page.');
     });
   }
 

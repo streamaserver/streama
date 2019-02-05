@@ -6,6 +6,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 import static org.springframework.http.HttpStatus.*
+import static javax.servlet.http.HttpServletResponse.SC_PRECONDITION_FAILED
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -21,6 +22,7 @@ class VideoController {
   def videoService
   def userActivityService
   def subtitleApiService
+  def settingsService
 
 
   def index() {
@@ -221,6 +223,11 @@ class VideoController {
 
 
   def searchSubtitles(Video videoInstance){
+    if(!settingsService.getValueForName('open_subtitles_enabled')){
+      response.setStatus(SC_PRECONDITION_FAILED)
+      return
+    }
+
     File videoFile = videoInstance.getVideoFiles()[0]  //TODO: gets first and only video file. Should be extended if multi-file is added
     Map options = [
         hash: params.hasHashSearch ? OpenSubtitlesHasher.computeHash(videoFile.getRawFile()) : null,

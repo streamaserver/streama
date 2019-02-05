@@ -7,6 +7,8 @@ class BootStrap {
     def migrationService
 
     def init = { servletContext ->
+        System.setProperty("http.agent", "")
+
         marshallerService.init()
         defaultDataService.createDefaultRoles()
         defaultDataService.createDefaultUsers()

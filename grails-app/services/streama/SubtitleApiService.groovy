@@ -3,10 +3,12 @@ package streama
 import groovy.json.JsonSlurper
 
 class SubtitleApiService {
+
+  def settingsService
+
   static String BASE_URL = 'https://rest.opensubtitles.org/search/'
 
   def search(Map options){
-    System.setProperty("http.agent", "")
     List optionsList = []
 
     if(options.episode){
@@ -30,9 +32,11 @@ class SubtitleApiService {
     }
     String urlString = optionsList.join('/')
 
-    URL url = new URL(BASE_URL + urlString)
-    URLConnection hc = url.openConnection()
-    hc.setRequestProperty("User-Agent", "TemporaryUserAgent")
+//    URL url = new URL(BASE_URL + urlString)
+    String userAgentSettings = settingsService.getValueForName('open_subtitles_user_agent')
+    URL url = new URL('http://localhost:8066/prometheus')
+    HttpURLConnection hc = (HttpURLConnection) url.openConnection()
+    hc.addRequestProperty("User-Agent", userAgentSettings)
     def jsonResult = url.getText("UTF-8")
 
     def result = new JsonSlurper().parseText(jsonResult)
