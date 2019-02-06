@@ -32,13 +32,11 @@ class SubtitleApiService {
     }
     String urlString = optionsList.join('/')
 
-//    URL url = new URL(BASE_URL + urlString)
+    URL url = new URL(BASE_URL + urlString)
     String userAgentSettings = settingsService.getValueForName('open_subtitles_user_agent')
-    URL url = new URL('http://localhost:8066/prometheus')
-    HttpURLConnection hc = (HttpURLConnection) url.openConnection()
-    hc.addRequestProperty("User-Agent", userAgentSettings)
-    def jsonResult = url.getText("UTF-8")
-
+    HttpURLConnection conn = url.openConnection()
+    conn.setRequestProperty("User-Agent", userAgentSettings)
+    def jsonResult = conn.getInputStream().getText('UTF-8')
     def result = new JsonSlurper().parseText(jsonResult)
     return result
   }
