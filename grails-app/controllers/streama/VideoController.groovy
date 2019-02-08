@@ -239,4 +239,15 @@ class VideoController {
     render (subtitleApiService.search(options) as JSON)
   }
 
+  def addSubtitle(){
+    def subtitleData = request.JSON
+    if(!subtitleData?.IDSubtitle || !subtitleData?.SubDownloadLink){
+      response.setStatus(SC_PRECONDITION_FAILED)
+      return
+    }
+
+    subtitleApiService.downloadSubtitle(subtitleData)
+
+  }
+
 }

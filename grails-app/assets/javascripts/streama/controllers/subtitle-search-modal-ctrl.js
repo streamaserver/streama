@@ -16,7 +16,9 @@ function subtitleSearchModalCtrl($uibModalInstance, dialogOptions, apiService) {
   };
 
   vm.search = search;
+  vm.submit = submit;
   vm.selectSubtitle = selectSubtitle;
+  vm.isSelected = isSelected;
   vm.close = $uibModalInstance.close;
 
   init();
@@ -31,13 +33,21 @@ function subtitleSearchModalCtrl($uibModalInstance, dialogOptions, apiService) {
   function search() {
     apiService.video.searchSubtitles(vm.subtitleSearch).then(
       function (data) {
-      vm.subtitles = data.data;
-    }, function (response) {
-      alertify.error('Using OpenSubtitles.org API is not allowed yet. Please contact the administrator of this page.');
+        console.log('%c data', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', data);
+    });
+  }
+
+  function submit() {
+    apiService.video.addSubtitle(vm.selectedSubtitle).then(function () {
+
     });
   }
 
   function selectSubtitle(subtitle) {
+    vm.selectedSubtitle = subtitle;
+  }
 
+  function isSelected(subtitle) {
+   return _.isEqualBy(subtitle, vm.selectedSubtitle, 'IDSubtitle');
   }
 }

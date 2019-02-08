@@ -62,8 +62,9 @@
 
   <div class="subtitle-results">
     <table class="table table-striped" ng-if="vm.subtitles.length">
-      <tr ng-repeat="subtitle in vm.subtitles" ng-click="vm.selectSubtitle(subtitle)">
+      <tr ng-repeat="subtitle in vm.subtitles | orderBy:subtitle.Score" ng-click="vm.selectSubtitle(subtitle)" ng-class="{'success': vm.isSelected(subtitle)}">
         <td>{{subtitle.SubFileName}}</td>
+        <td>{{subtitle.Score | number:1}}%</td>
         <td>{{subtitle.LanguageName}}</td>
       </tr>
     </table>
