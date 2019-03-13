@@ -125,10 +125,10 @@ class UserController {
     if (userInstance.username == "anonymous") {
       settingsService.changeAnonymousAccess(userInstance.enabled.toString())
     }
-
     userInstance.save flush: true
-
-    UserRole.removeAll(userInstance)
+    UserRole.withNewSession {
+      UserRole.removeAll(userInstance)
+    }
 
     data.authorities?.each { roleJson ->
       Role role = Role.get(roleJson.id)
@@ -161,7 +161,7 @@ class UserController {
     userInstance.save flush: true
 
     UserRole.removeAll(userInstance)
-
+    UserRole.save(flush: true)
     data.authorities?.each { roleJson ->
       Role role = Role.get(roleJson.id)
       UserRole.create(userInstance, role)
