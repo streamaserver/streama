@@ -161,7 +161,6 @@ class UserController {
     userInstance.save flush: true
 
     UserRole.removeAll(userInstance)
-    UserRole.save(flush: true)
     data.authorities?.each { roleJson ->
       Role role = Role.get(roleJson.id)
       UserRole.create(userInstance, role)
