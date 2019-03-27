@@ -98,7 +98,7 @@ dependencies {
     compile "org.grails.plugins:mail:2.0.0.RC4"
     compile "org.grails.plugins:grails-spring-websocket:2.3.0"
     compile group: 'eu.bitwalker', name: 'UserAgentUtils', version: '1.20'
-    runtime 'mysql:mysql-connector-java:5.1.36'
+    runtime 'mysql:mysql-connector-java:8.0.12'
     // runtime for postgresql works fine
     // but compile group kept for testing as per closed pull request #368
     //compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
