@@ -16,6 +16,10 @@ class AssetSettingTagLib {
     def linkRelIconSetting = { attribs ->
       def setting = attribs['setting']
 
+      if(!setting){
+        return
+      }
+
       out << '<link rel="icon" href="'+getAssetFromSetting(setting)+'" type="image/x-icon">'
     }
 
@@ -27,12 +31,19 @@ class AssetSettingTagLib {
       def altText = ""
       if(alt) altText = 'alt="'+alt+'"'
 
+      if(!setting){
+        return
+      }
       out << '<img class="'+classNames+'" src="'+getAssetFromSetting(setting)+'" '+altText+'>'
     }
 
     def cssBackgroundSetting = { attribs ->
       def setting = attribs['setting']
       def selector = attribs['selector']
+
+      if(!setting){
+        return
+      }
 
       out << '<style>'
       out << selector
