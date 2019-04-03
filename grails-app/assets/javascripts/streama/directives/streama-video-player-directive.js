@@ -321,6 +321,9 @@ angular.module('streama').directive('streamaVideoPlayer', [
             }
             $scope.videoDuration = video.duration;
             video.currentTime = $scope.options.customStartingTime || 0;
+            if($scope.options.outro_start ? $scope.options.outro_start < video.currentTime : video.duration - video.currentTime < 120) {
+              video.currentTime = 0
+            }
             $scope.currentTime = video.currentTime;
             $scope.initialPlay = true;
             if ($scope.options.videoTrack) {
