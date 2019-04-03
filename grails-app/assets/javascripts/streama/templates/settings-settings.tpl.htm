@@ -52,7 +52,7 @@
             <img class="pull-right" ng-show="getAssetFromSetting(setting)" ng-src="{{setting.src}}" alt="Streama Logo">
           </div>
           <div>
-            <input class="form-control input-sm" type="text" ng-model="setting.value" />
+            <input ng-required="setting.required" ng-init="setting.required=true" class="form-control input-sm" type="text"  ng-model="setting.value" />
           </div>
            <div>
              <div class="btn btn-sm btn-dark" ng-click="setting.value = setting.defaultValue">
