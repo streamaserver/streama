@@ -47,12 +47,6 @@ class VideoService {
 
         if (!previousShowEntry) {
           result.add(continueWatchingItem)
-        } else {
-          def previousIsLower = (previousShowEntry.video.seasonEpisodeMerged < continueWatchingItem.video.seasonEpisodeMerged)
-          if (previousShowEntry && previousIsLower) {
-            result.removeAll { it.id == previousShowEntry.id }
-            result.add(continueWatchingItem)
-          }
         }
       } else {
         result.add(continueWatchingItem)
