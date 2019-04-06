@@ -25,7 +25,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			FILTER_BY_TAG: 'Filtrar por Tag...',
 			BROWSE_GENRES: 'Navegar',
 			LOOKING_AT_GENRE: 'Você está vendo o gênero:',
-			MARK_COMPLETED: 'Marca completa',
+			MARK_COMPLETED: 'Concluído',
 			NO_TVSHOWS_FOUND: 'Nenhuma Série Disponível',
 			NO_MOVIES_FOUND: 'Nenhum Filme Disponível'
 		},
@@ -82,7 +82,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		PROFIlE: {
 			USERNAME: 'Usuário',
 			FULL_NAME: 'Nome completo',
-			LANGUAGE: 'Linguagem',
+			LANGUAGE: 'Idioma',
 			PAUSE_ON_CLICK: 'Pausar vídeo ao Clicar',
 			FAVORITE_GENRES: 'Gêneros favoritos',
 			SAVE: 'Salvar Perfil',
