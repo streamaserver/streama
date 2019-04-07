@@ -16,8 +16,7 @@ angular.module('streama').controller('settingsSettingsCtrl',
 
   $scope.updateMultipleSettings = function (settings) {
     settings.invalid = false;
-    apiService.settings.updateMultiple(settings)
-      .success(function () {
+    apiService.settings.updateMultiple(settings).then(function () {
         window.location.reload();
         alertify.success('Settings saved.');
       })
