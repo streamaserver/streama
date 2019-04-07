@@ -90,14 +90,14 @@
 
    <div class="season-picker-list">
     <span class="season-picker-item" ng-class="{'active': currentSeason == season}" ng-click="setCurrentSeason(season)"
-          ng-repeat="(season, episodes) in seasons | orderBy:'season'">
+          ng-repeat="season in seasons | orderBy:number">
       {{'VIDEO.SEASON' | translate}} {{season}}
     </span>
    </div>
 
    <div class="media-list">
      <div class="media-list-item episode-wrapper" style="padding-bottom: 8px;"
-          ng-repeat="episode in seasons[currentSeason] | orderBy:'episode_number'"
+          ng-repeat="episode in listEpisodesForSeason(currentSeason) | orderBy:'episode_number'"
           ng-class="{'no-files': !episode.hasFile}">
        <h3 class="media-episode-string">
          <span ng-show="episode.episodeString">{{episode.episodeString}}</span>

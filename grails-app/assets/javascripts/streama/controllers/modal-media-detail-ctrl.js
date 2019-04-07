@@ -8,6 +8,8 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     var mediaId = config.mediaId;
     $scope.isEditButtonHidden = config.isEditButtonHidden;
 
+    $scope.listEpisodesForSeason = listEpisodesForSeason;
+
     if(config.mediaObject) {
       $scope.media = config.mediaObject;
       $scope.isApiMovie = config.isApiMovie;
@@ -22,15 +24,15 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
         if($scope.mediaType == 'tvShow'){
           $scope.currentSeason = 0;
           apiService.tvShow.episodesForTvShow($scope.media.id).then(function (response) {
-            var data = response.data;
-            if(data.length){
-              $scope.seasons = _.groupBy(data, 'season_number');
-              $scope.currentSeason = _.min(data, 'season_number').season_number;
+            var episodes = $scope.episodes = response.data;
+            if(episodes.length){
+              $scope.seasons = _.chain(episodes).map('season_number').uniq().value();
+              $scope.currentSeason = _.min(episodes, 'season_number').season_number;
             }
           });
           apiService.dash.firstEpisodeForShow($scope.media.id).then(function (response) {
-            var data = response.data;
-            $scope.firstEpisode = data;
+            var firstEpisode = response.data;
+            $scope.firstEpisode = firstEpisode;
           });
         }
       });
@@ -67,4 +69,9 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 		$scope.$on('$stateChangeStart', function () {
 			$uibModalInstance.dismiss('cancel');
 		});
+
+
+    function listEpisodesForSeason(seasonNum) {
+      return _.filter($scope.episodes, {'season_number': seasonNum});
+    }
 }]);
