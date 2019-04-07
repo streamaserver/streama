@@ -22,7 +22,7 @@ angular.module('streama').controller('subProfilesCtrl',
 
     profileService.getUserProfiles().then(
       function(data) {
-        $scope.existingProfiles = data;
+        $scope.existingProfiles = data.data;
       }
     );
     $scope.setCurrentProfile = profileService.setCurrentProfile;
@@ -104,12 +104,10 @@ angular.module('streama').controller('subProfilesCtrl',
     };
 
     $scope.getAllProfiles = function () {
-      apiService.profile.getUserProfiles()
-        .success(function (data) {
-          $scope.existingProfiles = data;
+      apiService.profile.getUserProfiles().then(function (data) {
+          $scope.existingProfiles = data.data;
           $scope.refreshStates();
-        })
-        .error(function (data) {
+        }, function (data) {
           alertify.error(data.message);
           $scope.loading = false;
         });
