@@ -73,8 +73,8 @@ angular.module('streama').controller('modalUserCtrl', [
 		$scope.saveAndInviteUser = function (user) {
 			$scope.loading = true;
       var dateObj = angular.copy(user);
-			apiService.user.saveAndInviteUser(dateObj)
-				.success(function (data) {
+			apiService.user.saveAndInviteUser(dateObj).then(function (response) {
+			  var data = response.data;
 				  if(user.id){
             alertify.success('User Updated!');
             $uibModalInstance.close(data);
@@ -87,18 +87,15 @@ angular.module('streama').controller('modalUserCtrl', [
             isChild: false,
             user: data
           };
-          apiService.profile.save(basicProfile)
-            .success(function () {
+          apiService.profile.save(basicProfile).then(function () {
               alertify.success('Profile Created!');
               $uibModalInstance.close(data);
               $scope.loading = false;
-            })
-            .error(function (data) {
+            }, function (data) {
               alertify.error(data.message);
               $scope.loading = false;
             });
-				})
-				.error(function (response) {
+				}, function (response) {
 					$scope.loading = false;
 					if(_.get(response, 'errors')){
 					  _.forEach(response.errors, function(error){
@@ -113,27 +110,23 @@ angular.module('streama').controller('modalUserCtrl', [
     $scope.saveAndCreateUser = function (user) {
       $scope.loading = true;
       var dateObj = angular.copy(user);
-      apiService.user.saveAndCreateUser(dateObj)
-
-        .success(function (data) {
+      apiService.user.saveAndCreateUser(dateObj).then(function (response) {
+         var data = response.data;
           var basicProfile = {
             profileName: data.username,
             profileLanguage: data.language,
             isChild: false,
             user: data
           };
-          apiService.profile.save(basicProfile)
-            .success(function () {
+          apiService.profile.save(basicProfile).then(function () {
               alertify.success('Profile Created!');
               $uibModalInstance.close(data);
               $scope.loading = false;
-            })
-            .error(function (data) {
+            }, function (data) {
               alertify.error(data.message);
               $scope.loading = false;
             });
-        })
-        .error(function () {
+        }, function () {
           $scope.loading = false;
           alertify.error('There was an error saving the user.');
         });
