@@ -62,14 +62,12 @@ angular.module('streama').controller('subProfilesCtrl',
       if(!$scope.profile.id){
         return;
       }
-      apiService.profile.delete($scope.profile.id)
-        .success(function () {
+      apiService.profile.delete($scope.profile.id).then(function () {
           alertify.success('Profile Deleted!');
           $scope.getAllProfiles();
           $scope.loading = false;
           $scope.refreshStates();
-        })
-        .error(function (data) {
+        }, function (data) {
           alertify.error(data.message);
           $scope.loading = false;
         });
@@ -90,14 +88,12 @@ angular.module('streama').controller('subProfilesCtrl',
       }else {
         saveProfileEndpoint = apiService.profile.save;
       }
-      saveProfileEndpoint($scope.profile)
-        .success(function () {
+      saveProfileEndpoint($scope.profile).then(function () {
           alertify.success($scope.profile.id ? 'Profile Updated!' : 'Profile Created!');
           $scope.getAllProfiles();
           $scope.loading = false;
           $rootScope.$broadcast('streama.profiles.onChange');
-        })
-        .error(function (data) {
+        }, function (data) {
           alertify.error(data.message);
           $scope.loading = false;
         });
