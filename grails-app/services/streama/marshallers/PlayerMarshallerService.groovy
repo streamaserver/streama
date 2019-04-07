@@ -42,7 +42,7 @@ class PlayerMarshallerService {
         returnArray['hasFiles'] = video.hasFiles()
 
         returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUserAndProfile(video, springSecurityService.currentUser, profile)
-        returnArray['outro_start'] = video.outro_start ? video.outro_start * 60 : null  //convert to seconds
+        returnArray['outro_start'] = video.outro_start ? video.outro_start : null
 
         if (video instanceof Episode) {
           returnArray['mediaType'] = 'episode'
