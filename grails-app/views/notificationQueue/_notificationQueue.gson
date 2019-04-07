@@ -4,4 +4,21 @@ model {
 	NotificationQueue notificationQueue
 }
 
-json g.render(notificationQueue)
+json g.render(notificationQueue){
+	if(notificationQueue.movie){
+		movie {
+			poster_path notificationQueue.movie?.poster_image
+			title notificationQueue.movie?.title
+			release_date notificationQueue.movie?.release_date
+		}
+	}
+
+	if(notificationQueue.tvShow){
+		tvShow {
+			poster_path notificationQueue.tvShow?.poster_path
+			name notificationQueue.tvShow?.name
+			first_air_date notificationQueue.tvShow?.first_air_date
+		}
+	}
+
+}
