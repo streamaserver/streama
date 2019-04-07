@@ -28,11 +28,11 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm(confirmText, function (confirmed) {
 			if(confirmed){
-				apiService.video.removeFileFromDisk(file.id, file.path).success(function () {
+				apiService.video.removeFileFromDisk(file.id, file.path).then(function () {
 					_.remove($scope.files, {id: file.id});
 					_.remove($scope.files, {path: file.path});
           alertify.success('File deleted.');
-				}).error(function (err) {
+				}, function (err) {
 					console.log(err);
 					alertify.error('An error occured. ' + err.data);
 				});
@@ -46,17 +46,18 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
       alertify.confirm(confirmText, function (confirmed) {
         if(confirmed){
-          apiService.video.removeMultipleFilesFromDisk($scope.selectedFiles).success(function (response) {
-            _.forEach(response.successes, function (id) {
+          apiService.video.removeMultipleFilesFromDisk($scope.selectedFiles).then(function (response) {
+						var data = response.data;
+            _.forEach(data.successes, function (id) {
 								// TODO investigate why {id: id} doesn't work
 								_.remove($scope.files, function(file) {
 									return file.id === id;
 								});
 						});
             selectedFiles = [];
-            alertify.success(response.successes.length + ' of ' + $scope.selectedFiles.length + ' files deleted.');
-          }).error(function (response) {
-						alertify.error(response.successes.length + ' of ' + $scope.selectedFiles.length + ' files could be deleted. (this could be due to them being associated with the file-browser or an externalLink)');
+            alertify.success(data.successes.length + ' of ' + $scope.selectedFiles.length + ' files deleted.');
+          }, function (response) {
+						alertify.error(data.successes.length + ' of ' + $scope.selectedFiles.length + ' files could be deleted. (this could be due to them being associated with the file-browser or an externalLink)');
 					});
         }
       });
@@ -89,14 +90,13 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 		$scope.loading = true;
 		$scope.files = [];
 		$scope.filesCount = 0;
-		apiService.video.listAllFiles(params)
-			.success(function (data) {
+		apiService.video.listAllFiles(params).then(function (response) {
+				var data = response.data;
 			  console.log(data);
 				$scope.loading = false;
 				$scope.files = data.files;
 				$scope.filesCount = data.count;
-			})
-			.error(function () {
+			}, function () {
 				alertify.error('An error occurred.');
 			});
 	};
@@ -113,7 +113,7 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 		alertify.confirm(message, function (confirmed) {
 			if(confirmed){
 				$scope.loading = true;
-				apiService.video.cleanUpFiles(type).success(function () {
+				apiService.video.cleanUpFiles(type).then(function () {
 					$scope.refreshList('all');
 				});
 			}

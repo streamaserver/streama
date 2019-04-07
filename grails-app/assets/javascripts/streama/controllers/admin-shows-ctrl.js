@@ -8,8 +8,8 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
 
 	$scope.createFromFiles = createFromFiles;
 
-  apiService.theMovieDb.hasKey().success(function (data) {
-    if (!data.key) {
+  apiService.theMovieDb.hasKey().then(function (data) {
+    if (!data.data.key) {
       $scope.hasMovieDBKey = false;
       $scope.searchText = "Search Show from collection...";
     }
@@ -39,7 +39,8 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
     delete tempShow.id;
     tempShow.apiId = apiId;
 
-    apiService.tvShow.save(tempShow).success(function (data) {
+    apiService.tvShow.save(tempShow).then(function (response) {
+      var data = response.data;
       if(redirect){
         $state.go('admin.show', {showId: data.id});
       }else{
@@ -55,7 +56,8 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
 
 	function createFromFiles() {
 		modalService.createFromFilesModal('tvShow').then(function (data) {
-			apiService.tvShow.list().success(function (data) {
+			apiService.tvShow.list().then(function (response) {
+        var data = response.data;
 				angular.extend($scope.shows, data);
 			});
 		});

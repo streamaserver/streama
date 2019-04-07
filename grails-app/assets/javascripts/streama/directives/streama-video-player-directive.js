@@ -47,10 +47,10 @@ angular.module('streama').directive('streamaVideoPlayer', [
 
         if (!$scope.options.isExternalLink) {
           $http.head(videoSrc)
-            .success(function () {
+            .then(function () {
               initDirective();
-            })
-            .error(function (data, status) {
+            },
+              function (data, status) {
               if (status == 406) {
                 $scope.options.onError('FILE_IN_FS_NOT_FOUND');
               }

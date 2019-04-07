@@ -26,15 +26,16 @@ angular.module('streama').controller('modalNotificationAddCtrl', [
     		$scope.notification.id = $item.id;
     };
 
-    function notificationSuccess (data) {
+    function notificationSuccess (response) {
+      var data = response.data;
       $uibModalInstance.close(data);
     }
 
     function saveNotification (notification) {
         if($scope.selectedItem.mediaType == 'movie'){
-            apiService.notification.addMovieToCurrentNotification($scope.selectedItem.id).success(notificationSuccess);
+            apiService.notification.addMovieToCurrentNotification($scope.selectedItem.id).then(notificationSuccess);
         }else if($scope.selectedItem.mediaType == 'tvShow')
-            apiService.notification.addTvShowToCurrentNotification($scope.selectedItem.id, $scope.notification.description).success(notificationSuccess);
+            apiService.notification.addTvShowToCurrentNotification($scope.selectedItem.id, $scope.notification.description).then(notificationSuccess);
     }
 
     function clearNotification (){

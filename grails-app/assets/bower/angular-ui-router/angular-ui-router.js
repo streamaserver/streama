@@ -1,6 +1,6 @@
 /**
  * State-based routing for AngularJS
- * @version v0.2.18
+ * @version v0.4.3
  * @link http://angular-ui.github.com/
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -222,6 +222,11 @@ function map(collection, callback) {
   return result;
 }
 
+// issue #2676 #2889
+function silenceUncaughtInPromise (promise) {
+  return promise.then(undefined, function() {}) && promise;
+}
+
 /**
  * @ngdoc overview
  * @name ui.router.util
@@ -398,11 +403,13 @@ function $Resolve(  $q,    $injector) {
       // To complete the overall resolution, we have to wait for the parent
       // promise and for the promise for each invokable in our plan.
       var resolution = $q.defer(),
-          result = resolution.promise,
+          result = silenceUncaughtInPromise(resolution.promise),
           promises = result.$$promises = {},
           values = extend({}, locals),
           wait = 1 + plan.length/3,
           merged = false;
+
+      silenceUncaughtInPromise(result);
           
       function done() {
         // Merge parent values we haven't got yet and publish our own $$values
@@ -482,7 +489,7 @@ function $Resolve(  $q,    $injector) {
           }
         }
         // Publish promise synchronously; invocations further down in the plan may depend on it.
-        promises[key] = invocation.promise;
+        promises[key] = silenceUncaughtInPromise(invocation.promise);
       }
       
       return result;
@@ -558,6 +565,57 @@ function $Resolve(  $q,    $injector) {
 angular.module('ui.router.util').service('$resolve', $Resolve);
 
 
+
+/**
+ * @ngdoc object
+ * @name ui.router.util.$templateFactoryProvider
+ *
+ * @description
+ * Provider for $templateFactory. Manages which template-loading mechanism to
+ * use, and will default to the most recent one ($templateRequest on Angular
+ * versions starting from 1.3, $http otherwise).
+ */
+function TemplateFactoryProvider() {
+  var shouldUnsafelyUseHttp = angular.version.minor < 3;
+
+  /**
+   * @ngdoc function
+   * @name ui.router.util.$templateFactoryProvider#shouldUnsafelyUseHttp
+   * @methodOf ui.router.util.$templateFactoryProvider
+   *
+   * @description
+   * Forces $templateFactory to use $http instead of $templateRequest. This
+   * might cause XSS, as $http doesn't enforce the regular security checks for
+   * templates that have been introduced in Angular 1.3. Note that setting this
+   * to false on Angular older than 1.3.x will crash, as the $templateRequest
+   * service (and the security checks) are not implemented on these versions.
+   *
+   * See the $sce documentation, section
+   * <a href="https://docs.angularjs.org/api/ng/service/$sce#impact-on-loading-templates">
+   * Impact on loading templates</a> for more details about this mechanism.
+   *
+   * @param {boolean} value
+   */
+  this.shouldUnsafelyUseHttp = function(value) {
+    shouldUnsafelyUseHttp = !!value;
+  };
+
+  /**
+   * @ngdoc object
+   * @name ui.router.util.$templateFactory
+   *
+   * @requires $http
+   * @requires $templateCache
+   * @requires $injector
+   *
+   * @description
+   * Service. Manages loading of templates.
+   */
+  this.$get = ['$http', '$templateCache', '$injector', function($http, $templateCache, $injector){
+    return new TemplateFactory($http, $templateCache, $injector, shouldUnsafelyUseHttp);}];
+}
+
+
 /**
  * @ngdoc object
  * @name ui.router.util.$templateFactory
@@ -569,8 +627,7 @@ angular.module('ui.router.util').service('$resolve', $Resolve);
  * @description
  * Service. Manages loading of templates.
  */
-$TemplateFactory.$inject = ['$http', '$templateCache', '$injector'];
-function $TemplateFactory(  $http,   $templateCache,   $injector) {
+function TemplateFactory($http, $templateCache, $injector, shouldUnsafelyUseHttp) {
 
   /**
    * @ngdoc function
@@ -642,9 +699,15 @@ function $TemplateFactory(  $http,   $templateCache,   $injector) {
   this.fromUrl = function (url, params) {
     if (isFunction(url)) url = url(params);
     if (url == null) return null;
-    else return $http
-        .get(url, { cache: $templateCache, headers: { Accept: 'text/html' }})
-        .then(function(response) { return response.data; });
+    else {
+      if(!shouldUnsafelyUseHttp) {
+        return $injector.get('$templateRequest')(url);
+      } else {
+        return $http
+          .get(url, { cache: $templateCache, headers: { Accept: 'text/html' }})
+          .then(function(response) { return response.data; });
+      }
+    }
   };
 
   /**
@@ -667,7 +730,7 @@ function $TemplateFactory(  $http,   $templateCache,   $injector) {
   };
 }
 
-angular.module('ui.router.util').service('$templateFactory', $TemplateFactory);
+angular.module('ui.router.util').provider('$templateFactory', TemplateFactoryProvider);
 
 var $$UMFP; // reference to $UrlMatcherFactoryProvider
 
@@ -1266,8 +1329,8 @@ function $UrlMatcherFactory() {
   // If the slashes are simply URLEncoded, the browser can choose to pre-decode them,
   // and bidirectional encoding/decoding fails.
   // Tilde was chosen because it's not a RFC 3986 section 2.2 Reserved Character
-  function valToString(val) { return val != null ? val.toString().replace(/~/g, "~~").replace(/\//g, "~2F") : val; }
-  function valFromString(val) { return val != null ? val.toString().replace(/~2F/g, "/").replace(/~~/g, "~") : val; }
+  function valToString(val) { return val != null ? val.toString().replace(/(~|\/)/g, function (m) { return {'~':'~~', '/':'~2F'}[m]; }) : val; }
+  function valFromString(val) { return val != null ? val.toString().replace(/(~~|~2F)/g, function (m) { return {'~~':'~', '~2F':'/'}[m]; }) : val; }
 
   var $types = {}, enqueue = true, typeQueue = [], injector, defaultTypes = {
     "string": {
@@ -1281,8 +1344,8 @@ function $UrlMatcherFactory() {
     "int": {
       encode: valToString,
       decode: function(val) { return parseInt(val, 10); },
-      is: function(val) { return isDefined(val) && this.decode(val.toString()) === val; },
-      pattern: /\d+/
+      is: function(val) { return val !== undefined && val !== null && this.decode(val.toString()) === val; },
+      pattern: /-?\d+/
     },
     "bool": {
       encode: function(val) { return val ? 1 : 0; },
@@ -2274,6 +2337,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
 
       forEach(isDefined(state.views) ? state.views : { '': state }, function (view, name) {
         if (name.indexOf('@') < 0) name += '@' + state.parent.name;
+        view.resolveAs = view.resolveAs || state.resolveAs || '$resolve';
         views[name] = view;
       });
       return views;
@@ -2900,10 +2964,12 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
   $get.$inject = ['$rootScope', '$q', '$view', '$injector', '$resolve', '$stateParams', '$urlRouter', '$location', '$urlMatcherFactory'];
   function $get(   $rootScope,   $q,   $view,   $injector,   $resolve,   $stateParams,   $urlRouter,   $location,   $urlMatcherFactory) {
 
-    var TransitionSuperseded = $q.reject(new Error('transition superseded'));
-    var TransitionPrevented = $q.reject(new Error('transition prevented'));
-    var TransitionAborted = $q.reject(new Error('transition aborted'));
-    var TransitionFailed = $q.reject(new Error('transition failed'));
+    var TransitionSupersededError = new Error('transition superseded');
+
+    var TransitionSuperseded = silenceUncaughtInPromise($q.reject(TransitionSupersededError));
+    var TransitionPrevented = silenceUncaughtInPromise($q.reject(new Error('transition prevented')));
+    var TransitionAborted = silenceUncaughtInPromise($q.reject(new Error('transition aborted')));
+    var TransitionFailed = silenceUncaughtInPromise($q.reject(new Error('transition failed')));
 
     // Handles the case where a state which is the target of a transition is not found, and the user
     // can optionally retry or defer the transition
@@ -2959,7 +3025,10 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       var retryTransition = $state.transition = $q.when(evt.retry);
 
       retryTransition.then(function() {
-        if (retryTransition !== $state.transition) return TransitionSuperseded;
+        if (retryTransition !== $state.transition) {
+          $rootScope.$broadcast('$stateChangeCancel', redirect.to, redirect.toParams, state, params);
+          return TransitionSuperseded;
+        }
         redirect.options.$retry = true;
         return $state.transitionTo(redirect.to, redirect.toParams, redirect.options);
       }, function() {
@@ -3298,7 +3367,10 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       var transition = $state.transition = resolved.then(function () {
         var l, entering, exiting;
 
-        if ($state.transition !== transition) return TransitionSuperseded;
+        if ($state.transition !== transition) {
+          $rootScope.$broadcast('$stateChangeCancel', to.self, toParams, from.self, fromParams);
+          return TransitionSuperseded;
+        }
 
         // Exit 'from' states not kept
         for (l = fromPath.length - 1; l >= keep; l--) {
@@ -3319,7 +3391,10 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
         }
 
         // Run it again, to catch any transitions in callbacks
-        if ($state.transition !== transition) return TransitionSuperseded;
+        if ($state.transition !== transition) {
+          $rootScope.$broadcast('$stateChangeCancel', to.self, toParams, from.self, fromParams);
+          return TransitionSuperseded;
+        }
 
         // Update globals in $state
         $state.$current = to;
@@ -3354,8 +3429,15 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
         $urlRouter.update(true);
 
         return $state.current;
-      }, function (error) {
-        if ($state.transition !== transition) return TransitionSuperseded;
+      }).then(null, function (error) {
+        // propagate TransitionSuperseded error without emitting $stateChangeCancel
+        // as it was already emitted in the success handler above
+        if (error === TransitionSupersededError) return TransitionSuperseded;
+
+        if ($state.transition !== transition) {
+          $rootScope.$broadcast('$stateChangeCancel', to.self, toParams, from.self, fromParams);
+          return TransitionSuperseded;
+        }
 
         $state.transition = null;
         /**
@@ -3379,12 +3461,13 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
         evt = $rootScope.$broadcast('$stateChangeError', to.self, toParams, from.self, fromParams, error);
 
         if (!evt.defaultPrevented) {
-            $urlRouter.update();
+          $urlRouter.update();
         }
 
         return $q.reject(error);
       });
 
+      silenceUncaughtInPromise(transition);
       return transition;
     };
 
@@ -3428,7 +3511,11 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
 
       if (!isDefined(state)) { return undefined; }
       if ($state.$current !== state) { return false; }
-      return params ? equalForKeys(state.params.$$values(params), $stateParams) : true;
+
+      return !params || objectKeys(params).reduce(function(acc, key) {
+        var paramDef = state.params[key];
+        return acc && (!paramDef || paramDef.type.equals($stateParams[key], params[key]));
+      }, true);
     };
 
     /**
@@ -3494,7 +3581,20 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       var state = findState(stateOrName, options.relative);
       if (!isDefined(state)) { return undefined; }
       if (!isDefined($state.$current.includes[state.name])) { return false; }
-      return params ? equalForKeys(state.params.$$values(params), $stateParams, objectKeys(params)) : true;
+      if (!params) { return true; }
+
+      var keys = objectKeys(params);
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i], paramDef = state.params[key];
+        if (paramDef && !paramDef.type.equals($stateParams[key], params[key])) {
+          return false;
+        }
+      }
+
+      return objectKeys(params).reduce(function(acc, key) {
+        var paramDef = state.params[key];
+        return acc && !paramDef || paramDef.type.equals($stateParams[key], params[key]);
+      }, true);
     };
 
 
@@ -3606,6 +3706,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
             // Provide access to the state itself for internal use
             result.$$state = state;
             result.$$controllerAs = view.controllerAs;
+            result.$$resolveAs = view.resolveAs;
             dst[name] = result;
           }));
         });
@@ -3652,7 +3753,15 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
 
 angular.module('ui.router.state')
   .factory('$stateParams', function () { return {}; })
-  .provider('$state', $StateProvider);
+  .constant("$state.runtime", { autoinject: true })
+  .provider('$state', $StateProvider)
+  // Inject $state to initialize when entering runtime. #2574
+  .run(['$injector', function ($injector) {
+    // Allow tests (stateSpec.js) to turn this off by defining this constant
+    if ($injector.get("$state.runtime").autoinject) {
+      $injector.get('$state');
+    }
+  }]);
 
 
 $ViewProvider.$inject = [];
@@ -3753,8 +3862,6 @@ function $ViewScrollProvider() {
 
 angular.module('ui.router.state').provider('$uiViewScroll', $ViewScrollProvider);
 
-var ngMajorVer = angular.version.major;
-var ngMinorVer = angular.version.minor;
 /**
  * @ngdoc directive
  * @name ui.router.state.directive:ui-view
@@ -3779,34 +3886,31 @@ var ngMinorVer = angular.version.minor;
  * service, {@link ui.router.state.$uiViewScroll}. This custom service let's you
  * scroll ui-view elements into view when they are populated during a state activation.
  *
- * @param {string=} noanimation If truthy, the non-animated renderer will be selected (no animations
- * will be applied to the ui-view)
- *
  * *Note: To revert back to old [`$anchorScroll`](http://docs.angularjs.org/api/ng.$anchorScroll)
  * functionality, call `$uiViewScrollProvider.useAnchorScroll()`.*
  *
  * @param {string=} onload Expression to evaluate whenever the view updates.
- * 
+ *
  * @example
- * A view can be unnamed or named. 
+ * A view can be unnamed or named.
  * <pre>
  * <!-- Unnamed -->
- * <div ui-view></div> 
- * 
+ * <div ui-view></div>
+ *
  * <!-- Named -->
  * <div ui-view="viewName"></div>
  * </pre>
  *
- * You can only have one unnamed view within any template (or root html). If you are only using a 
+ * You can only have one unnamed view within any template (or root html). If you are only using a
  * single view and it is unnamed then you can populate it like so:
  * <pre>
- * <div ui-view></div> 
+ * <div ui-view></div>
  * $stateProvider.state("home", {
  *   template: "<h1>HELLO!</h1>"
  * })
  * </pre>
- * 
- * The above is a convenient shortcut equivalent to specifying your view explicitly with the {@link ui.router.state.$stateProvider#views `views`}
+ *
+ * The above is a convenient shortcut equivalent to specifying your view explicitly with the {@link ui.router.state.$stateProvider#methods_state `views`}
  * config property, by name, in this case an empty name:
  * <pre>
  * $stateProvider.state("home", {
@@ -3817,13 +3921,13 @@ var ngMinorVer = angular.version.minor;
  *   }    
  * })
  * </pre>
- * 
- * But typically you'll only use the views property if you name your view or have more than one view 
- * in the same template. There's not really a compelling reason to name a view if its the only one, 
+ *
+ * But typically you'll only use the views property if you name your view or have more than one view
+ * in the same template. There's not really a compelling reason to name a view if its the only one,
  * but you could if you wanted, like so:
  * <pre>
  * <div ui-view="main"></div>
- * </pre> 
+ * </pre>
  * <pre>
  * $stateProvider.state("home", {
  *   views: {
@@ -3833,14 +3937,14 @@ var ngMinorVer = angular.version.minor;
  *   }    
  * })
  * </pre>
- * 
+ *
  * Really though, you'll use views to set up multiple views:
  * <pre>
  * <div ui-view></div>
- * <div ui-view="chart"></div> 
- * <div ui-view="data"></div> 
+ * <div ui-view="chart"></div>
+ * <div ui-view="data"></div>
  * </pre>
- * 
+ *
  * <pre>
  * $stateProvider.state("home", {
  *   views: {
@@ -3870,9 +3974,28 @@ var ngMinorVer = angular.version.minor;
  * <ui-view autoscroll='false'/>
  * <ui-view autoscroll='scopeVariable'/>
  * </pre>
+ *
+ * Resolve data:
+ *
+ * The resolved data from the state's `resolve` block is placed on the scope as `$resolve` (this
+ * can be customized using [[ViewDeclaration.resolveAs]]).  This can be then accessed from the template.
+ *
+ * Note that when `controllerAs` is being used, `$resolve` is set on the controller instance *after* the
+ * controller is instantiated.  The `$onInit()` hook can be used to perform initialization code which
+ * depends on `$resolve` data.
+ *
+ * Example usage of $resolve in a view template
+ * <pre>
+ * $stateProvider.state('home', {
+ *   template: '<my-component user="$resolve.user"></my-component>',
+ *   resolve: {
+ *     user: function(UserService) { return UserService.fetchUser(); }
+ *   }
+ * });
+ * </pre>
  */
-$ViewDirective.$inject = ['$state', '$injector', '$uiViewScroll', '$interpolate'];
-function $ViewDirective(   $state,   $injector,   $uiViewScroll,   $interpolate) {
+$ViewDirective.$inject = ['$state', '$injector', '$uiViewScroll', '$interpolate', '$q'];
+function $ViewDirective(   $state,   $injector,   $uiViewScroll,   $interpolate,   $q) {
 
   function getService() {
     return ($injector.has) ? function(service) {
@@ -3893,35 +4016,24 @@ function $ViewDirective(   $state,   $injector,   $uiViewScroll,   $interpolate)
   // Returns a set of DOM manipulation functions based on which Angular version
   // it should use
   function getRenderer(attrs, scope) {
-    var statics = {
-      enter: function (element, target, cb) { target.after(element); cb(); },
-      leave: function (element, cb) { element.remove(); cb(); }
+    var statics = function() {
+      return {
+        enter: function (element, target, cb) { target.after(element); cb(); },
+        leave: function (element, cb) { element.remove(); cb(); }
+      };
     };
 
-    if (!!attrs.noanimation) return statics;
-
-    function animEnabled(element) {
-      if (ngMajorVer === 1 && ngMinorVer >= 4) return !!$animate.enabled(element);
-      if (ngMajorVer === 1 && ngMinorVer >= 2) return !!$animate.enabled();
-      return (!!$animator);
-    }
-
-    // ng 1.2+
     if ($animate) {
       return {
         enter: function(element, target, cb) {
-          if (!animEnabled(element)) {
-            statics.enter(element, target, cb);
-          } else if (angular.version.minor > 2) {
+          if (angular.version.minor > 2) {
             $animate.enter(element, null, target).then(cb);
           } else {
             $animate.enter(element, null, target, cb);
           }
         },
         leave: function(element, cb) {
-          if (!animEnabled(element)) {
-            statics.leave(element, cb);
-          } else if (angular.version.minor > 2) {
+          if (angular.version.minor > 2) {
             $animate.leave(element).then(cb);
           } else {
             $animate.leave(element, cb);
@@ -3930,7 +4042,6 @@ function $ViewDirective(   $state,   $injector,   $uiViewScroll,   $interpolate)
       };
     }
 
-    // ng 1.1.5
     if ($animator) {
       var animate = $animator && $animator(scope, attrs);
 
@@ -3940,7 +4051,7 @@ function $ViewDirective(   $state,   $injector,   $uiViewScroll,   $interpolate)
       };
     }
 
-    return statics;
+    return statics();
   }
 
   var directive = {
@@ -3953,7 +4064,8 @@ function $ViewDirective(   $state,   $injector,   $uiViewScroll,   $interpolate)
         var previousEl, currentEl, currentScope, latestLocals,
             onloadExp     = attrs.onload || '',
             autoScrollExp = attrs.autoscroll,
-            renderer      = getRenderer(attrs, scope);
+            renderer      = getRenderer(attrs, scope),
+            inherited     = $element.inheritedData('$uiView');
 
         scope.$on('$stateChangeSuccess', function() {
           updateView(false);
@@ -3962,37 +4074,26 @@ function $ViewDirective(   $state,   $injector,   $uiViewScroll,   $interpolate)
         updateView(true);
 
         function cleanupLastView() {
-          var _previousEl = previousEl;
-          var _currentScope = currentScope;
-
-          if (_currentScope) {
-            _currentScope._willBeDestroyed = true;
+          if (previousEl) {
+            previousEl.remove();
+            previousEl = null;
           }
 
-          function cleanOld() {
-            if (_previousEl) {
-              _previousEl.remove();
-            }
-
-            if (_currentScope) {
-              _currentScope.$destroy();
-            }
+          if (currentScope) {
+            currentScope.$destroy();
+            currentScope = null;
           }
 
           if (currentEl) {
+            var $uiViewData = currentEl.data('$uiViewAnim');
             renderer.leave(currentEl, function() {
-              cleanOld();
+              $uiViewData.$$animLeave.resolve();
               previousEl = null;
             });
 
             previousEl = currentEl;
-          } else {
-            cleanOld();
-            previousEl = null;
+            currentEl = null;
           }
-
-          currentEl = null;
-          currentScope = null;
         }
 
         function updateView(firstTime) {
@@ -4000,7 +4101,7 @@ function $ViewDirective(   $state,   $injector,   $uiViewScroll,   $interpolate)
               name            = getUiViewName(scope, attrs, $element, $interpolate),
               previousLocals  = name && $state.$current && $state.$current.locals[name];
 
-          if (!firstTime && previousLocals === latestLocals || scope._willBeDestroyed) return; // nothing to do
+          if (!firstTime && previousLocals === latestLocals) return; // nothing to do
           newScope = scope.$new();
           latestLocals = $state.$current.locals[name];
 
@@ -4019,7 +4120,16 @@ function $ViewDirective(   $state,   $injector,   $uiViewScroll,   $interpolate)
           newScope.$emit('$viewContentLoading', name);
 
           var clone = $transclude(newScope, function(clone) {
+            var animEnter = $q.defer(), animLeave = $q.defer();
+            var viewAnimData = {
+              $animEnter: animEnter.promise,
+              $animLeave: animLeave.promise,
+              $$animLeave: animLeave
+            };
+
+            clone.data('$uiViewAnim', viewAnimData);
             renderer.enter(clone, $element, function onUiViewEnter() {
+              animEnter.resolve();
               if(currentScope) {
                 currentScope.$emit('$viewContentAnimationEnded');
               }
@@ -4061,17 +4171,29 @@ function $ViewDirectiveFill (  $compile,   $controller,   $state,   $interpolate
     priority: -400,
     compile: function (tElement) {
       var initial = tElement.html();
+      if (tElement.empty) {
+        tElement.empty();
+      } else {
+        // ng 1.0.0 doesn't have empty(), which cleans up data and handlers
+        tElement[0].innerHTML = null;
+      }
+
       return function (scope, $element, attrs) {
         var current = $state.$current,
             name = getUiViewName(scope, attrs, $element, $interpolate),
             locals  = current && current.locals[name];
 
         if (! locals) {
+          $element.html(initial);
+          $compile($element.contents())(scope);
           return;
         }
 
         $element.data('$uiView', { name: name, state: locals.$$state });
         $element.html(locals.$template ? locals.$template : initial);
+
+        var resolveData = angular.extend({}, locals);
+        scope[locals.$$resolveAs] = resolveData;
 
         var link = $compile($element.contents());
 
@@ -4081,7 +4203,9 @@ function $ViewDirectiveFill (  $compile,   $controller,   $state,   $interpolate
           var controller = $controller(locals.$$controller, locals);
           if (locals.$$controllerAs) {
             scope[locals.$$controllerAs] = controller;
+            scope[locals.$$controllerAs][locals.$$resolveAs] = resolveData;
           }
+          if (isFunction(controller.$onInit)) controller.$onInit();
           $element.data('$ngControllerController', controller);
           $element.children().data('$ngControllerController', controller);
         }
@@ -4098,8 +4222,8 @@ function $ViewDirectiveFill (  $compile,   $controller,   $state,   $interpolate
  */
 function getUiViewName(scope, attrs, element, $interpolate) {
   var name = $interpolate(attrs.uiView || attrs.name || '')(scope);
-  var inherited = element.inheritedData('$uiView');
-  return name.indexOf('@') >= 0 ?  name :  (name + '@' + (inherited ? inherited.state.name : ''));
+  var uiViewCreatedBy = element.inheritedData('$uiView');
+  return name.indexOf('@') >= 0 ?  name :  (name + '@' + (uiViewCreatedBy ? uiViewCreatedBy.state.name : ''));
 }
 
 angular.module('ui.router.state').directive('uiView', $ViewDirective);
@@ -4181,7 +4305,7 @@ function defaultOpts(el, $state) {
  * to the state that the link lives in, in other words the state that loaded the
  * template containing the link.
  *
- * You can specify options to pass to {@link ui.router.state.$state#go $state.go()}
+ * You can specify options to pass to {@link ui.router.state.$state#methods_go $state.go()}
  * using the `ui-sref-opts` attribute. Options are restricted to `location`, `inherit`,
  * and `reload`.
  *
@@ -4218,7 +4342,7 @@ function defaultOpts(el, $state) {
  * </pre>
  *
  * @param {string} ui-sref 'stateName' can be any valid absolute or relative state
- * @param {Object} ui-sref-opts options to pass to {@link ui.router.state.$state#go $state.go()}
+ * @param {Object} ui-sref-opts options to pass to {@link ui.router.state.$state#methods_go $state.go()}
  */
 $StateRefDirective.$inject = ['$state', '$timeout'];
 function $StateRefDirective($state, $timeout) {
@@ -4230,6 +4354,8 @@ function $StateRefDirective($state, $timeout) {
       var def    = { state: ref.state, href: null, params: null };
       var type   = getTypeInfo(element);
       var active = uiSrefActive[1] || uiSrefActive[0];
+      var unlinkInfoFn = null;
+      var hookFn;
 
       def.options = extend(defaultOpts(element, $state), attrs.uiSrefOpts ? scope.$eval(attrs.uiSrefOpts) : {});
 
@@ -4237,7 +4363,8 @@ function $StateRefDirective($state, $timeout) {
         if (val) def.params = angular.copy(val);
         def.href = $state.href(ref.state, def.params, def.options);
 
-        if (active) active.$$addStateInfo(ref.state, def.params);
+        if (unlinkInfoFn) unlinkInfoFn();
+        if (active) unlinkInfoFn = active.$$addStateInfo(ref.state, def.params);
         if (def.href !== null) attrs.$set(type.attr, def.href);
       };
 
@@ -4248,7 +4375,11 @@ function $StateRefDirective($state, $timeout) {
       update();
 
       if (!type.clickable) return;
-      element.bind("click", clickHook(element, $state, $timeout, type, function() { return def; }));
+      hookFn = clickHook(element, $state, $timeout, type, function() { return def; });
+      element[element.on ? 'on' : 'bind']("click", hookFn);
+      scope.$on('$destroy', function() {
+        element[element.off ? 'off' : 'unbind']("click", hookFn);
+      });
     }
   };
 }
@@ -4266,8 +4397,8 @@ function $StateRefDirective($state, $timeout) {
  * params and override options.
  *
  * @param {string} ui-state 'stateName' can be any valid absolute or relative state
- * @param {Object} ui-state-params params to pass to {@link ui.router.state.$state#href $state.href()}
- * @param {Object} ui-state-opts options to pass to {@link ui.router.state.$state#go $state.go()}
+ * @param {Object} ui-state-params params to pass to {@link ui.router.state.$state#methods_href $state.href()}
+ * @param {Object} ui-state-opts options to pass to {@link ui.router.state.$state#methods_go $state.go()}
  */
 $StateRefDynamicDirective.$inject = ['$state', '$timeout'];
 function $StateRefDynamicDirective($state, $timeout) {
@@ -4280,12 +4411,15 @@ function $StateRefDynamicDirective($state, $timeout) {
       var group  = [attrs.uiState, attrs.uiStateParams || null, attrs.uiStateOpts || null];
       var watch  = '[' + group.map(function(val) { return val || 'null'; }).join(', ') + ']';
       var def    = { state: null, params: null, options: null, href: null };
+      var unlinkInfoFn = null;
+      var hookFn;
 
       function runStateRefLink (group) {
         def.state = group[0]; def.params = group[1]; def.options = group[2];
         def.href = $state.href(def.state, def.params, def.options);
 
-        if (active) active.$$addStateInfo(def.state, def.params);
+        if (unlinkInfoFn) unlinkInfoFn();
+        if (active) unlinkInfoFn = active.$$addStateInfo(def.state, def.params);
         if (def.href) attrs.$set(type.attr, def.href);
       }
 
@@ -4293,7 +4427,11 @@ function $StateRefDynamicDirective($state, $timeout) {
       runStateRefLink(scope.$eval(watch));
 
       if (!type.clickable) return;
-      element.bind("click", clickHook(element, $state, $timeout, type, function() { return def; }));
+      hookFn = clickHook(element, $state, $timeout, type, function() { return def; });
+      element[element.on ? 'on' : 'bind']("click", hookFn);
+      scope.$on('$destroy', function() {
+        element[element.off ? 'off' : 'unbind']("click", hookFn);
+      });
     }
   };
 }
@@ -4426,8 +4564,9 @@ function $StateRefActiveDirective($state, $stateParams, $interpolate) {
         if (isObject(uiSrefActive) && states.length > 0) {
           return;
         }
-        addState(newState, newParams, uiSrefActive);
+        var deregister = addState(newState, newParams, uiSrefActive);
         update();
+        return deregister;
       };
 
       $scope.$on('$stateChangeSuccess', update);
@@ -4436,13 +4575,19 @@ function $StateRefActiveDirective($state, $stateParams, $interpolate) {
         var state = $state.get(stateName, stateContext($element));
         var stateHash = createStateHash(stateName, stateParams);
 
-        states.push({
+        var stateInfo = {
           state: state || { name: stateName },
           params: stateParams,
           hash: stateHash
-        });
+        };
 
+        states.push(stateInfo);
         activeClasses[stateHash] = activeClass;
+
+        return function removeState() {
+          var idx = states.indexOf(stateInfo);
+          if (idx !== -1) states.splice(idx, 1);
+        };
       }
 
       /**

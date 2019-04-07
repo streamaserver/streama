@@ -2,7 +2,7 @@ angular.module('streama')
   .run(function ($window, $rootScope, $state, localStorageService, apiService, modalService,
                  userService, profileService, $translate) {
 
-  apiService.currentUser().success(function (data) {
+  apiService.currentUser().then(function (data) {
 		userService.setCurrentUser(data);
 	});
 
@@ -19,7 +19,7 @@ angular.module('streama')
 		});
 	};
 
-	apiService.settings.list().success(function (data) {
+	apiService.settings.list().then(function (data) {
 		$rootScope.settings = data;
 	});
 
@@ -63,7 +63,7 @@ angular.module('streama')
 
 
 	function loadAndInitProfiles() {
-    profileService.getUserProfiles().success(
+    profileService.getUserProfiles().then(
       function(data) {
         var savedProfile = profileService.getCurrentProfile();
         if(!savedProfile){

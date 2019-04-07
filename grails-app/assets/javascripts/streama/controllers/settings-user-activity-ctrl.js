@@ -26,8 +26,8 @@ angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'api
     function init() {
       loadList();
 
-      apiService.user.list().success(function (data) {
-        vm.users = data;
+      apiService.user.list().then(function (data) {
+        vm.users = data.data;
         vm.loading = false;
       });
     }
@@ -42,8 +42,8 @@ angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'api
     }
 
     function loadList() {
-      apiService.userActivity.list({offset: getOffset(), max: MAX_PER_PAGE, userId: _.get(vm.filter, 'user.id'), type: vm.currentType}).success(function (data) {
-        vm.userActivity = data;
+      apiService.userActivity.list({offset: getOffset(), max: MAX_PER_PAGE, userId: _.get(vm.filter, 'user.id'), type: vm.currentType}).then(function (data) {
+        vm.userActivity = data.data;
       });
     }
 

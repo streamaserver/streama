@@ -8,7 +8,8 @@ angular.module('streama').controller('modalUserCtrl', [
 		$scope.loading = false;
 		$scope.validPassword = isInvite ? true : false;
 
-		apiService.user.availableRoles().success(function (data) {
+		apiService.user.availableRoles().then(function (response) {
+      var data = response.data;
       $scope.roles = data;
     });
 
@@ -21,7 +22,8 @@ angular.module('streama').controller('modalUserCtrl', [
 			$scope.validUser = false;
 
 			if(username){
-				apiService.user.checkAvailability(username).success(function (data) {
+				apiService.user.checkAvailability(username).then(function (response) {
+          var data = response.data;
 					if(data.error){
 						$scope.error = 	data.error;
 					}else{

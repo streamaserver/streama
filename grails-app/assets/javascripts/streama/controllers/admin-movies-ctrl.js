@@ -18,8 +18,8 @@ angular.module('streama').controller('adminMoviesCtrl', [
 
   function init() {
     vm.movie = mediaListService.init(apiService.movie.list);
-    apiService.theMovieDb.hasKey().success(function (data) {
-      if (!data.key) {
+    apiService.theMovieDb.hasKey().then(function (data) {
+      if (!data.data.key) {
         vm.hasMovieDBKey = false;
         vm.searchText = "Search Movie from collection...";
       }
@@ -48,11 +48,11 @@ angular.module('streama').controller('adminMoviesCtrl', [
     delete tempMovie.id;
     tempMovie.apiId = apiId;
 
-    apiService.movie.save(tempMovie).success(function (data) {
+    apiService.movie.save(tempMovie).then(function (response) {
       if(redirect){
-        $state.go('admin.movie', {movieId: data.id});
+        $state.go('admin.movie', {movieId: response.data.id});
       }else{
-        vm.movie.list.push(data);
+        vm.movie.list.push(response.data);
       }
     });
   }
@@ -65,8 +65,8 @@ angular.module('streama').controller('adminMoviesCtrl', [
 
   function createFromFiles() {
     modalService.createFromFilesModal('movie').then(function (data) {
-      apiService.movie.list().success(function (data) {
-        angular.extend(vm.movie.list, data);
+      apiService.movie.list().then(function (response) {
+        angular.extend(vm.movie.list, response.data);
       });
     });
   }

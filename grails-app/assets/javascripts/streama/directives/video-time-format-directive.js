@@ -6,19 +6,42 @@ angular.module('streama').directive("videoTimeFormat", function(){
     restrict: 'A',
     require: 'ngModel',
     link: function(scope, element, attrs, ngModelController) {
+      var _timeInSeconds;
+
       //view to model
       ngModelController.$parsers.push(function(data) {
-        return data.split(":")[0]*60+data.split(":")[1]*1;
+        var timeSegments = data.split(":");
+        var hours = timeSegments.length >= 3 ? timeSegments[timeSegments.length - 3]: 0;
+        var minutes = timeSegments.length >= 2 ? timeSegments[timeSegments.length - 2] : 0;
+        var seconds = timeSegments[timeSegments.length - 1];
+        _timeInSeconds = hours*3600 + minutes*60 + seconds*1;
+        return _timeInSeconds;
       });
+
+
       //model to view
-      ngModelController.$formatters.push(function(data) {
-        if(data == undefined)
+      ngModelController.$formatters.push(function(timeInSeconds) {
+        if(timeInSeconds == undefined)
         {
           return '';
         }
-        var seconds = data % 60;
-        var minutes = (data-seconds) / 60;
-        return minutes+':'+seconds;
+        return getViewValue(timeInSeconds);
+      });
+
+
+      function getViewValue(timeInSeconds) {
+        _timeInSeconds = timeInSeconds;
+        var seconds = timeInSeconds % 60;
+        var minutes = Math.floor(timeInSeconds / 60);
+        var hours = Math.floor(timeInSeconds / 3600);
+        var viewValue = _.padStart(hours, 2, '0')  + ':' + _.padStart(minutes, 2, '0') + ':' + _.padStart(seconds, 2, '0');
+        return viewValue;
+      }
+
+      element.blur(function (event) {
+        ngModelController.$setViewValue("foo");
+        ngModelController.$viewValue = "foo";
+        ngModelController.$processModelValue();
       });
     }
   };

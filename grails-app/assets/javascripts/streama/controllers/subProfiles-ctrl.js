@@ -20,7 +20,7 @@ angular.module('streama').controller('subProfilesCtrl',
       '488f16','d36e10','4b4b4b','3a328b','b81f1f'
     ];
 
-    profileService.getUserProfiles().success(
+    profileService.getUserProfiles().then(
       function(data) {
         $scope.existingProfiles = data;
       }

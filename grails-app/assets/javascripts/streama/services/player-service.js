@@ -73,7 +73,8 @@ angular.module('streama').factory('playerService',
         if(videoData.show){
           videoOptions.showEpisodeBrowser = true;
 
-          apiService.tvShow.episodesForTvShow(videoData.show.id).success(function (episodes) {
+          apiService.tvShow.episodesForTvShow(videoData.show.id).then(function (response) {
+            var episodes = response.data;
             videoOptions.episodeList = _.groupBy(episodes, 'season_number');
             videoOptions.selectedEpisodes = videoOptions.episodeList[videoData.season_number];
             videoOptions.currentEpisode = {

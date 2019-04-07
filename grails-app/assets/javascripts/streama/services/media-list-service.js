@@ -64,12 +64,13 @@ angular.module('streama').factory('mediaListService', function () {
     };
     angular.extend(params, mediaConfig.filter);
 
-    mediaConfig.fetch(params).success(function (response) {
-      mediaConfig.total = response.total;
+    mediaConfig.fetch(params).then(function (response) {
+      var data = response.data;
+      mediaConfig.total = data.total;
       if(mediaConfig.currentOffset > 0){
-        mediaConfig.list = _.unionBy(mediaConfig.list, response.list, 'id');
+        mediaConfig.list = _.unionBy(mediaConfig.list, data.list, 'id');
       }else{
-        mediaConfig.list = response.list;
+        mediaConfig.list = data.list;
       }
       mediaConfig.isLoading = false;
     });

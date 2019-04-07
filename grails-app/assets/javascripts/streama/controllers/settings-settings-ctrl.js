@@ -4,7 +4,8 @@ angular.module('streama').controller('settingsSettingsCtrl',
       ['$scope', 'apiService', '$sce', 'uploadService',
       function ($scope, apiService, $sce, uploadService) {
 
-  apiService.settings.list().success(function (data) {
+  apiService.settings.list().then(function (response) {
+    var data = response.data;
     $scope.settings = data;
 
     _.forEach(data, function (setting) {
@@ -59,7 +60,8 @@ angular.module('streama').controller('settingsSettingsCtrl',
 	$scope.uploadStatus = {};
 	$scope.upload = function (setting, files) {
 		//check if upload dir is set
-		apiService.settings.list().success(function (setlist) {
+		apiService.settings.list().then(function (response) {
+      var data = response.data;
 			var uploadDir = _.find(setlist, {settingsKey: 'Upload Directory'});
 			if (uploadDir.value) {
 				//do upload

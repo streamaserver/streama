@@ -52,10 +52,11 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	}
 
 	function loadLocalFiles(path) {
-		apiService.file.localFiles(path).success(function(data) {
+		apiService.file.localFiles(path).then(function(response) {
+			var data = response.data;
 			vm.localFilesEnabled = true;
 			vm.localFiles = data;
-		}).error(function(data) {
+		}, function(data) {
 			if (data.code == 'LocalFilesNotEnabled') {
 				vm.localFilesEnabled = false;
 			}
@@ -76,7 +77,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
     dir.showFiles = (dir.showFiles == true && !forceOpen) ? false : true;
     if(!dir.localFiles || !dir.localFiles.length){
 			dir.localFiles = [];
-			apiService.file.localFiles(dir.path).success(function(data) {
+			apiService.file.localFiles(dir.path).then(function(response) {
+				var data = response.data;
 				dir.localFiles = data;
 				(onSuccess || angular.noop)(data);
 			});
@@ -101,7 +103,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		vm.isMatcherLoading = true;
     vm.matchResult = null;
 		var fileSelection = _.filter(vm.selection, {directory: false});
-		apiService.file.matchMetaDataFromFiles(fileSelection).success(function (data) {
+		apiService.file.matchMetaDataFromFiles(fileSelection).then(function (response) {
+			var data = response.data;
 			vm.isMatcherLoading = false;
 			vm.matchResult = data;
 			//console.log(data);
@@ -149,20 +152,22 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 			alertify.success('Nothing to add.');
 		}
 
-    apiService.file.bulkAddMediaFromFile(allFoundMatches).success(function (result) {
-      if(_.some(result, {status: 4})){
+    apiService.file.bulkAddMediaFromFile(allFoundMatches).then(function (response) {
+			var data = response.data;
+      if(_.some(data, {status: 4})){
         alertify.log("not all files were added unfortunately. This is due to TheMovieDB API LIMIT constraints. Just try again in a couple of seconds :). ")
       }else{
         alertify.success("All matches have been added to the database and files connected");
       }
-      mergeMatchResults(result);
+      mergeMatchResults(data);
     });
 
   }
 
 	function addSelectedFile(file) {
     var fileMatch = _.find(vm.matchResult, {"file": file.path});
-    apiService.file.bulkAddMediaFromFile([fileMatch]).success(function (result) {
+    apiService.file.bulkAddMediaFromFile([fileMatch]).then(function (response) {
+			var result = response.data;
       if(_.some(result, {status: 4})){
         alertify.log("not all files were added unfortunately. This is due to TheMovieDB API LIMIT constraints. Just try again in a couple of seconds :) ")
       }else{

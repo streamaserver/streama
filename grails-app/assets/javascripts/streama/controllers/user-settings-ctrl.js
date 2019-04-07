@@ -8,7 +8,8 @@ angular.module('streama').controller('userSettingsCtrl', function ($scope, apiSe
   $scope.languages = true;
 
 
-  apiService.theMovieDb.availableGenres().success(function (data) {
+  apiService.theMovieDb.availableGenres().then(function (response) {
+    var data = response.data;
     $scope.availableGenres = data;
     $scope.loading = false;
   });

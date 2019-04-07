@@ -8,8 +8,8 @@ angular.module('streama').controller('modalTvShowCtrl', [
   $scope.tvShow = tvShow || {};
   $scope.hasMovieDBKey = true;
 
-  apiService.theMovieDb.hasKey().success(function (data) {
-    if (!data.key) {
+  apiService.theMovieDb.hasKey().then(function (data) {
+    if (!data.data.key) {
       $scope.tvShow.manualInput = true;
       $scope.hasMovieDBKey = false;
     }
@@ -20,8 +20,8 @@ angular.module('streama').controller('modalTvShowCtrl', [
   };
 
 	$scope.saveShow = function (video) {
-		apiService.tvShow.save(video).success(function (data) {
-			$uibModalInstance.close(data);
+		apiService.tvShow.save(video).then(function (data) {
+			$uibModalInstance.close(data.data);
       alertify.success("TV Show saved.");
 		});
 	};

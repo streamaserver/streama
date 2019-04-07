@@ -11,16 +11,16 @@ angular.module('streama').controller('modalMovieCtrl', [
   $scope.addManually = ($scope.movie.id && !$scope.movie.apiId);
 	$scope.chooseNewBackdrop = chooseNewBackdrop;
 
-  apiService.theMovieDb.hasKey().success(function (data) {
-    if (!data.key) {
+  apiService.theMovieDb.hasKey().then(function (response) {
+    if (!response.data.key) {
       $scope.hasMovieDBKey = false;
       $scope.addManually = true;
     }
   });
 
 	$scope.saveMovie = function (movie) {
-		apiService.movie.save(movie).success(function (data) {
-			$uibModalInstance.close(data);
+		apiService.movie.save(movie).then(function (response) {
+			$uibModalInstance.close(response.data);
       alertify.success("Movie saved.");
 		});
 	};
@@ -78,15 +78,15 @@ angular.module('streama').controller('modalMovieCtrl', [
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 			alertify.confirm('Are you sure you want to delete the tag ' + tag.name, function (confirmed) {
 				if(confirmed){
-					apiService.tag.delete(tag.id).success(function () {
+					apiService.tag.delete(tag.id).then(function () {
 						_.remove($scope.tags, {id: tag.id});
 					})
 				}
 			});
 		};
 
-		apiService.tag.list().success(function (data) {
-			$scope.tags = data;
+		apiService.tag.list().then(function (response) {
+			$scope.tags = response.data;
 		});
 
 

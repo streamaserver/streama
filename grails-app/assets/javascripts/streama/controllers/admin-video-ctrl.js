@@ -5,7 +5,8 @@ angular.module('streama').controller('adminVideoCtrl', [
 	function ($scope, apiService, $stateParams, modalService, $state, uploadService) {
     $scope.loading = true;
 
-		apiService.genericVideo.get($stateParams.videoId).success(function (data) {
+		apiService.genericVideo.get($stateParams.videoId).then(function (response) {
+			var data = response.data;
 			$scope.video = data;
       $scope.loading = false;
 		});
@@ -20,7 +21,7 @@ angular.module('streama').controller('adminVideoCtrl', [
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 			alertify.confirm("Are you sure, you want to delete this Video?", function (confirmed) {
 				if(confirmed){
-					apiService.genericVideo.delete($stateParams.videoId).success(function () {
+					apiService.genericVideo.delete($stateParams.videoId).then(function () {
 						$state.go('admin.videos');
 					});
 				}
@@ -28,7 +29,7 @@ angular.module('streama').controller('adminVideoCtrl', [
 		};
 
 		$scope.addToCurrentNotification = function(){
-			apiService.notification.addMovieToCurrentNotification($stateParams.movieId).success(function () {
+			apiService.notification.addMovieToCurrentNotification($stateParams.movieId).then(function () {
 				alertify.success('The movie was added to the current notification queue.');
 			});
 		};
@@ -48,9 +49,9 @@ angular.module('streama').controller('adminVideoCtrl', [
           delete movie.id;
           movie.apiId = apiId;
 
-          apiService.movie.save(movie).success(function (data) {
+          apiService.movie.save(movie).then(function (data) {
 						if(redirect){
-							$state.go('admin.movie', {movieId: data.id});
+							$state.go('admin.movie', {movieId: data.data.id});
 						}
           });
 				}

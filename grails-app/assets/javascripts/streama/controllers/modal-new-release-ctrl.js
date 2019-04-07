@@ -20,7 +20,7 @@ angular.module('streama').controller('modalNewReleaseCtrl', [
 
     $scope.save = function (newRelease) {
       apiService.notification.highlightOnDashboard(newRelease)
-        .success(function () {
+        .then(function () {
           alertify.success('Highlight complete.');
           $uibModalInstance.close();
         })

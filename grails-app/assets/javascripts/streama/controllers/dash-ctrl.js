@@ -25,11 +25,12 @@ angular.module('streama').controller('dashCtrl',
       }
 
       if(!localStorageService.get('currentProfile')){
-        apiService.profile.getUserProfiles().success(function(data) {
+        apiService.profile.getUserProfiles().then(function(response) {
+            var data = response.data;
             localStorageService.set('currentProfile', data[0]);
             initMedia();
           }
-        ).error(function (data) {
+        , function (data) {
           alertify.error(data.message);
         });
       } else {
@@ -42,46 +43,52 @@ angular.module('streama').controller('dashCtrl',
       vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser.data);
       vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser.data);
 
-      apiService.tag.list().success(onTagsLoaded);
-      apiService.dash.listNewReleases().success(onNewReleasesLoaded);
-      apiService.dash.listContinueWatching().success(onContinueWatchingLoaded);
-      apiService.dash.listRecommendations().success(onRecommendedLoaded);
-      apiService.dash.listGenres().success(onGenreLoaded);
+      apiService.tag.list().then(onTagsLoaded);
+      apiService.dash.listNewReleases().then(onNewReleasesLoaded);
+      apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
+      apiService.dash.listRecommendations().then(onRecommendedLoaded);
+      apiService.dash.listGenres().then(onGenreLoaded);
     }
 
     // HOISTED FUNCTIONS BELOW
 
 
-    function onRecommendedLoaded(data) {
+    function onRecommendedLoaded(response) {
+      var data = response.data;
       vm.recommendations = data;
       vm.loadingRecommendations = false;
     }
 
 
     function fetchData(mediaConfig) {
-      mediaConfig.fetch({max: LIST_MAX, offset: mediaConfig.currentOffset, sort: mediaConfig.currentSort.sort, order: mediaConfig.currentSort.order}).success(function (response) {
-        mediaConfig.total = response.total;
+      mediaConfig.fetch({max: LIST_MAX, offset: mediaConfig.currentOffset, sort: mediaConfig.currentSort.sort, order: mediaConfig.currentSort.order}).then(function (response) {
+        var data = response.data;
+        mediaConfig.total = data.total;
         if(mediaConfig.currentOffset > 0){
-          mediaConfig.list = _.unionBy(mediaConfig.list, response.list, 'id');
+          mediaConfig.list = _.unionBy(mediaConfig.list, data.list, 'id');
         }else{
-          mediaConfig.list = response.list;
+          mediaConfig.list = data.list;
         }
         mediaConfig.isLoading = false;
       });
     }
 
-    function onContinueWatchingLoaded(data) {
+    function onContinueWatchingLoaded(response) {
+      var data = response.data;
       vm.continueWatching = data;
     }
 
-    function onNewReleasesLoaded(data) {
+    function onNewReleasesLoaded(response) {
+      var data = response.data;
       vm.newReleases = data;
     }
-    function onTagsLoaded(data) {
+    function onTagsLoaded(response) {
+      var data = response.data;
       vm.tags = data;
     }
 
-    function onGenreLoaded(data) {
+    function onGenreLoaded(response) {
+      var data = response.data;
       $rootScope.genres = data;
 
       if ($stateParams.genreId) {
@@ -92,7 +99,8 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function showInitialSettingsWarning() {
-      apiService.settings.list().success(function (data) {
+      apiService.settings.list().then(function (response) {
+        var data = response.data;
         $scope.settings = data;
         var TheMovieDbAPI = _.find(data, {settingsKey: 'Upload Directory'});
 
@@ -117,8 +125,8 @@ angular.module('streama').controller('dashCtrl',
 
 
     function fetchFirstEpisodeAndPlay(tvShow) {
-      apiService.dash.firstEpisodeForShow(tvShow.id).success(function (data) {
-        $state.go('player', {videoId: data.id});
+      apiService.dash.firstEpisodeForShow(tvShow.id).then(function (response) {
+        $state.go('player', {videoId: response.data.id});
       });
     }
     function showDetails(media) {
@@ -152,7 +160,7 @@ angular.module('streama').controller('dashCtrl',
       alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
       alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
         if (confirmed) {
-          apiService.viewingStatus.delete(viewingStatus.id).success(function (data) {
+          apiService.viewingStatus.delete(viewingStatus.id).then(function (data) {
             _.remove(vm.continueWatching, {'id': viewingStatus.id});
           });
         }
@@ -161,7 +169,7 @@ angular.module('streama').controller('dashCtrl',
 
     function isDashSectionHidden(sectionName) {
       var hiddenDashSectionSetting = _.find($scope.settings, {name: 'hidden_dash_sections'});
-      if(hiddenDashSectionSetting.value){
+      if(_.get(hiddenDashSectionSetting, 'value')){
         var hiddenDashSections = hiddenDashSectionSetting.value.split(',');
         return (hiddenDashSections.indexOf(sectionName) > -1);
       }

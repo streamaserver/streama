@@ -15,18 +15,21 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     else if(mediaId && $scope.mediaType){
 
       console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
-      apiService[$scope.mediaType].get(mediaId).success(function (data) {
+      apiService[$scope.mediaType].get(mediaId).then(function (response) {
+        var data = response.data;
         $scope.media = data;
 
         if($scope.mediaType == 'tvShow'){
           $scope.currentSeason = 0;
-          apiService.tvShow.episodesForTvShow($scope.media.id).success(function (data) {
+          apiService.tvShow.episodesForTvShow($scope.media.id).then(function (response) {
+            var data = response.data;
             if(data.length){
               $scope.seasons = _.groupBy(data, 'season_number');
               $scope.currentSeason = _.min(data, 'season_number').season_number;
             }
           });
-          apiService.dash.firstEpisodeForShow($scope.media.id).success(function (data) {
+          apiService.dash.firstEpisodeForShow($scope.media.id).then(function (response) {
+            var data = response.data;
             $scope.firstEpisode = data;
           });
         }

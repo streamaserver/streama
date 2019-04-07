@@ -28,11 +28,11 @@ angular.module('streama').controller('modalFileCtrl', [
     });
 
 		function loadLocalFiles(path) {
-			apiService.file.localFiles(path).success(function(data) {
+			apiService.file.localFiles(path).then(function(response) {
 				localStorageService.set('localFileLastPath', path);
 				$scope.localFilesEnabled = true;
-				$scope.localFiles = data;
-			}).error(function(data) {
+				$scope.localFiles = response.data;
+			}, function(data) {
 				if (data.code == 'LocalFilesNotEnabled') {
 					$scope.localFilesEnabled = false;
 					return;
@@ -54,12 +54,12 @@ angular.module('streama').controller('modalFileCtrl', [
     }
 
     $scope.addExternalUrl = function (externalUrl) {
-      apiService.video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).success(function (data) {
+      apiService.video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).then(function (response) {
         alertify.success("External URL Added.");
         $scope.video.externalLink = null;
 
-        if(_.find($scope.video.files, {id: data.id})){
-          $scope.video.files[_.indexOf($scope.video.files, {id: data.id})] = data;
+        if(_.find($scope.video.files, {id: response.data.id})){
+          $scope.video.files[_.indexOf($scope.video.files, {id: data.id})] = response.data;
         }else{
           $scope.video.files = $scope.video.files || [];
           $scope.video.files.push(data);
@@ -69,7 +69,8 @@ angular.module('streama').controller('modalFileCtrl', [
     };
 
     $scope.addLocalFile = function (localFile) {
-      apiService.video.addLocalFile({id: $scope.video.id, localFile: localFile}).success(function (data) {
+      apiService.video.addLocalFile({id: $scope.video.id, localFile: localFile}).then(function (response) {
+        var data = response.data;
         alertify.success("Local File Added.");
         $scope.video.localFile = null;
 
@@ -83,7 +84,7 @@ angular.module('streama').controller('modalFileCtrl', [
         if($scope.closeOnSelect){
           $uibModalInstance.dismiss('cancel');
         }
-      }).error(function(data) {
+      }, function(data) {
         alertify.error(data.message);
       });
     };
@@ -96,7 +97,7 @@ angular.module('streama').controller('modalFileCtrl', [
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
       alertify.confirm('Are you sure you want to remove the file "'+file.originalFilename+'"?', function (confirmed) {
         if(confirmed){
-          apiService.video.removeFile($scope.video.id, file.id).success(function () {
+          apiService.video.removeFile($scope.video.id, file.id).then(function () {
             if(file.extension == '.srt' || file.extension == '.vtt'){
               _.remove($scope.video.subtitles, {id: file.id});
               alertify.success('Subtitles deleted.');
@@ -110,7 +111,7 @@ angular.module('streama').controller('modalFileCtrl', [
     };
 
     $scope.saveChanges = function (file) {
-      apiService.file.save(file).success(function (data) {
+      apiService.file.save(file).then(function (data) {
         alertify.success('File successfully saved.');
       });
     };

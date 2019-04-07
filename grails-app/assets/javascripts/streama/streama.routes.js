@@ -152,7 +152,8 @@ angular.module('streama').config(function ($stateProvider) {
 
 
 	function resolveCurrentUser(apiService, $rootScope) {
-		return apiService.currentUser().success(function (data) {
+		return apiService.currentUser().then(function (response) {
+			var data = response.data;
 			if(!data){
 				location.href = '/login/auth'
 			}
@@ -161,7 +162,7 @@ angular.module('streama').config(function ($stateProvider) {
 				$rootScope.currentUser = data;
 				return data;
 			}
-		}).error(function (err, status) {
+		}, function (err, status) {
       if(status === 401){
         location.href = '/login/auth?sessionExpired=true'
       }
@@ -169,7 +170,8 @@ angular.module('streama').config(function ($stateProvider) {
 	}
 
 	function checkPermissionAdmin(apiService, $rootScope, $state) {
-		return apiService.currentUser().success(function (data) {
+		return apiService.currentUser().then(function (response) {
+			var data = response.data;
 			if(!data){
 				location.href = '/login/auth'
 			}
@@ -183,7 +185,8 @@ angular.module('streama').config(function ($stateProvider) {
 	}
 
 	function checkPermission(apiService, $rootScope, $state) {
-		return apiService.currentUser().success(function (data) {
+		return apiService.currentUser().then(function (response) {
+			var data = response.data;
 			if(!data){
 				location.href = '/login/auth'
 			}

@@ -5,12 +5,11 @@ angular.module('streama').controller('modalFileBrowserCtrl', [
 	function ($scope, $uibModalInstance, apiService) {
 		$scope.loading = true;
 
-		apiService.video.listAllFiles()
-			.success(function (data) {
+		apiService.video.listAllFiles().then(function (response) {
+				var data = response.data;
 				$scope.loading = false;
 				$scope.files = data;
-			})
-			.error(function () {
+			}, function () {
 				alertify.error('Failed to load the list of files.');
 			});
 

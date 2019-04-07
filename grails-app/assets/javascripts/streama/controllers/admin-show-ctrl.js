@@ -11,18 +11,21 @@ angular.module('streama').controller('adminShowCtrl', [
 	$scope.showLoading = true;
 	$scope.hasMovieDBKey = true;
 
-  apiService.theMovieDb.hasKey().success(function (data) {
-    if (!data.key) {
+	$scope.listEpisodesForSeason = listEpisodesForSeason;
+
+  apiService.theMovieDb.hasKey().then(function (response) {
+    if (!response.data.key) {
       $scope.hasMovieDBKey = false;
     }
   });
 
-	apiService.tvShow.get($stateParams.showId).success(function (data) {
-		$scope.show = data;
+	apiService.tvShow.get($stateParams.showId).then(function (response) {
+		$scope.show = response.data;
 
-		apiService.tvShow.adminEpisodesForTvShow($stateParams.showId).success(function (episodes) {
+		apiService.tvShow.adminEpisodesForTvShow($stateParams.showId).then(function (response) {
+			var episodes = $scope.episodes = response.data;
 			if(episodes.length){
-				$scope.seasons = _.groupBy(episodes, 'season_number');
+				$scope.seasons = _.chain(episodes).map('season_number').uniq().value();
         var defaultSeasion = parseInt($stateParams.season) || _.min(episodes, 'season_number').season_number;
         $scope.setCurrentSeason(defaultSeasion);
 			}
@@ -43,7 +46,7 @@ angular.module('streama').controller('adminShowCtrl', [
     alertify.set({ buttonReverse: true, labels: {ok: "OK", cancel : "Cancel"}});
 		alertify.prompt('Add a description to this TvShow. For instance, tell the users which season you added.', function (confirmed, text) {
 			if(confirmed){
-				apiService.notification.addTvShowToCurrentNotification($stateParams.showId, text).success(function () {
+				apiService.notification.addTvShowToCurrentNotification($stateParams.showId, text).then(function () {
 					alertify.success('The TvShow was added to the current notification queue.');
 				});
 			}
@@ -52,10 +55,14 @@ angular.module('streama').controller('adminShowCtrl', [
 
 
 	$scope.addNewEpisode = function(){
-		modalService.videoModal(null, 'manual', $scope.show, function (data) {
-			$scope.seasons = $scope.seasons || {};
-			$scope.seasons[parseInt(data.season_number)] = $scope.seasons[parseInt(data.season_number)] || [];
-			$scope.seasons[parseInt(data.season_number)].push(data);
+		modalService.videoModal(null, 'manual', $scope.show, function (response) {
+			var data = response.data;
+			$scope.seasons = $scope.seasons || [];
+			var seasonNum = parseInt(data.season_number);
+			if($scope.seasons.indexOf(seasonNum) === -1){
+				$scope.seasons.push(seasonNum);
+			}
+			$scope.episodes.push(data);
 			$scope.setCurrentSeason(data.season_number);
 		});
 	};
@@ -65,7 +72,7 @@ angular.module('streama').controller('adminShowCtrl', [
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm("Are you sure you want to delete this Show?", function (confirmed) {
 			if(confirmed){
-				apiService.tvShow.delete($scope.show.id).success(function () {
+				apiService.tvShow.delete($scope.show.id).then(function () {
 					$state.go('admin.shows');
 				});
 			}
@@ -87,8 +94,8 @@ angular.module('streama').controller('adminShowCtrl', [
 		if(index){
 		  if($scope.hasMovieDBKey){
         apiService.theMovieDb.countNewEpisodesForSeason({apiId: $scope.show.apiId, showId: $stateParams.showId, season: index})
-          .success(function (data) {
-            $scope.newEpisodesForSeason = data;
+          .then(function (response) {
+            $scope.newEpisodesForSeason = response.data;
           })
       }
 		}
@@ -98,11 +105,15 @@ angular.module('streama').controller('adminShowCtrl', [
 	var seasonForShow = function (season) {
     if($scope.hasMovieDBKey){
       return apiService.theMovieDb.seasonForShow({apiId: $scope.show.apiId, showId: $stateParams.showId, season: season})
-				.success(function (data) {
+				.then(function (response) {
+					var data = response.data;
 					console.log('%c seasonForShow', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
-					$scope.seasons = $scope.seasons ||  {};
-					$scope.seasons[season] = $scope.seasons[season] || [];
-					$scope.seasons[season] = $scope.seasons[season].concat(data);
+					$scope.seasons = $scope.seasons ||  [];
+					if($scope.seasons.indexOf(seasonNum) === -1) {
+						$scope.seasons.push(seasonNum);
+					}
+
+					$scope.episodes = $scope.episodes.concat(data);
 					$scope.newEpisodesForSeason = null;
 					maxSeason = Math.max(maxSeason, season);
 					if (maxSeason == season) {
@@ -168,10 +179,10 @@ angular.module('streama').controller('adminShowCtrl', [
 		alertify.confirm("Are you sure you want to remove the entire season " + season_number + "?", function (confirmed) {
 			if(confirmed){
 				$scope.loading = true;
-				apiService.tvShow.removeSeason($stateParams.showId, season_number).success(function () {
-					delete $scope.seasons[season_number];
+				apiService.tvShow.removeSeason($stateParams.showId, season_number).then(function () {
+					$scope.seasons.splice($scope.seasons.indexOf(season_number), 1);
 					$scope.loading = false;
-					var lowestSeasonNumber = _.property('season_number')(_.min($scope.seasons, 'season_number'));
+					var lowestSeasonNumber = _.min($scope.seasons);
 					if(lowestSeasonNumber){
 						$scope.setCurrentSeason(lowestSeasonNumber);
 					}
@@ -191,9 +202,13 @@ angular.module('streama').controller('adminShowCtrl', [
 
 		$scope.show.poster_image = data.id;
 
-		apiService.tvShow.save($scope.show).success(function (data) {
+		apiService.tvShow.save($scope.show).then(function (response) {
+			var data = response.data;
 			$scope.show.poster_image_src = data.poster_image_src;
 		});
 	}, function () {});
 
+	function listEpisodesForSeason(seasonNum) {
+		return _.filter($scope.episodes, {'season_number': seasonNum});
+	}
 }]);

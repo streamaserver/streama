@@ -15,12 +15,10 @@ angular.module('streama').controller('modalVideoCtrl', [
 		delete episode.dateCreated;
 		delete episode.lastUpdated;
 
-		apiService.episode.save(episode)
-			.success(function (data) {
+		apiService.episode.save(episode).then(function (data) {
 				$uibModalInstance.close(data);
         alertify.success("Video saved.");
-			})
-			.error(function () {
+			}, function () {
 				alertify.error("An error occured.");
 			});
 	};
@@ -41,7 +39,7 @@ angular.module('streama').controller('modalVideoCtrl', [
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm("Are you sure you want to delete this Episode?", function (confirmed) {
 			if(confirmed){
-				apiService.video.delete(video.id).success(function () {
+				apiService.video.delete(video.id).then(function () {
 					$uibModalInstance.close({deleted: true});
 				});
 			}
@@ -54,8 +52,8 @@ angular.module('streama').controller('modalVideoCtrl', [
 		alertify.confirm("Are you sure you want to re-fetch the meta-data from TheMovieDb? " +
 				"All your changes except for the added files will be overridden.", function (confirmed) {
 			if(confirmed){
-				apiService.video.refetch(video.id).success(function (result) {
-					_.assign(video, result);
+				apiService.video.refetch(video.id).then(function (result) {
+					_.assign(video, result.data);
 					alertify.success('Fetch successful');
 				});
 			}

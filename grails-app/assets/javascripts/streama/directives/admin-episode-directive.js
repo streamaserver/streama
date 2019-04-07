@@ -31,7 +31,7 @@ angular.module('streama').directive('adminEpisode', [
 
 			$scope.openFileBrowser = function(){
 				modalService.openFileBrowser(function (file) {
-					apiService.video.addFile($scope.episode.id, file.id).success(function () {
+					apiService.video.addFile($scope.episode.id, file.id).then(function () {
 						$scope.episode.files = $scope.episode.files || [];
 						$scope.episode.files.push(file);
 					});
