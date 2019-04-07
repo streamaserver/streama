@@ -31,16 +31,16 @@ angular.module('streama').directive("videoTimeFormat", function(){
 
       function getViewValue(timeInSeconds) {
         _timeInSeconds = timeInSeconds;
-        var seconds = timeInSeconds % 60;
-        var minutes = Math.floor(timeInSeconds / 60);
+        var remainingTime = timeInSeconds;
         var hours = Math.floor(timeInSeconds / 3600);
+        remainingTime = remainingTime % 3600;
+        var minutes = Math.floor(remainingTime / 60);
+        var seconds = remainingTime % 60;
         var viewValue = _.padStart(hours, 2, '0')  + ':' + _.padStart(minutes, 2, '0') + ':' + _.padStart(seconds, 2, '0');
         return viewValue;
       }
 
       element.blur(function (event) {
-        ngModelController.$setViewValue("foo");
-        ngModelController.$viewValue = "foo";
         ngModelController.$processModelValue();
       });
     }
