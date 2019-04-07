@@ -25,14 +25,13 @@ angular.module('streama').controller('userSettingsCtrl', function ($scope, apiSe
 
   $scope.saveProfile = function () {
     $scope.loading = true;
-    apiService.user.saveProfile($scope.user)
-      .success(function (data) {
+    apiService.user.saveProfile($scope.user).then(function (response) {
+      var data = response.data;
         $scope.loading = false;
         userService.setCurrentUser(data);
         alertify.success('Your profile was successfully saved.');
         $scope.profileForm.$setPristine();
-      })
-      .error(function () {
+      }, function () {
         $scope.loading = false;
       });
   };
@@ -52,15 +51,13 @@ angular.module('streama').controller('userSettingsCtrl', function ($scope, apiSe
   $scope.saveNewPassword = function () {
     $scope.loading = true;
 
-    apiService.user.changePassword($scope.passwordData)
-      .success(function () {
+    apiService.user.changePassword($scope.passwordData).then(function () {
         alertify.success('Password was successfully changed.');
         $scope.passwordData = {};
         $scope.passwordsInvalid = true;
         $scope.toggleChangePassword();
         $scope.loading = false;
-      })
-      .error(function (data) {
+      }, function (data) {
         alertify.error(data.message);
         $scope.loading = false;
       });
