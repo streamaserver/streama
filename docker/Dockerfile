@@ -5,6 +5,6 @@ ENV ACTIVE_PROFILE=docker
 
 WORKDIR /app
 COPY docker/entrypoint.sh entrypoint.sh
-COPY build/libs/*.war streama.war
+COPY build/libs/*.jar streama.jar
 
 ENTRYPOINT ["sh", "entrypoint.sh"]
