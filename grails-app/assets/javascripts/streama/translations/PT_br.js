@@ -38,7 +38,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			GENRE: 'Gênero',
 			TRAILER: 'Trailer',
 			SEASON: 'Temporada',
-      NO_SUBTITLE: 'Nenhum subtítulo'
+      NO_SUBTITLE: 'Nenhuma legenda'
+      UPNEXT: 'A seguir...'
 		},
 
 		MESSAGES: {
