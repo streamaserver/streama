@@ -19,8 +19,8 @@ angular.module('streama')
 		});
 	};
 
-	apiService.settings.list().then(function (data) {
-		$rootScope.settings = data;
+	apiService.settings.list().then(function (response) {
+		$rootScope.settings = response.data;
 	});
 
 	$rootScope.getSetting = function (name) {
