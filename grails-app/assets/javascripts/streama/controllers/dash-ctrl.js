@@ -157,10 +157,16 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function markCompleted(viewingStatus) {
+      alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
+      alertify.confirm($filter('translate')('DASHBOARD.MARK_COMPLETED_CONFIRM'), function (confirmed) {
+        if (confirmed) {
           apiService.viewingStatus.delete(viewingStatus.id).then(function (data) {
             _.remove(vm.continueWatching, {'id': viewingStatus.id});
           });
+        }
+      })
     }
+
 
     function isDashSectionHidden(sectionName) {
       var hiddenDashSectionSetting = _.find($scope.settings, {name: 'hidden_dash_sections'});
