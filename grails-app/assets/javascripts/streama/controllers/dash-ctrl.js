@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('streama').controller('dashCtrl',
-	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService, currentUser ) {
+	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService, currentUser,  $filter) {
   var vm = this;
 
     var LIST_MAX = 30;
