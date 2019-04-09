@@ -28,7 +28,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			MARK_COMPLETED: 'Concluído',
 			NO_TVSHOWS_FOUND: 'Nenhuma Série Disponível',
 			NO_MOVIES_FOUND: 'Nenhum Filme Disponível',
-      MARK_COMPLETED_CONFIRM: 'Gostaria de marcar isso como conluído?'
+      MARK_COMPLETED_CONFIRM: 'Gostaria de marcar este vídeo como conluído?'
 		},
 		VIDEO: {
 			RELEASED: 'Lançado',
