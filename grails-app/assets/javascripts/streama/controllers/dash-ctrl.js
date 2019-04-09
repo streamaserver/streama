@@ -158,7 +158,7 @@ angular.module('streama').controller('dashCtrl',
 
     function markCompleted(viewingStatus) {
       alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
-      alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
+      alertify.confirm("{{'DASHBOARD.MARK_COMPLETED_CONFIRM' | translate}}", function (confirmed) {
         if (confirmed) {
           apiService.viewingStatus.delete(viewingStatus.id).then(function (data) {
             _.remove(vm.continueWatching, {'id': viewingStatus.id});
