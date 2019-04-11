@@ -31,13 +31,12 @@ angular.module('streama').controller('settingsSettingsCtrl',
     $scope.changeValue(settings);
     $scope.loading = true;
 
-    apiService.settings.validateSettings(settings)
-      .success(function (data) {
+    apiService.settings.validateSettings(settings).then(function (response) {
+        var data = response.data;
         alertify.success(data.message || 'validation successful');
         settings.valid = true;
         $scope.loading = false;
-      })
-      .error(function (data) {
+      }, function (data) {
         alertify.error(data.message);
         settings.invalid = true;
         $scope.loading = false;
