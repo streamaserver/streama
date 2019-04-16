@@ -60,7 +60,7 @@ angular.module('streama').controller('settingsSettingsCtrl',
 		//check if upload dir is set
 		apiService.settings.list().then(function (response) {
       var data = response.data;
-			var uploadDir = _.find(setlist, {settingsKey: 'Upload Directory'});
+			var uploadDir = _.find(data, {settingsKey: 'Upload Directory'});
 			if (uploadDir.value) {
 				//do upload
 				uploadService.doUpload($scope.uploadStatus, 'file/upload.json?isPublic=true', function (data) {
@@ -86,11 +86,10 @@ angular.module('streama').controller('settingsSettingsCtrl',
       if (assetURL.startsWith("upload:")) {
 
         var id = assetURL.split(":")[1];
-        apiService.file.getURL(id)
-          .success(function (data) {
-            setting.src = data.url
+        apiService.file.getURL(id).then(function (response) {
+            setting.src = response.data.url;
             return true;
-          })
+          });
 
       } else {
         setting.src = assetURL;
