@@ -11,26 +11,47 @@ angular.module('streama').controller('modalMovieCtrl', [
   $scope.addManually = ($scope.movie.id && !$scope.movie.apiId);
 	$scope.chooseNewBackdrop = chooseNewBackdrop;
 
-  apiService.theMovieDb.hasKey().then(function (response) {
-    if (!response.data.key) {
-      $scope.hasMovieDBKey = false;
-      $scope.addManually = true;
-    }
-  });
+	$scope.imageUpload = {};
+	$scope.uploadImage = uploadImage;
+	$scope.saveMovie = saveMovie;
+	$scope.toggleAddManually = toggleAddManually;
+	$scope.selectFromAPI = selectFromAPI;
+	$scope.search = search;
+	$scope.onTagSelect = onTagSelect;
+	$scope.tagTransform = tagTransform;
+	$scope.deleteTag = deleteTag;
+	$scope.cancel = cancel;
 
-	$scope.saveMovie = function (movie) {
+	init();
+
+	function init() {
+		apiService.theMovieDb.hasKey().then(function (response) {
+			if (!response.data.key) {
+				$scope.hasMovieDBKey = false;
+				$scope.addManually = true;
+			}
+		});
+
+		apiService.tag.list().then(function (response) {
+			$scope.tags = response.data;
+		});
+
+		setTimeout(function () {
+			$('.name-input').focus();
+		}, 200);
+	}
+
+	function saveMovie(movie) {
 		apiService.movie.save(movie).then(function (response) {
 			$uibModalInstance.close(response.data);
-      alertify.success("Movie saved.");
+			alertify.success("Movie saved.");
 		});
-	};
+	}
 
-	$scope.toggleAddManually = function () {
+	function toggleAddManually() {
 		$scope.addManually = !$scope.addManually;
-	};
-
-
-	$scope.selectFromAPI = function ($item) {
+	}
+	function selectFromAPI($item) {
 		console.log('%c selectFromAPI', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
 		var apiId = $item.id;
 		delete $item.id;
@@ -40,64 +61,50 @@ angular.module('streama').controller('modalMovieCtrl', [
 		$scope.hasMovieDBKey = true;
 
 		$scope.formVisible = true;
-	};
-
-	$scope.search = function (query) {
+	}
+	function search(query) {
 		return apiService.theMovieDb.search('movie', query).then(function (data) {
 			return data.data;
 		});
-	};
+	}
 
+	function uploadImage(files, type) {
+		uploadService.doUpload($scope.imageUpload, 'file/upload.json', function (data) {
+			$scope.imageUpload.percentage = null;
+			if(data.error) return
 
+			$scope.movie[type] = data;
+			$scope.movie[type+'_src'] = data.src;
+		}, function () {}, files);
+	}
 
-		$scope.imageUpload = {};
-		$scope.uploadImage = function (files, type) {
-			uploadService.doUpload($scope.imageUpload, 'file/upload.json', function (data) {
-				$scope.imageUpload.percentage = null;
-				if(data.error) return
+	function onTagSelect(tag) {
+		apiService.tag.save(tag);
+	}
 
-				$scope.movie[type] = data;
-				$scope.movie[type+'_src'] = data.src;
-			}, function () {}, files);
+	function tagTransform(newTag) {
+		var item = {
+			name: newTag,
+			isNew: true
 		};
 
-		$scope.onTagSelect = function (tag) {
-			apiService.tag.save(tag);
-		};
+		return item;
+	}
 
-		$scope.tagTransform = function (newTag) {
-			var item = {
-				name: newTag,
-				isNew: true
-			};
-
-			return item;
-		};
-
-		$scope.deleteTag = function (tag) {
-      alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
-			alertify.confirm('Are you sure you want to delete the tag ' + tag.name, function (confirmed) {
-				if(confirmed){
-					apiService.tag.delete(tag.id).then(function () {
-						_.remove($scope.tags, {id: tag.id});
-					})
-				}
-			});
-		};
-
-		apiService.tag.list().then(function (response) {
-			$scope.tags = response.data;
+	function deleteTag(tag) {
+		alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
+		alertify.confirm('Are you sure you want to delete the tag ' + tag.name, function (confirmed) {
+			if(confirmed){
+				apiService.tag.delete(tag.id).then(function () {
+					_.remove($scope.tags, {id: tag.id});
+				})
+			}
 		});
+	}
 
-
-		setTimeout(function () {
-		$('.name-input').focus();
-	}, 200);
-
-
-	$scope.cancel = function () {
+	function cancel() {
 		$uibModalInstance.dismiss('cancel');
-	};
+	}
 
 	function chooseNewBackdrop() {
     modalService.openImageChooser('movie', $scope.movie);
