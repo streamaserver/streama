@@ -27,9 +27,9 @@ angular.module('streama').controller('adminMovieCtrl', [
 
 
     $scope.loadsimilar= function () {
-      apiService.movie.getsimilar($stateParams.movieId).then(function (data) {
+      apiService.movie.getsimilar($stateParams.movieId).then(function (response) {
         $scope.LoadingSimilar = false;
-        $scope.movie.similarMovies = data;
+        $scope.movie.similarMovies = response.data;
       });
     };
 
