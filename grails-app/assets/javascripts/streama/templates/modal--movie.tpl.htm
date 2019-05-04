@@ -67,11 +67,14 @@
         <div class="form-group">
           <div class="col-sm-12">
             <label>Genre</label>
-            <ul class="genre-list">
-              <li class="genre-tag" ng-repeat="genre in movie.genre">
-                {{genre.name}}
-              </li>
-            </ul>
+            <ui-select class="tag-select" multiple ng-model="movie.genre" theme="bootstrap" title="Add Genre">
+              <ui-select-match placeholder="Select Genre...">{{$item.name}}</ui-select-match>
+              <ui-select-choices repeat="genre in genres | propsFilter: {name: $select.search}">
+                <div class="tag-wrapper">
+                  <div class="tag-name" ng-bind-html="genre.name + genre.isTag| highlight: $select.search"></div>
+                </div>
+              </ui-select-choices>
+            </ui-select>
           </div>
         </div>
       </div>

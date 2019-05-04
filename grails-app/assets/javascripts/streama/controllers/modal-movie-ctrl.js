@@ -25,6 +25,10 @@ angular.module('streama').controller('modalMovieCtrl', [
 	init();
 
 	function init() {
+		apiService.genres.list().then(function (data) {
+			$scope.genres = data.data;
+		});
+
 		apiService.theMovieDb.hasKey().then(function (response) {
 			if (!response.data.key) {
 				$scope.hasMovieDBKey = false;
