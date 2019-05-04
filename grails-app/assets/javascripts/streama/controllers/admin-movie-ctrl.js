@@ -100,9 +100,9 @@ angular.module('streama').controller('adminMovieCtrl', [
           delete movie.id;
           movie.apiId = apiId;
 
-          apiService.movie.save(movie).then(function (data) {
+          apiService.movie.save(movie).then(function (response) {
 						if(redirect){
-							$state.go('admin.movie', {movieId: data.id});
+							$state.go('admin.movie', {movieId: response.data.id});
 						}
           });
 				}
