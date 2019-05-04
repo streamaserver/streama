@@ -125,7 +125,9 @@ class Video implements SimpleInstance{
     def result
 
     if (this instanceof Movie) {
-
+      if(!this.genre){
+        return
+      }
       Movie tmp_movie=Movie.find{
         ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id > this.id)}
       if(tmp_movie == null){
