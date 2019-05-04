@@ -39,6 +39,7 @@ class TheMovieDbService {
     def jsonContentSimilarMovies = new URL(BASE_URL + "/movie/$movieId/similar?$API_PARAMS").getText("UTF-8")
     def jsonSimilarMovies = new JsonSlurper().parseText(jsonContentSimilarMovies)
     jsonSimilarMovies?.results?.each { Map similarMovie ->
+      similarMovie.genre = parseGenres(similarMovie.genre_ids)
       similarMovie.mediatype = "Movie"
       try{
         def jsonContentTrailer = new URL(BASE_URL + "/movie/$similarMovie.id/videos?$API_PARAMS").getText("UTF-8")
@@ -199,5 +200,14 @@ class TheMovieDbService {
     entity.apiId = apiId
     entity.save(flush:true, failOnError:true)
     return entity
+  }
+
+  def parseGenres(movieDbGenres){
+    def streamaGenres = []
+    movieDbGenres.each{ metaGenre ->
+      Genre genre = Genre.findByApiId(metaGenre)
+      streamaGenres.add(genre)
+    }
+    return streamaGenres
   }
 }
