@@ -13,19 +13,27 @@ angular.module('streama').controller('modalFileCtrl', [
     var localFileLastPath = localStorageService.get('localFileLastPath')|| '';
 		$scope.localDir = localFileLastPath.split('/') || [];
     $scope.video = video;
+    $scope.uploadStatus = {};
+    $scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + video.id, onUploadSuccess, function () {});
 
     $scope.loadLocalFiles = loadLocalFiles;
 		$scope.backLocalDirectory = backLocalDirectory;
 		$scope.openLocalDirectory = openLocalDirectory;
 		$scope.toggleCloseOnSelect = toggleCloseOnSelect;
-
+    $scope.addLocalFile = addLocalFile;
+    $scope.cancel = cancel;
+    $scope.removeFile = removeFile;
+    $scope.saveChanges = saveChanges;
+    $scope.getFilesForExtensions = getFilesForExtensions;
+    $scope.addExternalUrl = addExternalUrl;
 
 		$scope.loadLocalFiles(localFileLastPath);
 
+		$scope.$watch('activeTab', onTabChange);
 
-		$scope.$watch('activeTab', function (newVal, oldVal) {
+    function onTabChange(newVal, oldVal) {
       localStorageService.set('activeFileModalTab', newVal);
-    });
+    }
 
 		function loadLocalFiles(path) {
 			apiService.file.localFiles(path).then(function(response) {
@@ -53,7 +61,8 @@ angular.module('streama').controller('modalFileCtrl', [
       $scope.loadLocalFiles($scope.localDir.join('/'));
     }
 
-    $scope.addExternalUrl = function (externalUrl) {
+
+    function addExternalUrl(externalUrl) {
       apiService.video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).then(function (response) {
         alertify.success("External URL Added.");
         $scope.video.externalLink = null;
@@ -66,9 +75,9 @@ angular.module('streama').controller('modalFileCtrl', [
           $scope.video.hasFiles = true;
         }
       });
-    };
+    }
 
-    $scope.addLocalFile = function (localFile) {
+    function addLocalFile(localFile) {
       apiService.video.addLocalFile({id: $scope.video.id, localFile: localFile}).then(function (response) {
         var data = response.data;
         alertify.success("Local File Added.");
@@ -79,7 +88,7 @@ angular.module('streama').controller('modalFileCtrl', [
         }else{
           $scope.video.files = $scope.video.files || [];
           $scope.video.files.push(data);
-					$scope.video.hasFiles = true;
+          $scope.video.hasFiles = true;
         }
         if($scope.closeOnSelect){
           $uibModalInstance.dismiss('cancel');
@@ -87,13 +96,9 @@ angular.module('streama').controller('modalFileCtrl', [
       }, function(data) {
         alertify.error(data.message);
       });
-    };
+    }
 
-    $scope.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
-    };
-
-    $scope.removeFile = function (file) {
+    function removeFile(file) {
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
       alertify.confirm('Are you sure you want to remove the file "'+file.originalFilename+'"?', function (confirmed) {
         if(confirmed){
@@ -108,44 +113,44 @@ angular.module('streama').controller('modalFileCtrl', [
           });
         }
       });
-    };
+    }
 
-    $scope.saveChanges = function (file) {
+    function cancel() {
+      $uibModalInstance.dismiss('cancel');
+    }
+    function saveChanges(file) {
       apiService.file.save(file).then(function (data) {
         alertify.success('File successfully saved.');
       });
-    };
+    }
 
-
-    $scope.uploadStatus = {};
-    $scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + video.id, function (data) {
-    	
+    function onUploadSuccess(data) {
       $scope.uploadStatus.percentage = null;
-
-		if(data.error) return
+      if(data.error) return;
 
       if(data.extension == '.srt' || data.extension == '.vtt'){
         $scope.video.subtitles = $scope.video.subtitles || [];
         $scope.video.subtitles.push(data);
-				$scope.video.hasFiles = true;
+        $scope.video.hasFiles = true;
         alertify.success('Subtitles uploaded successfully.');
       }else{
         $scope.video.files = $scope.video.files || [];
         $scope.video.files.push(data);
-				$scope.video.hasFiles = true;
+        $scope.video.hasFiles = true;
         alertify.success('Video uploaded successfully.');
       }
 
-    }, function () {});
+    }
 
-    $scope.getFilesForExtensions = function(extensions){
-      return _.filter($scope.video.files, function (file) {
-        return (extensions.indexOf(file.extension.toLowerCase()) > -1);
-      })
-    };
 
     function toggleCloseOnSelect() {
       localStorageService.set('fileModal.closeOnSelect', $scope.closeOnSelect);
+    }
+
+    function getFilesForExtensions(extensions){
+      return _.filter($scope.video.files, function (file) {
+        return (extensions.indexOf(file.extension.toLowerCase()) > -1);
+      })
     }
 
   }]);
