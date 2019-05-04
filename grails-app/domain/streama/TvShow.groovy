@@ -44,8 +44,8 @@ class TvShow implements SimpleInstance {
       overview size: 1..5000
   }
 
-  def getFilteredEpisodes(){
-    def filteredEpisodes = Episode.findAllByShowAndDeletedNotEqual(this, true)
+  List<Episode> getFilteredEpisodes(){
+    List filteredEpisodes = Episode.findAllByShowAndDeletedNotEqual(this, true)
     return filteredEpisodes
   }
 
