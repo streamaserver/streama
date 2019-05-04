@@ -37,12 +37,14 @@ class PlayerMarshallerService {
         returnArray['apiId'] = video.apiId
 
         returnArray['files'] = video.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }*.getSimpleInstance()
-        returnArray['subtitles'] = video.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }*.getSimpleInstance()
+        returnArray['videoFiles'] = video.getVideoFiles()*.getSimpleInstance()
+        returnArray['subtitles'] = video.getSubtitles()*.getSimpleInstance()
 
         returnArray['hasFiles'] = video.hasFiles()
 
         returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUserAndProfile(video, springSecurityService.currentUser, profile)
         returnArray['outro_start'] = video.outro_start ? video.outro_start : null
+        returnArray['defaultVideoFile'] = video.getDefaultVideoFile()?.getSimpleInstance()
 
         if (video instanceof Episode) {
           returnArray['mediaType'] = 'episode'

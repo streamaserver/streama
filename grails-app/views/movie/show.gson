@@ -3,11 +3,4 @@ import streama.Movie
 model {
 	Movie movie
 }
-
-json g.render(movie, [deep: true, excludes: ['files', 'poster_image']]){
-	hasFiles movie.files ? true : false
-	files movie.files?.collect{it.simpleInstance}
-	subtitles movie.files?.findAll{it.extension == '.srt' || it.extension == '.vtt'}?.collect{it.simpleInstance}
-  poster_image_src movie.poster_image?.src
-  //similarMovies movie.getSimilarMovies()
-}
+json tmpl.movie(movie)

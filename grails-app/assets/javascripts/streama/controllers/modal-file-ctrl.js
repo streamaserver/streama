@@ -26,6 +26,8 @@ angular.module('streama').controller('modalFileCtrl', [
     $scope.saveChanges = saveChanges;
     $scope.getFilesForExtensions = getFilesForExtensions;
     $scope.addExternalUrl = addExternalUrl;
+    $scope.toggleEdit = toggleEdit;
+    $scope.isEditing = isEditing;
 
 		$scope.loadLocalFiles(localFileLastPath);
 
@@ -67,11 +69,11 @@ angular.module('streama').controller('modalFileCtrl', [
         alertify.success("External URL Added.");
         $scope.video.externalLink = null;
 
-        if(_.find($scope.video.files, {id: response.data.id})){
-          $scope.video.files[_.indexOf($scope.video.files, {id: data.id})] = response.data;
+        if(_.find($scope.video.videoFiles, {id: response.data.id})){
+          $scope.video.videoFiles[_.indexOf($scope.video.videoFiles, {id: data.id})] = response.data;
         }else{
-          $scope.video.files = $scope.video.files || [];
-          $scope.video.files.push(data);
+          $scope.video.videoFiles = $scope.video.videoFiles || [];
+          $scope.video.videoFiles.push(data);
           $scope.video.hasFiles = true;
         }
       });
@@ -83,11 +85,11 @@ angular.module('streama').controller('modalFileCtrl', [
         alertify.success("Local File Added.");
         $scope.video.localFile = null;
 
-        if(_.find($scope.video.files, {id: data.id})){
-          $scope.video.files[_.indexOf($scope.video.files, {id: data.id})] = data;
+        if(_.find($scope.video.videoFiles, {id: data.id})){
+          $scope.video.videoFiles[_.indexOf($scope.video.videoFiles, {id: data.id})] = data;
         }else{
-          $scope.video.files = $scope.video.files || [];
-          $scope.video.files.push(data);
+          $scope.video.videoFiles = $scope.video.videoFiles || [];
+          $scope.video.videoFiles.push(data);
           $scope.video.hasFiles = true;
         }
         if($scope.closeOnSelect){
@@ -107,7 +109,7 @@ angular.module('streama').controller('modalFileCtrl', [
               _.remove($scope.video.subtitles, {id: file.id});
               alertify.success('Subtitles deleted.');
             }else{
-              _.remove($scope.video.files, {id: file.id});
+              _.remove($scope.video.videoFiles, {id: file.id});
               alertify.success('Video deleted.');
             }
           });
@@ -121,6 +123,7 @@ angular.module('streama').controller('modalFileCtrl', [
     function saveChanges(file) {
       apiService.file.save(file).then(function (data) {
         alertify.success('File successfully saved.');
+        toggleEdit(file);
       });
     }
 
@@ -134,8 +137,8 @@ angular.module('streama').controller('modalFileCtrl', [
         $scope.video.hasFiles = true;
         alertify.success('Subtitles uploaded successfully.');
       }else{
-        $scope.video.files = $scope.video.files || [];
-        $scope.video.files.push(data);
+        $scope.video.videoFiles = $scope.video.videoFiles || [];
+        $scope.video.videoFiles.push(data);
         $scope.video.hasFiles = true;
         alertify.success('Video uploaded successfully.');
       }
@@ -148,9 +151,17 @@ angular.module('streama').controller('modalFileCtrl', [
     }
 
     function getFilesForExtensions(extensions){
-      return _.filter($scope.video.files, function (file) {
+      return _.filter($scope.video.videoFiles, function (file) {
         return (extensions.indexOf(file.extension.toLowerCase()) > -1);
       })
+    }
+
+    function toggleEdit(file) {
+      file._isEditing = !file._isEditing;
+    }
+
+    function isEditing(file) {
+      return file._isEditing;
     }
 
   }]);

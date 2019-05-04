@@ -1,0 +1,58 @@
+.track-selector-list{
+  margin: 10px 0 40px;
+  font-size: 11px;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+  .track-selector-item{
+    padding: 7px 11px;
+    list-style: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 1.3em;
+    color: #ffffff;
+
+    i{
+      float: right;
+    }
+
+    &.active{
+      color: white;
+      background: $secondary;
+    }
+  }
+}
+
+.subtitle-size-picker{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  @include clearfix;
+
+  li{
+    padding: 9px;
+    float: left;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-right: 17px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #b5b5b5;
+    box-sizing: content-box;
+
+    &.active{
+      font-weight: 700;
+      color: white;
+      background: $secondary;
+    }
+
+    &.subtitle-size-lg{
+      font-size: 30px;
+    }
+    &.subtitle-size-md{
+      font-size: 22px;
+    }
+    &.subtitle-size-sm{
+      font-size: 16px;
+    }
+  }
+}

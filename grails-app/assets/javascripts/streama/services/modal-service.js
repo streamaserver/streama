@@ -17,6 +17,7 @@ function modalService($uibModal, $state) {
 		fileManagerModal: fileManagerModal,
 		newReleaseModal: newReleaseModal,
 		mediaDetailModal: mediaDetailModal,
+		openPlaybackOptions: openPlaybackOptions,
 		createFromFilesModal: createFromFilesModal,
     openImageChooser: openImageChooser
 	};
@@ -289,4 +290,21 @@ function modalService($uibModal, $state) {
 
     return modalInstance.result;
   }
+  
+  function openPlaybackOptions(playerOptions) {
+		var modalInstance = $uibModal.open({
+			templateUrl: '/streama/modal--playback-options.htm',
+			controller: 'playbackOptionsModalCtrl as vm',
+			size: 'lg',
+			resolve: {
+				dialogOptions: function () {
+					return {
+						playerOptions: playerOptions
+					};
+				}
+			}
+		});
+
+		return modalInstance.result;
+	}
 }

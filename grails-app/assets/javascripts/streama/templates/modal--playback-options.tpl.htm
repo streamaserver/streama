@@ -1,0 +1,52 @@
+<div class="modal-body">
+  <legend>
+    Playback Options
+  </legend>
+
+  <!--<pre>{{vm.playerOptions | json}}</pre>-->
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4>{{'VIDEO.SUBTITLES' | translate}}</h4>
+      <ul class="track-selector-list">
+        <li class="track-selector-item" ng-class="{'active': vm.isSubtitleSelected(null)}" ng-click="vm.selectSubtitle()">
+          {{'VIDEO.NO_SUBTITLE' | translate}} &nbsp;
+
+          <i ng-if="vm.isSubtitleSelected(null)" class="ion-checkmark"></i>
+        </li>
+        <li class="track-selector-item" ng-class="{'active': vm.isSubtitleSelected(track)}"
+            ng-repeat="track in vm.playerOptions.subtitles" ng-click="vm.selectSubtitle(track)">
+          {{track.subtitleLabel || track.originalFilename}}
+
+          <i ng-if="vm.isSubtitleSelected(track)" class="ion-checkmark"></i>
+        </li>
+      </ul>
+
+      <div>
+        <h4>{{'VIDEO.SUBTITLE_SIZE' | translate}}</h4>
+        <ul class="subtitle-size-picker">
+          <li class="subtitle-size-lg" ng-class="{'active': vm.playerOptions.subtitleSize == 'lg'}" ng-click="vm.changeSubtitleSize('lg')">A</li>
+          <li class="subtitle-size-md" ng-class="{'active': vm.playerOptions.subtitleSize == 'md'}" ng-click="vm.changeSubtitleSize('md')">A</li>
+          <li class="subtitle-size-sm" ng-class="{'active': vm.playerOptions.subtitleSize == 'sm'}" ng-click="vm.changeSubtitleSize('sm')">A</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4>{{'VIDEO.VIDEO_FILES' | translate}}</h4>
+      <ul class="track-selector-list">
+        <li class="track-selector-item" ng-class="{'active': vm.isVideoFileSelected(track)}"
+            ng-repeat="track in vm.playerOptions.videoFiles" ng-click="vm.selectVideoFile(track)">
+          {{track.label || track.originalFilename}}
+
+          <i ng-if="vm.isVideoFileSelected(track)" class="ion-checkmark"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default btn-sm" ng-click="vm.close()">Close</button>
+  <button class="btn btn-success btn-sm" ng-click="vm.submit()">Submit</button>
+</div>

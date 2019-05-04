@@ -198,6 +198,9 @@ class VideoController {
     if (matcher.getCount()) {
       file.extension = matcher[0][0]
     }
+    if(videoInstance.videoFiles.size() == 0){
+      file.isDefault = true
+    }
     file.save()
     videoInstance.addToFiles(file)
     respond file

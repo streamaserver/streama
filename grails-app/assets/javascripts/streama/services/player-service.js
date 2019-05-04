@@ -14,6 +14,7 @@ angular.module('streama').factory('playerService',
       videoSrc: '',
       videoType: '',
       videoTrack: '',
+      subtitleSize: 'md',
       videoOverlayEnabled: true,
       showEpisodeBrowser: false,
       showNextButton: false,
@@ -25,6 +26,8 @@ angular.module('streama').factory('playerService',
       currentEpisode: {},
       nextVideo: {},
       outro_start: null,
+      subtitles: [],
+      videoFiles: [],
       onSocketSessionCreate: angular.noop,
       onTimeChange: angular.noop,
       onError: angular.noop,
@@ -44,13 +47,18 @@ angular.module('streama').factory('playerService',
       setVideoOptions: function (video, settings) {
         videoOptions = angular.copy(defaultVideoOptions);
         videoData = video;
-        videoOptions.videoSrc = $sce.trustAsResourceUrl(video.files[0].src || video.files[0].externalLink);
-        videoOptions.originalFilename = video.files[0].originalFilename;
-        videoOptions.videoType = video.files[0].contentType;
+        videoOptions.videoSrc = $sce.trustAsResourceUrl(video.defaultVideoFile.src || video.defaultVideoFile.externalLink);
+        videoOptions.originalFilename = video.defaultVideoFile.originalFilename;
+        videoOptions.videoType = video.defaultVideoFile.contentType;
+        videoOptions.selectedVideoFile = video.defaultVideoFile;
         if($rootScope.currentUser.isTrustedUser) {
           videoOptions.showDownloadButton = _.find(settings, {name: 'player_showDownloadButton'}).parsedValue ;
         }else{
           videoOptions.showDownloadButton = false;
+        }
+
+        if(video.videoFiles && video.videoFiles.length){
+          videoOptions.videoFiles = video.videoFiles;
         }
 
         if(video.subtitles && video.subtitles.length){

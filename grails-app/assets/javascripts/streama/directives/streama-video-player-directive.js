@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').directive('streamaVideoPlayer', [
-  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce',
-  function (uploadService, localStorageService, $timeout, playerService, $http, $sce) {
+  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce', 'modalService',
+  function (uploadService, localStorageService, $timeout, playerService, $http, $sce, modalService) {
 
     return {
       restrict: 'AE',
@@ -29,6 +29,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         $scope.showControls = showControls;
         $scope.toggleSelectEpisodes = toggleSelectEpisodes;
         $scope.createNewPlayerSession = createNewPlayerSession;
+        $scope.openPlaybackOptions = openPlaybackOptions;
         $scope.toggleTextTrack = toggleTextTrack;
         $scope.selectSubtitle = selectSubtitle;
         $scope.changeSubtitle = changeSubtitle;
@@ -461,6 +462,17 @@ angular.module('streama').directive('streamaVideoPlayer', [
               isMouseWheelVolumeCtrlActive = true;
             });
           }
+        }
+        
+        function openPlaybackOptions() {
+          modalService.openPlaybackOptions($scope.options).then(function (response) {
+            if(!_.isEqualBy(response.selectedVideoFile, $scope.options.selectedVideoFile, 'id')){
+              $scope.options.selectedVideoFile = response.selectedVideoFile;
+              $scope.options.videoSrc = $sce.trustAsResourceUrl(response.selectedVideoFile.src || response.selectedVideoFile.externalLink);
+              $scope.options.originalFilename = response.selectedVideoFile.originalFilename;
+              $scope.options.videoType = response.selectedVideoFile.contentType;
+            }
+          });
         }
 
         function initMousetrap() {

@@ -156,11 +156,7 @@
 
 
 
-
-
-
-
-      <div ng-class="{'inactive': !selectedSubtitleId}" class="player-control-button player-fill-screen ion-android-textsms" ng-if="options.subtitles.length" ng-click="selectSubtitle()">
+      <div class="player-control-button player-fill-screen ion-android-textsms" ng-if="options.subtitles.length || options.videoFiles.length" ng-click="openPlaybackOptions()">
         <div id="player-menu-subtitle-selector" ng-show="multipleSubtitleBrowser" >
           <div class="subtitle-selector-container">
               <div class="subtitle-list-container">
@@ -175,7 +171,7 @@
               </div>
         </div>
       </div>
-      </div>
+    </div>
 
 
 

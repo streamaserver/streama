@@ -19,8 +19,10 @@ class File implements SimpleInstance {
   String localFile
   String subtitleLabel
   String subtitleSrcLang
+  String label
   String quality
   Boolean isPublic = false
+  Boolean isDefault = false
 
   static constraints = {
     sha256Hex maxSize: 64
@@ -28,7 +30,8 @@ class File implements SimpleInstance {
   }
   static transients = ['uploadService']
 
-  static simpleInstanceFields = ['id', 'src', 'originalFilename', 'contentType', 'subtitleSrcLang', 'subtitleLabel', 'externalLink']
+  static simpleInstanceFields = ['id', 'src', 'originalFilename', 'contentType', 'subtitleSrcLang', 'subtitleLabel',
+                                 'externalLink', 'label', 'isDefault']
 
   def getImagePath(){
     uploadService.getPath(this)

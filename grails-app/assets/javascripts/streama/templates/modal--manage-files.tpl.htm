@@ -1,6 +1,6 @@
 <div class="modal-body">
   <legend>
-    Video and subtitles for "{{video.name || video.title}}"
+    Videos and subtitles for "{{video.name || video.title}}"
   </legend>
 
   <ul class="nav nav-tabs">
@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <div>
+      <div style="overflow-y: auto; max-height: 200px;">
         <span class="btn btn-default btn-sm" ng-click="backLocalDirectory()" ng-if="localDir.length > 0">
           <span class="ion-android-arrow-back"></span>
         </span>
@@ -66,7 +66,7 @@
             </td>
 
             <td>
-              <span class="btn btn-success btn-sm" ng-click="addLocalFile(file.path)" ng-if="!file.directory">
+              <span class="btn btn-success btn-xs" ng-click="addLocalFile(file.path)" ng-if="!file.directory">
                 Choose
               </span>
             </td>
@@ -82,22 +82,34 @@
     </div>
   </div>
 
-
-    <table class="table table-striped" style="font-size: 14px;" ng-show="video.files.length">
+    <h4>Video Files</h4>
+    <table class="table table-striped" style="font-size: 14px;" ng-show="video.videoFiles.length">
       <thead>
       <tr>
         <th>Name </th>
         <th>Type</th>
-        <th style="width: 100px;"></th>
+        <th style="width: 86px;">is Default</th>
+        <th>Label</th>
+        <th style="width: 68px;"></th>
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="file in video.files">
+      <tr ng-repeat="file in video.videoFiles">
         <td>{{file.originalFilename}}</td>
         <td>{{file.contentType}}</td>
+        <td class="text-center">
+          <i ng-if="!isEditing(file)" ng-class="{'ion-checkmark-round text-success': file.isDefault, 'ion-close-round text-danger': !file.isDefault}"></i>
+          <input ng-if="isEditing(file)" type="checkbox" ng-model="file.isDefault" />
+        </td>
+        <td>
+          <span ng-if="!isEditing(file)">{{file.label}}</span>
+          <input ng-if="isEditing(file)" class="form-control input-xs" value="{{file.label}}" placeholder="Language/Quality" ng-model="file.label"/>
+        </td>
         <td style="padding: 6px;">
-          <button title="Delete file" class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
-          <a target="_blank" href="{{file.src}}" class="btn btn-xs btn-primary">preview</a>
+          <a ng-if="!isEditing(file)" target="_blank" href="{{file.src}}" class="btn btn-xs btn-primary"><i class="ion-eye"></i></a>
+          <button ng-if="!isEditing(file)" class="btn btn-xs" ng-click="toggleEdit(file)" ><i class="ion-edit"></i></button>
+          <button ng-if="isEditing(file)" title="Delete file" class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
+          <button ng-if="isEditing(file)" title="" class="btn btn-xs btn-success" ng-click="saveChanges(file)" ><i class="ion-checkmark"></i></button>
         </td>
       </tr>
       </tbody>

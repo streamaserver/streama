@@ -87,10 +87,10 @@ class Video implements SimpleInstance{
     }
   }
 
-  def getVideoFiles(){
+  Set<File> getVideoFiles(){
     return this.files?.findAll{it.extension != '.srt' && it.extension != '.vtt'}
   }
-  def getSubtitles(){
+  Set<File> getSubtitles(){
     return this.files?.findAll{it.extension == '.srt' || it.extension == '.vtt'}
   }
 
@@ -158,5 +158,14 @@ class Video implements SimpleInstance{
     }else{
       return this.poster_path
     }
+  }
+
+
+  File getDefaultVideoFile(){
+    def videoFiles = getVideoFiles()
+    if(!videoFiles){
+      return
+    }
+    return videoFiles.find{it.isDefault} ?: videoFiles[0]
   }
 }

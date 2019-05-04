@@ -39,7 +39,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       GENRE: 'Genre',
       TRAILER: 'Trailer',
       SEASON: 'Season',
+      SUBTITLES: 'Subtitles',
       NO_SUBTITLE: 'No Subtitle',
+      SUBTITLE_SIZE: 'Subtitle Sizes',
+      VIDEO_FILES: 'Video Sources',
       UPNEXT: 'UP Next...'
     },
 
