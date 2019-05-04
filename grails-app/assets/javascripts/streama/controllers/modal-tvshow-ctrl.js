@@ -17,6 +17,10 @@ angular.module('streama').controller('modalTvShowCtrl', [
 	init();
 
   function init(){
+    apiService.genres.list().then(function (data) {
+      $scope.genres = data.data;
+    });
+
 		apiService.theMovieDb.hasKey().then(function (data) {
 			if (!data.data.key) {
 				$scope.tvShow.manualInput = true;
