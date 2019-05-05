@@ -564,6 +564,7 @@ class MarshallerService {
         returnArray['episode_number'] = episode.episode_number
         returnArray['files'] = episode.videoFiles?.collect{it.simpleInstance}
         returnArray['subtitles'] = episode.subtitles?.collect{it.simpleInstance}
+        returnArray['videoFiles'] = episode.getVideoFiles()?.collect{it.simpleInstance}
         returnArray['still_path'] = episode.still_path
         returnArray['intro_start'] = episode.intro_start
         returnArray['intro_end'] = episode.intro_end
