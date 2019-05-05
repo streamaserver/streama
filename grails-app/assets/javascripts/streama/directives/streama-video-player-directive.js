@@ -397,6 +397,10 @@ angular.module('streama').directive('streamaVideoPlayer', [
 
         function changeSubtitle(subtitle) {
           $scope.options.selectedSubtitle = subtitle;
+          if(!subtitle){
+            hideSubtitle();
+            return;
+          }
           _.forEach(video.textTracks, function (value, key) {
             if (value.id !== 'subtitle-' + subtitle.id) {
               value.mode = 'hidden';
