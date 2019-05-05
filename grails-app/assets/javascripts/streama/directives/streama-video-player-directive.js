@@ -93,7 +93,13 @@ angular.module('streama').directive('streamaVideoPlayer', [
             var selectedSubtitleLanguage = localStorageService.get('selectedSubtitleLanguage');
 
             if (selectedSubtitleLanguage) {
-              changeSubtitle(_.find($scope.options.subtitles, {subtitleSrcLang: selectedSubtitleLanguage}));
+              var selectedSubtitle = _.find($scope.options.subtitles, {subtitleSrcLang: selectedSubtitleLanguage});
+              changeSubtitle(selectedSubtitle);
+            }
+            var savedVideoFileLabel = localStorageService.get('selectedVideoFile');
+            if (savedVideoFileLabel) {
+              var selectedVideoFile = _.find($scope.options.videoFiles, {label: savedVideoFileLabel});
+              changeVideoFile(selectedVideoFile);
             }
           });
         }
@@ -390,6 +396,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         }
 
         function changeSubtitle(subtitle) {
+          $scope.options.selectedSubtitle = subtitle;
           _.forEach(video.textTracks, function (value, key) {
             if (value.id !== 'subtitle-' + subtitle.id) {
               value.mode = 'hidden';
@@ -400,6 +407,21 @@ angular.module('streama').directive('streamaVideoPlayer', [
               localStorageService.set('selectedSubtitleLanguage', value.language);
             }
           });
+        }
+
+        function changeVideoFile(videoFile, videoTime) {
+          if(!videoFile){
+            return;
+          }
+          if(videoTime){
+            $scope.options.customStartingTime = videoTime;
+          }
+          $scope.initialPlay = false;
+          $scope.options.selectedVideoFile = videoFile;
+          $scope.options.videoSrc = $sce.trustAsResourceUrl(videoFile.src || videoFile.externalLink);
+          $scope.options.originalFilename = videoFile.originalFilename;
+          $scope.options.videoType = videoFile.contentType;
+          localStorageService.set('selectedVideoFile', videoFile.label);
         }
 
         //Changes the video player's volume. Takes the changing amount as a parameter.
@@ -465,12 +487,17 @@ angular.module('streama').directive('streamaVideoPlayer', [
         }
         
         function openPlaybackOptions() {
+          $scope.pause();
           modalService.openPlaybackOptions($scope.options).then(function (response) {
+            $scope.play();
+            if(!response){
+              return;
+            }
             if(!_.isEqualBy(response.selectedVideoFile, $scope.options.selectedVideoFile, 'id')){
-              $scope.options.selectedVideoFile = response.selectedVideoFile;
-              $scope.options.videoSrc = $sce.trustAsResourceUrl(response.selectedVideoFile.src || response.selectedVideoFile.externalLink);
-              $scope.options.originalFilename = response.selectedVideoFile.originalFilename;
-              $scope.options.videoType = response.selectedVideoFile.contentType;
+              changeVideoFile(response.selectedVideoFile, video.currentTime);
+            }
+            if(!_.isEqualBy(response.selectedSubtitle, $scope.options.selectedSubtitle, 'id')){
+              changeSubtitle(response.selectedSubtitle);
             }
           });
         }

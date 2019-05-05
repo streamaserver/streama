@@ -16,11 +16,11 @@ function playbackOptionsModalCtrl($uibModalInstance, dialogOptions, apiService) 
 
 
   function selectSubtitle(track) {
-    vm.playerOptions.selectedSubtitleId = _.get(track, 'id');
+    vm.playerOptions.selectedSubtitle = track;
   }
 
   function isSubtitleSelected(track) {
-    return (_.get(vm.playerOptions, 'selectedSubtitleId') === _.get(track, 'id'));
+    return (_.get(vm.playerOptions, 'selectedSubtitle.id') === _.get(track, 'id'));
   }
 
   function selectVideoFile(track) {
