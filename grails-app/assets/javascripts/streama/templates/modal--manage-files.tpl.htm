@@ -126,7 +126,7 @@
           <th>Type</th>
           <th>Label</th>
           <th>Language</th>
-          <th style="width: 10px;"></th>
+          <th style="width: 68px;"></th>
         </tr>
         </thead>
         <tbody>
@@ -134,10 +134,10 @@
           <td>{{file.originalFilename}}</td>
           <td>{{file.contentType}}</td>
           <th>
-            <input class="form-control" value="{{file.subtitleLabel}}" placeholder="Country" ng-change="subtitleLabel" ng-model="file.subtitleLabel"></input>
+            <input class="form-control input-xs" value="{{file.subtitleLabel}}" placeholder="Country" ng-change="subtitleLabel" ng-model="file.subtitleLabel"></input>
           </th>
           <th>
-            <input class="form-control" value="{{file.subtitleSrcLang}}" placeholder="ISO-3166 Country Code" ng-change="subtitleSrcLang" ng-model="file.subtitleSrcLang"></input>
+            <input class="form-control input-xs" value="{{file.subtitleSrcLang}}" placeholder="ISO-3166 Country Code" ng-change="subtitleSrcLang" ng-model="file.subtitleSrcLang"></input>
           </th>
           <td style="padding: 6px;">
             <button title="Delete file" class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
