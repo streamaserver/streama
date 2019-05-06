@@ -16,8 +16,8 @@ environments:
     development:
         dataSource:
             dbCreate: update
-            driverClassName:  'com.mysql.cj.jdbc.Driver'
-            url: jdbc:mysql://localhost/streama?useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+            driverClassName:  'com.mysql.jdbc.Driver'
+            url: jdbc:mysql://localhost/streama
             username: root
             password:
     mysql:

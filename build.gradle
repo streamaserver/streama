@@ -86,7 +86,7 @@ dependencies {
 
     // runtime
     runtime "com.h2database:h2"
-    runtime 'mysql:mysql-connector-java:8.0.12'
+    runtime 'mysql:mysql-connector-java:5.1.36'
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
 
     // custom
