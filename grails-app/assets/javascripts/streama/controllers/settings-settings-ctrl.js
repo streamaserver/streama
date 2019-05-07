@@ -36,7 +36,8 @@ angular.module('streama').controller('settingsSettingsCtrl',
         alertify.success(data.message || 'validation successful');
         settings.valid = true;
         $scope.loading = false;
-      }, function (data) {
+      }, function (response) {
+      var data = response.data;
         alertify.error(data.message);
         settings.invalid = true;
         $scope.loading = false;
