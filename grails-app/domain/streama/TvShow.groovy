@@ -73,19 +73,6 @@ class TvShow implements SimpleInstance {
 
 
   def getFirstEpisode(){
-    Episode firstEpisode = this.episodes?.find{it.files && it.season_number != "0"}
-
-    this.episodes.each{ Episode episode ->
-      if((episode.season_number == firstEpisode?.season_number) && (episode.episode_number < firstEpisode?.episode_number) && episode.files){
-        firstEpisode = episode
-      }
-      else if(episode.season_number < firstEpisode?.season_number && episode.files && episode.season_number != "0"){
-        firstEpisode = episode
-      }
-    }
-
-    if(firstEpisode && firstEpisode.files){
-      return firstEpisode
-    }
+    return this.episodes?.findAll{it.files && it.season_number != "0"}.min{it.seasonEpisodeMerged}
   }
 }
