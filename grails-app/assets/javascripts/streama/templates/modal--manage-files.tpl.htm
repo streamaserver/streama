@@ -39,46 +39,51 @@
     </div>
     <div class="tab-pane" ng-class="{'active': activeTab == 'local'}">
 
-      <div>
-        <div class="form-group">
-          <input type="text" ng-model="localFileSearch" class="form-control input-sm" placeholder="Search current directory...">
-        </div>
-      </div>
+      <p ng-if="!$root.getSetting('Local Video Files').value" class="alert alert-warning" role="alert">You dont have a local Directory set up. As an admin, go to the settings page to configure it now.</p>
 
-      <div style="overflow-y: auto; max-height: 200px;">
+      <div ng-if="$root.getSetting('Local Video Files').value">
+        <div>
+          <div class="form-group">
+            <input type="text" ng-model="localFileSearch" class="form-control input-sm" placeholder="Search current directory...">
+          </div>
+        </div>
+
+        <div style="overflow-y: auto; max-height: 200px;">
         <span class="btn btn-default btn-sm" ng-click="backLocalDirectory()" ng-if="localDir.length > 0">
           <span class="ion-android-arrow-back"></span>
         </span>
-        <span>{{ localDir.join('/') }}</span>
+          <span>{{ localDir.join('/') }}</span>
 
-        <table class="table table-striped">
-          <tr ng-repeat="file in localFiles | orderBy: ['-directory', 'name'] | filter:localFileSearch">
-            <td>
+          <table class="table table-striped">
+            <tr ng-repeat="file in localFiles | orderBy: ['-directory', 'name'] | filter:localFileSearch">
+              <td>
             <span ng-if="file.directory" ng-click="openLocalDirectory(file)">
               <span class="ion-folder"></span>
               {{ file.name }}
             </span>
 
-            <span ng-if="!file.directory">
+                <span ng-if="!file.directory">
               <span class="ion-document"></span>
               {{ file.name }}
             </span>
-            </td>
+              </td>
 
-            <td>
+              <td>
               <span class="btn btn-success btn-xs" ng-click="addLocalFile(file.path)" ng-if="!file.directory">
                 Choose
               </span>
-            </td>
-          </tr>
-        </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="closeOnSelect" ng-click="toggleCloseOnSelect()"> Close Modal on Select
+          </label>
+        </div>
       </div>
 
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" ng-model="closeOnSelect" ng-click="toggleCloseOnSelect()"> Close Modal on Select
-        </label>
-      </div>
     </div>
   </div>
 
@@ -86,6 +91,7 @@
     <table class="table table-striped" style="font-size: 14px;" ng-show="video.videoFiles.length">
       <thead>
       <tr>
+        <th>ID</th>
         <th>Name </th>
         <th>Type</th>
         <th style="width: 86px;">is Default</th>
@@ -95,6 +101,7 @@
       </thead>
       <tbody>
       <tr ng-repeat="file in video.videoFiles">
+        <td>{{file.id}}</td>
         <td>{{file.originalFilename}}</td>
         <td>{{file.contentType}}</td>
         <td class="text-center">
@@ -122,6 +129,7 @@
       <table class="table table-striped" style="font-size: 14px;">
         <thead>
         <tr>
+          <th>ID</th>
           <th>Name</th>
           <th>Type</th>
           <th>Label</th>
@@ -131,6 +139,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="file in video.subtitles">
+          <td>{{file.id}}</td>
           <td>{{file.originalFilename}}</td>
           <td>{{file.contentType}}</td>
           <th>
