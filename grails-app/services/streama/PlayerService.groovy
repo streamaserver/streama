@@ -19,7 +19,7 @@ class PlayerService {
         Double runtime = params.getDouble('runtime');
         ViewingStatus viewingStatus
 
-        if (!video || !currentTime) {
+        if (!video || currentTime == null) {
             return ResultHelper.generateErrorResult(NOT_ACCEPTABLE, 'video_currentTime', 'video or currentTime missing')
         }
 
