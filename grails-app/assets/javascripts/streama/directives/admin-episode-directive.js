@@ -32,8 +32,8 @@ angular.module('streama').directive('adminEpisode', [
 			$scope.openFileBrowser = function(){
 				modalService.openFileBrowser(function (file) {
 					apiService.video.addFile($scope.episode.id, file.id).then(function () {
-						$scope.episode.files = $scope.episode.files || [];
-						$scope.episode.files.push(file);
+						$scope.episode.videoFiles = $scope.episode.videoFiles || [];
+						$scope.episode.videoFiles.push(file);
 					});
 				});
 			};
@@ -49,8 +49,8 @@ angular.module('streama').directive('adminEpisode', [
 
       function uploadSuccess (data) {
         $scope.uploadStatus.percentage = null;
-        $scope.episode.files = $scope.episode.files || [];
-        $scope.episode.files.push(data);
+        $scope.episode.videoFiles = $scope.episode.videoFiles || [];
+        $scope.episode.videoFiles.push(data);
       }
 
       function uploadError(err) {

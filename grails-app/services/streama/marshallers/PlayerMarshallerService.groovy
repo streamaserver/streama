@@ -59,7 +59,7 @@ class PlayerMarshallerService {
           returnArray['intro_end'] = video.intro_end
 
           Video nextEpisode = video.getNextEpisode()
-          if (nextEpisode && nextEpisode.files) {
+          if (nextEpisode && nextEpisode.videoFiles) {
             returnArray['nextEpisode'] = nextEpisode?.getSimpleInstance()
           }else{
             returnArray['nextVideo'] = video.suggestNextVideo()?.getSimpleInstance()

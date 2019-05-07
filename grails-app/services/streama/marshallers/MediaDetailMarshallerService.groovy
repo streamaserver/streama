@@ -85,8 +85,9 @@ class MediaDetailMarshallerService {
         result['popularity'] = episode.popularity
         result['imdb_id'] = episode.imdb_id
 
-        result['files'] = episode.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
-        result['subtitles'] = episode.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+        result['files'] = episode.getVideoFiles()
+        result['videoFiles'] = episode.getVideoFiles()
+        result['subtitles'] = episode.getSubtitles()
 
         result['hasFiles'] = episode.hasFiles()
         result['tvShow'] = episode.show

@@ -536,7 +536,7 @@ class MarshallerService {
         returnArray['name'] = episode.name
         returnArray['season_number'] = episode.season_number
         returnArray['episode_number'] = episode.episode_number
-        returnArray['hasFile'] = episode.files?.size()
+        returnArray['hasFile'] = episode.getVideoFiles()?.size()
         returnArray['still_path'] = episode.still_path
         returnArray['intro_start'] = episode.intro_start
         returnArray['intro_end'] = episode.intro_end

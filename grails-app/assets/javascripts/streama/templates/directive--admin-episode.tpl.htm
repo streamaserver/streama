@@ -1,4 +1,4 @@
-<div class="media-list-item episode-wrapper" ng-class="{'no-files': !episode.files.length, 'uploading': uploadStatus.percentage != null}"
+<div class="media-list-item episode-wrapper" ng-class="{'no-files': !episode.videoFiles.length, 'uploading': uploadStatus.percentage != null}"
      ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)"
      ng-if="!episode.deleted">
 
@@ -17,8 +17,8 @@
     </span>
   </div>
 
-  <span class="label label-danger pull-right" ng-show="!episode.files.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
-  <a ui-sref="admin.reports" class="label label-danger pull-right" ng-show="episode.files.length && episode.reportCount">
+  <span class="label label-danger pull-right" ng-show="!episode.videoFiles.length"><i class="ion-alert-circled"></i> No Video File yet!</span>
+  <a ui-sref="admin.reports" class="label label-danger pull-right" ng-show="episode.videoFiles.length && episode.reportCount">
     <i class="ion-alert-circled"></i>
     <span ng-if="episode.reportCount == 1" >1 Report!</span>
     <span ng-if="episode.reportCount > 1" >{{episode.reportCount}} Reports!</span>
@@ -35,7 +35,7 @@
     <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>
     <div ng-if="!episode.still_path && !episode.still_image_src" class="fallback-image"></div>
 
-    <a ng-show="episode.files.length" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
+    <a ng-show="episode.videoFiles.length" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
   </div>
 
   <div class="button-wrapper">

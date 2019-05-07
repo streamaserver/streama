@@ -1,5 +1,5 @@
-<div class="files-wrapper" ng-show="episode.files.length">
-  <div class="file-wrapper" ng-repeat="file in episode.files">
+<div class="files-wrapper" ng-show="episode.videoFiles.length">
+  <div class="file-wrapper" ng-repeat="file in episode.videoFiles">
     <div class="file-name">
       {{file.originalFilename}} &nbsp;
       <button ng-click="removeFile(file)" title="Remove File" class="btn btn-danger btn-xxs"><i class="ion-close"></i></button>

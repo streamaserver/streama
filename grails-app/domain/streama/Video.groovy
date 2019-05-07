@@ -61,7 +61,7 @@ class Video implements SimpleInstance{
     def allEpisodesForTvShow = episode.show.episodes
     Video nextEpisode = allEpisodesForTvShow.findAll{it.seasonEpisodeMerged > episode.seasonEpisodeMerged && !it.deleted && it.getVideoFiles()}.min{it.seasonEpisodeMerged}
 
-    if(nextEpisode && nextEpisode.files){
+    if(nextEpisode && nextEpisode.getVideoFiles()){
       return nextEpisode
     }
   }
