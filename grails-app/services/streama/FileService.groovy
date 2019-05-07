@@ -35,6 +35,7 @@ class FileService {
     response.addHeader("Last-Modified", (new Date()).toString())
     response.addHeader("Cache-Control", 'public,max-age=3600,public')
     response.addHeader("Etag", file.sha256Hex)
+    response.addHeader("Content-Type", "video/mp4")
 
 
     if(rangeHeader){
