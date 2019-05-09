@@ -127,7 +127,12 @@ class TheMovieDbService {
   }
 
   def getEpisodeMeta(tvApiId, seasonNumber, episodeNumber){
-    def JsonContent = new URL(BASE_URL + "/tv/$tvApiId/season/$seasonNumber/episode/$episodeNumber?$API_PARAMS").getText("UTF-8")
+    URL url = new URL(BASE_URL + "/tv/$tvApiId/season/$seasonNumber/episode/$episodeNumber?$API_PARAMS")
+    HttpURLConnection conn = url.openConnection()
+    if(conn.responseCode != 200){
+      throw new Exception("TMDB request failed with statusCode: " + conn?.responseCode + ", responseMessage: " + conn?.responseMessage)
+    }
+    def JsonContent = url.getText("UTF-8")
     return new JsonSlurper().parseText(JsonContent)
   }
 
@@ -139,7 +144,14 @@ class TheMovieDbService {
     }
     def query = URLEncoder.encode(name, "UTF-8")
 
-    def JsonContent = new URL(BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY).getText("UTF-8")
+
+    URL url = new URL(BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY)
+    HttpURLConnection conn = url.openConnection()
+    log.debug("conn.responseCode: ${conn.responseCode}")
+    if(conn.responseCode != 200){
+      throw new Exception("TMDB request failed with statusCode: " + conn?.responseCode + ", responseMessage: " + conn?.responseMessage)
+    }
+    def JsonContent = url.getText("UTF-8")
     def data = new JsonSlurper().parseText(JsonContent)
     apiCacheData["$type:$name"] = data
 

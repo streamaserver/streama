@@ -30,7 +30,7 @@
   <div class="col-md-8">
     <i class="ion-document"></i> {{ file.name }}
   </div>
-  <div class="col-md-3">
+  <div class="col-md-3" style="padding-right: 0;">
     <i class="ion-load-c spin column-loading" ng-show="vm.isMatcherLoading && vm.isSelected(file) && (!vm.getMatchForPath(file.path) || vm.getMatchForPath(file.path).status == 1)"></i>
      <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 1">
       <a ng-click="vm.openMediaDetail(vm.getMatchForPath(file.path))"><i class="ion-ios-eye"></i> Match: {{vm.getMatchDisplay(file)}}</a>
@@ -45,7 +45,7 @@
       {{vm.getMatchForPath(file.path).message}}
     </span>
     <span class="text-danger" ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 4">
-      TheMovieDB Limit reached
+      TheMovieDB Error: &nbsp;<i class="ion-help-circled" title="{{vm.getMatchForPath(file.path).errorMessage}}"></i>
     </span>
 
     <br>

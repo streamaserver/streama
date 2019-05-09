@@ -106,8 +106,9 @@ class BulkCreateService {
         fileResult.genres = movieResult.genres
       }
     } catch (Exception ex) {
-      log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+      log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.", ex)
       fileResult.status = MATCHER_STATUS.LIMIT_REACHED
+      fileResult.errorMessage = ex.message
       fileResult.title = name
     }
     fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
@@ -149,8 +150,9 @@ class BulkCreateService {
         fileResult = extractDataForEpisode(existingTvShow, seasonNumber, episodeNumber, fileResult, tvShowId)
       }
     } catch (ex) {
-      log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+      log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.", ex)
       fileResult.status = MATCHER_STATUS.LIMIT_REACHED
+      fileResult.errorMessage = ex.message
       fileResult.name = name
     }
     fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
