@@ -149,7 +149,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	function getMatchDisplay(file) {
 		var match =_.find(vm.matchResult, {file: file.path});
 		if(match.type === 'episode'){
-			return match.showName + ' ' + 'S'+ _.padStart(match.season, 0) +'E'+  _.padStart( match.episodeNumber, 0)
+			return match.showName + ' ' + 'S'+ _.padStart(match.season, 2, "0") +'E'+  _.padStart( match.episodeNumber, 2, "0")
 		}
 
 		if(match.type === 'movie'){
