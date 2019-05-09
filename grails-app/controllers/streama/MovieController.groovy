@@ -17,7 +17,9 @@ class MovieController {
   }
 
   @Transactional
-  def save(Movie movieInstance) {
+  def save() {
+    def data = request.JSON
+    Movie movieInstance = Movie.findOrCreateById(data.id)
     if (movieInstance == null) {
       render status: NOT_FOUND
       return
@@ -32,6 +34,20 @@ class MovieController {
       render status: NOT_ACCEPTABLE
       return
     }
+
+    List tags = []
+    data.tags?.each{ tagData ->
+      Tag tag = Tag.findByIdOrName(tagData.id, tagData.name)
+      if(!tag){
+        tag = new Tag(tagData)
+        tag.save(flush: true, failOnError: true)
+      }
+
+      tags.add(tag)
+    }
+
+    data.tags = tags*.id
+    movieInstance.properties = data
 
     movieInstance.save flush: true
     respond movieInstance, [status: CREATED]
