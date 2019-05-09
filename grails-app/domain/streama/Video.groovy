@@ -88,10 +88,10 @@ class Video implements SimpleInstance{
   }
 
   Set<File> getVideoFiles(){
-    return this.files?.findAll{it.extension != '.srt' && it.extension != '.vtt'}
+    return this.files?.findAll{it.extension != '.srt' && it.extension != '.vtt'} ?: []
   }
   Set<File> getSubtitles(){
-    return this.files?.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+    return this.files?.findAll{it.extension == '.srt' || it.extension == '.vtt'} ?: []
   }
 
   def addLocalFile(localFilePath){
