@@ -23,6 +23,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	vm.toggleSelection = toggleSelection;
 	vm.toggleDirectorySelection = toggleDirectorySelection;
 	vm.getMatchForPath = getMatchForPath;
+	vm.getMatchDisplay = getMatchDisplay;
 	vm.selection = [];
   vm.addAllMatches = addAllMatches;
   vm.addSelectedFile = addSelectedFile;
@@ -143,6 +144,19 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 
 	function getMatchForPath(path) {
 		return _.find(vm.matchResult, {file: path});
+	}
+
+	function getMatchDisplay(file) {
+		var match =_.find(vm.matchResult, {file: file.path});
+		if(match.type === 'episode'){
+			return match.showName + ' ' + 'S'+ _.padStart(match.season, 0) +'E'+  _.padStart( match.episodeNumber, 0)
+		}
+
+		if(match.type === 'movie'){
+			return match.title + ' (' + match.release_date.substring(0, 4)  + ')'
+		}
+		console.log('%c match', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', match);
+
 	}
 
 

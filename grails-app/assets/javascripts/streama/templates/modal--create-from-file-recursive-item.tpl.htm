@@ -33,7 +33,7 @@
   <div class="col-md-3">
     <i class="ion-load-c spin column-loading" ng-show="vm.isMatcherLoading && vm.isSelected(file) && (!vm.getMatchForPath(file.path) || vm.getMatchForPath(file.path).status == 1)"></i>
      <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 1">
-      <a ng-click="vm.openMediaDetail(vm.getMatchForPath(file.path))"><i class="ion-ios-eye"></i> Preview Match</a>
+      <a ng-click="vm.openMediaDetail(vm.getMatchForPath(file.path))"><i class="ion-ios-eye"></i> Match: {{vm.getMatchDisplay(file)}}</a>
     </span>
     <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 2">
       already added
@@ -55,6 +55,6 @@
     </button>
     <a ng-if="vm.getMatchForPath(file.path).status == 2 || vm.getMatchForPath(file.path).status == 3"
        ng-click="vm.openAdminForm(vm.getMatchForPath(file.path))"
-       class="text-success">Open in new tab <i class="ion-android-open"></i></a>
+       class="text-success">Match: {{vm.getMatchDisplay(file)}} <i class="ion-android-open"></i></a>
   </div>
 </div>
