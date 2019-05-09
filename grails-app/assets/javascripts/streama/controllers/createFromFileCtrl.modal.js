@@ -125,6 +125,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	}
 
 	function toggleDirectorySelection(directory) {
+		directory.isSelected = !directory.isSelected;
 	  if(directory.isSelected){
       openLocalDirectory(directory, true, function () {
         _.forEach(directory.localFiles, function (file) {
