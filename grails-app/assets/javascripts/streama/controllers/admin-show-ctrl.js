@@ -109,8 +109,8 @@ angular.module('streama').controller('adminShowCtrl', [
 					var data = response.data;
 					console.log('%c seasonForShow', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
 					$scope.seasons = $scope.seasons ||  [];
-					if($scope.seasons.indexOf(seasonNum) === -1) {
-						$scope.seasons.push(seasonNum);
+					if($scope.seasons.indexOf(season) === -1) {
+						$scope.seasons.push(season);
 					}
 
 					$scope.episodes = $scope.episodes.concat(data);
