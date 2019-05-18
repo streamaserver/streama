@@ -19,7 +19,8 @@ class MovieController {
   @Transactional
   def save() {
     def data = request.JSON
-    Movie movieInstance = Movie.findOrCreateById(data.id)
+    Movie movieInstance = data.id ? Movie.get(data.id) : new Movie()
+
     if (movieInstance == null) {
       render status: NOT_FOUND
       return
