@@ -205,7 +205,7 @@ class TheMovieDbService {
     }
     if(type == 'episode'){
       entity = new Episode()
-      TvShow tvShow = TvShow.findByApiId(data.tv_id)
+      TvShow tvShow = TvShow.findByApiIdAndDeletedNotEqual(data.tv_id, true)
       if(!tvShow){
         tvShow = createEntityFromApiId('tv', data.tv_id)
       }
@@ -214,6 +214,7 @@ class TheMovieDbService {
     }
 
     entity.properties = data
+    entity.genre = parseGenres(data.genres*.id)
     entity.apiId = apiId
     entity.save(flush:true, failOnError:true)
     return entity
