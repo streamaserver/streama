@@ -209,6 +209,9 @@ class TheMovieDbService {
 
     entity.properties = data
     entity.genre = parseGenres(data.genres*.id)
+    if(type == 'movie'){
+      entity.trailerKey = getTrailerForMovie(apiId)?.key
+    }
     entity.apiId = apiId
     entity.save(flush:true, failOnError:true)
     return entity
