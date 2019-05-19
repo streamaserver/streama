@@ -94,11 +94,16 @@ class TheMovieDbService {
   }
 
   def getTrailerForMovie(movieId){
-    def JsonContent = new URL(BASE_URL + "/movie/$movieId/videos?$API_PARAMS").getText("UTF-8")
-    def videos =  new JsonSlurper().parseText(JsonContent).results
+    try{
+      def JsonContent = new URL(BASE_URL + "/movie/$movieId/videos?$API_PARAMS").getText("UTF-8")
+      def videos =  new JsonSlurper().parseText(JsonContent).results
 
-    def trailer = videos.findAll{it.type == "Trailer"}.max{it.size}
-    return trailer
+      def trailer = videos.findAll{it.type == "Trailer"}.max{it.size}
+      return trailer
+    }
+    catch (e){
+      log.error("problem during getTrailerForMovie for ${movieId}")
+    }
   }
 
   def getFullMovieMeta(movieId){

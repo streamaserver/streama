@@ -40,6 +40,7 @@ class TvShowController {
     }
 
     tvShow.properties = data
+    tvShow.properties.dateCreated = data
     tvShow.deleted = false
 
     if(!tvShow.imdb_id && !data.manualInput){

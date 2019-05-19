@@ -30,12 +30,6 @@ class MovieController {
       movieInstance.imdb_id = movieInstance.fullMovieMeta?.imdb_id
     }
 
-    movieInstance.validate()
-    if (movieInstance.hasErrors()) {
-      render status: NOT_ACCEPTABLE
-      return
-    }
-
     List tags = []
     data.tags?.each{ tagData ->
       Tag tag = Tag.findByIdOrName(tagData.id, tagData.name)
@@ -49,6 +43,13 @@ class MovieController {
 
     data.tags = tags*.id
     movieInstance.properties = data
+    movieInstance.properties.dateCreated = data
+
+    movieInstance.validate()
+    if (movieInstance.hasErrors()) {
+      render status: NOT_ACCEPTABLE
+      return
+    }
 
     movieInstance.save flush: true
     respond movieInstance, [status: CREATED]
