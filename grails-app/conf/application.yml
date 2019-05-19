@@ -152,7 +152,7 @@ grails:
 
 streama:
   regex:
-    movies: ^(?<Name>.*)?[._ \(]+\d{4}.*
+    movies: ^(?<Name>.*)?[._ \(]+(?<Year>\d{4}).*
     shows:
       - ^(?<Name>.+)[._ ][Ss](?<Season>\d{2})[Ee](?<Episode>\d{2,3}).*      # example:  "House.MD.S03E04.h264.mp4"
       - ^(?<Name>.+)[._ ](?<Season>\d{1,2})x(?<Episode>\d{2,3}).*           # example:  "House.MD.03x04.h264.mp4"

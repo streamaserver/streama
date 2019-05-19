@@ -137,10 +137,10 @@ class TheMovieDbService {
     return new JsonSlurper().parseText(JsonContent)
   }
 
-  def searchForEntry(type, name) {
+  def searchForEntry(type, name, String year = null) {
 
     def cachedApiData = apiCacheData."$type:$name"
-    if(cachedApiData){
+    if(false && cachedApiData){
       return cachedApiData
     }
     def query = URLEncoder.encode(name, "UTF-8")
@@ -155,6 +155,9 @@ class TheMovieDbService {
     }
     def JsonContent = url.getText("UTF-8")
     def data = new JsonSlurper().parseText(JsonContent)
+    if(data.results?.size() > 1 && year){
+      data.results = data.results.findAll{it.release_date.take(4) == year}
+    }
     apiCacheData["$type:$name"] = data
 
     return data

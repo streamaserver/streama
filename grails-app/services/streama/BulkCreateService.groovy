@@ -67,7 +67,7 @@ class BulkCreateService {
 
     def movieMatcher = fileName =~ '(?i)' + movieRegex
     if (movieMatcher.matches()) {
-      matchMovieFromFile(movieMatcher, fileResult)
+      matchMovieFromFile(movieMatcher, fileResult, movieRegex)
       foundMatch = true
       return fileResult
     }
@@ -78,12 +78,13 @@ class BulkCreateService {
   }
 
 
-  private void matchMovieFromFile(Matcher movieMatcher, LinkedHashMap<String, Object> fileResult) {
+  private void matchMovieFromFile(Matcher movieMatcher, LinkedHashMap<String, Object> fileResult, movieRegex) {
     def name = movieMatcher.group('Name').replaceAll(/[._]/, " ")
+    def year = movieRegex.contains('<Year>') ? movieMatcher.group('Year') : null
     def type = "movie"
 
     try {
-      def json = theMovieDbService.searchForEntry(type, name)
+      def json = theMovieDbService.searchForEntry(type, name, year)
       def movieDbResults = json?.results
 
       if (movieDbResults) {
