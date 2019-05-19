@@ -41,13 +41,7 @@ class TheMovieDbService {
     jsonSimilarMovies?.results?.each { Map similarMovie ->
       similarMovie.genre = parseGenres(similarMovie.genre_ids)
       similarMovie.mediatype = "Movie"
-      try{
-        def jsonContentTrailer = new URL(BASE_URL + "/movie/$similarMovie.id/videos?$API_PARAMS").getText("UTF-8")
-        def jsonTrailerData = new JsonSlurper().parseText(jsonContentTrailer)
-        similarMovie.trailerKey = jsonTrailerData?.results[0]?.key
-      }catch (e){
-        log.error(e.message)
-      }
+      similarMovie.trailerKey = getTrailerForMovie(similarMovie.id)?.key
 
     }
     return jsonSimilarMovies
