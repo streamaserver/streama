@@ -10,7 +10,7 @@
     <span ng-if="vm.getMatchForPath(file.path)">
       {{vm.getMatchForPath(file.path).message}}
     </span>
-      <button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1"
+      <button class="btn btn-xs btn-success button-icon" ng-if="vm.hasStatus(file, 1)"
               ng-click="vm.addSelectedFile()">Add this file
       </button>
     </div>
@@ -31,30 +31,46 @@
     <i class="ion-document"></i> {{ file.name }}
   </div>
   <div class="col-md-3" style="padding-right: 0;">
-    <i class="ion-load-c spin column-loading" ng-show="vm.isMatcherLoading && vm.isSelected(file) && (!vm.getMatchForPath(file.path) || vm.getMatchForPath(file.path).status == 1)"></i>
-     <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 1">
-      <a ng-click="vm.openMediaDetail(vm.getMatchForPath(file.path))"><i class="ion-ios-eye"></i> Match: {{vm.getMatchDisplay(file)}}</a>
+    <i class="ion-load-c spin column-loading"
+       ng-show="vm.isMatcherLoading && vm.isSelected(file) && (!vm.getMatchForPath(file.path) || vm.hasStatus(file, 1))"></i>
+     <span ng-if="vm.getMatchForPath(file.path) && (vm.hasStatus(file, 1) || vm.hasStatus(file, 6))">
+      <a ng-click="vm.openMediaDetail(vm.getMatchForPath(file.path))">
+        <i class="ion-ios-eye"></i>
+        {{vm.hasStatus(file, 6) ? 'Subtitle': ''}} Match: {{vm.getMatchDisplay(file)}}
+      </a>
     </span>
-    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 2">
+    <span ng-if="vm.getMatchForPath(file.path) && vm.hasStatus(file, 2)">
       already added
     </span>
-    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 3">
+    <span ng-if="vm.getMatchForPath(file.path) && vm.hasStatus(file, 3)">
       created
     </span>
-    <span ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 0">
+    <span ng-if="vm.getMatchForPath(file.path) && vm.hasStatus(file, 7)">
+      subtitle added
+    </span>
+    <span ng-if="vm.getMatchForPath(file.path) && vm.hasStatus(file, 5)">
+      found Media for Subtitle:
+      <a ng-click="vm.openAdminForm(vm.getMatchForPath(file.path))"
+         class="text-success">{{vm.getMatchDisplay(file)}} <i class="ion-android-open"></i></a>
+
+    </span>
+    <span ng-if="vm.getMatchForPath(file.path) && vm.hasStatus(file, 0)">
       {{vm.getMatchForPath(file.path).message}}
     </span>
-    <span class="text-danger" ng-if="vm.getMatchForPath(file.path) && vm.getMatchForPath(file.path).status == 4">
+    <span class="text-danger" ng-if="vm.getMatchForPath(file.path) && vm.hasStatus(file, 4)">
       TheMovieDB Error: &nbsp;<i class="ion-help-circled" title="{{vm.getMatchForPath(file.path).errorMessage}}"></i>
     </span>
 
     <br>
 
-    <button class="btn btn-xs btn-success button-icon" ng-if="vm.getMatchForPath(file.path).status == 1"
+    <button class="btn btn-xs btn-success button-icon" ng-if="vm.hasStatus(file, 1)"
             ng-click="vm.addSelectedFile(file)">Add this file
     </button>
-    <a ng-if="vm.getMatchForPath(file.path).status == 2 || vm.getMatchForPath(file.path).status == 3"
+    <button class="btn btn-xs btn-success button-icon" ng-if="vm.hasStatus(file, 5)"
+            ng-click="vm.addSelectedFile(file)">Add subtitle file
+    </button>
+    <a ng-if="vm.hasStatus(file, 2) || vm.hasStatus(file, 3) || vm.hasStatus(file, 7)"
        ng-click="vm.openAdminForm(vm.getMatchForPath(file.path))"
-       class="text-success">Match: {{vm.getMatchDisplay(file)}} <i class="ion-android-open"></i></a>
+       class="text-success">Go to: {{vm.getMatchDisplay(file)}} <i class="ion-android-open"></i></a>
   </div>
 </div>

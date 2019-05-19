@@ -18,7 +18,10 @@ class BulkCreateService {
     MATCH_FOUND: 1,
     EXISTING: 2,
     CREATED: 3,
-    LIMIT_REACHED: 4
+    LIMIT_REACHED: 4,
+    EXISTING_FOR_SUBTITLE: 5,
+    SUBTITLE_MATCH: 6,
+    SUBTITLE_ADDED: 7
   ]
   final static STREAMA_ROUTES = [
     movie: 'movie',
@@ -82,6 +85,7 @@ class BulkCreateService {
     def name = movieMatcher.group('Name').replaceAll(/[._]/, " ")
     def year = movieRegex.contains('<Year>') ? movieMatcher.group('Year') : null
     def type = "movie"
+    Boolean isSubtitle = VideoHelper.isSubtitleFile(fileResult.file)
 
     try {
       def json = theMovieDbService.searchForEntry(type, name, year)
@@ -94,7 +98,11 @@ class BulkCreateService {
 
         Movie existingMovie = Movie.findByApiIdAndDeletedNotEqual(movieResult.id, true)
         if(existingMovie){
-          fileResult.status = MATCHER_STATUS.EXISTING
+          if(isSubtitle){
+            fileResult.status = MATCHER_STATUS.EXISTING_FOR_SUBTITLE
+          }else{
+            fileResult.status = MATCHER_STATUS.EXISTING
+          }
           fileResult.importedId = existingMovie.id
           fileResult.importedType = STREAMA_ROUTES[type]
         }
@@ -113,6 +121,9 @@ class BulkCreateService {
       fileResult.title = name
     }
     fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
+    if(fileResult.status == MATCHER_STATUS.MATCH_FOUND && isSubtitle){
+      fileResult.status = MATCHER_STATUS.SUBTITLE_MATCH
+    }
     fileResult.message = 'match found'
     fileResult.type = type
   }
@@ -204,7 +215,10 @@ class BulkCreateService {
   @NotTransactional
   def bulkAddMediaFromFile(List<Map> fileMatchers){
     def result = []
-    fileMatchers.each{ fileMatcher ->
+    List<Map> videoFiles = fileMatchers.findAll{!VideoHelper.isSubtitleFile(it.file)}
+    List<Map> subtitleFiles = fileMatchers.findAll{VideoHelper.isSubtitleFile(it.file)}
+
+    videoFiles.each{ fileMatcher ->
       String type = fileMatcher.type
       def entity
       if(fileMatcher.status == MATCHER_STATUS.EXISTING){
@@ -229,6 +243,29 @@ class BulkCreateService {
 
       fileMatcher.status = MATCHER_STATUS.CREATED
       fileMatcher.importedId = entity instanceof Episode ? entity.showId : entity.id
+      fileMatcher.importedType = STREAMA_ROUTES[type]
+      result.add(fileMatcher)
+    }
+
+    subtitleFiles.each{ fileMatcher ->
+      String type = fileMatcher.type
+      Video videoInstance
+
+      if(type == 'movie'){
+        videoInstance = Movie.findByApiIdAndDeletedNotEqual(fileMatcher.apiId, true)
+      }
+      else if(type == 'episode'){
+        videoInstance = Episode.findByApiIdAndDeletedNotEqual(fileMatcher.apiId, true)
+      }
+
+      if(!videoInstance){
+        log.error("no video found for subtitle")
+        return
+      }
+      videoInstance.addLocalFile(fileMatcher.file)
+
+      fileMatcher.status = MATCHER_STATUS.SUBTITLE_ADDED
+      fileMatcher.importedId = videoInstance instanceof Episode ? videoInstance.showId : videoInstance.id
       fileMatcher.importedType = STREAMA_ROUTES[type]
       result.add(fileMatcher)
     }
