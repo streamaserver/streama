@@ -134,6 +134,7 @@ class BulkCreateService {
     def seasonNumber = tvShowMatcher.group('Season').toInteger()
     def episodeNumber = tvShowMatcher.group('Episode').toInteger()
     fileResult.type = "tv"
+    Boolean isSubtitle = VideoHelper.isSubtitleFile(fileResult.file)
 
     try {
       TvShow existingTvShow
@@ -153,7 +154,11 @@ class BulkCreateService {
 
       if(!seasonNumber && !episodeNumber){
         if(existingTvShow){
-          fileResult.status = MATCHER_STATUS.EXISTING
+          if(isSubtitle){
+            fileResult.status = MATCHER_STATUS.EXISTING_FOR_SUBTITLE
+          }else{
+            fileResult.status = MATCHER_STATUS.EXISTING
+          }
           fileResult.importedId =existingTvShow.id
           fileResult.importedType = STREAMA_ROUTES[fileResult.type]
         }
@@ -168,6 +173,9 @@ class BulkCreateService {
       fileResult.name = name
     }
     fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
+    if(fileResult.status == MATCHER_STATUS.MATCH_FOUND && isSubtitle){
+      fileResult.status = MATCHER_STATUS.SUBTITLE_MATCH
+    }
     fileResult.message = 'match found'
     fileResult.type = fileResult.type
     fileResult.season = seasonNumber
@@ -176,6 +184,7 @@ class BulkCreateService {
 
   private extractDataForEpisode(TvShow existingTvShow, seasonNumber, episodeNumber, fileResult, tvShowId) {
     fileResult.type = 'episode'
+    Boolean isSubtitle = VideoHelper.isSubtitleFile(fileResult.file)
     Episode existingEpisode
 
     if (existingTvShow) {
@@ -188,7 +197,7 @@ class BulkCreateService {
     }
 
     if (existingEpisode) {
-      fileResult.status = MATCHER_STATUS.EXISTING
+      fileResult.status = isSubtitle ? MATCHER_STATUS.EXISTING_FOR_SUBTITLE : MATCHER_STATUS.EXISTING
       fileResult.importedId = existingEpisode.showId
       fileResult.importedType = STREAMA_ROUTES[fileResult.type]
       fileResult.apiId = existingEpisode.apiId
@@ -197,7 +206,7 @@ class BulkCreateService {
       def episodeResult = theMovieDbService.getEpisodeMeta(tvShowId, seasonNumber, episodeNumber)
       existingEpisode = Episode.findByApiIdAndDeletedNotEqual(episodeResult.id, true)
       if (existingEpisode) {
-        fileResult.status = MATCHER_STATUS.EXISTING
+        fileResult.status = isSubtitle ? MATCHER_STATUS.EXISTING_FOR_SUBTITLE : MATCHER_STATUS.EXISTING
         fileResult.importedId = existingEpisode.showId
         fileResult.importedType = STREAMA_ROUTES[fileResult.type]
       }
