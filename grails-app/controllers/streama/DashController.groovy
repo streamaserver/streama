@@ -111,13 +111,20 @@ class DashController {
 
   def searchMedia() {
     String query = params.query
-    def movies = Movie.findAllByDeletedNotEqual(true)
-    def shows = TvShow.findAllByDeletedNotEqual(true)
 
+    def movies = Movie.where{
+      deleted != true
+      title =~ "%${query}%"
+    }.list()
+
+    def tvShows = TvShow.where{
+      deleted != true
+      name =~ "%${query}%"
+    }.list()
 
     def result = [
-        shows:shows.findAll{it.name.toLowerCase().contains(query.toLowerCase())},
-        movies:movies.findAll{it.title.toLowerCase().contains(query.toLowerCase())}
+        shows: tvShows,
+        movies: movies
     ]
     respond result
   }
