@@ -30,7 +30,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NO_MOVIES_FOUND: 'Nenhum Filme Disponível'
 		},
 		VIDEO: {
-			RELEASED: 'Lançado',
+			RELEASED: 'Lançamento',
 			IMDB: 'IMDB',
 			RATING: 'Classificação',
 			VOTES: 'Votos',
@@ -38,7 +38,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			GENRE: 'Gênero',
 			TRAILER: 'Trailer',
 			SEASON: 'Temporada',
-      NO_SUBTITLE: 'Não há legenda',
+      NO_SUBTITLE: 'Sem legenda',
       UPNEXT: 'A seguir...'
 		},
 
