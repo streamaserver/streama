@@ -5,7 +5,7 @@
 angular.module('streama.translations').config(function ($translateProvider) {
 	$translateProvider.translations('pt', {
 		LOGIN: {
-			TITLE: 'Faça Login',
+			TITLE: 'Fazer Login',
 			USERNAME: 'Usuário',
 			PASSWORD: 'Senha',
 			FIRST_TIME_HINT: 'Primeira vez fazendo login? Tente \'admin\' nos dois campos.',
@@ -30,15 +30,15 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NO_MOVIES_FOUND: 'Nenhum Filme Disponível'
 		},
 		VIDEO: {
-			RELEASED: 'Lançado',
+			RELEASED: 'Lançamento',
 			IMDB: 'IMDB',
 			RATING: 'Classificação',
 			VOTES: 'Votos',
-			OVERVIEW: 'Visão Geral',
+			OVERVIEW: 'Sinopse',
 			GENRE: 'Gênero',
 			TRAILER: 'Trailer',
 			SEASON: 'Temporada',
-      NO_SUBTITLE: 'Nenhuma legenda',
+      NO_SUBTITLE: 'Sem legenda',
       UPNEXT: 'A seguir...'
 		},
 
@@ -54,9 +54,9 @@ angular.module('streama.translations').config(function ($translateProvider) {
     WHOS_WATCHING: 'Quem está assistindo?',
     ADD_SUB_PROFILE: 'Adicionar perfil',
     EDIT_BTN: 'Editar',
-    DONE_BTN: 'Feito',
-    SAVE_BTN: 'Salve',
-    CREATE_BTN: 'Crio',
+    DONE_BTN: 'Concluir',
+    SAVE_BTN: 'Salvar',
+    CREATE_BTN: 'Criar',
     CANCEL_BTN: 'Cancelar',
     DELETE_BTN: 'Excluir',
     ENTER_NAME: 'Insira o nome',
@@ -89,8 +89,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			SAVE: 'Salvar Perfil',
 			PASS: 'Senha',
 			OLD_PASS: 'Senha Antiga',
-			NEW_PASS: 'Senha Nova',
-			NEW_PASS_PLACEHOLDER: 'Senha Nova (min. 6 caracteres)',
+			NEW_PASS: 'Nova Senha',
+			NEW_PASS_PLACEHOLDER: 'Nova Senha (min. 6 caracteres)',
 			REPEAT_PASS: 'Repita a Senha',
 			PASS_ERROR_EMPTY: 'A senha não pode estar vazia',
 			PASS_ERROR_LENGTH: 'A senha tem que ter pelo menos 6 caracteres',
@@ -146,7 +146,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			NOTIFICATIONS: {
 				TITLE: "O que são notificações?",
 				TEXT: "Você pode notificar seus amigos que foram convidados sobre vídeos enviados mandando notificações para eles. Você pode enviar notificações adicionando eles a fila de notificações ao clicar" +
-				" Add Notification button which is in your video's information page and going to the Notifications menu and clicking Send Queue button."
+				" Adicione o botão Notificação, que está na página de informações do seu vídeo, indo até o menu Notificações e clicando no botão Enviar Fila."
 			},
 			VIDEO_PLAYER_SHORTCUTS: {
 				TITLE: "O player tem botões de atalho?",
