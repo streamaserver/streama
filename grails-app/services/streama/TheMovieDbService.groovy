@@ -146,18 +146,22 @@ class TheMovieDbService {
 
 
     def requestUrl = BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY
-    URL url = new URL(requestUrl)
-    HttpURLConnection conn = url.openConnection()
-    log.debug("conn.responseCode: ${conn.responseCode}")
-    if(conn.responseCode != 200){
+    def data
+    URL url
+
+    try {
+      url = new URL(requestUrl)
+      def JsonContent = url.getText("UTF-8")
+      data = new JsonSlurper().parseText(JsonContent)
+      if(data.results?.size() > 1 && year){
+        data.results = data.results.findAll{it.release_date.take(4) == year}
+      }
+      apiCacheData["$type:$name"] = data
+    }
+    catch(e) {
+      HttpURLConnection conn = url.openConnection()
       throw new Exception("TMDB request failed with statusCode: " + conn?.responseCode + ", responseMessage: " + conn?.responseMessage + ", url: " + requestUrl)
     }
-    def JsonContent = url.getText("UTF-8")
-    def data = new JsonSlurper().parseText(JsonContent)
-    if(data.results?.size() > 1 && year){
-      data.results = data.results.findAll{it.release_date.take(4) == year}
-    }
-    apiCacheData["$type:$name"] = data
 
     return data
   }
