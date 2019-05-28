@@ -189,7 +189,7 @@ class TheMovieDbService {
     try{
       entity = createEntityFromApiData(type, apiData)
     }catch (e){
-      log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+      log.error("Error occured while trying to retrieve data from TheMovieDB: ${e.message}", e)
     }
     return entity
   }
@@ -217,7 +217,9 @@ class TheMovieDbService {
     }
 
     entity.properties = data
-    entity.genre = parseGenres(data.genres*.id)
+    if(data.genres){
+      entity.genre = parseGenres(data.genres*.id)
+    }
     if(type == 'movie'){
       entity.trailerKey = getTrailerForMovie(apiId)?.key
     }
