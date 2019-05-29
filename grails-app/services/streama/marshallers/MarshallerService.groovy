@@ -543,6 +543,7 @@ class MarshallerService {
         returnArray['outro_start'] = episode.outro_start
         returnArray['videoType'] = 'episode'
         returnArray['still_image_src'] = episode.still_image?.src
+        returnArray['videoFiles'] = episode.getVideoFiles()?.collect{it.simpleInstance}
 
         ViewingStatus viewingStatus = episode.getViewingStatus()
         if(viewingStatus){
