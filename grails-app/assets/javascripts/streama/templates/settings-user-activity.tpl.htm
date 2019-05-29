@@ -9,12 +9,19 @@
 
 <hr/>
 
-<h4>Filter</h4>
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-6">
+    <h4>Filter</h4>
     <select class="form-control input-sm" ng-model="vm.filter.user" ng-options="user as user.username for user in vm.users"
             ng-change="vm.onUserSelect()">
       <option value="">---All Users---</option>
+    </select>
+  </div>
+  <div class="col-sm-6">
+    <h4>Sort</h4>
+    <select class="form-control input-sm" ng-model="vm.currentSort"
+            ng-options="sortOption.key as sortOption.label for sortOption in vm.sortOptions"
+            ng-change="vm.onSortChange()">
     </select>
   </div>
 </div>
