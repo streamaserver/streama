@@ -224,6 +224,13 @@ class TheMovieDbService {
       entity.trailerKey = getTrailerForMovie(apiId)?.key
     }
     entity.apiId = apiId
+    if(entity instanceof Movie){
+      entity.imdb_id = entity.getFullMovieMeta()?.imdb_id
+    }
+    if(entity instanceof TvShow){
+      entity.imdb_id = entity.getExternalLinks()?.imdb_id
+    }
+
     entity.save(flush:true, failOnError:true)
     return entity
   }
