@@ -27,6 +27,7 @@ angular.module('streama')
 
 		apiService.settings.list().then(function (response) {
 			$rootScope.settings = response.data;
+			$rootScope.isDownloadButtonVisible = getSetting('player_showDownloadButton').parsedValue && ($rootScope.currentUser.isTrustedUser || getSetting('player_downloadForAllUsers').parsedValue);
 		});
 	}
 
