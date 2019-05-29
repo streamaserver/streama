@@ -36,7 +36,9 @@
   }
 
   .dash-filter{
-    display: none;
+    >div{
+      margin-bottom: 10px;
+    }
   }
 
   .admin{
