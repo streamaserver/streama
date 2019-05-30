@@ -97,7 +97,7 @@
 
   <!--   --------------- TV SHOWS ---------------------  -->
 
-  <div ng-if="!vm.isDashSectionHidden('discover-shows')">
+  <div ng-if="!vm.isDashSectionHidden('discover-shows') && (!$root.currentProfile.isChild || vm.tvShow.list.length)">
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_SHOWS' | translate}}</span>
       <span ng-show="$root.selectedGenre">{{::$root.selectedGenre.name}} TV Shows</span>
@@ -163,7 +163,7 @@
 
   <!--   --------------- MOVIES ---------------------  -->
 
-  <div ng-if="!vm.isDashSectionHidden('discover-movies')">
+  <div ng-if="!vm.isDashSectionHidden('discover-movies') && (!$root.currentProfile.isChild || vm.movie.list.length)">
     <h3>
       <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_MOVIES' | translate}}</span>
       <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>

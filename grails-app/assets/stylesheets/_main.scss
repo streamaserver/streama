@@ -49,6 +49,7 @@ h1,h2,h3,h4,h5,h6{
       .form-control{
         background: white;
         font-size: 16px;
+        border-radius: 20px;
       }
 
       .ui-select-bootstrap input{
@@ -62,6 +63,17 @@ h1,h2,h3,h4,h5,h6{
       border-radius: 40px;
       overflow: hidden;
       padding: 0;
+      border: 4px solid white;
+    }
+
+    .media-item{
+      .play-text{
+        padding: 12px 30px;
+      }
+
+      .info-icon{
+        right: 25px;
+      }
     }
   }
 }
