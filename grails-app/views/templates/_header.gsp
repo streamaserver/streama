@@ -73,7 +73,7 @@
                 <div class="avatar-in-header" ng-style="{'background-color': '#'+(prof.avatarColor || '0b74b2')}">
                   <img src="/assets/streama-profile-smiley.png" alt="">
                 </div>
-                <a>{{prof.profileName}}</a>
+                <a>{{prof.profileName}} <i ng-if="prof.isChild" class="icon-baby2"></i></a>
               </li>
               <li class="divider"></li>
               <li role="menuitem">
