@@ -12,7 +12,7 @@
     <g:if test="${streama.Settings.findByName('show_version_num').value == 'true'}">
       <div class="version">v${grailsApplication.metadata.getApplicationVersion()}</div>
     </g:if>
-    <div class="browse-genres" ng-if="isCurrentState('dash') && genres.length">
+    <div class="browse-genres" ng-if="isCurrentState('dash') && genres.length && !$root.currentProfile.isChild">
       <button class="btn btn-link toggle-menu" ng-click="toggleGenreMenu()">
         <span ng-if="selectedGenre" ng-bind="selectedGenre.name"></span>
         <span ng-if="!selectedGenre">{{'DASHBOARD.BROWSE_GENRES' | translate}}</span>
@@ -73,7 +73,7 @@
                 <div class="avatar-in-header" ng-style="{'background-color': '#'+(prof.avatarColor || '0b74b2')}">
                   <img src="/assets/streama-profile-smiley.png" alt="">
                 </div>
-                <a>{{prof.profileName}}</a>
+                <a>{{prof.profileName}} <i ng-if="prof.isChild" class="icon-baby2"></i></a>
               </li>
               <li class="divider"></li>
               <li role="menuitem">

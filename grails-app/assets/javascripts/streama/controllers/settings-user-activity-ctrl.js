@@ -7,12 +7,22 @@ angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'api
     vm.maxPerPage = MAX_PER_PAGE;
     vm.userIdFilter = null;
     vm.currentType = 'login';
+    vm.currentSort = 'dateCreated';
+    vm.sortOptions = [
+      {key: 'lastUpdated', label: 'Last Updated'},
+      {key: 'dateCreated', label: 'Date Created'},
+      {key: 'ipAddress', label: 'IP Address'},
+      {key: 'operatingSystem', label: 'Operating System'},
+      {key: 'device', label: 'Device'},
+      {key: 'browser', label: 'Browser'}
+    ];
     vm.changeType = changeType;
     vm.filter = {
       user: null
     };
 
     vm.onUserSelect = onUserSelect;
+    vm.onSortChange = onSortChange;
 
     vm.pagination = {
       currentPage: 1,
@@ -41,8 +51,18 @@ angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'api
       loadList();
     }
 
+    function onSortChange() {
+      loadList();
+    }
+
     function loadList() {
-      apiService.userActivity.list({offset: getOffset(), max: MAX_PER_PAGE, userId: _.get(vm.filter, 'user.id'), type: vm.currentType}).then(function (data) {
+      apiService.userActivity.list({
+        offset: getOffset(),
+        max: MAX_PER_PAGE,
+        userId: _.get(vm.filter, 'user.id'),
+        type: vm.currentType,
+        sort: vm.currentSort
+      }).then(function (data) {
         vm.userActivity = data.data;
       });
     }

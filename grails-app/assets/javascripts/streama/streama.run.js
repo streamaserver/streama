@@ -2,64 +2,77 @@ angular.module('streama')
   .run(function ($window, $rootScope, $state, localStorageService, apiService, modalService,
                  userService, profileService, $translate) {
 
-  apiService.currentUser().then(function (data) {
-		userService.setCurrentUser(data);
-	});
-
-  loadAndInitProfiles();
-
 	$rootScope.baseData = {};
-	$rootScope.isCurrentState = function (stateName) {
-		return ($state.current.name == stateName);
-	};
+	$rootScope.isCurrentState = isCurrentState;
+	$rootScope.searchMedia = searchMedia;
+	$rootScope.getSetting = getSetting;
+	$rootScope.selectFromSearch = selectFromSearch;
+	$rootScope.toggleGenreMenu = toggleGenreMenu;
+	$rootScope.changeGenre = changeGenre;
+	$rootScope.loginUser = loginUser;
 
-	$rootScope.searchMedia = function (query) {
+
+	$rootScope.$on('streama.profiles.onChange', loadAndInitProfiles);
+	$rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
+
+	init();
+
+	function init() {
+		apiService.currentUser().then(onCurrentUserLoaded);
+		loadAndInitProfiles();
+	}
+
+	function onCurrentUserLoaded(data) {
+		userService.setCurrentUser(data);
+
+		apiService.settings.list().then(function (response) {
+			$rootScope.settings = response.data;
+			$rootScope.isDownloadButtonVisible = getSetting('player_showDownloadButton').parsedValue && ($rootScope.currentUser.isTrustedUser || getSetting('player_downloadForAllUsers').parsedValue);
+		});
+	}
+
+	function getSetting(name) {
+		return _.find($rootScope.settings, {name: name}) || _.find($rootScope.settings, {settingsKey: name});
+	}
+
+	function searchMedia(query) {
 		return apiService.dash.searchMedia(query).then(function (data) {
 			return data.data.movies.concat(data.data.shows);
 		});
-	};
+	}
 
-	apiService.settings.list().then(function (response) {
-		$rootScope.settings = response.data;
-	});
+	function selectFromSearch(item) {
+		modalService.mediaDetailModal({mediaId: item.id, mediaType: item.mediaType});
+	}
 
-	$rootScope.getSetting = function (name) {
-		return _.find($rootScope.settings, {name: name}) || _.find($rootScope.settings, {settingsKey: name});
-	};
-
-	$rootScope.selectFromSearch = function (item) {
-    modalService.mediaDetailModal({mediaId: item.id, mediaType: item.mediaType});
-	};
-
-
-	$rootScope.toggleGenreMenu = function (close) {
+	function toggleGenreMenu(close) {
 		if(close){
 			$rootScope.genreMenuOpen = false;
 		}else{
 			$rootScope.genreMenuOpen = !$rootScope.genreMenuOpen;
 		}
-	};
+	}
 
-  $rootScope.$on('streama.profiles.onChange', loadAndInitProfiles);
+	function isCurrentState(stateName) {
+		return ($state.current.name == stateName);
+	}
 
-
-	$rootScope.changeGenre = function (genre) {
+	function changeGenre(genre) {
 		$rootScope.toggleGenreMenu(true);
 		$state.go('dash', {genreId: (genre ? genre.id : null)});
 		$rootScope.$broadcast('changedGenre', genre);
-	};
+	}
 
-	$rootScope.loginUser = function () {
-	  $window.location.assign('/login/login');
-  };
+	function loginUser() {
+		$window.location.assign('/login/login');
+	}
 
-
-	$rootScope.$on('$stateChangeSuccess', function (e, toState) {
+	function onStateChangeSuccess(e, toState) {
 		$rootScope.toggleGenreMenu(true);
 		if(toState.name == "player"){
 			localStorageService.set('originUrl', location.href);
 		}
-	});
+	}
 
 
 	function loadAndInitProfiles() {

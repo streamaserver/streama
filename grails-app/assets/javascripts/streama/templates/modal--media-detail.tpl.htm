@@ -102,6 +102,11 @@
        <h3 class="media-episode-string">
          <span ng-show="episode.episodeString">{{episode.episodeString}}</span>
          <span ng-show="!episode.episodeString">s{{episode.season_number | padnumber:2}}e{{episode.episode_number | padnumber:2}}</span>
+
+         <a class="pull-right" ng-if="$root.isDownloadButtonVisible"
+            href="{{episode.videoFiles[0].src}}" download="{{episode.videoFiles[0].originalFilename}}">
+           <i class="ion-android-download" style="font-size: 24px;"></i>
+         </a>
        </h3>
        <h3 class="media-title">{{episode.name}}</h3>
        <div class="media-item" >

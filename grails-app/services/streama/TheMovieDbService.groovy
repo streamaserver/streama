@@ -146,18 +146,22 @@ class TheMovieDbService {
 
 
     def requestUrl = BASE_URL + '/search/' + type + '?query=' + query + '&api_key=' + API_KEY
-    URL url = new URL(requestUrl)
-    HttpURLConnection conn = url.openConnection()
-    log.debug("conn.responseCode: ${conn.responseCode}")
-    if(conn.responseCode != 200){
+    def data
+    URL url
+
+    try {
+      url = new URL(requestUrl)
+      def JsonContent = url.getText("UTF-8")
+      data = new JsonSlurper().parseText(JsonContent)
+      if(data.results?.size() > 1 && year){
+        data.results = data.results.findAll{it.release_date.take(4) == year}
+      }
+      apiCacheData["$type:$name"] = data
+    }
+    catch(e) {
+      HttpURLConnection conn = url.openConnection()
       throw new Exception("TMDB request failed with statusCode: " + conn?.responseCode + ", responseMessage: " + conn?.responseMessage + ", url: " + requestUrl)
     }
-    def JsonContent = url.getText("UTF-8")
-    def data = new JsonSlurper().parseText(JsonContent)
-    if(data.results?.size() > 1 && year){
-      data.results = data.results.findAll{it.release_date.take(4) == year}
-    }
-    apiCacheData["$type:$name"] = data
 
     return data
   }
@@ -185,7 +189,7 @@ class TheMovieDbService {
     try{
       entity = createEntityFromApiData(type, apiData)
     }catch (e){
-      log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.")
+      log.error("Error occured while trying to retrieve data from TheMovieDB: ${e.message}", e)
     }
     return entity
   }
@@ -213,11 +217,20 @@ class TheMovieDbService {
     }
 
     entity.properties = data
-    entity.genre = parseGenres(data.genres*.id)
+    if(data.genres){
+      entity.genre = parseGenres(data.genres*.id)
+    }
     if(type == 'movie'){
       entity.trailerKey = getTrailerForMovie(apiId)?.key
     }
     entity.apiId = apiId
+    if(entity instanceof Movie){
+      entity.imdb_id = entity.getFullMovieMeta()?.imdb_id
+    }
+    if(entity instanceof TvShow){
+      entity.imdb_id = entity.getExternalLinks()?.imdb_id
+    }
+
     entity.save(flush:true, failOnError:true)
     return entity
   }

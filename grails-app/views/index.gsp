@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>${Settings.findByName('title').value}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
     <style type="text/css">
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
@@ -23,7 +23,7 @@
 </head>
 
 <body class="ng-cloak">
-  <div class="page-container">
+  <div class="page-container" ng-class="{'is-child': $root.currentProfile.isChild}">
     <g:if test="${sec.username() == 'anonymous'}">
       <g:render template="/templates/header_anonymous"></g:render>
     </g:if>

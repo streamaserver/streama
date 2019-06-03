@@ -1,6 +1,8 @@
 package streama
 
 import grails.converters.JSON
+import org.apache.commons.codec.digest.DigestUtils
+
 import static javax.servlet.http.HttpServletResponse.SC_NOT_ACCEPTABLE
 import grails.transaction.Transactional
 
@@ -11,7 +13,7 @@ class FileService {
 
   def allowedVideoFormats = ['.mp4', '.mkv', '.webm', '.ogg', '.m4v']
 
-  def serveVideo(request, response, rawFile, File file) {
+  def serveVideo(request, response, java.io.File rawFile, File file) {
     def rangeHeader = request.getHeader("Range")
     //bytes=391694320-
 
@@ -29,12 +31,15 @@ class FileService {
 
       contentLength = rangeEnd + 1 - rangeStart
     }
+    String sha256Hex = file.sha256Hex ?: DigestUtils.sha256Hex(rawFile.absolutePath)
     //add html5 video headers
     response.addHeader("Accept-Ranges", "bytes")
+    response.addHeader("Connection", "Keep-Alive")
+    response.addHeader("Keep-Alive", "timeout=5, max=100")
     response.addHeader("Content-Length", contentLength.toString())
-    response.addHeader("Last-Modified", (new Date()).toString())
+    response.addHeader("Last-Modified", (file.lastUpdated).format("EEE, dd MMM yyyy hh:MM:ss 'GMT'"))
     response.addHeader("Cache-Control", 'public,max-age=3600,public')
-    response.addHeader("Etag", file.sha256Hex)
+    response.addHeader("Etag", "\"${sha256Hex}\"")
     response.addHeader("Content-Type", "video/mp4")
 
 

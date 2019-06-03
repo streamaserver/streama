@@ -51,11 +51,7 @@ angular.module('streama').factory('playerService',
         videoOptions.originalFilename = video.defaultVideoFile.originalFilename;
         videoOptions.videoType = video.defaultVideoFile.contentType;
         videoOptions.selectedVideoFile = video.defaultVideoFile;
-        if($rootScope.currentUser.isTrustedUser) {
-          videoOptions.showDownloadButton = _.find(settings, {name: 'player_showDownloadButton'}).parsedValue ;
-        }else{
-          videoOptions.showDownloadButton = false;
-        }
+        videoOptions.showDownloadButton = $rootScope.isDownloadButtonVisible;
 
         if(video.videoFiles && video.videoFiles.length){
           videoOptions.videoFiles = video.videoFiles;
