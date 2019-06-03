@@ -15,6 +15,7 @@ class VideoService {
 
   def fileService
   def uploadService
+  def grailsApplication
 
   def deleteVideoAndAssociations(Video video) {
     video.setDeleted(true)
