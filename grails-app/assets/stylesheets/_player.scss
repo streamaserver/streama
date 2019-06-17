@@ -5,6 +5,16 @@ streama-video-player{
       cursor:none;
     }
   }
+
+  video.subtitle-size-lg::cue {
+    font-size: 1.2em;
+  }
+  video.subtitle-size-md::cue {
+    font-size: 1em;
+  }
+  video.subtitle-size-sm::cue {
+    font-size: 0.8em;
+  }
 }
 
 .video-wrapper-inner,
