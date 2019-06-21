@@ -23,7 +23,7 @@ environments:
     mysql:
         dataSource:
             dbCreate: update
-            driverClassName:  'com.mysql.cj.jdbc.Driver'
+            driverClassName:  'com.mysql.jdbc.Driver'
             url: jdbc:mysql://${mysql_host:localhost}:${mysql_port:3306}/${mysql_db:streama}
             username: ${mysql_user:streama}
             password: ${mysql_password:streama}
