@@ -51,6 +51,10 @@ class MigrationService {
         return
       }
 
+      if(!it.name){
+        return
+      }
+
       Genre genre = new Genre()
       genre.name = it.name
       genre.apiId = it.apiId
