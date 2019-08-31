@@ -25,7 +25,7 @@ class Video implements SimpleInstance{
   String imdb_id
 
   static hasMany = [files: File]
-  static simpleInstanceFields = ['overview', 'poster_path:posterPath', 'fullTitle']
+  static simpleInstanceFields = ['overview', 'poster_path:posterPath', 'title']
 
   static mapping = {
     cache true
