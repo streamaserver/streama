@@ -81,7 +81,7 @@
                ng-src="https://image.tmdb.org/t/p/w92/{{activity.video.show.poster_path || activity.video.poster_path}}"
                style="max-width: 50px; margin-right: 10px; float: left;"/>
             <div>{{activity.video.title || activity.video.name}}</div>
-            <div class="text-muted">s{{activity.video.episode_number | padnumber:2}}e{{activity.video.season_number | padnumber:2}}</div>
+            <div class="text-muted" ng-if="activity.video.canonicalName === 'streama.Episode'">s{{activity.video.season_number| padnumber:2}}e{{activity.video.episode_number | padnumber:2}}</div>
             <div class="text-muted">({{(activity.video.show.first_air_date || activity.video.release_date).substring(0,4)}})</div>
         </td>
 
