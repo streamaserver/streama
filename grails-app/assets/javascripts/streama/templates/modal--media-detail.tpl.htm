@@ -4,6 +4,11 @@
     <div class="col-xs-10">
       <legend>
         {{media.name || media.title || media.showName}}
+
+        <a ng-if="$root.isDownloadButtonVisible && mediaType == 'movie'"
+          href="{{media.videoFiles[0].src}}" download="{{media.videoFiles[0].originalFilename}}">
+        <i class="ion-android-download" style="font-size: 24px;"></i>
+      </a>
       </legend>
     </div>
     <div class="col-xs-2">

@@ -101,6 +101,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
               var selectedVideoFile = _.find($scope.options.videoFiles, {label: savedVideoFileLabel});
               changeVideoFile(selectedVideoFile);
             }
+
+            $scope.options.subtitleSize = localStorageService.get('subtitleSize') || 'md';
           });
         }
 
@@ -497,6 +499,10 @@ angular.module('streama').directive('streamaVideoPlayer', [
             if(!response){
               return;
             }
+
+            $scope.options.subtitleSize = response.subtitleSize;
+            localStorageService.set('subtitleSize', response.subtitleSize);
+
             if(!_.isEqualBy(response.selectedVideoFile, $scope.options.selectedVideoFile, 'id')){
               changeVideoFile(response.selectedVideoFile, video.currentTime);
             }
