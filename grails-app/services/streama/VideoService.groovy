@@ -15,6 +15,8 @@ class VideoService {
 
   def fileService
   def uploadService
+  def grailsApplication
+  def settingsService
 
   def deleteVideoAndAssociations(Video video) {
     video.setDeleted(true)
@@ -95,6 +97,17 @@ class VideoService {
     file.size = Files.size(givenPath)
     def extensionIndex = params.localFile.lastIndexOf('.')
     file.extension = params.localFile[extensionIndex..-1];
+	
+	// Subtitle label guessing (by Norwelian)
+	if(settingsService.getValueForName('guess_subtitle_label')){
+	    def regexConfig = grailsApplication.config.streama?.regex
+		def subtitleNameRegex = regexConfig?.subtitles
+	    def matcher = file.localFile =~ subtitleNameRegex
+		if (matcher.getCount()) {
+			file.subtitleLabel = matcher[0][1].toUpperCase()
+		}
+	}
+	
     if(videoInstance.videoFiles.size() == 0){
       file.isDefault = true
     }

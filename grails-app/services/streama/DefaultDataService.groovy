@@ -179,6 +179,15 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+		[
+            settingsKey: 'Guess Subtitle Label',
+            name: 'guess_subtitle_label',
+            description: 'Tries to guess the subtitle label automatically when adding a \'.vtt\' or \'.srt\' file. This is the default behaviour, to change it, change the \'subtitles\' regex in \'application.yml\'',
+            settingsType: 'boolean',
+            value: 'false',
+            required: false,
+            validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',
