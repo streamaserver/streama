@@ -83,6 +83,7 @@ dependencies {
     compile "org.grails.plugins:mail:2.0.0"
     compile "org.grails.plugins:grails-spring-websocket:2.4.1"
     compile "eu.bitwalker:UserAgentUtils:1.21"
+    compile "org.grails.plugins:spring-security-ldap:3.0.2"
 
     // runtime
     runtime "com.h2database:h2"
