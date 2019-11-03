@@ -43,7 +43,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       NO_SUBTITLE: 'No Subtitle',
       SUBTITLE_SIZE: 'Subtitle Sizes',
       VIDEO_FILES: 'Video Sources',
-      UPNEXT: 'UP Next...'
+      UPNEXT: 'Up Next...'
     },
 
     MESSAGES: {
