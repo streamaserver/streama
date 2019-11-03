@@ -43,8 +43,8 @@
         </div>
         <div class="col-xs-8">
           <h4>{{'VIDEO.UPNEXT' | translate}}</h4>
-          <h3>{{options.nextVideo.fullTitle}}</h3>
-          <p>{{options.nextVideo.overview}}</p>
+          <h3>{{options.nextVideo.fullTitle || options.nextVideo.title}}</h3>
+          <p>{{options.nextVideo.overview.length > 150 ? options.nextVideo.overview.substring(0, 150) + '...' : options.nextVideo.overview}}</p>
 
           <button class="play-button with-label" ng-click="next()"> <span class="play-label">play now</span> <i class="ion-ios-play"></i></button>
         </div>
