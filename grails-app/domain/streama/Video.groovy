@@ -132,13 +132,11 @@ class Video implements SimpleInstance{
 
       List<Movie> allOtherMovies = Movie.where{
         id != this.id
-        genre{
-          id == firstGenre?.id
-        }
+        isNotEmpty("files")
         deleted != true
       }.list()
 
-      result = allOtherMovies.max{ it.genre*.id?.intersect(this.genre*.id)?.size()}
+      result = allOtherMovies.max{ it.genre*.id?.intersect(this.genre*.id)?.size()}  //TODO: how big of a performance impact does this have for a large DB? need to test
     }
 
     if (this instanceof Episode) {
