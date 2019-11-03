@@ -8,13 +8,15 @@ class BootStrap {
 
     def init = { servletContext ->
         marshallerService.init()
-        defaultDataService.createDefaultRoles()
-        defaultDataService.createDefaultUsers()
-        defaultDataService.createDefaultSettings()
+        if(!Role.findByAuthority("ROLE_ADMIN")){  //this assumes that first-time init is done
+          defaultDataService.createDefaultRoles()
+          defaultDataService.createDefaultUsers()
+        }
 
+        migrationService.importMovieDbGenres()
+        defaultDataService.createDefaultSettings()
         migrationService.setDefaultDeletedFlag()
         migrationService.setTrailerForMovies()
-        migrationService.importMovieDbGenres()
         migrationService.addGenresToMoviesAndShows()
         migrationService.setTheMovieDBKey()
         migrationService.fixLogoValue()   //2017-03-04
