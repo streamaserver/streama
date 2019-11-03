@@ -128,14 +128,19 @@ class Video implements SimpleInstance{
       if(!this.genre){
         return
       }
-      Movie tmp_movie=Movie.find{
-        ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id > this.id)}
-      if(tmp_movie == null){
-        result =  Movie.find{ ((id!=this.id) && (genre.id in this.genre.id ) && deleted==this.deleted && id != this.id &&  id < this.id)}
-      }else{
-        result =  tmp_movie
-      }
+      def firstGenre = this.genre?.getAt(0)
+
+      List<Movie> allOtherMovies = Movie.where{
+        id != this.id
+        genre{
+          id == firstGenre?.id
+        }
+        deleted != true
+      }.list()
+
+      result = allOtherMovies.max{ it.genre*.id?.intersect(this.genre*.id)?.size()}
     }
+
     if (this instanceof Episode) {
       if(this.show?.genre){
         TvShow tmp
