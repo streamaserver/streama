@@ -150,6 +150,7 @@ angular.module('streama').controller('modalFileCtrl', [
 
 
     function toggleCloseOnSelect() {
+      $scope.closeOnSelect = !$scope.closeOnSelect;
       localStorageService.set('fileModal.closeOnSelect', $scope.closeOnSelect);
     }
 
