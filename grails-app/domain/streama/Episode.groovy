@@ -10,6 +10,7 @@ class Episode extends Video{
   int episode_number
   Integer seasonEpisodeMerged
   String episodeString
+  Float imdb_rating
 
   String still_path
 
