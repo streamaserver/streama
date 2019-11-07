@@ -16,10 +16,10 @@ environments:
     development:
         dataSource:
             dbCreate: update
-            driverClassName: 'com.mysql.jdbc.Driver'
-            url: jdbc:mysql://172.18.0.1/streama
-            username: dev
-            password: secret
+            driverClassName:  'com.mysql.jdbc.Driver'
+            url: jdbc:mysql://localhost/streama
+            username: root
+            password:
     mysql:
         dataSource:
             dbCreate: update
