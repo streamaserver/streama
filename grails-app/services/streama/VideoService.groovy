@@ -7,6 +7,8 @@ import org.grails.web.util.WebUtils
 import java.nio.file.Files
 import java.nio.file.Paths
 
+import org.codehaus.groovy.runtime.InvokerHelper
+
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE
 
@@ -66,6 +68,10 @@ class VideoService {
       if (continueWatchingItem.video instanceof Episode) {
         ViewingStatus next = continueWatchingItem.video.getNextEpisode()?.getViewingStatus()
         if(next != null) {
+          ViewingStatus newnext = new ViewingStatus() // we need a new opject
+          InvokerHelper.setProperties(newnext, next.properties)
+          next = newnext
+
           next.currentPlayTime = 0
           if(continueWatchingItem.video.outro_start != null) {
             if(continueWatchingItem.video.outro_start <= continueWatchingItem.currentPlayTime) {
