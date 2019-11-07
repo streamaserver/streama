@@ -38,7 +38,8 @@ class VideoService {
       order("lastUpdated", "desc")
     }
 
-    return reduceContinueWatchingEps(continueWatching)
+    continueWatching = reduceContinueWatchingEps(continueWatching)
+    return changeToNewEpisodesIfApplicable(continueWatching)
   }
 
   private static List<ViewingStatus> reduceContinueWatchingEps(List<ViewingStatus> continueWatching) {
@@ -58,6 +59,30 @@ class VideoService {
     return result
   }
 
+  // loads the next episode with currentPlayTime=0 if applicable
+  private static List<ViewingStatus> changeToNewEpisodesIfApplicable(List<ViewingStatus> continueWatching) {
+    def result = []
+    continueWatching.each { continueWatchingItem ->
+      if (continueWatchingItem.video instanceof Episode) {
+        ViewingStatus next = continueWatchingItem.video.getNextEpisode()?.getViewingStatus()
+        if(next != null) {
+          next.currentPlayTime = 0
+          if(continueWatchingItem.video.outro_start != null) {
+            if(continueWatchingItem.video.outro_start <= continueWatchingItem.currentPlayTime) {
+              result.add(next)
+              return
+            }
+          } else if (continueWatchingItem.runtime && continueWatchingItem.currentPlayTime * 100 / continueWatchingItem.runtime > 95) {
+            result.add(next)
+            return
+          }
+        }
+      }
+      // default case, also adds non-applicable episodes
+      result.add(continueWatchingItem)
+    }
+    return result
+  }
 
   @Transactional
   def addLocalFile(Video videoInstance, params){
@@ -97,7 +122,7 @@ class VideoService {
     file.size = Files.size(givenPath)
     def extensionIndex = params.localFile.lastIndexOf('.')
     file.extension = params.localFile[extensionIndex..-1];
-	
+
 	// Subtitle label guessing (by Norwelian)
 	if(settingsService.getValueForName('guess_subtitle_label')){
 	    def regexConfig = grailsApplication.config.streama?.regex
@@ -107,7 +132,7 @@ class VideoService {
 			file.subtitleLabel = matcher[0][1].toUpperCase()
 		}
 	}
-	
+
     if(videoInstance.videoFiles.size() == 0){
       file.isDefault = true
     }
