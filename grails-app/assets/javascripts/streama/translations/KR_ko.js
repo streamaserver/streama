@@ -26,7 +26,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: '장르를 보고있습니다.',
 			MARK_COMPLETED: '선택 완료',
 			NO_TVSHOWS_FOUND: '해당 드라마를 찾지 못했습니다.',
-			NO_MOVIES_FOUND: '해당 영화를 찾지 못했습니다.'
+			NO_MOVIES_FOUND: '해당 영화를 찾지 못했습니다.',
+      WATCHLIST: '나중에 볼'
 		},
 		VIDEO: {
 			RELEASED: '출시',

@@ -27,7 +27,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Вы смотрите по жанру:',
 			MARK_COMPLETED: 'Уже просмотрено!',
 			NO_TVSHOWS_FOUND: 'ТВ-шоу пока недоступно',
-			NO_MOVIES_FOUND: 'Кино пока недоступно'
+			NO_MOVIES_FOUND: 'Кино пока недоступно',
+      WATCHLIST: 'Посмотреть позже'
 		},
 		VIDEO: {
 			RELEASED: 'Дата выхода',

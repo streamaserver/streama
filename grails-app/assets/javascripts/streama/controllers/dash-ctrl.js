@@ -42,23 +42,24 @@ angular.module('streama').controller('dashCtrl',
       vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser.data);
       vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser.data);
       vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser.data);
+      vm.watchlist = mediaListService.init(apiService.dash.listWatchlist, {sort: 'id', order: 'DESC'}, currentUser.data);
 
       apiService.tag.list().then(onTagsLoaded);
       apiService.dash.listNewReleases().then(onNewReleasesLoaded);
       apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
       apiService.dash.listRecommendations().then(onRecommendedLoaded);
       apiService.dash.listGenres().then(onGenreLoaded);
+      apiService.dash.listWatchlist().then(onWatchlistLoaded);
+
     }
 
     // HOISTED FUNCTIONS BELOW
-
 
     function onRecommendedLoaded(response) {
       var data = response.data;
       vm.recommendations = data;
       vm.loadingRecommendations = false;
     }
-
 
     function fetchData(mediaConfig) {
       mediaConfig.fetch({max: LIST_MAX, offset: mediaConfig.currentOffset, sort: mediaConfig.currentSort.sort, order: mediaConfig.currentSort.order}).then(function (response) {
@@ -82,6 +83,7 @@ angular.module('streama').controller('dashCtrl',
       var data = response.data;
       vm.newReleases = data;
     }
+
     function onTagsLoaded(response) {
       var data = response.data;
       vm.tags = data;
@@ -96,6 +98,12 @@ angular.module('streama').controller('dashCtrl',
         vm.movie.filter.genre = [$rootScope.selectedGenre];
         vm.tvShow.filter.genre = [$rootScope.selectedGenre];
       }
+    }
+
+    function onWatchlistLoaded(response) {
+      var data = response.data;
+      vm.watchlist = data;
+      vm.videos = data.videos[0]
     }
 
     function showInitialSettingsWarning() {
@@ -123,12 +131,12 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
-
     function fetchFirstEpisodeAndPlay(tvShow) {
       apiService.dash.firstEpisodeForShow(tvShow.id).then(function (response) {
         $state.go('player', {videoId: response.data.id});
       });
     }
+
     function showDetails(media) {
       //modalService.mediaDetailModal((media.tvShowId || media.id), media.mediaType); //{videoId: data.id}
       if(media.mediaType === 'episode'){

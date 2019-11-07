@@ -1,9 +1,7 @@
 <div class="profile">
   <div class="profile-heading">
     <div class="btn-group pull-right">
-      <button type="button" class="btn btn-secondary"
-              style="background-color: #0ce3ac"
-              ng-click="toggleChangePassword()" ng-if="!changePasswordIsActive">{{'CHANGE_PASSWORD' | translate}}</button>
+      <button type="button" class="btn btn-secondary" ng-click="toggleChangePassword()" ng-if="!changePasswordIsActive">{{'CHANGE_PASSWORD' | translate}}</button>
     </div>
     <h1>
       <i class="ion-ios-arrow-thin-left" ng-if="changePasswordIsActive" ng-click="toggleChangePassword()"></i>

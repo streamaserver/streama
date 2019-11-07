@@ -19,19 +19,15 @@ class DashController {
     return [viewingStatusList: viewingStatusList]
   }
 
-
   def listShows(){
     JSON.use ('dashTvShow') {
       respond videoService.listShows(params, [:])
     }
   }
 
-
   def listEpisodesForShow(TvShow tvShow){
     respond tvShow.getFilteredEpisodes()
   }
-
-
 
   def listRecommendations(){
     User currentUser = springSecurityService.currentUser
@@ -63,7 +59,6 @@ class DashController {
     }
   }
 
-
   def firstEpisodeForShow(TvShow tvShow){
     Episode firstEpisode = tvShow.firstEpisode
     if(firstEpisode){
@@ -78,7 +73,6 @@ class DashController {
       respond videoService.listMovies(params, [:])
     }
   }
-
 
   def listGenericVideos(){
     List<Long> genreIds = params.list('genreId')*.toLong() ?: []
@@ -129,7 +123,6 @@ class DashController {
     respond result
   }
 
-
   def listGenres(){
     def genres = Genre.list()
     genres = genres.findAll{Genre currentGenre ->
@@ -172,7 +165,6 @@ class DashController {
     }
   }
 
-
   def mediaDetail(){
     log.debug(params.mediaType)
     log.debug(params.id)
@@ -201,8 +193,7 @@ class DashController {
     }
   }
 
-
-  def cotinueWatching(TvShow tvShow){
+  def continueWatching(TvShow tvShow){
     def result
 
     if(!tvShow){
@@ -237,5 +228,35 @@ class DashController {
       video == video
     }.deleteAll()
     render "OK"
+  }
+
+  def listWatchList(){
+    User currentUser = springSecurityService.getCurrentUser()
+    Long profileId = request.getHeader('profileId')?.toLong()
+    Profile currentProfile = Profile.findById(profileId)
+
+    def watchlist = Watchlist.where{
+      eq("user", currentUser)
+      eq("profile", currentProfile)
+      ne("isDeleted", true)
+      and {
+        videos {
+          if(params.sort && params.order){
+            order(params.sort, params.order)
+          }
+        }
+      }
+    }.list()
+
+    if(!watchlist){
+      render status: NO_CONTENT
+      return
+    }
+
+    def result = [watchlist: watchlist, videos: watchlist.videos ]
+
+    JSON.use ('dashWatchlist') {
+      render (result as JSON)
+    }
   }
 }

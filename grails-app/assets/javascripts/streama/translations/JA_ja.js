@@ -26,7 +26,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'ジャンルを見てください :',
 			MARK_COMPLETED: '完成品マーク',
 			NO_TVSHOWS_FOUND: 'テレビ番組発見なし',
-			NO_MOVIES_FOUND: 'ない映画'
+			NO_MOVIES_FOUND: 'ない映画',
+      WATCHLIST: '後で見る'
 		},
 		VIDEO: {
 			RELEASED: 'リリース',

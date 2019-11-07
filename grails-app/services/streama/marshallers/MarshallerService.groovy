@@ -14,6 +14,7 @@ import streama.TvShow
 import streama.User
 import streama.Video
 import streama.ViewingStatus
+import streama.Watchlist
 
 @Transactional
 class MarshallerService {
@@ -45,7 +46,6 @@ class MarshallerService {
 
       return returnArray
     }
-
 
     JSON.registerObjectMarshaller(User) { User user ->
       def returnArray = [:]
@@ -201,7 +201,6 @@ class MarshallerService {
       return returnArray;
     }
 
-
     JSON.createNamedConfig('fullShow') {  cfg ->
       cfg.registerObjectMarshaller(TvShow) { TvShow  tvShow ->
         def returnArray = [:]
@@ -229,7 +228,6 @@ class MarshallerService {
         return returnArray;
       }
     }
-
 
     JSON.createNamedConfig('dashViewingStatus') {  cfg ->
       cfg.registerObjectMarshaller(ViewingStatus) { ViewingStatus  viewingStatus ->
@@ -286,7 +284,57 @@ class MarshallerService {
       }
     }
 
+    JSON.createNamedConfig('dashWatchlist') { cfg ->
+      cfg.registerObjectMarshaller(Watchlist) { Watchlist watchlist ->
+        def returnArray = [:]
+        returnArray['id'] = watchlist.id
+        returnArray['dateCreated'] = watchlist.dateCreated
+        returnArray['lastUpdated'] = watchlist.lastUpdated
+        returnArray['isDeleted'] = watchlist.isDeleted
 
+        return returnArray;
+      }
+      cfg.registerObjectMarshaller(Video) { Video  video ->
+        def returnArray = [:]
+
+        returnArray['id'] = video.id
+        returnArray['dateCreated'] = video.dateCreated
+        returnArray['lastUpdated'] = video.lastUpdated
+        returnArray['overview'] = video.overview
+        returnArray['imdb_id'] = video.imdb_id
+        returnArray['vote_average'] = video.vote_average
+        returnArray['vote_count'] = video.vote_count
+        returnArray['popularity'] = video.popularity
+        returnArray['original_language'] = video.original_language
+
+        if(video instanceof Movie){
+          returnArray['title'] = video.title
+          returnArray['release_date'] = video.release_date
+          returnArray['poster_path'] = video.poster_path
+          returnArray['mediaType'] = 'movie'
+        }
+        if(video instanceof GenericVideo){
+          returnArray['title'] = video.title
+          returnArray['release_date'] = video.release_date
+          returnArray['poster_image_src'] = video.poster_image?.src
+          returnArray['mediaType'] = 'genericVideo'
+        }
+
+        if(video instanceof Episode){
+          returnArray['isEpisode'] = true
+          returnArray['title'] = video.show?.name
+          returnArray['poster_path'] = video.show?.poster_path
+          returnArray['episodeString'] = video.episodeString
+          returnArray['tvShowId'] = video.show?.id
+          returnArray['mediaType'] = 'tvShow'
+          returnArray['intro_start'] = video.intro_start
+          returnArray['intro_end'] = video.intro_end
+          returnArray['outro_start'] = video.outro_start
+        }
+
+        return returnArray
+      }
+    }
 
     JSON.createNamedConfig('firstEpisode') {  cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
@@ -418,7 +466,6 @@ class MarshallerService {
       }
     }
 
-
     JSON.createNamedConfig('fullMovie') {  cfg ->
       cfg.registerObjectMarshaller(Movie) { Movie  movie ->
         def returnArray = [:]
@@ -460,7 +507,6 @@ class MarshallerService {
         return returnArray;
       }
     }
-
 
     JSON.createNamedConfig('adminFileManager') {  cfg ->
       cfg.registerObjectMarshaller(File) { File  file ->
@@ -554,6 +600,7 @@ class MarshallerService {
         return returnArray;
       }
     }
+
     JSON.createNamedConfig('adminEpisodesForTvShow') {  cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
         def returnArray = [:]

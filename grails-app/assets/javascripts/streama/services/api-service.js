@@ -59,6 +59,7 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.post('user/changePassword.json', data);
 			}
 		},
+
     userActivity: {
       list: function (params) {
         return $http.get('userActivity.json', {params: params});
@@ -221,7 +222,6 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			}
 		},
 
-
 		genres: {
 			get: function (id) {
 				return $http.get('genre/show.json', {params: {id: id}});
@@ -230,7 +230,6 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('genre.json');
 			}
 		},
-
 
     settings: {
 			list: function () {
@@ -243,7 +242,6 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.post('settings/validateSettings.json', data);
 			}
 		},
-
 
 		notification: {
 			list: function () {
@@ -268,7 +266,6 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.delete('notificationQueue/delete.json', {params: {id: id}});
 			},
 		},
-
 
 		theMovieDb: {
       hasKey: function (params) {
@@ -329,7 +326,11 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 
 			listRecommendations: function () {
 				return $http.get('dash/listRecommendations.json');
-			}
+			},
+
+			listWatchlist: function (params) {
+        return $http.get('dash/listWatchList.json', {params: params});
+      }
 		},
 
 		websocket: {

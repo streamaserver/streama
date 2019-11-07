@@ -16,10 +16,10 @@ environments:
     development:
         dataSource:
             dbCreate: update
-            driverClassName:  'com.mysql.jdbc.Driver'
-            url: jdbc:mysql://localhost/streama
-            username: root
-            password:
+            driverClassName: 'com.mysql.jdbc.Driver'
+            url: jdbc:mysql://172.18.0.1/streama
+            username: dev
+            password: secret
     mysql:
         dataSource:
             dbCreate: update
@@ -166,6 +166,7 @@ streama:
               'application/octet-stream', 'video/x-matroska', 'image/vnd.microsoft.icon', 'video/mp2t']
 
 server:
+    port: 9001
     use-forward-headers: true
 
 grails.controllers.upload.maxFileSize: 10000000000000 # 10TB

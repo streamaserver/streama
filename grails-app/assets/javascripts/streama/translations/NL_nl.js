@@ -27,7 +27,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       LOOKING_AT_GENRE: 'Je kijkt naar het genre',
       MARK_COMPLETED: 'Markeer als bekeken',
       NO_TVSHOWS_FOUND: 'Geen series beschikbaar',
-      NO_MOVIES_FOUND: 'Geen films beschikbaar'
+      NO_MOVIES_FOUND: 'Geen films beschikbaar',
+      WATCHLIST:'later bekijken'
     },
     VIDEO: {
       RELEASED: 'Uitgebracht op',

@@ -27,7 +27,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'كنت تبحث في هذا النوع:',
 			MARK_COMPLETED: 'اكملت المشاهدة',
 			NO_TVSHOWS_FOUND: 'لايوجد عروض تلفزيونية',
-			NO_MOVIES_FOUND: 'لا يوجد افلام'
+			NO_MOVIES_FOUND: 'لا يوجد افلام',
+      WATCHLIST: 'عرض لاحقا'
 		},
 		VIDEO: {
 			RELEASED: 'الاصدار',

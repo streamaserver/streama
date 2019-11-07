@@ -28,7 +28,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       LOOKING_AT_GENRE: 'You\'re looking at the genre:',
       MARK_COMPLETED: 'Mark completed',
       NO_TVSHOWS_FOUND: 'No Tv-Shows Available',
-      NO_MOVIES_FOUND: 'No Movies Available'
+      NO_MOVIES_FOUND: 'No Movies Available',
+      WATCHLIST: 'Watchlist'
     },
     VIDEO: {
       RELEASED: 'Released',
@@ -71,7 +72,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     HELP_FAQ: 'HELP / FAQ',
     PROFILE_SETTINGS: 'User Settings',
     LOGOUT: 'Logout',
-    CHANGE_PASSWORD: 'Modify Password',
+    CHANGE_PASSWORD: 'Change Password',
     LANGUAGE_en: 'English',
     LANGUAGE_ru: 'Русский/Russian',
     LANGUAGE_de: 'Deutsch/German',
