@@ -202,7 +202,7 @@ class DashController {
   }
 
 
-  def cotinueWatching(TvShow tvShow){
+  def continueWatching(TvShow tvShow){
     def result
 
     if(!tvShow){
