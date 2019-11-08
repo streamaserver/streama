@@ -8,6 +8,8 @@
       <div ng-repeat="newRelease in vm.newReleases" class="new-releases-slide">
         <img class="poster-image" ng-src="https://image.tmdb.org/t/p/w342/{{newRelease.media.poster_path}}" class="pull-left">
         <div class="image-background" style="background-image: url('https://image.tmdb.org/t/p/w1280/{{newRelease.media.backdrop_path}}')">
+          <i class="add-icon ion-android-add-circle" ng-click="vm.showDetails(video)"></i>
+
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(newRelease.media)"></i>
           <div class="new-release-footer">
             <a class="play-icon ion-ios-play" ui-sref="player({videoId: newRelease.videoToPlayId})"></a>
@@ -24,7 +26,6 @@
       </div>
     </div>
   </div>
-
 
   <h2 class="genre-display" ng-if="$root.selectedGenre">{{'DASHBOARD.LOOKING_AT_GENRE' | translate}} <strong ng-bind="$root.selectedGenre.name"></strong></h2>
 
@@ -44,6 +45,7 @@
               {{'DASHBOARD.MARK_COMPLETED' | translate}}</button>
             <p ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span></p>
           </div>
+          <i class="add-icon ion-android-add-circle" ng-click="vm.showDetails(viewingStatus.video)"></i>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(viewingStatus.video)"></i>
           <a class="play-icon ion-ios-play" ui-sref="player({videoId: viewingStatus.video.id})"></a>
@@ -68,7 +70,6 @@
 
     <hr/>
   </div>
-
 
   <div ng-if="vm.recommendations.length && !$root.selectedGenre && !vm.isDashSectionHidden('recommends')">
     <h3>{{'DASHBOARD.RECOMMENDATIONS' | translate}}</h3>
@@ -145,6 +146,7 @@
           <div class="play-text">
             <h4 ng-bind="::tvShow.name"></h4>
           </div>
+          <i class="add-icon ion-android-add-circle" ng-click="vm.showDetails(tvShow)"></i>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(tvShow)"></i>
           <a class="play-icon ion-ios-play" ng-click="vm.fetchFirstEpisodeAndPlay(tvShow)"></a>
@@ -159,7 +161,6 @@
 
     <hr/>
   </div>
-
 
   <!--   --------------- MOVIES ---------------------  -->
 
@@ -214,6 +215,7 @@
             <h4 ng-bind="::movie.title"></h4>
             <p ng-bind="::movie.release_date.substring(0,4)"></p>
           </div>
+          <i class="add-icon ion-android-add-circle" ng-click="vm.showDetails(movie)"></i>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(movie)"></i>
           <a class="play-icon ion-ios-play" ui-sref="player({videoId: movie.id})"></a>
@@ -226,7 +228,6 @@
     </div>
 
   </div>
-
 
   <!--   --------------- GENERIC VIDEOS ---------------------  -->
 
@@ -269,6 +270,7 @@
             <h4 ng-bind="::movie.title"></h4>
             <p ng-bind="::movie.release_date.substring(0,4)"></p>
           </div>
+          <i class="add-icon ion-android-add-circle" ng-click="vm.showDetails(movie)"></i>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(movie)"></i>
           <a class="play-icon ion-ios-play" ui-sref="player({videoId: movie.id})"></a>
@@ -279,20 +281,31 @@
 
   <!----------------------------------------------Watchlist videos-------------------------------------------->
   <hr/>
-  <div ng-if="vm.watchlist && vm.videos.length">
+  <div ng-if="vm.watchlist && vm.watchlistVideos.length">
     <h3>{{'DASHBOARD.WATCHLIST' | translate}}</h3>
 
     <div class="row dash-filter">
       <div class="col-md-3">
         {{'DASHBOARD.SORT' | translate}}
-        <video-sort-order-dropdown ng-model="vm.videos.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'watchlist'"></video-sort-order-dropdown>
+        <video-sort-order-dropdown ng-model="vm.watchlistVideos.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'watchlist'"></video-sort-order-dropdown>
       </div>
     </div>
     <br>
 
     <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="video in vm.videos track by video.id">
-        <div class="media-item" >
+      <div class="media-list-item media-poster-item" ng-repeat="video in vm.watchlistVideos track by video.id">
+        <div class="media-item" ng-if="video.mediaType == 'tvShow'">
+          <streama-video-image type="poster" size="300" video="tvShow"></streama-video-image>
+
+          <div class="play-text">
+            <h4 ng-bind="video.title"></h4>
+          </div>
+          <i class="remove-icon ion-minus-circled" ng-click="vm.showDetails(video)"></i>
+
+          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(video)"></i>
+          <a class="play-icon ion-ios-play" ui-sref="player({videoId: video.id})"></a>
+        </div>
+        <div class="media-item" ng-if="video.mediaType != 'tvShow'">
 
           <streama-video-image type="poster" video="video"></streama-video-image>
 
@@ -300,6 +313,7 @@
             <h4 ng-bind="::(video.title || video.show.name)"></h4>
             <p ng-show="video.isEpisode"><span ng-bind="::video.episodeString"></span></p>
           </div>
+          <i class="remove-icon ion-minus-circled" ng-click="vm.showDetails(video)"></i>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(video)"></i>
           <a class="play-icon ion-ios-play" ui-sref="player({videoId: video.id})"></a>

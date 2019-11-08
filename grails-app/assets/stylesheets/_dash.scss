@@ -106,6 +106,26 @@
         background-position: 50% 0%;
       }
     }
+    .add-icon{
+      position: absolute;
+      bottom: 7px;
+      left: 7px;
+      line-height: 1em;
+      font-size: 31px;
+      color: $primary;
+      text-shadow: 1px 1px 1px black;
+      z-index: 9;
+    }
+    .remove-icon{
+      position: absolute;
+      bottom: 7px;
+      left: 7px;
+      line-height: 1em;
+      font-size: 31px;
+      color: $primary;
+      text-shadow: 1px 1px 1px black;
+      z-index: 9;
+    }
     .info-icon{
       position: absolute;
       bottom: 7px;

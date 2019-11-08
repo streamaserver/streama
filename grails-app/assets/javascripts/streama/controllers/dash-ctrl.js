@@ -36,20 +36,23 @@ angular.module('streama').controller('dashCtrl',
       } else {
         initMedia();
       }
+
+
     }
 
     function initMedia() {
       vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser.data);
       vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser.data);
       vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser.data);
-      vm.watchlist = mediaListService.init(apiService.dash.listWatchlist, {sort: 'id', order: 'DESC'}, currentUser.data);
+      vm.watchlistVideos = mediaListService.init(apiService.dash.showWatchlistVideos, {sort: 'id', order: 'DESC'}, currentUser.data);
 
       apiService.tag.list().then(onTagsLoaded);
       apiService.dash.listNewReleases().then(onNewReleasesLoaded);
       apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
       apiService.dash.listRecommendations().then(onRecommendedLoaded);
       apiService.dash.listGenres().then(onGenreLoaded);
-      apiService.dash.listWatchlist().then(onWatchlistLoaded);
+      apiService.dash.showWatchlist().then(onWatchlistLoaded);
+      apiService.dash.showWatchlistVideos().then(onWatchlistVideosLoaded);
 
     }
 
@@ -102,8 +105,15 @@ angular.module('streama').controller('dashCtrl',
 
     function onWatchlistLoaded(response) {
       var data = response.data;
+      console.log('watchlist', data);
       vm.watchlist = data;
-      vm.videos = data.videos[0]
+
+    }
+
+    function onWatchlistVideosLoaded(response) {
+      var data = response.data;
+      console.log('videos', data);
+      vm.watchlistVideos = data;
     }
 
     function showInitialSettingsWarning() {

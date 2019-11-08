@@ -328,8 +328,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/listRecommendations.json');
 			},
 
-			listWatchlist: function (params) {
-        return $http.get('dash/listWatchList.json', {params: params});
+			showWatchlist: function () {
+        return $http.get('dash/showWatchList.json');
+      },
+
+      showWatchlistVideos: function (params) {
+        return $http.get('dash/listWatchListVideos.json', {params: params});
       }
 		},
 

@@ -230,33 +230,43 @@ class DashController {
     render "OK"
   }
 
-  def listWatchList(){
-    User currentUser = springSecurityService.getCurrentUser()
-    Long profileId = request.getHeader('profileId')?.toLong()
-    Profile currentProfile = Profile.findById(profileId)
-
-    def watchlist = Watchlist.where{
-      eq("user", currentUser)
-      eq("profile", currentProfile)
-      ne("isDeleted", true)
-      and {
-        videos {
-          if(params.sort && params.order){
-            order(params.sort, params.order)
-          }
-        }
-      }
-    }.list()
+  def showWatchList(){
+    def watchlist = getWatchList()
 
     if(!watchlist){
       render status: NO_CONTENT
       return
     }
 
-    def result = [watchlist: watchlist, videos: watchlist.videos ]
+    JSON.use ('dashWatchlist') {
+      render (watchlist as JSON)
+    }
+  }
+
+  def listWatchListVideos(){
+    def videos = getWatchList().videos.sort{a, b -> a.id <=> b.id}
+
+    videos = params.order =="ASC" ? videos : videos.reverse()
+
+    if(!videos){
+      render status: NO_CONTENT
+      return
+    }
 
     JSON.use ('dashWatchlist') {
-      render (result as JSON)
+      render (videos as JSON)
     }
+  }
+
+  def getWatchList(){
+    User currentUser = springSecurityService.getCurrentUser()
+    Long profileId = request.getHeader('profileId')?.toLong()
+    Profile currentProfile = Profile.findById(profileId)
+
+    return Watchlist.where{
+      user == currentUser
+      profile ==  currentProfile
+      isDeleted == false
+    }.first()
   }
 }

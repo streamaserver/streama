@@ -54,11 +54,12 @@ angular.module('streama').directive('videoSortOrderDropdown', [function () {
 
 
         function formatter(value) {
+
           $scope.currentSort = _.find($scope.sortOrders, value) || $scope.sortOrders[0];
         }
 
 				$scope.setCurrentSort = function (sortOrder) {
-					$scope.currentSort = sortOrder;
+          $scope.currentSort = sortOrder;
           $controller.$setViewValue(sortOrder);
 				};
 

@@ -39,6 +39,20 @@
     @include vendor-property('transition', 'transform .3s');
   }
 
+  .add-icon,
+  .remove-icon{
+    position: absolute;
+    bottom: 7px;
+    left: 7px;
+    line-height: 1em;
+    font-size: 31px;
+    color: $primary;
+    text-shadow: 1px 1px 1px black;
+    z-index: 9;
+    opacity: 0;
+    @include vendor-property('transition', 'opacity .2s');
+  }
+
   .info-icon,
   .warning-icon{
     position: absolute;
@@ -115,6 +129,8 @@
     .play-icon,
     .complete-watching,
     .info-icon,
+    .add-icon,
+    .remove-icon,
     .play-text{
       opacity: 1;
     }
