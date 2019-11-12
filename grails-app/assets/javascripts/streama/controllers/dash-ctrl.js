@@ -7,6 +7,8 @@ angular.module('streama').controller('dashCtrl',
     var LIST_MAX = 30;
 		vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
     vm.showDetails = showDetails;
+    vm.addToWatchlist = addToWatchlist;
+    vm.removeFromWatchlist = removeFromWatchlist;
     vm.markCompleted = markCompleted;
     vm.loadingRecommendations = true;
     vm.isDashSectionHidden = isDashSectionHidden;
@@ -44,15 +46,14 @@ angular.module('streama').controller('dashCtrl',
       vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser.data);
       vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser.data);
       vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser.data);
-      vm.watchlistVideos = mediaListService.init(apiService.dash.showWatchlistVideos, {sort: 'id', order: 'DESC'}, currentUser.data);
+      vm.watchlistEntry = mediaListService.init(apiService.dash.listWatchlistEntries, {sort: 'id', order: 'DESC'}, currentUser.data);
 
       apiService.tag.list().then(onTagsLoaded);
       apiService.dash.listNewReleases().then(onNewReleasesLoaded);
       apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
       apiService.dash.listRecommendations().then(onRecommendedLoaded);
       apiService.dash.listGenres().then(onGenreLoaded);
-      apiService.dash.showWatchlist().then(onWatchlistLoaded);
-      apiService.dash.showWatchlistVideos().then(onWatchlistVideosLoaded);
+      apiService.dash.listWatchlistEntries().then(onWatchlistEntriesLoaded);
 
     }
 
@@ -103,17 +104,9 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
-    function onWatchlistLoaded(response) {
+    function onWatchlistEntriesLoaded(response) {
       var data = response.data;
-      console.log('watchlist', data);
-      vm.watchlist = data;
-
-    }
-
-    function onWatchlistVideosLoaded(response) {
-      var data = response.data;
-      console.log('videos', data);
-      vm.watchlistVideos = data;
+      vm.watchlistEntries = data;
     }
 
     function showInitialSettingsWarning() {
@@ -154,6 +147,29 @@ angular.module('streama').controller('dashCtrl',
       }else{
         modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false});
       }
+    }
+
+    function addToWatchlist(item) {
+      apiService.watchlistEntry.create(item).then(function (response) {
+        var type = item.mediaType;
+        if(type === 'genericVideo'){
+          type = 'video'
+        }
+        console.log(response);
+        alertify.success('The '+type+' was added to your watchlist.');
+      });
+    }
+
+    function removeFromWatchlist(item) {
+      alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
+      alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
+        if (confirmed) {
+          apiService.watchlistEntry.delete(item).then(function (response) {
+            console.log(response);
+            alertify.success('The '+item.type+' was added to your watchlist.');
+          });
+        }
+      })
     }
 
     function applyFilter(item, filterObj) {

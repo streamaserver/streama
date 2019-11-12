@@ -230,43 +230,28 @@ class DashController {
     render "OK"
   }
 
-  def showWatchList(){
-    def watchlist = getWatchList()
-
-    if(!watchlist){
-      render status: NO_CONTENT
-      return
-    }
-
-    JSON.use ('dashWatchlist') {
-      render (watchlist as JSON)
-    }
-  }
-
-  def listWatchListVideos(){
-    def videos = getWatchList().videos.sort{a, b -> a.id <=> b.id}
-
-    videos = params.order =="ASC" ? videos : videos.reverse()
-
-    if(!videos){
-      render status: NO_CONTENT
-      return
-    }
-
-    JSON.use ('dashWatchlist') {
-      render (videos as JSON)
-    }
-  }
-
-  def getWatchList(){
+  def listWatchlistEntries(){
     User currentUser = springSecurityService.getCurrentUser()
     Long profileId = request.getHeader('profileId')?.toLong()
     Profile currentProfile = Profile.findById(profileId)
 
-    return Watchlist.where{
+    def sortingColumn =  params.column ? params.column : 'id'
+    def sortingOrder =  params.order ? params.order : 'DESC'
+
+    List<WatchlistEntry> watchlistEntries = WatchlistEntry.where {
       user == currentUser
-      profile ==  currentProfile
+      profile == currentProfile
       isDeleted == false
-    }.first()
+    }.list(sort: sortingColumn, order: sortingOrder)
+    if(!watchlistEntries){
+      render status: NO_CONTENT
+      return
+    }
+
+    def result = [total: watchlistEntries.size(), list: watchlistEntries]
+
+    JSON.use ('dashWatchlist') {
+      render (result as JSON)
+    }
   }
 }

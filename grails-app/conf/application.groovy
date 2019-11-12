@@ -39,6 +39,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/tvShow/show',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/movie/show',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/genericVideo/show',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/watchlistEntry/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tvShow/episodesForTvShow',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/user/saveProfile',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/user/changePassword',  access :['IS_AUTHENTICATED_REMEMBERED']],

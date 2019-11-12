@@ -1,7 +1,0 @@
-import streama.Watchlist
-
-model {
-  Watchlist watchlist
-}
-
-json g.render(watchlist)

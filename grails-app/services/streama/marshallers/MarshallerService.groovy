@@ -14,7 +14,7 @@ import streama.TvShow
 import streama.User
 import streama.Video
 import streama.ViewingStatus
-import streama.Watchlist
+import streama.WatchlistEntry
 
 @Transactional
 class MarshallerService {
@@ -133,6 +133,7 @@ class MarshallerService {
 
       returnArray['hasFiles'] = movie.hasFiles()
 
+      returnArray['inWatchlist'] = movie.inWatchlist()
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
       return returnArray;
@@ -167,6 +168,7 @@ class MarshallerService {
       returnArray['genre'] = genericVideo.genre
       returnArray['hasFiles'] = genericVideo.hasFiles()
 
+      returnArray['inWatchlist'] = genericVideo.inWatchlist()
 
       return returnArray;
     }
@@ -195,6 +197,8 @@ class MarshallerService {
 
       returnArray['hasFiles'] = tvShow.getHasFiles()
       returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
+
+      returnArray['inWatchlist'] = tvShow.inWatchlist()
 
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
@@ -254,6 +258,7 @@ class MarshallerService {
         returnArray['vote_count'] = video.vote_count
         returnArray['popularity'] = video.popularity
         returnArray['original_language'] = video.original_language
+        returnArray['inWatchlist'] = video.inWatchlist()
 
         if(video instanceof Movie){
           returnArray['title'] = video.title
@@ -285,54 +290,16 @@ class MarshallerService {
     }
 
     JSON.createNamedConfig('dashWatchlist') { cfg ->
-      cfg.registerObjectMarshaller(Watchlist) { Watchlist watchlist ->
-        def returnArray = [:]
-        returnArray['id'] = watchlist.id
-        returnArray['dateCreated'] = watchlist.dateCreated
-        returnArray['lastUpdated'] = watchlist.lastUpdated
-        returnArray['isDeleted'] = watchlist.isDeleted
+      cfg.registerObjectMarshaller(WatchlistEntry) { WatchlistEntry watchlistEntry ->
+        def response = [:]
+        response['id'] = watchlistEntry.id
+        response['dateCreated'] = watchlistEntry.dateCreated
+        response['lastUpdated'] = watchlistEntry.lastUpdated
+        response['isDeleted'] = watchlistEntry.isDeleted
+        response['video'] = watchlistEntry.video
+        response['tvShow'] = watchlistEntry.tvShow
 
-        return returnArray;
-      }
-      cfg.registerObjectMarshaller(Video) { Video  video ->
-        def returnArray = [:]
-
-        returnArray['id'] = video.id
-        returnArray['dateCreated'] = video.dateCreated
-        returnArray['lastUpdated'] = video.lastUpdated
-        returnArray['overview'] = video.overview
-        returnArray['imdb_id'] = video.imdb_id
-        returnArray['vote_average'] = video.vote_average
-        returnArray['vote_count'] = video.vote_count
-        returnArray['popularity'] = video.popularity
-        returnArray['original_language'] = video.original_language
-
-        if(video instanceof Movie){
-          returnArray['title'] = video.title
-          returnArray['release_date'] = video.release_date
-          returnArray['poster_path'] = video.poster_path
-          returnArray['mediaType'] = 'movie'
-        }
-        if(video instanceof GenericVideo){
-          returnArray['title'] = video.title
-          returnArray['release_date'] = video.release_date
-          returnArray['poster_image_src'] = video.poster_image?.src
-          returnArray['mediaType'] = 'genericVideo'
-        }
-
-        if(video instanceof Episode){
-          returnArray['isEpisode'] = true
-          returnArray['title'] = video.show?.name
-          returnArray['poster_path'] = video.show?.poster_path
-          returnArray['episodeString'] = video.episodeString
-          returnArray['tvShowId'] = video.show?.id
-          returnArray['mediaType'] = 'tvShow'
-          returnArray['intro_start'] = video.intro_start
-          returnArray['intro_end'] = video.intro_end
-          returnArray['outro_start'] = video.outro_start
-        }
-
-        return returnArray
+        return response
       }
     }
 
@@ -402,6 +369,7 @@ class MarshallerService {
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
         returnArray['poster_image_src'] = movie.poster_image?.src
+        returnArray['inWatchlist'] = movie.inWatchlist()
 
         return returnArray;
       }
@@ -430,6 +398,7 @@ class MarshallerService {
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
         returnArray['genre'] = tvShow.genre
+        returnArray['inWatchlist'] = tvShow.inWatchlist()
 
         return returnArray;
       }
@@ -461,6 +430,7 @@ class MarshallerService {
 
         returnArray['tags'] = genericVideo.tags
         returnArray['genre'] = genericVideo.genre
+        returnArray['inWatchlist'] = genericVideo.inWatchlist()
 
         return returnArray;
       }
@@ -501,6 +471,7 @@ class MarshallerService {
 
 
         returnArray['hasFiles'] = movie.hasFiles()
+        returnArray['inWatchlist'] = movie.inWatchlist()
 //        returnArray['externalSubtitleUrl'] = movie.externalSubtitleUrl
 //        returnArray['externalVideoUrl'] = movie.externalVideoUrl
 

@@ -222,6 +222,15 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			}
 		},
 
+    watchlistEntry: {
+      create: function (item) {
+        return $http.post('watchlistEntry/create.json', {params: {id: item.id, mediaType: item.mediaType}});
+      },
+		  delete: function (item) {
+        return $http.delete('watchlistEntry/delete.json', {params: {id: item.id, mediaType: item.mediaType}})
+      }
+    },
+
 		genres: {
 			get: function (id) {
 				return $http.get('genre/show.json', {params: {id: id}});
@@ -328,12 +337,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/listRecommendations.json');
 			},
 
-			showWatchlist: function () {
-        return $http.get('dash/showWatchList.json');
-      },
-
-      showWatchlistVideos: function (params) {
-        return $http.get('dash/listWatchListVideos.json', {params: params});
+      listWatchlistEntries: function (params) {
+        return $http.get('dash/listWatchlistEntries.json', {params: params});
       }
 		},
 
