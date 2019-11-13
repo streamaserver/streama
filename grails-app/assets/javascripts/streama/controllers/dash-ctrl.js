@@ -53,7 +53,6 @@ angular.module('streama').controller('dashCtrl',
       apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
       apiService.dash.listRecommendations().then(onRecommendedLoaded);
       apiService.dash.listGenres().then(onGenreLoaded);
-      apiService.dash.listWatchlistEntries().then(onWatchlistEntriesLoaded);
 
     }
 
@@ -104,11 +103,6 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
-    function onWatchlistEntriesLoaded(response) {
-      var data = response.data;
-      vm.watchlistEntries = data;
-    }
-
     function showInitialSettingsWarning() {
       apiService.settings.list().then(function (response) {
         var data = response.data;
@@ -151,11 +145,13 @@ angular.module('streama').controller('dashCtrl',
 
     function addToWatchlist(item) {
       apiService.watchlistEntry.create(item).then(function (response) {
-        var type = item.mediaType;
-        if(type === 'genericVideo'){
-          type = 'video'
+        var type = handleVideoListsUpdate(item);
+        if(vm.watchlistEntry.list){
+          vm.watchlistEntry.list.push(response.data);
+        }else{
+          vm.watchlistEntry.list = [];
+          vm.watchlistEntry.list.push(response.data);
         }
-        console.log(response);
         alertify.success('The '+type+' was added to your watchlist.');
       });
     }
@@ -165,11 +161,39 @@ angular.module('streama').controller('dashCtrl',
       alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
         if (confirmed) {
           apiService.watchlistEntry.delete(item).then(function (response) {
-            console.log(response);
-            alertify.success('The '+item.type+' was added to your watchlist.');
+            var type = handleVideoListsUpdate(item);
+            _.remove(vm.watchlistEntry.list, function (watchlistEntry) {
+              return (watchlistEntry.video ? watchlistEntry.video.id : watchlistEntry.tvShow.id) === item.id
+            });
+            alertify.success('The '+type+' was removed from your watchlist.');
           });
         }
       })
+    }
+
+    function handleVideoListsUpdate(item){
+      var type = item.mediaType;
+      var index = -1;
+      switch (type) {
+        case "tvShow":
+          index = _.indexOf(vm.tvShow.list.map(function(element){return element.id}), item.id);
+          vm.tvShow.list[index].inWatchlist = !vm.tvShow.list[index].inWatchlist;
+          type = "show";
+          break;
+        case "movie":
+          index = _.indexOf(vm.movie.list.map(function(element){return element.id}), item.id);
+          vm.movie.list[index].inWatchlist = !vm.movie.list[index].inWatchlist;
+          type = 'movie';
+          break;
+        case "genericVideo":
+          index = _.indexOf(vm.genericVideo.list.map(function(element){return element.id}), item.id);
+          vm.genericVideo.list[index].inWatchlist = !vm.genericVideo.list[index].inWatchlist;
+          type = 'video';
+          break;
+        default:
+          break;
+      }
+      return type
     }
 
     function applyFilter(item, filterObj) {

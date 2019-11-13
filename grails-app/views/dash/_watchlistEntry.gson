@@ -21,6 +21,7 @@ json g.render(watchlistEntry, [deep:true, includes: ['id', 'dateCreated', 'lastU
         poster_path movie.poster_path
         backdrop_path movie.backdrop_path
         poster_image_src movie.poster_image?.src
+        inWatchlist movie.inWatchlist()
       }
       if (watchlistEntry.video instanceof GenericVideo) {
         GenericVideo genericVideo = watchlistEntry.video as GenericVideo
@@ -28,6 +29,7 @@ json g.render(watchlistEntry, [deep:true, includes: ['id', 'dateCreated', 'lastU
         mediaType 'genericVideo'
         release_date genericVideo.release_date
         poster_image_src genericVideo.poster_image?.src
+        inWatchlist genericVideo.inWatchlist()
       }
     }
   }
@@ -39,6 +41,7 @@ json g.render(watchlistEntry, [deep:true, includes: ['id', 'dateCreated', 'lastU
       poster_image_src tvShow.poster_image?.src
       episodesWithFilesCount tvShow.getFilteredEpisodes().findAll{it.files}.size()
       episodesCount tvShow.getFilteredEpisodes().size()
+      inWatchlist tvShow.inWatchlist()
     }
   }
 }

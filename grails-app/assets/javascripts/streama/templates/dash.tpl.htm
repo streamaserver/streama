@@ -308,7 +308,7 @@
 
   <!----------------------------------------------Watchlist-------------------------------------------->
   <hr/>
-  <div ng-if="vm.watchlistEntries">
+  <div ng-if="vm.watchlistEntry.list.length">
     <h3>{{'DASHBOARD.WATCHLIST' | translate}}</h3>
 
     <div class="row dash-filter">
@@ -328,7 +328,7 @@
             <div class="play-text">
               <h4 ng-bind="::watchlistEntry.tvShow.name"></h4>
             </div>
-            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(watchlistEntry)"></i>
+            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(watchlistEntry.tvShow)"></i>
 
             <i class="info-icon ion-ios-information" ng-click="vm.showDetails(watchlistEntry.tvShow)"></i>
             <a class="play-icon ion-ios-play" ng-click="vm.fetchFirstEpisodeAndPlay(watchlistEntry.tvShow)"></a>
