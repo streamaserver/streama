@@ -437,71 +437,17 @@ class MarshallerService {
     }
 
     JSON.createNamedConfig('dashWatchlist') { cfg ->
-      cfg.registerObjectMarshaller(Watchlist) { WatchlistEntry watchlistEntry ->
+      cfg.registerObjectMarshaller(WatchlistEntry) { WatchlistEntry watchlistEntry ->
         def response = [:]
         response['id'] = watchlistEntry.id
         response['dateCreated'] = watchlistEntry.dateCreated
         response['lastUpdated'] = watchlistEntry.lastUpdated
 
-        return response;
-      }
-      cfg.registerObjectMarshaller(Video) { Video  video ->
-        def response = [:]
-
-        response['id'] = video.id
-        response['dateCreated'] = video.dateCreated
-        response['lastUpdated'] = video.lastUpdated
-        response['overview'] = video.overview
-        response['imdb_id'] = video.imdb_id
-        response['vote_average'] = video.vote_average
-        response['vote_count'] = video.vote_count
-        response['popularity'] = video.popularity
-        response['original_language'] = video.original_language
-        response['inWatchlist'] = video.inWatchlist()
-
-        if(video instanceof Movie){
-          response['title'] = video.title
-          response['release_date'] = video.release_date
-          response['poster_path'] = video.poster_path
-          response['mediaType'] = 'movie'
-
-        }
-        if(video instanceof GenericVideo){
-          response['title'] = video.title
-          response['release_date'] = video.release_date
-          response['poster_image_src'] = video.poster_image?.src
-          response['mediaType'] = 'genericVideo'
-        }
-
+        response['tvShow'] = watchlistEntry.tvShow
+        response['video'] = watchlistEntry.video
         return response;
       }
 
-      cfg.registerObjectMarshaller(TvShow){ TvShow tvShow ->
-        def response = [:]
-
-        response['id'] = tvShow.id
-        response['mediaType'] = 'tvShow'
-        response['dateCreated'] = tvShow.dateCreated
-        response['lastUpdated'] = tvShow.lastUpdated
-        response['poster_path'] = tvShow.poster_path
-        response['backdrop_path'] = tvShow.backdrop_path
-        response['first_air_date'] = tvShow.first_air_date
-        response['name'] = tvShow.name
-        response['overview'] = tvShow.overview
-        response['apiId'] = tvShow.apiId
-        response['imdb_id'] = tvShow.imdb_id
-        response['original_language'] = tvShow.original_language
-        response['vote_average'] = tvShow.vote_average
-        response['vote_count'] = tvShow.vote_count
-        response['popularity'] = tvShow.popularity
-        response['manualInput'] = tvShow.manualInput
-        response['poster_image_src'] = tvShow.poster_image?.src
-        response['hasFiles'] = tvShow.getHasFiles()
-        response['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
-        response['inWatchlist'] = tvShow.inWatchlist()
-
-        return response;
-      }
     }
 
     JSON.createNamedConfig('fullMovie') {  cfg ->
