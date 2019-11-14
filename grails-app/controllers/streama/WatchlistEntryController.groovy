@@ -3,13 +3,12 @@ package streama
 import grails.converters.JSON
 import grails.transaction.Transactional
 
-import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.NO_CONTENT
 
 class WatchlistEntryController {
 	static responseFormats = ['json', 'xml']
-  //static allowedMethods = [post:"POST", delete: "DELETE"]
+  static allowedMethods = [post:"POST", delete: "DELETE"]
 
   def springSecurityService
 
