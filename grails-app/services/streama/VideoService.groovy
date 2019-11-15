@@ -67,21 +67,24 @@ class VideoService {
     continueWatching.each { continueWatchingItem ->
       if (continueWatchingItem.video instanceof Episode) {
         ViewingStatus next = continueWatchingItem.video.getNextEpisode()?.getViewingStatus()
-        if(next != null) {
-          ViewingStatus newnext = new ViewingStatus() // we need a new opject
+
+        if(next != null) { // if a viewing status exists reset it to 0
+          ViewingStatus newnext = new ViewingStatus() // we need a new opject so the episode list still works
           InvokerHelper.setProperties(newnext, next.properties)
           next = newnext
-
-          next.currentPlayTime = 0
-          if(continueWatchingItem.video.outro_start != null) {
-            if(continueWatchingItem.video.outro_start <= continueWatchingItem.currentPlayTime) {
-              result.add(next)
-              return
-            }
-          } else if (continueWatchingItem.runtime && continueWatchingItem.currentPlayTime * 100 / continueWatchingItem.runtime > 95) {
+        } else {
+          next = new ViewingStatus()
+          next.video = continueWatchingItem.video.getNextEpisode()
+        }
+        next.currentPlayTime = 0
+        if(continueWatchingItem.video.outro_start != null) {
+          if(continueWatchingItem.video.outro_start <= continueWatchingItem.currentPlayTime) {
             result.add(next)
             return
           }
+        } else if (continueWatchingItem.runtime && continueWatchingItem.currentPlayTime * 100 / continueWatchingItem.runtime > 95) {
+          result.add(next)
+          return
         }
       }
       // default case, also adds non-applicable episodes
