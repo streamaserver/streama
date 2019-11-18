@@ -23,7 +23,24 @@
     font-size: 52px;
     line-height: 1em;
   }
-
+.watchlist-button{
+  .add-icon{
+    line-height: 1em;
+    font-size: 52px;
+    color: $primary;
+    position: relative;
+    left: 75px;
+    bottom: 51px;
+  }
+  .remove-icon{
+    line-height: 1em;
+    font-size: 52px;
+    color: $primary;
+    position: relative;
+    left: 75px;
+    bottom: 51px;
+  }
+}
   legend{
     border: none;
     padding: 0;

@@ -5,6 +5,7 @@ import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.NO_CONTENT
+import static org.springframework.http.HttpStatus.OK
 
 class WatchlistEntryController {
 	static responseFormats = ['json', 'xml']
@@ -51,6 +52,7 @@ class WatchlistEntryController {
     Long profileId = request.getHeader('profileId')?.toLong()
     Profile currentProfile = Profile.findById(profileId)
     WatchlistEntry watchlistEntry
+    def result
 
     if(params.mediaType == "tvShow"){
       def tvShow = TvShow.where {
@@ -62,18 +64,19 @@ class WatchlistEntryController {
         tvShow == tvShow
         isDeleted == false
       }.first()
+      result = tvShow
     }
     else {
       def video = Video.where {
         id == params.id
       }.first()
-
       watchlistEntry =  WatchlistEntry.where {
         user == currentUser
         profile == currentProfile
         video == video
         isDeleted == false
       }.first()
+      result = video
     }
 
     if(!watchlistEntry){
@@ -82,6 +85,7 @@ class WatchlistEntryController {
     }
     watchlistEntry.isDeleted = true
     watchlistEntry.save flush: true, failOnError: true
-    respond status: NO_CONTENT
+
+    respond result, [status: OK]
   }
 }

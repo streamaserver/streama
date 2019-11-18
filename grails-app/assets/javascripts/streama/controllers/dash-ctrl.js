@@ -38,8 +38,6 @@ angular.module('streama').controller('dashCtrl',
       } else {
         initMedia();
       }
-
-
     }
 
     function initMedia() {
@@ -135,11 +133,22 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function showDetails(media) {
-      //modalService.mediaDetailModal((media.tvShowId || media.id), media.mediaType); //{videoId: data.id}
       if(media.mediaType === 'episode'){
         modalService.mediaDetailModal({mediaId: media.tvShowId, mediaType: 'tvShow', isApiMovie: false});
       }else{
-        modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false});
+        modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false}, function (value) {
+          media.inWatchlist = value.video.inWatchlist;
+          var type = handleVideoListsUpdate(media);
+          if(value.video.inWatchlist && !media.inWatchlist){
+            var watchlistEntry = value.watchlistEntry;
+            vm.watchlistEntry.list.push(watchlistEntry);
+            alertify.success('The '+type+' was added to your watchlist.');
+          }else{
+            removeMediaFromList(vm.watchlistEntry.list, media);
+            alertify.success('The '+type+' was removed from your watchlist.');
+          }
+          vm.watchlistEntry.list.sort(function(a,b) { return (a.id < b.id) ? 1 : ((a.id > b.id) ? -1 : 0)});
+        });
       }
     }
 
@@ -163,13 +172,17 @@ angular.module('streama').controller('dashCtrl',
         if (confirmed) {
           apiService.watchlistEntry.delete(item).then(function (response) {
             var type = handleVideoListsUpdate(item);
-            _.remove(vm.watchlistEntry.list, function (watchlistEntry) {
-              return (watchlistEntry.video ? watchlistEntry.video.id : watchlistEntry.tvShow.id) === item.id
-            });
+            removeMediaFromList(vm.watchlistEntry.list, item);
             alertify.success('The '+type+' was removed from your watchlist.');
           });
         }
-      })
+      });
+    }
+
+    function removeMediaFromList(list, media){
+      _.remove(list, function (watchlistEntry) {
+        return (watchlistEntry.video ? watchlistEntry.video.id : watchlistEntry.tvShow.id) === media.id
+      });
     }
 
     function handleVideoListsUpdate(item){
@@ -177,17 +190,17 @@ angular.module('streama').controller('dashCtrl',
       var index = -1;
       switch (type) {
         case "tvShow":
-          index = _.indexOf(vm.tvShow.list.map(function(element){return element.id}), item.id);
+          index = _.findIndex(vm.tvShow.list, function(element) { return item.id === element.id});
           vm.tvShow.list[index].inWatchlist = !vm.tvShow.list[index].inWatchlist;
           type = "show";
           break;
         case "movie":
-          index = _.indexOf(vm.movie.list.map(function(element){return element.id}), item.id);
+          index = _.findIndex(vm.movie.list, function(element) { return item.id === element.id});
           vm.movie.list[index].inWatchlist = !vm.movie.list[index].inWatchlist;
           type = 'movie';
           break;
         case "genericVideo":
-          index = _.indexOf(vm.genericVideo.list.map(function(element){return element.id}), item.id);
+          index = _.findIndex(vm.genericVideo.list, function(element) { return item.id === element.id});
           vm.genericVideo.list[index].inWatchlist = !vm.genericVideo.list[index].inWatchlist;
           type = 'video';
           break;
@@ -195,6 +208,14 @@ angular.module('streama').controller('dashCtrl',
           break;
       }
       return type
+    }
+    
+    function onRemoveFromWatchlist(event, data) {
+      var type = handleVideoListsUpdate(data);
+      _.remove(vm.watchlistEntry.list, function (watchlistEntry) {
+        return (watchlistEntry.video ? watchlistEntry.video.id : watchlistEntry.tvShow.id) === data.id
+      });
+      alertify.success('The '+type+' was removed from your watchlist.');
     }
 
     function applyFilter(item, filterObj) {
