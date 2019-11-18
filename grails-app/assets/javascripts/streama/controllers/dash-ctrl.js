@@ -152,6 +152,7 @@ angular.module('streama').controller('dashCtrl',
           vm.watchlistEntry.list = [];
           vm.watchlistEntry.list.push(response.data);
         }
+        vm.watchlistEntry.list.sort(function(a,b) { return (a.id < b.id) ? 1 : ((a.id > b.id) ? -1 : 0)});
         alertify.success('The '+type+' was added to your watchlist.');
       });
     }

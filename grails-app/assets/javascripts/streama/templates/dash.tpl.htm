@@ -107,6 +107,49 @@
     <hr/>
   </div>
 
+  <!----------------------------------------------Watchlist-------------------------------------------->
+  <div ng-if="vm.watchlistEntry.list.length">
+    <h3>{{'DASHBOARD.WATCHLIST' | translate}}</h3>
+
+    <div class="row dash-filter">
+      <div class="col-md-3">
+        {{'DASHBOARD.SORT' | translate}}
+        <video-sort-order-dropdown ng-model="vm.watchlistEntry.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'watchlist'"></video-sort-order-dropdown>
+      </div>
+    </div>
+    <br>
+
+    <div class="media-list">
+      <div class="media-list-item media-poster-item" ng-repeat="watchlistEntry in vm.watchlistEntry.list track by watchlistEntry.id">
+        <div class="media-item" ng-if="watchlistEntry.tvShow">
+
+          <streama-video-image type="poster" size="300" video="watchlistEntry.tvShow"></streama-video-image>
+
+          <div class="play-text">
+            <h4 ng-bind="::watchlistEntry.tvShow.name"></h4>
+          </div>
+          <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(watchlistEntry.tvShow)"></i>
+
+          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(watchlistEntry.tvShow)"></i>
+          <a class="play-icon ion-ios-play" ng-click="vm.fetchFirstEpisodeAndPlay(watchlistEntry.tvShow)"></a>
+        </div>
+        <div class="media-item" ng-if="watchlistEntry.video">
+
+          <streama-video-image type="poster" size="300" video="watchlistEntry.video"></streama-video-image>
+
+          <div class="play-text">
+            <h4 ng-bind="::watchlistEntry.video.title"></h4>
+            <p ng-bind="::watchlistEntry.video.release_date.substring(0,4)"></p>
+          </div>
+          <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(watchlistEntry.video)"></i>
+
+          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(watchlistEntry.video)"></i>
+          <a class="play-icon ion-ios-play" ui-sref="player({videoId: watchlistEntry.video.id})"></a>
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </div>
   <!--   --------------- TV SHOWS ---------------------  -->
 
   <div ng-if="!vm.isDashSectionHidden('discover-shows') && (!$root.currentProfile.isChild || vm.tvShow.list.length)">
@@ -304,51 +347,5 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <!----------------------------------------------Watchlist-------------------------------------------->
-  <hr/>
-  <div ng-if="vm.watchlistEntry.list.length">
-    <h3>{{'DASHBOARD.WATCHLIST' | translate}}</h3>
-
-    <div class="row dash-filter">
-      <div class="col-md-3">
-        {{'DASHBOARD.SORT' | translate}}
-        <video-sort-order-dropdown ng-model="vm.watchlistEntry.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'watchlist'"></video-sort-order-dropdown>
-      </div>
-    </div>
-    <br>
-
-    <div class="media-list">
-      <div class="media-list-item media-poster-item" ng-repeat="watchlistEntry in vm.watchlistEntry.list track by watchlistEntry.id">
-        <div class="media-item" ng-if="watchlistEntry.tvShow">
-
-            <streama-video-image type="poster" size="300" video="watchlistEntry.tvShow"></streama-video-image>
-
-            <div class="play-text">
-              <h4 ng-bind="::watchlistEntry.tvShow.name"></h4>
-            </div>
-            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(watchlistEntry.tvShow)"></i>
-
-            <i class="info-icon ion-ios-information" ng-click="vm.showDetails(watchlistEntry.tvShow)"></i>
-            <a class="play-icon ion-ios-play" ng-click="vm.fetchFirstEpisodeAndPlay(watchlistEntry.tvShow)"></a>
-        </div>
-        <div class="media-item" ng-if="watchlistEntry.video">
-
-            <streama-video-image type="poster" size="300" video="watchlistEntry.movie"></streama-video-image>
-
-            <div class="play-text">
-              <h4 ng-bind="::watchlistEntry.video.title"></h4>
-              <p ng-bind="::watchlistEntry.video.release_date.substring(0,4)"></p>
-            </div>
-            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(watchlistEntry.video)"></i>
-
-            <i class="info-icon ion-ios-information" ng-click="vm.showDetails(watchlistEntry.video)"></i>
-            <a class="play-icon ion-ios-play" ui-sref="player({videoId: watchlistEntry.video.id})"></a>
-        </div>
-      </div>
-    </div>
-
-
   </div>
 </div>

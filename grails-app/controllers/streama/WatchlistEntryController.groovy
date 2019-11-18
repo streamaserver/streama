@@ -60,6 +60,7 @@ class WatchlistEntryController {
         user == currentUser
         profile == currentProfile
         tvShow == tvShow
+        isDeleted == false
       }.first()
     }
     else {
@@ -71,6 +72,7 @@ class WatchlistEntryController {
         user == currentUser
         profile == currentProfile
         video == video
+        isDeleted == false
       }.first()
     }
 
