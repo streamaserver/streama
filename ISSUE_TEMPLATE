@@ -1,31 +1,3 @@
---------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------
-Thanks for reporting an issue for Streama, please review the instructions below before submitting the 
-issue. 
-
-*****YOUR ISSUE WILL BE CLOSED IF IT DOES NOT USE THIS TEMPLATE OR IT IS INCOMPLETE!*****
-
-Feature requests can be done without this template.  
-If you have multiple things to report please create one issue per item.  
-Please use english when reporting issues.  
-
-If you are unsure about something and the issue is more of a question a better 
-place to ask questions is on [discord](https://discord.gg/CJEHWX9).
-DO NOT use the issue tracker to ask questions.
-
-Please fill out the sections below the header and review the task list below.  
-Task List:
-- [ ] Issue description provided
-- [ ] Steps to reproduce provided
-- [ ] Stacktrace (if present) provided
-- [ ] Screenshots (if UI related) provided
-- [ ] Full description of the issue provided
-
-
-**PLEASE REMOVE THE ABOVE SECTION BEFORE SUBMISSION**
---------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------
-
 
 ### Issue description
 
@@ -37,11 +9,9 @@ Task List:
 3. TODO
 
 ### Expected Behaviour
-
 Tell us what should happen
 
 ### Actual Behaviour
-
 Tell us what happens instead
 
 ### Environment Information
