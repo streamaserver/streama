@@ -139,11 +139,11 @@ angular.module('streama').controller('dashCtrl',
         modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false}, function (value) {
           media.inWatchlist = value.video.inWatchlist;
           var type = handleVideoListsUpdate(media);
-          if(value.video.inWatchlist && !media.inWatchlist){
+          if(value.status === 'added'){
             var watchlistEntry = value.watchlistEntry;
             vm.watchlistEntry.list.push(watchlistEntry);
             alertify.success('The '+type+' was added to your watchlist.');
-          }else{
+          }else if (value.status === 'removed'){
             removeMediaFromList(vm.watchlistEntry.list, media);
             alertify.success('The '+type+' was removed from your watchlist.');
           }
@@ -253,7 +253,6 @@ angular.module('streama').controller('dashCtrl',
         var hiddenDashSections = hiddenDashSectionSetting.value.split(',');
         return (hiddenDashSections.indexOf(sectionName) > -1);
       }
-
     }
 
 	});
