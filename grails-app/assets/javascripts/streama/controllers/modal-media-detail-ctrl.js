@@ -3,6 +3,7 @@
 angular.module('streama').controller('modalMediaDetailCtrl', [
   '$scope', '$uibModalInstance', '$rootScope', 'config', '$state', 'apiService',
   function ($scope, $uibModalInstance, $rootScope, config, $state, apiService) {
+    var action;
 
     $scope.mediaType = config.mediaType;
     var mediaId = config.mediaId;
@@ -46,7 +47,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
       $uibModalInstance.close({
         watchlistEntry: $scope.watchlistEntry,
         video: $scope.media,
-        status: $scope.status
+        action: action
       });
       if($state.current.name === 'dash'){
         $state.go('dash', {mediaModal: null, mediaType: null});
@@ -84,7 +85,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
         var data = response.data;
         $scope.media = data.video ? data.video : data.tvShow;
         $scope.watchlistEntry = data;
-        $scope.status = 'added'
+        action = 'added'
       });
     }
 
@@ -95,7 +96,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
           apiService.watchlistEntry.delete(item).then(function (response) {
             var data = response.data;
             $scope.media = data;
-            $scope.status = 'removed'
+            action = 'removed'
           });
         }
       })

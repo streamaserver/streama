@@ -137,13 +137,12 @@ angular.module('streama').controller('dashCtrl',
         modalService.mediaDetailModal({mediaId: media.tvShowId, mediaType: 'tvShow', isApiMovie: false});
       }else{
         modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false}, function (value) {
-          media.inWatchlist = value.video.inWatchlist;
           var type = handleVideoListsUpdate(media);
-          if(value.status === 'added'){
+          if(value.action === 'added'){
             var watchlistEntry = value.watchlistEntry;
             vm.watchlistEntry.list.push(watchlistEntry);
             alertify.success('The '+type+' was added to your watchlist.');
-          }else if (value.status === 'removed'){
+          }else if (value.action === 'removed'){
             removeMediaFromList(vm.watchlistEntry.list, media);
             alertify.success('The '+type+' was removed from your watchlist.');
           }
