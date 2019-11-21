@@ -1,5 +1,5 @@
 <%@ page import="streama.Settings" %>
-<header class="main" ng-if="!isCurrentState('player')">
+<header class="main navbar-fixed-top" ng-if="!isCurrentState('player')" streama-header-directive>
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
       <g:imgSetting setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>
@@ -31,6 +31,16 @@
         </ul>
       </div>
     </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse-nav">
+      <ul class="nav navbar-nav">
+        <li><a ng-click="getByDashType('home')">{{'DASHBOARD.HOME' | translate}}</a></li>
+        <li><a ng-click="getByDashType('tv_shows')">{{'DASHBOARD.TV_SHOWS' | translate}}</a></li>
+        <li><a ng-click="getByDashType('movies')">{{'DASHBOARD.MOVIES' | translate}}</a></li>
+        <li><a ng-click="getByDashType('watchlist')">{{'DASHBOARD.MY_LIST' | translate}}</a></li>
+      </ul>
+    </div>
+
+    <i class="ion-navicon navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-nav"></i>
   </div>
 
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
