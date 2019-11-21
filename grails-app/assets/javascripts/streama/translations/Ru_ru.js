@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Ваша сессия истекла. Пожалуйста, войдите снова.'
 		},
 		DASHBOARD: {
+      HOME: 'Домашняя страница',
+      TV_SHOWS: 'ТВ шоу',
+      MOVIES: 'Фильмы',
+      MY_LIST:'Мой список',
 			TITLE: 'Главная',
 			RECOMMENDATIONS: 'Рекомендовано для вас',
 			NEW_RELEASES: 'Новое на сайте',

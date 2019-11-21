@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Din session er udløbet siden din sidste aktivitet. Venligst log ind igen.'
 		},
 		DASHBOARD: {
+      HOME: 'Hjemmeside',
+      TV_SHOWS: 'TV-shows',
+      MOVIES: 'Films',
+      MY_LIST:'Min liste',
 			TITLE: 'Betjeningspanel',
 			RECOMMENDATIONS: 'Foreslået til dig',
 			NEW_RELEASES: 'Nye Udgivelser',

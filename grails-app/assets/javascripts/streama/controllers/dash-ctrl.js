@@ -13,6 +13,8 @@ angular.module('streama').controller('dashCtrl',
     vm.loadingRecommendations = true;
     vm.isDashSectionHidden = isDashSectionHidden;
 
+    $rootScope.getByDashType = getByDashType;
+
     $scope.$on('changedGenre', onChangedGenre);
 
     init();
@@ -151,6 +153,29 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
+    function getByDashType(dashType) {
+      console.log(dashType);
+      switch (dashType) {
+        case 'home':
+          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "";
+          $state.go('dash');
+          break;
+        case 'tv_shows':
+          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "new-releases,continue-watching,recommends,watchlist,discover-movies,discover-generic";
+          break;
+        case 'movies':
+          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "new-releases,continue-watching,recommends,watchlist,discover-shows,discover-generic";
+          break;
+        case 'watchlist':
+          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "new-releases,continue-watching,recommends,discover-shows,discover-movies,discover-generic";
+          break;
+        default:
+          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "";
+          break;
+      }
+
+    }
+
     function addToWatchlist(item) {
       apiService.watchlistEntry.create(item).then(function (response) {
         var type = handleVideoListsUpdate(item);
@@ -186,27 +211,32 @@ angular.module('streama').controller('dashCtrl',
 
     function handleVideoListsUpdate(item){
       var type = item.mediaType;
-      var index = -1;
       switch (type) {
         case "tvShow":
-          index = _.findIndex(vm.tvShow.list, function(element) { return item.id === element.id});
-          vm.tvShow.list[index].inWatchlist = !vm.tvShow.list[index].inWatchlist;
+          watchlistStatusHandler(vm.tvShow.list, item);
           type = "show";
           break;
         case "movie":
-          index = _.findIndex(vm.movie.list, function(element) { return item.id === element.id});
-          vm.movie.list[index].inWatchlist = !vm.movie.list[index].inWatchlist;
+          watchlistStatusHandler(vm.movie.list, item);
           type = 'movie';
           break;
         case "genericVideo":
-          index = _.findIndex(vm.genericVideo.list, function(element) { return item.id === element.id});
-          vm.genericVideo.list[index].inWatchlist = !vm.genericVideo.list[index].inWatchlist;
+          watchlistStatusHandler(vm.genericVideo.list, item);
           type = 'video';
           break;
         default:
           break;
       }
+      watchlistStatusHandler(vm.newReleases, item);
+      watchlistStatusHandler(vm.continueWatching, item);
       return type
+    }
+
+    function watchlistStatusHandler(mediaList, item){
+      var index = _.findIndex(mediaList, function(element) { return item.id === element.id});
+      if(index > 0){
+        mediaList[index].inWatchlist = !mediaList[index].inWatchlist
+      }
     }
     
     function onRemoveFromWatchlist(event, data) {

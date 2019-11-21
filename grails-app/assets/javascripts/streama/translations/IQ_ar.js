@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'انتهت صلاحية الدخول منذ اخر نشاط. الرجاء تسجيل الدخول مرة اخرى.'
 		},
 		DASHBOARD: {
+      HOME: 'الصفحة الرئيسية',
+      TV_SHOWS: 'عرض تلفزيوني',
+      MOVIES: 'أفلام',
+      MY_LIST:'قائمتي',
 			TITLE: 'الواجهة الرئيسية',
 			RECOMMENDATIONS: 'افضل الافلام',
 			NEW_RELEASES: 'المصدرة حديثا',

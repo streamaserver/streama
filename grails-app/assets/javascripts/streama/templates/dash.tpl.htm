@@ -1,14 +1,19 @@
 
 <div class="dashboard">
+  <!--------------------------new releases--------------------------->
   <div ng-if="vm.newReleases.length && !vm.selectedGenre && !vm.isDashSectionHidden('new-releases')">
     <h3>{{'DASHBOARD.NEW_RELEASES' | translate}}</h3>
-
 
     <div uis-owl-carousel class="new-releases-slider" >
       <div ng-repeat="newRelease in vm.newReleases" class="new-releases-slide">
         <img class="poster-image" ng-src="https://image.tmdb.org/t/p/w342/{{newRelease.media.poster_path}}" class="pull-left">
         <div class="image-background" style="background-image: url('https://image.tmdb.org/t/p/w1280/{{newRelease.media.backdrop_path}}')">
-          <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(video)"></i>
+          <div ng-if="!newRelease.media.inWatchlist">
+            <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(newRelease.media)"></i>
+          </div>
+          <div ng-if="newRelease.media.inWatchlist">
+            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(newRelease.media)"></i>
+          </div>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(newRelease.media)"></i>
           <div class="new-release-footer">
@@ -29,9 +34,12 @@
 
   <h2 class="genre-display" ng-if="$root.selectedGenre">{{'DASHBOARD.LOOKING_AT_GENRE' | translate}} <strong ng-bind="$root.selectedGenre.name"></strong></h2>
 
-  <div ng-if="vm.continueWatching.length && !$root.selectedGenre && !vm.isDashSectionHidden('continue-watching')">
-    <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}</h3>
+  <!----------------------------------------------continue watching-------------------------------------------->
 
+  <div ng-if="vm.continueWatching.length && !$root.selectedGenre && !vm.isDashSectionHidden('continue-watching')">
+    <hr/>
+
+    <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}</h3>
 
     <div class="media-list media-list-continue-watching">
       <div class="media-list-item media-poster-item" ng-repeat="viewingStatus in vm.continueWatching">
@@ -45,10 +53,10 @@
               {{'DASHBOARD.MARK_COMPLETED' | translate}}</button>
             <p ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span></p>
           </div>
-          <div ng-if="viewingStatus.video.inWatchlist">
+          <div ng-if="!viewingStatus.video.inWatchlist">
             <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(viewingStatus.video)"></i>
           </div>
-          <div ng-if="!viewingStatus.video.inWatchlist">
+          <div ng-if="viewingStatus.video.inWatchlist">
             <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(viewingStatus.video)"></i>
           </div>
 
@@ -71,14 +79,13 @@
         </div>
       </div>
     </div>
-
-
-    <hr/>
   </div>
 
-  <div ng-if="vm.recommendations.length && !$root.selectedGenre && !vm.isDashSectionHidden('recommends')">
-    <h3>{{'DASHBOARD.RECOMMENDATIONS' | translate}}</h3>
+  <!----------------------------------------------recommendations-------------------------------------------->
 
+  <div ng-if="vm.recommendations.length && !$root.selectedGenre && !vm.isDashSectionHidden('recommends')">
+    <hr/>
+    <h3>{{'DASHBOARD.RECOMMENDATIONS' | translate}}</h3>
 
     <div class="media-list media-list-continue-watching">
       <div class="media-list-item media-poster-item" ng-repeat="video in vm.recommendations track by video.id">
@@ -103,12 +110,11 @@
       </div>
     </div>
 
-
-    <hr/>
   </div>
 
-  <!----------------------------------------------Watchlist-------------------------------------------->
-  <div ng-if="vm.watchlistEntry.list.length">
+  <!----------------------------------------------watchlist-------------------------------------------->
+  <div ng-if="!vm.isDashSectionHidden('watchlist') && vm.watchlistEntry.list.length">
+    <hr/>
     <h3>{{'DASHBOARD.WATCHLIST' | translate}}</h3>
 
     <div class="row dash-filter">
@@ -148,11 +154,12 @@
         </div>
       </div>
     </div>
-    <hr/>
   </div>
+
   <!--   --------------- TV SHOWS ---------------------  -->
 
   <div ng-if="!vm.isDashSectionHidden('discover-shows') && (!$root.currentProfile.isChild || vm.tvShow.list.length)">
+    <hr/>
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_SHOWS' | translate}}</span>
       <span ng-show="$root.selectedGenre">{{::$root.selectedGenre.name}} TV Shows</span>
@@ -217,13 +224,12 @@
     <div class="text-center" ng-if="vm.tvShow.total > vm.tvShow.list.length">
       <button class="btn btn-primary btn-outline" ng-click="vm.tvShow.loadMore()">Load more ...</button>
     </div>
-
-    <hr/>
   </div>
 
   <!--   --------------- MOVIES ---------------------  -->
 
   <div ng-if="!vm.isDashSectionHidden('discover-movies') && (!$root.currentProfile.isChild || vm.movie.list.length)">
+    <hr/>
     <h3>
       <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_MOVIES' | translate}}</span>
       <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>
@@ -290,13 +296,12 @@
     <div class="text-center" ng-if="vm.movie.total > vm.movie.list.length">
       <button class="btn btn-primary btn-outline" ng-click="vm.movie.loadMore()">Load more ...</button>
     </div>
-
   </div>
 
   <!--   --------------- GENERIC VIDEOS ---------------------  -->
 
-  <hr/>
   <div ng-if="vm.genericVideo.list.length && !vm.isDashSectionHidden('discover-generic')">
+    <hr/>
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_OTHER_VIDEOS' | translate}}</span>
       <span ng-show="$root.selectedGenre">{{::$root.selectedGenre.name}} Videos</span>

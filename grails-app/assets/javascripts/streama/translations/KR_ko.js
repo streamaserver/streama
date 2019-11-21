@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: '마지막 활동 이후 세션이 만료되었습니다. 다시 로그인하십시오.'
 		},
 		DASHBOARD: {
+      HOME: '집',
+      TV_SHOWS: 'TV 프로그램',
+      MOVIES: '영화 산업',
+      MY_LIST:'나의 목록',
 			TITLE: '대시보드',
 			NEW_RELEASES: '신작',
 			CONTINUE_WATCHING: '계속해서 보기',

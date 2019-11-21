@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Your session expired since your last activity. Please login again.'
     },
     DASHBOARD: {
+      HOME: 'Home',
+      TV_SHOWS: 'TV Shows',
+      MOVIES: 'Movies',
+      MY_LIST:'My list',
       TITLE: 'Dashboard',
       RECOMMENDATIONS: 'Recommendations for you',
       NEW_RELEASES: 'New Releases',

@@ -14,6 +14,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Deine Sitzung ist abgelaufen. Bitte logge dich erneut ein.'
 		},
 		DASHBOARD: {
+      HOME: 'Startseite',
+      TV_SHOWS: 'Fernsehshows',
+      MOVIES: 'Filme',
+      MY_LIST:'Meine Liste',
 			TITLE: 'Dashboard',
 			NEW_RELEASES: 'Neuerscheinungen',
 			CONTINUE_WATCHING: 'Weiterschauen',

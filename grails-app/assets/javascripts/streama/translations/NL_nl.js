@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Je sessie is verlopen sinds je laatste activiteit. Log alsjeblieft nogmaals in.'
     },
     DASHBOARD: {
+      HOME: 'Huis',
+      TV_SHOWS: 'Tv shows',
+      MOVIES: 'Films',
+      MY_LIST:'Mijn lijst',
       TITLE: 'Dashboard',
       RECOMMENDATIONS: 'Aanbevelingen voor u',
       NEW_RELEASES: 'Nieuw uitgebracht',
