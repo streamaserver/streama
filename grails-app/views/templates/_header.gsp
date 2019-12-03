@@ -33,10 +33,10 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-nav">
       <ul class="nav navbar-nav">
-        <li><a ng-click="getByDashType('home')">{{'DASHBOARD.HOME' | translate}}</a></li>
-        <li><a ng-click="getByDashType('tv_shows')">{{'DASHBOARD.TV_SHOWS' | translate}}</a></li>
-        <li><a ng-click="getByDashType('movies')">{{'DASHBOARD.MOVIES' | translate}}</a></li>
-        <li><a ng-click="getByDashType('watchlist')">{{'DASHBOARD.MY_LIST' | translate}}</a></li>
+        <li><a ng-click="changeDashType('home')">{{'DASHBOARD.HOME' | translate}}</a></li>
+        <li><a ng-click="changeDashType('discover-shows')">{{'DASHBOARD.TV_SHOWS' | translate}}</a></li>
+        <li><a ng-click="changeDashType('discover-movies')">{{'DASHBOARD.MOVIES' | translate}}</a></li>
+        <li><a ng-click="changeDashType('watchlist')">{{'DASHBOARD.MY_LIST' | translate}}</a></li>
       </ul>
     </div>
 

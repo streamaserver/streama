@@ -1,6 +1,6 @@
 angular.module('streama')
   .run(function ($window, $rootScope, $state, localStorageService, apiService, modalService,
-                 userService, profileService, $translate) {
+                 userService, profileService, $translate, $timeout) {
 
 	$rootScope.baseData = {};
 	$rootScope.isCurrentState = isCurrentState;
@@ -9,6 +9,7 @@ angular.module('streama')
 	$rootScope.selectFromSearch = selectFromSearch;
 	$rootScope.toggleGenreMenu = toggleGenreMenu;
 	$rootScope.changeGenre = changeGenre;
+	$rootScope.changeDashType = changeDashType;
 	$rootScope.loginUser = loginUser;
 
 
@@ -62,6 +63,10 @@ angular.module('streama')
 		$state.go('dash', {genreId: (genre ? genre.id : null)});
 		$rootScope.$broadcast('changedGenre', genre);
 	}
+
+	function changeDashType(dashType) {
+    $state.go('dash', {dashType: dashType}, {reload: true});
+  }
 
 	function loginUser() {
 		$window.location.assign('/login/login');

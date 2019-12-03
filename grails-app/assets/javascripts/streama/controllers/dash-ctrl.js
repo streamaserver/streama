@@ -12,8 +12,7 @@ angular.module('streama').controller('dashCtrl',
     vm.markCompleted = markCompleted;
     vm.loadingRecommendations = true;
     vm.isDashSectionHidden = isDashSectionHidden;
-
-    $rootScope.getByDashType = getByDashType;
+    vm.showDashboardWithDashType = showDashboardWithDashType;
 
     $scope.$on('changedGenre', onChangedGenre);
 
@@ -21,7 +20,9 @@ angular.module('streama').controller('dashCtrl',
 
     function init() {
       if ($rootScope.currentUser.isAdmin) {
-        showInitialSettingsWarning();
+        showInitialSettingsWarning().then(showDashboardWithDashType);
+      }else{
+        showDashboardWithDashType();
       }
 
       if ($stateParams.mediaModal) {
@@ -104,7 +105,8 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function showInitialSettingsWarning() {
-      apiService.settings.list().then(function (response) {
+      var settingsPromise = apiService.settings.list();
+      settingsPromise.then(function (response) {
         var data = response.data;
         $scope.settings = data;
         var TheMovieDbAPI = _.find(data, {settingsKey: 'Upload Directory'});
@@ -115,6 +117,7 @@ angular.module('streama').controller('dashCtrl',
           });
         }
       });
+      return settingsPromise;
     }
 
     function onChangedGenre(e, genre) {
@@ -153,27 +156,18 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
-    function getByDashType(dashType) {
-      console.log(dashType);
-      switch (dashType) {
-        case 'home':
-          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "";
-          $state.go('dash');
-          break;
-        case 'tv_shows':
-          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "new-releases,continue-watching,recommends,watchlist,discover-movies,discover-generic";
-          break;
-        case 'movies':
-          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "new-releases,continue-watching,recommends,watchlist,discover-shows,discover-generic";
-          break;
-        case 'watchlist':
-          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "new-releases,continue-watching,recommends,discover-shows,discover-movies,discover-generic";
-          break;
-        default:
-          _.find($scope.settings, {name: 'hidden_dash_sections'}).value = "";
-          break;
+    function showDashboardWithDashType() {
+      var dashType = $state.params.dashType;
+      var hiddenSections = ["new-releases","continue-watching","recommends","watchlist","discover-movies","discover-shows","discover-generic"];
+      if(dashType === "home"){
+        hiddenSections = [];
+      }else{
+        _.remove(hiddenSections, function (item) { return item === dashType });
       }
-
+      var setting = _.find($scope.settings, {name: 'hidden_dash_sections'});
+      if(setting){
+        setting.value = hiddenSections.toString().replace(" ","");
+      }
     }
 
     function addToWatchlist(item) {
@@ -237,14 +231,6 @@ angular.module('streama').controller('dashCtrl',
       if(index > 0){
         mediaList[index].inWatchlist = !mediaList[index].inWatchlist
       }
-    }
-    
-    function onRemoveFromWatchlist(event, data) {
-      var type = handleVideoListsUpdate(data);
-      _.remove(vm.watchlistEntry.list, function (watchlistEntry) {
-        return (watchlistEntry.video ? watchlistEntry.video.id : watchlistEntry.tvShow.id) === data.id
-      });
-      alertify.success('The '+type+' was removed from your watchlist.');
     }
 
     function applyFilter(item, filterObj) {
