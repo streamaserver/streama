@@ -56,7 +56,6 @@ angular.module('streama').controller('dashCtrl',
       apiService.dash.listGenres().then(onGenreLoaded);
 
     }
-
     // HOISTED FUNCTIONS BELOW
 
     function onRecommendedLoaded(response) {
@@ -166,7 +165,7 @@ angular.module('streama').controller('dashCtrl',
       }
       var setting = _.find($scope.settings, {name: 'hidden_dash_sections'});
       if(setting){
-        setting.value = hiddenSections.toString().replace(" ","");
+        setting.value = hiddenSections.toString();
       }
     }
 
