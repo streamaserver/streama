@@ -1,6 +1,6 @@
 angular.module('streama')
   .run(function ($window, $rootScope, $state, localStorageService, apiService, modalService,
-                 userService, profileService, $translate, $timeout) {
+                 userService, profileService, $translate) {
 
 	$rootScope.baseData = {};
 	$rootScope.isCurrentState = isCurrentState;

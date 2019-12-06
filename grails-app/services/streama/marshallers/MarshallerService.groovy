@@ -289,20 +289,6 @@ class MarshallerService {
       }
     }
 
-    JSON.createNamedConfig('dashWatchlist') { cfg ->
-      cfg.registerObjectMarshaller(WatchlistEntry) { WatchlistEntry watchlistEntry ->
-        def response = [:]
-        response['id'] = watchlistEntry.id
-        response['dateCreated'] = watchlistEntry.dateCreated
-        response['lastUpdated'] = watchlistEntry.lastUpdated
-        response['isDeleted'] = watchlistEntry.isDeleted
-        response['video'] = watchlistEntry.video
-        response['tvShow'] = watchlistEntry.tvShow
-
-        return response
-      }
-    }
-
     JSON.createNamedConfig('firstEpisode') {  cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
         def returnArray = [:]
@@ -436,7 +422,7 @@ class MarshallerService {
       }
     }
 
-    JSON.createNamedConfig('dashWatchlist') { cfg ->
+    JSON.createNamedConfig('watchlist') { cfg ->
       cfg.registerObjectMarshaller(WatchlistEntry) { WatchlistEntry watchlistEntry ->
         def response = [:]
         response['id'] = watchlistEntry.id

@@ -8,6 +8,10 @@
       <div ng-repeat="newRelease in vm.newReleases" class="new-releases-slide">
         <img class="poster-image" ng-src="https://image.tmdb.org/t/p/w342/{{newRelease.media.poster_path}}" class="pull-left">
         <div class="image-background" style="background-image: url('https://image.tmdb.org/t/p/w1280/{{newRelease.media.backdrop_path}}')">
+          <div>
+            <i ng-class="newRelease.media.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
+               ng-click="vm.handleWatchlistUpdate(newRelease.media.inWatchlist ? 'removed' : 'added', newRelease.media)"></i>
+          </div>
           <div ng-if="!newRelease.media.inWatchlist">
             <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(newRelease.media)"></i>
           </div>

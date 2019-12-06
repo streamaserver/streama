@@ -7,6 +7,7 @@ angular.module('streama').controller('dashCtrl',
     var LIST_MAX = 30;
 		vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
     vm.showDetails = showDetails;
+    vm.handleWatchlistUpdate = handleWatchlistUpdate;
     vm.addToWatchlist = addToWatchlist;
     vm.removeFromWatchlist = removeFromWatchlist;
     vm.markCompleted = markCompleted;
@@ -47,7 +48,7 @@ angular.module('streama').controller('dashCtrl',
       vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser.data);
       vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser.data);
       vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser.data);
-      vm.watchlistEntry = mediaListService.init(apiService.dash.listWatchlistEntries, {sort: 'id', order: 'DESC'}, currentUser.data);
+      vm.watchlistEntry = mediaListService.init(apiService.watchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser.data);
 
       apiService.tag.list().then(onTagsLoaded);
       apiService.dash.listNewReleases().then(onNewReleasesLoaded);
@@ -140,17 +141,8 @@ angular.module('streama').controller('dashCtrl',
       if(media.mediaType === 'episode'){
         modalService.mediaDetailModal({mediaId: media.tvShowId, mediaType: 'tvShow', isApiMovie: false});
       }else{
-        modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false}, function (value) {
-          var type = handleVideoListsUpdate(media);
-          if(value.action === 'added'){
-            var watchlistEntry = value.watchlistEntry;
-            vm.watchlistEntry.list.push(watchlistEntry);
-            alertify.success('The '+type+' was added to your watchlist.');
-          }else if (value.action === 'removed'){
-            removeMediaFromList(vm.watchlistEntry.list, media);
-            alertify.success('The '+type+' was removed from your watchlist.');
-          }
-          vm.watchlistEntry.list.sort(function(a,b) { return (a.id < b.id) ? 1 : ((a.id > b.id) ? -1 : 0)});
+        modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false}, function (response) {
+          updateWatchlist(response.action, vm.watchlistEntry.list, media, response.watchlistEntry);
         });
       }
     }
@@ -158,7 +150,7 @@ angular.module('streama').controller('dashCtrl',
     function showDashboardWithDashType() {
       var dashType = $state.params.dashType;
       var hiddenSections = ["new-releases","continue-watching","recommends","watchlist","discover-movies","discover-shows","discover-generic"];
-      if(dashType === "home"){
+      if(dashType === "home" || !dashType){
         hiddenSections = [];
       }else{
         _.remove(hiddenSections, function (item) { return item === dashType });
@@ -169,17 +161,21 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
+    function handleWatchlistUpdate(action, item){
+      switch (action) {
+        case "added":
+          addToWatchlist(item);
+          break;
+        case "removed":
+          removeFromWatchlist(item);
+          break;
+      }
+    }
+
     function addToWatchlist(item) {
       apiService.watchlistEntry.create(item).then(function (response) {
-        var type = handleVideoListsUpdate(item);
-        if(vm.watchlistEntry.list){
-          vm.watchlistEntry.list.push(response.data);
-        }else{
-          vm.watchlistEntry.list = [];
-          vm.watchlistEntry.list.push(response.data);
-        }
-        vm.watchlistEntry.list.sort(function(a,b) { return (a.id < b.id) ? 1 : ((a.id > b.id) ? -1 : 0)});
-        alertify.success('The '+type+' was added to your watchlist.');
+        vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
+        updateWatchlist("added", vm.watchlistEntry.list, item, response.data);
       });
     }
 
@@ -188,12 +184,22 @@ angular.module('streama').controller('dashCtrl',
       alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
         if (confirmed) {
           apiService.watchlistEntry.delete(item).then(function (response) {
-            var type = handleVideoListsUpdate(item);
-            removeMediaFromList(vm.watchlistEntry.list, item);
-            alertify.success('The '+type+' was removed from your watchlist.');
+            updateWatchlist("removed", vm.watchlistEntry.list, item);
           });
         }
       });
+    }
+
+    function updateWatchlist(action, list, media, watchlistEntry) {
+      var type = handleVideoListsUpdate(media);
+      if(action === 'added'){
+        list.push(watchlistEntry);
+        alertify.success('The '+type+' was added to your watchlist.');
+      }else if (action === 'removed'){
+        removeMediaFromList(list, media);
+        alertify.success('The '+type+' was removed from your watchlist.');
+      }
+      list.sort(function(a,b) { return (a.id < b.id) ? 1 : ((a.id > b.id) ? -1 : 0)});
     }
 
     function removeMediaFromList(list, media){
@@ -202,26 +208,26 @@ angular.module('streama').controller('dashCtrl',
       });
     }
 
-    function handleVideoListsUpdate(item){
-      var type = item.mediaType;
+    function handleVideoListsUpdate(media){
+      var type = media.mediaType;
       switch (type) {
         case "tvShow":
-          watchlistStatusHandler(vm.tvShow.list, item);
+          watchlistStatusHandler(vm.tvShow.list, media);
           type = "show";
           break;
         case "movie":
-          watchlistStatusHandler(vm.movie.list, item);
+          watchlistStatusHandler(vm.movie.list, media);
           type = 'movie';
           break;
         case "genericVideo":
-          watchlistStatusHandler(vm.genericVideo.list, item);
+          watchlistStatusHandler(vm.genericVideo.list, media);
           type = 'video';
           break;
         default:
           break;
       }
-      watchlistStatusHandler(vm.newReleases, item);
-      watchlistStatusHandler(vm.continueWatching, item);
+      watchlistStatusHandler(vm.newReleases, media);
+      watchlistStatusHandler(vm.continueWatching, media);
       return type
     }
 

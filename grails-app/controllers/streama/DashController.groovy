@@ -230,28 +230,4 @@ class DashController {
     render "OK"
   }
 
-  def listWatchlistEntries(){
-    User currentUser = springSecurityService.getCurrentUser()
-    Long profileId = request.getHeader('profileId')?.toLong()
-    Profile currentProfile = Profile.findById(profileId)
-
-    def sortingColumn =  params.column ? params.column : 'id'
-    def sortingOrder =  params.order ? params.order : 'DESC'
-
-    List<WatchlistEntry> watchlistEntries = WatchlistEntry.where {
-      user == currentUser
-      profile == currentProfile
-      isDeleted == false
-    }.list(sort: sortingColumn, order: sortingOrder)
-    if(!watchlistEntries){
-      render status: NO_CONTENT
-      return
-    }
-
-    def result = [total: watchlistEntries.size(), list: watchlistEntries]
-
-    JSON.use ('dashWatchlist') {
-      render (result as JSON)
-    }
-  }
 }

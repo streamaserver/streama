@@ -1,3 +1,5 @@
+package watchlistEntry
+
 import streama.GenericVideo
 import streama.Movie
 import streama.TvShow

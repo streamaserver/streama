@@ -22,7 +22,7 @@ class WatchlistEntryController {
     WatchlistEntry watchlistEntry
 
     if(params.mediaType == "tvShow"){
-      def tvShow = TvShow.where {
+      TvShow tvShow = TvShow.where {
         id == params.id
       }.first()
       watchlistEntry = new WatchlistEntry(
@@ -32,7 +32,7 @@ class WatchlistEntryController {
       ).save flush: true, failOnError: true
     }
     else {
-      def video = Video.where {
+      Video video = Video.where {
         id == params.id
       }.first()
       watchlistEntry = new WatchlistEntry(
@@ -41,7 +41,7 @@ class WatchlistEntryController {
         video: video
       ).save flush: true, failOnError: true
     }
-    JSON.use('dashWatchlist'){
+    JSON.use('watchlist'){
       render (watchlistEntry as JSON)
     }
   }
@@ -55,7 +55,7 @@ class WatchlistEntryController {
     def result
 
     if(params.mediaType == "tvShow"){
-      def tvShow = TvShow.where {
+      TvShow tvShow = TvShow.where {
         id == params.id
       }.first()
       watchlistEntry =  WatchlistEntry.where{
@@ -67,7 +67,7 @@ class WatchlistEntryController {
       result = tvShow
     }
     else {
-      def video = Video.where {
+      Video video = Video.where {
         id == params.id
       }.first()
       watchlistEntry =  WatchlistEntry.where {
@@ -87,5 +87,30 @@ class WatchlistEntryController {
     watchlistEntry.save flush: true, failOnError: true
 
     respond result, [status: OK]
+  }
+
+  def list(){
+    User currentUser = springSecurityService.getCurrentUser()
+    Long profileId = request.getHeader('profileId')?.toLong()
+    Profile currentProfile = Profile.findById(profileId)
+
+    def sortingColumn =  params.column ? params.column : 'id'
+    def sortingOrder =  params.order ? params.order : 'DESC'
+
+    List<WatchlistEntry> watchlistEntries = WatchlistEntry.where {
+      user == currentUser
+      profile == currentProfile
+      isDeleted == false
+    }.list(sort: sortingColumn, order: sortingOrder)
+    if(!watchlistEntries){
+      render status: NO_CONTENT
+      return
+    }
+
+    def result = [total: watchlistEntries.size(), list: watchlistEntries]
+
+    JSON.use ('watchlist') {
+      render (result as JSON)
+    }
   }
 }
