@@ -8,15 +8,10 @@
       <div ng-repeat="newRelease in vm.newReleases" class="new-releases-slide">
         <img class="poster-image" ng-src="https://image.tmdb.org/t/p/w342/{{newRelease.media.poster_path}}" class="pull-left">
         <div class="image-background" style="background-image: url('https://image.tmdb.org/t/p/w1280/{{newRelease.media.backdrop_path}}')">
+
           <div>
             <i ng-class="newRelease.media.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
                ng-click="vm.handleWatchlistUpdate(newRelease.media.inWatchlist ? 'removed' : 'added', newRelease.media)"></i>
-          </div>
-          <div ng-if="!newRelease.media.inWatchlist">
-            <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(newRelease.media)"></i>
-          </div>
-          <div ng-if="newRelease.media.inWatchlist">
-            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(newRelease.media)"></i>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(newRelease.media)"></i>
@@ -57,11 +52,9 @@
               {{'DASHBOARD.MARK_COMPLETED' | translate}}</button>
             <p ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span></p>
           </div>
-          <div ng-if="!viewingStatus.video.inWatchlist">
-            <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(viewingStatus.video)"></i>
-          </div>
-          <div ng-if="viewingStatus.video.inWatchlist">
-            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(viewingStatus.video)"></i>
+          <div>
+            <i ng-class="viewingStatus.video.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
+               ng-click="vm.handleWatchlistUpdate(viewingStatus.video.inWatchlist ? 'removed' : 'added', viewingStatus.video)"></i>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(viewingStatus.video)"></i>
@@ -101,11 +94,9 @@
             <h4 ng-bind="::(video.title || video.show.name)"></h4>
             <p ng-show="video.isEpisode"><span ng-bind="::video.episodeString"></span></p>
           </div>
-          <div ng-if="!video.inWatchlist">
-            <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(video)"></i>
-          </div>
-          <div ng-if="video.inWatchlist">
-            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(video)"></i>
+          <div>
+            <i ng-class="video.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
+               ng-click="vm.handleWatchlistUpdate(video.inWatchlist ? 'removed' : 'added', video)"></i>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(video)"></i>
@@ -139,6 +130,10 @@
             <h4 ng-bind="::watchlistEntry.tvShow.name"></h4>
           </div>
           <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(watchlistEntry.tvShow)"></i>
+          <div>
+            <i ng-class="'remove-icon ion-android-remove-circle'"
+               ng-click="vm.handleWatchlistUpdate('removed', watchlistEntry.tvShow)"></i>
+          </div>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(watchlistEntry.tvShow)"></i>
           <a class="play-icon ion-ios-play" ng-click="vm.fetchFirstEpisodeAndPlay(watchlistEntry.tvShow)"></a>
@@ -151,7 +146,10 @@
             <h4 ng-bind="::watchlistEntry.video.title"></h4>
             <p ng-bind="::watchlistEntry.video.release_date.substring(0,4)"></p>
           </div>
-          <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(watchlistEntry.video)"></i>
+          <div>
+            <i ng-class="'remove-icon ion-android-remove-circle'"
+               ng-click="vm.handleWatchlistUpdate('removed', watchlistEntry.video)"></i>
+          </div>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(watchlistEntry.video)"></i>
           <a class="play-icon ion-ios-play" ui-sref="player({videoId: watchlistEntry.video.id})"></a>
@@ -211,11 +209,10 @@
           <div class="play-text">
             <h4 ng-bind="::tvShow.name"></h4>
           </div>
-          <div ng-if="!tvShow.inWatchlist">
-            <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(tvShow)"></i>
-          </div>
-          <div ng-if="tvShow.inWatchlist">
-            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(tvShow)"></i>
+
+          <div>
+            <i ng-class="tvShow.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
+               ng-click="vm.handleWatchlistUpdate(tvShow.inWatchlist ? 'removed' : 'added', tvShow)"></i>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(tvShow)"></i>
@@ -284,11 +281,9 @@
             <h4 ng-bind="::movie.title"></h4>
             <p ng-bind="::movie.release_date.substring(0,4)"></p>
           </div>
-          <div ng-if="!movie.inWatchlist">
-            <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(movie)"></i>
-          </div>
-          <div ng-if="movie.inWatchlist">
-            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(movie)"></i>
+          <div>
+            <i ng-class="movie.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
+               ng-click="vm.handleWatchlistUpdate(movie.inWatchlist ? 'removed' : 'added', movie)"></i>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(movie)"></i>
@@ -344,11 +339,9 @@
             <h4 ng-bind="::movie.title"></h4>
             <p ng-bind="::movie.release_date.substring(0,4)"></p>
           </div>
-          <div ng-if="!movie.inWatchlist">
-            <i class="add-icon ion-android-add-circle" ng-click="vm.addToWatchlist(movie)"></i>
-          </div>
-          <div ng-if="movie.inWatchlist">
-            <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(movie)"></i>
+          <div>
+            <i ng-class="movie.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
+               ng-click="vm.handleWatchlistUpdate(movie.inWatchlist ? 'removed' : 'added', movie)"></i>
           </div>
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(movie)"></i>
