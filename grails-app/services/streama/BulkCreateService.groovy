@@ -50,6 +50,7 @@ class BulkCreateService {
 
   private matchSingleFile(file, movieRegex, List tvShowRegexList) {
     def fileResult = [file: file.path]
+    def foundMatch = false
 
     String fileName = file.name
 
@@ -58,13 +59,19 @@ class BulkCreateService {
 
       if (tvShowMatcher.matches()) {
         matchTvShowFromFile(tvShowMatcher, fileResult)
+        foundMatch = true
         return fileResult
       }
+    }
+
+    if(foundMatch){
+      return fileResult
     }
 
     def movieMatcher = fileName =~ '(?i)' + movieRegex
     if (movieMatcher.matches()) {
       matchMovieFromFile(movieMatcher, fileResult, movieRegex)
+      foundMatch = true
       return fileResult
     }
 
