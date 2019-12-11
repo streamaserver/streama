@@ -6,6 +6,9 @@ sudo: required
 
 language: groovy
 
+jdk:
+  - openjdk8
+
 services: docker
 
 script: ./gradlew build
