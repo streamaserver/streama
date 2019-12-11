@@ -14,6 +14,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'La sessione è scaduta dall\'ultima attività. Per favore esegui l\'accesso di nuovo.'
 		},
 		DASHBOARD: {
+      HOME: 'Casa',
+      TV_SHOWS: 'Spettacoli televisivi',
+      MOVIES: 'Films',
+      MY_LIST:'La mia lista',
 			TITLE: 'Cruscotto',
 			NEW_RELEASES: 'Nuove uscite',
 			CONTINUE_WATCHING: 'Continuare a guardare',
@@ -27,7 +31,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'si sta guardando il genere:',
 			MARK_COMPLETED: 'Mark completato',
 			NO_TVSHOWS_FOUND: 'No Tv-Show disponibili',
-			NO_MOVIES_FOUND: 'Nessun film disponibile'
+			NO_MOVIES_FOUND: 'Nessun film disponibile',
+      WATCHLIST: 'visualizza più tardi'
 		},
 		VIDEO: {
 			RELEASED: 'Rilasciato',

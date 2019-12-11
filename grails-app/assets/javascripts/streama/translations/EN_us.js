@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Your session expired since your last activity. Please login again.'
     },
     DASHBOARD: {
+      HOME: 'Home',
+      TV_SHOWS: 'TV Shows',
+      MOVIES: 'Movies',
+      MY_LIST:'My list',
       TITLE: 'Dashboard',
       RECOMMENDATIONS: 'Recommendations for you',
       NEW_RELEASES: 'New Releases',
@@ -24,11 +28,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SEARCH_BY_NAME: 'Search by Name...',
       FILTER_BY_TAG: 'Filter by Tag...',
       FILTER_BY_GENRE: 'Filter by Genre...',
-      BROWSE_GENRES: 'Browse',
+      BROWSE_GENRES: 'Browse Genre',
       LOOKING_AT_GENRE: 'You\'re looking at the genre:',
       MARK_COMPLETED: 'Mark completed',
       NO_TVSHOWS_FOUND: 'No Tv-Shows Available',
-      NO_MOVIES_FOUND: 'No Movies Available'
+      NO_MOVIES_FOUND: 'No Movies Available',
+      WATCHLIST: 'Watchlist'
     },
     VIDEO: {
       RELEASED: 'Released',

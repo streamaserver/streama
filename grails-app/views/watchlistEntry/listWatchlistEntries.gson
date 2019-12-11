@@ -1,0 +1,9 @@
+package watchlistEntry
+
+import streama.WatchlistEntry
+
+model {
+  Iterable<WatchlistEntry> watchlistEntries
+}
+
+json tmpl.watchlistEntry(watchlistEntries)

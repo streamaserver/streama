@@ -5,9 +5,11 @@ model {
 }
 
 json g.render(movie, [deep:true, excludes: ['poster_image']]){
+  mediaType "movie"
 	hasFiles movie.files ? true : false
 	files movie.files?.collect{it.simpleInstance}
 	videoFiles movie.getVideoFiles()*.getSimpleInstance()
 	subtitles movie.getSubtitles()*.getSimpleInstance()
   poster_image_src movie.poster_image?.src
+  inWatchlist movie.inWatchlist()
 }

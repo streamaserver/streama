@@ -30,7 +30,6 @@ class UrlMappings {
         "/api/v1/player/video/$id"(controller: 'player', action: 'video')
         "/api/v1/player/updateViewingStatus"(controller: 'player', action: 'updateViewingStatus')
 
-
         "/"(view: '/index')
         "500"(view: '/error')
 //        "404"(view: '/notFound')

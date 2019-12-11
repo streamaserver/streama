@@ -14,6 +14,7 @@ import streama.TvShow
 import streama.User
 import streama.Video
 import streama.ViewingStatus
+import streama.WatchlistEntry
 
 @Transactional
 class MarshallerService {
@@ -45,7 +46,6 @@ class MarshallerService {
 
       return returnArray
     }
-
 
     JSON.registerObjectMarshaller(User) { User user ->
       def returnArray = [:]
@@ -133,6 +133,7 @@ class MarshallerService {
 
       returnArray['hasFiles'] = movie.hasFiles()
 
+      returnArray['inWatchlist'] = movie.inWatchlist()
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
       return returnArray;
@@ -167,6 +168,7 @@ class MarshallerService {
       returnArray['genre'] = genericVideo.genre
       returnArray['hasFiles'] = genericVideo.hasFiles()
 
+      returnArray['inWatchlist'] = genericVideo.inWatchlist()
 
       return returnArray;
     }
@@ -196,11 +198,12 @@ class MarshallerService {
       returnArray['hasFiles'] = tvShow.getHasFiles()
       returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
 
+      returnArray['inWatchlist'] = tvShow.inWatchlist()
+
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
       return returnArray;
     }
-
 
     JSON.createNamedConfig('fullShow') {  cfg ->
       cfg.registerObjectMarshaller(TvShow) { TvShow  tvShow ->
@@ -230,7 +233,6 @@ class MarshallerService {
       }
     }
 
-
     JSON.createNamedConfig('dashViewingStatus') {  cfg ->
       cfg.registerObjectMarshaller(ViewingStatus) { ViewingStatus  viewingStatus ->
         def returnArray = [:]
@@ -256,6 +258,7 @@ class MarshallerService {
         returnArray['vote_count'] = video.vote_count
         returnArray['popularity'] = video.popularity
         returnArray['original_language'] = video.original_language
+        returnArray['inWatchlist'] = video.inWatchlist()
 
         if(video instanceof Movie){
           returnArray['title'] = video.title
@@ -285,8 +288,6 @@ class MarshallerService {
         return returnArray;
       }
     }
-
-
 
     JSON.createNamedConfig('firstEpisode') {  cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
@@ -354,6 +355,7 @@ class MarshallerService {
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
         returnArray['poster_image_src'] = movie.poster_image?.src
+        returnArray['inWatchlist'] = movie.inWatchlist()
 
         return returnArray;
       }
@@ -382,6 +384,7 @@ class MarshallerService {
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
         returnArray['genre'] = tvShow.genre
+        returnArray['inWatchlist'] = tvShow.inWatchlist()
 
         return returnArray;
       }
@@ -413,11 +416,25 @@ class MarshallerService {
 
         returnArray['tags'] = genericVideo.tags
         returnArray['genre'] = genericVideo.genre
+        returnArray['inWatchlist'] = genericVideo.inWatchlist()
 
         return returnArray;
       }
     }
 
+    JSON.createNamedConfig('watchlist') { cfg ->
+      cfg.registerObjectMarshaller(WatchlistEntry) { WatchlistEntry watchlistEntry ->
+        def response = [:]
+        response['id'] = watchlistEntry.id
+        response['dateCreated'] = watchlistEntry.dateCreated
+        response['lastUpdated'] = watchlistEntry.lastUpdated
+
+        response['tvShow'] = watchlistEntry.tvShow
+        response['video'] = watchlistEntry.video
+        return response;
+      }
+
+    }
 
     JSON.createNamedConfig('fullMovie') {  cfg ->
       cfg.registerObjectMarshaller(Movie) { Movie  movie ->
@@ -454,13 +471,13 @@ class MarshallerService {
 
 
         returnArray['hasFiles'] = movie.hasFiles()
+        returnArray['inWatchlist'] = movie.inWatchlist()
 //        returnArray['externalSubtitleUrl'] = movie.externalSubtitleUrl
 //        returnArray['externalVideoUrl'] = movie.externalVideoUrl
 
         return returnArray;
       }
     }
-
 
     JSON.createNamedConfig('adminFileManager') {  cfg ->
       cfg.registerObjectMarshaller(File) { File  file ->
@@ -554,6 +571,7 @@ class MarshallerService {
         return returnArray;
       }
     }
+
     JSON.createNamedConfig('adminEpisodesForTvShow') {  cfg ->
       cfg.registerObjectMarshaller(Episode) { Episode  episode ->
         def returnArray = [:]

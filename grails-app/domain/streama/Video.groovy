@@ -4,7 +4,7 @@ import streama.traits.SimpleInstance
 
 class Video implements SimpleInstance{
 
-  def springSecurityService
+  transient springSecurityService
   transient videoService
 
   Date dateCreated
@@ -170,5 +170,16 @@ class Video implements SimpleInstance{
       return
     }
     return videoFiles.find{it.isDefault} ?: videoFiles[0]
+  }
+
+  def inWatchlist(){
+    User currentUser = springSecurityService.currentUser
+    Profile profile = currentUser.getProfileFromRequest()
+    return WatchlistEntry.where{
+      user == currentUser
+      profile == profile
+      isDeleted == false
+      video ==this
+    }.count() > 0
   }
 }

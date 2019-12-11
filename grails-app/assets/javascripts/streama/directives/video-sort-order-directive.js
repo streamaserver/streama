@@ -45,13 +45,21 @@ angular.module('streama').directive('videoSortOrderDropdown', [function () {
 					]);
 				}
 
+        if($scope.dropdownType == 'watchlist'){
+          $scope.sortOrders = $scope.sortOrders.concat([
+            {sort: 'id', order: 'DESC', label: 'SORT_OPTIONS.NEWEST_ADDED'},
+            {sort: 'id', order: 'ASC', label: 'SORT_OPTIONS.OLDEST_ADDED'}
+          ])
+        }
+
 
         function formatter(value) {
+
           $scope.currentSort = _.find($scope.sortOrders, value) || $scope.sortOrders[0];
         }
 
 				$scope.setCurrentSort = function (sortOrder) {
-					$scope.currentSort = sortOrder;
+          $scope.currentSort = sortOrder;
           $controller.$setViewValue(sortOrder);
 				};
 

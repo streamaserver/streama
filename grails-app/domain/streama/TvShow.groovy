@@ -4,6 +4,7 @@ import streama.traits.SimpleInstance
 
 class TvShow implements SimpleInstance {
 
+  transient springSecurityService
   transient theMovieDbService
 
 
@@ -69,6 +70,17 @@ class TvShow implements SimpleInstance {
       log.warn(e.message)
       return null
     }
+  }
+
+  def inWatchlist(){
+    User currentUser = springSecurityService.currentUser
+    Profile profile = currentUser.getProfileFromRequest()
+    return WatchlistEntry.where{
+      user == currentUser
+      profile == profile
+      tvShow == this
+      isDeleted == false
+    }.count() > 0
   }
 
 

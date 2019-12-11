@@ -14,6 +14,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Deine Sitzung ist abgelaufen. Bitte logge dich erneut ein.'
 		},
 		DASHBOARD: {
+      HOME: 'Startseite',
+      TV_SHOWS: 'Fernsehshows',
+      MOVIES: 'Filme',
+      MY_LIST:'Meine Liste',
 			TITLE: 'Dashboard',
 			NEW_RELEASES: 'Neuerscheinungen',
 			CONTINUE_WATCHING: 'Weiterschauen',
@@ -28,8 +32,9 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Ausgewähltes Genre:',
 			MARK_COMPLETED: 'Als gesehen Markieren',
 			NO_TVSHOWS_FOUND: 'Keine Serien verfügbar',
-			NO_MOVIES_FOUND: 'Keine Filme verfügbar'
-		},
+			NO_MOVIES_FOUND: 'Keine Filme verfügbar',
+      WATCHLIST: 'Beobachtungsliste'
+    },
 		VIDEO: {
 			RELEASED: 'Veröffentlichung',
 			IMDB: 'IMDB',

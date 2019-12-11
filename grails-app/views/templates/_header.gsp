@@ -1,5 +1,5 @@
 <%@ page import="streama.Settings" %>
-<header class="main" ng-if="!isCurrentState('player')">
+<header class="main navbar-fixed-top" ng-if="!isCurrentState('player')" streama-header-directive>
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
       <g:imgSetting setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>
@@ -12,25 +12,42 @@
     <g:if test="${streama.Settings.findByName('show_version_num').value == 'true'}">
       <div class="version">v${grailsApplication.metadata.getApplicationVersion()}</div>
     </g:if>
-    <div class="browse-genres" ng-if="isCurrentState('dash') && genres.length && !$root.currentProfile.isChild">
-      <button class="btn btn-link toggle-menu" ng-click="toggleGenreMenu()">
-        <span ng-if="selectedGenre" ng-bind="selectedGenre.name"></span>
-        <span ng-if="!selectedGenre">{{'DASHBOARD.BROWSE_GENRES' | translate}}</span>
-        <i class="ion-android-arrow-dropdown"></i>
-      </button>
 
-      <div class="toggle-menu-content" ng-show="genreMenuOpen">
-        <i class="ion-close-circled pull-right" ng-click="toggleGenreMenu()"></i>
-        <ul>
-          <li>
-            <a ng-click="changeGenre()"><i class="ion-grid"></i> All</a>
-          </li>
-          <li ng-repeat="genre in ::genres">
-            <a ng-click="changeGenre(genre)" ng-bind="::genre.name"></a>
-          </li>
-        </ul>
-      </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse-nav">
+      <ul class="nav navbar-nav">
+        <li><a ng-click="changeDashType('home')" ng-class="{active: (isDashType('home') || isDashType(undefined))}">{{'DASHBOARD.HOME' | translate}}</a></li>
+        <li><a ng-click="changeDashType('discover-shows')" ng-class="{active: (isDashType('discover-shows'))}">{{'DASHBOARD.TV_SHOWS' | translate}}</a></li>
+        <li><a ng-click="changeDashType('discover-movies')" ng-class="{active: (isDashType('discover-movies'))}">{{'DASHBOARD.MOVIES' | translate}}</a></li>
+        <li><a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'DASHBOARD.MY_LIST' | translate}}</a></li>
+        <li class="browse-genres" ng-if="isCurrentState('dash') && genres.length && !$root.currentProfile.isChild">
+          <a ng-class="{active: selectedGenre}" ng-click="toggleGenreMenu()">
+            <span ng-if="selectedGenre">
+              <span>{{'VIDEO.GENRE' | translate}}:</span>
+              <span ng-bind="selectedGenre.name"></span>
+            </span>
+            <span ng-if="!selectedGenre">{{'DASHBOARD.BROWSE_GENRES' | translate}}</span>
+            <i class="ion-android-arrow-dropdown"></i>
+          </a>
+
+          <div class="toggle-menu-content" ng-show="genreMenuOpen">
+            <i class="ion-close-circled pull-right" ng-click="toggleGenreMenu()"></i>
+            <ul>
+              <li>
+                <a ng-click="changeGenre()"><i class="ion-grid"></i> All</a>
+              </li>
+              <li ng-repeat="genre in ::genres">
+                <a ng-click="changeGenre(genre)" ng-bind="::genre.name"></a>
+              </li>
+            </ul>
+          </div>
+
+        </li>
+      </ul>
     </div>
+
+
+
+    <i class="ion-navicon navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-nav"></i>
   </div>
 
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
