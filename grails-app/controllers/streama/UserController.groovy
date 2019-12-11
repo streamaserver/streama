@@ -198,7 +198,7 @@ class UserController {
       Genre.findOrCreateByApiId(it.apiId)
     }
 
-    bindData(currentUser, userData, [exclude: ['username', 'password', 'lastUpdated', 'dateCreated']])
+    bindData(currentUser, userData, [exclude: ['username', 'password', 'lastUpdated', 'dateCreated'], include: ['amountOfMediaEntries']])
 
     currentUser.save failOnError: true, flush: true
 

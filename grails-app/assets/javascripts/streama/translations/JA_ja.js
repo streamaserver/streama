@@ -82,6 +82,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_it: 'Italiano/イタリアの',
     LANGUAGE_da: 'Dansk/デンマーク語',
     LANGUAGE_ar: 'عربى/アラビア語',
+		LANGUAGE_hu: 'Magyar/ハンガリー人',
 		PROFIlE: {
 			USERNAME: 'ユーザー名',
 			FULL_NAME: '完全な名前',
@@ -166,4 +167,3 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		}
 	});
 });
-
