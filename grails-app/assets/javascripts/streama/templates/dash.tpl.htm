@@ -57,10 +57,10 @@
               {{'DASHBOARD.MARK_COMPLETED' | translate}}</button>
             <p ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span></p>
           </div>
-          <div>
-            <i ng-class="viewingStatus.video.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
-               ng-click="vm.handleWatchlistUpdate(viewingStatus.video.inWatchlist ? 'removed' : 'added', viewingStatus.video)"></i>
-          </div>
+          <!--<div>-->
+            <!--<i ng-class="viewingStatus.video.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"-->
+               <!--ng-click="vm.handleWatchlistUpdate(viewingStatus.video.inWatchlist ? 'removed' : 'added', viewingStatus.video)"></i>-->
+          <!--</div>-->
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(viewingStatus.video)"></i>
           <a class="play-icon ion-ios-play" ui-sref="player({videoId: viewingStatus.video.id})"></a>
