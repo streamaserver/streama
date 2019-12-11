@@ -79,6 +79,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_it: 'Italiano/الإيطالي',
     LANGUAGE_da: 'Dansk/دانماركي',
     LANGUAGE_ar: 'عربى',
+		LANGUAGE_hu: 'Magyar/الهنغارية',
 		PROFIlE: {
 			USERNAME: 'الاسم',
 			FULL_NAME: 'الاسم الكامل',
