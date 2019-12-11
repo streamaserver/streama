@@ -6,7 +6,12 @@
 
     <div uis-owl-carousel class="new-releases-slider" >
       <div ng-repeat="newRelease in vm.newReleases" class="new-releases-slide">
-        <img class="poster-image" ng-src="https://image.tmdb.org/t/p/w342/{{newRelease.media.poster_path}}" class="pull-left">
+        <div ng-if="newRelease.media.poster_path">
+          <img class="poster-image" ng-src="https://image.tmdb.org/t/p/w342/{{newRelease.media.poster_path}}" class="pull-left">
+        </div>
+        <div ng-if="newRelease.media.poster_image_src">
+          <img class="poster-image" ng-src="{{newRelease.media.poster_image_src}}" class="pull-left">
+        </div>
         <div class="image-background" style="background-image: url('https://image.tmdb.org/t/p/w1280/{{newRelease.media.backdrop_path}}')">
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(newRelease.media)"></i>
           <div class="new-release-footer">
