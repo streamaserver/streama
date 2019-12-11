@@ -10,6 +10,7 @@ angular.module('streama')
 	$rootScope.toggleGenreMenu = toggleGenreMenu;
 	$rootScope.changeGenre = changeGenre;
 	$rootScope.changeDashType = changeDashType;
+	$rootScope.isDashType = isDashType;
 	$rootScope.loginUser = loginUser;
 
 
@@ -66,6 +67,10 @@ angular.module('streama')
 
 	function changeDashType(dashType) {
     $state.go('dash', {dashType: dashType}, {reload: true});
+  }
+
+  function isDashType(dashType) {
+    return _.get($state.params, 'dashType') === dashType;
   }
 
 	function loginUser() {
