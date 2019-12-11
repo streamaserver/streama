@@ -122,13 +122,16 @@ angular.module('streama').controller('dashCtrl',
 
     function onChangedGenre(e, genre) {
       $rootScope.selectedGenre = genre;
+      var genreFilter;
       if ($rootScope.selectedGenre) {
-        vm.movie.filter.genre = [$rootScope.selectedGenre];
-        vm.tvShow.filter.genre = [$rootScope.selectedGenre];
+        genreFilter = [$rootScope.selectedGenre.id];
       } else {
-        vm.movie.filter.genre = [];
-        vm.tvShow.filter.genre = [];
+        genreFilter = [];
       }
+      vm.movie.filter.genre = genreFilter;
+      vm.tvShow.filter.genre = genreFilter;
+      vm.movie.setFilter();
+      vm.tvShow.setFilter();
     }
 
     function fetchFirstEpisodeAndPlay(tvShow) {

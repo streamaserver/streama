@@ -1,7 +1,7 @@
 
 <div class="dashboard">
   <!--------------------------new releases--------------------------->
-  <div ng-if="vm.newReleases.length && !vm.selectedGenre && !vm.isDashSectionHidden('new-releases')">
+  <div ng-if="vm.newReleases.length && !$root.selectedGenre && !vm.isDashSectionHidden('new-releases')">
     <h3>{{'DASHBOARD.NEW_RELEASES' | translate}}</h3>
 
     <div uis-owl-carousel class="new-releases-slider" >
