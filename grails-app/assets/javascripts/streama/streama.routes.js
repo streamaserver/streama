@@ -7,7 +7,7 @@ angular.module('streama').config(function ($stateProvider) {
 
 		//BASE ROUTES
 		.state('dash', {
-			url: '/dash?genreId?mediaModal?mediaType',
+			url: '/dash?genreId?mediaModal?mediaType?dashType',
 			templateUrl: '/streama/dash.htm',
 			controller: 'dashCtrl as vm',
 			reloadOnSearch: false,

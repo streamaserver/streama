@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Je sessie is verlopen sinds je laatste activiteit. Log alsjeblieft nogmaals in.'
     },
     DASHBOARD: {
+      HOME: 'Huis',
+      TV_SHOWS: 'Tv shows',
+      MOVIES: 'Films',
+      MY_LIST:'Mijn lijst',
       TITLE: 'Dashboard',
       RECOMMENDATIONS: 'Aanbevelingen voor u',
       NEW_RELEASES: 'Nieuw uitgebracht',
@@ -27,7 +31,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       LOOKING_AT_GENRE: 'Je kijkt naar het genre',
       MARK_COMPLETED: 'Markeer als bekeken',
       NO_TVSHOWS_FOUND: 'Geen series beschikbaar',
-      NO_MOVIES_FOUND: 'Geen films beschikbaar'
+      NO_MOVIES_FOUND: 'Geen films beschikbaar',
+      WATCHLIST:'later bekijken'
     },
     VIDEO: {
       RELEASED: 'Uitgebracht op',
@@ -79,6 +84,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_it: 'Italiano/Italiaans',
     LANGUAGE_da: 'Dansk/Deens',
     LANGUAGE_ar: 'عربى/Arabisch',
+    LANGUAGE_hu: 'Magyar/Hongaars',
     PROFIlE: {
       USERNAME: 'Gebruikersnaam',
       FULL_NAME: 'Volledige naam',

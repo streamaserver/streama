@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Ваша сессия истекла. Пожалуйста, войдите снова.'
 		},
 		DASHBOARD: {
+      HOME: 'Домашняя страница',
+      TV_SHOWS: 'ТВ шоу',
+      MOVIES: 'Фильмы',
+      MY_LIST:'Мой список',
 			TITLE: 'Главная',
 			RECOMMENDATIONS: 'Рекомендовано для вас',
 			NEW_RELEASES: 'Новое на сайте',
@@ -27,7 +31,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Вы смотрите по жанру:',
 			MARK_COMPLETED: 'Уже просмотрено!',
 			NO_TVSHOWS_FOUND: 'ТВ-шоу пока недоступно',
-			NO_MOVIES_FOUND: 'Кино пока недоступно'
+			NO_MOVIES_FOUND: 'Кино пока недоступно',
+      WATCHLIST: 'Посмотреть позже'
 		},
 		VIDEO: {
 			RELEASED: 'Дата выхода',
@@ -79,6 +84,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_it: 'Italiano/итальянский',
     LANGUAGE_da: 'Dansk/датский',
     LANGUAGE_ar: 'عربى/арабский',
+		LANGUAGE_hu: 'Magyar/венгерский',
 		PROFIlE: {
 			USERNAME: 'Логин',
 			FULL_NAME: 'Имя',

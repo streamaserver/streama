@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: '마지막 활동 이후 세션이 만료되었습니다. 다시 로그인하십시오.'
 		},
 		DASHBOARD: {
+      HOME: '집',
+      TV_SHOWS: 'TV 프로그램',
+      MOVIES: '영화 산업',
+      MY_LIST:'나의 목록',
 			TITLE: '대시보드',
 			NEW_RELEASES: '신작',
 			CONTINUE_WATCHING: '계속해서 보기',
@@ -26,7 +30,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: '장르를 보고있습니다.',
 			MARK_COMPLETED: '선택 완료',
 			NO_TVSHOWS_FOUND: '해당 드라마를 찾지 못했습니다.',
-			NO_MOVIES_FOUND: '해당 영화를 찾지 못했습니다.'
+			NO_MOVIES_FOUND: '해당 영화를 찾지 못했습니다.',
+      WATCHLIST: '나중에 볼'
 		},
 		VIDEO: {
 			RELEASED: '출시',
@@ -77,6 +82,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_it: 'Italiano/이탈리아 사람',
     LANGUAGE_da: 'Dansk/덴마크 말',
     LANGUAGE_ar: 'عربى/아라비아 말',
+    LANGUAGE_hu: 'Magyar/헝가리 인',
 		PROFIlE: {
 			USERNAME: '아이디',
 			FULL_NAME: '이름',

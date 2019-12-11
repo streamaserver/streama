@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Din session er udløbet siden din sidste aktivitet. Venligst log ind igen.'
 		},
 		DASHBOARD: {
+      HOME: 'Hjemmeside',
+      TV_SHOWS: 'TV-shows',
+      MOVIES: 'Films',
+      MY_LIST:'Min liste',
 			TITLE: 'Betjeningspanel',
 			RECOMMENDATIONS: 'Foreslået til dig',
 			NEW_RELEASES: 'Nye Udgivelser',
@@ -27,7 +31,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Du ser på genren:',
 			MARK_COMPLETED: 'Marker færdigt',
 			NO_TVSHOWS_FOUND: 'Ingen TV-Serier tilgængelig',
-			NO_MOVIES_FOUND: 'Ingen Film tilgængelig'
+			NO_MOVIES_FOUND: 'Ingen Film tilgængelig',
+      WATCHLIST: 'se senere'
 		},
 		VIDEO: {
 			RELEASED: 'Udgivet',
@@ -79,6 +84,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_it: 'Italiano/Italiensk',
     LANGUAGE_da: 'Dansk',
     LANGUAGE_ar: 'عربى/Arabisk',
+    LANGUAGE_hu: 'Magyar/Ungarsk',
 		PROFIlE: {
 			USERNAME: 'Brugernavn',
 			FULL_NAME: 'Fulde Navn',

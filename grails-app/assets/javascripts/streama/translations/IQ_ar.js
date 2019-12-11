@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'انتهت صلاحية الدخول منذ اخر نشاط. الرجاء تسجيل الدخول مرة اخرى.'
 		},
 		DASHBOARD: {
+      HOME: 'الصفحة الرئيسية',
+      TV_SHOWS: 'عرض تلفزيوني',
+      MOVIES: 'أفلام',
+      MY_LIST:'قائمتي',
 			TITLE: 'الواجهة الرئيسية',
 			RECOMMENDATIONS: 'افضل الافلام',
 			NEW_RELEASES: 'المصدرة حديثا',
@@ -27,7 +31,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'كنت تبحث في هذا النوع:',
 			MARK_COMPLETED: 'اكملت المشاهدة',
 			NO_TVSHOWS_FOUND: 'لايوجد عروض تلفزيونية',
-			NO_MOVIES_FOUND: 'لا يوجد افلام'
+			NO_MOVIES_FOUND: 'لا يوجد افلام',
+      WATCHLIST: 'عرض لاحقا'
 		},
 		VIDEO: {
 			RELEASED: 'الاصدار',
@@ -79,6 +84,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_it: 'Italiano/الإيطالي',
     LANGUAGE_da: 'Dansk/دانماركي',
     LANGUAGE_ar: 'عربى',
+		LANGUAGE_hu: 'Magyar/الهنغارية',
 		PROFIlE: {
 			USERNAME: 'الاسم',
 			FULL_NAME: 'الاسم الكامل',

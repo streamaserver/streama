@@ -13,6 +13,10 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SESSION_EXPIRED: 'Sua sessão expirou desde sua última atividade. Por favor faça login novamente.'
 		},
 		DASHBOARD: {
+      HOME: 'Casa',
+      TV_SHOWS: 'Programas de televisão',
+      MOVIES: 'Filmes',
+      MY_LIST:'Minha lista',
 			TITLE: 'Painel',
 			RECOMMENDATIONS: 'Sugestões para você',
 			NEW_RELEASES: 'Novos lançamentos',
@@ -27,7 +31,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Você está vendo o gênero:',
 			MARK_COMPLETED: 'Concluído',
 			NO_TVSHOWS_FOUND: 'Nenhuma Série Disponível',
-			NO_MOVIES_FOUND: 'Nenhum Filme Disponível'
+			NO_MOVIES_FOUND: 'Nenhum Filme Disponível',
+      WATCHLIST: 'ver mais tarde'
 		},
 		VIDEO: {
 			RELEASED: 'Lançamento',
@@ -80,6 +85,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_it: 'Italiano/Italiano',
     LANGUAGE_da: 'Dansk/dinamarquês',
     LANGUAGE_ar: 'عربى/Árabe',
+		LANGUAGE_hu: 'Magyar/Húngara',
 		PROFIlE: {
 			USERNAME: 'Usuário',
 			FULL_NAME: 'Nome completo',

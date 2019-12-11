@@ -20,7 +20,6 @@ h1,h2,h3,h4,h5,h6{
     background: $primary;
 
     header.main{
-      background: #257696;
       font-family: 'Indie Flower', cursive;
     }
 
@@ -125,9 +124,9 @@ h1,h2,h3,h4,h5,h6{
 
 header.main{
   @include clearfix;
-  background: rgba(0, 0, 0, 0.15);
+  background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+  @include vendor-property('transition', 'background 0.5s');
   padding: 5px 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.11);
 
   .navbar-nav{
     float: right;
@@ -142,6 +141,11 @@ header.main{
         color: white;
         padding: 11px 10px;
         display: block;
+
+        &.active{
+          font-weight: bold;
+          border-bottom: 1px solid $primary;
+        }
       }
     }
   }

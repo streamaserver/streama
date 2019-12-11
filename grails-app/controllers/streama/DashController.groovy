@@ -19,19 +19,15 @@ class DashController {
     return [viewingStatusList: viewingStatusList]
   }
 
-
   def listShows(){
     JSON.use ('dashTvShow') {
       respond videoService.listShows(params, [:])
     }
   }
 
-
   def listEpisodesForShow(TvShow tvShow){
     respond tvShow.getFilteredEpisodes()
   }
-
-
 
   def listRecommendations(){
     User currentUser = springSecurityService.currentUser
@@ -63,7 +59,6 @@ class DashController {
     }
   }
 
-
   def firstEpisodeForShow(TvShow tvShow){
     Episode firstEpisode = tvShow.firstEpisode
     if(firstEpisode){
@@ -78,7 +73,6 @@ class DashController {
       respond videoService.listMovies(params, [:])
     }
   }
-
 
   def listGenericVideos(){
     List<Long> genreIds = params.list('genreId')*.toLong() ?: []
@@ -129,7 +123,6 @@ class DashController {
     respond result
   }
 
-
   def listGenres(){
     def genres = Genre.list()
     genres = genres.findAll{Genre currentGenre ->
@@ -172,7 +165,6 @@ class DashController {
     }
   }
 
-
   def mediaDetail(){
     log.debug(params.mediaType)
     log.debug(params.id)
@@ -200,7 +192,6 @@ class DashController {
       render (media as JSON)
     }
   }
-
 
   def continueWatching(TvShow tvShow){
     def result
@@ -238,4 +229,5 @@ class DashController {
     }.deleteAll()
     render "OK"
   }
+
 }
