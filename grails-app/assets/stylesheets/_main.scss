@@ -141,6 +141,11 @@ header.main{
         color: white;
         padding: 11px 10px;
         display: block;
+
+        &.active{
+          font-weight: bold;
+          border-bottom: 1px solid $primary;
+        }
       }
     }
   }
