@@ -42,7 +42,7 @@
   </div>
 
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <ul class="nav navbar-nav navbar-fixed-top">
+    <ul class="nav navbar-nav">
 
       <li ng-if="isCurrentState('dash')">
         <div class="dash-search form-group has-feedback">
