@@ -272,8 +272,8 @@ angular.module('streama').controller('dashCtrl',
 
     function isDashSectionHidden(sectionName) {
       var hiddenDashSectionSetting = _.find($scope.settings, {name: 'hidden_dash_sections'});
-      if(_.get(hiddenDashSectionSetting, 'value')){
-        var hiddenDashSections = hiddenDashSectionSetting.value.split(',');
+      if(_.get(hiddenDashSectionSetting, 'parsedValue')){
+        var hiddenDashSections = hiddenDashSectionSetting.parsedValue.split(',');
         return (hiddenDashSections.indexOf(sectionName) > -1);
       }
     }
