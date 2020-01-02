@@ -124,8 +124,7 @@ h1,h2,h3,h4,h5,h6{
 
 header.main{
   @include clearfix;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
-  @include vendor-property('transition', 'background 0.5s');
+  background: rgb(20, 20, 20);
   padding: 5px 15px;
 
   .navbar-nav{
