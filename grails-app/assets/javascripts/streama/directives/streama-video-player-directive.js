@@ -101,6 +101,13 @@ angular.module('streama').directive('streamaVideoPlayer', [
               var selectedVideoFile = _.find($scope.options.videoFiles, {label: savedVideoFileLabel});
               changeVideoFile(selectedVideoFile);
             }
+            //Autoloads sub#0 if the setting is true on Admin>Settings, and if the subtitle exists (by Norwelian)
+            apiService.settings.list().then(function(data){
+                if(data['data'][18]['parsedValue'] && $scope.options.subtitles){
+                    hideSubtitle();
+                    changeSubtitle($scope.options.subtitles[0]);
+                }
+            });
 
             $scope.options.subtitleSize = localStorageService.get('subtitleSize') || 'md';
           });
