@@ -78,6 +78,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LOGOUT: 'Logout',
     CHANGE_PASSWORD: 'Change Password',
     LANGUAGE_en: 'English',
+    LANGUAGE_cn: 'Chinese/中文',
     LANGUAGE_ru: 'Русский/Russian',
     LANGUAGE_de: 'Deutsch/German',
     LANGUAGE_fr: 'Français/French',
