@@ -74,6 +74,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LOGOUT: 'Kijelentkezés',
     CHANGE_PASSWORD: 'Jelszó megváltoztatása',
     LANGUAGE_en: 'Angol/English',
+    LANGUAGE_cn: 'Chinese/中文',
     LANGUAGE_ru: 'Orosz/Russian',
     LANGUAGE_de: 'Német/German',
     LANGUAGE_fr: 'Francia/French',

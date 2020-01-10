@@ -73,6 +73,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LOGOUT: 'Uitloggen',
     CHANGE_PASSWORD: 'Wachtwoord wijzigen',
     LANGUAGE_en: 'English/Engels',
+    LANGUAGE_cn: 'Chinese/中文',
     LANGUAGE_ru: 'Русский/Russisch',
     LANGUAGE_de: 'Deutsch/Duits',
     LANGUAGE_fr: 'Français/Frans',
