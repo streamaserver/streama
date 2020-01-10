@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').directive('streamaVideoPlayer', [
-  'uploadService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce', 'modalService',
-  function (uploadService, localStorageService, $timeout, playerService, $http, $sce, modalService) {
+  'uploadService', 'apiService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce', 'modalService',
+  function (uploadService, apiService, localStorageService, $timeout, playerService, $http, $sce, modalService) {
 
     return {
       restrict: 'AE',
@@ -102,8 +102,13 @@ angular.module('streama').directive('streamaVideoPlayer', [
               changeVideoFile(selectedVideoFile);
             }
             //Autoloads sub#0 if the setting is true on Admin>Settings, and if the subtitle exists (by Norwelian)
+            var sub_auto_load_value = false;
             apiService.settings.list().then(function(data){
-                if(data['data'][18]['parsedValue'] && $scope.options.subtitles){
+                data['data'].forEach(function callback(currentValue, index, array) {
+                    if(currentValue.name == "subtitle_auto_load")
+                        sub_auto_load_value = currentValue.parsedValue;
+                });
+                if(sub_auto_load_value && $scope.options.subtitles){
                     hideSubtitle();
                     changeSubtitle($scope.options.subtitles[0]);
                 }
