@@ -188,6 +188,15 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+		[
+            settingsKey: 'Subtitle Auto Load',
+            name: 'subtitle_auto_load',
+            description: 'Auto loads the first subtitle track on media that has subtitles.',
+            settingsType: 'boolean',
+            value: 'false',
+            required: false,
+            validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',
