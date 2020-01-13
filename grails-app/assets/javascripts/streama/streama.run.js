@@ -12,6 +12,7 @@ angular.module('streama')
 	$rootScope.changeDashType = changeDashType;
 	$rootScope.isDashType = isDashType;
 	$rootScope.loginUser = loginUser;
+	$rootScope.isDashLinksHidden = isDashLinksHidden;
 
 
 	$rootScope.$on('streama.profiles.onChange', loadAndInitProfiles);
@@ -84,7 +85,6 @@ angular.module('streama')
 		}
 	}
 
-
 	function loadAndInitProfiles() {
     profileService.getUserProfiles().then(
       function(data) {
@@ -97,5 +97,12 @@ angular.module('streama')
         $translate.use(_.get($rootScope, 'currentProfile.profileLanguage') || _.get($rootScope, 'currentUser.language') || 'en')
       });
     $rootScope.setCurrentSubProfile = profileService.setCurrentProfile;
+  }
+  
+  function isDashLinksHidden(value) {
+	  var hiddenLinks = _.find($rootScope.settings, {name: 'hidden_dash_sections'});
+	  if(_.get(hiddenLinks, 'value')){
+      return !hiddenLinks.value.includes(value);
+    }
   }
 });

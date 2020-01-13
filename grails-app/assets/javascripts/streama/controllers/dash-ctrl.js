@@ -153,11 +153,13 @@ angular.module('streama').controller('dashCtrl',
     function showDashboardWithDashType() {
       var dashType = $state.params.dashType;
       var hiddenSections = ["new-releases","continue-watching","recommends","watchlist","discover-movies","discover-shows","discover-generic"];
+      var hiddenSectionsFromSettings = getHiddenSectionsList(_.find($scope.settings, {name: 'hidden_dash_sections'}));
       if(dashType === "home" || !dashType){
         hiddenSections = [];
       }else{
         _.remove(hiddenSections, function (item) { return item === dashType });
       }
+      hiddenSections.push(hiddenSectionsFromSettings);
       var setting = _.find($scope.settings, {name: 'hidden_dash_sections'});
       if(setting){
         setting.value = hiddenSections.toString();
@@ -271,10 +273,15 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function isDashSectionHidden(sectionName) {
-      var hiddenDashSectionSetting = _.find($scope.settings, {name: 'hidden_dash_sections'});
-      if(_.get(hiddenDashSectionSetting, 'parsedValue')){
-        var hiddenDashSections = hiddenDashSectionSetting.parsedValue.split(',');
+      var hiddenDashSections = getHiddenSectionsList(_.find($scope.settings, {name: 'hidden_dash_sections'}));
+      if(hiddenDashSections){
         return (hiddenDashSections.indexOf(sectionName) > -1);
+      }
+    }
+
+    function getHiddenSectionsList(hiddenDashSections) {
+      if(_.get(hiddenDashSections, 'value')){
+        return hiddenDashSections.value.split(',');
       }
     }
 
