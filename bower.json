@@ -18,6 +18,7 @@
   "dependencies": {
     "alertify": "~0.3.10",
     "angular-ui-router": "~0.*",
+    "angular-resource": "~1.7.*",
     "angular-local-storage": "~0.2.2",
     "bootstrap": "~3.3.5",
     "angular-ui-slider": "~0.1.3",

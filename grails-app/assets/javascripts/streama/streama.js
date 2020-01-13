@@ -28,7 +28,8 @@ angular.module('streama', [
     'ui.slider',
     'LocalStorageModule',
     'ui.select',
-    'ngSanitize'
+    'ngSanitize',
+    'ngResource'
 ]);
 
 
