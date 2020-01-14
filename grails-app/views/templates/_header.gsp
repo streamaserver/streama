@@ -16,13 +16,13 @@
     <div class="collapse navbar-collapse" id="navbar-collapse-nav">
       <ul class="nav navbar-nav">
         <li><a ng-click="changeDashType('home')" ng-class="{active: (isDashType('home') || isDashType(undefined))}">{{'DASHBOARD.HOME' | translate}}</a></li>
-        <li ng-if="isDashLinksHidden('discover-shows')">
+        <li ng-if="!$root.isDashSectionHidden('discover-shows')">
           <a ng-click="changeDashType('discover-shows')" ng-class="{active: (isDashType('discover-shows'))}">{{'DASHBOARD.TV_SHOWS' | translate}}</a>
         </li>
-        <li ng-if="isDashLinksHidden('discover-movies')">
+        <li ng-if="!$root.isDashSectionHidden('discover-movies')">
           <a ng-click="changeDashType('discover-movies')" ng-class="{active: (isDashType('discover-movies'))}">{{'DASHBOARD.MOVIES' | translate}}</a>
         </li>
-        <li ng-if="isDashLinksHidden('watchlist')">
+        <li ng-if="!$root.isDashSectionHidden('watchlist')">
           <a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'DASHBOARD.MY_LIST' | translate}}</a>
         </li>
         <li class="browse-genres" ng-if="isCurrentState('dash') && genres.length && !$root.currentProfile.isChild">

@@ -11,9 +11,8 @@ angular.module('streama').controller('dashCtrl',
     vm.addToWatchlist = addToWatchlist;
     vm.removeFromWatchlist = removeFromWatchlist;
     vm.markCompleted = markCompleted;
+    vm.isSectionHidden = isSectionHidden;
     vm.loadingRecommendations = true;
-    vm.isDashSectionHidden = isDashSectionHidden;
-    vm.showDashboardWithDashType = showDashboardWithDashType;
 
     $scope.$on('changedGenre', onChangedGenre);
 
@@ -21,9 +20,7 @@ angular.module('streama').controller('dashCtrl',
 
     function init() {
       if ($rootScope.currentUser.isAdmin) {
-        showInitialSettingsWarning().then(showDashboardWithDashType);
-      }else{
-        showDashboardWithDashType();
+        showInitialSettingsWarning();
       }
 
       if ($stateParams.mediaModal) {
@@ -150,22 +147,6 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
-    function showDashboardWithDashType() {
-      var dashType = $state.params.dashType;
-      var hiddenSections = ["new-releases","continue-watching","recommends","watchlist","discover-movies","discover-shows","discover-generic"];
-      var hiddenSectionsFromSettings = getHiddenSectionsList(_.find($scope.settings, {name: 'hidden_dash_sections'}));
-      if(dashType === "home" || !dashType){
-        hiddenSections = [];
-      }else{
-        _.remove(hiddenSections, function (item) { return item === dashType });
-      }
-      hiddenSections.push(hiddenSectionsFromSettings);
-      var setting = _.find($scope.settings, {name: 'hidden_dash_sections'});
-      if(setting){
-        setting.value = hiddenSections.toString();
-      }
-    }
-
     function handleWatchlistUpdate(action, item){
       switch (action) {
         case "added":
@@ -272,17 +253,21 @@ angular.module('streama').controller('dashCtrl',
       })
     }
 
-    function isDashSectionHidden(sectionName) {
-      var hiddenDashSections = getHiddenSectionsList(_.find($scope.settings, {name: 'hidden_dash_sections'}));
-      if(hiddenDashSections){
-        return (hiddenDashSections.indexOf(sectionName) > -1);
+    function isSectionHidden(sectionName) {
+      if(!$rootScope.settings){
+        return;
       }
-    }
+      var dashTypeParam = $state.params.dashType;
+      var hiddenSectionsForSubpages = ["new-releases","continue-watching","recommends","watchlist","discover-movies","discover-shows","discover-generic"];
 
-    function getHiddenSectionsList(hiddenDashSections) {
-      if(_.get(hiddenDashSections, 'value')){
-        return hiddenDashSections.value.split(',');
+      _.remove(hiddenSectionsForSubpages, function (item) { return item === dashTypeParam });
+
+      var isHomePage = (!dashTypeParam || dashTypeParam === "home");
+      if(_.includes(hiddenSectionsForSubpages, sectionName) && !isHomePage){
+        return true;
       }
+
+      return $rootScope.isDashSectionHidden(sectionName);
     }
 
 	});
