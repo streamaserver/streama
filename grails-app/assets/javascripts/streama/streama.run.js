@@ -1,6 +1,6 @@
 angular.module('streama')
-  .run(function ($window, $rootScope, $state, localStorageService, apiService, modalService,
-                 userService, profileService, $translate) {
+  .run(function ($window, $rootScope, $state, localStorageService, modalService,
+                 userService, profileService, $translate, User, Settings, Dash) {
 
 	$rootScope.baseData = {};
 	$rootScope.isCurrentState = isCurrentState;
@@ -20,15 +20,14 @@ angular.module('streama')
 	init();
 
 	function init() {
-		apiService.currentUser().then(onCurrentUserLoaded);
+	  User.currentUser().$promise.then(onCurrentUserLoaded);
 		loadAndInitProfiles();
 	}
 
 	function onCurrentUserLoaded(data) {
 		userService.setCurrentUser(data);
-
-		apiService.settings.list().then(function (response) {
-			$rootScope.settings = response.data;
+    Settings.list().$promise.then(function (response) {
+			$rootScope.settings = response;
 			$rootScope.isDownloadButtonVisible = getSetting('player_showDownloadButton').parsedValue && ($rootScope.currentUser.isTrustedUser || getSetting('player_downloadForAllUsers').parsedValue);
 		});
 	}
@@ -38,8 +37,8 @@ angular.module('streama')
 	}
 
 	function searchMedia(query) {
-		return apiService.dash.searchMedia(query).then(function (data) {
-			return data.data.movies.concat(data.data.shows);
+		return Dash.searchMedia(query).then(function (data) {
+			return data.movies.concat(data.shows);
 		});
 	}
 
@@ -92,7 +91,7 @@ angular.module('streama')
         if(!savedProfile){
           $state.go('sub-profiles');
         }
-        $rootScope.usersProfiles = data.data;
+        $rootScope.usersProfiles = data;
         $rootScope.currentProfile = savedProfile || $rootScope.usersProfiles[0];
         $translate.use(_.get($rootScope, 'currentProfile.profileLanguage') || _.get($rootScope, 'currentUser.language') || 'en')
       });
