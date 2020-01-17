@@ -64,8 +64,8 @@ angular.module('streama').factory('mediaListService', function () {
     };
     angular.extend(params, mediaConfig.filter);
 
-    mediaConfig.fetch(params).then(function (response) {
-      var data = response.data;
+    mediaConfig.fetch(params).$promise.then(function (response) {
+      var data = response;
       mediaConfig.total = data.total;
       if(mediaConfig.currentOffset > 0){
         mediaConfig.list = _.unionBy(mediaConfig.list, data.list, 'id');

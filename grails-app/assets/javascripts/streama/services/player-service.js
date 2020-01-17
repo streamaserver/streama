@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('streama').factory('playerService',
-  function ($stateParams, $sce, $state, $rootScope, socketService, apiService, $interval, $filter, contextPath, $uibModal) {
+  function ($stateParams, $sce, $state, $rootScope, socketService, $interval, $filter, contextPath, $uibModal, TvShow, ViewingStatus, Websocket) {
 
     var videoData = null;
     var videoOptions;
@@ -77,8 +77,8 @@ angular.module('streama').factory('playerService',
         if(videoData.show){
           videoOptions.showEpisodeBrowser = true;
 
-          apiService.tvShow.episodesForTvShow(videoData.show.id).then(function (response) {
-            var episodes = response.data;
+          TvShow.episodesForTvShow(videoData.show.id).$promise.then(function (response) {
+            var episodes = response;
             videoOptions.episodeList = _.groupBy(episodes, 'season_number');
             videoOptions.selectedEpisodes = videoOptions.episodeList[videoData.season_number];
             videoOptions.currentEpisode = {
@@ -122,14 +122,14 @@ angular.module('streama').factory('playerService',
           var params = {videoId: videoData.id, currentTime: videoElement.currentTime, runtime: videoElement.duration};
 
           if(params.runtime && params.videoId){
-            apiService.viewingStatus.save(params);
+            ViewingStatus.save(params);
           }
         }, 5000);
 
 
         if($stateParams.sessionId && !socketData){
           console.log('%c send socket event PLAY', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
-          apiService.websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'play', currentPlayerTime: videoElement.currentTime});
+          Websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'play', currentPlayerTime: videoElement.currentTime});
         }
       },
 
@@ -147,7 +147,7 @@ angular.module('streama').factory('playerService',
 
         if($stateParams.sessionId && !socketData){
           console.log('%c send socket event PAUSE', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
-          apiService.websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'pause', currentPlayerTime: videoElement.currentTime});
+          Websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'pause', currentPlayerTime: videoElement.currentTime});
         }
       },
 
@@ -210,11 +210,11 @@ angular.module('streama').factory('playerService',
 
       onVideoTimeChange: function (slider, duration) {
         var params = {videoId: videoData.id, currentTime: slider.value, runtime: duration};
-        apiService.viewingStatus.save(params);
+        ViewingStatus.save(params);
 
 
         if($stateParams.sessionId){
-          apiService.websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'timeChange', currentPlayerTime: slider.value});
+          Websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'timeChange', currentPlayerTime: slider.value});
         }
       },
 

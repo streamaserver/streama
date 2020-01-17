@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('streama').factory('profileService', function (localStorageService, apiService, $state, $rootScope, $translate) {
+angular.module('streama').factory('profileService', function (localStorageService, $state, $rootScope, $translate, Profile) {
 
   function setCurrentProfile(profile) {
     localStorageService.set('currentProfile', profile);
@@ -14,7 +14,7 @@ angular.module('streama').factory('profileService', function (localStorageServic
   }
 
   function getUserProfiles() {
-    return apiService.profile.getUserProfiles();
+    return Profile.getUserProfiles().$promise;
   }
 
   return {
