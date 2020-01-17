@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('streama').directive('adminEpisode', [
-	'uploadService', 'modalService', 'apiService', '$stateParams', function (uploadService, modalService, apiService, $stateParams) {
+	'uploadService', 'modalService', '$stateParams', 'Report', 'Video',
+  function (uploadService, modalService, $stateParams, Report, Video) {
 	return {
 		restrict: 'AE',
 		templateUrl: '/streama/directive--admin-episode.htm',
@@ -14,7 +15,7 @@ angular.module('streama').directive('adminEpisode', [
       addHighlighting();
 
       $scope.reportsForEpisode= function () {
-        apiService.report.reportsById($scope.episode.id).then(function (response) {
+        Report.reportsById({videoId: $scope.episode.id}).$promise.then(function (response) {
           $scope.episode.reportCount = response.data.reportCount;
         });
       }();
@@ -31,7 +32,7 @@ angular.module('streama').directive('adminEpisode', [
 
 			$scope.openFileBrowser = function(){
 				modalService.openFileBrowser(function (file) {
-					apiService.video.addFile($scope.episode.id, file.id).then(function () {
+					Video.addFile({videoId: $scope.episode.id, fileId: file.id}).$promise.then(function () {
 						$scope.episode.videoFiles = $scope.episode.videoFiles || [];
 						$scope.episode.videoFiles.push(file);
 					});

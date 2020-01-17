@@ -1,6 +1,6 @@
 //= wrapped
 
-angular.module('streama').directive('streamaVideoImage', function (uploadService, modalService, apiService, $stateParams) {
+angular.module('streama').directive('streamaVideoImage', function (uploadService, modalService, $stateParams) {
   return {
     restrict: 'E',
     templateUrl: '/streama/directive--streama-video-image.htm',
