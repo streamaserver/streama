@@ -151,9 +151,9 @@ angular.module('streama').config(function ($stateProvider) {
 		});
 
 
-	function resolveCurrentUser(apiService, $rootScope) {
-		return apiService.currentUser().then(function (response) {
-			var data = response.data;
+	function resolveCurrentUser($rootScope, User) {
+		return User.currentUser().$promise.then(function (response) {
+			var data = response;
 			if(!data){
 				location.href = '/login/auth'
 			}
@@ -169,9 +169,9 @@ angular.module('streama').config(function ($stateProvider) {
     });
 	}
 
-	function checkPermissionAdmin(apiService, $rootScope, $state) {
-		return apiService.currentUser().then(function (response) {
-			var data = response.data;
+	function checkPermissionAdmin($rootScope, $state, User) {
+		return User.currentUser().$promise.then(function (response) {
+			var data = response;
 			if(!data){
 				location.href = '/login/auth'
 			}
@@ -184,9 +184,9 @@ angular.module('streama').config(function ($stateProvider) {
 		});
 	}
 
-	function checkPermission(apiService, $rootScope, $state) {
-		return apiService.currentUser().then(function (response) {
-			var data = response.data;
+	function checkPermission($rootScope, $state, User) {
+		return User.currentUser().$promise.then(function (response) {
+			var data = response;
 			if(!data){
 				location.href = '/login/auth'
 			}
