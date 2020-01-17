@@ -1,7 +1,8 @@
 //= wrapped
 
 angular.module('streama').controller('adminReportsCtrl', [
-  'apiService', '$state', '$rootScope', '$filter', function (apiService, $state, $rootScope, $filter) {
+  '$state', '$rootScope', '$filter', 'Report',
+  function ($state, $rootScope, $filter, Report) {
     var vm = this;
     var selectedReports = [];
 
@@ -40,10 +41,10 @@ angular.module('streama').controller('adminReportsCtrl', [
     function loadReports (params) {
       vm.reports = [];
       vm.reportsCount = 0;
-      apiService.report.list(params)
+      Report.list(params).$promise
         .then(function (response) {
-          vm.reports = response.data.reports;
-          vm.reportsCount = response.data.count;
+          vm.reports = response.reports;
+          vm.reportsCount = response.count;
         }, function () {
           alertify.error('An error occurred.');
         });
@@ -60,9 +61,9 @@ angular.module('streama').controller('adminReportsCtrl', [
     }
 
     function resolve(oldReport) {
-      apiService.report.resolve(oldReport.id).then
+      Report.resolve({}, {id: oldReport.id}).$promise.then
       (function (response) {
-        var newReport = response.data;
+        var newReport = response;
         oldReport.resolved = newReport.resolved;
         oldReport.lastUpdated = newReport.lastUpdated;
         alertify.success('Selected report has been resolved.');
@@ -72,9 +73,9 @@ angular.module('streama').controller('adminReportsCtrl', [
       }
 
     function unresolve(oldReport) {
-      apiService.report.unresolve(oldReport.id).then
+      Report.unresolve({}, {id: oldReport.id}).$promise.then
       (function (response) {
-        var newReport = response.data;
+        var newReport = response;
         oldReport.resolved = newReport.resolved;
         oldReport.lastUpdated = newReport.lastUpdated;
         alertify.success('Selected report has been unresolved.');
@@ -89,9 +90,9 @@ angular.module('streama').controller('adminReportsCtrl', [
         alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
         alertify.confirm(confirmText, function (confirmed) {
           if(confirmed){
-            apiService.report.resolveMultiple(selectedReports).then
+            Report.resolveMultiple({}, selectedReports).$promise.then
             (function (response) {
-              var newReports = response.data;
+              var newReports = response;
               _.forEach(newReports, function (newReport) {
                   var vmReport = _.find(vm.reports, {id: newReport.id});
                   _.set(vmReport, 'resolved', true);

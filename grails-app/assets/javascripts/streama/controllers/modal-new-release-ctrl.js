@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalNewReleaseCtrl', [
-  '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'media', 'type', 'episodes',
-  function ($scope, $uibModalInstance, apiService, uploadService, media, type, episodes) {
+  '$scope', '$uibModalInstance', 'uploadService', 'media', 'type', 'episodes', 'Notification',
+  function ($scope, $uibModalInstance, uploadService, media, type, episodes, Notification) {
     $scope.loading = false;
     $scope.type = type;
     $scope.media = media;
@@ -19,7 +19,7 @@ angular.module('streama').controller('modalNewReleaseCtrl', [
 
 
     $scope.save = function (newRelease) {
-      apiService.notification.highlightOnDashboard(newRelease)
+      Notification.highlightOnDashboard({}, newRelease).$promise
         .then(function () {
           alertify.success('Highlight complete.');
           $uibModalInstance.close();

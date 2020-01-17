@@ -1,11 +1,12 @@
 
 
-angular.module('streama').controller('adminNewReleasesCtrl', ['$scope', 'apiService', 'modalService', '$state', function ($scope, apiService, modalService, $state) {
+angular.module('streama').controller('adminNewReleasesCtrl', ['$scope', 'modalService', '$state', 'Notification',
+  function ($scope, modalService, $state, Notification) {
 
 	$scope.loading = true;
 
-	apiService.notification.listNewReleases().then(function (data) {
-		$scope.notifications = data.data;
+	Notification.listNewReleases().$promise.then(function (data) {
+		$scope.notifications = data;
 		$scope.loading = false;
 	});
 
@@ -14,7 +15,7 @@ angular.module('streama').controller('adminNewReleasesCtrl', ['$scope', 'apiServ
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm('Are you sure you want to delete this highlight?', function (confirmed) {
 			if(confirmed){
-				apiService.notification.delete(notification.id).then(function (data) {
+				Notification.delete({id: notification.id}).$promise.then(function (data) {
 					_.remove($scope.notifications, {id: notification.id})
 				});
 			}

@@ -1,6 +1,7 @@
 
 
-angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', '$state', 'modalService', 'mediaListService', function ($scope, apiService, $state, modalService, mediaListService) {
+angular.module('streama').controller('adminShowsCtrl', ['$scope', '$state', 'modalService', 'mediaListService', 'TheMovieDB', 'TvShow',
+  function ($scope, $state, modalService, mediaListService, TheMovieDB, TvShow) {
 
 	$scope.loading = true;
   $scope.hasMovieDBKey = true;
@@ -8,15 +9,15 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
 
 	$scope.createFromFiles = createFromFiles;
 
-  apiService.theMovieDb.hasKey().then(function (data) {
-    if (!data.data.key) {
+  TheMovieDB.hasKey().$promise.then(function (data) {
+    if (!data.key) {
       $scope.hasMovieDBKey = false;
       $scope.searchText = "Search Show from collection...";
     }
   });
 
 
-  $scope.tvShow = mediaListService.init(apiService.tvShow.list, {sort: 'name', order: 'ASC'});
+  $scope.tvShow = mediaListService.init(TvShow.list, {sort: 'name', order: 'ASC'});
 
   $scope.openShowModal = function () {
 		modalService.tvShowModal(null, function (data) {
@@ -27,8 +28,8 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
   $scope.doSearch = function (query) {
     $scope.tvShow.search();
     if ($scope.hasMovieDBKey && query) {
-      return apiService.theMovieDb.search('tv', query).then(function (data) {
-        $scope.suggestedShows = data.data;
+      return TheMovieDB.search({type: 'tv', name: query}).$promise.then(function (data) {
+        $scope.suggestedShows = data;
       });
     }
   };
@@ -39,8 +40,8 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
     delete tempShow.id;
     tempShow.apiId = apiId;
 
-    apiService.tvShow.save(tempShow).then(function (response) {
-      var data = response.data;
+    TvShow.save({}, tempShow).$promise.then(function (response) {
+      var data = response;
       if(redirect){
         $state.go('admin.show', {showId: data.id});
       }else{
@@ -56,8 +57,8 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
 
 	function createFromFiles() {
 		modalService.createFromFilesModal('tvShow').then(function (data) {
-			apiService.tvShow.list().then(function (response) {
-        var data = response.data;
+			TvShow.list().$promise.then(function (response) {
+        var data = response;
 				angular.extend($scope.shows, data);
 			});
 		});

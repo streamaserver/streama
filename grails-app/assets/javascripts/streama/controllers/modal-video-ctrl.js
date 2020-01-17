@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalVideoCtrl', [
-	'$scope', '$uibModalInstance', 'apiService', 'video', 'isManual', 'tvShow', 'uploadService',
-	function ($scope, $uibModalInstance, apiService, video, isManual, tvShow, uploadService) {
+	'$scope', '$uibModalInstance', 'video', 'isManual', 'tvShow', 'uploadService', 'Episode', 'Video',
+	function ($scope, $uibModalInstance, video, isManual, tvShow, uploadService, Episode, Video) {
 	$scope.loading = false;
 	$scope.addManually = isManual;
 
@@ -15,7 +15,7 @@ angular.module('streama').controller('modalVideoCtrl', [
 		delete episode.dateCreated;
 		delete episode.lastUpdated;
 
-		apiService.episode.save(episode).then(function (data) {
+		Episode.save({}, episode).$promise.then(function (data) {
 				$uibModalInstance.close(data);
         alertify.success("Video saved.");
 			}, function () {
@@ -39,7 +39,7 @@ angular.module('streama').controller('modalVideoCtrl', [
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm("Are you sure you want to delete this Episode?", function (confirmed) {
 			if(confirmed){
-				apiService.video.delete(video.id).then(function () {
+				Video.delete({id: video.id}).$promise.then(function () {
 					$uibModalInstance.close({deleted: true});
 				});
 			}
@@ -52,8 +52,8 @@ angular.module('streama').controller('modalVideoCtrl', [
 		alertify.confirm("Are you sure you want to re-fetch the meta-data from TheMovieDb? " +
 				"All your changes except for the added files will be overridden.", function (confirmed) {
 			if(confirmed){
-				apiService.video.refetch(video.id).then(function (result) {
-					_.assign(video, result.data);
+				Video.refetch({id: video.id}).$promise.then(function (result) {
+					_.assign(video, result);
 					alertify.success('Fetch successful');
 				});
 			}

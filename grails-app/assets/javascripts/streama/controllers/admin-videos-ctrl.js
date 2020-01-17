@@ -1,12 +1,13 @@
 
 
-angular.module('streama').controller('adminVideosCtrl', ['$scope', 'apiService', 'modalService', '$state', function ($scope, apiService, modalService, $state) {
+angular.module('streama').controller('adminVideosCtrl', ['$scope', 'modalService', '$state', 'GenericVideo', 'Movie',
+  function ($scope, modalService, $state, GenericVideo, Movie) {
 
 	$scope.loading = true;
 
 
-	apiService.genericVideo.list().then(function (response) {
-		$scope.videos = response.data;
+	GenericVideo.list().$promise.then(function (response) {
+		$scope.videos = response;
 		$scope.loading = false;
 	});
 
@@ -22,9 +23,9 @@ angular.module('streama').controller('adminVideosCtrl', ['$scope', 'apiService',
 		delete tempMovie.id;
 		tempMovie.apiId = apiId;
 
-		apiService.movie.save(tempMovie).then(function (response) {
+		Movie.save({}, tempMovie).$promise.then(function (response) {
 			if(redirect){
-				$state.go('admin.movie', {movieId: response.data.id});
+				$state.go('admin.movie', {movieId: response.id});
 			}else{
 				$scope.movies.push(response.data);
 			}

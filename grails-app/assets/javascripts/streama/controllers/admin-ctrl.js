@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('streama').controller('adminCtrl', ['$scope', 'apiService', 'modalService', '$rootScope', function ($scope, apiService, modalService, $rootScope) {
+angular.module('streama').controller('adminCtrl', ['$scope', 'modalService', '$rootScope', function ($scope, modalService, $rootScope) {
 
 }]);
 

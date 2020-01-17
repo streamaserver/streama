@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('streama').controller('userSettingsCtrl', function ($scope, apiService, $rootScope, userService) {
+angular.module('streama').controller('userSettingsCtrl', function ($scope, $rootScope, userService, User, TheMovieDB) {
   $scope.user = angular.copy($rootScope.currentUser);
   $scope.loading = true;
   $scope.passwordData = {};
@@ -8,8 +8,8 @@ angular.module('streama').controller('userSettingsCtrl', function ($scope, apiSe
   $scope.languages = true;
 
 
-  apiService.theMovieDb.availableGenres().then(function (response) {
-    var data = response.data;
+  TheMovieDB.availableGenres().$promise.then(function (response) {
+    var data = response;
     $scope.availableGenres = data;
     $scope.loading = false;
   });
@@ -25,8 +25,8 @@ angular.module('streama').controller('userSettingsCtrl', function ($scope, apiSe
 
   $scope.saveProfile = function () {
     $scope.loading = true;
-    apiService.user.saveProfile($scope.user).then(function (response) {
-      var data = response.data;
+    User.saveProfile({}, $scope.user).$promise.then(function (response) {
+      var data = response;
         $scope.loading = false;
         userService.setCurrentUser(data);
         alertify.success('Your profile was successfully saved.');
@@ -51,7 +51,7 @@ angular.module('streama').controller('userSettingsCtrl', function ($scope, apiSe
   $scope.saveNewPassword = function () {
     $scope.loading = true;
 
-    apiService.user.changePassword($scope.passwordData).then(function () {
+    User.changePassword($scope.passwordData).$promise.then(function () {
         alertify.success('Password was successfully changed.');
         $scope.passwordData = {};
         $scope.passwordsInvalid = true;

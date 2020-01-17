@@ -1,6 +1,7 @@
 
 
-angular.module('streama').controller('adminNotificationsCtrl', ['$scope', 'apiService', 'modalService', '$state', function ($scope, apiService, modalService, $state) {
+angular.module('streama').controller('adminNotificationsCtrl', ['$scope', 'modalService', '$state', 'Notification',
+  function ($scope, modalService, $state, Notification) {
 
 	$scope.loading = true;
 
@@ -8,8 +9,8 @@ angular.module('streama').controller('adminNotificationsCtrl', ['$scope', 'apiSe
 
 
 
-   apiService.notification.list().then(function (data) {
-    	$scope.notifications = data.data;
+  Notification.list().$promise.then(function (data) {
+    	$scope.notifications = data;
     	$scope.loading = false;
    });
 
@@ -17,7 +18,7 @@ angular.module('streama').controller('adminNotificationsCtrl', ['$scope', 'apiSe
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm("Are you sure you want to send all of the open Notifications in the queue?", function (confirmed) {
 			if(confirmed){
-				apiService.notification.sendCurrentNotifcation()
+        Notification.sendCurrentNotification().$promise
 					.then(function () {
 						_.forEach($scope.notifications, function (notification) {
 							notification.isCompleted = true;
@@ -53,7 +54,7 @@ angular.module('streama').controller('adminNotificationsCtrl', ['$scope', 'apiSe
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm('Are you sure you want to delete this notification?', function (confirmed) {
 			if(confirmed){
-				apiService.notification.delete(notification.id).then(function (data) {
+        Notification.delete(notification.id).$promise.then(function (data) {
 					_.remove($scope.notifications, {id: notification.id})
 				});
 			}

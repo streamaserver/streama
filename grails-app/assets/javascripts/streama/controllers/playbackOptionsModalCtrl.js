@@ -3,7 +3,7 @@
 angular.module('streama')
   .controller('playbackOptionsModalCtrl', playbackOptionsModalCtrl);
 
-function playbackOptionsModalCtrl($uibModalInstance, dialogOptions, apiService) {
+function playbackOptionsModalCtrl($uibModalInstance, dialogOptions) {
   var vm = this;
   vm.playerOptions = _.clone(dialogOptions.playerOptions);
   vm.selectVideoFile = selectVideoFile;

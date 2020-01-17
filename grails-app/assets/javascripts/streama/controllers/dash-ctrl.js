@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('dashCtrl',
-	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService, currentUser ) {
+	function ($scope, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService, currentUser,
+            Dash, Profile, Tag, Settings, WatchlistEntry, ViewingStatus ) {
   var vm = this;
 
     var LIST_MAX = 30;
@@ -31,8 +32,8 @@ angular.module('streama').controller('dashCtrl',
       }
 
       if(!localStorageService.get('currentProfile')){
-        apiService.profile.getUserProfiles().then(function(response) {
-            var data = response.data;
+        Profile.getUserProfiles().$promise.then(function(response) {
+            var data = response;
             localStorageService.set('currentProfile', data[0]);
             initMedia();
           }
@@ -45,16 +46,16 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function initMedia() {
-      vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser);
-      vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
-      vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser);
-      vm.watchlistEntry = mediaListService.init(apiService.watchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser);
+      vm.movie = mediaListService.init(Dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser);
+      vm.tvShow = mediaListService.init(Dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
+      vm.genericVideo = mediaListService.init(Dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser);
+      vm.watchlistEntry = mediaListService.init(WatchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser);
 
-      apiService.tag.list().then(onTagsLoaded);
-      apiService.dash.listNewReleases().then(onNewReleasesLoaded);
-      apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
-      apiService.dash.listRecommendations().then(onRecommendedLoaded);
-      apiService.dash.listGenres().then(onGenreLoaded);
+      Tag.list().$promise.then(onTagsLoaded);
+      Dash.listNewReleases().$promise.then(onNewReleasesLoaded);
+      Dash.listContinueWatching().$promise.then(onContinueWatchingLoaded);
+      Dash.listRecommendations().$promise.then(onRecommendedLoaded);
+      Dash.listGenres().$promise.then(onGenreLoaded);
 
     }
     // HOISTED FUNCTIONS BELOW
@@ -105,9 +106,9 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function showInitialSettingsWarning() {
-      var settingsPromise = apiService.settings.list();
+      var settingsPromise = Settings.list().$promise;
       settingsPromise.then(function (response) {
-        var data = response.data;
+        var data = response;
         $scope.settings = data;
         var TheMovieDbAPI = _.find(data, {settingsKey: 'Upload Directory'});
 
@@ -135,8 +136,8 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function fetchFirstEpisodeAndPlay(tvShow) {
-      apiService.dash.firstEpisodeForShow(tvShow.id).then(function (response) {
-        $state.go('player', {videoId: response.data.id});
+      Dash.firstEpisodeForShow({id: tvShow.id}).$promise.then(function (response) {
+        $state.go('player', {videoId: response.id});
       });
     }
 
@@ -176,9 +177,9 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function addToWatchlist(item) {
-      apiService.watchlistEntry.create(item).then(function (response) {
+      WatchlistEntry.create({id: item.id, mediaType: item.mediaType}).$promise.then(function (response) {
         vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
-        updateWatchlist("added", vm.watchlistEntry.list, item, response.data);
+        updateWatchlist("added", vm.watchlistEntry.list, item, response);
       });
     }
 
@@ -186,7 +187,7 @@ angular.module('streama').controller('dashCtrl',
       alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
       alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
         if (confirmed) {
-          apiService.watchlistEntry.delete(item).then(function (response) {
+          WatchlistEntry.delete({id: item.id, mediaType: item.mediaType}).$promise.then(function (response) {
             updateWatchlist("removed", vm.watchlistEntry.list, item);
           });
         }
@@ -263,7 +264,7 @@ angular.module('streama').controller('dashCtrl',
       alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
       alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
         if (confirmed) {
-          apiService.viewingStatus.delete(viewingStatus.id).then(function (data) {
+          ViewingStatus.delete({id: viewingStatus.id}).$promise.then(function (data) {
             _.remove(vm.continueWatching, {'id': viewingStatus.id});
           });
         }

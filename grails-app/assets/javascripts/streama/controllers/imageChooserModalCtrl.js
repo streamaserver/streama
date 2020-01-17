@@ -3,7 +3,7 @@
 angular.module('streama')
   .controller('imageChooserModalCtrl', imageChooserModalCtrl);
 
-function imageChooserModalCtrl($uibModalInstance, dialogOptions, apiService) {
+function imageChooserModalCtrl($uibModalInstance, dialogOptions, TheMovieDB) {
   var vm = this;
 	vm.mediaType = dialogOptions.mediaType;
 	vm.media = dialogOptions.media;
@@ -16,8 +16,8 @@ function imageChooserModalCtrl($uibModalInstance, dialogOptions, apiService) {
 
 
   function init() {
-    apiService.theMovieDb.imagesForMedia({type: vm.mediaType, apiId: vm.media.apiId}).then(function (response) {
-      vm.imagesForMedia = response.data;
+    TheMovieDB.imagesForMedia({type: vm.mediaType, apiId: vm.media.apiId}).$promise.then(function (response) {
+      vm.imagesForMedia = response;
     });
   }
 

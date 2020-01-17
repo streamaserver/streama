@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('streama').controller('modalGenericVideoCtrl', [
-	'$scope', '$uibModalInstance', 'apiService', 'video', 'uploadService',
-	function ($scope, $uibModalInstance, apiService, video, uploadService) {
+	'$scope', '$uibModalInstance', 'video', 'uploadService', 'GenericVideo', 'Genre', 'Movie', 'Tag',
+	function ($scope, $uibModalInstance, video, uploadService, GenericVideo, Genre, Movie, Tag) {
 	$scope.loading = false;
 
 	$scope.video = video || {};
 
 	$scope.saveVideo = function (video) {
-		apiService.genericVideo.save(video).then(function (response) {
-			$uibModalInstance.close(response.data);
+		GenericVideo.save({}, video).$promise.then(function (response) {
+			$uibModalInstance.close(response);
 		});
 	};
 
@@ -19,9 +19,9 @@ angular.module('streama').controller('modalGenericVideoCtrl', [
 	$scope.uploadImage = function (files, type) {
 		uploadService.doUpload($scope.imageUpload, 'file/upload.json', function (data) {
 			$scope.imageUpload.percentage = null;
-			
+
 			if(data.error) return
-			
+
 			console.log('%c type', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', type);
 			$scope.video[type] = data;
 			$scope.video[type+'_src'] = data.src;
@@ -30,8 +30,8 @@ angular.module('streama').controller('modalGenericVideoCtrl', [
 
 
 
-	apiService.genres.list().then(function (data) {
-		$scope.genres = data.data;
+	Genre.list().$promise.then(function (data) {
+		$scope.genres = data;
 	});
 
 
@@ -39,7 +39,7 @@ angular.module('streama').controller('modalGenericVideoCtrl', [
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm("Are you sure, you want to delete this Episode?", function (confirmed) {
 			if(confirmed){
-				apiService.movie.delete(movie.id).then(function () {
+				Movie.delete({id: movie.id}).$promise.then(function () {
 					$uibModalInstance.close({deleted: true});
 				});
 			}
@@ -47,7 +47,7 @@ angular.module('streama').controller('modalGenericVideoCtrl', [
 	};
 
 	$scope.onTagSelect = function (tag) {
-		apiService.tag.save(tag);
+		Tag.save({}, tag);
 	};
 
 	$scope.tagTransform = function (newTag) {
@@ -63,15 +63,15 @@ angular.module('streama').controller('modalGenericVideoCtrl', [
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm('Are you sure you want to delete the tag ' + tag.name, function (confirmed) {
 			if(confirmed){
-				apiService.tag.delete(tag.id).then(function () {
+				Tag.delete({id: tag.id}).$promise.then(function () {
 					_.remove($scope.tags, {id: tag.id});
 				})
 			}
 		});
 	};
 
-	apiService.tag.list().then(function (response) {
-		$scope.tags = response.data;
+	Tag.list().$promise.then(function (response) {
+		$scope.tags = response;
 	});
 
 

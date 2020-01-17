@@ -1,10 +1,11 @@
 
 
-angular.module('streama').controller('settingsUsersCtrl', ['$scope', 'apiService', 'modalService', '$rootScope', function ($scope, apiService, modalService, $rootScope) {
+angular.module('streama').controller('settingsUsersCtrl', ['$scope', 'modalService', '$rootScope', 'User',
+  function ($scope, modalService, $rootScope, User) {
 	$scope.loading = true;
 
-	apiService.user.list().then(function (response) {
-    var data = response.data;
+	User.list().$promise.then(function (response) {
+    var data = response;
 		$scope.users = data;
 		$scope.loading = false;
 
@@ -72,7 +73,7 @@ angular.module('streama').controller('settingsUsersCtrl', ['$scope', 'apiService
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm('Are you sure you want to delete ' + user.username + '?', function (confirmed) {
 			if(confirmed){
-				apiService.user.delete(user.id).then(function (data) {
+				User.delete({id: user.id}).$promise.then(function (data) {
           _.remove($scope.users, {id: user.id})
 				});
 			}

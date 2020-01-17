@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('streama').controller('modalUserCtrl', [
-	'$scope', '$uibModalInstance', 'apiService', 'user', 'isInvite',
-	function ($scope, $uibModalInstance, apiService, user, isInvite) {
+	'$scope', '$uibModalInstance', 'user', 'isInvite', 'User', 'Profile',
+	function ($scope, $uibModalInstance, user, isInvite, User, Profile) {
 
 		$scope.user = angular.copy(user) || {};
 		$scope.loading = false;
 		$scope.validPassword = isInvite ? true : false;
 
-		apiService.user.availableRoles().then(function (response) {
-      var data = response.data;
+		User.availableRoles().$promise.then(function (response) {
+      var data = response;
       $scope.roles = data;
     });
 
@@ -22,8 +22,8 @@ angular.module('streama').controller('modalUserCtrl', [
 			$scope.validUser = false;
 
 			if(username){
-				apiService.user.checkAvailability(username).then(function (response) {
-          var data = response.data;
+        User.checkAvailability({username: username}).$promise.then(function (response) {
+          var data = response;
 					if(data.error){
 						$scope.error = 	data.error;
 					}else{
@@ -73,8 +73,8 @@ angular.module('streama').controller('modalUserCtrl', [
 		$scope.saveAndInviteUser = function (user) {
 			$scope.loading = true;
       var dateObj = angular.copy(user);
-			apiService.user.saveAndInviteUser(dateObj).then(function (response) {
-			  var data = response.data;
+			User.saveAndInviteUser({}, dateObj).$promise.then(function (response) {
+			  var data = response;
 				  if(user.id){
             alertify.success('User Updated!');
             $uibModalInstance.close(data);
@@ -87,7 +87,7 @@ angular.module('streama').controller('modalUserCtrl', [
             isChild: false,
             user: data
           };
-          apiService.profile.save(basicProfile).then(function () {
+          Profile.save({}, basicProfile).$promise.then(function () {
               alertify.success('Profile Created!');
               $uibModalInstance.close(data);
               $scope.loading = false;
@@ -110,15 +110,15 @@ angular.module('streama').controller('modalUserCtrl', [
     $scope.saveAndCreateUser = function (user) {
       $scope.loading = true;
       var dateObj = angular.copy(user);
-      apiService.user.saveAndCreateUser(dateObj).then(function (response) {
-         var data = response.data;
+      User.saveAndCreateUser({},dateObj).$promise.then(function (response) {
+         var data = response;
           var basicProfile = {
             profileName: data.username,
             profileLanguage: data.language,
             isChild: false,
             user: data
           };
-          apiService.profile.save(basicProfile).then(function () {
+          Profile.save({}, basicProfile).$promise.then(function () {
               alertify.success('Profile Created!');
               $uibModalInstance.close(data);
               $scope.loading = false;

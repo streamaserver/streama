@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('streama').controller('settingsSettingsCtrl',
-      ['$scope', 'apiService', '$sce', 'uploadService',
-      function ($scope, apiService, $sce, uploadService) {
+      ['$scope', '$sce', 'uploadService', 'Settings', 'File',
+      function ($scope, $sce, uploadService, Settings, File) {
 
-  apiService.settings.list().then(function (response) {
+  Settings.list().$promise.then(function (response) {
     var data = response.data;
     $scope.settings = data;
 
@@ -16,7 +16,7 @@ angular.module('streama').controller('settingsSettingsCtrl',
 
   $scope.updateMultipleSettings = function (settings) {
     settings.invalid = false;
-    apiService.settings.updateMultiple(settings).then(function () {
+    Settings.updateMultiple({}, settings).$promise.then(function () {
         window.location.reload();
         alertify.success('Settings saved.');
       })
@@ -31,8 +31,8 @@ angular.module('streama').controller('settingsSettingsCtrl',
     $scope.changeValue(settings);
     $scope.loading = true;
 
-    apiService.settings.validateSettings(settings).then(function (response) {
-        var data = response.data;
+    Settings.validateSettings({}, settings).$promise.then(function (response) {
+        var data = response;
         alertify.success(data.message || 'validation successful');
         settings.valid = true;
         $scope.loading = false;
@@ -59,8 +59,8 @@ angular.module('streama').controller('settingsSettingsCtrl',
 	$scope.uploadStatus = {};
 	$scope.upload = function (setting, files) {
 		//check if upload dir is set
-		apiService.settings.list().then(function (response) {
-      var data = response.data;
+		Settings.list().$promise.then(function (response) {
+      var data = response;
 			var uploadDir = _.find(data, {settingsKey: 'Upload Directory'});
 			if (uploadDir.value) {
 				//do upload
@@ -87,8 +87,8 @@ angular.module('streama').controller('settingsSettingsCtrl',
       if (assetURL.startsWith("upload:")) {
 
         var id = assetURL.split(":")[1];
-        apiService.file.getURL(id).then(function (response) {
-            setting.src = response.data.url;
+        File.getURL({id: id}).$promise.then(function (response) {
+            setting.src = response.url;
             return true;
           });
 

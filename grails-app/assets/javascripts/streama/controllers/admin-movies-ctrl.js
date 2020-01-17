@@ -1,8 +1,8 @@
 
 
 angular.module('streama').controller('adminMoviesCtrl', [
-  'apiService', 'modalService', '$state', 'mediaListService',
-  function (apiService, modalService, $state, mediaListService) {
+   'modalService', '$state', 'mediaListService', 'TheMovieDB', 'Movie',
+  function (modalService, $state, mediaListService, TheMovieDB, Movie) {
   var vm = this;
 
   vm.hasMovieDBKey = true;
@@ -17,9 +17,9 @@ angular.module('streama').controller('adminMoviesCtrl', [
   init();
 
   function init() {
-    vm.movie = mediaListService.init(apiService.movie.list);
-    apiService.theMovieDb.hasKey().then(function (data) {
-      if (!data.data.key) {
+    vm.movie = mediaListService.init(Movie.list);
+    TheMovieDB.hasKey().$promise.then(function (data) {
+      if (!data.key) {
         vm.hasMovieDBKey = false;
         vm.searchText = "Search Movie from collection...";
       }
@@ -36,8 +36,8 @@ angular.module('streama').controller('adminMoviesCtrl', [
   function doSearch(query) {
     vm.movie.search();
     if (vm.hasMovieDBKey) {
-      return apiService.theMovieDb.search('movie', query).then(function (data) {
-        vm.suggestedMovies = data.data;
+      return TheMovieDB.search({type: 'movie', name: query}).$promise.then(function (data) {
+        vm.suggestedMovies = data;
       });
     }
   }
@@ -48,11 +48,11 @@ angular.module('streama').controller('adminMoviesCtrl', [
     delete tempMovie.id;
     tempMovie.apiId = apiId;
 
-    apiService.movie.save(tempMovie).then(function (response) {
+    Movie.save({}, tempMovie).$promise.then(function (response) {
       if(redirect){
-        $state.go('admin.movie', {movieId: response.data.id});
+        $state.go('admin.movie', {movieId: response.id});
       }else{
-        vm.movie.list.push(response.data);
+        vm.movie.list.push(response);
       }
     });
   }
@@ -65,8 +65,8 @@ angular.module('streama').controller('adminMoviesCtrl', [
 
   function createFromFiles() {
     modalService.createFromFilesModal('movie').then(function (data) {
-      apiService.movie.list().then(function (response) {
-        angular.extend(vm.movie.list, response.data);
+      Movie.list().$promise.then(function (response) {
+        angular.extend(vm.movie.list, response);
       });
     });
   }

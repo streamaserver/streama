@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalTvShowCtrl', [
-	'$scope', '$uibModalInstance', 'apiService', 'tvShow',
-	function ($scope, $uibModalInstance, apiService, tvShow) {
+	'$scope', '$uibModalInstance', 'tvShow', 'Genre', 'TvShow', 'TheMovieDB',
+	function ($scope, $uibModalInstance, tvShow, Genre, TvShow, TheMovieDB) {
 
   $scope.loading = false;
   $scope.tvShow = tvShow || {};
@@ -17,12 +17,12 @@ angular.module('streama').controller('modalTvShowCtrl', [
 	init();
 
   function init(){
-    apiService.genres.list().then(function (data) {
-      $scope.genres = data.data;
+    Genre.list().$promise.then(function (data) {
+      $scope.genres = data;
     });
 
-		apiService.theMovieDb.hasKey().then(function (data) {
-			if (!data.data.key) {
+		TheMovieDB.hasKey().$promise.then(function (data) {
+			if (!data.key) {
 				$scope.tvShow.manualInput = true;
 				$scope.hasMovieDBKey = false;
 			}
@@ -38,8 +38,8 @@ angular.module('streama').controller('modalTvShowCtrl', [
 	}
 
 	function saveShow(video) {
-		apiService.tvShow.save(video).then(function (data) {
-			$uibModalInstance.close(data.data);
+		TvShow.save({}, video).$promise.then(function (data) {
+			$uibModalInstance.close(data);
 			alertify.success("TV Show saved.");
 		});
 	}
@@ -54,8 +54,8 @@ angular.module('streama').controller('modalTvShowCtrl', [
 	}
 
 	function search(query) {
-		return apiService.theMovieDb.search('tv', query).then(function (data) {
-			return data.data;
+		return TheMovieDB.search( {type: 'tv', name: query}).$promise.then(function (data) {
+			return data;
 		});
 	}
 

@@ -1,6 +1,7 @@
 
 
-angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiService', 'modalService', '$state', function ($scope, apiService, modalService, $state) {
+angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'modalService', '$state', 'Video',
+  function ($scope, modalService, $state, Video) {
 
 
 	$scope.maxPerPage = 10;
@@ -28,7 +29,7 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
     alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
 		alertify.confirm(confirmText, function (confirmed) {
 			if(confirmed){
-				apiService.video.removeFileFromDisk(file.id, file.path).then(function () {
+				Video.removeFileFromDisk({id: file.id, path: file.path}).$promise.then(function () {
 					_.remove($scope.files, {id: file.id});
 					_.remove($scope.files, {path: file.path});
           alertify.success('File deleted.');
@@ -46,8 +47,8 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
       alertify.confirm(confirmText, function (confirmed) {
         if(confirmed){
-          apiService.video.removeMultipleFilesFromDisk($scope.selectedFiles).then(function (response) {
-						var data = response.data;
+          Video.removeMultipleFilesFromDisk({}, $scope.selectedFiles).$promise.then(function (response) {
+						var data = response;
             _.forEach(data.successes, function (id) {
 								// TODO investigate why {id: id} doesn't work
 								_.remove($scope.files, function(file) {
@@ -90,9 +91,8 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 		$scope.loading = true;
 		$scope.files = [];
 		$scope.filesCount = 0;
-		apiService.video.listAllFiles(params).then(function (response) {
-				var data = response.data;
-			  console.log(data);
+		Video.listAllFiles(params).$promise.then(function (response) {
+				var data = response;
 				$scope.loading = false;
 				$scope.files = data.files;
 				$scope.filesCount = data.count;
@@ -113,7 +113,7 @@ angular.module('streama').controller('adminFileManagerCtrl', ['$scope', 'apiServ
 		alertify.confirm(message, function (confirmed) {
 			if(confirmed){
 				$scope.loading = true;
-				apiService.video.cleanUpFiles(type).then(function () {
+				Video.cleanUpFiles({type: type}).$promise.then(function () {
 					$scope.refreshList('all');
 				});
 			}

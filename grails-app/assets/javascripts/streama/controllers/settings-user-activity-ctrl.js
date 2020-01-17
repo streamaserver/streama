@@ -1,5 +1,5 @@
-angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'apiService', 'modalService', '$rootScope',
-  function ($scope, apiService, modalService, $rootScope) {
+angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'modalService', '$rootScope',
+  function ($scope, modalService, $rootScope, User) {
     var MAX_PER_PAGE = 10;
     var vm = this;
     vm.currentOffset = 0;
@@ -36,7 +36,7 @@ angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'api
     function init() {
       loadList();
 
-      apiService.user.list().then(function (data) {
+      User.list().$promise.then(function (data) {
         vm.users = data.data;
         vm.loading = false;
       });
@@ -56,13 +56,13 @@ angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'api
     }
 
     function loadList() {
-      apiService.userActivity.list({
+      User.userActivity({
         offset: getOffset(),
         max: MAX_PER_PAGE,
         userId: _.get(vm.filter, 'user.id'),
         type: vm.currentType,
         sort: vm.currentSort
-      }).then(function (data) {
+      }).$promise.then(function (data) {
         vm.userActivity = data.data;
       });
     }

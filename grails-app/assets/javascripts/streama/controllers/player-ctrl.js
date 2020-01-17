@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('streama').controller('playerCtrl', [
-	'$scope', 'apiService', '$stateParams', 'playerService', '$rootScope',
-	function ($scope, apiService, $stateParams, playerService, $rootScope) {
+	'$scope', '$stateParams', 'playerService', '$rootScope', 'Video',
+	function ($scope, $stateParams, playerService, $rootScope, Video) {
 
-		apiService.video.get($stateParams.videoId).then(function (response) {
-			$scope.video = response.data;
+		Video.get({id: $stateParams.videoId}).$promise.then(function (response) {
+			$scope.video = response;
 
 			var missingFileError = playerService.handleMissingFileError($scope.video);
 

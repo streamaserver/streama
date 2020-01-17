@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('streama').controller('subProfilesCtrl',
-  function ($scope, apiService, $rootScope, userService, localStorageService, $state, profileService) {
+  function ($scope, $rootScope, userService, localStorageService, $state, profileService, Profile) {
 
     $scope.profile = {
       profileName: '',
@@ -22,7 +22,7 @@ angular.module('streama').controller('subProfilesCtrl',
 
     profileService.getUserProfiles().then(
       function(data) {
-        $scope.existingProfiles = data.data;
+        $scope.existingProfiles = data;
       }
     );
     $scope.setCurrentProfile = profileService.setCurrentProfile;
@@ -62,7 +62,7 @@ angular.module('streama').controller('subProfilesCtrl',
       if(!$scope.profile.id){
         return;
       }
-      apiService.profile.delete($scope.profile.id).then(function () {
+      Profile.delete({id: $scope.profile.id}).$promise.then(function () {
           alertify.success('Profile Deleted!');
           $scope.getAllProfiles();
           $scope.loading = false;
@@ -84,11 +84,11 @@ angular.module('streama').controller('subProfilesCtrl',
       }
       var saveProfileEndpoint;
       if ($scope.profile.id) {
-        saveProfileEndpoint = apiService.profile.update;
+        saveProfileEndpoint = Profile.update;
       }else {
-        saveProfileEndpoint = apiService.profile.save;
+        saveProfileEndpoint = Profile.save;
       }
-      saveProfileEndpoint($scope.profile).then(function () {
+      saveProfileEndpoint({}, $scope.profile).$promise.then(function () {
           alertify.success($scope.profile.id ? 'Profile Updated!' : 'Profile Created!');
           $scope.getAllProfiles();
           $scope.loading = false;
@@ -100,8 +100,8 @@ angular.module('streama').controller('subProfilesCtrl',
     };
 
     $scope.getAllProfiles = function () {
-      apiService.profile.getUserProfiles().then(function (data) {
-          $scope.existingProfiles = data.data;
+      Profile.getUserProfiles().$promise.then(function (data) {
+          $scope.existingProfiles = data;
           $scope.refreshStates();
         }, function (data) {
           alertify.error(data.message);

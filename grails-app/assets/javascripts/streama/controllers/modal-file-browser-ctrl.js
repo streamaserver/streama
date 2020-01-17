@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('streama').controller('modalFileBrowserCtrl', [
-	'$scope', '$uibModalInstance', 'apiService',
-	function ($scope, $uibModalInstance, apiService) {
+	'$scope', '$uibModalInstance', 'Video',
+	function ($scope, $uibModalInstance, Video) {
 		$scope.loading = true;
 
-		apiService.video.listAllFiles().then(function (response) {
-				var data = response.data;
+      Video.listAllFiles().$promise.then(function (response) {
+				var data = response;
 				$scope.loading = false;
 				$scope.files = data;
 			}, function () {

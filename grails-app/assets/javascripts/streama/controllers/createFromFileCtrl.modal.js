@@ -3,7 +3,7 @@
 angular.module('streama')
   .controller('modalCreateFromFileCtrl', modalCreateFromFileCtrl);
 
-function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadService, dialogOptions, modalService, $state) {
+function modalCreateFromFileCtrl($scope, $uibModalInstance, uploadService, dialogOptions, modalService, $state, File) {
   var vm = this;
   var STATUS_NO_MATCH = 0;
   var STATUS_MATCH_FOUND = 1;
@@ -63,7 +63,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 	}
 
 	function loadLocalFiles(path) {
-		apiService.file.localFiles(path).then(function(response) {
+		File.localFiles({path: path}).$promise.then(function(response) {
 			var data = response.data;
 			vm.localFilesEnabled = true;
 			vm.localFiles = data;
@@ -88,7 +88,7 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
     dir.showFiles = (dir.showFiles == true && !forceOpen) ? false : true;
     if(!dir.localFiles || !dir.localFiles.length){
 			dir.localFiles = [];
-			apiService.file.localFiles(dir.path).then(function(response) {
+			File.localFiles({path: dir.path}).$promise.then(function(response) {
 				var data = response.data;
 				dir.localFiles = data;
 				(onSuccess || angular.noop)(data);
@@ -114,8 +114,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		vm.isMatcherLoading = true;
     vm.matchResult = null;
 		var fileSelection = _.filter(vm.selection, {directory: false});
-		apiService.file.matchMetaDataFromFiles(fileSelection).then(function (response) {
-			var data = response.data;
+		File.matchMetaDataFromFiles({}, {files: fileSelection}).$promise.then(function (response) {
+			var data = response;
 			vm.isMatcherLoading = false;
 			vm.matchResult = data;
 			//console.log(data);
@@ -179,8 +179,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 			alertify.success('Nothing to add.');
 		}
 
-    apiService.file.bulkAddMediaFromFile(allFoundMatches).then(function (response) {
-			var data = response.data;
+    File.bulkAddMediaFromFile({files: allFoundMatches}).$promise.then(function (response) {
+			var data = response;
       if(_.some(data, {status: STATUS_LIMIT_REACHED})){
         alertify.log("not all files were added unfortunately. This is due to TheMovieDB API LIMIT constraints. Just try again in a couple of seconds :). ")
       }else{
@@ -193,8 +193,8 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 
 	function addSelectedFile(file) {
     var fileMatch = _.find(vm.matchResult, {"file": file.path});
-    apiService.file.bulkAddMediaFromFile([fileMatch]).then(function (response) {
-			var result = response.data;
+    File.bulkAddMediaFromFile({files: [fileMatch]}).$promise.then(function (response) {
+			var result = response;
       if(_.some(result, {status: STATUS_LIMIT_REACHED})){
         alertify.log("not all files were added unfortunately. This is due to TheMovieDB API LIMIT constraints. Just try again in a couple of seconds :) ")
       }else{

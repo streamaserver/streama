@@ -1,13 +1,14 @@
 //= wrapped
 
 angular.module('streama').controller('modalErrorReportCtrl', [
-  'apiService', '$state', '$uibModalInstance', 'errorCode', 'videoData', '$rootScope', function (apiService, $state, $uibModalInstance, errorCode, videoData, $rootScope) {
+  '$state', '$uibModalInstance', 'errorCode', 'videoData', '$rootScope', 'Report',
+  function ($state, $uibModalInstance, errorCode, videoData, $rootScope, Report) {
     var vm = this;
     vm.close = close;
     vm.errorCode = errorCode;
     function close(data) {
       if (data === 'withReport') {
-          apiService.report.save(videoData.id, errorCode).then(function () {
+          Report.save({},{videoId: videoData.id, errorCode: errorCode}).$promise.then(function () {
               closeModalAndRedirect();
               alertify.success('Report sent successfully.');
           }, function (error) {

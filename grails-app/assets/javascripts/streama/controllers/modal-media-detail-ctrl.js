@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalMediaDetailCtrl', [
-  '$scope', '$uibModalInstance', '$rootScope', 'config', '$state', 'apiService',
-  function ($scope, $uibModalInstance, $rootScope, config, $state, apiService) {
+  '$scope', '$uibModalInstance', '$rootScope', 'config', '$state', 'TvShow', 'Movie', 'GenericVideo', 'Episode', 'Video', 'Dash', 'WatchlistEntry',
+  function ($scope, $uibModalInstance, $rootScope, config, $state, TvShow, Movie, GenericVideo, Episode, Video, Dash, WatchlistEntry) {
     var action;
 
     $scope.mediaType = config.mediaType;
@@ -20,25 +20,36 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     else if(mediaId && $scope.mediaType){
 
       console.log('%c media', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', mediaId);
-      apiService[$scope.mediaType].get(mediaId).then(function (response) {
-        var data = response.data;
-        $scope.media = data;
-
-        if($scope.mediaType == 'tvShow'){
+      switch ($scope.mediaType) {
+        case "tvShow":
           $scope.currentSeason = 0;
-          apiService.tvShow.episodesForTvShow($scope.media.id).then(function (response) {
-            var episodes = $scope.episodes = response.data;
+          TvShow.episodesForTvShow({id: $scope.media.id}).$promise.then(function (response) {
+            var episodes = $scope.episodes = response;
             if(episodes.length){
               $scope.seasons = _.chain(episodes).map('season_number').uniq().value();
               $scope.currentSeason = _.min(episodes, 'season_number').season_number;
             }
           });
-          apiService.dash.firstEpisodeForShow($scope.media.id).then(function (response) {
-            var firstEpisode = response.data;
+          Dash.firstEpisodeForShow({id: $scope.media.id}).$promise.then(function (response) {
+            var firstEpisode = response;
             $scope.firstEpisode = firstEpisode;
           });
-        }
-      });
+          break;
+        case "movie":
+          Movie.get({id: mediaId}).$promise.then(showMediaDetail);
+          break;
+        case "episode":
+          Episode.get({id: mediaId}).$promise.then(showMediaDetail);
+          break;
+        case "video":
+          Video.get({id: mediaId}).$promise.then(showMediaDetail);
+          break;
+        case "genericVideo":
+          GenericVideo.get({id: mediaId}).$promise.then(showMediaDetail);
+          break;
+        default:
+          console.log($scope.mediaType + ' has no request configured through $resources');
+      }
     }
     else if(!config.mediaObject && !mediaId && !$scope.mediaType) {
       alertify.error('No data available');
@@ -76,13 +87,18 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 			$uibModalInstance.dismiss('cancel');
 		});
 
+		function showMediaDetail(response) {
+      var data = response;
+      $scope.media = data;
+    }
+
     function listEpisodesForSeason(seasonNum) {
       return _.filter($scope.episodes, {'season_number': seasonNum});
     }
 
     function addToWatchlist(item) {
-      apiService.watchlistEntry.create(item).then(function (response) {
-        var data = response.data;
+      WatchlistEntry.create({}, item).$promise.then(function (response) {
+        var data = response;
         $scope.media = data.video ? data.video : data.tvShow;
         $scope.watchlistEntry = data;
         action = 'added'
@@ -93,8 +109,8 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
       alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
       alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
         if (confirmed) {
-          apiService.watchlistEntry.delete(item).then(function (response) {
-            var data = response.data;
+          WatchlistEntry.delete({}, item).$promise.then(function (response) {
+            var data = response;
             $scope.media = data;
             action = 'removed'
           });

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalNotificationAddCtrl', [
-  '$scope', '$uibModalInstance', 'apiService',
-  function ($scope, $uibModalInstance, apiService) {
+  '$scope', '$uibModalInstance', 'Dash', 'Notification',
+  function ($scope, $uibModalInstance, Dash, Notification) {
 
     $scope.notification = {};
     $scope.selectedItem = {};
@@ -15,8 +15,8 @@ angular.module('streama').controller('modalNotificationAddCtrl', [
     $scope.clearNotification = clearNotification;
 
     function search (query) {
-    		return apiService.dash.searchMedia(query).then(function (data) {
-    		  return data.data.shows.concat(data.data.movies);
+    		return Dash.searchMedia({query: query}).$promise.then(function (data) {
+    		  return data.shows.concat(data.movies);
     			//return data.data;
     	  });
     };
@@ -27,15 +27,15 @@ angular.module('streama').controller('modalNotificationAddCtrl', [
     };
 
     function notificationSuccess (response) {
-      var data = response.data;
+      var data = response;
       $uibModalInstance.close(data);
     }
 
     function saveNotification (notification) {
         if($scope.selectedItem.mediaType == 'movie'){
-            apiService.notification.addMovieToCurrentNotification($scope.selectedItem.id).then(notificationSuccess);
+            Notification.addMovieToCurrentNotification({id: $scope.selectedItem.id}).$promise.then(notificationSuccess);
         }else if($scope.selectedItem.mediaType == 'tvShow')
-            apiService.notification.addTvShowToCurrentNotification($scope.selectedItem.id, $scope.notification.description).then(notificationSuccess);
+            Notification.addTvShowToCurrentNotification({id: $scope.selectedItem.id, description: $scope.notification.description}).$promise.then(notificationSuccess);
     }
 
     function clearNotification (){

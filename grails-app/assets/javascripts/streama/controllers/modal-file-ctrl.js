@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalFileCtrl', [
-  '$scope', '$uibModalInstance', 'apiService', 'uploadService', 'video', 'localStorageService', '$rootScope',
-  function ($scope, $uibModalInstance, apiService, uploadService, video, localStorageService, $rootScope) {
+  '$scope', '$uibModalInstance', 'uploadService', 'video', 'localStorageService', '$rootScope', 'File', 'Video',
+  function ($scope, $uibModalInstance, uploadService, video, localStorageService, $rootScope, File, Video) {
     $scope.loading = false;
     $scope.localFilesEnabled = false;
     $scope.localFiles = [];
@@ -41,10 +41,10 @@ angular.module('streama').controller('modalFileCtrl', [
       if(!_.get($rootScope.getSetting('Local Video Files'), 'value')){
         return;
       }
-			apiService.file.localFiles(path).then(function(response) {
+			File.localFiles({path: path}).$promise.then(function(response) {
 				localStorageService.set('localFileLastPath', path);
 				$scope.localFilesEnabled = true;
-				$scope.localFiles = response.data;
+				$scope.localFiles = response;
 			}, function(data) {
 				if (data.code == 'LocalFilesNotEnabled') {
 					$scope.localFilesEnabled = false;
@@ -68,12 +68,12 @@ angular.module('streama').controller('modalFileCtrl', [
 
 
     function addExternalUrl(externalUrl) {
-      apiService.video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).then(function (response) {
+      Video.addExternalUrl({id: $scope.video.id, externalUrl: externalUrl}).$promise.then(function (response) {
         alertify.success("External URL Added.");
         $scope.video.externalLink = null;
 
-        if(_.find($scope.video.videoFiles, {id: response.data.id})){
-          $scope.video.videoFiles[_.indexOf($scope.video.videoFiles, {id: data.id})] = response.data;
+        if(_.find($scope.video.videoFiles, {id: response.id})){
+          $scope.video.videoFiles[_.indexOf($scope.video.videoFiles, {id: data.id})] = response;
         }else{
           $scope.video.videoFiles = $scope.video.videoFiles || [];
           $scope.video.videoFiles.push(data);
@@ -83,8 +83,8 @@ angular.module('streama').controller('modalFileCtrl', [
     }
 
     function addLocalFile(localFile) {
-      apiService.video.addLocalFile({id: $scope.video.id, localFile: localFile}).then(function (response) {
-        var data = response.data;
+      Video.addLocalFile({id: $scope.video.id, localFile: localFile}).$promise.then(function (response) {
+        var data = response;
         alertify.success("Local File Added.");
         $scope.video.localFile = null;
 
@@ -107,7 +107,7 @@ angular.module('streama').controller('modalFileCtrl', [
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
       alertify.confirm('Are you sure you want to remove the file "'+file.originalFilename+'"?', function (confirmed) {
         if(confirmed){
-          apiService.video.removeFile($scope.video.id, file.id).then(function () {
+          Video.removeFile({videoId: $scope.video.id, fileId: file.id}).$promise.then(function () {
             if(file.extension == '.srt' || file.extension == '.vtt'){
               _.remove($scope.video.subtitles, {id: file.id});
               alertify.success('Subtitles deleted.');
@@ -124,7 +124,7 @@ angular.module('streama').controller('modalFileCtrl', [
       $uibModalInstance.dismiss('cancel');
     }
     function saveChanges(file) {
-      apiService.file.save(file).then(function (data) {
+      File.save({}, file).$promise.then(function (data) {
         alertify.success('File successfully saved.');
         toggleEdit(file);
       });
