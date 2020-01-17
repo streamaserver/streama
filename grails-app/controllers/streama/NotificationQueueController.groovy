@@ -96,7 +96,7 @@ class NotificationQueueController {
 
 
     @Transactional
-    def sendCurrentNotifcations() {
+    def sendCurrentNotification() {
         def notificationQueues = NotificationQueue.findAllByIsCompletedAndTypeIsNull(false)
 
 
