@@ -16,7 +16,8 @@ angular.module('streama').factory('Settings', function ($resource) {
     },
     "list": {
       method: "GET",
-      url: 'settings.json'
+      url: 'settings.json',
+      isArray: true
     },
   };
 

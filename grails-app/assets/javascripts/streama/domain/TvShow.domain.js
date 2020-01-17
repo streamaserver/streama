@@ -24,12 +24,12 @@ angular.module('streama').factory('TvShow', function ($resource) {
     },
     "list": {
       method: "GET",
-      isArray: true,
       url:  'tvShow.json'
     },
     "adminEpisodesForTvShow": {
       method: "GET",
-      url:  baseUrl + 'adminEpisodesForTvShow.json'
+      url:  baseUrl + 'adminEpisodesForTvShow.json',
+      isArray: true
     },
     "removeSeason": {
       method: "GET",

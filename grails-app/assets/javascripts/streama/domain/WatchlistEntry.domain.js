@@ -16,7 +16,6 @@ angular.module('streama').factory('WatchlistEntry', function ($resource) {
     },
     "list": {
       method: "GET",
-      isArray: true,
       url:  baseUrl + 'list.json'
     }
   };

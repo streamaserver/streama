@@ -8,8 +8,7 @@ angular.module('streama').factory('User', function ($resource) {
   var actions = {
     "currentUser": {
       method: "GET",
-      url: 'user/current.json',
-      isArray: false
+      url: 'user/current.json'
     },
     "save": {
       method: "POST",

@@ -12,7 +12,8 @@ angular.module('streama').factory('Dash', function ($resource) {
     },
     "listContinueWatching": {
       method: "GET",
-      url:  baseUrl + 'listContinueWatching.json'
+      url:  baseUrl + 'listContinueWatching.json',
+      isArray: true
     },
     "listMovies": {
       method: "GET",
@@ -28,7 +29,8 @@ angular.module('streama').factory('Dash', function ($resource) {
     },
     "listGenres": {
       method: "GET",
-      url:  baseUrl + 'listGenres.json'
+      url:  baseUrl + 'listGenres.json',
+      isArray: true
     },
     "listGenericVideos": {
       method: "GET",
@@ -36,11 +38,13 @@ angular.module('streama').factory('Dash', function ($resource) {
     },
     "listNewReleases": {
       method: "GET",
-      url:  baseUrl + 'listNewReleases.json'
+      url:  baseUrl + 'listNewReleases.json',
+      isArray: true
     },
     "listRecommendations": {
       method: "GET",
-      url:  baseUrl + 'listRecommendations.json'
+      url:  baseUrl + 'listRecommendations.json',
+      isArray: true
     }
   };
 

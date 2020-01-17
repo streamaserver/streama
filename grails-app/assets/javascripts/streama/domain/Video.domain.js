@@ -48,6 +48,10 @@ angular.module('streama').factory('Video', function ($resource) {
       method:"GET",
       url: baseUrl + 'addLocalFile.json'
     },
+    "listAllFiles":{
+      method:"GET",
+      url: 'file.json'
+    },
 
 
   };

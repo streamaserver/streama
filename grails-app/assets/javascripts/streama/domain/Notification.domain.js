@@ -27,8 +27,11 @@ angular.module('streama').factory('Notification', function ($resource) {
     },
     "addTvShowToCurrentNotification": {
       method: "GET",
-      isArray: true,
       url:  baseUrl + 'addTvShowToCurrentNotification.json'
+    },
+    "sendCurrentNotification": {
+      method: "GET",
+      url:  baseUrl + 'sendCurrentNotification.json'
     },
   };
 

@@ -8,7 +8,8 @@ angular.module('streama').factory('File', function ($resource) {
   var actions = {
     "localFiles":{
       method:"GET",
-      url: baseUrl + 'localFiles.json'
+      url: baseUrl + 'localFiles.json',
+      isArray: true
     },
     "listAllFiles":{
       method:"GET",

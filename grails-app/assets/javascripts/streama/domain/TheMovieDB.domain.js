@@ -12,7 +12,8 @@ angular.module('streama').factory('TheMovieDB', function ($resource) {
     },
     "search": {
       method: "GET",
-      url:  baseUrl + 'search.json'
+      url:  baseUrl + 'search.json',
+      isArray: true
     },
     "seasonNumberForShow": {
       method: "GET",
@@ -24,7 +25,8 @@ angular.module('streama').factory('TheMovieDB', function ($resource) {
     },
     "availableGenres": {
       method: "GET",
-      url:  baseUrl + 'availableGenres.json'
+      url:  baseUrl + 'availableGenres.json',
+      isArray: true
     },
     "countNewEpisodesForSeason": {
       method: "GET",

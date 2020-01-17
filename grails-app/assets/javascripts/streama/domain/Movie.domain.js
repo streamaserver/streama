@@ -24,7 +24,6 @@ angular.module('streama').factory('Movie', function ($resource) {
     },
     "list": {
       method: "GET",
-      isArray: true,
       url:  'movie.json'
     }
   };
