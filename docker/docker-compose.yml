@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: mysql
+    hostname: mysql
+    networks:
+      - net-backend
+    expose:
+      - 3306
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: streama_root_password
+      MYSQL_USER: streama
+      MYSQL_DATABASE: streama
+      MYSQL_PASSWORD: streama_password
+
+  streama:
+    image: streama
+    build: .
+    restart: always
+    container_name: streama
+    hostname: streama
+    depends_on:
+      - mysql
+    networks:
+      - net-backend
+    ports:
+      - "80:8080"
+    volumes:
+      - $HOME/movies:/data/streama # Change to your video folder
+      - app_data:/app/streama
+    environment:
+      ACTIVE_PROFILE: mysql
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB: streama
+      MYSQL_USER: streama
+      MYSQL_PASSWORD: streama_password
+
+networks:
+  net-backend:
+
+volumes:
+  db_data:
+  app_data:
