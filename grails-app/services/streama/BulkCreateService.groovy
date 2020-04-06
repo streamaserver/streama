@@ -54,13 +54,12 @@ class BulkCreateService {
 
     String fileName = file.name
 
-    tvShowRegexList.each{ tvShowRegex ->
+    foundMatch = tvShowRegexList.any{ tvShowRegex ->
       def tvShowMatcher = fileName =~ '(?i)' + tvShowRegex
 
       if (tvShowMatcher.matches()) {
         matchTvShowFromFile(tvShowMatcher, fileResult)
-        foundMatch = true
-        return fileResult
+        return true
       }
     }
 
@@ -92,10 +91,12 @@ class BulkCreateService {
       def movieDbResults = json?.results
 
       if (movieDbResults) {
+        fileResult.message = 'match found'
+        fileResult.status = MATCHER_STATUS.MATCH_FOUND
+
         def movieId = movieDbResults.id[0]
 
         def movieResult = theMovieDbService.getFullMovieMeta(movieId)
-
         Movie existingMovie = Movie.findByApiIdAndDeletedNotEqual(movieResult.id, true)
         if(existingMovie){
           if(isSubtitle){
@@ -113,6 +114,9 @@ class BulkCreateService {
         fileResult.poster_path = movieResult.poster_path
         fileResult.backdrop_path = movieResult.backdrop_path
         fileResult.genres = movieResult.genres
+      } else {
+        fileResult.message = 'no found'
+        fileResult.status = MATCHER_STATUS.NO_MATCH
       }
     } catch (Exception ex) {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.", ex)
@@ -120,11 +124,9 @@ class BulkCreateService {
       fileResult.errorMessage = ex.message
       fileResult.title = name
     }
-    fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
     if(fileResult.status == MATCHER_STATUS.MATCH_FOUND && isSubtitle){
       fileResult.status = MATCHER_STATUS.SUBTITLE_MATCH
     }
-    fileResult.message = 'match found'
     fileResult.type = type
   }
 
@@ -133,15 +135,15 @@ class BulkCreateService {
     def name = tvShowMatcher.group('Name').replaceAll(/[._]/, " ")
     def seasonNumber = tvShowMatcher.group('Season').toInteger()
     def episodeNumber = tvShowMatcher.group('Episode').toInteger()
-    fileResult.type = "tv"
+    def type = "tv"
     Boolean isSubtitle = VideoHelper.isSubtitleFile(fileResult.file)
-
+    fileResult.type = type
     try {
       TvShow existingTvShow
       def tvShowData
       def tvShowId
 
-      def json = theMovieDbService.searchForEntry(fileResult.type, name)
+      def json = theMovieDbService.searchForEntry(type, name)
       tvShowData = json?.results[0]
       tvShowId = tvShowData.id
       existingTvShow = TvShow.findByApiIdAndDeletedNotEqual(tvShowId, true)
@@ -151,7 +153,7 @@ class BulkCreateService {
       fileResult.showName = tvShowData.name
       fileResult.poster_path = tvShowData.poster_path
       fileResult.backdrop_path = tvShowData.backdrop_path
-
+      fileResult.status = MATCHER_STATUS.MATCH_FOUND
       if(!seasonNumber && !episodeNumber){
         if(existingTvShow){
           if(isSubtitle){
@@ -159,27 +161,25 @@ class BulkCreateService {
           }else{
             fileResult.status = MATCHER_STATUS.EXISTING
           }
-          fileResult.importedId =existingTvShow.id
-          fileResult.importedType = STREAMA_ROUTES[fileResult.type]
+          fileResult.importedId = existingTvShow.id
+          fileResult.importedType = STREAMA_ROUTES[type]
         }
         fileResult.apiId = tvShowId
       } else {
         fileResult = extractDataForEpisode(existingTvShow, seasonNumber, episodeNumber, fileResult, tvShowId)
+        fileResult.season = seasonNumber
+        fileResult.episodeNumber = episodeNumber
       }
+      fileResult.message = 'match found'
     } catch (ex) {
       log.error("Error occured while trying to retrieve data from TheMovieDB. Please check your API-Key.", ex)
       fileResult.status = MATCHER_STATUS.LIMIT_REACHED
       fileResult.errorMessage = ex.message
       fileResult.name = name
     }
-    fileResult.status = fileResult.status ?: MATCHER_STATUS.MATCH_FOUND
     if(fileResult.status == MATCHER_STATUS.MATCH_FOUND && isSubtitle){
       fileResult.status = MATCHER_STATUS.SUBTITLE_MATCH
     }
-    fileResult.message = 'match found'
-    fileResult.type = fileResult.type
-    fileResult.season = seasonNumber
-    fileResult.episodeNumber = episodeNumber
   }
 
   private extractDataForEpisode(TvShow existingTvShow, seasonNumber, episodeNumber, fileResult, tvShowId) {
