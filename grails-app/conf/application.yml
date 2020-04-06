@@ -152,9 +152,11 @@ grails:
 
 streama:
   regex:
-    movies: ^(?<Name>[^\(\[]*)?[._ \(\[]+(?<Year>\d{4}).*
+    movies: ^([\(\[]+[^\)\]]*[\)\]]+)?(?<Name>[^\(\[]*)?[._ \(\[]+(?<Year>\d{4})[^pk].*
     shows:
-      - ^(?<Name>.+)[._ ][Ss](?<Season>\d{2})[Ee](?<Episode>\d{2,3}).*      # example:  "House.MD.S03E04.h264.mp4"
+      - ^(?<Name>.+)[._ ](?<Year>\d{4})[._ ][Ss](?<Season>\d{2})\.?[Ee](?<Episode>\d{2,3}).*      # example:  "House.MD.2008.S03E04.h264.mp4"
+      - ^(?<Name>.+)[._ ][Ss](?<Season>\d{2})\.?[Ee](?<Episode>\d{2,3}).*      # example:  "House.MD.S03E04.h264.mp4"
+      - ^(?<Name>.+)[._ ](?<Year>\d{4})[._ ](?<Season>\d{1,2})x(?<Episode>\d{2,3}).*           # example:  "House.MD.2008.03x04.h264.mp4"
       - ^(?<Name>.+)[._ ](?<Season>\d{1,2})x(?<Episode>\d{2,3}).*           # example:  "House.MD.03x04.h264.mp4"
       - ^(?<Season>\d{2})-(?<Episode>\d{2,3})-(?<Name>.*?)-.*               # example:  "02-05-Dr. House-Tanz_ums_Feuer-cineonws.mp4"
       - ^(?<Name>.*?)(?<Episode>\d{1,3})x(?<Season>\d{2}).*                 # example:  "Castle4x06DaemonsWebdl480pOktober242011rC.mkv(jkuzt).mp4"
