@@ -34,7 +34,7 @@ class UploadService {
     //log.debug(params)
     def rawFile = request.getFile('file')
     def mimetype = rawFile.contentType
-    def sha256Hex = DigestUtils.sha256Hex(rawFile.inputStream)
+    def sha256Hex = rawFile.inputStream.withStream { stream -> DigestUtils.sha256Hex(stream) }
     def index = rawFile.originalFilename.lastIndexOf('.')
     String extension = rawFile.originalFilename[index..-1];
     def originalFilenameNoExt = rawFile.originalFilename[0..(index-1)]
