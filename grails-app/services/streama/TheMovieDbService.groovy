@@ -3,12 +3,14 @@ package streama
 import groovy.json.JsonSlurper
 import grails.transaction.Transactional
 
+import java.util.concurrent.ConcurrentHashMap
+
 @Transactional
 class TheMovieDbService {
 
   def BASE_URL = "https://api.themoviedb.org/3"
 
-  def apiCacheData = [:]
+  def apiCacheData = new ConcurrentHashMap()
 
   def getAPI_PARAMS(){
     return "api_key=$API_KEY&language=$API_LANGUAGE"
@@ -159,8 +161,7 @@ class TheMovieDbService {
       apiCacheData["$type:$name"] = data
     }
     catch(e) {
-      HttpURLConnection conn = url.openConnection()
-      throw new Exception("TMDB request failed with statusCode: " + conn?.responseCode + ", responseMessage: " + conn?.responseMessage + ", url: " + requestUrl)
+      throw new Exception("TMDB request failed", e)
     }
 
     return data
