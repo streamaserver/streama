@@ -170,3 +170,29 @@ server:
 
 grails.controllers.upload.maxFileSize: 10000000000000 # 10TB
 grails.controllers.upload.maxRequestSize: 10000000000000 # 10TB
+
+grails.plugin.springsecurity.providerNames:
+    - daoAuthenticationProvider
+    - ldapAuthProvider
+    - anonymousAuthenticationProvider
+    - rememberMeAuthenticationProvider
+
+# Uncomment and update the below to configure LDAP authentication
+# http://grails-plugins.github.io/grails-spring-security-ldap/v3/index.html 
+#grails.plugin.springsecurity.ldap:
+#    context:
+#        managerDn: 'ldap'
+#        managerPassword: '[password]'
+#        server: 'ldap://[server]'
+#    search:
+#        base: 'dc=example,dc=com'
+#        filter: 'sAMAccountName={0}'
+#        searchSubtree: true
+#        attributesToReturn: ['mail', 'displayName']
+#    auth:
+#        hideUserNotFoundExceptions: false
+#    useRememberMe: false
+#    authorities:
+#        ignorePartialResultException: true
+#        retrieveDatabaseRoles: false
+#        retrieveGroupRoles: false
