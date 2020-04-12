@@ -9,7 +9,7 @@
 
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal Netflix for just such a purpose!
 
-[![Visit the Promo Page](design/promo-page.png)](https://streamaserver.org/) 
+[![Visit the Docs](design/promo-page.png)](https://github.com/streamaserver/streama/wiki) 
 [![Live Demo](design/live-demo-button.png)](https://demo.streamaserver.org/) 
 [![Streama on Google Play store](design/google-play-badge.jpg)](https://play.google.com/store/apps/details?id=dularion.streama) 
 
