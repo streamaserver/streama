@@ -97,7 +97,7 @@
                 <a ui-sref="sub-profiles">{{'MANAGE_SUB_PROFILES' | translate}}</a>
               </li>
               <li class="divider"></li>
-              <li role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>
+              <li ng-if="!$root.getSetting('hide_help_faq').parsedValue" role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>
               <li role="menuitem"><a ui-sref="userSettings">{{'PROFILE_SETTINGS' | translate}}</a></li>
               <li class="divider"></li>
               <li><g:link uri="/logoff">{{'LOGOUT' | translate}}</g:link></li>
