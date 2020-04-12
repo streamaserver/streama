@@ -14,7 +14,7 @@ buildscript {
     }
 }
 
-version "1.8.0"
+version "1.8.1"
 group "streama"
 
 
@@ -94,7 +94,7 @@ dependencies {
     // custom
     console "org.grails:grails-console"
     profile "org.grails.profiles:angular"
-    
+
     // test
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
