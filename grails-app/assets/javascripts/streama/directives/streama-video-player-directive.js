@@ -37,6 +37,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         $scope.playerVolumeToggle = playerVolumeToggle;
         $scope.play = play;
         $scope.pause = pause;
+        $scope.skip = skip;
         $scope.closeVideo = closeVideo;
         $scope.clickVideo = clickVideo;
         $scope.fullScreen = toggleFullScreen;
@@ -472,7 +473,6 @@ angular.module('streama').directive('streamaVideoPlayer', [
           $scope.currentTimeChanged = true;
           $scope.options.onTimeChange(video.currentTime, $scope.videoDuration);
           $timeout.cancel(currentTimeChangeTimeout);
-          $scope.$apply();
 
           currentTimeChangeTimeout = $timeout(function () {
             $scope.currentTimeChanged = false;
@@ -503,7 +503,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
             });
           }
         }
-        
+
         function openPlaybackOptions() {
           $scope.pause();
           modalService.openPlaybackOptions($scope.options).then(function (response) {
@@ -529,24 +529,28 @@ angular.module('streama').directive('streamaVideoPlayer', [
           Mousetrap.bind('left', function (event) {
             event.preventDefault();
             skipActivated();
+            $scope.$apply();
             video.currentTime -= skippingDuration;
           }, 'keyup');
 
           Mousetrap.bind('right', function (event) {
             event.preventDefault();
             skipActivated();
+            $scope.$apply();
             video.currentTime += skippingDuration;
           }, 'keyup');
 
           Mousetrap.bind('ctrl+right', function (event) {
             event.preventDefault();
             skipActivated();
+            $scope.$apply();
             video.currentTime += longSkippingDuration;
           }, 'keyup');
 
           Mousetrap.bind('ctrl+left', function (event) {
             event.preventDefault();
             skipActivated();
+            $scope.$apply();
             video.currentTime -= longSkippingDuration;
           }, 'keyup');
 
@@ -595,6 +599,17 @@ angular.module('streama').directive('streamaVideoPlayer', [
             }
             $scope.$apply();
           });
+        }
+
+        function skip(direction, seconds) {
+          skipActivated();
+
+          if(direction === 'rewind'){
+            video.currentTime -= seconds;
+          }
+          if(direction === 'fastForward'){
+            video.currentTime += seconds;
+          }
         }
 
 
