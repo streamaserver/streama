@@ -39,4 +39,8 @@ class ViewingStatus {
     return (currentPlayTime/runtime) * 100
   }
 
+  Boolean hasVideoEnded(){
+    (calculateCompletionPercentage() >= ViewingStatus.COMPLETED_PERCENTAGE_THRESHOLD)
+  }
+
 }

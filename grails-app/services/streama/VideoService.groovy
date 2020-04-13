@@ -46,17 +46,19 @@ class VideoService {
         def previousShowEntry = result.find { it.video instanceof Episode && it.video.show?.id == continueWatchingItem.video.show?.id }
 
         if (!previousShowEntry) {
-          if(continueWatchingItem.calculateCompletionPercentage() < ViewingStatus.COMPLETED_PERCENTAGE_THRESHOLD){
+          if(!continueWatchingItem.hasVideoEnded()){
             result.add(continueWatchingItem)
           }else{
             continueWatchingItem.completed = true
             continueWatchingItem.save()
             ViewingStatus newViewingStatus = ViewingStatusService.createNewForNextEpisode(continueWatchingItem)
-            result.add(newViewingStatus)
+            if(newViewingStatus){
+              result.add(newViewingStatus)
+            }
           }
         }
       } else{
-        if(continueWatchingItem.calculateCompletionPercentage() < ViewingStatus.COMPLETED_PERCENTAGE_THRESHOLD){
+        if(!continueWatchingItem.hasVideoEnded()){
           result.add(continueWatchingItem)
         }else{
           continueWatchingItem.completed = true
@@ -65,7 +67,7 @@ class VideoService {
       }
     }
 
-    return result -= null
+    return result
   }
 
 
