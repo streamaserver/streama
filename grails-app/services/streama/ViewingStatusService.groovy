@@ -54,4 +54,21 @@ class ViewingStatusService {
 
     return viewingStatus
   }
+
+  static ViewingStatus createNewForNextEpisode(ViewingStatus continueWatchingItem) {
+    Episode nextEpisode = continueWatchingItem.video?.getNextEpisode()
+    if(!nextEpisode){
+      return
+    }
+    ViewingStatus viewingStatus = new ViewingStatus()
+    viewingStatus.runtime = continueWatchingItem.runtime
+    viewingStatus.currentPlayTime = 0
+    viewingStatus.tvShow = continueWatchingItem.tvShow
+    viewingStatus.user = continueWatchingItem.user
+    viewingStatus.profile = continueWatchingItem.profile
+    viewingStatus.video = nextEpisode
+    viewingStatus.save()
+
+    return viewingStatus
+  }
 }

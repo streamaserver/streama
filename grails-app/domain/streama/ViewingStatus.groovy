@@ -7,7 +7,7 @@ class ViewingStatus {
 
   Date dateCreated
   Date lastUpdated
-  
+
   Video video
   TvShow tvShow
   User user
@@ -15,6 +15,8 @@ class ViewingStatus {
   Integer runtime
   Boolean completed = false
   Profile profile
+
+  static Integer COMPLETED_PERCENTAGE_THRESHOLD = 95
 
   static mapping = {
     cache true
@@ -28,6 +30,13 @@ class ViewingStatus {
     lastUpdated nullable: true
     currentPlayTime nullable: false
     video nullable: false
+  }
+
+  Double calculateCompletionPercentage(){
+    if(!currentPlayTime || !runtime){
+      return 0
+    }
+    return (currentPlayTime/runtime) * 100
   }
 
 }

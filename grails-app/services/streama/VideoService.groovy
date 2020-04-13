@@ -2,12 +2,10 @@ package streama
 
 import grails.transaction.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
-import org.grails.web.util.WebUtils
 
 import java.nio.file.Files
 import java.nio.file.Paths
 
-import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE
 
 @Transactional
@@ -48,15 +46,29 @@ class VideoService {
         def previousShowEntry = result.find { it.video instanceof Episode && it.video.show?.id == continueWatchingItem.video.show?.id }
 
         if (!previousShowEntry) {
-          result.add(continueWatchingItem)
+          if(continueWatchingItem.calculateCompletionPercentage() < ViewingStatus.COMPLETED_PERCENTAGE_THRESHOLD){
+            result.add(continueWatchingItem)
+          }else{
+            continueWatchingItem.completed = true
+            continueWatchingItem.save()
+            ViewingStatus newViewingStatus = ViewingStatusService.createNewForNextEpisode(continueWatchingItem)
+            result.add(newViewingStatus)
+          }
         }
-      } else {
-        result.add(continueWatchingItem)
+      } else{
+        if(continueWatchingItem.calculateCompletionPercentage() < ViewingStatus.COMPLETED_PERCENTAGE_THRESHOLD){
+          result.add(continueWatchingItem)
+        }else{
+          continueWatchingItem.completed = true
+          continueWatchingItem.save()
+        }
       }
     }
 
-    return result
+    return result -= null
   }
+
+
 
 
   @Transactional
@@ -97,7 +109,7 @@ class VideoService {
     file.size = Files.size(givenPath)
     def extensionIndex = params.localFile.lastIndexOf('.')
     file.extension = params.localFile[extensionIndex..-1];
-	
+
 	// Subtitle label guessing (by Norwelian)
 	if(settingsService.getValueForName('guess_subtitle_label')){
 	    def regexConfig = grailsApplication.config.streama?.regex
@@ -107,7 +119,7 @@ class VideoService {
 			file.subtitleLabel = matcher[0][1].toUpperCase()
 		}
 	}
-	
+
     if(videoInstance.videoFiles.size() == 0){
       file.isDefault = true
     }
