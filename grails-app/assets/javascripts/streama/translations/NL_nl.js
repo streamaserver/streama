@@ -32,6 +32,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MARK_COMPLETED: 'Markeer als bekeken',
       NO_TVSHOWS_FOUND: 'Geen series beschikbaar',
       NO_MOVIES_FOUND: 'Geen films beschikbaar',
+      NO_WATCHLIST_FOUND: 'Hier nog niets',
       WATCHLIST:'later bekijken'
     },
     VIDEO: {

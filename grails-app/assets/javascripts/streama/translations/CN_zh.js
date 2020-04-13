@@ -32,6 +32,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       LOOKING_AT_GENRE: '你正在查看：',
       MARK_COMPLETED: '标记为看过',
       NO_TVSHOWS_FOUND: '没有任何节目可用',
+      NO_WATCHLIST_FOUND: '這裡什麼都沒有',
       NO_MOVIES_FOUND: '没有任何电影可用',
       WATCHLIST: '我的片单'
     },

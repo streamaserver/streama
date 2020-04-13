@@ -13,7 +13,7 @@ angular.module('streama').controller('dashCtrl',
     vm.markCompleted = markCompleted;
     vm.loadingRecommendations = true;
     vm.isDashSectionHidden = isDashSectionHidden;
-    vm.showDashboardWithDashType = showDashboardWithDashType;
+    vm.isDashType = isDashType;
 
     $scope.$on('changedGenre', onChangedGenre);
 
@@ -21,11 +21,8 @@ angular.module('streama').controller('dashCtrl',
 
     function init() {
       if ($rootScope.currentUser.isAdmin) {
-        showInitialSettingsWarning().then(showDashboardWithDashType);
-      }else{
-        showDashboardWithDashType();
+        showInitialSettingsWarning();
       }
-
       if ($stateParams.mediaModal) {
         modalService.mediaDetailModal({mediaId: $stateParams.mediaModal, mediaType: $stateParams.mediaType, isApiMovie: false});
       }
@@ -45,17 +42,29 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function initMedia() {
-      vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser);
-      vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
-      vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser);
-      vm.watchlistEntry = mediaListService.init(apiService.watchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser);
+      if(isDashType("home") || isDashType("discover-movies")){
+        vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser);
+      }
+      if(isDashType("home") || isDashType("discover-shows")){
+        vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
+      }
+      if(isDashType("home") || isDashType("watchlist")){
+        vm.watchlistEntry = mediaListService.init(apiService.watchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser);
+      }
+      if(isDashType("home")){
+        vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser);
+        apiService.dash.listNewReleases().then(onNewReleasesLoaded);
+        apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
+        apiService.dash.listRecommendations().then(onRecommendedLoaded);
+      }
 
-      apiService.tag.list().then(onTagsLoaded);
-      apiService.dash.listNewReleases().then(onNewReleasesLoaded);
-      apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
-      apiService.dash.listRecommendations().then(onRecommendedLoaded);
       apiService.dash.listGenres().then(onGenreLoaded);
+      apiService.tag.list().then(onTagsLoaded);
+    }
 
+
+    function isDashType(type) {
+      return ($state.params.dashType === type);
     }
     // HOISTED FUNCTIONS BELOW
 
@@ -147,20 +156,6 @@ angular.module('streama').controller('dashCtrl',
         modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false}, function (response) {
           updateWatchlist(response.action, vm.watchlistEntry.list, media, response.watchlistEntry);
         });
-      }
-    }
-
-    function showDashboardWithDashType() {
-      var dashType = $state.params.dashType;
-      var hiddenSections = ["new-releases","continue-watching","recommends","watchlist","discover-movies","discover-shows","discover-generic"];
-      if(dashType === "home" || !dashType){
-        hiddenSections = [];
-      }else{
-        _.remove(hiddenSections, function (item) { return item === dashType });
-      }
-      var setting = _.find($scope.settings, {name: 'hidden_dash_sections'});
-      if(setting){
-        setting.value = hiddenSections.toString();
       }
     }
 

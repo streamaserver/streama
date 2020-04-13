@@ -31,6 +31,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Du ser på genren:',
 			MARK_COMPLETED: 'Marker færdigt',
 			NO_TVSHOWS_FOUND: 'Ingen TV-Serier tilgængelig',
+      NO_WATCHLIST_FOUND: 'Intet her endnu',
 			NO_MOVIES_FOUND: 'Ingen Film tilgængelig',
       WATCHLIST: 'se senere'
 		},

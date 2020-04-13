@@ -31,6 +31,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			MARK_COMPLETED: '선택 완료',
 			NO_TVSHOWS_FOUND: '해당 드라마를 찾지 못했습니다.',
 			NO_MOVIES_FOUND: '해당 영화를 찾지 못했습니다.',
+      NO_WATCHLIST_FOUND: '아직 아무것도 없습니다',
       WATCHLIST: '나중에 볼'
 		},
 		VIDEO: {

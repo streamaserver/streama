@@ -1,7 +1,7 @@
 
 <div class="dashboard">
   <!--------------------------new releases--------------------------->
-  <div ng-if="vm.newReleases.length && !$root.selectedGenre && !vm.isDashSectionHidden('new-releases')">
+  <div ng-if="vm.newReleases.length && !$root.selectedGenre && vm.isDashType('home') && !vm.isDashSectionHidden('new-releases')">
     <h3>{{'DASHBOARD.NEW_RELEASES' | translate}}</h3>
 
     <div uis-owl-carousel class="new-releases-slider" >
@@ -40,7 +40,7 @@
 
   <!----------------------------------------------continue watching-------------------------------------------->
 
-  <div ng-if="vm.continueWatching.length && !$root.selectedGenre && !vm.isDashSectionHidden('continue-watching')">
+  <div ng-if="vm.continueWatching.length && !$root.selectedGenre && vm.isDashType('home') && !vm.isDashSectionHidden('continue-watching')">
     <hr/>
 
     <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}</h3>
@@ -88,7 +88,7 @@
 
   <!----------------------------------------------recommendations-------------------------------------------->
 
-  <div ng-if="vm.recommendations.length && !$root.selectedGenre && !vm.isDashSectionHidden('recommends')">
+  <div ng-if="vm.recommendations.length && !$root.selectedGenre && vm.isDashType('home') && !vm.isDashSectionHidden('recommends')">
     <hr/>
     <h3>{{'DASHBOARD.RECOMMENDATIONS' | translate}}</h3>
 
@@ -116,7 +116,7 @@
   </div>
 
   <!----------------------------------------------watchlist-------------------------------------------->
-  <div ng-if="!vm.isDashSectionHidden('watchlist') && vm.watchlistEntry.list.length">
+  <div ng-if="vm.isDashType('home') && vm.watchlistEntry.list.length && !vm.isDashSectionHidden('watchlist')">
     <hr/>
     <h3>{{'DASHBOARD.WATCHLIST' | translate}}</h3>
 
@@ -165,10 +165,15 @@
       </div>
     </div>
   </div>
+  <div ng-if="vm.isDashType('watchlist') && !vm.watchlistEntry.list.length">
+    <p class="no-episodes-yet" >
+      {{'DASHBOARD.NO_WATCHLIST_FOUND' | translate}}
+    </p>
+  </div>
 
   <!--   --------------- TV SHOWS ---------------------  -->
 
-  <div ng-if="!vm.isDashSectionHidden('discover-shows') && (!$root.currentProfile.isChild || vm.tvShow.list.length)">
+  <div ng-if="(vm.isDashType('home') || vm.isDashType('discover-shows')) && (!$root.currentProfile.isChild || vm.tvShow.list.length) && !vm.isDashSectionHidden('discover-shows')">
     <hr/>
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_SHOWS' | translate}}</span>
@@ -237,7 +242,7 @@
 
   <!--   --------------- MOVIES ---------------------  -->
 
-  <div ng-if="!vm.isDashSectionHidden('discover-movies') && (!$root.currentProfile.isChild || vm.movie.list.length)">
+  <div ng-if="(vm.isDashType('home') || vm.isDashType('discover-movies')) && (!$root.currentProfile.isChild || vm.movie.list.length) && !vm.isDashSectionHidden('discover-movies')">
     <hr/>
     <h3>
       <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_MOVIES' | translate}}</span>
@@ -307,7 +312,7 @@
 
   <!--   --------------- GENERIC VIDEOS ---------------------  -->
 
-  <div ng-if="vm.genericVideo.list.length && !vm.isDashSectionHidden('discover-generic')">
+  <div ng-if="vm.genericVideo.list.length && vm.isDashType('home') && !vm.isDashSectionHidden('discover-generic')">
     <hr/>
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_OTHER_VIDEOS' | translate}}</span>

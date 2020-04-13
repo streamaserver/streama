@@ -29,6 +29,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       LOOKING_AT_GENRE: 'Ezt a műfajt nézi jelenleg:',
       MARK_COMPLETED: 'Megjelölés megnézettként',
       NO_TVSHOWS_FOUND: 'Nincsenek elérhető TV sorozatok ',
+      NO_WATCHLIST_FOUND: 'Még nincs itt',
       NO_MOVIES_FOUND: 'Nincsenek elérhető filmek'
     },
     VIDEO: {

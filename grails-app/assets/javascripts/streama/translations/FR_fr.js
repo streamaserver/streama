@@ -28,6 +28,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			MARK_COMPLETED: 'Marquer comme fini',
 			NO_TVSHOWS_FOUND: 'Aucune série disponible',
 			NO_MOVIES_FOUND: 'Aucun film disponible',
+      NO_WATCHLIST_FOUND: 'Rien ici encore',
       WATCHLIST: 'voir plus tard'
 		},
 		VIDEO: {

@@ -31,6 +31,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			MARK_COMPLETED: '完成品マーク',
 			NO_TVSHOWS_FOUND: 'テレビ番組発見なし',
 			NO_MOVIES_FOUND: 'ない映画',
+      NO_WATCHLIST_FOUND: 'ここにはまだ何もありません',
       WATCHLIST: '後で見る'
 		},
 		VIDEO: {
