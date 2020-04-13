@@ -41,6 +41,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         $scope.closeVideo = closeVideo;
         $scope.clickVideo = clickVideo;
         $scope.fullScreen = toggleFullScreen;
+        $scope.getCustomSubtitleSize = getCustomSubtitleSize;
         $scope.next = $scope.options.onNext;
         $scope.isInitialized = false;
         $scope.isNextVideoShowing = false;
@@ -116,6 +117,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
             });
 
             $scope.options.subtitleSize = localStorageService.get('subtitleSize') || 'md';
+            $scope.options.hasCustomSubtitleSize = localStorageService.get('hasCustomSubtitleSize') || false;
+            $scope.options.customSubtitleSize = localStorageService.get('customSubtitleSize') || null;
           });
         }
 
@@ -194,6 +197,10 @@ angular.module('streama').directive('streamaVideoPlayer', [
 
         function clickVideo() {
           $scope.options.onVideoClick();
+        }
+
+        function getCustomSubtitleSize() {
+          return $scope.options.hasCustomSubtitleSize ? $scope.options.customSubtitleSize : null;
         }
 
         function toggleFullScreen() {
@@ -512,8 +519,12 @@ angular.module('streama').directive('streamaVideoPlayer', [
               return;
             }
 
+            $scope.options.hasCustomSubtitleSize = response.hasCustomSubtitleSize;
+            $scope.options.customSubtitleSize = response.customSubtitleSize;
             $scope.options.subtitleSize = response.subtitleSize;
             localStorageService.set('subtitleSize', response.subtitleSize);
+            localStorageService.set('hasCustomSubtitleSize', response.hasCustomSubtitleSize);
+            localStorageService.set('customSubtitleSize', response.customSubtitleSize);
 
             if(!_.isEqualBy(response.selectedVideoFile, $scope.options.selectedVideoFile, 'id')){
               changeVideoFile(response.selectedVideoFile, video.currentTime);

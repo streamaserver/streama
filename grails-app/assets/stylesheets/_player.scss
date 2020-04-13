@@ -15,6 +15,11 @@ streama-video-player{
   video.subtitle-size-sm::cue {
     font-size: 0.8em;
   }
+  @for $i from 10 through 60{
+    video.subtitle-size-custom-#{$i}::cue{
+      font-size: #{$i}px;
+    }
+  }
 }
 
 .video-wrapper-inner,
