@@ -64,7 +64,7 @@ angular.module('streama').controller('dashCtrl',
 
 
     function isDashType(type) {
-      return ($state.params.dashType === type);
+      return ($state.params.dashType === type || (type === 'home' && !$state.params.dashType));
     }
     // HOISTED FUNCTIONS BELOW
 
