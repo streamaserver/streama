@@ -4,13 +4,25 @@ angular.module('streama').filter('padnumber', [function () {
 	return function(input, length) {
 		return pad(input, length);
 	};
-	
+
 }]);
 
 
 angular.module('streama').filter('secondsToDateTime', [function() {
 	return function(seconds) {
 		return new Date(1970, 0, 1).setSeconds(seconds);
+	};
+}]);
+
+// <span ng-if="videoDuration >= 3600">{{videoDuration | secondsToDateTime | date:'hh:mm:ss'}}</span>
+// <span ng-if="videoDuration < 3600">{{videoDuration | secondsToDateTime | date:'mm:ss'}}</span>
+
+angular.module('streama').filter('secondsToTimeDisplay', ['$filter', function($filter) {
+	return function(seconds) {
+    var date = new Date(1970, 0, 1).setSeconds(seconds);
+    var format = seconds  >= 3600 ? 'hh:mm:ss' : 'mm:ss';
+    var result = $filter('date')(date, format);
+    return result;
 	};
 }]);
 
