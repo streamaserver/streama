@@ -95,6 +95,7 @@ dependencies {
     console "org.grails:grails-console"
     profile "org.grails.profiles:angular"
     runtime "org.grails.plugins:async:4.0.0"
+    compile "org.apache.tika:tika-parsers:1.12"
 
 
   // test

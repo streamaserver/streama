@@ -2,7 +2,13 @@ package streama
 
 import grails.transaction.Transactional
 import org.apache.commons.codec.digest.DigestUtils
+import org.apache.tika.metadata.Metadata
+import org.apache.tika.parser.AutoDetectParser
+import org.apache.tika.sax.BodyContentHandler
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest
+
+import javax.imageio.ImageIO
+import java.awt.image.BufferedImage
 
 @Transactional
 class UploadService {
@@ -57,12 +63,12 @@ class UploadService {
   }
 
 
-  def createFileFromUpload(sha256Hex, rawFile, extension, originalFilename, contentType, params = [:]){
+  def createFileFromUpload(String sha256Hex, rawFile, String extension, String originalFilename, String contentType, Map params = [:]){
     def fileInstance = new File(sha256Hex:sha256Hex)
     fileInstance.originalFilename = originalFilename
     fileInstance.contentType = contentType
     fileInstance.extension = extension
-    fileInstance.size = rawFile.size
+    fileInstance.size = params.size ?: rawFile.size
     fileInstance.name = rawFile.name
     if(params?.isPublic == 'true'){
       fileInstance.isPublic = true
@@ -118,4 +124,68 @@ class UploadService {
 
     return servePrefix + "/file/serve/" + file.id + file.extension
   }
+
+
+  File createUploadFromFromLink(String imageLink){
+    def url = new URL(imageLink)
+    URLConnection con = url.openConnection()
+    con.setUseCaches(false)
+    def fileName = new java.io.File(url.file).name
+    def orignialImageData = con.inputStream.bytes
+
+
+
+
+    render new Date()
+  }
+
+  /**
+   * Handle Upload from real byte[]
+   * @param bytes
+   * @param params
+   * @return
+   */
+  File handleUpload(byte[] fileData, params) {
+    if(!fileData){
+      return
+    }
+    params.sha256Hex = DigestUtils.sha256Hex(fileData)
+    params.extension = extractExtensionFromFilename(params.name)
+    params.contentType = params.contentType ?:  detectContentType(fileData)
+    params.size = fileData.size()
+
+    java.io.File targetFile = new java.io.File(this.dir.uploadDir, params.sha256Hex + params.extension)
+    targetFile.setBytes(fileData)
+
+    File file = createFileFromUpload(params.sha256Hex, targetFile, params.extension, params.name, params.contentType, params)
+    return file
+  }
+
+
+  String extractExtensionFromFilename(String filename) {
+    String extension
+
+    if (filename == 'undefined') {
+      extension = '.png'
+    } else {
+      def index = filename.lastIndexOf('.')
+      extension = filename[index..-1];
+
+      if (extension.length() < 3) {
+        extension = '.png'
+      }
+    }
+    return extension
+  }
+
+  def detectContentType(byte[] buf) {
+    AutoDetectParser parser = new AutoDetectParser()
+    BodyContentHandler handler = new BodyContentHandler(new StringWriter())
+    Metadata metadata = new Metadata()
+    parser.parse(new ByteArrayInputStream(buf), handler, metadata)
+    def contentType = metadata.get("Content-Type")
+//    log.debug('contentType' + contentType)
+    return contentType
+  }
+
 }

@@ -1,6 +1,7 @@
 package streama
 
 import grails.converters.JSON
+import grails.transaction.NotTransactional
 import grails.transaction.Transactional
 import groovy.json.JsonSlurper
 import static grails.async.Promises.*
@@ -139,53 +140,75 @@ class TheMovieDbController {
   }
 
 
-  @Transactional
+  @NotTransactional
   def checkAndFixImageIntegrity(){
     if(!theMovieDbService.getAPI_KEY()){
       return
     }
     imageIntegrityResult = [
-      tvShowCount: 0,
-      movieCount: 0,
-      completed: false
+      tvShow: [
+        total: 0,
+        skipped: 0,
+        fixed: 0
+      ],
+      movie: [
+        total: 0,
+        skipped: 0,
+        fixed: 0
+      ]
     ]
 
-    task {
-      TvShow.where { deleted != true && apiId != null }.list().each{ TvShow tvShow ->
-        boolean isPosterImageReachable = !tvShow.poster_path || theMovieDbService.isImageReachable(tvShow.poster_path)
-        if (!isPosterImageReachable){
-          theMovieDbService.refreshData(tvShow, 'poster_path')
-        }
-        boolean isBackdropImageReachable = !tvShow.backdrop_path || theMovieDbService.isImageReachable(tvShow.backdrop_path)
-        if (!isBackdropImageReachable){
-          theMovieDbService.refreshData(tvShow, 'backdrop_path')
-        }
-        if(!isBackdropImageReachable || !isPosterImageReachable){
-          imageIntegrityResult.tvShowCount++
-        }
+    List<TvShow> tvShows = TvShow.where {
+      deleted != true
+      apiId != null
+      (poster_image == null || backdrop_image == null)
+    }.list()
+    imageIntegrityResult.tvShow.total = tvShows.size()
+    tvShows.each{ TvShow tvShow ->
+      boolean isPosterImageReachable = !tvShow.poster_path || theMovieDbService.isImageReachable(tvShow.poster_path)
+      if (!isPosterImageReachable){
+        theMovieDbService.refreshData(tvShow, 'poster_path', 'poster_image')
+
+      }
+      boolean isBackdropImageReachable = !tvShow.backdrop_path || theMovieDbService.isImageReachable(tvShow.backdrop_path)
+      if (!isBackdropImageReachable){
+        theMovieDbService.refreshData(tvShow, 'backdrop_path', 'backdrop_image')
+      }
+      if(!isBackdropImageReachable || !isPosterImageReachable){
+        imageIntegrityResult.tvShow.fixed++
+      }
+      else{
+        imageIntegrityResult.tvShow.skipped++
       }
 
-      Movie.where{ deleted != true && apiId != null}.list().each{Movie movie ->
-        boolean isPosterImageReachable = !movie.poster_path || theMovieDbService.isImageReachable(movie.poster_path)
-        if (!isPosterImageReachable){
-          theMovieDbService.refreshData(movie, 'poster_path')
-        }
-        boolean isBackdropImageReachable = !movie.backdrop_path || theMovieDbService.isImageReachable(movie.backdrop_path)
-        if (!isBackdropImageReachable){
-          theMovieDbService.refreshData(movie, 'backdrop_path')
-        }
-        if(!isBackdropImageReachable || !isPosterImageReachable){
-          imageIntegrityResult.movieCount++
-        }
+      log.info("STATUS UPDATE: TV-SHOWS -- Fixed: ${imageIntegrityResult.tvShow.fixed}, Skipped: ${imageIntegrityResult.tvShow.skipped}, total: ${imageIntegrityResult.tvShow.total}")
+    }
+
+    List<Movie> movies = Movie.where {
+      deleted != true
+      apiId != null
+      (poster_image == null || backdrop_image == null)
+    }.list()
+    imageIntegrityResult.movie.total = movies.size()
+    movies.each{ Movie movie ->
+      boolean isPosterImageReachable = !movie.poster_path || theMovieDbService.isImageReachable(movie.poster_path)
+      if (!isPosterImageReachable){
+        theMovieDbService.refreshData(movie, 'poster_path', 'poster_image')
       }
-      imageIntegrityResult.completed = true
+      boolean isBackdropImageReachable = !movie.backdrop_path || theMovieDbService.isImageReachable(movie.backdrop_path)
+      if (!isBackdropImageReachable){
+        theMovieDbService.refreshData(movie, 'backdrop_path', 'backdrop_image')
+      }
+      if(!isBackdropImageReachable || !isPosterImageReachable){
+        imageIntegrityResult.movie.fixed++
+      }
+      else{
+        imageIntegrityResult.movie.skipped++
+      }
+      log.info("STATUS UPDATE: MOVIE -- Fixed: ${imageIntegrityResult.movie.fixed}, Skipped: ${imageIntegrityResult.movie.skipped}, total: ${imageIntegrityResult.movie.total}")
     }
 
     response.setStatus(SC_OK)
-    render (imageIntegrityResult as JSON)
-  }
-
-  def pollImageIntegrityFix(){
     render (imageIntegrityResult as JSON)
   }
 }

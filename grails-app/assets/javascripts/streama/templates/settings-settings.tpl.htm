@@ -1,5 +1,7 @@
 <button class="btn btn-primary pull-right" ng-click="updateMultipleSettings(settings)" ng-disabled="anySettingsInvalid()">Save Settings</button>
 
+<button class="btn btn-info pull-right" style="margin-left: 4px;" ng-click="syncImages()"><i class="ion-arrow-return-right"></i> Fix & Sync Images</button>
+
 <h1>
   Settings
 
@@ -11,6 +13,9 @@
 </h1>
 
 
+<div class="spinner big big-loading" ng-show="bigLoading">
+  <i class="ion-load-c spin"></i>
+</div>
 
 <hr/>
 

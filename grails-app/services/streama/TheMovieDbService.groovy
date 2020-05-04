@@ -12,6 +12,7 @@ class TheMovieDbService {
   def BASE_URL = "https://api.themoviedb.org/3"
 
   def apiCacheData = new ConcurrentHashMap()
+  def uploadService
 
   def getAPI_PARAMS(){
     return "api_key=$API_KEY&language=$API_LANGUAGE"
@@ -247,7 +248,7 @@ class TheMovieDbService {
   }
 
   def isImageReachable(String imageId){
-    URL imageUrl = new URL(buildImagePath(imageId, 300))
+    URL imageUrl = new URL(buildImagePath(imageId, "w300"))
     HttpURLConnection connection = (HttpURLConnection) imageUrl.openConnection()
     connection.setRequestMethod("GET")
     connection.connect()
@@ -259,26 +260,49 @@ class TheMovieDbService {
    * builds entire image path for tmdb image paths. Ie returns something like
    * https://image.tmdb.org/t/p/w300/uZEIHtWmJKzCL59maAgfkpbcGzC.jpg
    * @param propertyName on the video instance
-   * @param size for the tmdb image path. defaults to 300
+   * @param size for the tmdb image path. defaults to w300
    * @return entire image link for tmdb, for non-tmdb-videos returns value as is.
    */
-  static String buildImagePath(String imagePath, Integer size = 300){
+  static String buildImagePath(String imagePath, String size = "w300"){
 
     if(imagePath?.startsWith('/')){
-      return "https://image.tmdb.org/t/p/w$size$imagePath"
+      return "https://image.tmdb.org/t/p/$size$imagePath"
     }else{
       return imagePath
     }
   }
 
-  def refreshData(instance, path){
+  @Transactional
+  def refreshData(instance, path, String localFileProperty = null){
+    Map meta
     if(instance instanceof TvShow){
-      Map meta = instance.getFullTvShowMeta()
-      if(!meta){
-        return
-      }
-      instance[path] = meta[path]
-      instance.save(failOnError: true, flush: true)
+      meta = instance.getFullTvShowMeta()
     }
+    else if(instance instanceof Movie){
+      meta = instance.getFullMovieMeta()
+    }
+    if(!meta){
+      return
+    }
+    String newImagePath = meta[path]
+    instance[path] = newImagePath
+    if(localFileProperty){
+      String name = instance instanceof TvShow ? instance.name : instance.title
+      instance[localFileProperty] = uploadService.handleUpload(getImageDataFromTmdb(newImagePath), [name:"${name}_${path}.png"])
+    }
+    instance.save(failOnError: true, flush: true)
+  }
+
+  byte[] getImageDataFromTmdb(String path){
+    try{
+      String imagePath = buildImagePath(path, "original")
+      def url = new URL(imagePath)
+      URLConnection con = url.openConnection()
+      con.setUseCaches(false)
+      return con.inputStream.bytes
+    }catch(e){
+      log.error("Failed to fetch image data, ${e.message}")
+    }
+
   }
 }
