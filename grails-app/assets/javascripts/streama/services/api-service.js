@@ -300,7 +300,13 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
       imagesForMedia: function (params) {
 				return $http.get('theMovieDb/imagesForMedia', {params: params});
-			}
+			},
+      checkAndFixImageIntegrity: function (data) {
+        return $http.post('theMovieDb/checkAndFixImageIntegrity.json', data);
+      },
+      pollImageIntegrityFix: function (data) {
+        return $http.get('theMovieDb/pollImageIntegrityFix.json', data);
+      }
 		},
 
 		dash: {

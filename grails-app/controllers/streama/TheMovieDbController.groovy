@@ -1,13 +1,20 @@
 package streama
 
 import grails.converters.JSON
+import grails.transaction.Transactional
 import groovy.json.JsonSlurper
+import static grails.async.Promises.*
+
+import static javax.servlet.http.HttpServletResponse.SC_ACCEPTED
+import static javax.servlet.http.HttpServletResponse.SC_OK
 
 class TheMovieDbController {
   static responseFormats = ['json', 'xml']
 
   def theMovieDbService
   def migrationService
+
+  Map imageIntegrityResult = [:]
 
   def search() {
     String type = params.type
@@ -131,4 +138,54 @@ class TheMovieDbController {
     render (json?."$imageType" as JSON)
   }
 
+
+  @Transactional
+  def checkAndFixImageIntegrity(){
+    if(!theMovieDbService.getAPI_KEY()){
+      return
+    }
+    imageIntegrityResult = [
+      tvShowCount: 0,
+      movieCount: 0,
+      completed: false
+    ]
+
+    task {
+      TvShow.where { deleted != true && apiId != null }.list().each{ TvShow tvShow ->
+        boolean isPosterImageReachable = !tvShow.poster_path || theMovieDbService.isImageReachable(tvShow.poster_path)
+        if (!isPosterImageReachable){
+          theMovieDbService.refreshData(tvShow, 'poster_path')
+        }
+        boolean isBackdropImageReachable = !tvShow.backdrop_path || theMovieDbService.isImageReachable(tvShow.backdrop_path)
+        if (!isBackdropImageReachable){
+          theMovieDbService.refreshData(tvShow, 'backdrop_path')
+        }
+        if(!isBackdropImageReachable || !isPosterImageReachable){
+          imageIntegrityResult.tvShowCount++
+        }
+      }
+
+      Movie.where{ deleted != true && apiId != null}.list().each{Movie movie ->
+        boolean isPosterImageReachable = !movie.poster_path || theMovieDbService.isImageReachable(movie.poster_path)
+        if (!isPosterImageReachable){
+          theMovieDbService.refreshData(movie, 'poster_path')
+        }
+        boolean isBackdropImageReachable = !movie.backdrop_path || theMovieDbService.isImageReachable(movie.backdrop_path)
+        if (!isBackdropImageReachable){
+          theMovieDbService.refreshData(movie, 'backdrop_path')
+        }
+        if(!isBackdropImageReachable || !isPosterImageReachable){
+          imageIntegrityResult.movieCount++
+        }
+      }
+      imageIntegrityResult.completed = true
+    }
+
+    response.setStatus(SC_OK)
+    render (imageIntegrityResult as JSON)
+  }
+
+  def pollImageIntegrityFix(){
+    render (imageIntegrityResult as JSON)
+  }
 }

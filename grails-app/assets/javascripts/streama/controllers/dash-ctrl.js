@@ -124,6 +124,11 @@ angular.module('streama').controller('dashCtrl',
           alertify.alert('You need to fill out some required base-settings. You will be redirected to the settings page now.', function () {
             $state.go('settings.settings');
           });
+        }else{
+         apiService.settings.checkImageIntegrity().then(function (imageIntegrityResponse) {
+            var imageIntegrityResult = imageIntegrityResponse.data;
+           console.log('%c imageIntegrityResult', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', imageIntegrityResult);
+         });
         }
       });
       return settingsPromise;

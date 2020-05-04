@@ -7,6 +7,7 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
   $scope.searchText = "Search Show from collection or TheMovieDB...";
 
 	$scope.createFromFiles = createFromFiles;
+	$scope.syncImages = syncImages;
 
   apiService.theMovieDb.hasKey().then(function (data) {
     if (!data.data.key) {
@@ -62,5 +63,25 @@ angular.module('streama').controller('adminShowsCtrl', ['$scope', 'apiService', 
 			});
 		});
 	}
+
+  function syncImages() {
+    alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
+    alertify.confirm("Are you sure, you want to sync all images? This might take a while.", function (confirmed) {
+      if(confirmed){
+        $scope.loading = true;
+        apiService.theMovieDb.checkAndFixImageIntegrity().then(function () {
+          var pollInterval = $interval(function () {
+            pollImageIntegrity();
+          }, 1000);
+        });
+      }
+    });
+
+    function pollImageIntegrity() {
+      apiService.theMovieDb.pollImageIntegrityFix().then(function (pollResult) {
+        console.log('%c pollResult', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', pollResult);
+      });
+    }
+  }
 
 }]);

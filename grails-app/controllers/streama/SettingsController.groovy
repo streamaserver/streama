@@ -8,6 +8,7 @@ import grails.transaction.Transactional
 class SettingsController {
 
   def settingsService
+  def theMovieDbService
 
   static responseFormats = ['json', 'xml']
   static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]

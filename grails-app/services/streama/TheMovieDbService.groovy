@@ -2,6 +2,7 @@ package streama
 
 import groovy.json.JsonSlurper
 import grails.transaction.Transactional
+import org.hibernate.boot.archive.internal.UrlInputStreamAccess
 
 import java.util.concurrent.ConcurrentHashMap
 
@@ -243,5 +244,41 @@ class TheMovieDbService {
       streamaGenres.add(genre)
     }
     return streamaGenres
+  }
+
+  def isImageReachable(String imageId){
+    URL imageUrl = new URL(buildImagePath(imageId, 300))
+    HttpURLConnection connection = (HttpURLConnection) imageUrl.openConnection()
+    connection.setRequestMethod("GET")
+    connection.connect()
+    int code = connection.getResponseCode()
+    return (code == 200)
+  }
+
+  /**
+   * builds entire image path for tmdb image paths. Ie returns something like
+   * https://image.tmdb.org/t/p/w300/uZEIHtWmJKzCL59maAgfkpbcGzC.jpg
+   * @param propertyName on the video instance
+   * @param size for the tmdb image path. defaults to 300
+   * @return entire image link for tmdb, for non-tmdb-videos returns value as is.
+   */
+  static String buildImagePath(String imagePath, Integer size = 300){
+
+    if(imagePath?.startsWith('/')){
+      return "https://image.tmdb.org/t/p/w$size$imagePath"
+    }else{
+      return imagePath
+    }
+  }
+
+  def refreshData(instance, path){
+    if(instance instanceof TvShow){
+      Map meta = instance.getFullTvShowMeta()
+      if(!meta){
+        return
+      }
+      instance[path] = meta[path]
+      instance.save(failOnError: true, flush: true)
+    }
   }
 }
