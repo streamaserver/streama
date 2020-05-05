@@ -121,7 +121,7 @@ angular.module('streama')
 
       function syncImages() {
         alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});
-        alertify.confirm("Are you sure, you want to sync all images? This might take a while.", function (confirmed) {
+        alertify.confirm("Are you sure, you want to sync all images? This might take a while. (check the server logs for status updates)", function (confirmed) {
           if(confirmed){
             $scope.bigLoading = true;
             apiService.theMovieDb.checkAndFixImageIntegrity().then(function () {
