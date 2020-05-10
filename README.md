@@ -2,10 +2,14 @@
 # STREAMA
 
 
+
 [![Build Status](https://img.shields.io/travis/streamaserver/streama/master.svg?style=for-the-badge)](https://travis-ci.org/streamaserver/streama) 
 [![Downloads](https://img.shields.io/github/downloads/streamaserver/streama/total.svg?style=for-the-badge)](https://github.com/streamaserver/streama/releases)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=for-the-badge)](https://github.com/streamaserver/streama/blob/master/LICENSE.md) 
 [![Discord](https://img.shields.io/discord/432358302496849931.svg?style=for-the-badge)](https://discord.gg/CJEHWX9)
+
+  
+Docs: https://docs.streama-project.com/  
 
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal Netflix for just such a purpose!
 
