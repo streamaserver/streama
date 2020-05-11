@@ -64,6 +64,20 @@
           <label>Timestamp Added</label>
           <input type="text" class="form-control input-sm" ng-model="movie.dateCreated"/>
         </div>
+        <div class="col-sm-3">
+          <label>Poster ID</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.poster_path"/>
+        </div>
+        <div class="col-sm-3">
+          <label>Backdrop ID</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.backdrop_path"/>
+        </div>
+      </div>
+      <div class="form-group row-slim" ng-if="movie.apiId">
+        <div class="col-sm-3">
+          <label>TMDB Link:</label>
+          <a ng-href="https://www.themoviedb.org/movie/{{movie.apiId}}" target="_blank">{{movie.title}}</a>
+        </div>
       </div>
 
       <div class="form-group">
