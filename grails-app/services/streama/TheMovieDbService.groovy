@@ -111,9 +111,15 @@ class TheMovieDbService {
   }
 
   def getFullMovieMeta(movieId){
+    def cachedApiData = apiCacheData."movie$movieId"
+    if(cachedApiData){
+      return cachedApiData
+    }
     try{
       def JsonContent = new URL(BASE_URL + "/movie/$movieId?$API_PARAMS").getText("UTF-8")
-      return new JsonSlurper().parseText(JsonContent)
+      def data = new JsonSlurper().parseText(JsonContent)
+      apiCacheData["movie$movieId"] = data
+      return data
     }catch (e){
       log.warn("could not load fullMeta for Movie this time, " + e.message)
     }
@@ -121,9 +127,16 @@ class TheMovieDbService {
   }
 
   def getFullTvShowMeta(tvId){
+
+    def cachedApiData = apiCacheData."tv:$tvId"
+    if(cachedApiData){
+      return cachedApiData
+    }
     try{
       def JsonContent = new URL(BASE_URL + "/tv/$tvId?$API_PARAMS").getText("UTF-8")
-      return new JsonSlurper().parseText(JsonContent)
+      def data = new JsonSlurper().parseText(JsonContent)
+      apiCacheData["tv:$tvId"] = data
+      return data
     }catch (e){
       log.warn("could not load fullMeta for TV SHOW this time, " + e.message)
     }
@@ -282,6 +295,10 @@ class TheMovieDbService {
       meta = instance.getFullMovieMeta()
     }
     if(!meta){
+      if(instance.apiId){
+        log.warn("Seems like you hit your TMDB Limit. Sleeping for 10 Seconds")
+        Thread.sleep(10000)
+      }
       return
     }
     String newImagePath = meta[path]
