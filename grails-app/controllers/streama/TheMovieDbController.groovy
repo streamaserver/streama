@@ -142,6 +142,7 @@ class TheMovieDbController {
 
   @NotTransactional
   def checkAndFixImageIntegrity(){
+    def ids = params.list('ids')*.toLong()
     if(!theMovieDbService.getAPI_KEY()){
       return
     }
@@ -162,6 +163,9 @@ class TheMovieDbController {
       deleted != true
       apiId != null
       (poster_image == null || backdrop_image == null)
+      if(ids){
+        id in ids
+      }
     }.list()
     imageIntegrityResult.tvShow.total = tvShows.size()
     tvShows.each{ TvShow tvShow ->
@@ -188,6 +192,9 @@ class TheMovieDbController {
       deleted != true
       apiId != null
       (poster_image == null || backdrop_image == null)
+      if(ids){
+        id in ids
+      }
     }.list()
     imageIntegrityResult.movie.total = movies.size()
     movies.each{ Movie movie ->
@@ -209,6 +216,8 @@ class TheMovieDbController {
     }
 
     response.setStatus(SC_OK)
+    log.info("STATUS UPDATE IMAGE-FIX: COMPLETED!")
+
     render (imageIntegrityResult as JSON)
   }
 }

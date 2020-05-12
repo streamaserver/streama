@@ -266,7 +266,14 @@ class TheMovieDbService {
     connection.setRequestMethod("GET")
     connection.connect()
     int code = connection.getResponseCode()
-    return (code == 200)
+    if(code != 200){
+      return false
+    }
+    def contentType = connection.getHeaderField('content-type')
+    if(contentType == 'text/html'){
+      return false
+    }
+    return true
   }
 
   /**
