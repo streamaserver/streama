@@ -53,3 +53,5 @@
 /.jruby-container
 /.sass-cache
 /.sass-work
+grails-app/assets/stylesheets/.sass-cache
+out
