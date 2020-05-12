@@ -59,7 +59,7 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
 
-      <li ng-if="isCurrentState('dash')">
+      <li ng-if="isCurrentState('dash') && $root.getSetting('hide-dash-search').parsedValue != true">
         <div class="dash-search form-group has-feedback">
           <input type="text" placeholder="Search.." class="form-control input-xs" ng-model="dashSearch"
                  typeahead-append-to-body="true" uib-typeahead="(item.title || item.name) for item in searchMedia($viewValue)"
