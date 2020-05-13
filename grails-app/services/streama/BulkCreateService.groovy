@@ -4,6 +4,7 @@ import grails.transaction.NotTransactional
 import grails.transaction.Transactional
 
 import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 @Transactional
 class BulkCreateService {
@@ -35,20 +36,21 @@ class BulkCreateService {
 
 
     def movieRegex = regexConfig?.movies ?: STD_MOVIE_REGEX
+	def movieRegexList = movieRegex instanceof List ? movieRegex : [movieRegex]
     def tvShowRegex = regexConfig?.shows ?: STD_TVSHOW_REGEX
     def tvShowRegexList = tvShowRegex instanceof List ? tvShowRegex : [tvShowRegex]
 
     def result = []
 
     files.each { file ->
-      def fileResult = matchSingleFile(file, movieRegex, tvShowRegexList)
+      def fileResult = matchSingleFile(file, movieRegexList, tvShowRegexList)
       result.add(fileResult)
     }
 
     return result
   }
 
-  private matchSingleFile(file, movieRegex, List tvShowRegexList) {
+  private matchSingleFile(file, List<Pattern> movieRegexList, List<Pattern> tvShowRegexList) {
     def fileResult = [file: file.path]
     def foundMatch = false
 
@@ -67,12 +69,19 @@ class BulkCreateService {
       return fileResult
     }
 
-    def movieMatcher = fileName =~ '(?i)' + movieRegex
-    if (movieMatcher.matches()) {
-      matchMovieFromFile(movieMatcher, fileResult, movieRegex)
-      foundMatch = true
-      return fileResult
-    }
+	foundMatch = movieRegexList.any { movieRegex ->
+		def movieMatcher = fileName =~ '(?i)' + movieRegex
+		
+		if (movieMatcher.matches()) {
+			matchMovieFromFile(movieMatcher, fileResult, movieRegex)
+			return true
+			return fileResult
+		}
+	}
+	
+	if (foundMatch) {
+		return fileResult
+	}
 
     fileResult.status = MATCHER_STATUS.NO_MATCH
     fileResult.message = 'No match found'
