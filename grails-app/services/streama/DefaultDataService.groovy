@@ -224,6 +224,15 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+		    [
+            settingsKey: 'Footer Content',
+            name: 'footer-content',
+            description: 'HTML Content for the Footer',
+            settingsType: 'wysiwyg',
+            value: '',
+            required: false,
+            validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',

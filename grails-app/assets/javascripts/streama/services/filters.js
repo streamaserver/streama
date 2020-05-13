@@ -32,6 +32,12 @@ angular.module('streama').filter('trustResourceUrl', ['$sce', function($sce) {
 	};
 }]);
 
+angular.module('streama').filter('trustHtml', ['$sce', function($sce) {
+	return function(input) {
+		return $sce.trustAsHtml(input);
+	};
+}]);
+
 
 function pad(n, width, z) {
 	z = z || '0';

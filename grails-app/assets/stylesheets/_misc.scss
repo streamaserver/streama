@@ -34,4 +34,10 @@
   background-color: darken($primary, 50%);
 }
 
-
+streama-wysiwyg{
+  display: block;
+  background: rgba(255, 255, 255, 0.07);
+}
+.ql-bubble .ql-tooltip {
+  z-index: 999;
+}
