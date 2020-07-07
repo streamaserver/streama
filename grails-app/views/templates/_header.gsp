@@ -22,7 +22,7 @@
         <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
           <a ng-click="changeDashType('discover-movies')" ng-class="{active: (isDashType('discover-movies'))}">{{'DASHBOARD.MOVIES' | translate}}</a>
         </li>
-        <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
+        <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue && $root.getSetting('hide-mylist-button').parsedValue != true">
           <a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'DASHBOARD.MY_LIST' | translate}}</a>
         </li>
         <li class="browse-genres" ng-if="isCurrentState('dash') && genres.length && !$root.currentProfile.isChild">
@@ -68,7 +68,9 @@
         </div>
       </li>
       <sec:ifLoggedIn>
-        <li><a ui-sref="dash">{{'DASHBOARD.TITLE' | translate}}</a></li>
+        <li ng-if="$root.getSetting('hide-dash-button').parsedValue != true">
+          <a ui-sref="dash">{{'DASHBOARD.TITLE' | translate}}</a>
+        </li>
       </sec:ifLoggedIn>
 
       <sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
