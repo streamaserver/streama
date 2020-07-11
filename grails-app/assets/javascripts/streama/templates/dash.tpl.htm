@@ -2,7 +2,7 @@
 <div class="dashboard">
   <!--------------------------new releases--------------------------->
   <div ng-if="vm.newReleases.length && !$root.selectedGenre && vm.isDashType('home') && !vm.isDashSectionHidden('new-releases')">
-    <h3 style="padding-top:1em;">{{'DASHBOARD.NEW_RELEASES' | translate}}</h3>
+    <h3 class="new_releases_header">{{'DASHBOARD.NEW_RELEASES' | translate}}</h3>
 
     <div uis-owl-carousel class="new-releases-slider" >
       <div ng-repeat="newRelease in vm.newReleases" class="new-releases-slide">
