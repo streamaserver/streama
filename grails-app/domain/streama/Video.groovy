@@ -57,7 +57,7 @@ class Video implements SimpleInstance{
       return VideoStatus.COMPLETED
     }
     else if(viewingStatus){
-      return VideoStatus.COMPLETED
+      return VideoStatus.VIEWING
     }
     return VideoStatus.UNVIEWED
   }
