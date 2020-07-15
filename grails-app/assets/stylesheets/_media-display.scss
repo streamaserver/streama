@@ -141,6 +141,31 @@
   }
 
 
+  .status-icon{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 1px;
+    width: 1px;
+    border-right: 40px solid transparent;
+    border-bottom: 40px solid darken($primary, 15%);
+    filter: drop-shadow(0px -1px 11px rgba(0,0,0, 0.5));
+
+    &:after{
+      @include icomoon;
+      position: absolute;
+      top: 19px;
+      left: 4px;
+      font-size: 13px;
+    }
+
+    &.status-completed{
+      &:after{
+        content: '\ed6c';
+      }
+    }
+  }
+
 }
 
 .media-list-item{

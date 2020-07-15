@@ -154,7 +154,7 @@ angular.module('streama').controller('dashCtrl',
         modalService.mediaDetailModal({mediaId: media.tvShowId, mediaType: 'tvShow', isApiMovie: false});
       }else{
         modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false}, function (response) {
-          updateWatchlist(response.action, vm.watchlistEntry.list, media, response.watchlistEntry);
+          updateWatchlist(response.action, _.get(vm.watchlistEntry, 'list'), media, response.watchlistEntry);
         });
       }
     }
@@ -173,7 +173,7 @@ angular.module('streama').controller('dashCtrl',
     function addToWatchlist(item) {
       apiService.watchlistEntry.create(item).then(function (response) {
         vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
-        updateWatchlist("added", vm.watchlistEntry.list, item, response.data);
+        updateWatchlist("added", _.get(vm.watchlistEntry, 'list'), item, response.data);
       });
     }
 
@@ -182,7 +182,7 @@ angular.module('streama').controller('dashCtrl',
       alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
         if (confirmed) {
           apiService.watchlistEntry.delete(item).then(function (response) {
-            updateWatchlist("removed", vm.watchlistEntry.list, item);
+            updateWatchlist("removed", _.get(vm.watchlistEntry, 'list'), item);
           });
         }
       });

@@ -217,4 +217,14 @@ class VideoController {
     respond result
   }
 
+  @Transactional
+  def markAsUnviewed(Video videoInstance){
+    ViewingStatus viewingStatus = videoInstance.getViewingStatus()
+    if(!viewingStatus){
+      return
+    }
+    viewingStatus.delete()
+    render status: 200
+  }
+
 }

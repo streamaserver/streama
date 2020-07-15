@@ -40,6 +40,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
       RELEASED: '发布于',
       IMDB: 'IMDB',
       RATING: '评分',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
       VOTES: '投票',
       OVERVIEW: '简介',
       GENRE: '类型',

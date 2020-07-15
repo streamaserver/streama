@@ -38,6 +38,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			RELEASED: '출시',
 			IMDB: 'IMDB',
 			RATING: '평점',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
 			VOTES: '투표',
 			OVERVIEW: '줄거리',
 			GENRE: '장르',

@@ -39,6 +39,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
       RELEASED: 'Uitgebracht op',
       IMDB: 'IMDB',
       RATING: 'Waardering',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
       VOTES: 'Aantal stemmen',
       OVERVIEW: 'Overzicht',
       GENRE: 'Genre',

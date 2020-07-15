@@ -285,7 +285,7 @@
 
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="movie in vm.movie.list | orderBy:vm.movie.sorter.sort |filter: vm.movie.filter.execute">
-        <div class="media-item" >
+        <div class="media-item">
 
           <streama-video-image type="poster" size="300" video="movie"></streama-video-image>
 
@@ -300,6 +300,7 @@
 
           <i class="info-icon ion-ios-information" ng-click="vm.showDetails(movie)"></i>
           <a class="play-icon ion-ios-play" ui-sref="player({videoId: movie.id})"></a>
+          <i ng-if="movie.status == 'completed'" class="status-icon status-{{movie.status}}"></i>
         </div>
       </div>
     </div>
