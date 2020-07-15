@@ -123,7 +123,10 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
       },
       markAsUnviewed: function (params) {
         return $http.get('video/markAsUnviewed.json', {params: params});
-      }
+      },
+      markCompleted: function (params) {
+        return $http.get('video/markCompleted.json', {params: params});
+      },
 		},
 
     report: {

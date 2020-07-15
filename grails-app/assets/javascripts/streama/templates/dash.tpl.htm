@@ -45,25 +45,9 @@
     <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}</h3>
 
     <div class="media-list media-list-continue-watching">
-      <div class="media-list-item media-poster-item" ng-repeat="viewingStatus in vm.continueWatching">
-        <div class="media-item" >
+      <div class="media-list-item media-poster-item" ng-repeat="viewingStatus in vm.continueWatching" ng-if="!viewingStatus.video.deleted">
 
-          <streama-video-image type="poster" video="viewingStatus.video" size="300"></streama-video-image>
-
-          <div class="play-text">
-            <h4>Continue "<span ng-bind="::(viewingStatus.video.title || viewingStatus.video.show.name)"></span>"</h4>
-            <button class=" btn btn-secondary btn-xss complete-watching" ng-click="vm.markCompleted(viewingStatus)">
-              {{'DASHBOARD.MARK_COMPLETED' | translate}}</button>
-            <p ng-show="viewingStatus.video.isEpisode"><span ng-bind="::viewingStatus.video.episodeString"></span></p>
-          </div>
-          <!--<div>-->
-            <!--<i ng-class="viewingStatus.video.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"-->
-               <!--ng-click="vm.handleWatchlistUpdate(viewingStatus.video.inWatchlist ? 'removed' : 'added', viewingStatus.video)"></i>-->
-          <!--</div>-->
-
-          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(viewingStatus.video)"></i>
-          <a class="play-icon ion-ios-play" ui-sref="player({videoId: viewingStatus.video.id})"></a>
-        </div>
+        <streama-dash-media-item entity="viewingStatus.video"></streama-dash-media-item>
 
         <div class="media-progress-wrapper">
 
@@ -93,22 +77,8 @@
 
     <div class="media-list media-list-continue-watching">
       <div class="media-list-item media-poster-item" ng-repeat="video in vm.recommendations track by video.id">
-        <div class="media-item" >
 
-          <streama-video-image type="poster" video="video"></streama-video-image>
-
-          <div class="play-text">
-            <h4 ng-bind="::(video.title || video.show.name)"></h4>
-            <p ng-show="video.isEpisode"><span ng-bind="::video.episodeString"></span></p>
-          </div>
-          <div>
-            <i ng-class="video.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
-               ng-click="vm.handleWatchlistUpdate(video.inWatchlist ? 'removed' : 'added', video)"></i>
-          </div>
-
-          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(video)"></i>
-          <a class="play-icon ion-ios-play" ui-sref="player({videoId: video.id})"></a>
-        </div>
+        <streama-dash-media-item entity="video"></streama-dash-media-item>
       </div>
     </div>
 
@@ -129,38 +99,7 @@
 
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="watchlistEntry in vm.watchlistEntry.list track by watchlistEntry.id">
-        <div class="media-item" ng-if="watchlistEntry.tvShow">
-
-          <streama-video-image type="poster" size="300" video="watchlistEntry.tvShow"></streama-video-image>
-
-          <div class="play-text">
-            <h4 ng-bind="::watchlistEntry.tvShow.name"></h4>
-          </div>
-          <i class="remove-icon ion-android-remove-circle" ng-click="vm.removeFromWatchlist(watchlistEntry.tvShow)"></i>
-          <div>
-            <i ng-class="'remove-icon ion-android-remove-circle'"
-               ng-click="vm.handleWatchlistUpdate('removed', watchlistEntry.tvShow)"></i>
-          </div>
-
-          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(watchlistEntry.tvShow)"></i>
-          <a class="play-icon ion-ios-play" ng-click="vm.fetchFirstEpisodeAndPlay(watchlistEntry.tvShow)"></a>
-        </div>
-        <div class="media-item" ng-if="watchlistEntry.video">
-
-          <streama-video-image type="poster" size="300" video="watchlistEntry.video"></streama-video-image>
-
-          <div class="play-text">
-            <h4 ng-bind="::watchlistEntry.video.title"></h4>
-            <p ng-bind="::watchlistEntry.video.release_date.substring(0,4)"></p>
-          </div>
-          <div>
-            <i ng-class="'remove-icon ion-android-remove-circle'"
-               ng-click="vm.handleWatchlistUpdate('removed', watchlistEntry.video)"></i>
-          </div>
-
-          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(watchlistEntry.video)"></i>
-          <a class="play-icon ion-ios-play" ui-sref="player({videoId: watchlistEntry.video.id})"></a>
-        </div>
+        <streama-dash-media-item entity="watchlistEntry.tvShow || watchlistEntry.video"></streama-dash-media-item>
       </div>
     </div>
   </div>
@@ -215,21 +154,7 @@
 
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="tvShow in vm.tvShow.list | filter: vm.tvShow.filter.execute">
-        <div class="media-item" >
-          <streama-video-image type="poster" size="300" video="tvShow"></streama-video-image>
-
-          <div class="play-text">
-            <h4 ng-bind="::tvShow.name"></h4>
-          </div>
-
-          <div>
-            <i ng-class="tvShow.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
-               ng-click="vm.handleWatchlistUpdate(tvShow.inWatchlist ? 'removed' : 'added', tvShow)"></i>
-          </div>
-
-          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(tvShow)"></i>
-          <a class="play-icon ion-ios-play" ng-click="vm.fetchFirstEpisodeAndPlay(tvShow)"></a>
-        </div>
+        <streama-dash-media-item entity="tvShow"></streama-dash-media-item>
       </div>
     </div>
 
@@ -285,23 +210,7 @@
 
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="movie in vm.movie.list | orderBy:vm.movie.sorter.sort |filter: vm.movie.filter.execute">
-        <div class="media-item">
-
-          <streama-video-image type="poster" size="300" video="movie"></streama-video-image>
-
-          <div class="play-text">
-            <h4 ng-bind="::movie.title"></h4>
-            <p ng-bind="::movie.release_date.substring(0,4)"></p>
-          </div>
-          <div>
-            <i ng-class="movie.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
-               ng-click="vm.handleWatchlistUpdate(movie.inWatchlist ? 'removed' : 'added', movie)"></i>
-          </div>
-
-          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(movie)"></i>
-          <a class="play-icon ion-ios-play" ui-sref="player({videoId: movie.id})"></a>
-          <i ng-if="movie.status == 'completed'" class="status-icon status-{{movie.status}}"></i>
-        </div>
+        <streama-dash-media-item entity="movie"></streama-dash-media-item>
       </div>
     </div>
 
@@ -342,24 +251,7 @@
 
     <div class="media-list">
       <div class="media-list-item media-poster-item" ng-repeat="movie in vm.genericVideo.list  |filter: vm.genericVideo.filter.title">
-
-        <div class="media-item" >
-
-
-          <streama-video-image type="poster" size="300" video="movie"></streama-video-image>
-
-          <div class="play-text">
-            <h4 ng-bind="::movie.title"></h4>
-            <p ng-bind="::movie.release_date.substring(0,4)"></p>
-          </div>
-          <div>
-            <i ng-class="movie.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
-               ng-click="vm.handleWatchlistUpdate(movie.inWatchlist ? 'removed' : 'added', movie)"></i>
-          </div>
-
-          <i class="info-icon ion-ios-information" ng-click="vm.showDetails(movie)"></i>
-          <a class="play-icon ion-ios-play" ui-sref="player({videoId: movie.id})"></a>
-        </div>
+        <streama-dash-media-item entity="movie"></streama-dash-media-item>
       </div>
     </div>
   </div>

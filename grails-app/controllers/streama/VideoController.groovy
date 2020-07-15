@@ -227,4 +227,15 @@ class VideoController {
     render status: 200
   }
 
+  @Transactional
+  def markCompleted(Video videoInstance){
+    ViewingStatus viewingStatus = videoInstance.getViewingStatus()
+    if(!viewingStatus){
+      return
+    }
+    viewingStatus.completed = true
+    viewingStatus.save flush:true
+    respond viewingStatus, [status: OK]
+  }
+
 }

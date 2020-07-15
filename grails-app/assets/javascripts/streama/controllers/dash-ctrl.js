@@ -5,17 +5,14 @@ angular.module('streama').controller('dashCtrl',
   var vm = this;
 
     var LIST_MAX = 30;
-		vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
     vm.showDetails = showDetails;
     vm.handleWatchlistUpdate = handleWatchlistUpdate;
-    vm.addToWatchlist = addToWatchlist;
-    vm.removeFromWatchlist = removeFromWatchlist;
-    vm.markCompleted = markCompleted;
     vm.loadingRecommendations = true;
     vm.isDashSectionHidden = isDashSectionHidden;
     vm.isDashType = isDashType;
 
     $scope.$on('changedGenre', onChangedGenre);
+    $scope.$on('video.updateWatchlist', onVideoUpdateWatchlist);
 
     init();
 
@@ -143,12 +140,6 @@ angular.module('streama').controller('dashCtrl',
       vm.tvShow.setFilter();
     }
 
-    function fetchFirstEpisodeAndPlay(tvShow) {
-      apiService.dash.firstEpisodeForShow(tvShow.id).then(function (response) {
-        $state.go('player', {videoId: response.data.id});
-      });
-    }
-
     function showDetails(media) {
       if(media.mediaType === 'episode'){
         modalService.mediaDetailModal({mediaId: media.tvShowId, mediaType: 'tvShow', isApiMovie: false});
@@ -254,23 +245,16 @@ angular.module('streama').controller('dashCtrl',
       return (showItemArray.indexOf(false) < 0);
     }
 
-    function markCompleted(viewingStatus) {
-      alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
-      alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
-        if (confirmed) {
-          apiService.viewingStatus.delete(viewingStatus.id).then(function (data) {
-            _.remove(vm.continueWatching, {'id': viewingStatus.id});
-          });
-        }
-      })
-    }
-
     function isDashSectionHidden(sectionName) {
       var hiddenDashSectionSetting = _.find($scope.settings, {name: 'hidden_dash_sections'});
       if(_.get(hiddenDashSectionSetting, 'parsedValue')){
         var hiddenDashSections = hiddenDashSectionSetting.parsedValue.split(',');
         return (hiddenDashSections.indexOf(sectionName) > -1);
       }
+    }
+
+    function onVideoUpdateWatchlist(e, data) {
+      updateWatchlist(data.action, _.get(vm.watchlistEntry, 'list'), data.media, _.get(data.response, 'data'));
     }
 
 	});
