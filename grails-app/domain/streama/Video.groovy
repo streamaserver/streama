@@ -51,6 +51,18 @@ class Video implements SimpleInstance{
     ViewingStatus.findByVideoAndUser(this, springSecurityService.currentUser)
   }
 
+  String getStatus(){
+    ViewingStatus viewingStatus = getViewingStatus()
+    if(viewingStatus?.completed){
+      return VideoStatus.COMPLETED
+    }
+    else if(viewingStatus){
+      return VideoStatus.COMPLETED
+    }
+    return VideoStatus.UNVIEWED
+  }
+
+
   def getNextEpisode(){
     if(!(this instanceof Episode)){
       return
