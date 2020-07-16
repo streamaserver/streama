@@ -18,7 +18,7 @@
   </div>
 
   <i class="info-icon ion-ios-information" ng-click="vm.showDetails(vm.entity)"></i>
-  <a class="play-icon ion-ios-play" ng-if="movie.mediaType == 'tvShow'" ng-click="vm.fetchFirstEpisodeAndPlay(vm.entity)"></a>
-  <a class="play-icon ion-ios-play" ng-if="movie.mediaType != 'tvShow'" ui-sref="player({videoId: vm.entity.id})"></a>
-  <i ng-if="movie.status == 'completed'" class="status-icon status-{{movie.status}}"></i>
+  <a class="play-icon ion-ios-play" ng-if="vm.entity.mediaType == 'tvShow'" ng-click="vm.fetchFirstEpisodeAndPlay(vm.entity)"></a>
+  <a class="play-icon ion-ios-play" ng-if="vm.entity.mediaType != 'tvShow'" ui-sref="player({videoId: vm.entity.id})"></a>
+  <i ng-if="vm.entity.status == 'completed'" class="status-icon status-{{vm.entity.status}}"></i>
 </div>

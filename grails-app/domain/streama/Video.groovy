@@ -53,7 +53,7 @@ class Video implements SimpleInstance{
 
   String getStatus(){
     ViewingStatus viewingStatus = getViewingStatus()
-    if(viewingStatus?.completed){
+    if(viewingStatus?.completed || viewingStatus?.hasVideoEnded()){
       return VideoStatus.COMPLETED
     }
     else if(viewingStatus){
