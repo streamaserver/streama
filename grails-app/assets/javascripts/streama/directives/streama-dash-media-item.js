@@ -13,12 +13,14 @@ angular.module('streama').directive('streamaDashMediaItem', function () {
   }
 });
 
-function controller(apiService, modalService, $rootScope, $state) {
+function controller(apiService, modalService, $rootScope, $state, $scope) {
   var vm = this;
   vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
   vm.showDetails = showDetails;
   vm.handleWatchlistUpdate = handleWatchlistUpdate;
   vm.markCompleted = markCompleted;
+
+  $scope.$on('video.markAsUnviewed', onVideoMarkAsUnviewed);
 
   function fetchFirstEpisodeAndPlay(tvShow) {
     apiService.dash.firstEpisodeForShow(tvShow.id).then(function (response) {
@@ -73,5 +75,11 @@ function controller(apiService, modalService, $rootScope, $state) {
         });
       }
     })
+  }
+
+  function onVideoMarkAsUnviewed(e, data) {
+    if(data.id === vm.entity.id){
+      vm.entity.status = 'unviewed';
+    }
   }
 }
