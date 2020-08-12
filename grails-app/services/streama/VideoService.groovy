@@ -122,9 +122,9 @@ class VideoService {
 		}
 	}
 
-    if(videoInstance.videoFiles.size() == 0){
-      file.isDefault = true
-    }
+    file.isDefault = (videoInstance.videoFiles.isEmpty() && fileService.allowedVideoFormats.contains(file.extension)) ||
+      (videoInstance.getSubtitles().isEmpty() && fileService.allowedSubtitleFormats.contains(file.extension))
+
 
     file.save(failOnError: true, flush: true)
     videoInstance.addToFiles(file)

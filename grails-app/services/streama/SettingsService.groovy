@@ -1,18 +1,19 @@
 package streama
 
 import grails.transaction.Transactional
-import org.apache.commons.validator.routines.UrlValidator
 
 @Transactional
 class SettingsService {
 
   def theMovieDbService
+  def opensubtitlesService
+  def grailsApplication
 
   def getBaseUrl() {
     return Settings.findBySettingsKey('Base URL')?.value
   }
 
-  def getValueForName(String name){
+  def getValueForName(String name) {
     def setting = Settings.findByName(name)
     return setting?.getParsedValue()
   }
@@ -24,16 +25,16 @@ class SettingsService {
   def enableAnonymousUser() {
     User anonymous = User.findByUsername("anonymous")
     if (anonymous) {
-        anonymous.enabled = true
-        anonymous.deleted = false   /** If user has been previously mark as deleted, clear the field **/
+      anonymous.enabled = true
+      anonymous.deleted = false   /** If user has been previously mark as deleted, clear the field **/
     } else {  /** If the user not exists, or has been deleted, create it **/
-        anonymous = new User(username: 'anonymous', password: 'anonymous', fullName: 'Anonymous', enabled: true)
+      anonymous = new User(username: 'anonymous', password: 'anonymous', fullName: 'Anonymous', enabled: true)
     }
     anonymous.save failOnError: true
   }
 
   def changeAnonymousAccess(String value) {
-    Settings setting = Settings.findByName("anonymous_access" )
+    Settings setting = Settings.findByName("anonymous_access")
     setting.value = value
     setting.save failOnError: true
   }
@@ -54,7 +55,7 @@ class SettingsService {
     }
     if (settingsInstance.settingsKey == 'Second Directory') {
       def additionalReadStorages = settingsInstance.value?.split(/\|/)
-      additionalReadStorages.each{ value ->
+      additionalReadStorages.each { value ->
         validateLocalDirectoryPermissions(value + '/upload', resultValue)
       }
     }
@@ -66,6 +67,9 @@ class SettingsService {
     }
     if (settingsInstance.settingsKey == 'TheMovieDB API language') {
       validateTheMovieDbLanguage(settingsInstance, resultValue)
+    }
+    if (settingsInstance.settingsKey == 'Credentials for opensubtitles') {
+      validateCredentialsForOpensubtitles(settingsInstance, resultValue)
     }
 
     return resultValue;
@@ -126,6 +130,22 @@ class SettingsService {
     } else {
       resultValue.error = true;
       resultValue.message = "Invalid API language: The entered language is not an IETF language tag.";
+    }
+  }
+
+  def validateCredentialsForOpensubtitles(Settings settingsInstance, resultValue) {
+    def credentials = settingsInstance.value
+    def url = opensubtitlesService.buildUrl(null, "forrest gump", null, "eng")
+    def response = opensubtitlesService.sendRequest(url, credentials)
+    if (response.statusCodeValue == 403) {
+      resultValue.success = true
+      resultValue.message = "Invalid credentials for opensubtitles: Username or password is incorrect."
+    } else if (response.statusCodeValue == 200) {
+      resultValue.sucess = true
+      resultValue.message = "Credentials for opensubtitles is valid and can be used!"
+    } else {
+      resultValue.sucess = true
+      resultValue.message = response.body
     }
   }
 }

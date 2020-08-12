@@ -239,6 +239,16 @@ class DefaultDataService {
 //            settingsType: 'radio',
 //            description: 'If this is set to "yes", after successful file-conversion the original file will be removed from the Upload Directory. This may be useful in case you have limited disk space.'
 //        ],
+
+        [
+          settingsKey: 'Credentials for opensubtitles',
+          name: 'credentials_opensubtitles',
+          description: 'Credentials which are used to authenticate the user on the opensubtitles website. Enter username and password, separated by :. Example: username:password.',
+          settingsType: 'string',
+          value: '',
+          required: false,
+          validationRequired: true
+        ],
     ]
 
     settings.each{ settingData ->

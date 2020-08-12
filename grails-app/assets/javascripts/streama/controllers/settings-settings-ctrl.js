@@ -24,29 +24,32 @@ angular.module('streama')
             window.location.reload();
             alertify.success('Settings saved.');
           })
-      };
+        };
 
 
-      $scope.validateSettings = function (settings) {
-        if($scope.loading === true){
-          return
-        }
+        $scope.validateSettings = function (settings) {
+          if ($scope.loading === true) {
+            return
+          }
+          $scope.changeValue(settings);
+          $scope.loading = true;
 
-        $scope.changeValue(settings);
-        $scope.loading = true;
-
-        apiService.settings.validateSettings(settings).then(function (response) {
+          apiService.settings.validateSettings(settings).then(function (response) {
             var data = response.data;
-            alertify.success(data.message || 'validation successful');
+            if (data.message.includes("Invalid credentials") || data.message.includes("problems")) {
+              alertify.log(data.message)
+            } else {
+              alertify.success(data.message || 'validation successful');
+            }
             settings.valid = true;
             $scope.loading = false;
           }, function (response) {
-          var data = response.data;
+            var data = response.data;
             alertify.error(data.message);
             settings.invalid = true;
             $scope.loading = false;
           });
-      };
+        };
 
       $scope.changeValue = function (settings) {
         if(settings.validationRequired === false){
