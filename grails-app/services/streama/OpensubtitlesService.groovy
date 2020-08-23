@@ -16,7 +16,6 @@ class OpensubtitlesService {
   def openSubtitlesHasherService
   def fileService
   def settingsService
-  def zipService
   def grailsApplication
 
   def setDefaultSubtitle(def subtileId, def videoId) {
@@ -93,7 +92,7 @@ class OpensubtitlesService {
       }
 
       try {
-        def fileName = zipService.unzipFile(stagingDir, filename, subtitleName)
+        def fileName = ZipHelper.unzipFile(stagingDir, filename, subtitleName)
         def fileDb = saveFile(stagingDir, fileName, subtitleName, subtitleLanguage)
         if (fileDb != null) {
           if (videoInstance.getSubtitles().isEmpty()) {
@@ -112,11 +111,10 @@ class OpensubtitlesService {
     }
   }
 
-  def sendRequest(String url, String credentials) {
-    HttpHeaders headers = new HttpHeaders()
-    def encoderCredentials = credentials.encodeAsBase64()
-    headers.set("Authorization", "Basic $encoderCredentials")
-    headers.set("User-Agent", "curl/7.65.3")
+  // If the request to the opensubtitle API receives the status code 403, sends a request for access.
+  // Then the request to get subtitles is sent again
+  def sendRequest(String url, String credentials, boolean retry = true) {
+    def headers = createHeaders(credentials)
     HttpEntity<String> entity = new HttpEntity<String>(headers)
     def response = ResponseEntity.status(400).body("Opensubtitle API problems")
     try {
@@ -124,12 +122,24 @@ class OpensubtitlesService {
     } catch (Exception e) {
       log.error("Opensubtitle API exception, ${e.message}", e)
       if (e.statusCode.value == 403) {
+        if (retry) {
+          def accessHeader = createHeadersToAccess(credentials)
+          HttpEntity<String> accessEntity = new HttpEntity<String>(accessHeader)
+          def spUrl = buildUrl(null, generateRandomName(), null, "eng")
+          try {
+            //Access request
+            restTemplate.exchange(spUrl, HttpMethod.GET, accessEntity, SubtitlesResponse[].class)
+          } catch (Exception ex) {
+          }
+          //Retry subtitle request
+          return sendRequest(url, credentials, false)
+        }
+
         response = ResponseEntity.status(e.statusCode.value).body("Looks like you have invalid credentials for opensubtitles API, please check admin settings page")
       }
     }
     return response
   }
-
 
   def buildUrl(String episode, String query, String season, String subLanguageId) {
 
@@ -164,5 +174,28 @@ class OpensubtitlesService {
   def getVideoSubtitles(videoId) {
     def video = Video.findById(videoId)
     return video.getSubtitles()
+  }
+
+  def generateRandomName() {
+    def pool = ['a'..'z'].flatten()
+    Random rand = new Random(System.currentTimeMillis())
+    def nameChars = (0..5).collect { pool[rand.nextInt(pool.size())] }
+    def name = nameChars.join()
+  }
+
+  def createHeaders(String credentials){
+    HttpHeaders headers = new HttpHeaders()
+    def encoderCredentials = credentials.encodeAsBase64()
+    headers.set("Authorization", "Basic $encoderCredentials")
+    headers.set("User-Agent", "curl/7.65.3")
+    return headers
+  }
+
+  def createHeadersToAccess(String credentials){
+    HttpHeaders headers = new HttpHeaders()
+    def encoderCredentials = credentials.encodeAsBase64()
+    headers.set("Authorization", "Basic $encoderCredentials")
+    headers.set("User-Agent", "UserAgent")
+    return headers
   }
 }

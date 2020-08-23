@@ -36,6 +36,8 @@ angular.module('streama')
 
           apiService.settings.validateSettings(settings).then(function (response) {
             var data = response.data;
+
+            //Allows user to save other settings, even if credentials are invalid or there were problems with opensubtitles api
             if (data.message.includes("Invalid credentials") || data.message.includes("problems")) {
               alertify.log(data.message)
             } else {

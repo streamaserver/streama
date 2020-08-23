@@ -15,7 +15,4 @@ class SubtitlesResponse {
   Long subDownloadsCnt
 
   String subFormat
-
-  static constraints = {
-  }
 }

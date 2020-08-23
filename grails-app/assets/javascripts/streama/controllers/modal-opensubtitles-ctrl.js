@@ -13,9 +13,12 @@ angular.module('streama').controller('modalOpensubtitleCtrl', [
     $scope.isSearch = false;
     $scope.colMd = 12;
     $scope.numberOfResults = 0;
+
+    var englishLanguage = languageData[121].IdSubLanguage;
+
     $scope.opensubtitleLanguages = {
       availableOptions: languageData,
-      model: languageData[121].IdSubLanguage
+      defaultValue: englishLanguage
     };
 
     $scope.activeTab = localStorageService.get('activeFileModalTab') || 'upload';
@@ -32,7 +35,7 @@ angular.module('streama').controller('modalOpensubtitleCtrl', [
     $scope.cancel = cancel;
 
     function getSubtitles() {
-      apiService.subtitle.getOpensubtitles(video, $scope.videoName, $scope.opensubtitleLanguages.model, $scope.searchByHash).then(function (data) {
+      apiService.subtitle.getOpensubtitles(video, $scope.videoName, $scope.opensubtitleLanguages.defaultValue, $scope.searchByHash).then(function (data) {
         $scope.opensubtitles = data.data;
         $scope.isSearch = true;
         $scope.colMd = 6;
@@ -45,7 +48,7 @@ angular.module('streama').controller('modalOpensubtitleCtrl', [
     function uploadSubtitles(opensubtitle) {
       apiService.subtitle.uploadOpensubtitles(opensubtitle, video.id).then(function (data) {
         alertify.success('Successfully loaded');
-      }, function (response) {
+      }, function () {
         alertify.log('Failed to load file. Try again.');
       });
     }

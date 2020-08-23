@@ -131,13 +131,13 @@
           <th>Name</th>
           <th>Language</th>
           <th>Label</th>
-          <th style="width: 235px; text-align: center">Actions</th>
+          <th class="align-th-action">Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="file in video.subtitles | orderBy: 'id'">
           <td>{{file.id}}</td>
-          <td style="overflow:hidden; text-overflow:ellipsis; max-width: 375px; white-space: nowrap;">{{file.originalFilename}}</td>
+          <td class="hide-overflowing-name text-max-width-375">{{file.originalFilename}}</td>
           <td>
             <span ng-if="!isEditing(file)">{{file.subtitleSrcLang}}</span>
             <input ng-if="isEditing(file)" class="form-control input-xs" value="{{file.subtitleSrcLang}}" placeholder="Language" ng-model="file.subtitleSrcLang"/>
@@ -146,12 +146,12 @@
             <span ng-if="!isEditing(file)">{{file.subtitleLabel}}</span>
             <input ng-if="isEditing(file)" class="form-control input-xs" value="{{file.subtitleLabel}}" placeholder="Label" ng-model="file.subtitleLabel"/>
           </td>
-          <td style="padding: 6px; display: flex; justify-content: flex-end;">
-            <button title="Set as default" style="margin-left: 3px" ng-class="{'btn btn-xs btn-success': file.isDefault, 'btn btn-xs btn-primary': !file.isDefault}" ng-click="setAsDefault(file)">{{file.isDefault ? 'standard' : 'set as standard'}}</button>
-            <a class="btn btn-xs btn-primary" style="margin-left: 3px" href="{{generateDownloadUrl(file.id)}}" download>download</a>
-            <button ng-if="!isEditing(file)" class="btn btn-xs" style="margin-left: 3px" ng-click="toggleEdit(file)" ><i class="ion-edit"></i></button>
-            <button ng-if="isEditing(file)" title="Delete file" class="btn btn-xs btn-danger" style="margin-left: 3px" ng-click="removeSubtitle(file)"><i class="ion-trash-a"></i></button>
-            <button ng-if="isEditing(file)" title="Save change" class="btn btn-xs btn-success" style="margin-left: 3px" ng-click="saveChanges(file)"><i class="ion-checkmark"></i></button>
+          <td id="flexible-control-buttons">
+            <button title="Set as default" ng-class="{'btn btn-xs btn-success': file.isDefault, 'btn btn-xs btn-primary': !file.isDefault}" ng-click="setAsDefault(file)">{{file.isDefault ? 'standard' : 'set as standard'}}</button>
+            <a class="btn btn-xs btn-primary management-btn" href="{{generateDownloadUrl(file.id)}}" download>download</a>
+            <button ng-if="!isEditing(file)" class="btn btn-xs management-btn" ng-click="toggleEdit(file)" ><i class="ion-edit"></i></button>
+            <button ng-if="isEditing(file)" title="Delete file" class="btn btn-xs btn-danger management-btn" ng-click="removeSubtitle(file)"><i class="ion-trash-a"></i></button>
+            <button ng-if="isEditing(file)" title="Save change" class="btn btn-xs btn-success management-btn" ng-click="saveChanges(file)"><i class="ion-checkmark"></i></button>
           </td>
         </tr>
         </tbody>

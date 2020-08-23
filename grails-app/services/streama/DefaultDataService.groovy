@@ -243,7 +243,8 @@ class DefaultDataService {
         [
           settingsKey: 'Credentials for opensubtitles',
           name: 'credentials_opensubtitles',
-          description: 'Credentials which are used to authenticate the user on the opensubtitles website. Enter username and password, separated by :. Example: username:password.',
+          description: 'Credentials which are used to authenticate the user on the opensubtitles website. Enter username and password, separated by :. Example: username:password. ' +
+            'To use the opensubtitles search, you must activate the User Agent. More information at https://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst',
           settingsType: 'string',
           value: '',
           required: false,

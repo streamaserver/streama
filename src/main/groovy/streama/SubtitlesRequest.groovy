@@ -6,7 +6,4 @@ class SubtitlesRequest {
   String query
   String season
   String subLanguageId
-
-  static constraints = {
-  }
 }

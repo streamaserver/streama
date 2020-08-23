@@ -122,14 +122,25 @@ class VideoService {
 		}
 	}
 
-    file.isDefault = (videoInstance.videoFiles.isEmpty() && fileService.allowedVideoFormats.contains(file.extension)) ||
-      (videoInstance.getSubtitles().isEmpty() && fileService.allowedSubtitleFormats.contains(file.extension))
+    file.isDefault = haveSetByDefault (videoInstance, file)
 
 
     file.save(failOnError: true, flush: true)
     videoInstance.addToFiles(file)
     videoInstance.save(failOnError: true, flush: true)
     return file
+  }
+
+  def haveSetByDefault(Video videoInstance, File file){
+    isFirstFile(videoInstance, file) || isFirstSubtitle(videoInstance, file)
+  }
+
+  def isFirstSubtitle(Video videoInstance, File file){
+    videoInstance.getSubtitles().isEmpty() && fileService.allowedSubtitleFormats.contains(file.extension)
+  }
+
+  def isFirstFile(Video videoInstance, File file){
+    videoInstance.videoFiles.isEmpty() && fileService.allowedVideoFormats.contains(file.extension)
   }
 
 

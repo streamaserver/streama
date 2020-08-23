@@ -135,16 +135,15 @@ class SettingsService {
 
   def validateCredentialsForOpensubtitles(Settings settingsInstance, resultValue) {
     def credentials = settingsInstance.value
-    def url = opensubtitlesService.buildUrl(null, "forrest gump", null, "eng")
+    def url = opensubtitlesService.buildUrl(null, opensubtitlesService.generateRandomName(), null, "eng")
+//    def url = opensubtitlesService.buildUrl(null, "forrest gump", null, "eng")
     def response = opensubtitlesService.sendRequest(url, credentials)
+    resultValue.success = true
     if (response.statusCodeValue == 403) {
-      resultValue.success = true
       resultValue.message = "Invalid credentials for opensubtitles: Username or password is incorrect."
     } else if (response.statusCodeValue == 200) {
-      resultValue.sucess = true
       resultValue.message = "Credentials for opensubtitles is valid and can be used!"
     } else {
-      resultValue.sucess = true
       resultValue.message = response.body
     }
   }

@@ -1,13 +1,12 @@
 package streama
 
-import grails.transaction.Transactional
+
 import org.apache.commons.codec.digest.DigestUtils
 
 import java.util.zip.GZIPInputStream
 
-@Transactional
-class ZipService {
-  def unzipFile(String stagingDir, String zipFileName, String originalFileName) {
+class ZipHelper {
+  static String unzipFile(String stagingDir, String zipFileName, String originalFileName) {
     byte[] buffer = new byte[1024]
     def filePath = new java.io.File("$stagingDir/$zipFileName")
 

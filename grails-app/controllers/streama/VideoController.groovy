@@ -124,8 +124,7 @@ class VideoController {
     def file = uploadService.upload(request)
 
     if (file != null) {
-      file.isDefault = (videoInstance.videoFiles.isEmpty() && fileService.allowedVideoFormats.contains(file.extension)) ||
-        (videoInstance.getSubtitles().isEmpty() && fileService.allowedSubtitleFormats.contains(file.extension))
+      file.isDefault = videoService.haveSetByDefault(videoInstance, file)
       videoInstance.addToFiles(file)
       videoInstance.save flush: true, failOnError: true
       respond file
@@ -148,7 +147,7 @@ class VideoController {
     }
 
     video.removeFromFiles(file)
-    if (!video.getSubtitles().isEmpty() && fileService.allowedSubtitleFormats.contains(file.extension)) {
+    if (!videoService.isFirstSubtitle(video, file)) {
       def subtitle = video.getSubtitles().min { it.id }
       subtitle.isDefault = true
     }
@@ -173,7 +172,7 @@ class VideoController {
     if (video.videoFiles.size() == 0 && fileService.allowedVideoFormats.contains(file.extension)) {
       file.isDefault = true
     }
-    if (video.getSubtitles().isEmpty() && fileService.allowedSubtitleFormats(file.extension)) {
+    if (videoService.isFirstSubtitle(video, file)) {
       file.isDefault = true
     }
 
@@ -214,7 +213,7 @@ class VideoController {
     if (videoInstance.videoFiles.size() == 0 && fileService.allowedVideoFormats.contains(file.extension)) {
       file.isDefault = true
     }
-    if (videoInstance.getSubtitles().isEmpty() && fileService.allowedSubtitleFormats(file.extension)) {
+    if (videoService.isFirstSubtitle(videoInstance, file)) {
       file.isDefault = true
     }
 
