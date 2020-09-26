@@ -330,6 +330,10 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/firstEpisodeForShow.json', {params: {id: id}});
 			},
 
+			randomEpisodeForShow: function (id) {
+				return $http.get('dash/randomEpisodeForShow.json', {params: {id: id}});
+			},
+
 			listGenres: function () {
 				return $http.get('dash/listGenres.json');
 			},

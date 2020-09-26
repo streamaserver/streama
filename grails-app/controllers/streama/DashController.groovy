@@ -25,11 +25,11 @@ class DashController {
     }
   }
 
-  def listEpisodesForShow(TvShow tvShow){
+  def listEpisodesForShow(TvShow tvShow) {
     respond tvShow.getFilteredEpisodes()
   }
 
-  def listRecommendations(){
+  def listRecommendations() {
     User currentUser = springSecurityService.currentUser
     List<Video> result = []
     def favoriteGenreNames = currentUser.favoriteGenres*.name
@@ -52,18 +52,27 @@ class DashController {
       episodes.size() > 0
       deleted != true
     }.list()
-    result = movies + tvShows*.firstEpisode
+    result = movies + tvShows*.getFirstEpisode()
 
     JSON.use ('dashViewingStatus') {
       render (result as JSON)
     }
   }
 
-  def firstEpisodeForShow(TvShow tvShow){
-    Episode firstEpisode = tvShow.firstEpisode
+  def firstEpisodeForShow(TvShow tvShow) {
+    Episode firstEpisode = tvShow.getFirstEpisode()
     if(firstEpisode){
       respond firstEpisode
     }else{
+      respond status: NOT_FOUND
+    }
+  }
+
+  def randomEpisodeForShow(TvShow tvShow) {
+    Episode randomEpisode = tvShow.getRandomEpisode()
+    if (randomEpisode) {
+      respond randomEpisode
+    } else {
       respond status: NOT_FOUND
     }
   }
@@ -216,7 +225,7 @@ class DashController {
     if(viewingStatus?.video){
       result = viewingStatus?.video
     }else{
-      result = tvShow.firstEpisode
+      result = tvShow.getFirstEpisode()
     }
     JSON.use('mediaDetail'){
       render (result as JSON)

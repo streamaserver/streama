@@ -6,6 +6,7 @@ angular.module('streama').controller('dashCtrl',
 
     var LIST_MAX = 30;
 		vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
+		vm.fetchRandomEpisodeAndPlay = fetchRandomEpisodeAndPlay;
     vm.showDetails = showDetails;
     vm.handleWatchlistUpdate = handleWatchlistUpdate;
     vm.addToWatchlist = addToWatchlist;
@@ -145,6 +146,12 @@ angular.module('streama').controller('dashCtrl',
 
     function fetchFirstEpisodeAndPlay(tvShow) {
       apiService.dash.firstEpisodeForShow(tvShow.id).then(function (response) {
+        $state.go('player', {videoId: response.data.id});
+      });
+    }
+
+    function fetchRandomEpisodeAndPlay(tvShow) {
+      apiService.dash.randomEpisodeForShow(tvShow.id).then(function (response) {
         $state.go('player', {videoId: response.data.id});
       });
     }

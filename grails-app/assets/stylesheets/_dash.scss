@@ -33,6 +33,14 @@
     left: 75px;
     bottom: 51px;
   }
+  .shuffle-icon{
+    line-height: 1em;
+    font-size: 52px;
+    color: $primary;
+    position: relative;
+    left: 150px;
+    bottom: 102px;
+  }
   .remove-icon{
     line-height: 1em;
     font-size: 52px;
@@ -148,6 +156,16 @@
       position: absolute;
       bottom: 7px;
       right: 7px;
+      line-height: 1em;
+      font-size: 31px;
+      color: $primary;
+      text-shadow: 1px 1px 1px black;
+      z-index: 9;
+    }
+    .shuffle-icon{
+      position: absolute;
+      bottom: 7px;
+      right: 21px;
       line-height: 1em;
       font-size: 31px;
       color: $primary;
