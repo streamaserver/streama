@@ -194,11 +194,12 @@ class UserController {
       return
     }
 
-    userData.favoriteGenres?.collect{
+    userData.favoriteGenres = userData.favoriteGenres?.collect{
       Genre.findOrCreateByApiId(it.apiId)
     }
 
-    bindData(currentUser, userData, [exclude: ['username', 'password', 'lastUpdated', 'dateCreated'], include: ['amountOfMediaEntries']])
+    bindData(currentUser, userData, [exclude: ['username', 'password', 'lastUpdated', 'dateCreated', 'favoriteGenres'], include: ['amountOfMediaEntries']])
+    currentUser.properties.favoriteGenres = userData.favoriteGenres*.id
 
     currentUser.save failOnError: true, flush: true
 
