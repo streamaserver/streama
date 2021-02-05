@@ -120,7 +120,13 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
       addLocalFile: function (params) {
         return $http.get('video/addLocalFile.json', {params: params});
-      }
+      },
+      markAsUnviewed: function (params) {
+        return $http.get('video/markAsUnviewed.json', {params: params});
+      },
+      markCompleted: function (params) {
+        return $http.get('video/markCompleted.json', {params: params});
+      },
 		},
 
     report: {

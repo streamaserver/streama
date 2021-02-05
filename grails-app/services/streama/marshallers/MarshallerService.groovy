@@ -306,6 +306,7 @@ class MarshallerService {
         returnArray['episodeString'] = episode.episodeString
         returnArray['air_date'] = episode.air_date
         returnArray['still_path'] = episode.still_path
+        returnArray['status'] = episode.getStatus()
 
         return returnArray;
       }
@@ -355,6 +356,8 @@ class MarshallerService {
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
         returnArray['poster_image_src'] = movie.poster_image?.src
+        returnArray['status'] = movie.getStatus()
+
         returnArray['inWatchlist'] = movie.inWatchlist()
 
         return returnArray;
@@ -430,7 +433,14 @@ class MarshallerService {
         response['lastUpdated'] = watchlistEntry.lastUpdated
 
         response['tvShow'] = watchlistEntry.tvShow
-        response['video'] = watchlistEntry.video
+        response['video'] = [
+          id: watchlistEntry.video.id,
+          mediaType: watchlistEntry.video.getType(),
+          poster_path: watchlistEntry.video.getPosterPath(),
+          inWatchlist: watchlistEntry.video.inWatchlist(),
+          release_date: watchlistEntry.video.getReleaseDate()
+        ]
+
         return response;
       }
 

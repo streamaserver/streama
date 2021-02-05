@@ -12,4 +12,5 @@ json g.render(movie, [deep:true, excludes: ['poster_image']]){
 	subtitles movie.getSubtitles()*.getSimpleInstance()
   poster_image_src movie.poster_image?.src
   inWatchlist movie.inWatchlist()
+  status movie.getStatus()
 }

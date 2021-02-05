@@ -36,6 +36,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
       RELEASED: 'Megjelent',
       IMDB: 'IMDB',
       RATING: 'Értékelés',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
       VOTES: 'Szavazatok',
       OVERVIEW: 'Összefoglalás',
       GENRE: 'Műfaj',

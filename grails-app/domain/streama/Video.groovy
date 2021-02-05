@@ -51,6 +51,18 @@ class Video implements SimpleInstance{
     ViewingStatus.findByVideoAndUser(this, springSecurityService.currentUser)
   }
 
+  String getStatus(){
+    ViewingStatus viewingStatus = getViewingStatus()
+    if(viewingStatus?.completed || viewingStatus?.hasVideoEnded()){
+      return VideoStatus.COMPLETED
+    }
+    else if(viewingStatus){
+      return VideoStatus.VIEWING
+    }
+    return VideoStatus.UNVIEWED
+  }
+
+
   def getNextEpisode(){
     if(!(this instanceof Episode)){
       return
@@ -165,6 +177,26 @@ class Video implements SimpleInstance{
       return
     }
     return videoFiles.find{it.isDefault} ?: videoFiles[0]
+  }
+
+  String getType(){
+    if(this instanceof Movie){
+      return 'movie'
+    }
+    if(this instanceof GenericVideo){
+      return 'genericVideo'
+    }
+    if(this instanceof Episode){
+      return 'episode'
+    }
+  }
+
+  def getReleaseDate(){
+    if(this instanceof Episode){
+      return air_date
+    }else{
+      return release_date
+    }
   }
 
   def inWatchlist(){

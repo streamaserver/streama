@@ -58,6 +58,11 @@
            <li><strong>{{'VIDEO.RATING' | translate}}: </strong>
              {{media.vote_average}}/10 ({{media.vote_count}} {{'VIDEO.VOTES' | translate}})
            </li>
+           <li ng-if="mediaType == 'movie'">
+             <strong>{{'VIDEO.STATUS' | translate}}: </strong>
+             <strong>{{'VIDEO.STATUS_VALUE.' + media.status | translate}}</strong>
+             <a ng-if="media.status == 'completed'" class="btn btn-primary btn-xxs" ng-click="markAsUnviewed()">Mark as unviewed</a>
+           </li>
          </ul>
 
          <hr/>

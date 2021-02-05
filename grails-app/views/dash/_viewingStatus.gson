@@ -21,6 +21,7 @@ json g.render(viewingStatus, [includes: ['id', 'dateCreated', 'lastUpdated', 'cu
       popularity viewingStatus.video.popularity
       original_language viewingStatus.video.original_language
       title viewingStatus.video.getTitle()
+      status viewingStatus.video.getStatus()
 
       if (viewingStatus.video instanceof Movie) {
         Movie movie = viewingStatus.video as Movie

@@ -12,6 +12,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     $scope.listEpisodesForSeason = listEpisodesForSeason;
     $scope.addToWatchlist = addToWatchlist;
     $scope.removeFromWatchlist = removeFromWatchlist;
+    $scope.markAsUnviewed = markAsUnviewed;
 
     if(config.mediaObject) {
       $scope.media = config.mediaObject;
@@ -100,5 +101,12 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
           });
         }
       })
+    }
+
+    function markAsUnviewed() {
+      apiService.video.markAsUnviewed({id: $scope.media.id}).then(function () {
+        $scope.media.status = 'unviewed';
+        $rootScope.$broadcast('video.markAsUnviewed', {id: $scope.media.id});
+      });
     }
 }]);
