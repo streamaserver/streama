@@ -169,6 +169,7 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function removeFromWatchlist(item) {
+      vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
       alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
       alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
         if (confirmed) {
@@ -254,6 +255,7 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function onVideoUpdateWatchlist(e, data) {
+      vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
       updateWatchlist(data.action, _.get(vm.watchlistEntry, 'list'), data.media, _.get(data.response, 'data'));
     }
 

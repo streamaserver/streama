@@ -179,6 +179,26 @@ class Video implements SimpleInstance{
     return videoFiles.find{it.isDefault} ?: videoFiles[0]
   }
 
+  String getType(){
+    if(this instanceof Movie){
+      return 'movie'
+    }
+    if(this instanceof GenericVideo){
+      return 'genericVideo'
+    }
+    if(this instanceof Episode){
+      return 'episode'
+    }
+  }
+
+  def getReleaseDate(){
+    if(this instanceof Episode){
+      return air_date
+    }else{
+      return release_date
+    }
+  }
+
   def inWatchlist(){
     User currentUser = springSecurityService.currentUser
     Profile profile = currentUser.getProfileFromRequest()

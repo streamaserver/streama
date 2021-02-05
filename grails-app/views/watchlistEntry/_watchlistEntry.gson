@@ -1,5 +1,6 @@
 package watchlistEntry
 
+import streama.Episode
 import streama.GenericVideo
 import streama.Movie
 import streama.TvShow
@@ -32,6 +33,13 @@ json g.render(watchlistEntry, [deep:true, includes: ['id', 'dateCreated', 'lastU
         release_date genericVideo.release_date
         poster_image_src genericVideo.poster_image?.src
         inWatchlist genericVideo.inWatchlist()
+      }
+      if (watchlistEntry.video instanceof Episode) {
+        Episode episode = watchlistEntry.video as Episode
+
+        mediaType 'episode'
+        poster_image_src episode.getPosterPath()
+        inWatchlist episode.inWatchlist()
       }
     }
   }
