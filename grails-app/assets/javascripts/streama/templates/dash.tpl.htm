@@ -85,7 +85,7 @@
   </div>
 
   <!----------------------------------------------watchlist-------------------------------------------->
-  <div ng-if="vm.isDashType('home') && vm.watchlistEntry.list.length && !vm.isDashSectionHidden('watchlist')">
+  <div ng-if="(vm.isDashType('home') || vm.isDashType('watchlist')) && vm.watchlistEntry.list.length && !vm.isDashSectionHidden('watchlist')">
     <hr/>
     <h3>{{'DASHBOARD.WATCHLIST' | translate}}</h3>
 
