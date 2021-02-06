@@ -149,7 +149,7 @@ class VideoController {
     video.removeFromFiles(file)
     if (!videoService.isFirstSubtitle(video, file)) {
       def subtitle = video.getSubtitles().min { it.id }
-      subtitle.isDefault = true
+      subtitle?.isDefault = true
     }
     video.save flush: true, failOnError: true
 
