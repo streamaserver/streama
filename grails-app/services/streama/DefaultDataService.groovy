@@ -224,6 +224,15 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+		[
+            settingsKey: 'Enable Random Episode button',
+            name: 'enable-random-episode-button',
+            description: 'Determines whether the shuffle / random play button in the dashboard cards should appear. ',
+            settingsType: 'boolean',
+            value: 'false',
+            required: false,
+            validationRequired: false
+        ],
 		    [
             settingsKey: 'Footer Content',
             name: 'footer-content',
