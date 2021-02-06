@@ -168,7 +168,22 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
       }
     },
 
-		episode: {
+    subtitle: {
+      setDefault: function(subtitleId, videoId) {
+        return $http.get('subtitles/setDefault.json', {params: {id: subtitleId, videoId: videoId}});
+      },
+      getOpensubtitles: function (video, videoTitle, subtitlelanguage, isSearchByHash) {
+        return $http.get('subtitles/get.json', {params: {episode: video.episode_number, query: videoTitle, season: video.season_number, subLanguageId: subtitlelanguage, videoId: video.id, searchByHash: isSearchByHash}});
+      },
+      uploadOpensubtitles: function (opensubtitle, videoId) {
+        return $http.get('subtitles/download.json', {params: {subFileName: opensubtitle.subFileName, subDownloadLink: opensubtitle.subDownloadLink, subLang: opensubtitle.languageName, videoId: videoId}});
+      },
+      refreshSubtitles: function (videoId) {
+        return $http.get('subtitles/getVideoSubtitles.json', {params: {videoId: videoId}});
+      },
+    },
+
+    episode: {
 			get: function (id) {
 				return $http.get('episode/show.json', {params: {id: id}});
 			},

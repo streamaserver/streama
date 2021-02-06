@@ -542,6 +542,9 @@ class MarshallerService {
         returnArray['quality'] = file.quality
         returnArray['fileExists'] = file.fileExists
         returnArray['videos'] = file.associatedVideos
+        returnArray['isDefault'] = file.isDefault
+        returnArray['subtitleSrcLang'] = file.subtitleSrcLang
+        returnArray['subtitleLabel'] = file.subtitleLabel
 
         return returnArray
       }
