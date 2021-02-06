@@ -60,8 +60,7 @@ class GenericVideoController {
             return
         }
 
-        genericVideoInstance.deleted = true
-        genericVideoInstance.save failOnError: true, flush: true
+        genericVideoInstance.delete flush:true
         render status: NO_CONTENT
     }
 
