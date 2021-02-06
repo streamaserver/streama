@@ -38,6 +38,10 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
             var firstEpisode = response.data;
             $scope.firstEpisode = firstEpisode;
           });
+          apiService.dash.randomEpisodeForShow($scope.media.id).then(function (response) {
+            var randomEpisode = response.data;
+            $scope.randomEpisode = randomEpisode;
+          });
         }
       });
     }

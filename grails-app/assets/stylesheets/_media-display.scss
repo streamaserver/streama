@@ -66,6 +66,18 @@
     @include vendor-property('transition', 'opacity .2s');
   }
 
+  .shuffle-icon{
+    position: absolute;
+    bottom: 7px;
+    left: 65px;
+    line-height: 1em;
+    font-size: 31px;
+    color: $primary;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0);
+    opacity: 0;
+    @include vendor-property('transition', 'opacity .2s');
+  }
+
   .warning-icon{
     opacity: 1;
     color: $danger;
@@ -130,6 +142,7 @@
     .complete-watching,
     .info-icon,
     .add-icon,
+    .shuffle-icon,
     .remove-icon,
     .play-text{
       opacity: 1;

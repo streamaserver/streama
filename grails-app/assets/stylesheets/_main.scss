@@ -1,113 +1,119 @@
-body{
-  background-color: #25292B;
+body {
+  background-color: #25292b;
   color: white;
   font-weight: 300;
 }
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: white;
 }
 
-
-.page-container{
+.page-container {
   min-height: 100%;
   margin-bottom: -30px;
 
-
-  &.is-child{
+  &.is-child {
     background: $primary;
 
-    header.main{
-      font-family: 'Indie Flower', cursive;
+    header.main {
+      font-family: "Indie Flower", cursive;
     }
 
-    .dash-search{
-      input{
+    .dash-search {
+      input {
         background: white;
       }
-      .form-control-feedback{
+      .form-control-feedback {
         color: #257696;
       }
     }
 
-    .dashboard{
-      font-family: 'Indie Flower', cursive;
+    .dashboard {
+      font-family: "Indie Flower", cursive;
 
-      hr{
+      hr {
         border-color: darken($primary, 5%);
       }
 
-      h3{
-        font-family: 'Indie Flower', cursive;
+      h3 {
+        font-family: "Indie Flower", cursive;
         font-size: 32px;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
       }
 
-      .form-control{
+      .form-control {
         background: white;
         font-size: 16px;
         border-radius: 20px;
       }
 
-      .ui-select-bootstrap input{
+      .ui-select-bootstrap input {
         font-size: 16px;
         margin-bottom: 0;
         height: 1.55em;
       }
     }
 
-    .media-list-item{
+    .media-list-item {
       border-radius: 40px;
       overflow: hidden;
       padding: 0;
       border: 4px solid white;
     }
 
-    .media-item{
-      .play-text{
+    .media-item {
+      .play-text {
         padding: 12px 30px;
       }
 
-      .info-icon{
+      .info-icon {
         right: 25px;
       }
     }
   }
 }
 
-.page-container-push{
+.page-container-push {
   height: 30px;
 }
 
-.footer{
+.footer {
   padding: 7px 15px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
 }
 
-.version{
+.version {
   color: rgba(255, 255, 255, 0.3);
   font-size: 10px;
   font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 }
 
-.logo{
+.logo {
   padding: 6px 0;
   position: relative;
   margin: 0 auto;
   display: block;
 
-  img{
+  img {
     max-width: 130px;
     max-height: 31px;
   }
-  i{
+  i {
     font-size: 0.85em;
   }
 
-  .spinner{
+  .spinner {
     position: absolute;
     left: 142px;
     top: 20px;
@@ -115,34 +121,36 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .navbar-collapse.collapsing,
-.navbar-collapse.in{
+.navbar-collapse.in {
   clear: both;
   display: block;
 }
 
-
-
-header.main{
+header.main {
   @include clearfix;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
-  @include vendor-property('transition', 'background 0.5s');
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 0)
+  );
+  @include vendor-property("transition", "background 0.5s");
   padding: 5px 15px;
 
-  .navbar-nav{
+  .navbar-nav {
     float: right;
     padding: 0;
     margin: 0;
 
-    >li{
+    > li {
       list-style: none;
       display: inline-block;
 
-      >a{
+      > a {
         color: white;
         padding: 11px 10px;
         display: block;
 
-        &.active{
+        &.active {
           font-weight: bold;
           border-bottom: 1px solid $primary;
         }
@@ -168,7 +176,7 @@ header.main{
     display: flex;
     align-items: center;
 
-    &:hover{
+    &:hover {
       background: #424242;
     }
 
@@ -179,11 +187,9 @@ header.main{
       }
     }
   }
-
 }
 
-
-.navbar-toggle{
+.navbar-toggle {
   margin: 0;
   font-size: 30px;
   padding: 0 13px;
@@ -193,48 +199,45 @@ header.main{
   right: 7px;
 }
 
-.content{
+.content {
 }
 
-.dash-search{
+.dash-search {
   margin: 0;
   padding: 8px 9px 8px 0px;
 }
 
-
-.dropdown-menu>li{
-  >a.typeahead-item{
+.dropdown-menu > li {
+  > a.typeahead-item {
     @include flexbox;
     @include align-items(center);
     padding: 7px;
     font-size: 14px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
-    img{
+    img {
       margin-right: 10px;
       width: 50px;
     }
 
-    &.inactive{
+    &.inactive {
       opacity: 0.5;
     }
   }
 
-
-  &:last-child >a{
+  &:last-child > a {
     border: none;
   }
 }
 
-hr{
+hr {
   border-color: rgba(255, 255, 255, 0.08);
 }
 
-
-.sort-by{
+.sort-by {
   margin-left: 8px;
-  .btn{
-    .caret{
+  .btn {
+    .caret {
       margin-left: 8px;
     }
   }

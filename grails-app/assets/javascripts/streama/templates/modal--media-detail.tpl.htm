@@ -28,6 +28,9 @@
       <div ng-if="!media.inWatchlist" class="watchlist-button">
         <i class="add-icon ion-android-add-circle" ng-click="addToWatchlist(media)"></i>
       </div>
+      <div ng-if="media.mediaType === 'tvShow'" class="watchlist-button">
+        <i class="shuffle-icon ion-shuffle" ui-sref="player({videoId: (randomEpisode.id)})"></i>
+      </div>
       <div ng-if="media.inWatchlist" class="watchlist-button">
         <i class="remove-icon ion-android-remove-circle" ng-click="removeFromWatchlist(media)"></i>
       </div>
