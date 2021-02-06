@@ -242,6 +242,33 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+        [
+          settingsKey: 'Hide \'Dashboard\' button',
+          name: 'hide-dash-button',
+          description: 'Determines whether the the top Dashboard button should be hidden',
+          settingsType: 'boolean',
+          value: 'false',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'Hide \'My List\' button',
+          name: 'hide-mylist-button',
+          description: 'Determines whether the \'My List\' button should be hidden. In contrast to the \'Dashboard Header-links\' setting this will only hide \'My List\'',
+          settingsType: 'boolean',
+          value: 'false',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'Amount of profiles users can create',
+          name: 'profile-count',
+          description: 'Determines how much profiles each individual user can create. Defaults to 4.',
+          settingsType: 'integer',
+          value: '4',
+          required: true,
+          validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',
