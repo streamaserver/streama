@@ -77,6 +77,10 @@ h1,h2,h3,h4,h5,h6{
   }
 }
 
+.new_releases_header {
+  padding-top: 1em;
+}
+
 .page-container-push{
   height: 30px;
 }
@@ -124,7 +128,7 @@ h1,h2,h3,h4,h5,h6{
 
 header.main{
   @include clearfix;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+  background-image: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.35) 100%);
   @include vendor-property('transition', 'background 0.5s');
   padding: 5px 15px;
 
@@ -139,7 +143,8 @@ header.main{
 
       >a{
         color: white;
-        padding: 11px 10px;
+        padding: 1.03em 10px;
+        margin-right: 0.05em;
         display: block;
 
         &.active{
@@ -198,7 +203,7 @@ header.main{
 
 .dash-search{
   margin: 0;
-  padding: 8px 9px 8px 0px;
+  padding: 1.03em 9px 8px 0px;
 }
 
 
