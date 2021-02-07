@@ -51,6 +51,18 @@ class Video implements SimpleInstance{
     ViewingStatus.findByVideoAndUser(this, springSecurityService.currentUser)
   }
 
+  String getStatus(){
+    ViewingStatus viewingStatus = getViewingStatus()
+    if(viewingStatus?.completed || viewingStatus?.hasVideoEnded()){
+      return VideoStatus.COMPLETED
+    }
+    else if(viewingStatus){
+      return VideoStatus.VIEWING
+    }
+    return VideoStatus.UNVIEWED
+  }
+
+
   def getNextEpisode(){
     if(!(this instanceof Episode)){
       return
@@ -102,22 +114,17 @@ class Video implements SimpleInstance{
    * builds entire image path for tmdb image paths. Ie returns something like
    * https://image.tmdb.org/t/p/w300/uZEIHtWmJKzCL59maAgfkpbcGzC.jpg
    * @param propertyName on the video instance
-   * @param size for the tmdb image path. defaults to 300
+   * @param size for the tmdb image path. defaults to w300
    * @return entire image link for tmdb, for non-tmdb-videos returns value as is.
    */
-  String buildImagePath(String propertyName, Integer size = 300){
+  String buildImagePath(String propertyName, String size = "w300"){
     if(!this.hasProperty(propertyName)){
       log.error('no Property fonud on instance called ' + propertyName)
       return
     }
 
     String imagePath = this[propertyName]
-
-    if(imagePath?.startsWith('/')){
-      return "https://image.tmdb.org/t/p/w$size$imagePath"
-    }else{
-      return imagePath
-    }
+    return TheMovieDbService.buildImagePath(imagePath, size)
   }
 
 
@@ -170,6 +177,26 @@ class Video implements SimpleInstance{
       return
     }
     return videoFiles.find{it.isDefault} ?: videoFiles[0]
+  }
+
+  String getType(){
+    if(this instanceof Movie){
+      return 'movie'
+    }
+    if(this instanceof GenericVideo){
+      return 'genericVideo'
+    }
+    if(this instanceof Episode){
+      return 'episode'
+    }
+  }
+
+  def getReleaseDate(){
+    if(this instanceof Episode){
+      return air_date
+    }else{
+      return release_date
+    }
   }
 
   def inWatchlist(){

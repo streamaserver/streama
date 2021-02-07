@@ -12,6 +12,7 @@ class Movie extends Video{
   String poster_path
   String trailerKey
   File poster_image
+  File backdrop_image
 
 
   static hasMany = [tags: Tag, genre: Genre]

@@ -19,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Filme',
       MY_LIST:'Meine Liste',
 			TITLE: 'Dashboard',
+      TITLE_COUNTER_OF: 'von',
 			NEW_RELEASES: 'Neuerscheinungen',
 			CONTINUE_WATCHING: 'Weiterschauen',
 			DISCOVER_SHOWS: 'Entdecke Serien',
@@ -32,6 +33,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Ausgewähltes Genre:',
 			MARK_COMPLETED: 'Als gesehen Markieren',
 			NO_TVSHOWS_FOUND: 'Keine Serien verfügbar',
+      NO_WATCHLIST_FOUND: 'Noch keine Einträge',
 			NO_MOVIES_FOUND: 'Keine Filme verfügbar',
       WATCHLIST: 'Beobachtungsliste'
     },
@@ -39,6 +41,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			RELEASED: 'Veröffentlichung',
 			IMDB: 'IMDB',
 			RATING: 'Bewertungen',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
 			VOTES: 'Stimmen',
 			OVERVIEW: 'Zusammenfassung',
 			GENRE: 'Genre',
@@ -72,7 +80,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		PROFILE_SETTINGS: 'Profileinstellungen',
 		LOGOUT: 'Ausloggen',
 		CHANGE_PASSWORD: 'Passwort ändern',
-	LANGUAGE_cn: 'Chinese/中文',	
+	LANGUAGE_cn: 'Chinese/中文',
 	LANGUAGE_en: 'English/Englisch',
     LANGUAGE_ru: 'Русский/Russisch',
     LANGUAGE_de: 'Deutsch',

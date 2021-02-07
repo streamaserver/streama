@@ -2,13 +2,17 @@ package streama
 
 import groovy.json.JsonSlurper
 import grails.transaction.Transactional
+import org.hibernate.boot.archive.internal.UrlInputStreamAccess
+
+import java.util.concurrent.ConcurrentHashMap
 
 @Transactional
 class TheMovieDbService {
 
   def BASE_URL = "https://api.themoviedb.org/3"
 
-  def apiCacheData = [:]
+  def apiCacheData = new ConcurrentHashMap()
+  def uploadService
 
   def getAPI_PARAMS(){
     return "api_key=$API_KEY&language=$API_LANGUAGE"
@@ -107,9 +111,15 @@ class TheMovieDbService {
   }
 
   def getFullMovieMeta(movieId){
+    def cachedApiData = apiCacheData."movie$movieId"
+    if(cachedApiData){
+      return cachedApiData
+    }
     try{
       def JsonContent = new URL(BASE_URL + "/movie/$movieId?$API_PARAMS").getText("UTF-8")
-      return new JsonSlurper().parseText(JsonContent)
+      def data = new JsonSlurper().parseText(JsonContent)
+      apiCacheData["movie$movieId"] = data
+      return data
     }catch (e){
       log.warn("could not load fullMeta for Movie this time, " + e.message)
     }
@@ -117,9 +127,16 @@ class TheMovieDbService {
   }
 
   def getFullTvShowMeta(tvId){
+
+    def cachedApiData = apiCacheData."tv:$tvId"
+    if(cachedApiData){
+      return cachedApiData
+    }
     try{
       def JsonContent = new URL(BASE_URL + "/tv/$tvId?$API_PARAMS").getText("UTF-8")
-      return new JsonSlurper().parseText(JsonContent)
+      def data = new JsonSlurper().parseText(JsonContent)
+      apiCacheData["tv:$tvId"] = data
+      return data
     }catch (e){
       log.warn("could not load fullMeta for TV SHOW this time, " + e.message)
     }
@@ -159,8 +176,7 @@ class TheMovieDbService {
       apiCacheData["$type:$name"] = data
     }
     catch(e) {
-      HttpURLConnection conn = url.openConnection()
-      throw new Exception("TMDB request failed with statusCode: " + conn?.responseCode + ", responseMessage: " + conn?.responseMessage + ", url: " + requestUrl)
+      throw new Exception("TMDB request failed", e)
     }
 
     return data
@@ -242,5 +258,75 @@ class TheMovieDbService {
       streamaGenres.add(genre)
     }
     return streamaGenres
+  }
+
+  def isImageReachable(String imageId){
+    URL imageUrl = new URL(buildImagePath(imageId, "w300"))
+    HttpURLConnection connection = (HttpURLConnection) imageUrl.openConnection()
+    connection.setRequestMethod("GET")
+    connection.connect()
+    int code = connection.getResponseCode()
+    if(code != 200){
+      return false
+    }
+    def contentType = connection.getHeaderField('content-type')
+    if(contentType == 'text/html'){
+      return false
+    }
+    return true
+  }
+
+  /**
+   * builds entire image path for tmdb image paths. Ie returns something like
+   * https://image.tmdb.org/t/p/w300/uZEIHtWmJKzCL59maAgfkpbcGzC.jpg
+   * @param propertyName on the video instance
+   * @param size for the tmdb image path. defaults to w300
+   * @return entire image link for tmdb, for non-tmdb-videos returns value as is.
+   */
+  static String buildImagePath(String imagePath, String size = "w300"){
+
+    if(imagePath?.startsWith('/')){
+      return "https://image.tmdb.org/t/p/$size$imagePath"
+    }else{
+      return imagePath
+    }
+  }
+
+  @Transactional
+  def refreshData(instance, path, String localFileProperty = null){
+    Map meta
+    if(instance instanceof TvShow){
+      meta = instance.getFullTvShowMeta()
+    }
+    else if(instance instanceof Movie){
+      meta = instance.getFullMovieMeta()
+    }
+    if(!meta){
+      if(instance.apiId){
+        log.warn("Seems like you hit your TMDB Limit. Sleeping for 10 Seconds")
+        Thread.sleep(10000)
+      }
+      return
+    }
+    String newImagePath = meta[path]
+    instance[path] = newImagePath
+    if(localFileProperty){
+      String name = instance instanceof TvShow ? instance.name : instance.title
+      instance[localFileProperty] = uploadService.handleUpload(getImageDataFromTmdb(newImagePath), [name:"${name}_${path}.png"])
+    }
+    instance.save(failOnError: true, flush: true)
+  }
+
+  byte[] getImageDataFromTmdb(String path){
+    try{
+      String imagePath = buildImagePath(path, "original")
+      def url = new URL(imagePath)
+      URLConnection con = url.openConnection()
+      con.setUseCaches(false)
+      return con.inputStream.bytes
+    }catch(e){
+      log.error("Failed to fetch image data, ${e.message}", e)
+    }
+
   }
 }

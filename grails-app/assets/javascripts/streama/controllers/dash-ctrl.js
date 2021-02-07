@@ -6,27 +6,21 @@ angular.module('streama').controller('dashCtrl',
   var vm = this;
 
     var LIST_MAX = 30;
-		vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
     vm.showDetails = showDetails;
     vm.handleWatchlistUpdate = handleWatchlistUpdate;
-    vm.addToWatchlist = addToWatchlist;
-    vm.removeFromWatchlist = removeFromWatchlist;
-    vm.markCompleted = markCompleted;
     vm.loadingRecommendations = true;
     vm.isDashSectionHidden = isDashSectionHidden;
-    vm.showDashboardWithDashType = showDashboardWithDashType;
+    vm.isDashType = isDashType;
 
     $scope.$on('changedGenre', onChangedGenre);
+    $scope.$on('video.updateWatchlist', onVideoUpdateWatchlist);
 
     init();
 
     function init() {
       if ($rootScope.currentUser.isAdmin) {
-        showInitialSettingsWarning().then(showDashboardWithDashType);
-      }else{
-        showDashboardWithDashType();
+        showInitialSettingsWarning();
       }
-
       if ($stateParams.mediaModal) {
         modalService.mediaDetailModal({mediaId: $stateParams.mediaModal, mediaType: $stateParams.mediaType, isApiMovie: false});
       }
@@ -46,17 +40,29 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function initMedia() {
-      vm.movie = mediaListService.init(Dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser);
-      vm.tvShow = mediaListService.init(Dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
-      vm.genericVideo = mediaListService.init(Dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser);
-      vm.watchlistEntry = mediaListService.init(WatchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser);
+      if(isDashType("home") || isDashType("discover-movies")){
+        vm.movie = mediaListService.init(Dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser);
+      }
+      if(isDashType("home") || isDashType("discover-shows")){
+        vm.tvShow = mediaListService.init(Dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
+      }
+      if(isDashType("home") || isDashType("watchlist")){
+        vm.watchlistEntry = mediaListService.init(WatchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser);
+      }
+      if(isDashType("home")){
+        vm.genericVideo = mediaListService.init(Dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser);
+        Dash.listNewReleases().$promise.then(onNewReleasesLoaded);
+        Dash.listContinueWatching().$promise.then(onContinueWatchingLoaded);
+        Dash.listRecommendations().$promise.then(onRecommendedLoaded);
+      }
 
-      Tag.list().$promise.then(onTagsLoaded);
-      Dash.listNewReleases().$promise.then(onNewReleasesLoaded);
-      Dash.listContinueWatching().$promise.then(onContinueWatchingLoaded);
-      Dash.listRecommendations().$promise.then(onRecommendedLoaded);
       Dash.listGenres().$promise.then(onGenreLoaded);
+      Tag.list().$promise.then(onTagsLoaded);
+    }
 
+
+    function isDashType(type) {
+      return ($state.params.dashType === type || (type === 'home' && !$state.params.dashType));
     }
     // HOISTED FUNCTIONS BELOW
 
@@ -135,33 +141,13 @@ angular.module('streama').controller('dashCtrl',
       vm.tvShow.setFilter();
     }
 
-    function fetchFirstEpisodeAndPlay(tvShow) {
-      Dash.firstEpisodeForShow({id: tvShow.id}).$promise.then(function (response) {
-        $state.go('player', {videoId: response.id});
-      });
-    }
-
     function showDetails(media) {
       if(media.mediaType === 'episode'){
         modalService.mediaDetailModal({mediaId: media.tvShowId, mediaType: 'tvShow', isApiMovie: false});
       }else{
         modalService.mediaDetailModal({mediaId: media.id, mediaType: media.mediaType, isApiMovie: false}, function (response) {
-          updateWatchlist(response.action, vm.watchlistEntry.list, media, response.watchlistEntry);
+          updateWatchlist(response.action, _.get(vm.watchlistEntry, 'list'), media, response.watchlistEntry);
         });
-      }
-    }
-
-    function showDashboardWithDashType() {
-      var dashType = $state.params.dashType;
-      var hiddenSections = ["new-releases","continue-watching","recommends","watchlist","discover-movies","discover-shows","discover-generic"];
-      if(dashType === "home" || !dashType){
-        hiddenSections = [];
-      }else{
-        _.remove(hiddenSections, function (item) { return item === dashType });
-      }
-      var setting = _.find($scope.settings, {name: 'hidden_dash_sections'});
-      if(setting){
-        setting.value = hiddenSections.toString();
       }
     }
 
@@ -179,16 +165,17 @@ angular.module('streama').controller('dashCtrl',
     function addToWatchlist(item) {
       WatchlistEntry.create({id: item.id, mediaType: item.mediaType}).$promise.then(function (response) {
         vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
-        updateWatchlist("added", vm.watchlistEntry.list, item, response);
+        updateWatchlist("added", _.get(vm.watchlistEntry, 'list'), item, response);
       });
     }
 
     function removeFromWatchlist(item) {
+      vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
       alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
       alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
         if (confirmed) {
           WatchlistEntry.delete({id: item.id, mediaType: item.mediaType}).$promise.then(function (response) {
-            updateWatchlist("removed", vm.watchlistEntry.list, item);
+            updateWatchlist("removed", _.get(vm.watchlistEntry, 'list'), item);
           });
         }
       });
@@ -260,23 +247,17 @@ angular.module('streama').controller('dashCtrl',
       return (showItemArray.indexOf(false) < 0);
     }
 
-    function markCompleted(viewingStatus) {
-      alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
-      alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
-        if (confirmed) {
-          ViewingStatus.delete({id: viewingStatus.id}).$promise.then(function (data) {
-            _.remove(vm.continueWatching, {'id': viewingStatus.id});
-          });
-        }
-      })
-    }
-
     function isDashSectionHidden(sectionName) {
       var hiddenDashSectionSetting = _.find($scope.settings, {name: 'hidden_dash_sections'});
       if(_.get(hiddenDashSectionSetting, 'parsedValue')){
         var hiddenDashSections = hiddenDashSectionSetting.parsedValue.split(',');
         return (hiddenDashSections.indexOf(sectionName) > -1);
       }
+    }
+
+    function onVideoUpdateWatchlist(e, data) {
+      vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
+      updateWatchlist(data.action, _.get(vm.watchlistEntry, 'list'), data.media, _.get(data.response, 'data'));
     }
 
 	});

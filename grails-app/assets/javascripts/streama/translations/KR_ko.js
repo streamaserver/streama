@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: '영화 산업',
       MY_LIST:'나의 목록',
 			TITLE: '대시보드',
+      TITLE_COUNTER_OF: 'of',
 			NEW_RELEASES: '신작',
 			CONTINUE_WATCHING: '계속해서 보기',
 			DISCOVER_SHOWS: '드라마 찾기',
@@ -31,12 +32,19 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			MARK_COMPLETED: '선택 완료',
 			NO_TVSHOWS_FOUND: '해당 드라마를 찾지 못했습니다.',
 			NO_MOVIES_FOUND: '해당 영화를 찾지 못했습니다.',
+      NO_WATCHLIST_FOUND: '아직 아무것도 없습니다',
       WATCHLIST: '나중에 볼'
 		},
 		VIDEO: {
 			RELEASED: '출시',
 			IMDB: 'IMDB',
 			RATING: '평점',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
 			VOTES: '투표',
 			OVERVIEW: '줄거리',
 			GENRE: '장르',

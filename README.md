@@ -2,19 +2,23 @@
 # STREAMA
 
 
+
 [![Build Status](https://img.shields.io/travis/streamaserver/streama/master.svg?style=for-the-badge)](https://travis-ci.org/streamaserver/streama) 
 [![Downloads](https://img.shields.io/github/downloads/streamaserver/streama/total.svg?style=for-the-badge)](https://github.com/streamaserver/streama/releases)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=for-the-badge)](https://github.com/streamaserver/streama/blob/master/LICENSE.md) 
 [![Discord](https://img.shields.io/discord/432358302496849931.svg?style=for-the-badge)](https://discord.gg/CJEHWX9)
 
+  
+Docs: https://docs.streama-project.com/  
+
 Ever had a huge bookshelf full of shows and movies? Ever wanted to digitalize them, but didn't have a good way of organizing the files? Worry no more! Streama is your own personal Netflix for just such a purpose!
 
-[![Visit the Promo Page](design/promo-page.png)](https://streamaserver.org/) 
-[![Live Demo](design/live-demo-button.png)](https://demo.streamaserver.org/) 
+[![Visit the Docs](design/promo-page.png)](https://github.com/streamaserver/streama/wiki) 
+[![Live Demo](design/live-demo-button.png)](https://streama.demo-version.net/) 
 [![Streama on Google Play store](design/google-play-badge.jpg)](https://play.google.com/store/apps/details?id=dularion.streama) 
 
 ## Live-Demo
-https://demo.streamaserver.org/  
+https://streama.demo-version.net/   
 **credentials: username: demoUser | password: demoUser**  
 Feel free to play around there as much as you like (everything is reset at night)  
 We will keep this demo updated with our newest releases as they come, so that you can check out new features there first before deciding to deploy them in your own environments. 
@@ -47,7 +51,7 @@ If you want to donate to the developer via bitcoin use 17rCUEX6KYQ8ZM4w39ttEUL7S
 - [License](#license)
 
 # Getting Started
-- [Installation and first-time setup](https://streamaserver.org/getting-started/installing/)
+- [Installation and first-time setup](https://docs.streama-project.com/getting-started/installing/)
 
 If you have any issues getting started, feel free to [chat with us on Discord](https://discord.gg/CJEHWX9). We are more than happy to assist and then improve the docs accordingly. 
 

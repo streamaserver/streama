@@ -19,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Films',
       MY_LIST:'La mia lista',
 			TITLE: 'Cruscotto',
+      TITLE_COUNTER_OF: 'of',
 			NEW_RELEASES: 'Nuove uscite',
 			CONTINUE_WATCHING: 'Continuare a guardare',
 			DISCOVER_SHOWS: 'Scopri spettacoli',
@@ -32,12 +33,19 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			MARK_COMPLETED: 'Mark completato',
 			NO_TVSHOWS_FOUND: 'No Tv-Show disponibili',
 			NO_MOVIES_FOUND: 'Nessun film disponibile',
+      NO_WATCHLIST_FOUND: 'Ancora niente qui',
       WATCHLIST: 'visualizza più tardi'
 		},
 		VIDEO: {
 			RELEASED: 'Rilasciato',
 			IMDB: 'IMDB',
 			RATING: 'Voto',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
 			VOTES: 'Voti',
 			OVERVIEW: 'Panoramica',
 			GENRE: 'Genere',

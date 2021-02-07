@@ -1,5 +1,5 @@
 <%@ page import="streama.Settings" %>
-<header class="main navbar-fixed-top" ng-if="!isCurrentState('player')" streama-header-directive>
+<header class="main navbar-fixed-top" ng-if="!isCurrentState('player')">
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
       <g:imgSetting setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>
@@ -33,10 +33,10 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-nav">
       <ul class="nav navbar-nav">
-        <li><a ng-click="getByDashType('home')">{{'DASHBOARD.HOME' | translate}}</a></li>
-        <li><a ng-click="getByDashType('tv_shows')">{{'DASHBOARD.TV_SHOWS' | translate}}</a></li>
-        <li><a ng-click="getByDashType('movies')">{{'DASHBOARD.MOVIES' | translate}}</a></li>
-        <li><a ng-click="getByDashType('watchlist')">{{'DASHBOARD.MY_LIST' | translate}}</a></li>
+        <li><a ng-click="changeDashType('home')" ng-class="{active: (isDashType('home') || isDashType(undefined))}">{{'DASHBOARD.HOME' | translate}}</a></li>
+        <li><a ng-click="changeDashType('discover-shows')" ng-class="{active: (isDashType('discover-shows'))}">{{'DASHBOARD.TV_SHOWS' | translate}}</a></li>
+        <li><a ng-click="changeDashType('discover-movies')" ng-class="{active: (isDashType('discover-movies'))}">{{'DASHBOARD.MOVIES' | translate}}</a></li>
+        <li><a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'Watch List' | translate}}</a></li>
       </ul>
     </div>
   </div>

@@ -1,0 +1,28 @@
+<div class="media-item" >
+  <streama-video-image type="poster" size="300" video="vm.entity"></streama-video-image>
+
+  <div class="play-text">
+    <h4>
+      <span ng-if="vm.entity.status == 'viewing'">Continue: </span>
+      <span ng-bind="::(vm.entity.title || vm.entity.show.name || vm.entity.name)"></span>
+    </h4>
+    <button class=" btn btn-secondary btn-xss complete-watching"
+            ng-if="vm.entity.status == 'viewing'" ng-click="vm.markCompleted(vm.entity)">
+      {{'DASHBOARD.MARK_COMPLETED' | translate}}</button>
+    <p ng-show="vm.entity.isEpisode"><span ng-bind="::vm.entity.episodeString"></span></p>
+  </div>
+
+  <div ng-if="vm.entity.status != 'viewing'">
+    <i ng-class="vm.entity.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
+       title="{{vm.entity.inWatchlist ? 'Remove from': 'Add to'}} Watchlist"
+       ng-click="vm.handleWatchlistUpdate(vm.entity.inWatchlist ? 'removed' : 'added', vm.entity)"></i>
+  </div>
+
+  <i class="info-icon ion-ios-information" ng-click="vm.showDetails(vm.entity)"></i>
+  <a class="play-icon ion-ios-play" ng-if="vm.entity.mediaType == 'tvShow'" ng-click="vm.fetchFirstEpisodeAndPlay(vm.entity)"></a>
+  <a class="shuffle-icon ion-shuffle" title="Play random Episode"
+     ng-if="vm.entity.mediaType == 'tvShow' && $root.getSetting('enable-random-episode-button').parsedValue == true"
+     ng-click="vm.fetchRandomEpisodeAndPlay(vm.entity)"></a>
+  <a class="play-icon ion-ios-play" ng-if="vm.entity.mediaType != 'tvShow'" ui-sref="player({videoId: vm.entity.id})"></a>
+  <i ng-if="vm.entity.status == 'completed'" class="status-icon status-{{vm.entity.status}}"></i>
+</div>

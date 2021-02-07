@@ -19,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Películas',
       MY_LIST:'Mi lista',
 			TITLE: 'Panel de control',
+      TITLE_COUNTER_OF: 'of',
 			NEW_RELEASES: 'Nuevas Publicaciones',
 			CONTINUE_WATCHING: 'Continuar Viendo',
 			DISCOVER_SHOWS: 'Descubre Series',
@@ -31,6 +32,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Estás explorando el género:',
 			MARK_COMPLETED: 'Marcar como Completado',
 			NO_TVSHOWS_FOUND: 'No se han encontrado Series',
+      NO_WATCHLIST_FOUND: 'Nada aquí todavía',
 			NO_MOVIES_FOUND: 'No se han encontrado Películas',
       WATCHLIST: 'ver más tarde'
 		},
@@ -38,6 +40,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			RELEASED: 'Publicado',
 			IMDB: 'IMDB',
 			RATING: 'Puntuación',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
 			VOTES: 'Votos',
 			OVERVIEW: 'Sinopsis',
 			GENRE: 'Género',

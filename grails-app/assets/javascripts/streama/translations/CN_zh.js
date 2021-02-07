@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: '电影',
       MY_LIST:'我的片单',
       TITLE: '回到主页',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: '为你推荐',
       NEW_RELEASES: '最新发售',
       CONTINUE_WATCHING: '继续观看',
@@ -32,6 +33,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       LOOKING_AT_GENRE: '你正在查看：',
       MARK_COMPLETED: '标记为看过',
       NO_TVSHOWS_FOUND: '没有任何节目可用',
+      NO_WATCHLIST_FOUND: '這裡什麼都沒有',
       NO_MOVIES_FOUND: '没有任何电影可用',
       WATCHLIST: '我的片单'
     },
@@ -39,6 +41,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
       RELEASED: '发布于',
       IMDB: 'IMDB',
       RATING: '评分',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
       VOTES: '投票',
       OVERVIEW: '简介',
       GENRE: '类型',

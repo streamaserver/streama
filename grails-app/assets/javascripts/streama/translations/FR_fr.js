@@ -11,10 +11,11 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		},
 		DASHBOARD: {
       HOME: 'Accueil',
-      TV_SHOWS: 'Émissions de télévision',
+      TV_SHOWS: 'Séries',
       MOVIES: 'Films',
       MY_LIST:'Ma liste',
 			TITLE: 'Tableau de bord',
+      TITLE_COUNTER_OF: 'of',
 			NEW_RELEASES: 'Nouvelles sorties',
 			CONTINUE_WATCHING: 'Continuer le visionnage',
 			DISCOVER_SHOWS: 'Découvrez des séries',
@@ -28,12 +29,19 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			MARK_COMPLETED: 'Marquer comme fini',
 			NO_TVSHOWS_FOUND: 'Aucune série disponible',
 			NO_MOVIES_FOUND: 'Aucun film disponible',
-      WATCHLIST: 'voir plus tard'
+      NO_WATCHLIST_FOUND: 'Votre liste est vide',
+      WATCHLIST: 'Ma liste'
 		},
 		VIDEO: {
 			RELEASED: 'Sorti',
 			IMDB: 'IMDB',
 			RATING: 'Note',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
 			VOTES: 'Votes',
 			OVERVIEW: 'Résumé',
 			GENRE: 'Genre',
@@ -43,7 +51,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		},
 
 		MESSAGES: {
-			SHARE_SOCKET: 'En créant une nouvelle session, vous serez rediriger vers ce lecteur vidéo avec un identifiant de session unique dans l\'adresse. Partagez cette adresse avec vos amis pour regarder une vidéo de façon synchronisée !',
+			SHARE_SOCKET: 'En créant une nouvelle session, vous serez redirigé vers ce lecteur vidéo avec un identifiant de session unique dans l\'adresse. Partagez cette adresse avec vos amis pour regarder une vidéo de façon synchronisée !',
 			FILE_MISSING: 'Il y\'a un problème avec ce contenu. Il semblerait que vous ayez supprimé le fichier vidéo associé.',
 			CODEC_PROBLEM: 'Il semblerait qu\'il y ai un problème pour lire ce fichier. Cela est probablement dû à un problème de codec. Essayez de convertir votre vidéo en un format compatible HTML5, supprimez le fichier actuellement attaché et réajoutez le. Si le codec est bon, vérifier les logs d\'erreur sur le serveur et l\'URL racine dans les paramètres.',
 			WRONG_BASEPATH: 'Votre vidéo a été ajouté avec un mauvais chemin racine, mais vous naviguez en utilisant "{{basePath}}". Vérifiez que le chemin racine est correct dans les paramètres et qu\'il correspond bien à l\'URL que vous utilisez pour naviguer cette application.'

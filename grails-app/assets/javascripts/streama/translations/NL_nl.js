@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Films',
       MY_LIST:'Mijn lijst',
       TITLE: 'Dashboard',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: 'Aanbevelingen voor u',
       NEW_RELEASES: 'Nieuw uitgebracht',
       CONTINUE_WATCHING: 'Verder kijken',
@@ -32,12 +33,19 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MARK_COMPLETED: 'Markeer als bekeken',
       NO_TVSHOWS_FOUND: 'Geen series beschikbaar',
       NO_MOVIES_FOUND: 'Geen films beschikbaar',
+      NO_WATCHLIST_FOUND: 'Hier nog niets',
       WATCHLIST:'later bekijken'
     },
     VIDEO: {
       RELEASED: 'Uitgebracht op',
       IMDB: 'IMDB',
       RATING: 'Waardering',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
       VOTES: 'Aantal stemmen',
       OVERVIEW: 'Overzicht',
       GENRE: 'Genre',

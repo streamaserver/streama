@@ -2,12 +2,10 @@ package streama
 
 import grails.transaction.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
-import org.grails.web.util.WebUtils
 
 import java.nio.file.Files
 import java.nio.file.Paths
 
-import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE
 
 @Transactional
@@ -48,15 +46,31 @@ class VideoService {
         def previousShowEntry = result.find { it.video instanceof Episode && it.video.show?.id == continueWatchingItem.video.show?.id }
 
         if (!previousShowEntry) {
-          result.add(continueWatchingItem)
+          if(!continueWatchingItem.hasVideoEnded()){
+            result.add(continueWatchingItem)
+          }else{
+            continueWatchingItem.completed = true
+            continueWatchingItem.save()
+            ViewingStatus newViewingStatus = ViewingStatusService.createNewForNextEpisode(continueWatchingItem)
+            if(newViewingStatus){
+              result.add(newViewingStatus)
+            }
+          }
         }
-      } else {
-        result.add(continueWatchingItem)
+      } else{
+        if(!continueWatchingItem.hasVideoEnded()){
+          result.add(continueWatchingItem)
+        }else{
+          continueWatchingItem.completed = true
+          continueWatchingItem.save()
+        }
       }
     }
 
     return result
   }
+
+
 
 
   @Transactional
@@ -97,7 +111,7 @@ class VideoService {
     file.size = Files.size(givenPath)
     def extensionIndex = params.localFile.lastIndexOf('.')
     file.extension = params.localFile[extensionIndex..-1];
-	
+
 	// Subtitle label guessing (by Norwelian)
 	if(settingsService.getValueForName('guess_subtitle_label')){
 	    def regexConfig = grailsApplication.config.streama?.regex
@@ -107,15 +121,26 @@ class VideoService {
 			file.subtitleLabel = matcher[0][1].toUpperCase()
 		}
 	}
-	
-    if(videoInstance.videoFiles.size() == 0){
-      file.isDefault = true
-    }
+
+    file.isDefault = haveSetByDefault (videoInstance, file)
+
 
     file.save(failOnError: true, flush: true)
     videoInstance.addToFiles(file)
     videoInstance.save(failOnError: true, flush: true)
     return file
+  }
+
+  def haveSetByDefault(Video videoInstance, File file){
+    isFirstFile(videoInstance, file) || isFirstSubtitle(videoInstance, file)
+  }
+
+  def isFirstSubtitle(Video videoInstance, File file){
+    videoInstance.getSubtitles().isEmpty() && fileService.allowedSubtitleFormats.contains(file.extension)
+  }
+
+  def isFirstFile(Video videoInstance, File file){
+    videoInstance.videoFiles.isEmpty() && fileService.allowedVideoFormats.contains(file.extension)
   }
 
 

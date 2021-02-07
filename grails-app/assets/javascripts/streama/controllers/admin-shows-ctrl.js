@@ -1,9 +1,12 @@
 
 
-angular.module('streama').controller('adminShowsCtrl', ['$scope', '$state', 'modalService', 'mediaListService', 'TheMovieDB', 'TvShow',
-  function ($scope, $state, modalService, mediaListService, TheMovieDB, TvShow) {
+angular.module('streama')
+  .controller('adminShowsCtrl',
+    ['$scope', '$state', 'modalService', 'mediaListService', '$interval', 'TvShow', 'TheMovieDB',
+    function ($scope, $state, modalService, mediaListService, $interval, TvShow, TheMovieDB) {
 
-	$scope.loading = true;
+	$scope.loading = false;
+	$scope.bigLoading = false;
   $scope.hasMovieDBKey = true;
   $scope.searchText = "Search Show from collection or TheMovieDB...";
 

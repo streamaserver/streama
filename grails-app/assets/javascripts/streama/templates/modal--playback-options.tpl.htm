@@ -24,11 +24,16 @@
 
       <div>
         <h4>{{'VIDEO.SUBTITLE_SIZE' | translate}}</h4>
-        <ul class="subtitle-size-picker">
+        <ul class="subtitle-size-picker" ng-if="!vm.playerOptions.hasCustomSubtitleSize">
           <li class="subtitle-size-lg" ng-class="{'active': vm.playerOptions.subtitleSize == 'lg'}" ng-click="vm.changeSubtitleSize('lg')">A</li>
           <li class="subtitle-size-md" ng-class="{'active': vm.playerOptions.subtitleSize == 'md'}" ng-click="vm.changeSubtitleSize('md')">A</li>
           <li class="subtitle-size-sm" ng-class="{'active': vm.playerOptions.subtitleSize == 'sm'}" ng-click="vm.changeSubtitleSize('sm')">A</li>
         </ul>
+        <div>
+          <label><input type="checkbox" ng-model="vm.playerOptions.hasCustomSubtitleSize"> Custom Size?</label>
+          <input ng-if="vm.playerOptions.hasCustomSubtitleSize" class="form-control input-sm" type="text"
+                 placeholder="Custom Font Size (in px)" ng-model="vm.playerOptions.customSubtitleSize">
+        </div>
       </div>
     </div>
     <div class="col-md-6">

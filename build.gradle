@@ -14,7 +14,7 @@ buildscript {
     }
 }
 
-version "1.8.0"
+version "1.10.1"
 group "streama"
 
 
@@ -80,20 +80,55 @@ dependencies {
     compile "org.hibernate:hibernate-core:5.1.2.Final"
     compile "org.hibernate:hibernate-ehcache:5.1.2.Final"
     compile 'org.grails.plugins:spring-security-core:3.0.4'
-    compile "org.grails.plugins:mail:2.0.0"
+    compile "org.grails.plugins:mail:3.0.0"
     compile "org.grails.plugins:grails-spring-websocket:2.4.1"
     compile "eu.bitwalker:UserAgentUtils:1.21"
+    compile "org.grails.plugins:spring-security-ldap:3.0.2"
 
     // runtime
     runtime "com.h2database:h2"
     runtime 'mysql:mysql-connector-java:5.1.36'
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
+    runtime 'javax.xml.bind:jaxb-api:2.3.0'
 
     // custom
     console "org.grails:grails-console"
     profile "org.grails.profiles:angular"
-    
-    // test
+    runtime "org.grails.plugins:async:4.0.0"
+    compile ("org.apache.tika:tika-parsers:1.12") {
+        exclude group: 'org.ow2.asm', module: 'asm'
+        exclude group: 'com.healthmarketscience.jackcess'
+        exclude group: 'net.sourceforge.jmatio'
+        exclude group: 'org.tukaani', module: 'xz'
+        exclude group: 'org.apache.pdfbox'
+        exclude group: 'org.apache.poi'
+        exclude group: 'org.codelibs', module: 'jhighlight'
+        exclude group: 'com.pff', module: 'java-libpst'
+        exclude group: 'com.github.junrar'
+        exclude group: 'org.apache.cxf'
+        exclude group: 'org.apache.opennlp'
+        exclude group: 'de.l3s.boilerpipe'
+        exclude group: 'com.rometools'
+        exclude group: 'org.bouncycastle'
+        exclude group: 'org.ccil.cowan.tagsoup'
+        exclude group: 'com.googlecode.json-simple'
+        exclude group: 'com.googlecode.juniversalchardet'
+        exclude group: 'edu.ucar', module: 'netcdf4'
+        exclude group: 'edu.ucar', module: 'grib'
+        exclude group: 'edu.ucar', module: 'cdm'
+        exclude group: 'edu.ucar', module: 'httpservices'
+        exclude group: 'org.apache.commons', module: 'commons-csv'
+        exclude group: 'org.apache.commons', module: 'commons-exec'
+        exclude group: 'org.apache.sis.storage'
+        exclude group: 'org.apache.sis.core'
+        exclude group: 'org.json', module: 'json'
+        exclude group: 'com.google.code.gson'
+        exclude group: 'org.apache.commons', module: 'commons-compress'
+        exclude group: 'org.opengis', module: 'geoapi'
+        exclude group: 'org.apache.james'
+    }
+
+  // test
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testCompile "org.grails:grails-datastore-rest-client"

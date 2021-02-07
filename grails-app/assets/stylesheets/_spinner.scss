@@ -2,7 +2,7 @@
   width: 38px;
   text-align: center;
   display: inline-block;
-  
+
   &.big{
     position: fixed;
     top: 50%;
@@ -23,7 +23,7 @@
   width: 8px;
   height: 8px;
   background-color: rgba(255, 255, 255, 0.78);
-  
+
   float: left;
   margin-right: 4px;
   border-radius: 100%;
@@ -39,6 +39,24 @@
 .spinner .bounce2 {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
+}
+
+.spinner.big-loading{
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+
+  i{
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -0.5em;
+    margin-top: -0.5em;
+  }
 }
 
 @-webkit-keyframes sk-bouncedelay {

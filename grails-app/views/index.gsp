@@ -13,6 +13,8 @@
         }
     </style>
 
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css">
     <asset:stylesheet src="vendor.css"/>
     <asset:stylesheet src="application.css"/>
     <g:linkRelIconSetting setting="${Settings.findByName('favicon').value}"></g:linkRelIconSetting>
@@ -40,6 +42,7 @@
 
   <g:render template="/templates/footer"></g:render>
 
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <asset:javascript src="vendor.js" />
     <asset:javascript src="streama/streama.js" />
 

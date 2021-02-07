@@ -1,5 +1,5 @@
 <%@ page import="streama.Settings" %>
-<header class="main navbar-fixed-top" ng-if="!isCurrentState('player')" streama-header-directive>
+<header class="main navbar-fixed-top" ng-if="!isCurrentState('player')">
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
       <g:imgSetting setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>
@@ -16,9 +16,15 @@
     <div class="collapse navbar-collapse" id="navbar-collapse-nav">
       <ul class="nav navbar-nav">
         <li><a ng-click="changeDashType('home')" ng-class="{active: (isDashType('home') || isDashType(undefined))}">{{'DASHBOARD.HOME' | translate}}</a></li>
-        <li><a ng-click="changeDashType('discover-shows')" ng-class="{active: (isDashType('discover-shows'))}">{{'DASHBOARD.TV_SHOWS' | translate}}</a></li>
-        <li><a ng-click="changeDashType('discover-movies')" ng-class="{active: (isDashType('discover-movies'))}">{{'DASHBOARD.MOVIES' | translate}}</a></li>
-        <li><a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'DASHBOARD.MY_LIST' | translate}}</a></li>
+        <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
+          <a ng-click="changeDashType('discover-shows')" ng-class="{active: (isDashType('discover-shows'))}">{{'DASHBOARD.TV_SHOWS' | translate}}</a>
+        </li>
+        <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
+          <a ng-click="changeDashType('discover-movies')" ng-class="{active: (isDashType('discover-movies'))}">{{'DASHBOARD.MOVIES' | translate}}</a>
+        </li>
+        <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue && $root.getSetting('hide-mylist-button').parsedValue != true">
+          <a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'DASHBOARD.MY_LIST' | translate}}</a>
+        </li>
         <li class="browse-genres" ng-if="isCurrentState('dash') && genres.length && !$root.currentProfile.isChild">
           <a ng-class="{active: selectedGenre}" ng-click="toggleGenreMenu()">
             <span ng-if="selectedGenre">
@@ -53,7 +59,7 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
 
-      <li ng-if="isCurrentState('dash')">
+      <li ng-if="isCurrentState('dash') && $root.getSetting('hide-dash-search').parsedValue != true">
         <div class="dash-search form-group has-feedback">
           <input type="text" placeholder="Search.." class="form-control input-xs" ng-model="dashSearch"
                  typeahead-append-to-body="true" uib-typeahead="(item.title || item.name) for item in searchMedia($viewValue)"
@@ -62,7 +68,9 @@
         </div>
       </li>
       <sec:ifLoggedIn>
-        <li><a ui-sref="dash">{{'DASHBOARD.TITLE' | translate}}</a></li>
+        <li ng-if="$root.getSetting('hide-dash-button').parsedValue != true">
+          <a ui-sref="dash">{{'DASHBOARD.TITLE' | translate}}</a>
+        </li>
       </sec:ifLoggedIn>
 
       <sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
@@ -97,7 +105,7 @@
                 <a ui-sref="sub-profiles">{{'MANAGE_SUB_PROFILES' | translate}}</a>
               </li>
               <li class="divider"></li>
-              <li role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>
+              <li ng-if="!$root.getSetting('hide_help_faq').parsedValue" role="menuitem"><a ui-sref="help">{{'HELP_FAQ' | translate}}</a></li>
               <li role="menuitem"><a ui-sref="userSettings">{{'PROFILE_SETTINGS' | translate}}</a></li>
               <li class="divider"></li>
               <li><g:link uri="/logoff">{{'LOGOUT' | translate}}</g:link></li>

@@ -15,6 +15,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     },
     DASHBOARD: {
       TITLE: 'Főoldal',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: 'Ajánlatok',
       NEW_RELEASES: 'Nemrég megjelent',
       CONTINUE_WATCHING: 'Megtekintés folytatása',
@@ -29,12 +30,19 @@ angular.module('streama.translations').config(function ($translateProvider) {
       LOOKING_AT_GENRE: 'Ezt a műfajt nézi jelenleg:',
       MARK_COMPLETED: 'Megjelölés megnézettként',
       NO_TVSHOWS_FOUND: 'Nincsenek elérhető TV sorozatok ',
+      NO_WATCHLIST_FOUND: 'Még nincs itt',
       NO_MOVIES_FOUND: 'Nincsenek elérhető filmek'
     },
     VIDEO: {
       RELEASED: 'Megjelent',
       IMDB: 'IMDB',
       RATING: 'Értékelés',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
       VOTES: 'Szavazatok',
       OVERVIEW: 'Összefoglalás',
       GENRE: 'Műfaj',

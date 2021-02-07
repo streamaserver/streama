@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Films',
       MY_LIST:'Min liste',
 			TITLE: 'Betjeningspanel',
+      TITLE_COUNTER_OF: 'of',
 			RECOMMENDATIONS: 'Foreslået til dig',
 			NEW_RELEASES: 'Nye Udgivelser',
 			CONTINUE_WATCHING: 'Se videre',
@@ -31,6 +32,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			LOOKING_AT_GENRE: 'Du ser på genren:',
 			MARK_COMPLETED: 'Marker færdigt',
 			NO_TVSHOWS_FOUND: 'Ingen TV-Serier tilgængelig',
+      NO_WATCHLIST_FOUND: 'Intet her endnu',
 			NO_MOVIES_FOUND: 'Ingen Film tilgængelig',
       WATCHLIST: 'se senere'
 		},
@@ -38,6 +40,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			RELEASED: 'Udgivet',
 			IMDB: 'IMDB',
 			RATING: 'Bedømmelse',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
 			VOTES: 'Stemmer',
 			OVERVIEW: 'Oversigt',
 			GENRE: 'Genre',

@@ -61,13 +61,11 @@
               <span class="ion-folder"></span>
               {{ file.name }}
             </span>
-
                 <span ng-if="!file.directory">
               <span class="ion-document"></span>
               {{ file.name }}
             </span>
               </td>
-
               <td>
               <span class="btn btn-success btn-xs" ng-click="addLocalFile(file.path)" ng-if="!file.directory">
                 Choose
@@ -131,26 +129,29 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
-          <th>Type</th>
-          <th>Label</th>
           <th>Language</th>
-          <th style="width: 68px;"></th>
+          <th>Label</th>
+          <th class="align-th-action">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="file in video.subtitles">
+        <tr ng-repeat="file in video.subtitles | orderBy: 'id'">
           <td>{{file.id}}</td>
-          <td>{{file.originalFilename}}</td>
-          <td>{{file.contentType}}</td>
-          <th>
-            <input class="form-control input-xs" value="{{file.subtitleLabel}}" placeholder="Country" ng-change="subtitleLabel" ng-model="file.subtitleLabel"></input>
-          </th>
-          <th>
-            <input class="form-control input-xs" value="{{file.subtitleSrcLang}}" placeholder="ISO-3166 Country Code" ng-change="subtitleSrcLang" ng-model="file.subtitleSrcLang"></input>
-          </th>
-          <td style="padding: 6px;">
-            <button title="Delete file" class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
-            <button title="" class="btn btn-xs btn-primary" ng-click="saveChanges(file)" ><i class="ion-checkmark"></i></button>
+          <td class="hide-overflowing-name text-max-width-375">{{file.originalFilename}}</td>
+          <td>
+            <span ng-if="!isEditing(file)">{{file.subtitleSrcLang}}</span>
+            <input ng-if="isEditing(file)" class="form-control input-xs" value="{{file.subtitleSrcLang}}" placeholder="Language" ng-model="file.subtitleSrcLang"/>
+          </td>
+          <td>
+            <span ng-if="!isEditing(file)">{{file.subtitleLabel}}</span>
+            <input ng-if="isEditing(file)" class="form-control input-xs" value="{{file.subtitleLabel}}" placeholder="Label" ng-model="file.subtitleLabel"/>
+          </td>
+          <td id="flexible-control-buttons">
+            <button title="Set as default" ng-class="{'btn btn-xs btn-success': file.isDefault, 'btn btn-xs btn-primary': !file.isDefault}" ng-click="setAsDefault(file)">{{file.isDefault ? 'standard' : 'set as standard'}}</button>
+            <a class="btn btn-xs btn-primary management-btn" href="{{generateDownloadUrl(file.id)}}" download>download</a>
+            <button ng-if="!isEditing(file)" class="btn btn-xs management-btn" ng-click="toggleEdit(file)" ><i class="ion-edit"></i></button>
+            <button ng-if="isEditing(file)" title="Delete file" class="btn btn-xs btn-danger management-btn" ng-click="removeSubtitle(file)"><i class="ion-trash-a"></i></button>
+            <button ng-if="isEditing(file)" title="Save change" class="btn btn-xs btn-success management-btn" ng-click="saveChanges(file)"><i class="ion-checkmark"></i></button>
           </td>
         </tr>
         </tbody>
@@ -160,6 +161,7 @@
 </div>
 
 <div class="modal-footer">
+  <button class="btn btn-secondary" ng-click="manageOpenSubtitle(video)">Add from Opensubtitles</button>
   <button class="btn btn-default" ng-click="cancel()">Close</button>
 </div>
 

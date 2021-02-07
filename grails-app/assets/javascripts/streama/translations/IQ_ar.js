@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'أفلام',
       MY_LIST:'قائمتي',
 			TITLE: 'الواجهة الرئيسية',
+      TITLE_COUNTER_OF: 'of',
 			RECOMMENDATIONS: 'افضل الافلام',
 			NEW_RELEASES: 'المصدرة حديثا',
 			CONTINUE_WATCHING: 'الاستمرار في المشاهدة',
@@ -32,12 +33,19 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			MARK_COMPLETED: 'اكملت المشاهدة',
 			NO_TVSHOWS_FOUND: 'لايوجد عروض تلفزيونية',
 			NO_MOVIES_FOUND: 'لا يوجد افلام',
+      NO_WATCHLIST_FOUND: 'لا يوجد شيء هنا حتى الآن',
       WATCHLIST: 'عرض لاحقا'
 		},
 		VIDEO: {
 			RELEASED: 'الاصدار',
 			IMDB: 'IMDB',
 			RATING: 'التقييم',
+      STATUS: 'Status',
+      STATUS_VALUE: {
+        'completed': 'Completed',
+        'viewing': 'Viewing',
+        'unviewed': 'Unviewed'
+      },
 			VOTES: 'التصويت',
 			OVERVIEW: 'نظرة عامة',
 			GENRE: 'الصنف',

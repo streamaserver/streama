@@ -2,6 +2,8 @@ package streama
 
 import grails.converters.JSON
 
+import java.beans.Transient
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -58,6 +60,7 @@ class TvShowController {
     respond tvShow, [status: (data.id ? OK : CREATED)]
   }
 
+  @Transactional
   def show(TvShow tvShow) {
     JSON.use('fullShow') {
       respond tvShow, [status: OK]

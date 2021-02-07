@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Фильмы',
       MY_LIST:'Мой список',
 			TITLE: 'Главная',
+      TITLE_COUNTER_OF: 'of',
 			RECOMMENDATIONS: 'Рекомендовано для вас',
 			NEW_RELEASES: 'Новое на сайте',
 			CONTINUE_WATCHING: 'Продолжить просмотр',
@@ -32,12 +33,19 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			MARK_COMPLETED: 'Уже просмотрено!',
 			NO_TVSHOWS_FOUND: 'ТВ-шоу пока недоступно',
 			NO_MOVIES_FOUND: 'Кино пока недоступно',
+      NO_WATCHLIST_FOUND: 'Здесь пока ничего',
       WATCHLIST: 'Посмотреть позже'
 		},
 		VIDEO: {
 			RELEASED: 'Дата выхода',
 			IMDB: 'IMDB',
 			RATING: 'Рейтинг',
+      STATUS: 'положение дел',
+      STATUS_VALUE: {
+        'completed': 'Завершенный',
+        'viewing': 'просмотр',
+        'unviewed': 'непросмотренный'
+      },
 			VOTES: 'Голосов',
 			OVERVIEW: 'Описание',
 			GENRE: 'Жанр',

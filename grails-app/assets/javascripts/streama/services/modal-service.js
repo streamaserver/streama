@@ -15,6 +15,7 @@ function modalService($uibModal, $state) {
 		userCreateModal: userCreateModal,
 		userInviteModal: userInviteModal,
 		fileManagerModal: fileManagerModal,
+    openSubtitlesManagerModal: openSubtitlesManagerModal,
 		newReleaseModal: newReleaseModal,
 		mediaDetailModal: mediaDetailModal,
 		openPlaybackOptions: openPlaybackOptions,
@@ -205,6 +206,25 @@ function modalService($uibModal, $state) {
 		});
 	}
 
+  function openSubtitlesManagerModal (video, callback) {
+    var modalInstance = $uibModal.open({
+      templateUrl: '/streama/modal--manage-opensubtitles.htm',
+      controller: 'modalOpensubtitleCtrl',
+      size: 'lg',
+      backdrop: 'static',
+      keyboard: false,
+      resolve: {
+        video: function () {
+          return video;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (data) {
+      (callback || angular.noop)(data);
+    });
+  }
+
 	function newReleaseModal (media, type, episodes, callback) {
 		var modalInstance = $uibModal.open({
 			templateUrl: '/streama/modal--new-release.htm',
@@ -290,7 +310,7 @@ function modalService($uibModal, $state) {
 
     return modalInstance.result;
   }
-  
+
   function openPlaybackOptions(playerOptions) {
 		var modalInstance = $uibModal.open({
 			templateUrl: '/streama/modal--playback-options.htm',

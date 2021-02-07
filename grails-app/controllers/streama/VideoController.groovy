@@ -124,6 +124,7 @@ class VideoController {
     def file = uploadService.upload(request)
 
     if (file != null) {
+      file.isDefault = videoService.haveSetByDefault(videoInstance, file)
       videoInstance.addToFiles(file)
       videoInstance.save flush: true, failOnError: true
       respond file
@@ -146,6 +147,10 @@ class VideoController {
     }
 
     video.removeFromFiles(file)
+    if (!videoService.isFirstSubtitle(video, file)) {
+      def subtitle = video.getSubtitles().min { it.id }
+      subtitle?.isDefault = true
+    }
     video.save flush: true, failOnError: true
 
     fileService.fullyRemoveFile(file)
@@ -162,6 +167,13 @@ class VideoController {
     if (!video || !file) {
       render status: NOT_FOUND
       return
+    }
+
+    if (video.videoFiles.size() == 0 && fileService.allowedVideoFormats.contains(file.extension)) {
+      file.isDefault = true
+    }
+    if (videoService.isFirstSubtitle(video, file)) {
+      file.isDefault = true
     }
 
     video.addToFiles(file)
@@ -198,9 +210,13 @@ class VideoController {
     if (matcher.getCount()) {
       file.extension = matcher[0][0]
     }
-    if(videoInstance.videoFiles.size() == 0){
+    if (videoInstance.videoFiles.size() == 0 && fileService.allowedVideoFormats.contains(file.extension)) {
       file.isDefault = true
     }
+    if (videoService.isFirstSubtitle(videoInstance, file)) {
+      file.isDefault = true
+    }
+
     file.save()
     videoInstance.addToFiles(file)
     respond file
@@ -215,6 +231,27 @@ class VideoController {
       return
     }
     respond result
+  }
+
+  @Transactional
+  def markAsUnviewed(Video videoInstance){
+    ViewingStatus viewingStatus = videoInstance.getViewingStatus()
+    if(!viewingStatus){
+      return
+    }
+    viewingStatus.delete()
+    render status: 200
+  }
+
+  @Transactional
+  def markCompleted(Video videoInstance){
+    ViewingStatus viewingStatus = videoInstance.getViewingStatus()
+    if(!viewingStatus){
+      return
+    }
+    viewingStatus.completed = true
+    viewingStatus.save flush:true
+    respond viewingStatus, [status: OK]
   }
 
 }
