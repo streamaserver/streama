@@ -128,10 +128,11 @@ angular.module('streama').controller('modalFileCtrl', [
           apiService.video.removeFile($scope.video.id, file.id).then(function () {
             _.remove($scope.video.subtitles, {id: file.id});
             alertify.success('Subtitles deleted.');
-          }).then(() => apiService.subtitle.refreshSubtitles($scope.video.id).then(function (data) {
+          }).then(function (){
+            apiService.subtitle.refreshSubtitles($scope.video.id).then(function (data) {
               $scope.video.subtitles = data.data;
-            })
-          );
+            });
+          });
         }
       });
 
@@ -150,7 +151,9 @@ angular.module('streama').controller('modalFileCtrl', [
 
     function setAsDefault(file) {
       apiService.subtitle.setDefault(file.id, $scope.video.id).then(function (data) {
-        video.subtitles.forEach(s => s.isDefault = false);
+        video.subtitles.forEach(function (s){
+          s.isDefault = false;
+        });
         file.isDefault = true;
         alertify.success('Successfully set by default');
       });
