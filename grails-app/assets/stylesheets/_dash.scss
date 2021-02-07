@@ -5,6 +5,11 @@
   h3{
     font-size: 16px;
     text-transform: uppercase;
+
+    .counter{
+      text-transform: none;
+      font-weight: 100;
+    }
   }
 
   .genre-display{
