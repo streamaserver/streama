@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: '电影',
       MY_LIST:'我的片单',
       TITLE: '回到主页',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: '为你推荐',
       NEW_RELEASES: '最新发售',
       CONTINUE_WATCHING: '继续观看',

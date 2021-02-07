@@ -20,6 +20,7 @@ angular.module("streama.translations").config(function ($translateProvider) {
       MOVIES: "Filmler",
       MY_LIST: "Listem",
       TITLE: "Sayfam",
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: "Senin için öneriler",
       NEW_RELEASES: "Yeni Çıkanlar",
       CONTINUE_WATCHING: "İzlemeye devam et",

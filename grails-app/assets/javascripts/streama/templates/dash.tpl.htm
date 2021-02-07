@@ -116,7 +116,7 @@
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_SHOWS' | translate}}</span>
       <span ng-show="$root.selectedGenre">{{::$root.selectedGenre.name}} TV Shows</span>
-      <span class="counter">({{vm.tvShow.list.length}} of {{vm.tvShow.total}})</span>
+      <span class="counter">({{vm.tvShow.list.length}} {{'DASHBOARD.TITLE_COUNTER_OF' | translate}} {{vm.tvShow.total}})</span>
     </h3>
 
     <div class="row dash-filter">
@@ -172,7 +172,7 @@
     <h3>
       <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_MOVIES' | translate}}</span>
       <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>
-      <span class="counter">({{vm.movie.list.length}} of {{vm.movie.total}})</span>
+      <span class="counter">({{vm.movie.list.length}} {{'DASHBOARD.TITLE_COUNTER_OF' | translate}} {{vm.movie.total}})</span>
      </h3>
 
     <div class="row dash-filter" ng-hide="!vm.movie.filter && !vm.movie.list.length">
@@ -228,7 +228,7 @@
     <h3>
       <span ng-show="!$root.selectedGenre">{{'DASHBOARD.DISCOVER_OTHER_VIDEOS' | translate}}</span>
       <span ng-show="$root.selectedGenre">{{::$root.selectedGenre.name}} Videos</span>
-      <span class="counter">({{vm.genericVideo.list.length}} of {{vm.genericVideo.total}})</span>
+      <span class="counter">({{vm.genericVideo.list.length}} {{'DASHBOARD.TITLE_COUNTER_OF' | translate}} {{vm.genericVideo.total}})</span>
      </h3>
 
     <div class="row dash-filter">

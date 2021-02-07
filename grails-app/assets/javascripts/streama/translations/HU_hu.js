@@ -15,6 +15,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     },
     DASHBOARD: {
       TITLE: 'Főoldal',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: 'Ajánlatok',
       NEW_RELEASES: 'Nemrég megjelent',
       CONTINUE_WATCHING: 'Megtekintés folytatása',

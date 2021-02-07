@@ -19,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Films',
       MY_LIST:'La mia lista',
 			TITLE: 'Cruscotto',
+      TITLE_COUNTER_OF: 'of',
 			NEW_RELEASES: 'Nuove uscite',
 			CONTINUE_WATCHING: 'Continuare a guardare',
 			DISCOVER_SHOWS: 'Scopri spettacoli',

@@ -19,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Películas',
       MY_LIST:'Mi lista',
 			TITLE: 'Panel de control',
+      TITLE_COUNTER_OF: 'of',
 			NEW_RELEASES: 'Nuevas Publicaciones',
 			CONTINUE_WATCHING: 'Continuar Viendo',
 			DISCOVER_SHOWS: 'Descubre Series',

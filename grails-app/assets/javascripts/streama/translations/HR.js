@@ -15,6 +15,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
         MOVIES: "Filmovi",
         MY_LIST: "Moj popis",
         TITLE: "Nadzorna ploča",
+        TITLE_COUNTER_OF: 'of',
         RECOMMENDATIONS: "Preporuke za vas",
         NEW_RELEASES: "Nova izdanja",
         CONTINUE_WATCHING: "Nastavite gledati",
