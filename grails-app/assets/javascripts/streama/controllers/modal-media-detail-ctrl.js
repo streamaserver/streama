@@ -103,7 +103,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     }
 
     function addToWatchlist(item) {
-      WatchlistEntry.create({}, item).$promise.then(function (response) {
+      WatchlistEntry.create({id: item.id, mediaType: item.mediaType}).$promise.then(function (response) {
         var data = response;
         $scope.media = data.video ? data.video : data.tvShow;
         $scope.watchlistEntry = data;
@@ -125,7 +125,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     }
 
     function markAsUnviewed() {
-      Video.markAsUnviewed({id: $scope.media.id}).then(function () {
+      Video.markAsUnviewed({id: $scope.media.id}).$promise.then(function () {
         $scope.media.status = 'unviewed';
         $rootScope.$broadcast('video.markAsUnviewed', {id: $scope.media.id});
       });

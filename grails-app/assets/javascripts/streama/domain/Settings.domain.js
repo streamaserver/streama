@@ -12,7 +12,8 @@ angular.module('streama').factory('Settings', function ($resource) {
     },
     "updateMultiple": {
       method: "POST",
-      url:  baseUrl + 'updateMultiple.json'
+      url:  baseUrl + 'updateMultiple.json',
+      isArray: true
     },
     "list": {
       method: "GET",

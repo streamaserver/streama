@@ -150,7 +150,7 @@ angular.module('streama').controller('modalFileCtrl', [
     }
 
     function setAsDefault(file) {
-      Subtitle.setDefault(file.id, $scope.video.id).then(function (data) {
+      Subtitle.setDefault({id: file.id, videoId: $scope.video.id}).$promise.then(function (data) {
         video.subtitles.forEach(function (s){
           s.isDefault = false;
         });

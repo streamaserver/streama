@@ -20,7 +20,8 @@ angular.module('streama').factory('TvShow', function ($resource) {
     },
     "episodesForTvShow": {
       method: "GET",
-      url:  baseUrl + 'episodesForTvShow.json'
+      url:  baseUrl + 'episodesForTvShow.json',
+      isArray: true
     },
     "list": {
       method: "GET",

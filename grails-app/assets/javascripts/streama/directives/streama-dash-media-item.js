@@ -24,14 +24,14 @@ function controller(modalService, $rootScope, $state, $scope, Dash, WatchlistEnt
   $scope.$on('video.markAsUnviewed', onVideoMarkAsUnviewed);
 
   function fetchFirstEpisodeAndPlay(tvShow) {
-    Dash.firstEpisodeForShow(tvShow.id).$promise.then(function (response) {
+    Dash.firstEpisodeForShow({id: tvShow.id}).$promise.then(function (response) {
       $state.go('player', {videoId: response.id});
     });
   }
 
 
   function fetchRandomEpisodeAndPlay(tvShow) {
-    Dash.randomEpisodeForShow(tvShow.id).$promise.then(function (response) {
+    Dash.randomEpisodeForShow({id: tvShow.id}).$promise.then(function (response) {
       $state.go('player', {videoId: response.id});
     });
   }
@@ -58,7 +58,7 @@ function controller(modalService, $rootScope, $state, $scope, Dash, WatchlistEnt
   }
 
   function addToWatchlist(item) {
-    WatchlistEntry.create(item).$promise.then(function (response) {
+    WatchlistEntry.create({id: item.id, mediaType: item.mediaType}).$promise.then(function (response) {
       $rootScope.$broadcast('video.updateWatchlist', {action: 'added', response: response, media: item});
     });
   }

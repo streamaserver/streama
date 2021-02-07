@@ -35,18 +35,18 @@ angular.module('streama').controller('modalOpensubtitleCtrl', [
     $scope.cancel = cancel;
 
     function getSubtitles() {
-      Subtitle.getOpensubtitles(video, $scope.videoName, $scope.opensubtitleLanguages.defaultValue, $scope.searchByHash).then(function (data) {
-        $scope.opensubtitles = data.data;
+      Subtitle.getOpensubtitles({episode: video.episode_number, query: $scope.videoName, season: video.season_number, subLanguageId: $scope.opensubtitleLanguages.defaultValue, videoId: video.id, searchByHash: $scope.searchByHash}).$promise.then(function (data) {
+        $scope.opensubtitles = data;
         $scope.isSearch = true;
         $scope.colMd = 6;
-        $scope.numberOfResults = data.data.length;
+        $scope.numberOfResults = data.length;
       }, function (data) {
-        alertify.error(data.data.message);
+        alertify.error(data.message);
       });
     }
 
     function uploadSubtitles(opensubtitle) {
-      Subtitle.uploadOpensubtitles(opensubtitle, video.id).then(function (data) {
+      Subtitle.uploadOpensubtitles({subFileName: opensubtitle.subFileName, subDownloadLink: opensubtitle.subDownloadLink, subLang: opensubtitle.languageName, videoId: video.id}).$promise.then(function (data) {
         alertify.success('Successfully loaded');
       }, function () {
         alertify.log('Failed to load file. Try again.');
@@ -54,8 +54,8 @@ angular.module('streama').controller('modalOpensubtitleCtrl', [
     }
 
     function cancel() {
-      Subtitle.refreshSubtitles($scope.video.id).then(function (data) {
-        $scope.video.subtitles = data.data;
+      Subtitle.refreshSubtitles({videoId: $scope.video.id}).$promise.then(function (data) {
+        $scope.video.subtitles = data;
       });
       $uibModalInstance.dismiss('cancel');
     }

@@ -3,22 +3,18 @@ angular.module('streama').factory('WatchlistEntry', function ($resource) {
 
   var baseUrl = 'watchlistEntry/';
 
-  var params = {};
-
-  var actions = {
+  return $resource('NO_CRUD', {}, {
     "create": {
       method: "POST",
-      url:  baseUrl + 'save.json'
+      url:  'watchlistEntry/create'
     },
     "delete": {
       method: "DELETE",
-      url: baseUrl + 'delete.json'
+      url: 'watchlistEntry/delete'
     },
     "list": {
       method: "GET",
-      url:  baseUrl + 'list.json'
+      url:  'watchlistEntry/list'
     }
-  };
-
-  return $resource(baseUrl, params, actions);
+  });
 });

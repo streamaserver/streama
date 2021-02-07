@@ -16,7 +16,7 @@ class ViewingStatusService {
     Double runtime = params.getDouble('runtime')
     ViewingStatus viewingStatus
 
-    if (!video || !currentTime) {
+    if (!video || currentTime == null) {
       return [hasError: true, code: NOT_ACCEPTABLE]
     }
 

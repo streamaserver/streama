@@ -4,11 +4,12 @@ angular.module('streama').factory('Subtitle', function ($resource) {
   return $resource('NO CRUD', {}, {
     "setDefault":{
       method:"GET",
-      url: 'subtitles/setDefaul'
+      url: 'subtitles/setDefault'
     },
     "getOpensubtitles": {
       method: "GET",
-      url:  'subtitles/get'
+      url:  'subtitles/get',
+      isArray: true
     },
     "uploadOpensubtitles": {
       method: "GET",

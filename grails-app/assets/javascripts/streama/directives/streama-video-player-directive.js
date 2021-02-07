@@ -105,8 +105,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
             }
             //Autoloads sub#0 if the setting is true on Admin>Settings, and if the subtitle exists (by Norwelian)
             var sub_auto_load_value = false;
-            Settings.list().then(function(data){
-                data['data'].forEach(function callback(currentValue, index, array) {
+            Settings.list().$promise.then(function(data){
+                _.forEach(data, function callback(currentValue, index, array) {
                     if(currentValue.name == "subtitle_auto_load")
                         sub_auto_load_value = currentValue.parsedValue;
                 });

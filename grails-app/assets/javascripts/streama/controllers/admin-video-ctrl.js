@@ -49,7 +49,7 @@ angular.module('streama').controller('adminVideoCtrl', [
           delete movie.id;
           movie.apiId = apiId;
 
-          Movie.save({}, movie).then(function (data) {
+          Movie.save({}, movie).$promise.then(function (data) {
 						if(redirect){
 							$state.go('admin.movie', {movieId: data.id});
 						}

@@ -37,7 +37,7 @@ angular.module('streama')
 	}
 
 	function searchMedia(query) {
-		return Dash.searchMedia(query).then(function (data) {
+		return Dash.searchMedia({query: query}).$promise.then(function (data) {
 			return data.movies.concat(data.shows);
 		});
 	}

@@ -9,10 +9,9 @@ angular.module('streama')
       $scope.syncImages = syncImages;
 
       Settings.list().$promise.then(function (response) {
-        var data = response.data;
-        $scope.settings = data;
+        $scope.settings = response;
 
-        _.forEach(data, function (setting) {
+        _.forEach(response, function (setting) {
           setting.description = $sce.trustAsHtml(Autolinker.link(setting.description, { newWindow: "true" } ));
         });
         $scope.loading = false;

@@ -16,7 +16,7 @@ angular.module('streama').directive('adminEpisode', [
 
       $scope.reportsForEpisode= function () {
         Report.reportsById({videoId: $scope.episode.id}).$promise.then(function (response) {
-          $scope.episode.reportCount = response.data.reportCount;
+          $scope.episode.reportCount = response.reportCount;
         });
       }();
 

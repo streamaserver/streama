@@ -3,7 +3,11 @@
 angular.module('streama').factory('Video', function ($resource) {
   var baseUrl = 'video/';
 
-  return $resource(baseUrl, {}, {
+  return $resource('NO_CRUD', {}, {
+    "get":{
+      method:"GET",
+      url: baseUrl + 'show'
+    },
     "show":{
       method:"GET",
       url: baseUrl + 'show'

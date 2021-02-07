@@ -18,7 +18,7 @@ class WatchlistEntryController {
     User currentUser = springSecurityService.currentUser
     Long profileId = request.getHeader('profileId')?.toLong()
     Profile currentProfile = Profile.findById(profileId)
-    def params = request.JSON.params
+    def params = request.JSON
     WatchlistEntry watchlistEntry
 
     if(params.mediaType == "tvShow"){
