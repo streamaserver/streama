@@ -1,60 +1,64 @@
+//= wrapped
 
 angular.module('streama').factory('Video', function ($resource) {
-
   var baseUrl = 'video/';
 
-  var params = {};
-
-  var actions = {
+  return $resource(baseUrl, {}, {
     "show":{
       method:"GET",
-      url: baseUrl + 'show.json'
+      url: baseUrl + 'show'
     },
     "save": {
       method: "POST",
-      url:  baseUrl + 'save.json'
+      url:  baseUrl + 'save'
     },
     "delete": {
       method: "DELETE",
-      url: baseUrl + 'delete.json'
+      url: baseUrl + 'delete'
     },
     "list": {
       method: "GET",
       isArray: true,
-      url:  'video.json'
+      url:  'video'
     },
     "dash":{
       method:"GET",
-      url: baseUrl + 'dash.json'
+      url: baseUrl + 'dash'
     },
     "removeFile":{
       method:"GET",
-      url: baseUrl + 'removeFile.json'
+      url: baseUrl + 'removeFile'
     },
     "addFile":{
       method:"GET",
-      url:  baseUrl + 'addFile.json'
+      url:  baseUrl + 'addFile'
     },
     "refetch":{
       method:"GET",
       isArray: true,
-      url:  baseUrl + 'refetch.json'
+      url:  baseUrl + 'refetch'
     },
     "addExternalUrl":{
       method:"GET",
-      url: baseUrl + 'addExternalUrl.json'
+      url: baseUrl + 'addExternalUrl'
+    },
+    "markAsUnviewed":{
+      method:"GET",
+      url: baseUrl + 'markAsUnviewed'
+    },
+    "markCompleted":{
+      method:"GET",
+      url: baseUrl + 'markCompleted'
     },
     "addLocalFile":{
       method:"GET",
-      url: baseUrl + 'addLocalFile.json'
+      url: baseUrl + 'addLocalFile'
     },
     "listAllFiles":{
       method:"GET",
-      url: 'file.json'
+      url: 'file'
     },
 
 
-  };
-
-  return $resource(baseUrl, params, actions);
+  });
 });

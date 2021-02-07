@@ -125,7 +125,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     }
 
     function markAsUnviewed() {
-      apiService.video.markAsUnviewed({id: $scope.media.id}).then(function () {
+      Video.markAsUnviewed({id: $scope.media.id}).then(function () {
         $scope.media.status = 'unviewed';
         $rootScope.$broadcast('video.markAsUnviewed', {id: $scope.media.id});
       });

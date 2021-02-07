@@ -8,33 +8,41 @@ angular.module('streama').factory('TheMovieDB', function ($resource) {
   var actions = {
     "hasKey": {
       method: "GET",
-      url:  baseUrl + 'hasKey.json'
+      url:  baseUrl + 'hasKey'
     },
     "search": {
       method: "GET",
-      url:  baseUrl + 'search.json',
+      url:  baseUrl + 'search',
       isArray: true
     },
     "seasonNumberForShow": {
       method: "GET",
-      url:  baseUrl + 'seasonNumberForShow.json'
+      url:  baseUrl + 'seasonNumberForShow'
     },
     "seasonForShow": {
       method: "GET",
-      url:  baseUrl + 'seasonForShow.json'
+      url:  baseUrl + 'seasonForShow'
     },
     "availableGenres": {
       method: "GET",
-      url:  baseUrl + 'availableGenres.json',
+      url:  baseUrl + 'availableGenres',
       isArray: true
     },
     "countNewEpisodesForSeason": {
       method: "GET",
-      url:  baseUrl + 'countNewEpisodesForSeason.json'
+      url:  baseUrl + 'countNewEpisodesForSeason'
     },
     "imagesForMedia": {
       method: "GET",
-      url:  baseUrl + 'imagesForMedia.json'
+      url:  baseUrl + 'imagesForMedia'
+    },
+    "checkAndFixImageIntegrity": {
+      method: "POST",
+      url:  baseUrl + 'checkAndFixImageIntegrity'
+    },
+    "pollImageIntegrityFix": {
+      method: "GET",
+      url:  baseUrl + 'pollImageIntegrityFix'
     },
   };
 

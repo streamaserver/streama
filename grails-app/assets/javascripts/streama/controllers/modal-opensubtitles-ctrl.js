@@ -2,8 +2,8 @@
 
 
 angular.module('streama').controller('modalOpensubtitleCtrl', [
-  '$scope', '$uibModalInstance', 'apiService', 'video', 'localStorageService', 'languageData', '$rootScope',
-  function ($scope, $uibModalInstance, apiService, video, localStorageService, languageData, $rootScope) {
+  '$scope', '$uibModalInstance', 'video', 'localStorageService', 'languageData', 'Subtitle',
+  function ($scope, $uibModalInstance, video, localStorageService, languageData, Subtitle) {
 
     $scope.videoName = video.name || video.title
     $scope.loading = false;
@@ -35,7 +35,7 @@ angular.module('streama').controller('modalOpensubtitleCtrl', [
     $scope.cancel = cancel;
 
     function getSubtitles() {
-      apiService.subtitle.getOpensubtitles(video, $scope.videoName, $scope.opensubtitleLanguages.defaultValue, $scope.searchByHash).then(function (data) {
+      Subtitle.getOpensubtitles(video, $scope.videoName, $scope.opensubtitleLanguages.defaultValue, $scope.searchByHash).then(function (data) {
         $scope.opensubtitles = data.data;
         $scope.isSearch = true;
         $scope.colMd = 6;
@@ -46,7 +46,7 @@ angular.module('streama').controller('modalOpensubtitleCtrl', [
     }
 
     function uploadSubtitles(opensubtitle) {
-      apiService.subtitle.uploadOpensubtitles(opensubtitle, video.id).then(function (data) {
+      Subtitle.uploadOpensubtitles(opensubtitle, video.id).then(function (data) {
         alertify.success('Successfully loaded');
       }, function () {
         alertify.log('Failed to load file. Try again.');
@@ -54,7 +54,7 @@ angular.module('streama').controller('modalOpensubtitleCtrl', [
     }
 
     function cancel() {
-      apiService.subtitle.refreshSubtitles($scope.video.id).then(function (data) {
+      Subtitle.refreshSubtitles($scope.video.id).then(function (data) {
         $scope.video.subtitles = data.data;
       });
       $uibModalInstance.dismiss('cancel');

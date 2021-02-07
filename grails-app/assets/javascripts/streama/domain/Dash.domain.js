@@ -8,42 +8,46 @@ angular.module('streama').factory('Dash', function ($resource) {
   var actions = {
     "searchMedia": {
       method: "GET",
-      url:  baseUrl + 'searchMedia.json'
+      url:  baseUrl + 'searchMedia'
     },
     "listContinueWatching": {
       method: "GET",
-      url:  baseUrl + 'listContinueWatching.json',
+      url:  baseUrl + 'listContinueWatching',
       isArray: true
     },
     "listMovies": {
       method: "GET",
-      url:  baseUrl + 'listMovies.json'
+      url:  baseUrl + 'listMovies'
     },
     "listShows": {
       method: "GET",
-      url:  baseUrl + 'listShows.json'
+      url:  baseUrl + 'listShows'
     },
     "firstEpisodeForShow": {
       method: "GET",
-      url:  baseUrl + 'firstEpisodeForShow.json'
+      url:  baseUrl + 'firstEpisodeForShow'
+    },
+    "randomEpisodeForShow": {
+      method: "GET",
+      url:  baseUrl + 'randomEpisodeForShow'
     },
     "listGenres": {
       method: "GET",
-      url:  baseUrl + 'listGenres.json',
+      url:  baseUrl + 'listGenres',
       isArray: true
     },
     "listGenericVideos": {
       method: "GET",
-      url:  baseUrl + 'listGenericVideos.json'
+      url:  baseUrl + 'listGenericVideos'
     },
     "listNewReleases": {
       method: "GET",
-      url:  baseUrl + 'listNewReleases.json',
+      url:  baseUrl + 'listNewReleases',
       isArray: true
     },
     "listRecommendations": {
       method: "GET",
-      url:  baseUrl + 'listRecommendations.json',
+      url:  baseUrl + 'listRecommendations',
       isArray: true
     }
   };

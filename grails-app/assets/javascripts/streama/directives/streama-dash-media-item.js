@@ -13,7 +13,7 @@ angular.module('streama').directive('streamaDashMediaItem', function () {
   }
 });
 
-function controller(apiService, modalService, $rootScope, $state, $scope) {
+function controller(modalService, $rootScope, $state, $scope, Dash, WatchlistEntry, Video) {
   var vm = this;
   vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
   vm.fetchRandomEpisodeAndPlay = fetchRandomEpisodeAndPlay;
@@ -24,15 +24,15 @@ function controller(apiService, modalService, $rootScope, $state, $scope) {
   $scope.$on('video.markAsUnviewed', onVideoMarkAsUnviewed);
 
   function fetchFirstEpisodeAndPlay(tvShow) {
-    apiService.dash.firstEpisodeForShow(tvShow.id).then(function (response) {
-      $state.go('player', {videoId: response.data.id});
+    Dash.firstEpisodeForShow(tvShow.id).$promise.then(function (response) {
+      $state.go('player', {videoId: response.id});
     });
   }
 
 
   function fetchRandomEpisodeAndPlay(tvShow) {
-    apiService.dash.randomEpisodeForShow(tvShow.id).then(function (response) {
-      $state.go('player', {videoId: response.data.id});
+    Dash.randomEpisodeForShow(tvShow.id).$promise.then(function (response) {
+      $state.go('player', {videoId: response.id});
     });
   }
 
@@ -58,7 +58,7 @@ function controller(apiService, modalService, $rootScope, $state, $scope) {
   }
 
   function addToWatchlist(item) {
-    apiService.watchlistEntry.create(item).then(function (response) {
+    WatchlistEntry.create(item).$promise.then(function (response) {
       $rootScope.$broadcast('video.updateWatchlist', {action: 'added', response: response, media: item});
     });
   }
@@ -67,7 +67,7 @@ function controller(apiService, modalService, $rootScope, $state, $scope) {
     alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
     alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
       if (confirmed) {
-        apiService.watchlistEntry.delete(item).then(function (response) {
+        WatchlistEntry.delete(item).$promise.then(function (response) {
           $rootScope.$broadcast('video.updateWatchlist', {action: 'removed', media: item});
         });
       }
@@ -78,7 +78,7 @@ function controller(apiService, modalService, $rootScope, $state, $scope) {
     alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
     alertify.confirm("Are you sure you want to mark this video as completed?", function (confirmed) {
       if (confirmed) {
-        apiService.video.markCompleted({id: vm.entity.id}).then(function (data) {
+        Video.markCompleted({id: vm.entity.id}).$promise.then(function (data) {
           vm.entity.deleted = true;
         });
       }
