@@ -1,3 +1,5 @@
+//= wrapped
+
 angular.module('streama').factory('languageData', languageData);
 
 function languageData() {
