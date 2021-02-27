@@ -14,7 +14,7 @@ class GenericVideoController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         JSON.use('admin') {
-            respond GenericVideo.list(), [status: OK]
+            respond GenericVideo.where{deleted != true}.list(), [status: OK]
         }
     }
 
@@ -60,7 +60,8 @@ class GenericVideoController {
             return
         }
 
-        genericVideoInstance.delete flush:true
+        genericVideoInstance.deleted = true
+        genericVideoInstance.save(flush:true)
         render status: NO_CONTENT
     }
 
