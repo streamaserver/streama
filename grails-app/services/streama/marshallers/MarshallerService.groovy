@@ -112,7 +112,7 @@ class MarshallerService {
       returnArray['mediaType'] = 'movie'
       returnArray['dateCreated'] = movie.dateCreated
       returnArray['lastUpdated'] = movie.lastUpdated
-      returnArray['poster_path'] = movie.poster_path
+      returnArray['poster_path'] = movie.getPosterPath()
       returnArray['release_date'] = movie.release_date
       returnArray['title'] = movie.title
       returnArray['overview'] = movie.overview
@@ -176,7 +176,7 @@ class MarshallerService {
       returnArray['mediaType'] = 'tvShow'
       returnArray['dateCreated'] = tvShow.dateCreated
       returnArray['lastUpdated'] = tvShow.lastUpdated
-      returnArray['poster_path'] = tvShow.poster_path
+      returnArray['poster_path'] = tvShow.getPosterPath()
       returnArray['backdrop_path'] = tvShow.backdrop_path
       returnArray['first_air_date'] = tvShow.first_air_date
       returnArray['name'] = tvShow.name
@@ -214,7 +214,7 @@ class MarshallerService {
         returnArray['overview'] = tvShow.overview
         returnArray['apiId'] = tvShow.apiId
         returnArray['backdrop_path'] = tvShow.backdrop_path
-        returnArray['poster_path'] = tvShow.poster_path
+        returnArray['poster_path'] = tvShow.getPosterPath()
         returnArray['first_air_date'] = tvShow.first_air_date
         returnArray['original_language'] = tvShow.original_language
         returnArray['vote_average'] = tvShow.vote_average
@@ -261,12 +261,13 @@ class MarshallerService {
         if (video instanceof Movie) {
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
-          returnArray['poster_path'] = video.poster_path
+          returnArray['poster_path'] = video.getPosterPath()
           returnArray['mediaType'] = 'movie'
         }
         if (video instanceof GenericVideo) {
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
+          returnArray['poster_path'] = video.getPosterPath()
           returnArray['poster_image_src'] = video.poster_image?.src
           returnArray['mediaType'] = 'genericVideo'
         }
@@ -274,7 +275,7 @@ class MarshallerService {
         if (video instanceof Episode) {
           returnArray['isEpisode'] = true
           returnArray['title'] = video.show?.name
-          returnArray['poster_path'] = video.show?.poster_path
+          returnArray['poster_path'] = video.getPosterPath()
           returnArray['episodeString'] = video.episodeString
           returnArray['tvShowId'] = video.show?.id
           returnArray['mediaType'] = 'tvShow'
@@ -322,7 +323,7 @@ class MarshallerService {
         returnArray['vote_count'] = tvShow.vote_count
         returnArray['popularity'] = tvShow.popularity
         returnArray['backdrop_path'] = tvShow.backdrop_path
-        returnArray['poster_path'] = tvShow.poster_path
+        returnArray['poster_path'] = tvShow.getPosterPath()
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
 
@@ -364,7 +365,7 @@ class MarshallerService {
         returnArray['vote_count'] = tvShow.vote_count
         returnArray['popularity'] = tvShow.popularity
         returnArray['backdrop_path'] = tvShow.backdrop_path
-        returnArray['poster_path'] = tvShow.poster_path
+        returnArray['poster_path'] = tvShow.getPosterPath()
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
 
@@ -391,7 +392,7 @@ class MarshallerService {
         returnArray['title'] = movie.title
         returnArray['release_date'] = movie.release_date
         returnArray['backdrop_path'] = movie.backdrop_path
-        returnArray['poster_path'] = movie.poster_path
+        returnArray['poster_path'] = movie.getPosterPath(342)
         returnArray['trailerKey'] = movie.trailerKey
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
@@ -414,7 +415,7 @@ class MarshallerService {
 
         returnArray['dateCreated'] = tvShow.dateCreated
         returnArray['lastUpdated'] = tvShow.lastUpdated
-        returnArray['poster_path'] = tvShow.poster_path
+        returnArray['poster_path'] = tvShow.getPosterPath()
         returnArray['first_air_date'] = tvShow.first_air_date
         returnArray['name'] = tvShow.name
         returnArray['overview'] = tvShow.overview
@@ -453,6 +454,7 @@ class MarshallerService {
 
         returnArray['title'] = genericVideo.title
         returnArray['release_date'] = genericVideo.release_date
+        returnArray['poster_path'] = genericVideo.getPosterPath()
         returnArray['poster_image_src'] = genericVideo.poster_image?.src
         returnArray['backdrop_image_src'] = genericVideo.backdrop_image?.src
         returnArray['trailerKey'] = genericVideo.trailerKey
@@ -504,7 +506,7 @@ class MarshallerService {
         returnArray['title'] = movie.title
         returnArray['release_date'] = movie.release_date
         returnArray['backdrop_path'] = movie.backdrop_path
-        returnArray['poster_path'] = movie.poster_path
+        returnArray['poster_path'] = movie.getPosterPath()
         returnArray['trailerKey'] = movie.trailerKey
 
         returnArray['files'] = movie.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }
@@ -557,13 +559,13 @@ class MarshallerService {
         if (video instanceof Movie) {
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
-          returnArray['poster_path'] = video.poster_path
+          returnArray['poster_path'] = video.getPosterPath()
         }
 
         if (video instanceof Episode) {
           returnArray['isEpisode'] = true
           returnArray['title'] = video.show?.name
-          returnArray['poster_path'] = video.show?.poster_path
+          returnArray['poster_path'] = video.getPosterPath()
         }
 
         return returnArray

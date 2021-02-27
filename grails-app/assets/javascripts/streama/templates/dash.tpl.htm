@@ -7,11 +7,9 @@
     <div uis-owl-carousel class="new-releases-slider" >
       <div ng-repeat="newRelease in vm.newReleases" class="new-releases-slide">
         <div ng-if="newRelease.media.poster_path">
-          <img class="poster-image" ng-src="https://image.tmdb.org/t/p/w342/{{newRelease.media.poster_path}}" class="pull-left">
+          <img class="poster-image" ng-src="{{newRelease.media.poster_path}}" class="pull-left">
         </div>
-        <div ng-if="newRelease.media.poster_image_src">
-          <img class="poster-image" ng-src="{{newRelease.media.poster_image_src}}" class="pull-left">
-        </div>
+
         <div class="image-background" style="background: url('https://image.tmdb.org/t/p/original{{newRelease.media.backdrop_path}}') no-repeat center; background-size: cover;">
           <div>
             <i ng-class="newRelease.media.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
