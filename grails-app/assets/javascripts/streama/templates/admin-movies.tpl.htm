@@ -5,8 +5,6 @@
       <video-sort-order-dropdown ng-model="vm.movie.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'movie'"/>
     </h1>
 
-    <input placeholder="{{vm.searchText}}" type="text" ng-model="vm.movie.filter.title" ng-change="vm.doSearch(vm.movie.filter.title)"
-           ng-model-options="{debounce: 333}" class="form-control input-sm" />
   </div>
   <div class="col-md-6">
     <br>
@@ -14,6 +12,13 @@
       <button class="btn btn-primary" ng-click="vm.createFromFiles()">Bulk-Create from file(s)</button>
       <button class="btn btn-primary" ng-click="vm.openMovieModal()">Create new Movie</button>
     </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-5">
+    <input placeholder="{{vm.searchText}}" type="text" ng-model="vm.movie.filter.title" ng-change="vm.doSearch(vm.movie.filter.title)"
+           ng-model-options="{debounce: 333}" class="form-control input-sm" />
   </div>
 </div>
 
