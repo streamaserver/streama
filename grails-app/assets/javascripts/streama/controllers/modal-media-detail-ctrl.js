@@ -67,7 +67,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 			if(media.isGenericVideo){
 				$state.go('admin.video', {videoId: media.id});
 			}
-			if(media.title){
+			else if(media.title){
 				$state.go('admin.movie', {movieId: media.id});
 			}
 			else if(media.name){
