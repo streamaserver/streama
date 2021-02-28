@@ -21,6 +21,7 @@ angular.module('streama').controller('adminVideoCtrl', [
         var data = response.data;
         $scope.video = data;
         $scope.loading = false;
+        $scope.highlightOnDashboard = modalService.newReleaseModal.bind(modalService, $scope.video, 'genericVideo');
       });
     }
 

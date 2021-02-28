@@ -58,6 +58,7 @@ class MediaDetailMarshallerService {
         result['popularity'] = movie.popularity
         result['imdb_id'] = movie.imdb_id
         result['poster_image_src'] = movie.poster_image?.src
+        result['backdrop_image_src'] = movie.backdrop_image?.src
         result['genre'] = movie.genre
 
         result['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}

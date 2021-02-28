@@ -166,14 +166,14 @@ class Video implements SimpleInstance{
     String TMDB_BASE_PATH = "https://image.tmdb.org/t/p/w${width}/"
 
     if(this instanceof Episode){
-      if(this.show.poster_path?.startsWith('http')){
-        return this.show.poster_path
-      }
-      return TMDB_BASE_PATH + this.show.poster_path
+      return this.show?.getPosterPath()
     }else if(this instanceof GenericVideo){
       return this.poster_image?.getSrc()
     }
 
+    if(this instanceof Movie && this.poster_image){
+      return this.poster_image?.getSrc()
+    }
     if(this.poster_path?.startsWith('http')){
       return this.poster_path
     }

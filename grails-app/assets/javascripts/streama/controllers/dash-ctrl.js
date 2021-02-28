@@ -10,6 +10,7 @@ angular.module('streama').controller('dashCtrl',
     vm.loadingRecommendations = true;
     vm.isDashSectionHidden = isDashSectionHidden;
     vm.isDashType = isDashType;
+    vm.getNewReleaseBackdrop = getNewReleaseBackdrop;
 
     $scope.$on('changedGenre', onChangedGenre);
     $scope.$on('video.updateWatchlist', onVideoUpdateWatchlist);
@@ -257,6 +258,14 @@ angular.module('streama').controller('dashCtrl',
     function onVideoUpdateWatchlist(e, data) {
       vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
       updateWatchlist(data.action, _.get(vm.watchlistEntry, 'list'), data.media, _.get(data.response, 'data'));
+    }
+
+    function getNewReleaseBackdrop(media){
+      if(media.backdrop_path){
+        return 'https://image.tmdb.org/t/p/original' + media.backdrop_path;
+      }else if(media.backdrop_image_src){
+        return media.backdrop_image_src;
+      }
     }
 
 	});

@@ -10,7 +10,7 @@
           <img class="poster-image" ng-src="{{newRelease.media.poster_path}}" class="pull-left">
         </div>
 
-        <div class="image-background" style="background: url('https://image.tmdb.org/t/p/original{{newRelease.media.backdrop_path}}') no-repeat center; background-size: cover;">
+        <div class="image-background" style="background: url('{{vm.getNewReleaseBackdrop(newRelease.media)}}') no-repeat center; background-size: cover;">
           <div>
             <i ng-class="newRelease.media.inWatchlist ? 'remove-icon ion-android-remove-circle' : 'add-icon ion-android-add-circle'"
                ng-click="vm.handleWatchlistUpdate(newRelease.media.inWatchlist ? 'removed' : 'added', newRelease.media)"></i>
