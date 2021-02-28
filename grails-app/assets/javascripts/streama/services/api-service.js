@@ -261,6 +261,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
 			list: function () {
 				return $http.get('genre.json');
+			},
+			create: function (name) {
+				return $http.post('genre/save', {name: name});
+			},
+			delete: function (id) {
+				return $http.delete('genre/delete', {params: {id: id}});
 			}
 		},
 

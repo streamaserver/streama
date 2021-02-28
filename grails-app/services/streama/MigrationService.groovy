@@ -1,11 +1,15 @@
 package streama
 
 import grails.transaction.Transactional
+import groovy.sql.Sql
+
+import javax.sql.DataSource
 
 @Transactional
 class MigrationService {
 
   def theMovieDbService
+  DataSource dataSource
 
   def setTheMovieDBKey() {
     def setting = Settings.list()
@@ -204,6 +208,12 @@ class MigrationService {
         vs.save()
       }
     }
+  }
+
+  def dbMigrations(){
+    def sql = new Sql(dataSource)
+    sql.execute('alter table genre modify api_id int null;')
+    log.info("SQL Executed, ${sql.updateCount} rows Updated")
   }
 
 

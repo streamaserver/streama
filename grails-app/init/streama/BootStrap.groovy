@@ -25,6 +25,8 @@ class BootStrap {
         migrationService.migrateMergedSeasonEpisode()
         migrationService.setupBasicSubProfiles()
         migrationService.addProfilesToViewingStatusRecords()
+
+        migrationService.dbMigrations()
     }
     def destroy = {
     }
