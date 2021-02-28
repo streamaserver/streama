@@ -96,7 +96,7 @@
          </ul>
        </div>
 
-       <img ng-if="media.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{media.still_path}}"/>
+       <img ng-if="media.still_path" ng-src="{{media.still_path}}"/>
 
        <div ng-if="media.trailerKey">
          <h4>{{'VIDEO.TRAILER' | translate}}</h4>
@@ -105,7 +105,7 @@
        </div>
      </div>
      <div class="col-sm-4">
-       <img ng-if="media.poster_path && !media.poster_image_src" ng-src="https://image.tmdb.org/t/p/w300/{{media.poster_path}}"/>
+       <img ng-if="media.poster_path && !media.poster_image_src" ng-src="{{media.poster_path}}"/>
        <img ng-if="media.poster_image_src" ng-src="{{media.poster_image_src}}"/>
      </div>
    </div>

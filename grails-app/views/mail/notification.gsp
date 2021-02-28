@@ -212,7 +212,7 @@
                   <g:each in="${notificationQueues.findAll{it.movie}}" var="notification">
                     <tr>
                       <td width="100px">
-                        <img src="https://image.tmdb.org/t/p/w92/${notification.movie.poster_path}"/>
+                        <img src="${notification.movie.getPosterPath(92)}"/>
                       </td>
                       <td>
                         <p><strong>${notification.movie.title} (${notification.movie.release_date?.substring(0,4)})</strong></p>
@@ -231,7 +231,7 @@
                   <g:each in="${notificationQueues.findAll{it.tvShow}}" var="notification">
                     <tr>
                       <td width="100px">
-                        <img src="https://image.tmdb.org/t/p/w92/${notification.tvShow.poster_path}"/>
+                        <img src="${notification.tvShow.getPosterPath(92)}"/>
                       </td>
                       <td>
                         <p><strong>${notification.tvShow.name} (${notification.tvShow.first_air_date?.substring(0,4)})</strong></p>

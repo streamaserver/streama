@@ -34,7 +34,7 @@
 
         <div ng-switch-when="movie">
           <div class="col-md-4" ng-if="selectedItem.poster_path">
-            <img ng-src="https://image.tmdb.org/t/p/w300/{{selectedItem.poster_path}}"/>
+            <img ng-src="{{selectedItem.poster_path}}"/>
           </div>
           <div class="col-md-8">
             <h2>{{selectedItem.title}}</h2>

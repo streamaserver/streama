@@ -113,7 +113,7 @@
 
     <div class="col-sm-4 col-lg-3" >
       <img ng-if="!movie.poster_path && !movie.poster_image_src" ng-src="{{basePath}}assets/poster-not-found.png"/>
-      <img ng-if="movie.poster_path" ng-src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"/>
+      <img ng-if="movie.poster_path" ng-src="{{movie.poster_path}}"/>
       <img ng-if="movie.poster_image_src" ng-src="{{movie.poster_image_src}}"/>
     </div>
   </div>
@@ -146,7 +146,7 @@
         </div>
       </div>
       <div class="media-item" >
-        <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
+        <img ng-src="{{movie.poster_path}}"/>
       </div>
       <div class="media-meta">Release: {{movie.release_date.substring(0, 4)}} | <i class="ion-ios-star"></i> {{movie.vote_average}}</div>
     </div>

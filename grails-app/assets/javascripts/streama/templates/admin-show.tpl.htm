@@ -84,7 +84,7 @@
 
   <div class="col-sm-4">
     <div ng-if="!show.manualInput">
-      <img ng-show="show.poster_path" ng-src="https://image.tmdb.org/t/p/w500/{{show.poster_path}}"/>
+      <img ng-show="show.poster_path" ng-src="{{show.poster_path}}"/>
       <img ng-show="!show.poster_path" ng-src="{{basePath}}assets/poster-not-found.png"/>
     </div>
 

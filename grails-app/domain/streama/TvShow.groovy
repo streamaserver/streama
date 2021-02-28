@@ -90,8 +90,17 @@ class TvShow implements SimpleInstance {
     return listEpisodesWithFiles().min { it.seasonEpisodeMerged }
   }
 
-  def getPosterPath(){
-    String TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w300/'
+  def getPosterPath(Integer width = 300){
+    if(this.poster_image){
+      return this.poster_image.src
+    }
+    if(!this.poster_path){
+      return
+    }
+    String TMDB_BASE_PATH = "https://image.tmdb.org/t/p/w${width}/"
+    if(this.poster_path?.startsWith('http')){
+      return this.poster_path
+    }
     return TMDB_BASE_PATH + this.poster_path
   }
 

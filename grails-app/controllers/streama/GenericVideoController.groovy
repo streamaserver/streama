@@ -14,7 +14,7 @@ class GenericVideoController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         JSON.use('admin') {
-            respond GenericVideo.where{deleted != true}.list(), [status: OK]
+            respond GenericVideo.where{deleted != true}.list(max: 9999), [status: OK]
         }
     }
 

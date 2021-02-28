@@ -24,7 +24,7 @@ class MediaDetailMarshallerService {
         result['overview'] = tvShow.overview
         result['apiId'] = tvShow.apiId
         result['backdrop_path'] = tvShow.backdrop_path
-        result['poster_path'] = tvShow.poster_path
+        result['poster_path'] = tvShow.getPosterPath()
         result['first_air_date'] = tvShow.first_air_date
         result['original_language'] = tvShow.original_language
         result['vote_average'] = tvShow.vote_average
@@ -47,7 +47,7 @@ class MediaDetailMarshallerService {
         result['mediaType'] = 'movie'
         result['dateCreated'] = movie.dateCreated
         result['lastUpdated'] = movie.lastUpdated
-        result['poster_path'] = movie.poster_path
+        result['poster_path'] = movie.getPosterPath()
         result['release_date'] = movie.release_date
         result['title'] = movie.title
         result['overview'] = movie.overview

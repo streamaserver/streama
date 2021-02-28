@@ -10,4 +10,5 @@ json g.render(tvShow, [deep: true]){
 	episodesWithFilesCount tvShow.getFilteredEpisodes().findAll{it.files}.size()
 	episodesCount tvShow.getFilteredEpisodes().size()
   inWatchlist tvShow.inWatchlist()
+  poster_path tvShow.getPosterPath()
 }
