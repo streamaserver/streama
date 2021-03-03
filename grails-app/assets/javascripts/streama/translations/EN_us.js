@@ -28,7 +28,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       SORT: 'Sort:',
       SEARCH_BY_NAME: 'Search by Name...',
       FILTER_BY_TAG: 'Filter by Tag...',
-      FILTER_BY_GENRE: 'Filter by Genre...',
+      FILTER_BY_GENRE: 'Filter by Pipeline...',
       BROWSE_GENRES: 'Browse Genre',
       LOOKING_AT_GENRE: 'You\'re looking at the genre:',
       MARK_COMPLETED: 'Mark completed',
