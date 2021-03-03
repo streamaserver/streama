@@ -107,7 +107,7 @@
     </p>
   </div>
 
-  <!--   --------------- TV SHOWS ---------------------  -->
+  <!--   --------------- TV SHOWS ---------------------
 
   <div ng-if="(vm.isDashType('home') || vm.isDashType('discover-shows')) && (!$root.currentProfile.isChild || vm.tvShow.list.length) && !vm.isDashSectionHidden('discover-shows')">
     <hr/>
@@ -161,14 +161,15 @@
     <div class="text-center" ng-if="vm.tvShow.total > vm.tvShow.list.length">
       <button class="btn btn-primary btn-outline" ng-click="vm.tvShow.loadMore()">Load more ...</button>
     </div>
-  </div>
+  </div> -->
 
   <!--   --------------- MOVIES ---------------------  -->
 
   <div ng-if="(vm.isDashType('home') || vm.isDashType('discover-movies')) && (!$root.currentProfile.isChild || vm.movie.list.length) && !vm.isDashSectionHidden('discover-movies')">
     <hr/>
     <h3>
-      <span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_MOVIES' | translate}}</span>
+      <span ng-show="!selectedGenre">{{'STUDENT FILMS' | translate}}</span>
+      <!--span ng-show="!selectedGenre">{{'DASHBOARD.DISCOVER_MOVIES' | translate}}</span> -->
       <span ng-show="selectedGenre">{{::selectedGenre.name}} Movies</span>
       <span class="counter">({{vm.movie.list.length}} {{'DASHBOARD.TITLE_COUNTER_OF' | translate}} {{vm.movie.total}})</span>
      </h3>
