@@ -26,7 +26,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       DISCOVER_MOVIES: 'Discover Movies',
       DISCOVER_OTHER_VIDEOS: 'Discover other videos',
       SORT: 'Sort:',
-      SEARCH_BY_NAME: 'Search by Specialty or Name...',
+      SEARCH_BY_NAME: 'Search by Name...',
       FILTER_BY_TAG: 'Filter by Tag...',
       FILTER_BY_GENRE: 'Filter by Pipeline...',
       BROWSE_GENRES: 'Browse Genre',
