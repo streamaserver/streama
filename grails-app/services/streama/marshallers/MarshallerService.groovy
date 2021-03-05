@@ -160,6 +160,7 @@ class MarshallerService {
       returnArray['vote_count'] = genericVideo.vote_count
       returnArray['popularity'] = genericVideo.popularity
       returnArray['original_language'] = genericVideo.original_language
+      returnArray['certification'] = genericVideo.certification
 
       returnArray['title'] = genericVideo.title
       returnArray['release_date'] = genericVideo.release_date
@@ -199,6 +200,7 @@ class MarshallerService {
       returnArray['popularity'] = tvShow.popularity
       returnArray['manualInput'] = tvShow.manualInput
       returnArray['poster_image_src'] = tvShow.poster_image?.src
+      returnArray['certification'] = tvShow.certification
 
       returnArray['hasFiles'] = tvShow.getHasFiles()
       returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)

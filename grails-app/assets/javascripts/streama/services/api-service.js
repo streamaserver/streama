@@ -277,8 +277,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			import: function (type) {
 				return $http.get('certification/importCertifications.json', {params: {type: type}});
 			},
-			list: function () {
-				return $http.get('certification.json');
+			list: function (type) {
+				return $http.get('certification.json', {params: {type: type}});
 			},
 			create: function (name) {
 				return $http.post('certification/save', {name: name});

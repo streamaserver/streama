@@ -25,6 +25,11 @@ angular.module('streama').controller('modalMovieCtrl', [
 	init();
 
 	function init() {
+
+		apiService.certifications.list('movie').then(function (data) {
+			$scope.certifications = data.data;
+		});
+
 		apiService.genres.list().then(function (data) {
 			$scope.genres = data.data;
 		});

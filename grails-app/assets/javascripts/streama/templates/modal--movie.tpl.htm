@@ -103,6 +103,13 @@
         </div>
       </div>
 
+      <div class="form-group" ng-if="movie.id || movie.manualInput">
+        <div class="col-sm-12">
+          <label>Certifications</label>
+          <select class="form-control" placeholder="Select Certification..." ng-model="movie.certification"
+                  ng-options="cert as cert.certification for cert in certifications track by cert.id"></select>
+        </div>
+      </div>
 
 
       <div class="form-group" ng-show="movie.id">
@@ -121,7 +128,6 @@
           </ui-select>
         </div>
       </div>
-
 
 
       <div class="form-group" ng-if="movie.backdrop_path">

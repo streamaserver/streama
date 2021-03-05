@@ -27,7 +27,7 @@ class MovieController {
       return
     }
 
-    if(data.apiId){
+    if(data.apiId && !movieInstance.id){
       movieInstance = theMovieDbService.createEntityFromApiId('movie', data.apiId)
     }else{
       movieInstance.properties = data

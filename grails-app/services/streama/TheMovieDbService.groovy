@@ -232,7 +232,8 @@ class TheMovieDbService {
 //      log.debug("epiosde data")
     }
 
-    data.certification = data.release_dates?.results?.find{it.iso_3166_1 == 'US'}?.release_dates[0]?.certification
+    String certificationName = data.release_dates?.results?.find{it.iso_3166_1 == 'US'}?.release_dates[0]?.certification
+    data.certification = Certification.findOrCreateByCertificationAndType(certificationName, type)
     entity.properties = data
     if(data.genres){
       entity.genre = parseGenres(data.genres*.id)

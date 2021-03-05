@@ -33,11 +33,11 @@ class TvShowController {
     }
 
     TvShow tvShow = TvShow.get(data.id)
-	if(data.apiId != null){
-      tvShow = TvShow.findByApiId(data.apiId)
-	}
+    if(data.apiId != null){
+        tvShow = TvShow.findByApiId(data.apiId)
+    }
 
-	if(tvShow == null){
+	  if(tvShow == null){
       tvShow = new TvShow()
     }
 

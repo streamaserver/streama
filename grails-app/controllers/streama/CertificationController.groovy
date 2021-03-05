@@ -13,9 +13,10 @@ class CertificationController {
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
+    def index() {
         params.max = 999
-        respond Certification.list(params), [status: OK]
+        String type = params.type
+        respond Certification.where{type == type}.list(params), [status: OK]
     }
 
     @Transactional

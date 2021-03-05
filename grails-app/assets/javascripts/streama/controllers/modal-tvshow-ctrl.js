@@ -17,6 +17,10 @@ angular.module('streama').controller('modalTvShowCtrl', [
 	init();
 
   function init(){
+    apiService.certifications.list('tv').then(function (data) {
+      $scope.certifications = data.data;
+    });
+
     apiService.genres.list().then(function (data) {
       $scope.genres = data.data;
     });

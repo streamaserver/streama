@@ -19,11 +19,15 @@ class GenericVideoController {
     }
 
     @Transactional
-    def save(GenericVideo genericVideoInstance) {
+    def save() {
+        def data = request.JSON
+        GenericVideo genericVideoInstance = data.id ? GenericVideo.get(data.id) : new GenericVideo()
+
         if (genericVideoInstance == null) {
             render status: NOT_FOUND
             return
         }
+        genericVideoInstance.properties = data
 
         genericVideoInstance.validate()
         if (genericVideoInstance.hasErrors()) {
@@ -36,11 +40,15 @@ class GenericVideoController {
     }
 
     @Transactional
-    def update(GenericVideo genericVideoInstance) {
+    def update() {
+        def data = request.JSON
+        GenericVideo genericVideoInstance = data.id ? GenericVideo.get(data.id) : new GenericVideo()
+
         if (genericVideoInstance == null) {
             render status: NOT_FOUND
             return
         }
+        genericVideoInstance.properties = data
 
         genericVideoInstance.validate()
         if (genericVideoInstance.hasErrors()) {
