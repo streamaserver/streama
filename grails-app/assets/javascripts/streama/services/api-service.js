@@ -270,24 +270,6 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			}
 		},
 
-		certifications: {
-			get: function (id) {
-				return $http.get('certification/show.json', {params: {id: id}});
-			},
-			import: function (type) {
-				return $http.get('certification/importCertifications.json', {params: {type: type}});
-			},
-			list: function () {
-				return $http.get('certification.json');
-			},
-			create: function (name) {
-				return $http.post('certification/save', {name: name});
-			},
-			delete: function (id) {
-				return $http.delete('certification/delete', {params: {id: id}});
-			}
-		},
-
     settings: {
 			list: function () {
 				return $http.get('settings.json');
