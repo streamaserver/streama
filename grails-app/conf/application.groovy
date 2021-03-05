@@ -61,7 +61,6 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/subtitles/getVideoSubtitles',  access :['IS_AUTHENTICATED_REMEMBERED']],
 
   [pattern:'/genericVideo/**',  access :['ROLE_CONTENT_MANAGER']],
-  [pattern:'/certification/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/genre/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/tvShow/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/video/**',  access :['ROLE_CONTENT_MANAGER']],

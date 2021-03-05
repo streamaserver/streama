@@ -118,13 +118,6 @@ angular.module('streama').config(function ($stateProvider) {
       controllerAs: "vm"
     })
 
-    .state('admin.certifications', {
-      url: '/certifications',
-      templateUrl: '/streama/admin-certifications.htm',
-      controller: 'adminCertificationsCtrl',
-      controllerAs: "vm"
-    })
-
 
 
 		//SETTINGS ROUTES

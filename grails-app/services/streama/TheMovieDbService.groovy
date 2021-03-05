@@ -15,7 +15,7 @@ class TheMovieDbService {
   def uploadService
 
   def getAPI_PARAMS(){
-    return "api_key=$API_KEY&language=$API_LANGUAGE&append_to_response=release_dates"
+    return "api_key=$API_KEY&language=$API_LANGUAGE"
   }
   def getAPI_PARAMS_WITHOUT_LANG(){
     return "api_key=$API_KEY"
@@ -199,7 +199,7 @@ class TheMovieDbService {
   }
 
   @Transactional
-  def createEntityFromApiId(String type, id, Map data = [:]){
+  def createEntityFromApiId(type, id, data = [:]){
     def apiData = getEntryById(type, id, data)
     def entity
     try{
@@ -232,7 +232,6 @@ class TheMovieDbService {
 //      log.debug("epiosde data")
     }
 
-    data.certification = data.release_dates?.results?.find{it.iso_3166_1 == 'US'}?.release_dates[0]?.certification
     entity.properties = data
     if(data.genres){
       entity.genre = parseGenres(data.genres*.id)
@@ -329,12 +328,5 @@ class TheMovieDbService {
       log.error("Failed to fetch image data, ${e.message}", e)
     }
 
-  }
-
-  def listCertifications(String type){
-    def requestUrl = "${BASE_URL}/certification/${type}/list?${API_PARAMS_WITHOUT_LANG}"
-    def JsonContent = new URL(requestUrl).getText("UTF-8")
-    def json = new JsonSlurper().parseText(JsonContent)
-    return json.certifications['US']
   }
 }
