@@ -14,6 +14,8 @@
 //= require_tree filters
 //= require_tree templates
 
+//= require_tree genre
+
 //= require streama.run
 //= require streama.routes
 //= require streama.interceptor

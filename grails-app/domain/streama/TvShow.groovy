@@ -28,10 +28,12 @@ class TvShow implements SimpleInstance {
   Double vote_average
   Integer vote_count
   Double popularity
-  static hasMany = [episodes: Episode, genre: Genre]
+  String certification   //PG-Rating, available values U,PG,13,15,18,No Restriction
 
   File poster_image
   File backdrop_image
+
+  static hasMany = [episodes: Episode, genre: Genre]
 
   static mapping = {
     cache true
