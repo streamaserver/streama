@@ -8,6 +8,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class MovieController {
   def videoService
+  def theMovieDbService
 
   static responseFormats = ['json', 'xml']
   static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -26,8 +27,10 @@ class MovieController {
       return
     }
 
-    if (!movieInstance.imdb_id && movieInstance.apiId) {
-      movieInstance.imdb_id = movieInstance.fullMovieMeta?.imdb_id
+    if(data.apiId){
+      movieInstance = theMovieDbService.createEntityFromApiId('movie', data.apiId)
+    }else{
+      movieInstance.properties = data
     }
 
     List tags = []
@@ -42,8 +45,7 @@ class MovieController {
     }
 
     data.tags = tags*.id
-    movieInstance.properties = data
-    movieInstance.properties.dateCreated = data
+    movieInstance.properties.dateCreated = new Date()
 
     movieInstance.validate()
     if (movieInstance.hasErrors()) {

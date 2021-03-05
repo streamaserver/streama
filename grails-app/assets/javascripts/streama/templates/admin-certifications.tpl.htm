@@ -1,0 +1,51 @@
+
+<div class="row">
+  <div class="col-xs-8">
+    <h1>Certification <span class="text-muted text-xs">({{vm.certifications.length}} items)</span></h1>
+    <p>Here you can manage the certifications for Videos / TvShows.</p>
+    <p>Usually, Certification are automatically added alongside TMDb-videos & shows. But if TMDb isn't enabled or  you want to add your own custom Certifications, you can do so here.</p>
+  </div>
+  <div class="col-xs-4 text-right">
+    <br>
+    <div class="btn-group">
+      <button class="btn btn-sm btn-primary" ng-click="vm.addCertification()">Add new</button>
+      <button class="btn btn-sm btn-default" ng-click="vm.importCertifications('movie')">Import For Movies</button>
+      <button class="btn btn-sm btn-default" ng-click="vm.importCertifications('tv')">Import For TV-Shows</button>
+    </div>
+  </div>
+</div>
+
+
+<div>
+  <table class="table table-striped table-reports">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Certification</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tr ng-repeat="certification in vm.certifications | orderBy:'-id' ">
+      <td>
+        {{certification.id}}
+      </td>
+      <td>
+        {{certification.certification}}
+      </td>
+      <td>
+        {{certification.type}}
+      </td>
+      <td>
+        {{certification.description}}
+      </td>
+
+      <td>
+        <button class="btn btn-xs btn-danger" ng-click="vm.deleteCertification(certification.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
+
+</div>

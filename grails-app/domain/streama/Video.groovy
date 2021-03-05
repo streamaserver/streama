@@ -23,6 +23,7 @@ class Video implements SimpleInstance{
   Integer reportCount
   Boolean deleted = false
   String imdb_id
+  String certification   //PG-Rating, available values U,PG,13,15,18,No Restriction
 
   static hasMany = [files: File]
   static simpleInstanceFields = ['overview', 'poster_path:posterPath', 'title']
