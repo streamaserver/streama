@@ -20,7 +20,8 @@ function modalService($uibModal, $state) {
 		mediaDetailModal: mediaDetailModal,
 		openPlaybackOptions: openPlaybackOptions,
 		createFromFilesModal: createFromFilesModal,
-    openImageChooser: openImageChooser
+    openImageChooser: openImageChooser,
+    certificationModal: certificationModal
 	};
 
 	function tvShowModal (tvShow, callback) {
@@ -287,6 +288,21 @@ function modalService($uibModal, $state) {
 						mediaType: mediaType
 					};
 				}
+			}
+		});
+
+		return modalInstance.result;
+	}
+
+	function certificationModal(entity) {
+		var modalInstance = $uibModal.open({
+			templateUrl: '/streama/modal--certification.htm',
+			controller: 'modalCertificationCtrl as vm',
+			size: 'lg',
+			backdrop: 'static',
+			keyboard: false,
+			resolve: {
+        entity: entity
 			}
 		});
 

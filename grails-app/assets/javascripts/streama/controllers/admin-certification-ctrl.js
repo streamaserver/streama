@@ -1,12 +1,13 @@
 //= wrapped
 
 angular.module('streama').controller('adminCertificationsCtrl', [
-  'apiService', '$state', '$rootScope', '$filter', function (apiService, $state, $rootScope, $filter) {
+  'apiService', '$state', '$rootScope', '$filter', 'modalService', function (apiService, $state, $rootScope, $filter, modalService) {
     var vm = this;
 
     vm.addCertification = addCertification;
     vm.importCertifications = importCertifications;
     vm.deleteCertification = deleteCertification;
+    vm.editCertification = editCertification;
 
     apiService.certifications.list().then(function (response){
       vm.certifications = response.data;
@@ -14,15 +15,20 @@ angular.module('streama').controller('adminCertificationsCtrl', [
 
 
     function addCertification(){
-      alertify.set({ buttonReverse: true, labels: {ok: "Create", cancel : "Cancel"}});
-      alertify.prompt('Add a new custom certification.', function (confirmed, name) {
-        if(confirmed){
-          apiService.certifications.create(name).then(function (response) {
-            alertify.success('The Certification was created.');
-            vm.certifications.push(response.data);
-          });
-        }
-      })
+      modalService.certificationModal().then(function (data){
+        apiService.certifications.create(data).then(function (response) {
+          alertify.success('The Certification was created.');
+          vm.certifications.push(response.data);
+        });
+      });
+    }
+    function editCertification(certification){
+      modalService.certificationModal(certification).then(function (data){
+        apiService.certifications.update(data).then(function (response) {
+          alertify.success('The Certification was updated.');
+          angular.extend(certification, response.data);
+        });
+      });
     }
 
     function importCertifications(type){

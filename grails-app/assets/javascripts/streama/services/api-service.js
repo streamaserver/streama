@@ -280,8 +280,11 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			list: function (type) {
 				return $http.get('certification.json', {params: {type: type}});
 			},
-			create: function (name) {
-				return $http.post('certification/save', {certification: name});
+			create: function (data) {
+				return $http.post('certification/save', data);
+			},
+			update: function (data) {
+				return $http.post('certification/save', data);
 			},
 			delete: function (id) {
 				return $http.delete('certification/delete', {params: {id: id}});

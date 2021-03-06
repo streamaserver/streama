@@ -1,0 +1,34 @@
+<form class="form-horizontal">
+
+  <div class="modal-body">
+    <legend>
+      Certification
+    </legend>
+
+    <div style="padding: 14px;">
+      <div class="form-group">
+        <input type="text" class="form-control" ng-model="entity.certification" placeholder="Certification Name">
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea rows="4" type="text" class="form-control " ng-model="entity.description"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <input type="text" class="form-control " ng-model="entity.type" placeholder="either 'movie' or 'tv'"/>
+      </div>
+      <div class="form-group">
+        <label>Level</label>
+        <input type="text" class="form-control " ng-model="entity.level" placeholder="The higher the number, the more 'restricted'"/>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-success" ng-click="saveEntity()" ng-disabled="!entity.certification">Save</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+  </div>
+</form>
