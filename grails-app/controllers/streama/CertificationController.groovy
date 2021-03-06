@@ -15,8 +15,13 @@ class CertificationController {
 
     def index() {
         params.max = 999
-        String type = params.type
-        respond Certification.where{type == type}.list(params), [status: OK]
+        def certifications = Certification.where {
+          if(params.type){
+            type == params.type
+          }
+        }.list(params)
+
+      respond certifications, [status: OK]
     }
 
     @Transactional

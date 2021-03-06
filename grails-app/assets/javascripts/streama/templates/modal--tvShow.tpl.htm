@@ -86,6 +86,14 @@
         </div>
       </div>
 
+      <div class="form-group">
+        <div class="col-sm-12" ng-if="!tvShow.id && !tvShow.manualInput && !certifications.length">
+          <label>Certifications</label>
+          <div>
+            <span class="ion-android-warning text-danger"></span> You don't have any tmdb Certifications yet. Import now? <a ui-sref="admin.certifications" target="_blank">Go to Certification Administration</a>.
+          </div>
+        </div>
+      </div>
 
       <div>
         <div class="form-group">
