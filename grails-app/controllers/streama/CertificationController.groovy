@@ -17,7 +17,10 @@ class CertificationController {
         params.max = 999
         def certifications = Certification.where {
           if(params.type){
-            type == params.type
+            or{
+              eq('type', params.type)
+              isNull('type')
+            }
           }
         }.list(params)
 
