@@ -61,6 +61,8 @@ class MarshallerService {
       returnArray['isContentManager'] = (user.authorities.find { it.authority == 'ROLE_CONTENT_MANAGER' } ? true : false)
       returnArray['isTrustedUser'] = (user.authorities.find { it.authority == 'ROLE_TRUSTED_USER' } ? true : false)
       returnArray['pauseVideoOnClick'] = user.pauseVideoOnClick
+      returnArray['movieCertifications'] = user.movieCertifications
+      returnArray['tvCertifications'] = user.tvCertifications
 
       if (user.invitationSent && user.uuid) {
         returnArray['invitationLink'] = settingsService.baseUrl +  "/invite?uuid=${user?.uuid}"
