@@ -13,6 +13,14 @@ angular.module('streama').controller('modalUserCtrl', [
       $scope.roles = data;
     });
 
+    apiService.certifications.list('movie').then(function (data) {
+      $scope.movieCertifications = data.data;
+    });
+
+    apiService.certifications.list('tv').then(function (data) {
+      $scope.tvCertifications = data.data;
+    });
+
 		$scope.cancel = function () {
 			$uibModalInstance.dismiss('cancel');
 		};

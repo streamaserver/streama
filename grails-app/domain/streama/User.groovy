@@ -27,6 +27,9 @@ class User {
   String fullName
   Integer amountOfMediaEntries
 
+  Certification movieCertifications
+  Certification tvCertifications
+
 	static transients = ['springSecurityService']
 
   static hasMany = [favoriteGenres: Genre, profiles: Profile]
