@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="modal-body modal-media-detail">
   <div class="row">
@@ -48,105 +49,116 @@
 
 
 
- <div ng-show="media">
-   <div class="row">
-     <div class="col-sm-8">
+  <div ng-show="media">
+    <div class="row">
+      <div class="col-sm-8">
 
-       <div ng-if="mediaType != 'episode'">
-         <ul class="info-list">
-           <li><strong>{{'VIDEO.RELEASED' | translate}}: </strong> {{media.release_date.substring(0,4) || media.first_air_date.substring(0,4)}}</li>
-           <li><strong>{{'VIDEO.IMDB' | translate}}: </strong>
-             <a target="_blank" >{{movie.linkedInLink}}</a>
-<!--             <a target="_blank" href="http://www.imdb.com/title/{{media.imdb_id}}">{{media.name || media.title}}</a>-->
-           </li>
-           <li><strong>{{'VIDEO.RATING' | translate}}: </strong>
-             {{media.vote_average}}/10 ({{media.vote_count}} {{'VIDEO.VOTES' | translate}})
-           </li>
-           <li ng-if="mediaType == 'movie'">
-             <strong>{{'VIDEO.STATUS' | translate}}: </strong>
-             <strong>{{'VIDEO.STATUS_VALUE.' + media.status | translate}}</strong>
-             <a ng-if="media.status == 'completed'" class="btn btn-primary btn-xxs" ng-click="markAsUnviewed()">Mark as unviewed</a>
-           </li>
-         </ul>
-
-         <hr/>
-       </div>
+        <h4>{{'VIDEO.OVERVIEW' | translate}}</h4>
+        <p class="overview-text">{{media.overview || media.episodeOverview}}</p>
 
 
-
-       <div ng-if="mediaType == 'episode'">
-         <h3>S{{media.season | padnumber:2}}E{{media.episodeNumber | padnumber:2}} - {{media.episodeName}}</h3>
-
-         <ul class="info-list">
-           <li><strong>Air Date: </strong> {{media.first_air_date}}</li>
-         </ul>
-
-
-
-       </div>
-       <h4>{{'VIDEO.OVERVIEW' | translate}}</h4>
-       <p class="overview-text">{{media.overview || media.episodeOverview}}</p>
+        <div ng-if="media.genre.length">
+          <h4>{{'VIDEO.GENRE' | translate}}</h4>
+          <ul class="genre-list">
+            <li class="genre-tag interactive" ng-repeat="genre in media.genre" ui-sref="dash({genreId: genre.id})">
+              {{genre.name}}
+            </li>
+          </ul>
+        </div>
 
 
-       <div ng-if="media.genre.length">
-         <h4>{{'VIDEO.GENRE' | translate}}</h4>
-         <ul class="genre-list">
-           <li class="genre-tag interactive" ng-repeat="genre in media.genre" ui-sref="dash({genreId: genre.id})">
-             {{genre.name}}
-           </li>
-         </ul>
-       </div>
+        <div ng-if="mediaType == 'episode'">
+          <h3>S{{media.season | padnumber:2}}E{{media.episodeNumber | padnumber:2}} - {{media.episodeName}}</h3>
 
-       <img ng-if="media.still_path" ng-src="{{media.still_path}}"/>
+          <ul class="info-list">
+            <li><strong>Air Date: </strong> {{media.first_air_date}}</li>
+          </ul>
+        </div>
 
-       <div ng-if="media.trailerKey">
-         <h4>{{'VIDEO.TRAILER' | translate}}</h4>
-         <iframe width="560" height="315" ng-src="{{'https://www.youtube.com/embed/'+media.trailerKey+'?rel=0' | trustResourceUrl}}"
-                 frameborder="0" allowfullscreen></iframe>
-       </div>
-     </div>
-     <div class="col-sm-4">
-       <img ng-if="media.poster_path && !media.poster_image_src" ng-src="{{media.poster_path}}"/>
-       <img ng-if="media.poster_image_src" ng-src="{{media.poster_image_src}}"/>
-     </div>
+        <hr/>
 
-   </div>
+        <div class="col-md-6" style="padding-left:0px">
+          <legend>
+            BY: {{media.name || media.title || media.showName}}
 
-   <hr>
+            <a ng-if="$root.isDownloadButtonVisible && mediaType == 'movie'"
+               href="{{media.videoFiles[0].src}}" download="{{media.videoFiles[0].originalFilename}}">
+              <i class="ion-android-download" style="font-size: 24px;"></i>
+            </a>
+          </legend>
 
-   <div class="season-picker-list">
+
+          <div class="row">
+            <div class="col-xs-12" style="height:40px; padding:5px 15px;">
+              <!--         Create logic for ng-if = !twitter.exists { hide social link } -->
+              <a target="_blank" href="http://twitter.com/{{media.twitterLink}}" class="fa fa-twitter" style="text-decoration: none; height:40px; width:40px; font-size:30px; margin-right:10px; padding:0px; border-radius: 50%;"></a>
+              <a target="_blank" href="http://linkedin.com/in/{{media.linkedInLink}}" class="fa fa-linkedin" style="text-decoration: none; height:40px; width:40px; font-size:30px; margin-right:10px; padding:0px; border-radius: 50%;"></a>
+              <a target="_blank" href="http://instagram.com/{{media.instagramLink}}" class="fa fa-instagram" style="text-decoration: none; height:40px; width:40px; font-size:30px; margin-right:10px; padding:0px; border-radius: 50%;"></a>
+            </div>
+          </div>
+
+          <h4 style="margin-bottom:0px;">Portfolio:</h4>
+<!--          <a>{{media.portfolioLink}}</a>-->
+
+        </div>
+
+
+
+        <div class="col-md-6" style="padding-left:0px; margin: 10px 0px;">
+          <!--         STUDENT PHOTO GOES HERE -->
+          <img src="{{media.imdb_id}}" alt="Italian Trulli" style="width:300px;height:180px;">
+        </div>
+
+
+        <img ng-if="media.still_path" ng-src="{{media.still_path}}"/>
+
+        <!--       <div ng-if="media.trailerKey">-->
+        <!--         <h4>{{'VIDEO.TRAILER' | translate}}</h4>-->
+        <!--         <iframe width="560" height="315" ng-src="{{'https://www.youtube.com/embed/'+media.trailerKey+'?rel=0' | trustResourceUrl}}"-->
+        <!--                 frameborder="0" allowfullscreen></iframe>-->
+        <!--       </div>-->
+      </div>
+      <div class="col-sm-4">
+        <img ng-if="media.poster_path && !media.poster_image_src" ng-src="{{media.poster_path}}"/>
+        <img ng-if="media.poster_image_src" ng-src="{{media.poster_image_src}}"/>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="season-picker-list">
     <span class="season-picker-item" ng-class="{'active': currentSeason == season}" ng-click="setCurrentSeason(season)"
           ng-repeat="season in seasons | orderBy:number">
       {{'VIDEO.SEASON' | translate}} {{season}}
     </span>
-   </div>
+    </div>
 
-   <div class="media-list">
-     <div class="media-list-item episode-wrapper" style="padding-bottom: 8px;"
-          ng-repeat="episode in listEpisodesForSeason(currentSeason) | orderBy:'episode_number'"
-          ng-class="{'no-files': !episode.hasFile}">
-       <h3 class="media-episode-string">
-         <span ng-show="episode.episodeString">{{episode.episodeString}}</span>
-         <span ng-show="!episode.episodeString">s{{episode.season_number | padnumber:2}}e{{episode.episode_number | padnumber:2}}</span>
+    <div class="media-list">
+      <div class="media-list-item episode-wrapper" style="padding-bottom: 8px;"
+           ng-repeat="episode in listEpisodesForSeason(currentSeason) | orderBy:'episode_number'"
+           ng-class="{'no-files': !episode.hasFile}">
+        <h3 class="media-episode-string">
+          <span ng-show="episode.episodeString">{{episode.episodeString}}</span>
+          <span ng-show="!episode.episodeString">s{{episode.season_number | padnumber:2}}e{{episode.episode_number | padnumber:2}}</span>
 
-         <a class="pull-right" ng-if="$root.isDownloadButtonVisible"
-            href="{{episode.videoFiles[0].src}}" download="{{episode.videoFiles[0].originalFilename}}">
-           <i class="ion-android-download" style="font-size: 24px;"></i>
-         </a>
-       </h3>
-       <h3 class="media-title">{{episode.name}}</h3>
-       <div class="media-item" >
-         <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.still_path}}"/>
-         <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>
-         <div ng-if="!episode.still_path && !episode.still_image_src" class="fallback-image"></div>
-         <a ng-show="episode.hasFile" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
-       </div>
-       <streama-progress-bar video="episode" ng-if="episode.isInProgress"></streama-progress-bar>
-       <div style="height: 35px;" ng-if="!episode.isInProgress"></div>
-     </div>
+          <a class="pull-right" ng-if="$root.isDownloadButtonVisible"
+             href="{{episode.videoFiles[0].src}}" download="{{episode.videoFiles[0].originalFilename}}">
+            <i class="ion-android-download" style="font-size: 24px;"></i>
+          </a>
+        </h3>
+        <h3 class="media-title">{{episode.name}}</h3>
+        <div class="media-item" >
+          <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.still_path}}"/>
+          <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>
+          <div ng-if="!episode.still_path && !episode.still_image_src" class="fallback-image"></div>
+          <a ng-show="episode.hasFile" ui-sref="player({videoId: episode.id})" class="play-icon ion-ios-play"></a>
+        </div>
+        <streama-progress-bar video="episode" ng-if="episode.isInProgress"></streama-progress-bar>
+        <div style="height: 35px;" ng-if="!episode.isInProgress"></div>
+      </div>
 
-   </div>
- </div>
+    </div>
+  </div>
 
 
 </div>
