@@ -19,20 +19,14 @@
           <div class="bounce3"></div>
         </div>
       </div>
-      <div class="col-sm-12" ng-if="addManually">
-        <input type="text" class="form-control" ng-model="movie.title" placeholder="Movie Name">
-      </div>
     </div>
 
     <div ng-show="movie.apiId || addManually">
+      <h4 style="color:#BBBBBB">STUDENT INFORMATION</h4>
       <div class="form-group row-slim">
-        <div class="col-sm-2">
-          <label>Release Date</label>
-          <input type="text" class="form-control input-sm" ng-model="movie.release_date" placeholder="2003-01-23"/>
-        </div>
-        <div class="col-sm-2">
-          <label>IMDB ID</label>
-          <input type="text" class="form-control input-sm" ng-model="movie.imdb_id" placeholder="tt0383126"/>
+        <div class="col-sm-8">
+          <label>Student Name</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.studentName"/>
         </div>
         <div ng-hide="addManually">
           <div class="col-sm-2">
@@ -55,39 +49,56 @@
           </div>
         </div>
       </div>
+
       <div class="form-group row-slim">
-        <div class="col-sm-3">
-          <label>YouTube Trailer Key</label>
-          <input type="text" class="form-control input-sm" ng-model="movie.trailerKey"/>
+        <div class="col-sm-4">
+          <label>Student Image (URL)</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.studentImage"/>
         </div>
-        <div class="col-sm-3">
-          <label>Timestamp Added</label>
-          <input type="text" class="form-control input-sm" ng-model="movie.dateCreated"/>
-        </div>
-        <div class="col-sm-3">
-          <label>Poster ID</label>
-          <input type="text" class="form-control input-sm" ng-model="movie.poster_path"/>
-        </div>
-        <div class="col-sm-3">
-          <label>Backdrop ID</label>
-          <input type="text" class="form-control input-sm" ng-model="movie.backdrop_path"/>
+        <div class="col-sm-4">
+          <label>Portfolio Link</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.portfolioLink"/>
         </div>
       </div>
+
       <div class="form-group row-slim">
-        <div class="col-sm-3">
-          <label>LinkedIn</label>
+        <div class="col-sm-4">
+          <label>LinkedIn Username</label>
           <input type="text" class="form-control input-sm" ng-model="movie.linkedInLink"/>
         </div>
-        <div class="col-sm-3">
-          <label>Instgram</label>
+        <div class="col-sm-4">
+          <label>Instgram Username</label>
           <input type="text" class="form-control input-sm" ng-model="movie.instagramLink"/>
         </div>
-        <div class="col-sm-3">
-          <label>Twitter</label>
+        <div class="col-sm-4">
+          <label>Twitter Username</label>
           <input type="text" class="form-control input-sm" ng-model="movie.twitterLink"/>
         </div>
-
       </div>
+
+      <hr>
+
+
+      <h4 style="color:#BBBBBB">MOVIE INFORMATION</h4>
+      <div class="form-group row-slim">
+        <div class="col-sm-8">
+          <label>Movie Name</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.title"/>
+        </div>
+<!--        <div class="col-sm-4">-->
+<!--          <label>YouTube Key</label>-->
+<!--          <input type="text" class="form-control input-sm" ng-model="movie.trailerKey"/>-->
+<!--        </div>-->
+<!--        <div class="col-sm-3">-->
+<!--          <label>Poster ID</label>-->
+<!--          <input type="text" class="form-control input-sm" ng-model="movie.poster_path"/>-->
+<!--        </div>-->
+<!--        <div class="col-sm-3">-->
+<!--          <label>Backdrop ID</label>-->
+<!--          <input type="text" class="form-control input-sm" ng-model="movie.backdrop_path"/>-->
+<!--        </div>-->
+      </div>
+
       <div class="form-group row-slim" ng-if="movie.apiId">
         <div class="col-sm-3">
           <label>TMDB Link:</label>
@@ -97,7 +108,7 @@
 
       <div class="form-group">
         <div class="col-sm-12">
-          <label>Overview</label>
+          <label>Description</label>
           <textarea class="form-control" cols="30" rows="4" ng-model="movie.overview" placeholder="Overview"></textarea>
         </div>
       </div>
