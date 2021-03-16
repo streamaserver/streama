@@ -133,6 +133,9 @@ class MarshallerService {
       returnArray['poster_image_src'] = movie.poster_image?.src
       returnArray['backdrop_image_src'] = movie.backdrop_image?.src
       returnArray['genre'] = movie.genre
+      returnArray['twitterLink'] = movie.twitterLink
+      returnArray['linkedInLink'] = movie.linkedInLink
+      returnArray['instagramLink'] = movie.instagramLink
 
       returnArray['files'] = movie.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }
       returnArray['subtitles'] = movie.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }

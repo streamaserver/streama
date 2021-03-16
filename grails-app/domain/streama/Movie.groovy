@@ -11,6 +11,9 @@ class Movie extends Video{
   String backdrop_path
   String poster_path
   String trailerKey
+  String twitterLink
+  String instagramLink
+  String linkedInLink
   File poster_image
   File backdrop_image
 
