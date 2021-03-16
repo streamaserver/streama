@@ -77,9 +77,9 @@
 
         <hr/>
 
-        <div class="col-md-6" style="padding-left:0px">
+        <div class="col-md-7" style="padding-left:0px">
           <legend>
-            BY: {{media.name || media.title || media.showName}}
+            BY: {{media.studentName}}
 
             <a ng-if="$root.isDownloadButtonVisible && mediaType == 'movie'"
                href="{{media.videoFiles[0].src}}" download="{{media.videoFiles[0].originalFilename}}">
@@ -98,15 +98,15 @@
           </div>
 
           <h4 style="margin-bottom:0px;">Portfolio:</h4>
-<!--          <a>{{media.portfolioLink}}</a>-->
+          <a>{{media.portfolioLink}}</a>
 
         </div>
 
 
 
-        <div class="col-md-6" style="padding-left:0px; margin: 10px 0px;">
+        <div class="col-md-5" style="padding-left:0px; margin: 10px 0px;">
           <!--         STUDENT PHOTO GOES HERE -->
-          <img src="{{media.imdb_id}}" alt="Italian Trulli" style="width:300px;height:180px;">
+          <img src="{{media.studentImage}}" alt="Italian Trulli" style="width:300px;height:180px;">
         </div>
 
 
