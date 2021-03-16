@@ -404,6 +404,7 @@ class MarshallerService {
         returnArray['backdrop_path'] = movie.backdrop_path
         returnArray['poster_path'] = movie.getPosterPath(342)
         returnArray['trailerKey'] = movie.trailerKey
+        returnArray['twitterLink'] = movie.twitterLink
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
         returnArray['poster_image_src'] = movie.poster_image?.src

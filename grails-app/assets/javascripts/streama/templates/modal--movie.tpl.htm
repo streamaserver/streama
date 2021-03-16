@@ -73,6 +73,21 @@
           <input type="text" class="form-control input-sm" ng-model="movie.backdrop_path"/>
         </div>
       </div>
+      <div class="form-group row-slim">
+        <div class="col-sm-3">
+          <label>LinkedIn</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.linkedInLink"/>
+        </div>
+        <div class="col-sm-3">
+          <label>Instgram</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.instagramLink"/>
+        </div>
+        <div class="col-sm-3">
+          <label>Twitter</label>
+          <input type="text" class="form-control input-sm" ng-model="movie.twitterLink"/>
+        </div>
+
+      </div>
       <div class="form-group row-slim" ng-if="movie.apiId">
         <div class="col-sm-3">
           <label>TMDB Link:</label>
