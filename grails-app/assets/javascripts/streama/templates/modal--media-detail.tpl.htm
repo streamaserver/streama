@@ -66,6 +66,15 @@
           </ul>
         </div>
 
+        <div ng-if="media.tags.length">
+          <h4>Specialties</h4>
+          <ul class="genre-list">
+            <li class="genre-tag interactive" ng-repeat="tag in media.tags" ui-sref="dash({tagId: tag.id})">
+              {{tag.name}}
+            </li>
+          </ul>
+        </div>
+
 
         <div ng-if="mediaType == 'episode'">
           <h3>S{{media.season | padnumber:2}}E{{media.episodeNumber | padnumber:2}} - {{media.episodeName}}</h3>

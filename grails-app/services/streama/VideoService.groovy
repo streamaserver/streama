@@ -152,6 +152,8 @@ class VideoService {
     String order = params.order
     Long genreId = params.long('genreId')
     List<Long> genreList = params.list('genre')*.toLong() ?: []
+    Long tagId = params.long('tagId')
+    List<Long> tagList = params.list('tags')*.toLong() ?: []
 
     if(currentProfile?.isChild){
       genreList += Genre.findAllByNameInList(['Kids', 'Family'])*.id
@@ -170,10 +172,20 @@ class VideoService {
           id == genreId
         }
       }
-
       if(genreList){
         genre{
-          id in genreList
+          id == genreList
+        }
+      }
+
+      if(tagId){
+        tags{
+          id == tagId
+        }
+      }
+      if(tagList){
+        tags{
+          id == tagList
         }
       }
     }

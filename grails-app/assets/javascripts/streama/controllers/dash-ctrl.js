@@ -13,6 +13,7 @@ angular.module('streama').controller('dashCtrl',
     vm.getNewReleaseBackdrop = getNewReleaseBackdrop;
 
     $scope.$on('changedGenre', onChangedGenre);
+    $scope.$on('changedTag', onChangedTag);
     $scope.$on('video.updateWatchlist', onVideoUpdateWatchlist);
 
     init();
@@ -97,7 +98,14 @@ angular.module('streama').controller('dashCtrl',
 
     function onTagsLoaded(response) {
       var data = response.data;
-      vm.tags = data;
+      // vm.tags = data;
+      $rootScope.tags = data;
+
+      if ($stateParams.tagId) {
+        $rootScope.selectedTag = _.find(data, {id: parseInt($stateParams.tagId)});
+        vm.movie.filter.tag = [$rootScope.selectedTag];
+        vm.tvShow.filter.tag = [$rootScope.selectedTag];
+      }
     }
 
     function onGenreLoaded(response) {
@@ -125,6 +133,20 @@ angular.module('streama').controller('dashCtrl',
         }
       });
       return settingsPromise;
+    }
+
+    function onChangedTag(e, tag) {
+      $rootScope.selectedTag = tag;
+      var tagFilter;
+      if ($rootScope.selectedTag) {
+        tagFilter = [$rootScope.selectedTag.id];
+      } else {
+        tagFilter = [];
+      }
+      vm.movie.filter.tags = tagFilter;
+      vm.tvShow.filter.tags = tagFilter;
+      vm.movie.setFilter();
+      vm.tvShow.setFilter();
     }
 
     function onChangedGenre(e, genre) {
