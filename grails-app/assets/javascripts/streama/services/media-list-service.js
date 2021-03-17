@@ -15,7 +15,7 @@ angular.module('streama').factory('mediaListService', function () {
         sorter: _.getterSetter(setSort, getSort),
         setFilter: setFilter,
         filter: {
-          tags: null,
+          tags: [],
           genre: [],
           title: null
         },
