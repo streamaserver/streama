@@ -133,9 +133,7 @@ class MarshallerService {
       returnArray['poster_image_src'] = movie.poster_image?.src
       returnArray['backdrop_image_src'] = movie.backdrop_image?.src
       returnArray['genre'] = movie.genre
-      returnArray['studentName'] = movie.studentName
-      returnArray['studentImage'] = movie.studentImage
-      returnArray['portfolioLink'] = movie.portfolioLink
+
       returnArray['twitterLink'] = movie.twitterLink
       returnArray['linkedInLink'] = movie.linkedInLink
       returnArray['instagramLink'] = movie.instagramLink

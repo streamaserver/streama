@@ -175,12 +175,21 @@
      </h3>
 
     <div class="row dash-filter" ng-hide="!vm.movie.filter && !vm.movie.list.length">
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         {{'DASHBOARD.SORT' | translate}}
         <video-sort-order-dropdown ng-model="vm.movie.sorter" ng-model-options="{getterSetter:true}" dropdown-type="'movie'"></video-sort-order-dropdown>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-sm-6">
+        <input class="form-control input-sm" type="text" ng-model="vm.movie.filter.title" ng-model-options="{debounce: 400}"
+               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" ng-change="vm.movie.setFilter()" />
+      </div>
+    </div>
+
+    <h5 style="color:#bbbbbb;margin:5px 0px">Search by student skills:</h5>
+
+    <div class="row dash-filter" ng-hide="!vm.movie.filter && !vm.movie.list.length">
+      <div class="col-sm-6">
         <ui-select class="tag-select" multiple ng-model="vm.movie.filter.genre" ng-change="vm.movie.setFilter()" theme="bootstrap" title="Filter by Genre">
           <ui-select-match placeholder="{{'DASHBOARD.FILTER_BY_GENRE' | translate}}">{{$item.name}}</ui-select-match>
           <ui-select-choices repeat="genre.id as genre in genres | propsFilter: {name: $select.search}">
@@ -191,10 +200,18 @@
         </ui-select>
       </div>
 
-      <div class="col-sm-4">
-        <input class="form-control input-sm" type="text" ng-model="vm.movie.filter.title" ng-model-options="{debounce: 400}"
-               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" ng-change="vm.movie.setFilter()" />
+      <div class="col-sm-6">
+        <ui-select class="tag-select" multiple ng-model="vm.movie.filter.tags" ng-change="vm.movie.setFilter()" theme="bootstrap" title="Filter by Tags">
+          <ui-select-match placeholder="{{'DASHBOARD.FILTER_BY_TAG' | translate}}">{{$item.name}}</ui-select-match>
+          <ui-select-choices repeat="tag.id as tag in tags | propsFilter: {name: $select.search}">
+            <div class="tag-wrapper">
+              <div class="tag-name" ng-bind-html="tag.name | highlight: $select.search"></div>
+            </div>
+          </ui-select-choices>
+        </ui-select>
       </div>
+
+
     </div>
     <br>
 
