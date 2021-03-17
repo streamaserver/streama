@@ -174,7 +174,7 @@ class VideoService {
       }
       if(genreList){
         genre{
-          id == genreList
+          id in genreList
         }
       }
 
@@ -185,7 +185,7 @@ class VideoService {
       }
       if(tagList){
         tags{
-          id == tagList
+          id in tagList
         }
       }
     }
