@@ -97,7 +97,14 @@ angular.module('streama').controller('dashCtrl',
 
     function onTagsLoaded(response) {
       var data = response.data;
-      vm.tags = data;
+      // vm.tags = data;
+      $rootScope.tags = data;
+
+      if ($stateParams.tagId) {
+        $rootScope.selectedTag = _.find(data, {id: parseInt($stateParams.tagId)});
+        vm.movie.filter.tag = [$rootScope.selectedTag];
+        vm.tvShow.filter.tag = [$rootScope.selectedTag];
+      }
     }
 
     function onGenreLoaded(response) {
