@@ -16,7 +16,7 @@ class ViewingStatus {
   Boolean completed = false
   Profile profile
 
-  static Integer COMPLETED_PERCENTAGE_THRESHOLD = 95
+  static Integer COMPLETED_PERCENTAGE_THRESHOLD = 0
 
   static mapping = {
     cache true
