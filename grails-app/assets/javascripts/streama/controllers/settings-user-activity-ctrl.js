@@ -1,6 +1,6 @@
 angular.module('streama').controller('settingsUserActivityCtrl', ['$scope', 'apiService', 'modalService', '$rootScope',
   function ($scope, apiService, modalService, $rootScope) {
-    var MAX_PER_PAGE = 10;
+    var MAX_PER_PAGE = 300;
     var vm = this;
     vm.currentOffset = 0;
     vm.loading = true;
