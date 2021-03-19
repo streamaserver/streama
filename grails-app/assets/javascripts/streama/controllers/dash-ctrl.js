@@ -4,7 +4,7 @@ angular.module('streama').controller('dashCtrl',
 	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService, currentUser ) {
   var vm = this;
 
-    var LIST_MAX = 30;
+    var LIST_MAX = 300;
     vm.showDetails = showDetails;
     vm.handleWatchlistUpdate = handleWatchlistUpdate;
     vm.loadingRecommendations = true;
