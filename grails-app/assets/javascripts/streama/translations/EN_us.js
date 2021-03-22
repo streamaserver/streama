@@ -20,7 +20,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       TITLE: 'Dashboard',
       TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: 'Recommendations for you',
-      NEW_RELEASES: 'New Releases',
+      NEW_RELEASES: 'SHOWCASE',
       CONTINUE_WATCHING: 'Continue Watching',
       DISCOVER_SHOWS: 'Discover Shows',
       DISCOVER_MOVIES: 'Discover Movies',
