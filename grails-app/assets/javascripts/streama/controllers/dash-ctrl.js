@@ -212,24 +212,6 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
-    function applyFilter(item, filterObj) {
-      var showItemArray = [];
-
-      _.forEach(filterObj, function (filterVal, key) {
-        if (_.isArray(filterVal) && filterVal.length) {
-          var intersection = _.intersectionBy(item[key], filterVal, 'id');
-          var isVisible = (intersection.length ? true : false);
-          showItemArray.push(isVisible);
-        }
-        if (_.isString(filterVal) && filterVal.length >= 1) {
-          var isVisible = (_.includes(item[key].toLowerCase(), filterVal.toLowerCase()) ? true : false);
-          showItemArray.push(isVisible);
-        }
-      });
-
-      return (showItemArray.indexOf(false) < 0);
-    }
-
     function isDashSectionHidden(sectionName) {
       var hiddenDashSectionSetting = _.find($scope.settings, {name: 'hidden_dash_sections'});
       if(_.get(hiddenDashSectionSetting, 'parsedValue')){
