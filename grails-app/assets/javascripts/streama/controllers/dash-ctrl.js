@@ -46,7 +46,7 @@ angular.module('streama').controller('dashCtrl',
         vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
       }
       if(isDashType("home") || isDashType("continue-watching")){
-        vm.continueWatching = mediaListService.init(apiService.dash.listContinueWatching, {sort: 'currentPlayTime', order: 'DESC'}, currentUser)
+        vm.continueWatching = mediaListService.init(apiService.dash.listContinueWatching, {sort: 'lastUpdated', order: 'DESC'}, currentUser)
       }
       if(isDashType("home") || isDashType("watchlist")){
         vm.watchlistEntry = mediaListService.init(apiService.watchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser);
