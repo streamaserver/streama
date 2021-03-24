@@ -24,8 +24,12 @@ class VideoService {
   }
 
 
-  public static List<ViewingStatus> listContinueWatching(User currentUser, Profile profile) {
-    List<ViewingStatus> continueWatching = ViewingStatus.withCriteria {
+  static Map listContinueWatching(User currentUser, Profile profile, GrailsParameterMap params) {
+    def max = params.int('max', 50)
+    def offset = params.int('offset', 0)
+    String sort = params.sort
+    String order = params.order
+    def continueWatchingQuery = ViewingStatus.where {
       eq("user", currentUser)
       eq("profile", profile)
       video {
@@ -33,10 +37,11 @@ class VideoService {
         ne("deleted", true)
       }
 //      eq("completed", false)
-      order("lastUpdated", "desc")
     }
 
-    return reduceContinueWatchingEps(continueWatching)
+    def viewingStatusList = continueWatchingQuery.list(max : max, offset: offset, sort: sort, order: order)
+    def totalCount = continueWatchingQuery.count()
+    return [total: totalCount, list: reduceContinueWatchingEps(viewingStatusList)]
   }
 
   private static List<ViewingStatus> reduceContinueWatchingEps(List<ViewingStatus> continueWatching) {
