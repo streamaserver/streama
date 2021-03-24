@@ -4,7 +4,6 @@ angular.module('streama').controller('dashCtrl',
 	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService, currentUser ) {
   var vm = this;
 
-    var LIST_MAX = 30;
     vm.showDetails = showDetails;
     vm.handleWatchlistUpdate = handleWatchlistUpdate;
     vm.loadingRecommendations = true;
@@ -46,13 +45,15 @@ angular.module('streama').controller('dashCtrl',
       if(isDashType("home") || isDashType("discover-shows")){
         vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
       }
+      if(isDashType("home") || isDashType("continue-watching")){
+        vm.continueWatching = mediaListService.init(apiService.dash.listContinueWatching, {sort: 'currentPlayTime', order: 'DESC'}, currentUser)
+      }
       if(isDashType("home") || isDashType("watchlist")){
         vm.watchlistEntry = mediaListService.init(apiService.watchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser);
       }
       if(isDashType("home")){
         vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser);
         apiService.dash.listNewReleases().then(onNewReleasesLoaded);
-        apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
         apiService.dash.listRecommendations().then(onRecommendedLoaded);
       }
 
@@ -70,24 +71,6 @@ angular.module('streama').controller('dashCtrl',
       var data = response.data;
       vm.recommendations = data;
       vm.loadingRecommendations = false;
-    }
-
-    function fetchData(mediaConfig) {
-      mediaConfig.fetch({max: LIST_MAX, offset: mediaConfig.currentOffset, sort: mediaConfig.currentSort.sort, order: mediaConfig.currentSort.order}).then(function (response) {
-        var data = response.data;
-        mediaConfig.total = data.total;
-        if(mediaConfig.currentOffset > 0){
-          mediaConfig.list = _.unionBy(mediaConfig.list, data.list, 'id');
-        }else{
-          mediaConfig.list = data.list;
-        }
-        mediaConfig.isLoading = false;
-      });
-    }
-
-    function onContinueWatchingLoaded(response) {
-      var data = response.data;
-      vm.continueWatching = data;
     }
 
     function onNewReleasesLoaded(response) {
