@@ -341,8 +341,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/searchMedia.json', {params: {query: query}});
 			},
 
-			listContinueWatching: function () {
-				return $http.get('dash/listContinueWatching.json');
+			listContinueWatching: function (params) {
+				return $http.get('dash/listContinueWatching.json', {params: params});
 			},
 
 			listMovies: function (params) {
