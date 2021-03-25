@@ -187,7 +187,7 @@ function modalService($uibModal, $state) {
 		});
 	}
 
-	function fileManagerModal (video, callback) {
+	function fileManagerModal (video, episodes, callback) {
 		var modalInstance = $uibModal.open({
 			templateUrl: '/streama/modal--manage-files.htm',
 			controller: 'modalFileCtrl',
@@ -197,6 +197,9 @@ function modalService($uibModal, $state) {
 			resolve: {
 				video: function () {
 					return video;
+				},
+        episodes: function () {
+					return episodes;
 				}
 			}
 		});

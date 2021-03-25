@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalFileCtrl', [
-  '$scope', '$uibModalInstance', 'apiService', 'modalService', 'uploadService', 'video', 'localStorageService', '$rootScope', '$stateParams',
-  function ($scope, $uibModalInstance, apiService, modalService, uploadService, video, localStorageService, $rootScope, $stateParams) {
+  '$scope', '$uibModalInstance', 'apiService', 'modalService', 'uploadService', 'video', 'episodes', 'localStorageService', '$rootScope', '$stateParams',
+  function ($scope, $uibModalInstance, apiService, modalService, uploadService, video, episodes, localStorageService, $rootScope, $stateParams) {
     $scope.loading = false;
     $scope.localFilesEnabled = false;
     $scope.localFiles = [];
@@ -19,12 +19,6 @@ angular.module('streama').controller('modalFileCtrl', [
     $scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + video.id, onUploadSuccess, function () {
     });
     $scope.openNextEpisode = localStorageService.get('fileModal.closeOnSelect');
-    apiService.tvShow.adminEpisodesForTvShow($stateParams.showId).then(function (response) {
-      $scope.episodes = response.data;
-      if($scope.episodes.length){
-        $scope.seasons = _.chain($scope.episodes).map('season_number').uniq().value();
-      }
-    });
 
     $scope.loadLocalFiles = loadLocalFiles;
     $scope.backLocalDirectory = backLocalDirectory;
@@ -119,12 +113,12 @@ angular.module('streama').controller('modalFileCtrl', [
     }
 
     function loadNextEpisodeModal() {
-      var currentSeason = _.filter($scope.episodes, {'season_number': $scope.video.season_number});
+      var currentSeason = _.filter(episodes, {'season_number': $scope.video.season_number});
       var lastEpisodeId = currentSeason[currentSeason.length - 1].id;
+      var nextEpisodeId = $scope.video.id + 1;
+      var nextEpisode = _.find(episodes, {id: nextEpisodeId});
       if ($scope.openNextEpisode && $scope.video.id < lastEpisodeId) {
-        apiService.video.get($scope.video.id + 1).then(function (response) {
-          modalService.fileManagerModal(response.data);
-        });
+        modalService.fileManagerModal(nextEpisode, episodes);
       }
     }
 
