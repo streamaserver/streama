@@ -68,7 +68,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     },
     MANAGE_CONTENT: 'Manage Content',
     MANAGE_SUB_PROFILES: 'Manage profiles',
-    WHOS_WATCHING: 'Who\'s watching?',
+    WHOS_WATCHING: 'Position Profiles',
     ADD_SUB_PROFILE: 'Add Profile',
     EDIT_BTN: 'Edit',
     DONE_BTN: 'Done',
