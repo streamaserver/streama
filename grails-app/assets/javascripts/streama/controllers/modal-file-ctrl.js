@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').controller('modalFileCtrl', [
-  '$scope', '$uibModalInstance', 'apiService', 'modalService', 'uploadService', 'video', 'localStorageService', '$rootScope',
-  function ($scope, $uibModalInstance, apiService, modalService, uploadService, video, localStorageService, $rootScope) {
+  '$scope', '$uibModalInstance', 'apiService', 'modalService', 'uploadService', 'video', 'localStorageService', '$rootScope', '$stateParams',
+  function ($scope, $uibModalInstance, apiService, modalService, uploadService, video, localStorageService, $rootScope, $stateParams) {
     $scope.loading = false;
     $scope.localFilesEnabled = false;
     $scope.localFiles = [];
@@ -17,6 +17,13 @@ angular.module('streama').controller('modalFileCtrl', [
     $scope.video = video;
     $scope.uploadStatus = {};
     $scope.upload = uploadService.doUpload.bind(uploadService, $scope.uploadStatus, 'video/uploadFile.json?id=' + video.id, onUploadSuccess, function () {
+    });
+    $scope.openNextEpisode = localStorageService.get('fileModal.closeOnSelect');
+    apiService.tvShow.adminEpisodesForTvShow($stateParams.showId).then(function (response) {
+      $scope.episodes = response.data;
+      if($scope.episodes.length){
+        $scope.seasons = _.chain($scope.episodes).map('season_number').uniq().value();
+      }
     });
 
     $scope.loadLocalFiles = loadLocalFiles;
@@ -34,6 +41,7 @@ angular.module('streama').controller('modalFileCtrl', [
     $scope.addExternalUrl = addExternalUrl;
     $scope.toggleEdit = toggleEdit;
     $scope.isEditing = isEditing;
+    $scope.toggleOpenNextEpisode = toggleOpenNextEpisode;
 
     $scope.loadLocalFiles(localFileLastPath);
 
@@ -107,6 +115,17 @@ angular.module('streama').controller('modalFileCtrl', [
       }, function (data) {
         alertify.error(data.message);
       });
+    loadNextEpisodeModal();
+    }
+
+    function loadNextEpisodeModal() {
+      var currentSeason = _.filter($scope.episodes, {'season_number': $scope.video.season_number});
+      var lastEpisodeId = currentSeason[currentSeason.length - 1].id;
+      if ($scope.openNextEpisode && $scope.video.id < lastEpisodeId) {
+        apiService.video.get($scope.video.id + 1).then(function (response) {
+          modalService.fileManagerModal(response.data);
+        });
+      }
     }
 
     function removeFile(file) {
@@ -140,6 +159,7 @@ angular.module('streama').controller('modalFileCtrl', [
 
     function cancel() {
       $uibModalInstance.dismiss('cancel');
+      loadNextEpisodeModal();
     }
 
     function saveChanges(file) {
@@ -188,6 +208,10 @@ angular.module('streama').controller('modalFileCtrl', [
     function toggleCloseOnSelect() {
       $scope.closeOnSelect = !$scope.closeOnSelect;
       localStorageService.set('fileModal.closeOnSelect', $scope.closeOnSelect);
+    }
+
+    function toggleOpenNextEpisode() {
+      $scope.openNextEpisode = $scope.openNextEpisode !== true;
     }
 
     function getFilesForExtensions(extensions) {
