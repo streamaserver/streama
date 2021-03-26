@@ -36,6 +36,7 @@ angular.module('streama').controller('modalFileCtrl', [
     $scope.toggleEdit = toggleEdit;
     $scope.isEditing = isEditing;
     $scope.toggleOpenNextEpisode = toggleOpenNextEpisode;
+    $scope.closeAndOpenNext = closeAndOpenNext;
 
     $scope.loadLocalFiles(localFileLastPath);
 
@@ -152,6 +153,10 @@ angular.module('streama').controller('modalFileCtrl', [
     }
 
     function cancel() {
+      $uibModalInstance.dismiss('cancel');
+    }
+
+    function closeAndOpenNext() {
       $uibModalInstance.dismiss('cancel');
       loadNextEpisodeModal();
     }
