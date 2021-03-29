@@ -79,6 +79,9 @@
           <label>
             <input type="checkbox" ng-model="closeOnSelect" ng-click="toggleCloseOnSelect()"> Close Modal on Select
           </label>
+          <label>
+            <input type="checkbox" ng-model="openNextEpisode" ng-click="toggleOpenNextEpisode()"> Open Next Episode
+          </label>
         </div>
       </div>
 
@@ -163,5 +166,6 @@
 <div class="modal-footer">
   <button class="btn btn-secondary" ng-click="manageOpenSubtitle(video)">Add from Opensubtitles</button>
   <button class="btn btn-default" ng-click="cancel()">Close</button>
+  <button class="btn btn-default" ng-click="closeAndOpenNext()">Close and open next</button>
 </div>
 
