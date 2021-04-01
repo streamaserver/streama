@@ -20,6 +20,9 @@ environments:
             url: jdbc:mysql://localhost/streama
             username: root
             password: root
+     #   server:
+     #     port: 8888
+
     mysql:
         dataSource:
             dbCreate: update
@@ -55,6 +58,9 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+     #   server:
+     #     port: 8888
+
     docker:
         dataSource:
             dbCreate: update

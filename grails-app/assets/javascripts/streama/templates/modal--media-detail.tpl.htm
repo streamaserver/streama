@@ -26,15 +26,15 @@
     <div class="col-xs-12">
       <a ng-if="!isApiMovie" class="icon-play ion-android-arrow-dropright-circle" ui-sref="player({videoId: (firstEpisode.id || media.id)})"></a>
 
-      <div ng-if="!media.inWatchlist" class="watchlist-button">
-        <i class="add-icon ion-android-add-circle" ng-click="addToWatchlist(media)"></i>
-      </div>
-      <div ng-if="media.mediaType === 'tvShow'" class="watchlist-button">
-        <i class="shuffle-icon ion-shuffle" ui-sref="player({videoId: (randomEpisode.id)})"></i>
-      </div>
-      <div ng-if="media.inWatchlist" class="watchlist-button">
-        <i class="remove-icon ion-android-remove-circle" ng-click="removeFromWatchlist(media)"></i>
-      </div>
+<!--      <div ng-if="!media.inWatchlist" class="watchlist-button">-->
+<!--        <i class="add-icon ion-android-add-circle" ng-click="addToWatchlist(media)"></i>-->
+<!--      </div>-->
+<!--      <div ng-if="media.mediaType === 'tvShow'" class="watchlist-button">-->
+<!--        <i class="shuffle-icon ion-shuffle" ui-sref="player({videoId: (randomEpisode.id)})"></i>-->
+<!--      </div>-->
+<!--      <div ng-if="media.inWatchlist" class="watchlist-button">-->
+<!--        <i class="remove-icon ion-android-remove-circle" ng-click="removeFromWatchlist(media)"></i>-->
+<!--      </div>-->
     </div>
   </div>
 
@@ -113,10 +113,10 @@
 
 
 
-        <div class="col-md-5" style="padding-left:0px; margin: 10px 0px;">
-          <!--         STUDENT PHOTO GOES HERE -->
-          <img src="{{media.studentImage}}" alt="Italian Trulli" style="width:300px;height:180px;">
-        </div>
+<!--        <div class="col-md-5" style="padding-left:0px; margin: 10px 0px;">-->
+<!--          &lt;!&ndash;         STUDENT PHOTO GOES HERE &ndash;&gt;-->
+<!--          <img src="{{media.studentImage}}" alt="" style="width:300px;height:180px;">-->
+<!--        </div>-->
 
 
         <img ng-if="media.still_path" ng-src="{{media.still_path}}"/>

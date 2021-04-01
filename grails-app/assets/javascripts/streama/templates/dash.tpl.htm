@@ -36,38 +36,38 @@
   <h2 class="genre-display" ng-if="$root.selectedGenre">{{'DASHBOARD.LOOKING_AT_GENRE' | translate}} <strong ng-bind="$root.selectedGenre.name"></strong></h2>
 
   <!----------------------------------------------continue watching-------------------------------------------->
+  <!--
+    <div ng-if="vm.continueWatching.length && !$root.selectedGenre && vm.isDashType('home') && !vm.isDashSectionHidden('continue-watching')">
+      <hr/>
 
-  <div ng-if="vm.continueWatching.length && !$root.selectedGenre && vm.isDashType('home') && !vm.isDashSectionHidden('continue-watching')">
-    <hr/>
+      <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}</h3>
 
-    <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}</h3>
+      <div class="media-list media-list-continue-watching">
+        <div class="media-list-item media-poster-item" ng-repeat="viewingStatus in vm.continueWatching" ng-if="!viewingStatus.video.deleted">
 
-    <div class="media-list media-list-continue-watching">
-      <div class="media-list-item media-poster-item" ng-repeat="viewingStatus in vm.continueWatching" ng-if="!viewingStatus.video.deleted">
+          <streama-dash-media-item entity="viewingStatus.video"></streama-dash-media-item>
 
-        <streama-dash-media-item entity="viewingStatus.video"></streama-dash-media-item>
+          <div class="media-progress-wrapper">
 
-        <div class="media-progress-wrapper">
+            <div class="progress-info" ng-show="viewingStatus.video.isEpisode">
+              <span ng-bind="::viewingStatus.video.episodeString"></span> - <span ng-bind="::viewingStatus.video.title"></span>
+            </div>
+            <div class="progress-info" ng-show="!viewingStatus.video.isEpisode" ng-bind="::viewingStatus.video.title"></div>
 
-          <div class="progress-info" ng-show="viewingStatus.video.isEpisode">
-            <span ng-bind="::viewingStatus.video.episodeString"></span> - <span ng-bind="::viewingStatus.video.title"></span>
-          </div>
-          <div class="progress-info" ng-show="!viewingStatus.video.isEpisode" ng-bind="::viewingStatus.video.title"></div>
+            <div class="progress-time">
+              <span ng-bind="::(viewingStatus.currentPlayTime | secondsToTimeDisplay)"></span>
+              <span class="text-muted">/ <span ng-bind="::(viewingStatus.runtime | secondsToTimeDisplay)"></span></span>
+            </div>
 
-          <div class="progress-time">
-            <span ng-bind="::(viewingStatus.currentPlayTime | secondsToTimeDisplay)"></span>
-            <span class="text-muted">/ <span ng-bind="::(viewingStatus.runtime | secondsToTimeDisplay)"></span></span>
-          </div>
-
-          <div class="media-progress" ng-if="viewingStatus.runtime">
-            <div class="progress-inner" style="width: {{viewingStatus.currentPlayTime / viewingStatus.runtime * 100}}%;"></div>
+            <div class="media-progress" ng-if="viewingStatus.runtime">
+              <div class="progress-inner" style="width: {{viewingStatus.currentPlayTime / viewingStatus.runtime * 100}}%;"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </div> -->
 
-  <!----------------------------------------------recommendations-------------------------------------------->
+    <!----------------------------------------------recommendations-------------------------------------------->
 
   <div ng-if="vm.recommendations.length && !$root.selectedGenre && vm.isDashType('home') && !vm.isDashSectionHidden('recommends')">
     <hr/>

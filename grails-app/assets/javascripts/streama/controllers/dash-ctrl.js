@@ -4,7 +4,7 @@ angular.module('streama').controller('dashCtrl',
 	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService, currentUser ) {
   var vm = this;
 
-    var LIST_MAX = 30;
+    var LIST_MAX = 300;
     vm.showDetails = showDetails;
     vm.handleWatchlistUpdate = handleWatchlistUpdate;
     vm.loadingRecommendations = true;
@@ -289,5 +289,17 @@ angular.module('streama').controller('dashCtrl',
         return media.backdrop_image_src;
       }
     }
+
+// testing how to save scroll position
+
+    window.addEventListener('scroll',function() {
+      //When scroll change, you save it on localStorage.
+      localStorage.setItem('scrollPosition',window.scrollY);
+    },false);
+
+    window.addEventListener('load',function() {
+      if(localStorage.getItem('scrollPosition') !== null)
+        window.scrollTo(0, localStorage.getItem('scrollPosition'));
+    },false);
 
 	});
