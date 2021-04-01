@@ -3,6 +3,7 @@ package streama
 class GenericVideo extends Video{
 
   String title
+  String studentName
   String release_date
 
   File poster_image

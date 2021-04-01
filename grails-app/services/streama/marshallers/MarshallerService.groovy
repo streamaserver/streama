@@ -167,6 +167,7 @@ class MarshallerService {
       returnArray['original_language'] = genericVideo.original_language
 
       returnArray['title'] = genericVideo.title
+      returnArray['student_name'] = genericVideo.studentName
       returnArray['release_date'] = genericVideo.release_date
       returnArray['poster_image_src'] = genericVideo.poster_image?.src
       returnArray['backdrop_image_src'] = genericVideo.backdrop_image?.src
