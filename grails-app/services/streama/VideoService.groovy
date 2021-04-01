@@ -167,8 +167,8 @@ class VideoService {
       if(params.title){
         title =~ "%${params.title}%"
       }
-      if(params.student_name){
-        studentName =~ "%${params.student_name}%"
+      if(params.studentName){
+        studentName =~ "%${params.studentName}%"
       }
       if(genreId){
         genre{
