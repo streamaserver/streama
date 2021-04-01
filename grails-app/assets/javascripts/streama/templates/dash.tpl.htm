@@ -212,7 +212,15 @@
         <input class="form-control input-sm" type="text" ng-model="vm.movie.filter.title" ng-model-options="{debounce: 400}"
                placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" ng-change="vm.movie.setFilter()" />
       </div>
+
+      <div class="col-sm-6">
+        <input class="form-control input-sm" type="text" ng-model="vm.movie.filter.name" ng-model-options="{debounce: 400}"
+               placeholder="{{'DASHBOARD.SEARCH_BY_NAME2' | translate}}" ng-change="vm.movie.setFilter()" />
+      </div>
+
     </div>
+
+
 
     <br>
 
