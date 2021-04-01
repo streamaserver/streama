@@ -99,15 +99,16 @@
 
           <div class="row">
             <div class="col-xs-12" style="height:40px; padding:5px 15px;">
-              <!--         Create logic for ng-if = !twitter.exists { hide social link } -->
-              <a target="_blank" href="http://twitter.com/{{media.twitterLink}}" class="fa fa-twitter" style="text-decoration: none; height:40px; width:40px; font-size:30px; margin-right:10px; padding:0px; border-radius: 50%;"></a>
-              <a target="_blank" href="http://linkedin.com/in/{{media.linkedInLink}}" class="fa fa-linkedin" style="text-decoration: none; height:40px; width:40px; font-size:30px; margin-right:10px; padding:0px; border-radius: 50%;"></a>
-              <a target="_blank" href="http://instagram.com/{{media.instagramLink}}" class="fa fa-instagram" style="text-decoration: none; height:40px; width:40px; font-size:30px; margin-right:10px; padding:0px; border-radius: 50%;"></a>
+              <a ng-if="media.twitterLink" target="_blank" href="http://twitter.com/{{media.twitterLink}}" class="fa fa-twitter" style="text-decoration: none; height:40px; width:40px; font-size:30px; margin-right:10px; padding:0px; border-radius: 50%;"></a>
+              <a ng-if="media.linkedInLink" target="_blank" href="http://linkedin.com/in/{{media.linkedInLink}}" class="fa fa-linkedin" style="text-decoration: none; height:40px; width:40px; font-size:30px; margin-right:10px; padding:0px; border-radius: 50%;"></a>
+              <a ng-if="media.instagramLink" target="_blank" href="http://instagram.com/{{media.instagramLink}}" class="fa fa-instagram" style="text-decoration: none; height:40px; width:40px; font-size:30px; margin-right:10px; padding:0px; border-radius: 50%;"></a>
             </div>
           </div>
 
-          <h4 style="margin-bottom:0px;">Portfolio:</h4>
-          <a>{{media.portfolioLink}}</a>
+          <div ng-if="media.portfolioLink">
+            <h4 style="margin-bottom:0px;">Portfolio:</h4>
+            <a>{{media.portfolioLink}}</a>
+          </div>
 
         </div>
 
