@@ -174,18 +174,6 @@
       <span class="counter">({{vm.movie.list.length}} {{'DASHBOARD.TITLE_COUNTER_OF' | translate}} {{vm.movie.total}})</span>
      </h3>
 
-    <div class="row dash-filter" ng-hide="!vm.movie.filter && !vm.movie.list.length">
-      <div class="col-sm-6">
-        {{'DASHBOARD.SORT' | translate}}
-        <video-sort-order-dropdown ng-model="vm.movie.sorter" ng-model-options="{getterSetter:true}" dropdown-type="'movie'"></video-sort-order-dropdown>
-      </div>
-
-      <div class="col-sm-6">
-        <input class="form-control input-sm" type="text" ng-model="vm.movie.filter.title" ng-model-options="{debounce: 400}"
-               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" ng-change="vm.movie.setFilter()" />
-      </div>
-    </div>
-
     <h5 style="color:#bbbbbb;margin:5px 0px">Search by student skills:</h5>
 
     <div class="row dash-filter" ng-hide="!vm.movie.filter && !vm.movie.list.length">
@@ -210,9 +198,22 @@
           </ui-select-choices>
         </ui-select>
       </div>
-
-
     </div>
+
+    <h5 style="color:#bbbbbb;margin:5px 0px">Search by movie name:</h5>
+
+    <div class="row dash-filter" ng-hide="!vm.movie.filter && !vm.movie.list.length">
+<!--      <div class="col-sm-6">-->
+<!--        {{'DASHBOARD.SORT' | translate}}-->
+<!--        <video-sort-order-dropdown ng-model="vm.movie.sorter" ng-model-options="{getterSetter:true}" dropdown-type="'movie'"></video-sort-order-dropdown>-->
+<!--      </div>-->
+
+      <div class="col-sm-6">
+        <input class="form-control input-sm" type="text" ng-model="vm.movie.filter.title" ng-model-options="{debounce: 400}"
+               placeholder="{{'DASHBOARD.SEARCH_BY_NAME' | translate}}" ng-change="vm.movie.setFilter()" />
+      </div>
+    </div>
+
     <br>
 
     <div class="spinner" ng-show="vm.movie.isLoading">
