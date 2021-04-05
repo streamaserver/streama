@@ -123,7 +123,6 @@ class MarshallerService {
       returnArray['poster_path'] = movie.getPosterPath()
       returnArray['release_date'] = movie.release_date
       returnArray['title'] = movie.title
-      returnArray['student_name'] = movie.studentName
       returnArray['overview'] = movie.overview
       returnArray['apiId'] = movie.apiId
       returnArray['original_language'] = movie.original_language
@@ -135,6 +134,7 @@ class MarshallerService {
       returnArray['backdrop_image_src'] = movie.backdrop_image?.src
       returnArray['genre'] = movie.genre
 
+      returnArray['studentName'] = movie.studentName
       returnArray['twitterLink'] = movie.twitterLink
       returnArray['linkedInLink'] = movie.linkedInLink
       returnArray['instagramLink'] = movie.instagramLink
