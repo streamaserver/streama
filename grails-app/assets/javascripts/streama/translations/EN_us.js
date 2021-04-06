@@ -136,37 +136,37 @@ angular.module('streama.translations').config(function ($translateProvider) {
 
     FAQ: {
       UPLOAD_VIDEO: {
-        TITLE: 'How can I upload a video?',
-        TEXT: "You can upload videos by going to Manage Content menu. Choose if you want to upload a Movie, TV show or Other video. Click the relevant sub-menu option" +
-          " on the vertical navigation bar on the left side of the screen. You can upload a video by clicking the Create New Movie/TV Show/Other Video button or by typing" +
-          " the name of the video you want to upload to the search bar and selecting the relevant movie from search results. After that, you can choose to fill in the video's" +
-          " information either manually or loading its information from TheMovieDB. After that, you can upload the video and subtitle files by clicking Manage Files button."
+        TITLE: 'How can I create a new Position-profile?',
+        TEXT: " When you log into the Sheridan Industry Day app for the first time you will be brought to a " +
+          " position profile page.  On this page you can create profiles for different positions that you wish " +
+          " to find candidates for.  You can also return to the Position profiles page by selecting the Profile " +
+          " Drop-down menu and selecting the “Manage profiles” option. "
       },
       DELETE_VIDEO: {
-        TITLE: 'How can I delete a video?',
-        TEXT: "You can delete a video by going to the video's information page and clicking Manage Files and selecting the red trash can icon. Clicking Edit Movie and selecting" +
-          " Delete Movie is another way to do it. You can also use the File Manager which is in the Manage Content menu. You can see all the files you have uploaded there. Click" +
-          " the red trash can icon to delete a file."
+        TITLE: 'How can I filter and search the films?',
+        TEXT: " To find the right candidates for the positions you are hiring for you can filter the student films by " +
+          " Pipeline, Specialties and search by the Student-name or Film-name.  The search bars are found " +
+          " at the top of the Student Films area of the sites home page. "
       },
       VIDEO_FORMATS: {
-        TITLE: 'Which video formats are supported?',
-        TEXT: "Streama supports currently only the video file formats supported by HTML5 player. You can test if your video file is HTML5 player compatible by dragging and dropping" +
-          " your file to an empty tab on your browser."
+        TITLE: 'How can I create a Watchlist?',
+        TEXT: " Each profile you create enables you to build and save a watchlist for films to be reviewed.  You" +
+          " can add and subtract from the watchlist but suing the “+” and “–“ icons located at the bottom " +
+          " left corner of the film's poster Image. "
       },
       SUBTITLES: {
-        TITLE: 'How can I add subtitles to videos?',
-        TEXT: "You can add subtitles to videos by clicking Manage Files button which is in the video's information page. You can drag and drop subtitle files there." +
-          " Previously you had to manually convert them into a compatible file format, but not anymore! Now the application handles that for you."
+        TITLE: 'How can I see the Film and Film-makers information?',
+        TEXT: " To access the Film and Film-makers information select the “i” icon to the bottom right of the " +
+          " film's poster image. "
       },
       INVITE_USERS: {
-        TITLE: 'How can I invite friends to watch my hosted videos?',
-        TEXT:"You can share your videos with your friends by inviting them to use your hosted Streama. Go to the Users menu and click Invite User button. Fill in the invite form and" +
-          " select the invitee's role(s). Users with the role Admin can edit Users & Settings. Users with the role Content Manager can edit content. Your friend will be notified about" +
-          " the invitation via email. You can also share video sessions with your friends by clicking the video player's Share button and linking the session URL to them."
+        TITLE: 'How can I contact a student filmmaker?',
+        TEXT: " Near the bottom of the information card there are selectable social media icons, as well as a " +
+          " portfolio link to direct you to the contact information of the student filmmaker. "
       },
       BASE_URL: {
-        TITLE: "What's the base URL and how should I configure it?",
-        TEXT: "The Base-URL is used for the videos and the link in the invitation-email."
+        TITLE: 'Who can I contact for technical support?',
+        TEXT: " For technical assistance please contact Banimationtechs@sheridancollege.ca "
       },
       NOTIFICATIONS: {
         TITLE: "What are notifications?",
