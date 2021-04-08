@@ -45,39 +45,6 @@ class VideoService {
     return [total: totalCount, list: viewingStatusList]
   }
 
-  private static List<ViewingStatus> reduceContinueWatchingEps(List<ViewingStatus> continueWatching) {
-    def result = []
-    continueWatching.each { continueWatchingItem ->
-      if (continueWatchingItem.video instanceof Episode) {
-        def previousShowEntry = result.find { it.video instanceof Episode && it.video.show?.id == continueWatchingItem.video.show?.id }
-
-        if (!previousShowEntry) {
-          if(!continueWatchingItem.hasVideoEnded()){
-            result.add(continueWatchingItem)
-          }else{
-            continueWatchingItem.completed = true
-            continueWatchingItem.save()
-            ViewingStatus newViewingStatus = ViewingStatusService.createNewForNextEpisode(continueWatchingItem)
-            if(newViewingStatus){
-              result.add(newViewingStatus)
-            }
-          }
-        }
-      } else{
-        if(!continueWatchingItem.hasVideoEnded()){
-          result.add(continueWatchingItem)
-        }else{
-          continueWatchingItem.completed = true
-          continueWatchingItem.save()
-        }
-      }
-    }
-
-    return result
-  }
-
-
-
 
   @Transactional
   def addLocalFile(Video videoInstance, params){

@@ -55,6 +55,16 @@ class ViewingStatusService {
     viewingStatus.runtime = runtime
     viewingStatus.user = currentUser
 
+
+    if(viewingStatus.hasVideoEnded()){
+      viewingStatus.completed = true
+      viewingStatus.isActive = false
+
+      if(video instanceof Episode){
+        ViewingStatusService.createNewForNextEpisode(viewingStatus)
+     }
+    }
+
     //TODO update other active viewingStatuses from the same tvShow to isActive=false
     viewingStatus.validate()
     if (viewingStatus.hasErrors()) {
@@ -78,6 +88,7 @@ class ViewingStatusService {
     viewingStatus.user = continueWatchingItem.user
     viewingStatus.profile = continueWatchingItem.profile
     viewingStatus.video = nextEpisode
+    viewingStatus.isActive = true
     viewingStatus.save()
 
     return viewingStatus
