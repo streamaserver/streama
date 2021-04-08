@@ -52,6 +52,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/settings/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/report/save',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/video/markCompleted',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/video/markAsUnviewed',  access :['IS_AUTHENTICATED_REMEMBERED']],
 
   [pattern:'/subtitles/get',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/subtitles/download',  access :['IS_AUTHENTICATED_REMEMBERED']],
