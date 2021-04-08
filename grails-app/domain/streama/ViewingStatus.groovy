@@ -14,6 +14,7 @@ class ViewingStatus {
   Integer currentPlayTime
   Integer runtime
   Boolean completed = false
+  Boolean isActive = true
   Profile profile
 
   static Integer COMPLETED_PERCENTAGE_THRESHOLD = 95

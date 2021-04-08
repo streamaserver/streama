@@ -39,12 +39,23 @@ class ViewingStatusService {
       viewingStatus = new ViewingStatus(tvShow: show, user: currentUser, video: video, profile: params.profile)
     }
 
+
+    if(video instanceof Episode){
+      ViewingStatus.where{
+        user == currentUser
+        tvShow == video.show
+        profile == params.profile
+      }.updateAll([isActive: false])
+
+    }
+
+    viewingStatus.isActive = true
     viewingStatus.video = video
     viewingStatus.currentPlayTime = currentTime
     viewingStatus.runtime = runtime
     viewingStatus.user = currentUser
 
-
+    //TODO update other active viewingStatuses from the same tvShow to isActive=false
     viewingStatus.validate()
     if (viewingStatus.hasErrors()) {
       return [hasError: true, code: NOT_ACCEPTABLE]
