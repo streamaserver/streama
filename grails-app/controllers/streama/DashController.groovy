@@ -14,7 +14,7 @@ class DashController {
     User currentUser = springSecurityService.currentUser
     Long profileId = request.getHeader('profileId')?.toLong()
     Profile profile = Profile.findById(profileId)
-    return videoService.listContinueWatching(currentUser, profile, params)
+    respond videoService.listContinueWatching(currentUser, profile, params)
   }
 
   def listShows(){
