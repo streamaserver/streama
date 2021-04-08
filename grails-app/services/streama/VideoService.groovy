@@ -32,6 +32,7 @@ class VideoService {
     def continueWatchingQuery = ViewingStatus.where {
       eq("user", currentUser)
       eq("profile", profile)
+      eq("isActive", true)
       video {
         isNotEmpty("files")
         ne("deleted", true)
@@ -41,7 +42,7 @@ class VideoService {
 
     def viewingStatusList = continueWatchingQuery.list(max : max, offset: offset, sort: sort, order: order)
     def totalCount = continueWatchingQuery.count()
-    return [total: totalCount, list: reduceContinueWatchingEps(viewingStatusList)]
+    return [total: totalCount, list: viewingStatusList]
   }
 
   private static List<ViewingStatus> reduceContinueWatchingEps(List<ViewingStatus> continueWatching) {
