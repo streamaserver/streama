@@ -17,7 +17,8 @@ angular.module('streama').factory('mediaListService', function () {
         filter: {
           tags: [],
           genre: [],
-          title: null
+          title: null,
+          studentName: null
         },
         fetch: endpoint,
         search: search,

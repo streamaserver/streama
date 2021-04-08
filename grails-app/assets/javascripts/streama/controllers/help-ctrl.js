@@ -17,8 +17,8 @@ angular.module('streama').controller('helpCtrl', ['$anchorScroll', '$location', 
     };
 
     //Array of question objects. Help page contents are constructed by reading these.
-    $scope.questions = [ 'UPLOAD_VIDEO', 'DELETE_VIDEO', 'VIDEO_FORMATS', 'SUBTITLES', 'INVITE_USERS', 'BASE_URL',
-      'NOTIFICATIONS', 'VIDEO_PLAYER_SHORTCUTS', 'FAVORITE_GENRES', 'USEFUL_LINKS']
-
+    $scope.questions = [ 'UPLOAD_VIDEO', 'DELETE_VIDEO', 'VIDEO_FORMATS', 'SUBTITLES', 'INVITE_USERS', 'BASE_URL']
+    // $scope.questions = [ 'UPLOAD_VIDEO', 'DELETE_VIDEO', 'VIDEO_FORMATS', 'SUBTITLES', 'INVITE_USERS', 'BASE_URL',
+    //   'NOTIFICATIONS', 'VIDEO_PLAYER_SHORTCUTS', 'FAVORITE_GENRES', 'USEFUL_LINKS']
   }
 ]);

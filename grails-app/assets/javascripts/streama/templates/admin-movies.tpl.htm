@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-6">
     <h1>
-      Movies <span class="text-muted text-xs">({{vm.movie.total}} items)</span>
-      <video-sort-order-dropdown ng-model="vm.movie.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'movie'"/>
+      Films <span class="text-muted text-xs">({{vm.movie.total}} items)</span>
+      <video-sort-order-dropdown ng-model="vm.movie.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'films'"/>
     </h1>
 
     <input placeholder="{{vm.searchText}}" type="text" ng-model="vm.movie.filter.title" ng-change="vm.doSearch(vm.movie.filter.title)"
@@ -12,7 +12,7 @@
     <br>
     <div class="btn-group pull-right">
       <button class="btn btn-primary" ng-click="vm.createFromFiles()">Bulk-Create from file(s)</button>
-      <button class="btn btn-primary" ng-click="vm.openMovieModal()">Create new Movie</button>
+      <button class="btn btn-primary" ng-click="vm.openMovieModal()">Create new Film</button>
     </div>
   </div>
 </div>

@@ -167,6 +167,9 @@ class VideoService {
       if(params.title){
         title =~ "%${params.title}%"
       }
+      if(params.studentName){
+        studentName =~ "%${params.studentName}%"
+      }
       if(genreId){
         genre{
           id == genreId
