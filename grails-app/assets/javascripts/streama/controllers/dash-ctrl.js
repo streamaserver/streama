@@ -4,7 +4,6 @@ angular.module('streama').controller('dashCtrl',
 	function ($scope, apiService, $state, $rootScope, localStorageService, modalService, $stateParams, mediaListService, currentUser ) {
   var vm = this;
 
-    var LIST_MAX = 30;
     vm.showDetails = showDetails;
     vm.handleWatchlistUpdate = handleWatchlistUpdate;
     vm.loadingRecommendations = true;
@@ -30,8 +29,8 @@ angular.module('streama').controller('dashCtrl',
             var data = response.data;
             localStorageService.set('currentProfile', data[0]);
             initMedia();
-          }
-        , function (data) {
+          },
+          function (data) {
           alertify.error(data.message);
         });
       } else {
@@ -40,19 +39,21 @@ angular.module('streama').controller('dashCtrl',
     }
 
     function initMedia() {
-      if(isDashType("home") || isDashType("discover-movies")){
+      if(isDashType('home') || isDashType('discover-movies')){
         vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser);
       }
-      if(isDashType("home") || isDashType("discover-shows")){
+      if(isDashType('home') || isDashType('discover-shows')){
         vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
       }
-      if(isDashType("home") || isDashType("watchlist")){
+      if(isDashType('home') || isDashType('continue-watching')){
+        vm.continueWatching = mediaListService.init(apiService.dash.listContinueWatching, {sort: 'lastUpdated', order: 'DESC'}, currentUser);
+      }
+      if(isDashType('home') || isDashType('watchlist')){
         vm.watchlistEntry = mediaListService.init(apiService.watchlistEntry.list, {sort: 'id', order: 'DESC'}, currentUser);
       }
-      if(isDashType("home")){
+      if(isDashType('home')){
         vm.genericVideo = mediaListService.init(apiService.dash.listGenericVideos, {sort: 'title', order: 'ASC'}, currentUser);
         apiService.dash.listNewReleases().then(onNewReleasesLoaded);
-        apiService.dash.listContinueWatching().then(onContinueWatchingLoaded);
         apiService.dash.listRecommendations().then(onRecommendedLoaded);
       }
 
@@ -70,24 +71,6 @@ angular.module('streama').controller('dashCtrl',
       var data = response.data;
       vm.recommendations = data;
       vm.loadingRecommendations = false;
-    }
-
-    function fetchData(mediaConfig) {
-      mediaConfig.fetch({max: LIST_MAX, offset: mediaConfig.currentOffset, sort: mediaConfig.currentSort.sort, order: mediaConfig.currentSort.order}).then(function (response) {
-        var data = response.data;
-        mediaConfig.total = data.total;
-        if(mediaConfig.currentOffset > 0){
-          mediaConfig.list = _.unionBy(mediaConfig.list, data.list, 'id');
-        }else{
-          mediaConfig.list = data.list;
-        }
-        mediaConfig.isLoading = false;
-      });
-    }
-
-    function onContinueWatchingLoaded(response) {
-      var data = response.data;
-      vm.continueWatching = data;
     }
 
     function onNewReleasesLoaded(response) {
@@ -153,10 +136,10 @@ angular.module('streama').controller('dashCtrl',
 
     function handleWatchlistUpdate(action, item){
       switch (action) {
-        case "added":
+        case 'added':
           addToWatchlist(item);
           break;
-        case "removed":
+        case 'removed':
           removeFromWatchlist(item);
           break;
       }
@@ -165,17 +148,17 @@ angular.module('streama').controller('dashCtrl',
     function addToWatchlist(item) {
       apiService.watchlistEntry.create(item).then(function (response) {
         vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
-        updateWatchlist("added", _.get(vm.watchlistEntry, 'list'), item, response.data);
+        updateWatchlist('added', _.get(vm.watchlistEntry, 'list'), item, response.data);
       });
     }
 
     function removeFromWatchlist(item) {
       vm.watchlistEntry.list = vm.watchlistEntry.list ? vm.watchlistEntry.list : [];
-      alertify.set({buttonReverse: true, labels: {ok: "Yes", cancel: "Cancel"}});
-      alertify.confirm("Are you sure you want to remove this video from your watchlist?", function (confirmed) {
+      alertify.set({buttonReverse: true, labels: {ok: 'Yes', cancel: 'Cancel'}});
+      alertify.confirm('Are you sure you want to remove this video from your watchlist?', function (confirmed) {
         if (confirmed) {
           apiService.watchlistEntry.delete(item).then(function (response) {
-            updateWatchlist("removed", _.get(vm.watchlistEntry, 'list'), item);
+            updateWatchlist('removed', _.get(vm.watchlistEntry, 'list'), item);
           });
         }
       });
@@ -190,27 +173,27 @@ angular.module('streama').controller('dashCtrl',
         removeMediaFromList(list, media);
         alertify.success('The '+type+' was removed from your watchlist.');
       }
-      list.sort(function(a,b) { return (a.id < b.id) ? 1 : ((a.id > b.id) ? -1 : 0)});
+      list.sort(function(a,b) { return (a.id < b.id) ? 1 : ((a.id > b.id) ? -1 : 0);});
     }
 
     function removeMediaFromList(list, media){
       _.remove(list, function (watchlistEntry) {
-        return (watchlistEntry.video ? watchlistEntry.video.id : watchlistEntry.tvShow.id) === media.id
+        return (watchlistEntry.video ? watchlistEntry.video.id : watchlistEntry.tvShow.id) === media.id;
       });
     }
 
     function handleVideoListsUpdate(media){
       var type = media.mediaType;
       switch (type) {
-        case "tvShow":
+        case 'tvShow':
           watchlistStatusHandler(vm.tvShow.list, media);
-          type = "show";
+          type = 'show';
           break;
-        case "movie":
+        case 'movie':
           watchlistStatusHandler(vm.movie.list, media);
           type = 'movie';
           break;
-        case "genericVideo":
+        case 'genericVideo':
           watchlistStatusHandler(vm.genericVideo.list, media);
           type = 'video';
           break;
@@ -219,32 +202,14 @@ angular.module('streama').controller('dashCtrl',
       }
       watchlistStatusHandler(vm.newReleases, media);
       watchlistStatusHandler(vm.continueWatching, media);
-      return type
+      return type;
     }
 
     function watchlistStatusHandler(mediaList, item){
-      var index = _.findIndex(mediaList, function(element) { return item.id === element.id});
+      var index = _.findIndex(mediaList, function(element) { return item.id === element.id;});
       if(index > 0){
-        mediaList[index].inWatchlist = !mediaList[index].inWatchlist
+        mediaList[index].inWatchlist = !mediaList[index].inWatchlist;
       }
-    }
-
-    function applyFilter(item, filterObj) {
-      var showItemArray = [];
-
-      _.forEach(filterObj, function (filterVal, key) {
-        if (_.isArray(filterVal) && filterVal.length) {
-          var intersection = _.intersectionBy(item[key], filterVal, 'id');
-          var isVisible = (intersection.length ? true : false);
-          showItemArray.push(isVisible);
-        }
-        if (_.isString(filterVal) && filterVal.length >= 1) {
-          var isVisible = (_.includes(item[key].toLowerCase(), filterVal.toLowerCase()) ? true : false);
-          showItemArray.push(isVisible);
-        }
-      });
-
-      return (showItemArray.indexOf(false) < 0);
     }
 
     function isDashSectionHidden(sectionName) {

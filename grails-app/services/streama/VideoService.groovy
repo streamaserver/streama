@@ -24,53 +24,26 @@ class VideoService {
   }
 
 
-  public static List<ViewingStatus> listContinueWatching(User currentUser, Profile profile) {
-    List<ViewingStatus> continueWatching = ViewingStatus.withCriteria {
+  static Map listContinueWatching(User currentUser, Profile profile, GrailsParameterMap params) {
+    def max = params.int('max', 50)
+    def offset = params.int('offset', 0)
+    String sort = params.sort
+    String order = params.order
+    def continueWatchingQuery = ViewingStatus.where {
       eq("user", currentUser)
       eq("profile", profile)
+      eq("isActive", true)
       video {
         isNotEmpty("files")
         ne("deleted", true)
       }
 //      eq("completed", false)
-      order("lastUpdated", "desc")
     }
 
-    return reduceContinueWatchingEps(continueWatching)
+    def viewingStatusList = continueWatchingQuery.list(max : max, offset: offset, sort: sort, order: order)
+    def totalCount = continueWatchingQuery.count()
+    return [total: totalCount, list: viewingStatusList]
   }
-
-  private static List<ViewingStatus> reduceContinueWatchingEps(List<ViewingStatus> continueWatching) {
-    def result = []
-    continueWatching.each { continueWatchingItem ->
-      if (continueWatchingItem.video instanceof Episode) {
-        def previousShowEntry = result.find { it.video instanceof Episode && it.video.show?.id == continueWatchingItem.video.show?.id }
-
-        if (!previousShowEntry) {
-          if(!continueWatchingItem.hasVideoEnded()){
-            result.add(continueWatchingItem)
-          }else{
-            continueWatchingItem.completed = true
-            continueWatchingItem.save()
-            ViewingStatus newViewingStatus = ViewingStatusService.createNewForNextEpisode(continueWatchingItem)
-            if(newViewingStatus){
-              result.add(newViewingStatus)
-            }
-          }
-        }
-      } else{
-        if(!continueWatchingItem.hasVideoEnded()){
-          result.add(continueWatchingItem)
-        }else{
-          continueWatchingItem.completed = true
-          continueWatchingItem.save()
-        }
-      }
-    }
-
-    return result
-  }
-
-
 
 
   @Transactional

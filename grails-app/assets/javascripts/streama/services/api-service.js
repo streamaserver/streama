@@ -248,7 +248,7 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
         return $http.post('watchlistEntry/create.json', {params: {id: item.id, mediaType: item.mediaType}});
       },
 		  delete: function (item) {
-        return $http.delete('watchlistEntry/delete.json', {params: {id: item.id, mediaType: item.mediaType}})
+        return $http.delete('watchlistEntry/delete.json', {params: {id: item.id, mediaType: item.mediaType}});
       },
       list: function (params) {
         return $http.get('watchlistEntry/list.json', {params: params});
@@ -341,8 +341,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/searchMedia.json', {params: {query: query}});
 			},
 
-			listContinueWatching: function () {
-				return $http.get('dash/listContinueWatching.json');
+			listContinueWatching: function (params) {
+				return $http.get('dash/listContinueWatching.json', {params: params});
 			},
 
 			listMovies: function (params) {
@@ -386,16 +386,16 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 
     profile: {
 		  save: function (params) {
-        return $http.post('profile/save',  params)
+        return $http.post('profile/save',  params);
       },
 		  update: function (params) {
-        return $http.put('profile/update.json',  params)
+        return $http.put('profile/update.json',  params);
       },
 		  delete: function (id) {
-        return $http.delete('profile/delete.json',  {params: {id: id}})
+        return $http.delete('profile/delete.json',  {params: {id: id}});
       },
       getUserProfiles: function () {
-        return $http.get('profile/getUserProfiles.json')
+        return $http.get('profile/getUserProfiles.json');
       }
     }
 

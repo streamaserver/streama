@@ -25,6 +25,7 @@ class BootStrap {
         migrationService.migrateMergedSeasonEpisode()
         migrationService.setupBasicSubProfiles()
         migrationService.addProfilesToViewingStatusRecords()
+        migrationService.migrateContinueWatchingActiveFlag()
 
         migrationService.dbMigrations()
     }

@@ -210,6 +210,43 @@ class MigrationService {
     }
   }
 
+  def migrateContinueWatchingActiveFlag(){
+    def continueWatchingQuery = ViewingStatus.where {
+      eq("completed", false)
+      isNull("isActive")
+    }.list(sort: 'lastUpdated', order: 'desc')
+
+    def groupedContinueWatchings = continueWatchingQuery.groupBy {it.profileId}
+
+    groupedContinueWatchings.each { profileId, continueWatchingList ->
+      def episodeResults = []
+      continueWatchingList.each{ viewingStatus ->
+        if(viewingStatus.video instanceof Movie || viewingStatus.video instanceof GenericVideo){
+          viewingStatus.isActive = true
+          viewingStatus.save()
+          return
+        }
+
+        if(viewingStatus.video instanceof Episode){
+          def previousShowEntry = episodeResults.find { it.video instanceof Episode && it.video.show?.id == viewingStatus.video.show?.id }
+          if(!previousShowEntry){
+            episodeResults.add(viewingStatus)
+            viewingStatus.isActive = true
+            viewingStatus.save()
+          }else{
+            viewingStatus.isActive = false
+            viewingStatus.save()
+          }
+        }
+
+        log.error("viewingStatus.video is neither Episode, Movie or GenericVideo - whats going on? ID: ${viewingStatus.id}")
+      }
+
+    }
+
+
+  }
+
   def dbMigrations(){
     def sql = new Sql(dataSource)
     sql.execute('alter table genre modify api_id int null;')

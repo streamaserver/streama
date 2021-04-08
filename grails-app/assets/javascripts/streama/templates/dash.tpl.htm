@@ -37,13 +37,15 @@
 
   <!----------------------------------------------continue watching-------------------------------------------->
 
-  <div ng-if="vm.continueWatching.length && !$root.selectedGenre && vm.isDashType('home') && !vm.isDashSectionHidden('continue-watching')">
+  <div ng-if="vm.continueWatching.list.length && !$root.selectedGenre && vm.isDashType('home') && !vm.isDashSectionHidden('continue-watching')">
     <hr/>
 
-    <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}</h3>
+    <h3>{{'DASHBOARD.CONTINUE_WATCHING' | translate}}
+      <span class="counter">({{vm.continueWatching.list.length}} {{'DASHBOARD.TITLE_COUNTER_OF' | translate}} {{vm.continueWatching.total}})</span>
+    </h3>
 
     <div class="media-list media-list-continue-watching">
-      <div class="media-list-item media-poster-item" ng-repeat="viewingStatus in vm.continueWatching" ng-if="!viewingStatus.video.deleted">
+      <div class="media-list-item media-poster-item" ng-repeat="viewingStatus in vm.continueWatching.list" ng-if="!viewingStatus.video.deleted">
 
         <streama-dash-media-item entity="viewingStatus.video"></streama-dash-media-item>
 
@@ -65,6 +67,9 @@
         </div>
       </div>
     </div>
+          <div class="text-center" ng-if="vm.continueWatching.total > vm.continueWatching.list.length">
+            <button class="btn btn-primary btn-outline" ng-click="vm.continueWatching.loadMore()">Load more ...</button>
+          </div>
   </div>
 
   <!----------------------------------------------recommendations-------------------------------------------->
