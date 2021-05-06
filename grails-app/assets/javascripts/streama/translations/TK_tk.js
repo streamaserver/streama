@@ -6,8 +6,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
   $translateProvider.translations('tk', {
     LOGIN: {
       TITLE: 'Haýyş ulgama giriň',
-      USERNAME: 'Login',
-      PASSWORD: 'Parol',
+      USERNAME: 'Ulanyjy ady',
+      PASSWORD: 'Açar söz',
       FIRST_TIME_HINT: 'Ulgama ilkinji gezek girýäňizmi? Ilki meýdançada \'admin\' ulanyjy bilen synanşyp görüň.',
       SUBMIT: 'Giriş',
       SESSION_EXPIRED: 'Ulgamda siziň iň soňky hereketiňiziň dowamlylygy tamamlandy. Ulgama gaýtadan girmegiňizi haýyş edýäris.'
@@ -84,7 +84,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     HELP_FAQ: 'KÖMEK / Iň köp soralýan soraglar',
     PROFILE_SETTINGS: 'Ulanyjynyň Sazlamalary',
     LOGOUT: 'Çykyş',
-    CHANGE_PASSWORD: 'Paroly üýtgetmek',
+    CHANGE_PASSWORD: 'Açar sözi üýtgetmek',
     LANGUAGE_en: 'English',
     LANGUAGE_cn: 'Chinese/中文',
     LANGUAGE_ru: 'Русский/Russian',
