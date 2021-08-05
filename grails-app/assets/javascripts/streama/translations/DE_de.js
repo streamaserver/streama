@@ -43,9 +43,9 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			RATING: 'Bewertungen',
       STATUS: 'Status',
       STATUS_VALUE: {
-        'completed': 'Completed',
-        'viewing': 'Viewing',
-        'unviewed': 'Unviewed'
+        'completed': 'Angeschaut',
+        'viewing': 'Weiterschauen',
+        'unviewed': 'Ungesehen'
       },
 			VOTES: 'Stimmen',
 			OVERVIEW: 'Zusammenfassung',
