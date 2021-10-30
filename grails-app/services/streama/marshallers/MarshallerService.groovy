@@ -486,13 +486,7 @@ class MarshallerService {
         response['lastUpdated'] = watchlistEntry.lastUpdated
 
         response['tvShow'] = watchlistEntry.tvShow
-        response['video'] = [
-          id: watchlistEntry.video.id,
-          mediaType: watchlistEntry.video.getType(),
-          poster_path: watchlistEntry.video.getPosterPath(),
-          inWatchlist: watchlistEntry.video.inWatchlist(),
-          release_date: watchlistEntry.video.getReleaseDate()
-        ]
+        response['video'] = watchlistEntry.video
 
         return response
       }
