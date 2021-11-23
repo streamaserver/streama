@@ -15,6 +15,7 @@ angular
       "en",
       "fr",
       "es",
+      "cat",
       "de",
       'hr',
       "kr",
