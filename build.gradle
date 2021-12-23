@@ -129,9 +129,9 @@ dependencies {
     }
     
       // Fix Log4Shell
-  compile 'org.apache.logging.log4j:log4j-api:2.16.0'
-  compile 'org.apache.logging.log4j:log4j-core:2.16.0'
-  compile 'org.apache.logging.log4j:log4j-to-slf4j:2.16.0'
+  compile 'org.apache.logging.log4j:log4j-api:2.17.0'
+  compile 'org.apache.logging.log4j:log4j-core:2.17.0'
+  compile 'org.apache.logging.log4j:log4j-to-slf4j:2.17.0'
   compile 'ch.qos.logback:logback-classic:1.2.8'
   compile 'ch.qos.logback:logback-core:1.2.8'
 
