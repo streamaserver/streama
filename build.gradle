@@ -14,7 +14,7 @@ buildscript {
     }
 }
 
-version "1.10.3"
+version "1.10.4"
 group "streama"
 
 
@@ -127,7 +127,7 @@ dependencies {
         exclude group: 'org.opengis', module: 'geoapi'
         exclude group: 'org.apache.james'
     }
-    
+
       // Fix Log4Shell
   compile 'org.apache.logging.log4j:log4j-api:2.17.0'
   compile 'org.apache.logging.log4j:log4j-core:2.17.0'
