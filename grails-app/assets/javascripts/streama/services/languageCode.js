@@ -3009,7 +3009,7 @@ function languageData() {
       "ISO639": "tk",
       "LanguageName": "Turkmen",
       "UploadEnabled": "1",
-      "WebEnabled": "0"
+      "WebEnabled": "1"
     },
     {
       "IdSubLanguage": "tum",

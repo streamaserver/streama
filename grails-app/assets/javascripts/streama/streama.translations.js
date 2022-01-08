@@ -28,5 +28,6 @@ angular
       "cn",
       "hu",
       "tr",
+      "tk",
     ];
   });
