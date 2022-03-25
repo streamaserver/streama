@@ -17,9 +17,6 @@
       <ul class="nav navbar-nav">
         <li><a ng-click="changeDashType('home')" ng-class="{active: (isDashType('home') || isDashType(undefined))}">{{'DASHBOARD.HOME' | translate}}</a></li>
         <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
-          <a ng-click="changeDashType('discover-shows')" ng-class="{active: (isDashType('discover-shows'))}">{{'DASHBOARD.TV_SHOWS' | translate}}</a>
-        </li>
-        <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
           <a ng-click="changeDashType('discover-movies')" ng-class="{active: (isDashType('discover-movies'))}">{{'DASHBOARD.MOVIES' | translate}}</a>
         </li>
         <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue && $root.getSetting('hide-mylist-button').parsedValue != true">

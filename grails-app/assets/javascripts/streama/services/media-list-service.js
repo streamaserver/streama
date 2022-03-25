@@ -5,7 +5,7 @@ angular.module('streama').factory('mediaListService', function () {
 
   return{
     init: function (endpoint, defaultSort, currentUser) {
-      LIST_MAX = _.get(currentUser, 'amountOfMediaEntries', 300);
+      LIST_MAX = 65; //_.get(currentUser, 'amountOfMediaEntries', 300);
       var mediaListConfig = {
         total: 0,
         currentSort: defaultSort || {sort: 'title', order: 'ASC'},

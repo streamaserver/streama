@@ -27,7 +27,7 @@
   <hr/>
 
   <div class="media-list">
-    <div class="media-list-item media-poster-item" ng-class="{'no-files': !movie.hasFiles}"
+    <div class="media-list-item media-poster-item" infinite-scroll="vm.movie.loadMore()" infinite-scroll-distance='2' ng-class="{'no-files': !movie.hasFiles}"
          ng-repeat="movie in vm.movie.list" ui-sref="admin.movie({movieId: movie.id})">
       <div class="media-item" >
 

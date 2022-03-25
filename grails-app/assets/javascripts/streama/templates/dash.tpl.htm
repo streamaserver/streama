@@ -232,15 +232,16 @@
       {{'DASHBOARD.NO_MOVIES_FOUND' | translate}}
     </p>
 
-    <div class="media-list">
+    <div class="media-list" infinite-scroll="vm.movie.loadMore()" infinite-scroll-distance='2'>
       <div class="media-list-item media-poster-item" ng-repeat="movie in vm.movie.list | orderBy:vm.movie.sorter.sort |filter: vm.movie.filter.execute">
         <streama-dash-media-item entity="movie"></streama-dash-media-item>
+
       </div>
     </div>
 
-    <div class="text-center" ng-if="vm.movie.total > vm.movie.list.length">
-      <button class="btn btn-primary btn-outline" ng-click="vm.movie.loadMore()">Load more ...</button>
-    </div>
+<!--    <div class="text-center" ng-if="vm.movie.total > vm.movie.list.length">-->
+<!--      <button class="btn btn-primary btn-outline" ng-click="vm.movie.loadMore()">Load more ...</button>-->
+<!--    </div>-->
   </div>
 
   <!--   --------------- GENERIC VIDEOS ---------------------  -->

@@ -40,6 +40,7 @@ angular.module('streama').controller('dashCtrl',
       }
     }
 
+    // TODO look into max and offset and get 20 by default and load more as it goes
     function initMedia() {
       if(isDashType("home") || isDashType("discover-movies")){
         vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser);
@@ -289,6 +290,8 @@ angular.module('streama').controller('dashCtrl',
         return media.backdrop_image_src;
       }
     }
+
+
 
 // testing how to save scroll position
 

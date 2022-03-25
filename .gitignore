@@ -55,3 +55,6 @@
 /.sass-work
 grails-app/assets/stylesheets/.sass-cache
 out
+/data/
+/streama.mv.db
+/streama.trace.db

@@ -1,0 +1,27 @@
+{
+  "name": "ng-infinite-scroll",
+  "version": "1.0.0",
+  "description": "Infinite scrolling for AngularJS",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/BinaryMuse/ngInfiniteScroll.git"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/testacular start --single-run --browsers=PhantomJS ./test/testacular.conf.js"
+  },
+  "author": "Brandon Tilley <brandon@brandontilley.com>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "chai": "~1.4.0",
+    "grunt-testacular": "~0.3.0",
+    "grunt-coffeelint": "0.0.5",
+    "grunt-coffee": "0.0.6",
+    "testacular": "~0.4.0",
+    "grunt-contrib-coffee": "~0.4.0",
+    "grunt-contrib-concat": "~0.1.2",
+    "grunt-contrib-uglify": "~0.1.1",
+    "coffee-script": "~1.4.0",
+    "grunt-contrib-clean": "~0.4.0"
+  }
+}

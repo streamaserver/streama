@@ -247,7 +247,7 @@ class DefaultDataService {
           name: 'hide-dash-button',
           description: 'Determines whether the the top Dashboard button should be hidden',
           settingsType: 'boolean',
-          value: 'false',
+          value: 'true',
           required: false,
           validationRequired: false
         ],
