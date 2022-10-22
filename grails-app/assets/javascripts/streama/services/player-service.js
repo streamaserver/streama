@@ -33,6 +33,7 @@ angular.module('streama').factory('playerService',
       onError: angular.noop,
       onPlay: angular.noop,
       onPause: angular.noop,
+      onPip: angular.noop,
       onClose: angular.noop,
       onNext: angular.noop,
       onVideoClick: angular.noop,
@@ -101,6 +102,7 @@ angular.module('streama').factory('playerService',
 
         videoOptions.onPlay = this.onVideoPlay.bind(videoOptions);
         videoOptions.onPause = this.onVideoPause.bind(videoOptions);
+        videoOptions.onPip = this.onVideoPip.bind(videoOptions);
         videoOptions.onError = this.onVideoError.bind(videoOptions);
         videoOptions.onTimeChange = this.onVideoTimeChange.bind(videoOptions);
         videoOptions.onClose = this.onVideoClose.bind(videoOptions);
@@ -149,6 +151,10 @@ angular.module('streama').factory('playerService',
           console.log('%c send socket event PAUSE', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
           apiService.websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'pause', currentPlayerTime: videoElement.currentTime});
         }
+      },
+
+      onVideoPip: function() {
+        apiService.websocket.triggerPlayerAction({socketSessionId: $stateParams.sessionId, playerAction: 'pip'});
       },
 
       onVideoClose: function () {
@@ -303,6 +309,9 @@ angular.module('streama').factory('playerService',
               break;
             case 'timeChange':
               $rootScope.$broadcast('triggerVideoTimeChange', data);
+              break;
+            case 'pip':
+              $rootScope.$broadcast('triggerVideoPip', data);
               break;
           }
         }
