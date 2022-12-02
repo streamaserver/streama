@@ -40,10 +40,10 @@ angular.module('streama').controller('dashCtrl',
 
     function initMedia() {
       if(isDashType('home') || isDashType('discover-movies')){
-        vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'title', order: 'ASC'}, currentUser);
+        vm.movie = mediaListService.init(apiService.dash.listMovies, {sort: 'release_date', order: 'DESC'}, currentUser);
       }
       if(isDashType('home') || isDashType('discover-shows')){
-        vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'name', order: 'ASC'}, currentUser);
+        vm.tvShow = mediaListService.init(apiService.dash.listShows, {sort: 'first_air_date', order: 'DESC'}, currentUser);
       }
       if(isDashType('home') || isDashType('continue-watching')){
         vm.continueWatching = mediaListService.init(apiService.dash.listContinueWatching, {sort: 'lastUpdated', order: 'DESC'}, currentUser);
