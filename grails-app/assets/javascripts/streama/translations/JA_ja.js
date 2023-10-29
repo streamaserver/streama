@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: '映画',
       MY_LIST:'私のリスト',
 			TITLE: 'ダッシュ ボード',
+      TITLE_COUNTER_OF: 'of',
 			NEW_RELEASES: '新しいリリース',
 			CONTINUE_WATCHING: '続きを見る',
 			DISCOVER_SHOWS: 'ショーを発見します',
@@ -91,6 +92,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk/デンマーク語',
     LANGUAGE_ar: 'عربى/アラビア語',
 		LANGUAGE_hu: 'Magyar/ハンガリー人',
+		LANGUAGE_sk: 'Slovensky/Slovak',
 		PROFIlE: {
 			USERNAME: 'ユーザー名',
 			FULL_NAME: '完全な名前',

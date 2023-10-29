@@ -21,7 +21,7 @@ json g.render(watchlistEntry, [deep:true, includes: ['id', 'dateCreated', 'lastU
 
         mediaType 'movie'
         release_date movie.release_date
-        poster_path movie.poster_path
+        poster_path movie.getPosterPath()
         backdrop_path movie.backdrop_path
         poster_image_src movie.poster_image?.src
         inWatchlist movie.inWatchlist()
@@ -31,6 +31,7 @@ json g.render(watchlistEntry, [deep:true, includes: ['id', 'dateCreated', 'lastU
 
         mediaType 'genericVideo'
         release_date genericVideo.release_date
+        poster_path genericVideo.getPosterPath()
         poster_image_src genericVideo.poster_image?.src
         inWatchlist genericVideo.inWatchlist()
       }
@@ -38,6 +39,7 @@ json g.render(watchlistEntry, [deep:true, includes: ['id', 'dateCreated', 'lastU
         Episode episode = watchlistEntry.video as Episode
 
         mediaType 'episode'
+        poster_path episode.getPosterPath()
         poster_image_src episode.getPosterPath()
         inWatchlist episode.inWatchlist()
       }
@@ -48,6 +50,8 @@ json g.render(watchlistEntry, [deep:true, includes: ['id', 'dateCreated', 'lastU
       TvShow tvShow = watchlistEntry.tvShow as TvShow
       id tvShow.id
       name tvShow.name
+
+      poster_path tvShow.getPosterPath()
       poster_image_src tvShow.poster_image?.src
       episodesWithFilesCount tvShow.getFilteredEpisodes().findAll{it.files}.size()
       episodesCount tvShow.getFilteredEpisodes().size()

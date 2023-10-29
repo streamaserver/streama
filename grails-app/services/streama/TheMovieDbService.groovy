@@ -325,7 +325,7 @@ class TheMovieDbService {
       con.setUseCaches(false)
       return con.inputStream.bytes
     }catch(e){
-      log.error("Failed to fetch image data, ${e.message}")
+      log.error("Failed to fetch image data, ${e.message}", e)
     }
 
   }

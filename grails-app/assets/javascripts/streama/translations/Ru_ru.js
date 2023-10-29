@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Фильмы',
       MY_LIST:'Мой список',
 			TITLE: 'Главная',
+      TITLE_COUNTER_OF: 'of',
 			RECOMMENDATIONS: 'Рекомендовано для вас',
 			NEW_RELEASES: 'Новое на сайте',
 			CONTINUE_WATCHING: 'Продолжить просмотр',

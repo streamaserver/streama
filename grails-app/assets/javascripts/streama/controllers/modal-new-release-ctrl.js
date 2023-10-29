@@ -23,8 +23,7 @@ angular.module('streama').controller('modalNewReleaseCtrl', [
         .then(function () {
           alertify.success('Highlight complete.');
           $uibModalInstance.close();
-        })
-        .error(function (err, status) {
+        }, function (err, status) {
           console.log('%c error', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;');
           alertify.error(err.message);
         });

@@ -224,6 +224,15 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+		[
+            settingsKey: 'Enable Random Episode button',
+            name: 'enable-random-episode-button',
+            description: 'Determines whether the shuffle / random play button in the dashboard cards should appear. ',
+            settingsType: 'boolean',
+            value: 'false',
+            required: false,
+            validationRequired: false
+        ],
 		    [
             settingsKey: 'Footer Content',
             name: 'footer-content',
@@ -233,12 +242,50 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+        [
+          settingsKey: 'Hide \'Dashboard\' button',
+          name: 'hide-dash-button',
+          description: 'Determines whether the the top Dashboard button should be hidden',
+          settingsType: 'boolean',
+          value: 'false',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'Hide \'My List\' button',
+          name: 'hide-mylist-button',
+          description: 'Determines whether the \'My List\' button should be hidden. In contrast to the \'Dashboard Header-links\' setting this will only hide \'My List\'',
+          settingsType: 'boolean',
+          value: 'false',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'Amount of profiles users can create',
+          name: 'profile-count',
+          description: 'Determines how much profiles each individual user can create. Defaults to 4.',
+          settingsType: 'integer',
+          value: '4',
+          required: true,
+          validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',
 //            settingsType: 'radio',
 //            description: 'If this is set to "yes", after successful file-conversion the original file will be removed from the Upload Directory. This may be useful in case you have limited disk space.'
 //        ],
+
+        [
+          settingsKey: 'Credentials for opensubtitles',
+          name: 'credentials_opensubtitles',
+          description: 'Credentials which are used to authenticate the user on the opensubtitles website. Enter username and password, separated by :. Example: username:password. ' +
+            'To use the opensubtitles search, you must activate the User Agent. More information at https://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst',
+          settingsType: 'string',
+          value: '',
+          required: false,
+          validationRequired: true
+        ],
     ]
 
     settings.each{ settingData ->

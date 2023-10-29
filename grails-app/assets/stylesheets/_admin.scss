@@ -12,6 +12,7 @@
     width: 300px;
     background: rgba(0, 0, 0, 0.15);
     border-right: 1px solid rgba(255, 255, 255, 0.11);
+    margin-top: 0.65em;
     @include flex(none);
 
     ul{
