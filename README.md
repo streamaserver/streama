@@ -1,5 +1,5 @@
 ![Streama Banner](design/banner2.png)
-# STREAMA
+# STREAMA - HLS Playback
 
 
 
