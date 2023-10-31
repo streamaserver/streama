@@ -530,7 +530,22 @@
   border: 0
 }
 
+.player-wrapper .player-control-bar .player-pip {
+  -webkit-order: 25;
+  -ms-flex-order: 25;
+  -moz-box-ordinal-group: 25;
+  order: 25;
+  font-size: 2.8em;
+  width: 1.7499999999999998em;
+  margin: 0 .35em;
+  border: 0
+}
+
 .player-wrapper .player-control-bar .player-fill-screen.player-hidden {
+  display: none
+}
+
+.player-wrapper .player-control-bar .player-pip.player-hidden {
   display: none
 }
 

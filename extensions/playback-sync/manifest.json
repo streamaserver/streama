@@ -1,0 +1,48 @@
+{
+    "name": "RxnFlix Auto Sync",
+    "version": "1.4.1",
+    "description": "syncs playback events b/w multiple video sources",
+    "permissions": [
+        "tabs",
+        "storage",
+		"activeTab",
+		"scripting",
+		"idle"
+	],
+	"host_permissions": [
+        "https://*.youtube.com/*",
+        "https://*.vimeo.com/*",
+        "https://*.netflix.com/*",
+         "http://localhost:8080/*",
+        "https://*.youtubekids.com/*"
+    ],
+    "homepage_url": "https://github.com/drodil/youtube_auto_pause",
+    "content_scripts": [{
+        "matches": [
+            "https://*.youtube.com/*",
+            "https://*.youtubekids.com/*",
+            "https://*.vimeo.com/*",
+            "http://localhost:8080/*",
+            "https://*.netflix.com/*"
+        ],
+        "run_at": "document_end",
+        "all_frames": true,
+        "js": ["tab_watcher_executor.js"]
+    }],
+    "background": {
+        "service_worker": "relayer.js"
+    },
+	"externally_connectable": {
+		"ids": [
+			"*"
+		],
+		"matches": [
+            "https://*.youtube.com/*",
+            "https://*.youtubekids.com/*",
+            "https://*.vimeo.com/*",
+             "http://localhost:8080/*",
+            "https://*.netflix.com/*"
+		]
+	},
+    "manifest_version": 3
+}

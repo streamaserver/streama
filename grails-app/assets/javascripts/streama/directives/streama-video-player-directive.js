@@ -38,6 +38,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         $scope.play = play;
         $scope.pause = pause;
         $scope.skip = skip;
+        $scope.pip = pip;
         $scope.closeVideo = closeVideo;
         $scope.clickVideo = clickVideo;
         $scope.fullScreen = toggleFullScreen;
@@ -259,6 +260,9 @@ angular.module('streama').directive('streamaVideoPlayer', [
           $scope.$on('triggerVideoPause', function (e, data) {
             $scope.pause(data);
           });
+          $scope.$on('triggerVideoPip', function (e) {
+            $scope.pip();
+          });
           $scope.$on('triggerVideoToggle', function (e, data) {
             if ($scope.playing) {
               $scope.pause(data);
@@ -378,6 +382,17 @@ angular.module('streama').directive('streamaVideoPlayer', [
           $scope.playing = true;
           $scope.options.onPlay(video, socketData);
           $scope.overlayVisible = false;
+        }
+
+        function pip() {
+          try {
+            if (document.pictureInPictureElement) {
+              document.exitPictureInPicture();
+            } else {
+              video.requestPictureInPicture();
+            }
+          } catch (err) {
+          }
         }
 
         function createNewPlayerSession() {
