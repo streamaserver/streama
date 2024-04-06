@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: '영화 산업',
       MY_LIST:'나의 목록',
 			TITLE: '대시보드',
+      TITLE_COUNTER_OF: 'of',
 			NEW_RELEASES: '신작',
 			CONTINUE_WATCHING: '계속해서 보기',
 			DISCOVER_SHOWS: '드라마 찾기',
@@ -91,6 +92,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk/덴마크 말',
     LANGUAGE_ar: 'عربى/아라비아 말',
     LANGUAGE_hu: 'Magyar/헝가리 인',
+		LANGUAGE_sk: 'Slovensky/Slovak',
 		PROFIlE: {
 			USERNAME: '아이디',
 			FULL_NAME: '이름',

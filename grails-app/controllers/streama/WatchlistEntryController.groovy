@@ -101,6 +101,7 @@ class WatchlistEntryController {
       user == currentUser
       profile == currentProfile
       isDeleted == false
+      video != null || tvShow != null
     }.list(sort: sortingColumn, order: sortingOrder)
     if(!watchlistEntries){
       render status: NO_CONTENT

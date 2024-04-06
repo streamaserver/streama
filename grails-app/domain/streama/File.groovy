@@ -10,6 +10,7 @@ class File implements SimpleInstance {
   Date lastUpdated
 
   String sha256Hex
+  String openSubtitleHash
   String name
   String extension
   String contentType

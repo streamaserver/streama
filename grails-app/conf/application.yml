@@ -162,6 +162,8 @@ streama:
       - ^(?<Name>.*?)(?<Episode>\d{1,3})x(?<Season>\d{2}).*                 # example:  "Castle4x06DaemonsWebdl480pOktober242011rC.mkv(jkuzt).mp4"
     subtitles: ^.+\-(.+)\.(?:srt|vtt)$
 
+  opensubtitleUrl: 'https://rest.opensubtitles.org/search'
+
   uploadtypes: ['video/h264', 'video/mp4', 'video/mpeg', 'video/quicktime', 'video/webm', 'video/x-ms-wm', 'video/x-ms-wmv',
               'video/x-msvideo', 'image/bmp', 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/svg+xml',
               'image/x-icon', 'image/x-png', 'application/x-subrip', 'text/plain', 'text/vtt', 'text/plain',
@@ -180,7 +182,7 @@ grails.plugin.springsecurity.providerNames:
     - rememberMeAuthenticationProvider
 
 # Uncomment and update the below to configure LDAP authentication
-# http://grails-plugins.github.io/grails-spring-security-ldap/v3/index.html 
+# http://grails-plugins.github.io/grails-spring-security-ldap/v3/index.html
 #grails.plugin.springsecurity.ldap:
 #    context:
 #        managerDn: 'ldap'

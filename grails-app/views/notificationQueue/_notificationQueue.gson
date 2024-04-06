@@ -7,7 +7,7 @@ model {
 json g.render(notificationQueue){
 	if(notificationQueue.movie){
 		movie {
-			poster_path notificationQueue.movie?.poster_image
+			poster_path notificationQueue.movie?.getPosterPath()
 			title notificationQueue.movie?.title
 			release_date notificationQueue.movie?.release_date
 		}
@@ -15,7 +15,7 @@ json g.render(notificationQueue){
 
 	if(notificationQueue.tvShow){
 		tvShow {
-			poster_path notificationQueue.tvShow?.poster_path
+			poster_path notificationQueue.tvShow?.getPosterPath()
 			name notificationQueue.tvShow?.name
 			first_air_date notificationQueue.tvShow?.first_air_date
 		}

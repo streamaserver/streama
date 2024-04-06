@@ -12,6 +12,8 @@ json g.render(video, [deep:true, excludes: ['files']]){
 	viewedStatus video.getViewingStatus()
   inWatchlist video.inWatchlist()
 
+  poster_path video.getPosterPath()
+
 //	if(video instanceof Episode){
 ////		nextEpisode {
 ////			id video.nextEpisode?.id

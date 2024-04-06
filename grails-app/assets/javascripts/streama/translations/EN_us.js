@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Movies',
       MY_LIST:'My list',
       TITLE: 'Dashboard',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: 'Recommendations for you',
       NEW_RELEASES: 'New Releases',
       CONTINUE_WATCHING: 'Continue Watching',
@@ -90,6 +91,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_de: 'Deutsch/German',
     LANGUAGE_fr: 'Français/French',
     LANGUAGE_es: 'Español/Spanish',
+    LANGUAGE_cat: 'Català/Catalan',
     LANGUAGE_kr: '한국어/Korean',
     LANGUAGE_nl: 'Nederlands/Dutch',
     LANGUAGE_pt: 'Português/Portuguese',
@@ -98,6 +100,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk/Danish',
     LANGUAGE_ar: 'عربى/Arabic',
     LANGUAGE_hu: 'Magyar/Hungarian',
+		LANGUAGE_sk: 'Slovensky/Slovak',
     PROFIlE: {
       USERNAME: 'Username',
       FULL_NAME: 'Full Name',

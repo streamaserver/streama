@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Films',
       MY_LIST:'Mijn lijst',
       TITLE: 'Dashboard',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: 'Aanbevelingen voor u',
       NEW_RELEASES: 'Nieuw uitgebracht',
       CONTINUE_WATCHING: 'Verder kijken',
@@ -93,6 +94,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk/Deens',
     LANGUAGE_ar: 'عربى/Arabisch',
     LANGUAGE_hu: 'Magyar/Hongaars',
+		LANGUAGE_sk: 'Slovensky/Slovak',
     PROFIlE: {
       USERNAME: 'Gebruikersnaam',
       FULL_NAME: 'Volledige naam',

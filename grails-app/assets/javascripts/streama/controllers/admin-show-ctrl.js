@@ -11,9 +11,7 @@ angular.module('streama').controller('adminShowCtrl', [
 	$scope.showLoading = true;
 	$scope.hasMovieDBKey = true;
 
-	$scope.listEpisodesForSeason = listEpisodesForSeason;
-
-  apiService.theMovieDb.hasKey().then(function (response) {
+	apiService.theMovieDb.hasKey().then(function (response) {
     if (!response.data.key) {
       $scope.hasMovieDBKey = false;
     }
@@ -91,6 +89,7 @@ angular.module('streama').controller('adminShowCtrl', [
 
 	$scope.setCurrentSeason = function (index) {
 		$scope.currentSeason = index;
+		$scope.currentEpisodesForSeason = listEpisodesForSeason(index);
 		if(index){
 		  if($scope.hasMovieDBKey){
         apiService.theMovieDb.countNewEpisodesForSeason({apiId: $scope.show.apiId, showId: $stateParams.showId, season: index})

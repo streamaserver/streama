@@ -12,6 +12,7 @@ import static org.springframework.http.HttpStatus.*
 class FileService {
 
   def allowedVideoFormats = ['.mp4', '.mkv', '.webm', '.ogg', '.m4v']
+  def allowedSubtitleFormats = ['.srt', '.vtt']
 
   def serveVideo(request, response, java.io.File rawFile, File file) {
     def rangeHeader = request.getHeader("Range")

@@ -6,7 +6,7 @@ class Genre {
   String name
 
   static constraints = {
-    apiId nullable: false
+    apiId nullable: true
     name nullable: false
   }
 }
