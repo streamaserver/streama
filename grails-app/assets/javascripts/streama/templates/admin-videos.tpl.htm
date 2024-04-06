@@ -1,9 +1,18 @@
-<button class="btn btn-primary pull-right btn-lg" ng-click="openGenericVideoModal()">Create generic video</button>
+<div class="row">
+  <div class="col-md-6">
+    <h1>
+      Other Videos <span class="text-muted text-xs">({{videos.length}} items)</span>
+      <video-sort-order-dropdown ng-model="currentSort" dropdown-type="'movie'"/>
+    </h1>
 
-<h1>
-  Other Videos <span class="text-muted text-xs">({{videos.length}} items)</span>
-  <video-sort-order-dropdown ng-model="currentSort" dropdown-type="'movie'"/>
-</h1>
+  </div>
+  <div class="col-md-6">
+    <br>
+    <div class="btn-group pull-right">
+      <button class="btn btn-primary" ng-click="openGenericVideoModal()">Create generic video</button>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-md-5">
@@ -37,5 +46,3 @@
     </div>
   </div>
 </div>
-
-
