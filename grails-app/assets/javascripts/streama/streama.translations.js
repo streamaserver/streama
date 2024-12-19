@@ -30,5 +30,6 @@ angular
       "hu",
       "tr",
       "sk",
+      "pl",
     ];
   });

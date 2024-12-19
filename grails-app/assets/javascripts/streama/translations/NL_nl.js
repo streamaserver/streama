@@ -95,6 +95,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_ar: 'عربى/Arabisch',
     LANGUAGE_hu: 'Magyar/Hongaars',
 		LANGUAGE_sk: 'Slovensky/Slovak',
+    LANGUAGE_pl: 'Polski/Pools',
     PROFIlE: {
       USERNAME: 'Gebruikersnaam',
       FULL_NAME: 'Volledige naam',
