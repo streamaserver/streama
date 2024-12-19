@@ -101,6 +101,7 @@ angular.module("streama.translations").config(function ($translateProvider) {
     LANGUAGE_ar: "عربى/Arabic",
     LANGUAGE_hu: "Magyar/Hungarian",
     LANGUAGE_tr: "Turkish/Türkçe",
+    LANGUAGE_pl: "Polski/Lehçe",
     PROFIlE: {
       USERNAME: "Kullanıcı adı",
       FULL_NAME: "Ad Soyad",
