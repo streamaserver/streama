@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
 
 import javax.activation.MimetypesFileTypeMap
+import java.net.MalformedURLException
 
 @Transactional
 class OpensubtitlesService {
@@ -78,9 +79,52 @@ class OpensubtitlesService {
     return response
   }
 
+  // Allowed domains for subtitle downloads (SSRF mitigation - CWE-918)
+  private static final List<String> ALLOWED_SUBTITLE_HOSTS = [
+    "dl.opensubtitles.org",
+    "www.opensubtitles.org",
+    "opensubtitles.org",
+    "vip.opensubtitles.org"
+  ]
+
+  /**
+   * Validates that a URL is from an allowed subtitle provider.
+   * This prevents SSRF attacks by ensuring only whitelisted domains are accessed.
+   */
+  private boolean isUrlAllowed(String urlString) {
+    try {
+      URL parsedUrl = new URL(urlString)
+      String host = parsedUrl.getHost()?.toLowerCase()
+      String protocol = parsedUrl.getProtocol()?.toLowerCase()
+
+      // Only allow HTTPS (or HTTP for backwards compatibility with opensubtitles)
+      if (protocol != "https" && protocol != "http") {
+        log.warn("Blocked subtitle download attempt with disallowed protocol: ${protocol}")
+        return false
+      }
+
+      // Check if host is in allowlist
+      if (!ALLOWED_SUBTITLE_HOSTS.contains(host)) {
+        log.warn("Blocked subtitle download attempt from disallowed host: ${host}")
+        return false
+      }
+
+      return true
+    } catch (MalformedURLException e) {
+      log.warn("Blocked subtitle download attempt with malformed URL: ${urlString}")
+      return false
+    }
+  }
+
   def downloadSubtitles(String subtitleName, String url, String subtitleLanguage, videoId) {
     def videoInstance = Video.findById(videoId)
     if (videoInstance != null) {
+      // Security fix: Validate URL before fetching (SSRF mitigation - CWE-918)
+      if (!isUrlAllowed(url)) {
+        log.error("Security: Blocked subtitle download from unauthorized URL: ${url}")
+        throw new SecurityException("Subtitle downloads are only allowed from opensubtitles.org")
+      }
+
       def stagingDir = uploadService.getDir().uploadDir.toString()
       def filename = url.tokenize('/')[-1]
       def filePath = new java.io.File("$stagingDir/$filename")

@@ -46,10 +46,33 @@ class SubtitlesController {
     def subtitleLink = params.subDownloadLink
     def subtitleLang = params.subLang
     def videoId = params.videoId
-    if (opensubtitlesService.downloadSubtitles(subtitleName, subtitleLink, subtitleLang, videoId)) {
-      respond status: OK
-    } else {
-      respond status: BAD_REQUEST
+
+    // Security fix: Input validation at controller level (defense in depth)
+    // Validate required parameters are present
+    if (!subtitleName || !subtitleLink || !subtitleLang || !videoId) {
+      response.status = BAD_REQUEST.value()
+      respond([error: true, message: "Missing required parameters"])
+      return
+    }
+
+    // Validate subtitleName doesn't contain path traversal characters
+    if (subtitleName.contains("..") || subtitleName.contains("/") || subtitleName.contains("\\")) {
+      log.warn("Security: Blocked potential path traversal in subtitle filename: ${subtitleName}")
+      response.status = BAD_REQUEST.value()
+      respond([error: true, message: "Invalid subtitle filename"])
+      return
+    }
+
+    try {
+      if (opensubtitlesService.downloadSubtitles(subtitleName, subtitleLink, subtitleLang, videoId)) {
+        respond status: OK
+      } else {
+        respond status: BAD_REQUEST
+      }
+    } catch (SecurityException e) {
+      log.error("Security violation in subtitle download: ${e.message}")
+      response.status = BAD_REQUEST.value()
+      respond([error: true, message: e.message])
     }
   }
 
