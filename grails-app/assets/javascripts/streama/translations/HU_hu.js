@@ -15,6 +15,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     },
     DASHBOARD: {
       TITLE: 'Főoldal',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: 'Ajánlatok',
       NEW_RELEASES: 'Nemrég megjelent',
       CONTINUE_WATCHING: 'Megtekintés folytatása',
@@ -94,6 +95,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dán/Danish',
     LANGUAGE_ar: 'Arab/Arabic',
     LANGUAGE_hu: 'Magyar',
+		LANGUAGE_sk: 'Slovensky/Slovak',
     PROFIlE: {
       USERNAME: 'Felhasználónév',
       FULL_NAME: 'Teljes név',

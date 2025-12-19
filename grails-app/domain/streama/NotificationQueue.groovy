@@ -8,6 +8,7 @@ class NotificationQueue {
   Boolean isCompleted = false
 
   Movie movie
+  GenericVideo genericVideo
   TvShow tvShow
   Video videoToPlay
 

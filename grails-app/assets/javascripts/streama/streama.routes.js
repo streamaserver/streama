@@ -111,6 +111,12 @@ angular.module('streama').config(function ($stateProvider) {
       controller: 'adminReportsCtrl',
       controllerAs: "vm"
     })
+    .state('admin.genres', {
+      url: '/genres',
+      templateUrl: '/streama/admin-genres.htm',
+      controller: 'adminGenresCtrl',
+      controllerAs: "vm"
+    })
 
 
 

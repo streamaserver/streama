@@ -18,6 +18,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'أفلام',
       MY_LIST:'قائمتي',
 			TITLE: 'الواجهة الرئيسية',
+      TITLE_COUNTER_OF: 'of',
 			RECOMMENDATIONS: 'افضل الافلام',
 			NEW_RELEASES: 'المصدرة حديثا',
 			CONTINUE_WATCHING: 'الاستمرار في المشاهدة',
@@ -93,6 +94,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk/دانماركي',
     LANGUAGE_ar: 'عربى',
 		LANGUAGE_hu: 'Magyar/الهنغارية',
+		LANGUAGE_sk: 'Slovensky/Slovak',
 		PROFIlE: {
 			USERNAME: 'الاسم',
 			FULL_NAME: 'الاسم الكامل',

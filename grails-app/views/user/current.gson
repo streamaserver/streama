@@ -9,5 +9,5 @@ json g.render(user, [deep: true]){
 	isAdmin (user?.authorities?.find{it.authority == 'ROLE_ADMIN'} ? true : false)
 	isContentManager (user?.authorities?.find{it.authority == 'ROLE_CONTENT_MANAGER'} ? true : false)
   isTrustedUser (user?.authorities?.find{it.authority == 'ROLE_TRUSTED_USER'} ? true : false)
-  amountOfMediaEntries user.amountOfMediaEntries ?: 30
+  amountOfMediaEntries user.amountOfMediaEntries ?: 10
 }

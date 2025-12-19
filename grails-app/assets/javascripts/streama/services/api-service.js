@@ -168,7 +168,22 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
       }
     },
 
-		episode: {
+    subtitle: {
+      setDefault: function(subtitleId, videoId) {
+        return $http.get('subtitles/setDefault.json', {params: {id: subtitleId, videoId: videoId}});
+      },
+      getOpensubtitles: function (video, videoTitle, subtitlelanguage, isSearchByHash) {
+        return $http.get('subtitles/get.json', {params: {episode: video.episode_number, query: videoTitle, season: video.season_number, subLanguageId: subtitlelanguage, videoId: video.id, searchByHash: isSearchByHash}});
+      },
+      uploadOpensubtitles: function (opensubtitle, videoId) {
+        return $http.get('subtitles/download.json', {params: {subFileName: opensubtitle.subFileName, subDownloadLink: opensubtitle.subDownloadLink, subLang: opensubtitle.languageName, videoId: videoId}});
+      },
+      refreshSubtitles: function (videoId) {
+        return $http.get('subtitles/getVideoSubtitles.json', {params: {videoId: videoId}});
+      },
+    },
+
+    episode: {
 			get: function (id) {
 				return $http.get('episode/show.json', {params: {id: id}});
 			},
@@ -233,7 +248,7 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
         return $http.post('watchlistEntry/create.json', {params: {id: item.id, mediaType: item.mediaType}});
       },
 		  delete: function (item) {
-        return $http.delete('watchlistEntry/delete.json', {params: {id: item.id, mediaType: item.mediaType}})
+        return $http.delete('watchlistEntry/delete.json', {params: {id: item.id, mediaType: item.mediaType}});
       },
       list: function (params) {
         return $http.get('watchlistEntry/list.json', {params: params});
@@ -246,6 +261,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			},
 			list: function () {
 				return $http.get('genre.json');
+			},
+			create: function (name) {
+				return $http.post('genre/save', {name: name});
+			},
+			delete: function (id) {
+				return $http.delete('genre/delete', {params: {id: id}});
 			}
 		},
 
@@ -320,8 +341,8 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 				return $http.get('dash/searchMedia.json', {params: {query: query}});
 			},
 
-			listContinueWatching: function () {
-				return $http.get('dash/listContinueWatching.json');
+			listContinueWatching: function (params) {
+				return $http.get('dash/listContinueWatching.json', {params: params});
 			},
 
 			listMovies: function (params) {
@@ -334,6 +355,10 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 
 			firstEpisodeForShow: function (id) {
 				return $http.get('dash/firstEpisodeForShow.json', {params: {id: id}});
+			},
+
+			randomEpisodeForShow: function (id) {
+				return $http.get('dash/randomEpisodeForShow.json', {params: {id: id}});
 			},
 
 			listGenres: function () {
@@ -361,16 +386,16 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 
     profile: {
 		  save: function (params) {
-        return $http.post('profile/save',  params)
+        return $http.post('profile/save',  params);
       },
 		  update: function (params) {
-        return $http.put('profile/update.json',  params)
+        return $http.put('profile/update.json',  params);
       },
 		  delete: function (id) {
-        return $http.delete('profile/delete.json',  {params: {id: id}})
+        return $http.delete('profile/delete.json',  {params: {id: id}});
       },
       getUserProfiles: function () {
-        return $http.get('profile/getUserProfiles.json')
+        return $http.get('profile/getUserProfiles.json');
       }
     }
 
