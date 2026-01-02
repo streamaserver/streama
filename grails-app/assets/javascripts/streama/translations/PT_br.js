@@ -13,7 +13,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Senha',
 			FIRST_TIME_HINT: 'Primeira vez fazendo login? Tente \'admin\' nos dois campos.',
 			SUBMIT: 'Entrar',
-			SESSION_EXPIRED: 'Sua sessão expirou desde sua última atividade. Por favor faça login novamente.'
+			SESSION_EXPIRED: 'Sua sessão expirou desde sua última atividade. Por favor faça login novamente.',
+			FORGOT_PASSWORD: 'Esqueceu sua senha?'
 		},
 		DASHBOARD: {
 			HOME: 'Início',

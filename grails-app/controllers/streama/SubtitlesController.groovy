@@ -36,7 +36,7 @@ class SubtitlesController {
       def map = [error: true, message: responseSubtitle.body]
       respond map
     } else {
-      respond JSON.parse((responseSubtitle.body as JSON).toString())
+      respond responseSubtitle.body
     }
   }
 

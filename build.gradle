@@ -14,7 +14,7 @@ buildscript {
     }
 }
 
-version "1.10.6"
+version "1.11.0"
 group "streama"
 
 
@@ -87,7 +87,7 @@ dependencies {
 
     // runtime
     runtime "com.h2database:h2"
-    runtime 'mysql:mysql-connector-java:5.1.36'
+    runtime 'mysql:mysql-connector-java:8.0.28'
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
     runtime 'javax.xml.bind:jaxb-api:2.3.0'
 

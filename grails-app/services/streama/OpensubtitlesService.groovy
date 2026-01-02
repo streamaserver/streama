@@ -163,9 +163,9 @@ class OpensubtitlesService {
     def response = ResponseEntity.status(400).body("Opensubtitle API problems")
     try {
       response = restTemplate.exchange(url, HttpMethod.GET, entity, SubtitlesResponse[].class)
-    } catch (Exception e) {
-      log.error("Opensubtitle API exception, ${e.message}", e)
-      if (e.statusCode.value == 403) {
+    } catch (org.springframework.web.client.HttpClientErrorException e) {
+      log.error("Opensubtitle API HTTP error, ${e.message}", e)
+      if (e.statusCode.value() == 403) {
         if (retry) {
           def accessHeader = createHeadersToAccess(credentials)
           HttpEntity<String> accessEntity = new HttpEntity<String>(accessHeader)
@@ -179,8 +179,13 @@ class OpensubtitlesService {
           return sendRequest(url, credentials, false)
         }
 
-        response = ResponseEntity.status(e.statusCode.value).body("Looks like you have invalid credentials for opensubtitles API, please check admin settings page")
+        response = ResponseEntity.status(e.statusCode.value()).body("Looks like you have invalid credentials for opensubtitles API, please check admin settings page")
+      } else {
+        response = ResponseEntity.status(e.statusCode.value()).body("OpenSubtitles API error: ${e.statusCode.reasonPhrase}")
       }
+    } catch (Exception e) {
+      log.error("Opensubtitle API exception, ${e.message}", e)
+      response = ResponseEntity.status(500).body("Failed to connect to OpenSubtitles API: ${e.message}")
     }
     return response
   }
@@ -188,7 +193,7 @@ class OpensubtitlesService {
   def buildUrl(String episode, String query, String season, String subLanguageId) {
 
     def episodeParam = episode ? "/episode-${episode}" : ""
-    def queryParam = query ? "/query-${query.replaceAll(" ", "%20").toLowerCase()}" : ""
+    def queryParam = query ? "/query-${URLEncoder.encode(query.toLowerCase(), 'UTF-8').replace('+', '%20')}" : ""
     def seasonParam = season ? "/season-${season}" : ""
     def subLanguageIdParam = subLanguageId ? "/sublanguageid-${subLanguageId}" : ""
 

@@ -10,7 +10,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Kodeord',
 			FIRST_TIME_HINT: 'Første gang du logger ind? Prøv \'admin\' i begge felter.',
 			SUBMIT: 'Log Ind',
-      SESSION_EXPIRED: 'Din session er udløbet siden din sidste aktivitet. Venligst log ind igen.'
+      SESSION_EXPIRED: 'Din session er udløbet siden din sidste aktivitet. Venligst log ind igen.',
+      FORGOT_PASSWORD: 'Glemt adgangskode?'
 		},
 		DASHBOARD: {
       HOME: 'Hjemmeside',

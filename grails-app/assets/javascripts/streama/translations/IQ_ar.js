@@ -10,7 +10,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'الرمز',
 			FIRST_TIME_HINT: 'اول مرة تقوم بتسجيل الدخول؟ حاول ادخال \'admin\' بالفراغيين.',
 			SUBMIT: 'تسجيل الدخول',
-      SESSION_EXPIRED: 'انتهت صلاحية الدخول منذ اخر نشاط. الرجاء تسجيل الدخول مرة اخرى.'
+      SESSION_EXPIRED: 'انتهت صلاحية الدخول منذ اخر نشاط. الرجاء تسجيل الدخول مرة اخرى.',
+      FORGOT_PASSWORD: 'هل نسيت كلمة المرور؟'
 		},
 		DASHBOARD: {
       HOME: 'الصفحة الرئيسية',

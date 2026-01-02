@@ -11,7 +11,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Contrasenya',
 			FIRST_TIME_HINT: 'És la teva primera vegada? Prova \'*admin\' en els dos camps.',
 			SUBMIT: 'Entrar',
-      SESSION_EXPIRED: 'La seva sessió va expirar des de la seva última activitat. Si us plau iniciï sessió de nou.'
+      SESSION_EXPIRED: 'La seva sessió va expirar des de la seva última activitat. Si us plau iniciï sessió de nou.',
+      FORGOT_PASSWORD: 'Has oblidat la contrasenya?'
 		},
 		DASHBOARD: {
       HOME: 'Casa',

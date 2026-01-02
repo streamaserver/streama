@@ -13,6 +13,7 @@ angular.module("streama.translations").config(function ($translateProvider) {
       SUBMIT: "Giriş",
       SESSION_EXPIRED:
         "Son etkinliğinizden bu yana oturumunuz sona erdi. Lütfen tekrar giriş yapın.",
+      FORGOT_PASSWORD: "Şifrenizi mi unuttunuz?",
     },
     DASHBOARD: {
       HOME: "Ana Sayfa",
