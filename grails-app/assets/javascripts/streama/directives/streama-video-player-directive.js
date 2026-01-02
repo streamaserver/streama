@@ -318,7 +318,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
             $scope.isNextVideoShowing = (nextVideoId && video.currentTime > videoOutroStart);
           } else {
             var remainingDurationSeconds = video.duration - video.currentTime;
-            $scope.isNextVideoShowing = (nextVideoId && remainingDurationSeconds < END_OF_VIDEO);
+			var endOfVideo = Math.min(Math.max(3, video.duration * 0.042), END_OF_VIDEO);
+            $scope.isNextVideoShowing = (nextVideoId && remainingDurationSeconds < endOfVideo);
           }
         }
 

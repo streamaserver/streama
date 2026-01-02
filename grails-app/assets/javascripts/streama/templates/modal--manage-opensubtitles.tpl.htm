@@ -1,0 +1,86 @@
+<div class="modal-body">
+  <legend>
+    Subtitle Search
+  </legend>
+
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="formGroupTitle">Title</label>
+      <div class="col-md-10">
+        <input class="form-control input-sm" id="formGroupTitle" type="text" value='{{video.name || video.title}}'
+               ng-model="videoName">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="repeatSelect">Language</label>
+      <div class="col-md-10">
+        <select class="form-control input-sm" name="repeatSelect" id="repeatSelect"
+                ng-model="opensubtitleLanguages.defaultValue">
+          <option ng-repeat="language in opensubtitleLanguages.availableOptions" value="{{language.IdSubLanguage}}">
+            {{language.LanguageName}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="formGroupSeason">Season</label>
+      <div class="col-sm-10">
+        <input class="form-control input-sm" id="formGroupSeason" type="text" value='{{video.season_number}}' disabled>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="formGroupEpisode">Episode</label>
+      <div class="col-md-10">
+        <input class="form-control input-sm" id="formGroupEpisode" type="text" value='{{video.episode_number}}'
+               disabled>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-1 col-sm-offset-2">
+        <button class="btn btn-success" ng-click="getSubtitles(videoName, videoLanguage, searchByHash)">Search
+        </button>
+      </div>
+      <div class="col-sm-3" id="checkSearchByHash">
+        <input type="checkbox" id="checkSearch" ng-model="searchByHash">
+        <label for="checkSearch">Search by hash</label>
+      </div>
+    </div>
+  </form>
+
+
+  <table class="table table-striped" style="font-size: 14px;" ng-show="opensubtitles.length">
+    <thead>
+    <tr>
+      <th>Full name</th>
+      <th>Format</th>
+      <th>Language</th>
+      <th>Downloads</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="opensubtitle in opensubtitles">
+      <td class="hide-overflowing-name">{{opensubtitle.subFileName}}</td>
+      <td>{{opensubtitle.subFormat}}</td>
+      <td>{{opensubtitle.languageName}}</td>
+      <td>{{opensubtitle.subDownloadsCnt}}</td>
+      <td>
+        <button title="Upload Opensubtitle" class="btn btn-xs btn-primary management-btn" ng-click="uploadSubtitles(opensubtitle)">upload</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal-footer">
+  <div class="form-group">
+    <label class="col-md-6 align-label-with-subtitle-count" ng-if="isSearch">Research complete: {{numberOfResults}} result(s)</label>
+    <div ng-class="{'col-md-12 padding-btn-close': !isSearch, 'col-md-6 padding-btn-close': isSearch}">
+      <button class="btn btn-default" ng-click="cancel()">Close</button>
+    </div>
+  </div>
+</div>

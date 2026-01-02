@@ -56,6 +56,9 @@
 
             <button class="btn btn-primary pull-right">{{'LOGIN.SUBMIT' | translate}} &nbsp; <i class="ion-chevron-right"></i></button></span>
         </form>
+        <div class="forgot-password-link" style="margin-top: 15px; text-align: center;">
+          <a href="${request.contextPath}/passwordReset/request" style="color: #aaa;">{{'LOGIN.FORGOT_PASSWORD' | translate}}</a>
+        </div>
       </div>
     </div>
     <div class="page-container-push"></div>

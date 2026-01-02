@@ -10,7 +10,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Пароль',
 			FIRST_TIME_HINT: 'Впервые? Используйте \'admin\' в качестве логина и пароля для входа.',
 			SUBMIT: 'Войти',
-      SESSION_EXPIRED: 'Ваша сессия истекла. Пожалуйста, войдите снова.'
+      SESSION_EXPIRED: 'Ваша сессия истекла. Пожалуйста, войдите снова.',
+      FORGOT_PASSWORD: 'Забыли пароль?'
 		},
 		DASHBOARD: {
       HOME: 'Домашняя страница',
@@ -18,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Фильмы',
       MY_LIST:'Мой список',
 			TITLE: 'Главная',
+      TITLE_COUNTER_OF: 'of',
 			RECOMMENDATIONS: 'Рекомендовано для вас',
 			NEW_RELEASES: 'Новое на сайте',
 			CONTINUE_WATCHING: 'Продолжить просмотр',

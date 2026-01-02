@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.11.0 - 2026-01-02
+### Features
+- Added forgot password flow with email-based password reset
+- Password reset tokens expire after 30 minutes for security
+- Reset link logged to console when email is not configured (useful for development/testing)
+
+### Technical
+- New PasswordResetController with request, sendResetEmail, index, and setPassword actions
+- Added passwordResetToken and passwordResetExpiry fields to User domain
+- Created email template for password reset notifications
+- Added "Forgot Password?" link to login page
+- Added translations for forgot password flow in all 18 language files
+
+
 ## 0.3.1.RC - 2016-05-18
 ### Features
 - now you dont need to manually parse your SRT files to vtt anymore! the application will do it for you on the fly! 

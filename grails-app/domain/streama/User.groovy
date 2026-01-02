@@ -26,6 +26,8 @@ class User {
 	String language = 'en'
   String fullName
   Integer amountOfMediaEntries
+  String passwordResetToken
+  Date passwordResetExpiry
 
 	static transients = ['springSecurityService']
 
@@ -36,6 +38,8 @@ class User {
 		password blank: false
 		dateCreated nullable: true
 		lastUpdated nullable: true
+		passwordResetToken nullable: true
+		passwordResetExpiry nullable: true
 	}
 
 	static mapping = {

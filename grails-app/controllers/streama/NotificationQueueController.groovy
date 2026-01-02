@@ -138,12 +138,18 @@ class NotificationQueueController {
         def data = request.JSON
         def movie
         def tvShow
+        def genericVideo
         def id = data.mediaId
         def mediaType = data.mediaType
         def videoToPlay = Video.get(data.videoToPlay?.id ?: data.mediaId)
+
         if(mediaType == 'movie'){
             movie = Movie.get(id)
-        }else{
+        }
+        else if(mediaType == 'genericVideo'){
+          genericVideo = GenericVideo.get(id)
+        }
+        else{
             tvShow = TvShow.get(id)
         }
 
@@ -159,7 +165,7 @@ class NotificationQueueController {
             return
         }
 
-        if(!movie && !tvShow){
+        if(!movie && !tvShow && !genericVideo){
             render status: NOT_ACCEPTABLE
             return
         }
@@ -168,6 +174,9 @@ class NotificationQueueController {
             type == 'newRelease'
             if(movie){
                 movie == movie
+            }
+            if(genericVideo){
+              genericVideo == genericVideo
             }
             if(tvShow){
                 tvShow == tvShow
@@ -187,6 +196,7 @@ class NotificationQueueController {
         notification.description = data.description
         notification.movie = movie
         notification.tvShow = tvShow
+        notification.genericVideo = genericVideo
         notification.videoToPlay = videoToPlay
         notification.save(failOnError: true)
 

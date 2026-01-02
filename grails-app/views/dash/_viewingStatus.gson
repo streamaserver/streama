@@ -28,7 +28,7 @@ json g.render(viewingStatus, [includes: ['id', 'dateCreated', 'lastUpdated', 'cu
 
         mediaType 'movie'
         release_date movie.release_date
-        poster_path movie.poster_path
+        poster_path movie.getPosterPath()
         backdrop_path movie.backdrop_path
         poster_image_src movie.poster_image?.src
       }
@@ -37,6 +37,7 @@ json g.render(viewingStatus, [includes: ['id', 'dateCreated', 'lastUpdated', 'cu
 
         mediaType 'genericVideo'
         release_date genericVideo.release_date
+        poster_path genericVideo.getPosterPath()
         poster_image_src genericVideo.poster_image?.src
       }
 
@@ -46,7 +47,7 @@ json g.render(viewingStatus, [includes: ['id', 'dateCreated', 'lastUpdated', 'cu
         mediaType 'episode'
         isEpisode true
         backdrop_path episode.still_path
-        poster_path episode.show?.poster_path
+        poster_path episode.getPosterPath()
         poster_image_src episode.show?.poster_image?.src
         episodeString episode.episodeString
         tvShowId episode.show?.id

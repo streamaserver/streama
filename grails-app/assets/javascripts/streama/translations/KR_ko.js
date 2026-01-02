@@ -10,7 +10,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: '비밀번호',
 			FIRST_TIME_HINT: '처음 로그인 하시나요? \'admin\'를 입력해보세요!',
 			SUBMIT: '로그인',
-      SESSION_EXPIRED: '마지막 활동 이후 세션이 만료되었습니다. 다시 로그인하십시오.'
+      SESSION_EXPIRED: '마지막 활동 이후 세션이 만료되었습니다. 다시 로그인하십시오.',
+      FORGOT_PASSWORD: '비밀번호를 잊으셨나요?'
 		},
 		DASHBOARD: {
       HOME: '집',
@@ -18,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: '영화 산업',
       MY_LIST:'나의 목록',
 			TITLE: '대시보드',
+      TITLE_COUNTER_OF: 'of',
 			NEW_RELEASES: '신작',
 			CONTINUE_WATCHING: '계속해서 보기',
 			DISCOVER_SHOWS: '드라마 찾기',
@@ -91,6 +93,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk/덴마크 말',
     LANGUAGE_ar: 'عربى/아라비아 말',
     LANGUAGE_hu: 'Magyar/헝가리 인',
+		LANGUAGE_sk: 'Slovensky/Slovak',
 		PROFIlE: {
 			USERNAME: '아이디',
 			FULL_NAME: '이름',
