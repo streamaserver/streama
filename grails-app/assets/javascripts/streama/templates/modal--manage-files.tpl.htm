@@ -125,7 +125,11 @@
 
     <div ng-show="video.subtitles.length">
       <br/>
-      <h4>Subtitles</h4>
+      <h4>Subtitles
+        <button class="btn btn-xs btn-info" ng-click="autodetectAllLabels()" title="Autodetect language for all subtitles">
+          <i class="ion-wand"></i> Autodetect All
+        </button>
+      </h4>
 
       <table class="table table-striped" style="font-size: 14px;">
         <thead>
@@ -152,6 +156,7 @@
           <td id="flexible-control-buttons">
             <button title="Set as default" ng-class="{'btn btn-xs btn-success': file.isDefault, 'btn btn-xs btn-primary': !file.isDefault}" ng-click="setAsDefault(file)">{{file.isDefault ? 'standard' : 'set as standard'}}</button>
             <a class="btn btn-xs btn-primary management-btn" href="{{generateDownloadUrl(file.id)}}" download>download</a>
+            <button ng-if="!isEditing(file)" class="btn btn-xs btn-info management-btn" ng-click="autodetectLabel(file)" title="Autodetect language"><i class="ion-wand"></i></button>
             <button ng-if="!isEditing(file)" class="btn btn-xs management-btn" ng-click="toggleEdit(file)" ><i class="ion-edit"></i></button>
             <button ng-if="isEditing(file)" title="Delete file" class="btn btn-xs btn-danger management-btn" ng-click="removeSubtitle(file)"><i class="ion-trash-a"></i></button>
             <button ng-if="isEditing(file)" title="Save change" class="btn btn-xs btn-success management-btn" ng-click="saveChanges(file)"><i class="ion-checkmark"></i></button>

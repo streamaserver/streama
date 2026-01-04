@@ -226,4 +226,86 @@ angular.module('streama').controller('modalFileCtrl', [
     function isEditing(file) {
       return file._isEditing;
     }
+
+    // Language code to full name mapping (includes ISO codes AND full names)
+    var languageMap = {
+      'en': 'English', 'eng': 'English', 'english': 'English',
+      'sv': 'Swedish', 'swe': 'Swedish', 'sve': 'Swedish', 'swedish': 'Swedish',
+      'de': 'German', 'ger': 'German', 'deu': 'German', 'german': 'German',
+      'fr': 'French', 'fre': 'French', 'fra': 'French', 'french': 'French',
+      'es': 'Spanish', 'spa': 'Spanish', 'spanish': 'Spanish',
+      'it': 'Italian', 'ita': 'Italian', 'italian': 'Italian',
+      'pt': 'Portuguese', 'por': 'Portuguese', 'portuguese': 'Portuguese',
+      'nl': 'Dutch', 'dut': 'Dutch', 'nld': 'Dutch', 'dutch': 'Dutch',
+      'da': 'Danish', 'dan': 'Danish', 'danish': 'Danish',
+      'no': 'Norwegian', 'nor': 'Norwegian', 'nob': 'Norwegian', 'norwegian': 'Norwegian',
+      'fi': 'Finnish', 'fin': 'Finnish', 'finnish': 'Finnish',
+      'pl': 'Polish', 'pol': 'Polish', 'polish': 'Polish',
+      'ru': 'Russian', 'rus': 'Russian', 'russian': 'Russian',
+      'ja': 'Japanese', 'jpn': 'Japanese', 'japanese': 'Japanese',
+      'ko': 'Korean', 'kor': 'Korean', 'korean': 'Korean',
+      'zh': 'Chinese', 'chi': 'Chinese', 'zho': 'Chinese', 'chinese': 'Chinese',
+      'ar': 'Arabic', 'ara': 'Arabic', 'arabic': 'Arabic',
+      'he': 'Hebrew', 'heb': 'Hebrew', 'hebrew': 'Hebrew',
+      'tr': 'Turkish', 'tur': 'Turkish', 'turkish': 'Turkish',
+      'el': 'Greek', 'gre': 'Greek', 'ell': 'Greek', 'greek': 'Greek',
+      'cs': 'Czech', 'cze': 'Czech', 'ces': 'Czech', 'czech': 'Czech',
+      'hu': 'Hungarian', 'hun': 'Hungarian', 'hungarian': 'Hungarian',
+      'ro': 'Romanian', 'rum': 'Romanian', 'ron': 'Romanian', 'romanian': 'Romanian',
+      'th': 'Thai', 'tha': 'Thai', 'thai': 'Thai',
+      'vi': 'Vietnamese', 'vie': 'Vietnamese', 'vietnamese': 'Vietnamese',
+      'id': 'Indonesian', 'ind': 'Indonesian', 'indonesian': 'Indonesian',
+      'hr': 'Croatian', 'hrv': 'Croatian', 'croatian': 'Croatian',
+      'bg': 'Bulgarian', 'bul': 'Bulgarian', 'bulgarian': 'Bulgarian',
+      'uk': 'Ukrainian', 'ukr': 'Ukrainian', 'ukrainian': 'Ukrainian',
+      'sr': 'Serbian', 'srp': 'Serbian', 'serbian': 'Serbian',
+      'sk': 'Slovak', 'slo': 'Slovak', 'slk': 'Slovak', 'slovak': 'Slovak',
+      'sl': 'Slovenian', 'slv': 'Slovenian', 'slovenian': 'Slovenian',
+      'forced': 'Forced'  // for forced subtitles
+    };
+
+    $scope.autodetectLabel = function(file) {
+      var filename = file.originalFilename || '';
+      // Remove extension
+      var nameWithoutExt = filename.replace(/\.(srt|vtt|sub|ass|ssa)$/i, '');
+      // Split by common delimiters
+      var parts = nameWithoutExt.split(/[.\-_\s]/);
+
+      // Search for language code in the parts (check last few parts first)
+      for (var i = parts.length - 1; i >= 0 && i >= parts.length - 4; i--) {
+        var part = parts[i].toLowerCase();
+        if (languageMap[part]) {
+          file.subtitleSrcLang = part;
+          file.subtitleLabel = languageMap[part];
+          file._isEditing = true;
+          alertify.success('Detected: ' + languageMap[part]);
+          return;
+        }
+      }
+      alertify.warning('Could not detect language from filename');
+    };
+
+    $scope.autodetectAllLabels = function() {
+      var detected = 0;
+      ($scope.video.subtitles || []).forEach(function(file) {
+        var filename = file.originalFilename || '';
+        var nameWithoutExt = filename.replace(/\.(srt|vtt|sub|ass|ssa)$/i, '');
+        var parts = nameWithoutExt.split(/[.\-_\s]/);
+
+        for (var i = parts.length - 1; i >= 0 && i >= parts.length - 4; i--) {
+          var part = parts[i].toLowerCase();
+          if (languageMap[part]) {
+            file.subtitleSrcLang = part;
+            file.subtitleLabel = languageMap[part];
+            detected++;
+            break;
+          }
+        }
+      });
+      if (detected > 0) {
+        alertify.success('Detected language for ' + detected + ' subtitle(s)');
+      } else {
+        alertify.warning('Could not detect any languages');
+      }
+    };
   }]);
