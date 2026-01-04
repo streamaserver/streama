@@ -4,6 +4,7 @@ import grails.transaction.Transactional
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 
 import javax.activation.MimetypesFileTypeMap
@@ -18,6 +19,8 @@ class OpensubtitlesService {
   def fileService
   def settingsService
   def grailsApplication
+
+  private static final String USER_AGENT = "Streama v1.11"
 
   def setDefaultSubtitle(def subtileId, def videoId) {
     def video = Video.findById(videoId)
@@ -38,12 +41,18 @@ class OpensubtitlesService {
   }
 
   def getSubtitles(SubtitlesRequest opensubtitlesRequest) {
-    String resourceUrl = buildUrl(opensubtitlesRequest.getEpisode(), opensubtitlesRequest.getQuery(), opensubtitlesRequest.getSeason(), opensubtitlesRequest.getSubLanguageId())
-    def credentials = settingsService.getValueForName('credentials_opensubtitles')
-    def response = sendRequest(resourceUrl, credentials)
-    if (response.statusCodeValue == 200) {
-      response.body.findAll { it.subFormat.equals("srt") || it.subFormat.equals("vtt") }.sort { -it.subDownloadsCnt }
+    String resourceUrl = buildSearchUrl(
+      opensubtitlesRequest.getQuery(),
+      opensubtitlesRequest.getSubLanguageId(),
+      opensubtitlesRequest.getSeason(),
+      opensubtitlesRequest.getEpisode()
+    )
+    def apiKey = settingsService.getValueForName('opensubtitles_api_key')
+    if (!apiKey) {
+      return ResponseEntity.status(400).body([error: true, message: "OpenSubtitles API key required. The old API was discontinued in 2024. " +
+        "Get your free API key at opensubtitles.com/consumers and enter it in Admin → Settings → 'OpenSubtitles API Key'"])
     }
+    def response = sendSearchRequest(resourceUrl, apiKey)
     return response
   }
 
@@ -61,20 +70,26 @@ class OpensubtitlesService {
             log.error("Failed to save openSubtitleHash, ${e.message}", e)
           }
         }
-        subtitleUrlList.add(buildUrl(file.openSubtitleHash, file.size))
+        subtitleUrlList.add(buildHashSearchUrl(file.openSubtitleHash, file.size))
       }
     }
     Set responseSet = []
-    def credentials = settingsService.getValueForName('credentials_opensubtitles')
+    def apiKey = settingsService.getValueForName('opensubtitles_api_key')
+    if (!apiKey) {
+      return ResponseEntity.status(400).body([error: true, message: "OpenSubtitles API key required. The old API was discontinued in 2024. " +
+        "Get your free API key at opensubtitles.com/consumers and enter it in Admin → Settings → 'OpenSubtitles API Key'"])
+    }
 
     for (url in subtitleUrlList) {
-      def response = sendRequest(url, credentials)
+      def response = sendSearchRequest(url, apiKey)
       if (response.statusCodeValue != 200) {
         return response
       }
-      responseSet.addAll(response.body)
+      if (response.body instanceof List) {
+        responseSet.addAll(response.body)
+      }
     }
-    responseSet?.sort { -it.subDownloadsCnt }
+    responseSet = responseSet?.sort { -(it.subDownloadsCnt ?: 0) }
     def response = ResponseEntity.status(200).body(responseSet)
     return response
   }
@@ -84,7 +99,10 @@ class OpensubtitlesService {
     "dl.opensubtitles.org",
     "www.opensubtitles.org",
     "opensubtitles.org",
-    "vip.opensubtitles.org"
+    "vip.opensubtitles.org",
+    "api.opensubtitles.com",
+    "www.opensubtitles.com",
+    "opensubtitles.com"
   ]
 
   /**
@@ -116,21 +134,48 @@ class OpensubtitlesService {
     }
   }
 
-  def downloadSubtitles(String subtitleName, String url, String subtitleLanguage, videoId) {
+  /**
+   * Downloads subtitle using the new OpenSubtitles API v1 two-step process:
+   * 1. POST to /download with file_id to get temporary download link
+   * 2. Download the file from the temporary link
+   */
+  def downloadSubtitles(String subtitleName, String fileIdOrUrl, String subtitleLanguage, videoId) {
     def videoInstance = Video.findById(videoId)
-    if (videoInstance != null) {
-      // Security fix: Validate URL before fetching (SSRF mitigation - CWE-918)
-      if (!isUrlAllowed(url)) {
-        log.error("Security: Blocked subtitle download from unauthorized URL: ${url}")
-        throw new SecurityException("Subtitle downloads are only allowed from opensubtitles.org")
+    if (videoInstance == null) {
+      return false
+    }
+
+    def apiKey = settingsService.getValueForName('opensubtitles_api_key')
+    if (!apiKey) {
+      log.warn("OpenSubtitles API key not configured - subtitle download skipped")
+      return false
+    }
+
+    try {
+      // Step 1: Get download link from API
+      def downloadUrl = getDownloadLink(fileIdOrUrl, apiKey)
+      if (!downloadUrl) {
+        log.error("Failed to get download link for file_id: ${fileIdOrUrl}")
+        return false
       }
 
+      // Security fix: Validate URL before fetching (SSRF mitigation - CWE-918)
+      if (!isUrlAllowed(downloadUrl)) {
+        log.error("Security: Blocked subtitle download from unauthorized URL: ${downloadUrl}")
+        throw new SecurityException("Subtitle downloads are only allowed from opensubtitles.org/opensubtitles.com")
+      }
+
+      // Step 2: Download the actual file
       def stagingDir = uploadService.getDir().uploadDir.toString()
-      def filename = url.tokenize('/')[-1]
+      def filename = downloadUrl.tokenize('/')[-1]
+      // Clean up filename - remove query params
+      if (filename.contains('?')) {
+        filename = filename.split('\\?')[0]
+      }
       def filePath = new java.io.File("$stagingDir/$filename")
 
       new FileOutputStream(filePath).withStream { out ->
-        new URL(url).openStream().eachByte {
+        new URL(downloadUrl).openStream().eachByte {
           out.write(it)
         }
       }
@@ -152,59 +197,163 @@ class OpensubtitlesService {
       } finally {
         filePath.delete()
       }
+    } catch (Exception e) {
+      log.error("Failed to download subtitle: ${e.message}", e)
+      return false
     }
   }
 
-  // If the request to the opensubtitle API receives the status code 403, sends a request for access.
-  // Then the request to get subtitles is sent again
-  def sendRequest(String url, String credentials, boolean retry = true) {
-    def headers = createHeaders(credentials)
-    HttpEntity<String> entity = new HttpEntity<String>(headers)
-    def response = ResponseEntity.status(400).body("Opensubtitle API problems")
-    try {
-      response = restTemplate.exchange(url, HttpMethod.GET, entity, SubtitlesResponse[].class)
-    } catch (org.springframework.web.client.HttpClientErrorException e) {
-      log.error("Opensubtitle API HTTP error, ${e.message}", e)
-      if (e.statusCode.value() == 403) {
-        if (retry) {
-          def accessHeader = createHeadersToAccess(credentials)
-          HttpEntity<String> accessEntity = new HttpEntity<String>(accessHeader)
-          def spUrl = buildUrl(null, generateRandomName(), null, "eng")
-          try {
-            //Access request
-            restTemplate.exchange(spUrl, HttpMethod.GET, accessEntity, SubtitlesResponse[].class)
-          } catch (Exception ex) {
-          }
-          //Retry subtitle request
-          return sendRequest(url, credentials, false)
-        }
+  /**
+   * Gets a temporary download link from the OpenSubtitles API
+   */
+  private String getDownloadLink(String fileId, String apiKey) {
+    def baseUrl = grailsApplication.config.streama.opensubtitleUrl
+    def downloadEndpoint = "${baseUrl}/download"
 
-        response = ResponseEntity.status(e.statusCode.value()).body("Looks like you have invalid credentials for opensubtitles API, please check admin settings page")
-      } else {
-        response = ResponseEntity.status(e.statusCode.value()).body("OpenSubtitles API error: ${e.statusCode.reasonPhrase}")
+    HttpHeaders headers = new HttpHeaders()
+    headers.set("Api-Key", apiKey)
+    headers.set("User-Agent", USER_AGENT)
+    headers.setContentType(MediaType.APPLICATION_JSON)
+
+    def requestBody = [file_id: Long.parseLong(fileId)]
+    HttpEntity<Map> entity = new HttpEntity<>(requestBody, headers)
+
+    try {
+      def response = restTemplate.exchange(downloadEndpoint, HttpMethod.POST, entity, OpenSubtitlesDownloadResponse.class)
+      if (response.statusCodeValue == 200 && response.body?.link) {
+        return response.body.link
       }
     } catch (Exception e) {
-      log.error("Opensubtitle API exception, ${e.message}", e)
-      response = ResponseEntity.status(500).body("Failed to connect to OpenSubtitles API: ${e.message}")
+      log.error("Failed to get download link: ${e.message}", e)
+    }
+    return null
+  }
+
+  /**
+   * Sends search request to OpenSubtitles API v1
+   */
+  def sendSearchRequest(String url, String apiKey) {
+    def headers = createHeaders(apiKey)
+    HttpEntity<String> entity = new HttpEntity<String>(headers)
+    def response = ResponseEntity.status(400).body([error: true, message: "OpenSubtitles API problems"])
+
+    try {
+      def apiResponse = restTemplate.exchange(url, HttpMethod.GET, entity, OpenSubtitlesApiResponse.class)
+
+      // Handle 301 redirect - OpenSubtitles API reorders query params and returns 301
+      if (apiResponse.statusCodeValue == 301 || apiResponse.statusCodeValue == 302) {
+        def redirectUrl = apiResponse.headers.getLocation()?.toString()
+        if (redirectUrl) {
+          // Handle relative redirects
+          if (redirectUrl.startsWith("/")) {
+            def baseUrl = grailsApplication.config.streama.opensubtitleUrl
+            // Extract base domain from the original URL
+            def baseDomain = baseUrl.replaceAll(/\/api\/v1.*/, "")
+            redirectUrl = baseDomain + redirectUrl
+          }
+          log.info("Following OpenSubtitles redirect to: ${redirectUrl}")
+          apiResponse = restTemplate.exchange(redirectUrl, HttpMethod.GET, entity, OpenSubtitlesApiResponse.class)
+        }
+      }
+
+      if (apiResponse.statusCodeValue == 200) {
+        // Convert to legacy format for compatibility with frontend
+        def subtitles = apiResponse.body?.data ? convertToLegacyFormat(apiResponse.body.data) : []
+        response = ResponseEntity.status(200).body(subtitles)
+      } else {
+        log.warn("OpenSubtitles API returned status ${apiResponse.statusCodeValue}")
+        response = ResponseEntity.status(apiResponse.statusCodeValue).body([])
+      }
+    } catch (org.springframework.web.client.HttpClientErrorException e) {
+      log.error("OpenSubtitles API HTTP error: ${e.message}", e)
+      if (e.statusCode.value() == 401) {
+        response = ResponseEntity.status(401).body([error: true, message: "Invalid OpenSubtitles API key. Please check your API key in admin settings."])
+      } else if (e.statusCode.value() == 429) {
+        response = ResponseEntity.status(429).body([error: true, message: "OpenSubtitles rate limit exceeded. Please try again later."])
+      } else {
+        response = ResponseEntity.status(e.statusCode.value()).body([error: true, message: "OpenSubtitles API error: ${e.statusCode.reasonPhrase}"])
+      }
+    } catch (Exception e) {
+      log.error("OpenSubtitles API exception: ${e.message}", e)
+      response = ResponseEntity.status(500).body([error: true, message: "Failed to connect to OpenSubtitles API: ${e.message}"])
     }
     return response
   }
 
-  def buildUrl(String episode, String query, String season, String subLanguageId) {
-
-    def episodeParam = episode ? "/episode-${episode}" : ""
-    def queryParam = query ? "/query-${URLEncoder.encode(query.toLowerCase(), 'UTF-8').replace('+', '%20')}" : ""
-    def seasonParam = season ? "/season-${season}" : ""
-    def subLanguageIdParam = subLanguageId ? "/sublanguageid-${subLanguageId}" : ""
-
-    def url = grailsApplication.config.streama.opensubtitleUrl + episodeParam + queryParam + seasonParam + subLanguageIdParam
+  /**
+   * Converts new API v1 response format to legacy format for frontend compatibility
+   */
+  private List<SubtitlesResponse> convertToLegacyFormat(List<OpenSubtitlesSubtitle> subtitles) {
+    return subtitles.collect { sub ->
+      def attrs = sub.attributes
+      def file = attrs.files?.getAt(0)
+      // Determine format from filename extension if not provided
+      def fileName = file?.fileName ?: attrs.release ?: "Unknown"
+      def format = attrs.format?.toLowerCase()
+      if (!format && fileName) {
+        def ext = fileName.tokenize('.')[-1]?.toLowerCase()
+        format = ext ?: "srt"
+      }
+      new SubtitlesResponse(
+        subFileName: fileName,
+        subDownloadLink: file?.fileId?.toString() ?: "", // Store file_id as download link for the download step
+        languageName: attrs.language ?: "Unknown",
+        subDownloadsCnt: attrs.downloadCount ?: 0,
+        subFormat: format ?: "srt"
+      )
+    }.findAll { response ->
+      // Filter to only SRT/VTT after conversion (most compatible formats)
+      def fmt = response.subFormat?.toLowerCase()
+      fmt == "srt" || fmt == "vtt" || fmt == "sub" || !fmt
+    }.sort { -(it.subDownloadsCnt ?: 0) }
   }
 
-  def buildUrl(String fileHash, Long fileSize) {
+  /**
+   * Builds search URL with query parameters for the new API v1
+   */
+  def buildSearchUrl(String query, String subLanguageId, String season, String episode) {
+    def baseUrl = grailsApplication.config.streama.opensubtitleUrl
+    def params = []
 
-    def moviebytesize = fileSize ? "/moviebytesize-${fileSize}" : ""
-    def moviehash = fileHash ? "/moviehash-${fileHash}" : ""
-    def url = grailsApplication.config.streama.opensubtitleUrl + moviebytesize + moviehash
+    if (query) {
+      params.add("query=${URLEncoder.encode(query, 'UTF-8')}")
+    }
+    if (subLanguageId) {
+      params.add("languages=${subLanguageId}")
+    }
+    if (season) {
+      params.add("season_number=${season}")
+    }
+    if (episode) {
+      params.add("episode_number=${episode}")
+    }
+
+    def url = "${baseUrl}/subtitles"
+    if (params) {
+      url += "?" + params.join("&")
+    }
+    return url
+  }
+
+  /**
+   * Builds search URL for hash-based search
+   */
+  def buildHashSearchUrl(String fileHash, Long fileSize) {
+    def baseUrl = grailsApplication.config.streama.opensubtitleUrl
+    def params = []
+
+    if (fileHash) {
+      params.add("moviehash=${fileHash}")
+    }
+    if (fileSize) {
+      params.add("moviebytesize=${fileSize}")
+    }
+
+    def url = "${baseUrl}/subtitles"
+    if (params) {
+      url += "?" + params.join("&")
+    }
+    return url
   }
 
   def saveFile(String stagingDir, String fileName, String subtitleName, String subtitleLanguage) {
@@ -225,26 +374,14 @@ class OpensubtitlesService {
     return video.getSubtitles()
   }
 
-  def generateRandomName() {
-    def pool = ['a'..'z'].flatten()
-    Random rand = new Random(System.currentTimeMillis())
-    def nameChars = (0..5).collect { pool[rand.nextInt(pool.size())] }
-    def name = nameChars.join()
-  }
-
-  def createHeaders(String credentials){
+  /**
+   * Creates headers for API v1 requests with API key authentication
+   */
+  def createHeaders(String apiKey) {
     HttpHeaders headers = new HttpHeaders()
-    def encoderCredentials = credentials.encodeAsBase64()
-    headers.set("Authorization", "Basic $encoderCredentials")
-    headers.set("User-Agent", "curl/7.65.3")
-    return headers
-  }
-
-  def createHeadersToAccess(String credentials){
-    HttpHeaders headers = new HttpHeaders()
-    def encoderCredentials = credentials.encodeAsBase64()
-    headers.set("Authorization", "Basic $encoderCredentials")
-    headers.set("User-Agent", "UserAgent")
+    headers.set("Api-Key", apiKey)
+    headers.set("User-Agent", USER_AGENT)
+    headers.setContentType(MediaType.APPLICATION_JSON)
     return headers
   }
 }

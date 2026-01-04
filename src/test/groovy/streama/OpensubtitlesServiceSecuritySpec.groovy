@@ -21,11 +21,16 @@ class OpensubtitlesServiceSecuritySpec extends Specification {
 
     where:
     url << [
+      // Legacy opensubtitles.org domains
       "http://dl.opensubtitles.org/en/download/sub/12345",
       "https://dl.opensubtitles.org/en/download/sub/12345",
       "http://www.opensubtitles.org/download/sub/67890",
       "https://opensubtitles.org/download/sub/11111",
-      "http://vip.opensubtitles.org/download/sub/22222"
+      "http://vip.opensubtitles.org/download/sub/22222",
+      // New opensubtitles.com domains
+      "https://api.opensubtitles.com/api/v1/download/12345",
+      "https://www.opensubtitles.com/download/sub/67890",
+      "https://opensubtitles.com/download/sub/11111"
     ]
   }
 
@@ -55,6 +60,8 @@ class OpensubtitlesServiceSecuritySpec extends Specification {
       // Subdomain bypass attempts
       "http://opensubtitles.org.evil.com/",
       "http://dl.opensubtitles.org.attacker.com/",
+      "http://opensubtitles.com.evil.com/",
+      "http://api.opensubtitles.com.attacker.com/",
 
       // Malformed URLs
       "",
@@ -63,17 +70,31 @@ class OpensubtitlesServiceSecuritySpec extends Specification {
     ]
   }
 
-  def "downloadSubtitles throws SecurityException for blocked URL"() {
+  def "downloadSubtitles returns false when API key is not configured"() {
     given:
     def video = Mock(Video) {
       getId() >> 1L
     }
     Video.metaClass.static.findById = { id -> video }
+    service.settingsService = Mock(Object) {
+      getValueForName('opensubtitles_api_key') >> null
+    }
 
     when:
-    service.downloadSubtitles("subtitle.srt", "http://evil.com/payload.gz", "en", 1L)
+    def result = service.downloadSubtitles("subtitle.srt", "12345", "en", 1L)
 
     then:
-    thrown(SecurityException)
+    result == false
+  }
+
+  def "downloadSubtitles returns false when video not found"() {
+    given:
+    Video.metaClass.static.findById = { id -> null }
+
+    when:
+    def result = service.downloadSubtitles("subtitle.srt", "12345", "en", 1L)
+
+    then:
+    result == false
   }
 }
