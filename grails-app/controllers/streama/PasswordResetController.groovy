@@ -38,7 +38,7 @@ class PasswordResetController {
                     }
                     log.info("Password reset email sent to ${user.username}")
                 } catch (Exception e) {
-                    log.warn("Email sending failed - logging reset link instead")
+                    log.warn("Email sending failed: ${e.message}")
                     log.warn("==============================================")
                     log.warn("PASSWORD RESET LINK for ${user.username}:")
                     log.warn(resetLink)

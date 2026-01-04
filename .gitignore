@@ -55,3 +55,8 @@
 /.sass-work
 grails-app/assets/stylesheets/.sass-cache
 out
+
+# Project notes (local only)
+CLAUDE.md
+*.mv.db
+*.trace.db

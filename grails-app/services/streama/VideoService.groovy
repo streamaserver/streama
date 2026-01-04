@@ -15,6 +15,7 @@ class VideoService {
   def uploadService
   def grailsApplication
   def settingsService
+  def transcodingService
 
   def deleteVideoAndAssociations(Video video) {
     video.setDeleted(true)
@@ -83,7 +84,7 @@ class VideoService {
     file.contentType = Files.probeContentType(givenPath)
     file.size = Files.size(givenPath)
     def extensionIndex = params.localFile.lastIndexOf('.')
-    file.extension = params.localFile[extensionIndex..-1];
+    file.extension = params.localFile[extensionIndex..-1].toLowerCase();
 
 	// Subtitle label guessing (by Norwelian)
 	if(settingsService.getValueForName('guess_subtitle_label')){
@@ -101,7 +102,26 @@ class VideoService {
     file.save(failOnError: true, flush: true)
     videoInstance.addToFiles(file)
     videoInstance.save(failOnError: true, flush: true)
+
+    // Probe audio codec if this is a video file and transcoding is available
+    if (fileService.allowedVideoFormats.contains(file.extension)) {
+      probeFileAudioCodec(file)
+    }
+
     return file
+  }
+
+  /**
+   * Probe a file's audio codec and update its transcoding status
+   */
+  def probeFileAudioCodec(File file) {
+    try {
+      if (transcodingService) {
+        transcodingService.probeAndUpdateFile(file)
+      }
+    } catch (Exception e) {
+      log.warn("Failed to probe audio codec for file ${file.id}: ${e.message}")
+    }
   }
 
   def haveSetByDefault(Video videoInstance, File file){

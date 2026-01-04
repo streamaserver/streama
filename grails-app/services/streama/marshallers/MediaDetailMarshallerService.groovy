@@ -61,8 +61,8 @@ class MediaDetailMarshallerService {
         result['backdrop_image_src'] = movie.backdrop_image?.src
         result['genre'] = movie.genre
 
-        result['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
-        result['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+        result['files'] = movie.files.findAll{it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt'}
+        result['subtitles'] = movie.files.findAll{it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt'}
 
         result['hasFiles'] = movie.hasFiles()
         return result

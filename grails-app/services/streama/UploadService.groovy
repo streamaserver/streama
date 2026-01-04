@@ -40,7 +40,7 @@ class UploadService {
     def mimetype = rawFile.contentType
     def sha256Hex = rawFile.inputStream.withStream { stream -> DigestUtils.sha256Hex(stream) }
     def index = rawFile.originalFilename.lastIndexOf('.')
-    String extension = rawFile.originalFilename[index..-1];
+    String extension = rawFile.originalFilename[index..-1].toLowerCase();
     def originalFilenameNoExt = rawFile.originalFilename[0..(index - 1)]
     def contentType = rawFile.contentType;
 
@@ -168,7 +168,7 @@ class UploadService {
       extension = '.png'
     } else {
       def index = filename.lastIndexOf('.')
-      extension = filename[index..-1];
+      extension = filename[index..-1].toLowerCase();
 
       if (extension.length() < 3) {
         extension = '.png'
