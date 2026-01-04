@@ -15,6 +15,7 @@ class VideoService {
   def uploadService
   def grailsApplication
   def settingsService
+  def transcodingService
 
   def deleteVideoAndAssociations(Video video) {
     video.setDeleted(true)
@@ -24,53 +25,26 @@ class VideoService {
   }
 
 
-  public static List<ViewingStatus> listContinueWatching(User currentUser, Profile profile) {
-    List<ViewingStatus> continueWatching = ViewingStatus.withCriteria {
+  static Map listContinueWatching(User currentUser, Profile profile, GrailsParameterMap params) {
+    def max = params.int('max', 50)
+    def offset = params.int('offset', 0)
+    String sort = params.sort
+    String order = params.order
+    def continueWatchingQuery = ViewingStatus.where {
       eq("user", currentUser)
       eq("profile", profile)
+      eq("isActive", true)
       video {
         isNotEmpty("files")
         ne("deleted", true)
       }
 //      eq("completed", false)
-      order("lastUpdated", "desc")
     }
 
-    return reduceContinueWatchingEps(continueWatching)
+    def viewingStatusList = continueWatchingQuery.list(max : max, offset: offset, sort: sort, order: order)
+    def totalCount = continueWatchingQuery.count()
+    return [total: totalCount, list: viewingStatusList]
   }
-
-  private static List<ViewingStatus> reduceContinueWatchingEps(List<ViewingStatus> continueWatching) {
-    def result = []
-    continueWatching.each { continueWatchingItem ->
-      if (continueWatchingItem.video instanceof Episode) {
-        def previousShowEntry = result.find { it.video instanceof Episode && it.video.show?.id == continueWatchingItem.video.show?.id }
-
-        if (!previousShowEntry) {
-          if(!continueWatchingItem.hasVideoEnded()){
-            result.add(continueWatchingItem)
-          }else{
-            continueWatchingItem.completed = true
-            continueWatchingItem.save()
-            ViewingStatus newViewingStatus = ViewingStatusService.createNewForNextEpisode(continueWatchingItem)
-            if(newViewingStatus){
-              result.add(newViewingStatus)
-            }
-          }
-        }
-      } else{
-        if(!continueWatchingItem.hasVideoEnded()){
-          result.add(continueWatchingItem)
-        }else{
-          continueWatchingItem.completed = true
-          continueWatchingItem.save()
-        }
-      }
-    }
-
-    return result
-  }
-
-
 
 
   @Transactional
@@ -110,7 +84,7 @@ class VideoService {
     file.contentType = Files.probeContentType(givenPath)
     file.size = Files.size(givenPath)
     def extensionIndex = params.localFile.lastIndexOf('.')
-    file.extension = params.localFile[extensionIndex..-1];
+    file.extension = params.localFile[extensionIndex..-1].toLowerCase();
 
 	// Subtitle label guessing (by Norwelian)
 	if(settingsService.getValueForName('guess_subtitle_label')){
@@ -122,14 +96,44 @@ class VideoService {
 		}
 	}
 
-    if(videoInstance.videoFiles.size() == 0){
-      file.isDefault = true
-    }
+    file.isDefault = haveSetByDefault (videoInstance, file)
+
 
     file.save(failOnError: true, flush: true)
     videoInstance.addToFiles(file)
     videoInstance.save(failOnError: true, flush: true)
+
+    // Probe audio codec if this is a video file and transcoding is available
+    if (fileService.allowedVideoFormats.contains(file.extension)) {
+      probeFileAudioCodec(file)
+    }
+
     return file
+  }
+
+  /**
+   * Probe a file's audio codec and update its transcoding status
+   */
+  def probeFileAudioCodec(File file) {
+    try {
+      if (transcodingService) {
+        transcodingService.probeAndUpdateFile(file)
+      }
+    } catch (Exception e) {
+      log.warn("Failed to probe audio codec for file ${file.id}: ${e.message}")
+    }
+  }
+
+  def haveSetByDefault(Video videoInstance, File file){
+    isFirstFile(videoInstance, file) || isFirstSubtitle(videoInstance, file)
+  }
+
+  def isFirstSubtitle(Video videoInstance, File file){
+    videoInstance.getSubtitles().isEmpty() && fileService.allowedSubtitleFormats.contains(file.extension)
+  }
+
+  def isFirstFile(Video videoInstance, File file){
+    videoInstance.videoFiles.isEmpty() && fileService.allowedVideoFormats.contains(file.extension)
   }
 
 

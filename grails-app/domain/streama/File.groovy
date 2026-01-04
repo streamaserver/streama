@@ -10,6 +10,7 @@ class File implements SimpleInstance {
   Date lastUpdated
 
   String sha256Hex
+  String openSubtitleHash
   String name
   String extension
   String contentType
@@ -24,14 +25,22 @@ class File implements SimpleInstance {
   Boolean isPublic = false
   Boolean isDefault = false
 
+  // Audio transcoding fields
+  String audioCodec              // detected audio codec (aac, eac3, ac3, dts, etc.)
+  Boolean needsTranscoding       // true if browser-incompatible codec
+  String transcodedAudioPath     // path to cached transcoded .aac file
+
   static constraints = {
     sha256Hex maxSize: 64
     quality inList: ['720p', '480p', '360p']
+    audioCodec nullable: true
+    needsTranscoding nullable: true
+    transcodedAudioPath nullable: true
   }
   static transients = ['uploadService']
 
   static simpleInstanceFields = ['id', 'src', 'originalFilename', 'contentType', 'subtitleSrcLang', 'subtitleLabel',
-                                 'externalLink', 'label', 'isDefault']
+                                 'externalLink', 'label', 'isDefault', 'audioCodec', 'needsTranscoding']
 
   def getImagePath(){
     uploadService.getPath(this)

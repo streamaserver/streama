@@ -10,7 +10,7 @@ class VideoHelper {
   }
 
   static Boolean isSubtitleFile(String filename){
-    String extension = getExtensionFromFilename(filename)
+    String extension = getExtensionFromFilename(filename)?.toLowerCase()
     return (extension == '.srt' || extension == '.vtt')
   }
 }

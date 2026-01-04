@@ -10,7 +10,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       PASSWORD: 'Password',
       FIRST_TIME_HINT: 'First time logging in? Try \'admin\' for both fields.',
       SUBMIT: 'Login',
-      SESSION_EXPIRED: 'Your session expired since your last activity. Please login again.'
+      SESSION_EXPIRED: 'Your session expired since your last activity. Please login again.',
+      FORGOT_PASSWORD: 'Forgot Password?'
     },
     DASHBOARD: {
       HOME: 'Home',
@@ -18,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Movies',
       MY_LIST:'My list',
       TITLE: 'Dashboard',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: 'Recommendations for you',
       NEW_RELEASES: 'New Releases',
       CONTINUE_WATCHING: 'Continue Watching',
@@ -55,7 +57,9 @@ angular.module('streama.translations').config(function ($translateProvider) {
       NO_SUBTITLE: 'No Subtitle',
       SUBTITLE_SIZE: 'Subtitle Sizes',
       VIDEO_FILES: 'Video Sources',
-      UPNEXT: 'Up Next...'
+      UPNEXT: 'Up Next...',
+      TRANSCODING_TITLE: 'Converting Audio',
+      TRANSCODING_MESSAGE: 'The audio in this video needs to be converted for your browser. This only happens once per video.'
     },
 
     MESSAGES: {
@@ -63,7 +67,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       FILE_MISSING: 'There is a problem with this content. It seems you removed the associated video file from it.',
       CODEC_PROBLEM: 'There seems to be a problem adding the video-file to the player. This is most likely due to a codec-problem. Try converting it to a compatible HTML5 codec, remove the currently attached file and re-add it. If the codecs are fine, check the error log of the server and the base URL in the settings.',
       WRONG_BASEPATH: 'Your video get\'s included using the wrong Base Path, but you are browsing the page via "{{basePath}}". Make sure you set the correct Base Path in the settings and that you are using it to browse the application.',
-      FILE_IN_FS_NOT_FOUND: 'Your video cannot be found in any of the locations available to the application. Please check your settings and your file system to make sure that the files are accessible by the application.'
+      FILE_IN_FS_NOT_FOUND: 'Your video cannot be found in any of the locations available to the application. Please check your settings and your file system to make sure that the files are accessible by the application.',
+      TRANSCODING_FAILED: 'Audio transcoding failed for this video. Please check the server logs for more details, or try re-uploading the video file.'
     },
     MANAGE_CONTENT: 'Manage Content',
     MANAGE_SUB_PROFILES: 'Manage profiles',
@@ -90,6 +95,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_de: 'Deutsch/German',
     LANGUAGE_fr: 'Français/French',
     LANGUAGE_es: 'Español/Spanish',
+    LANGUAGE_cat: 'Català/Catalan',
     LANGUAGE_kr: '한국어/Korean',
     LANGUAGE_nl: 'Nederlands/Dutch',
     LANGUAGE_pt: 'Português/Portuguese',
@@ -98,9 +104,11 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk/Danish',
     LANGUAGE_ar: 'عربى/Arabic',
     LANGUAGE_hu: 'Magyar/Hungarian',
+		LANGUAGE_sk: 'Slovensky/Slovak',
     PROFIlE: {
       USERNAME: 'Username',
       FULL_NAME: 'Full Name',
+      LAST_LOGIN: 'Last Login',
       LANGUAGE: 'Language',
       PAUSE_ON_CLICK: 'Pause Video on Click',
       FAVORITE_GENRES: 'Favorite Genres',

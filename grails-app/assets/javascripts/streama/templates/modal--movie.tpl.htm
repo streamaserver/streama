@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <div ng-hide="addManually">
+      <div>
         <div class="form-group">
           <div class="col-sm-12">
             <label>Genre</label>
@@ -159,6 +159,26 @@
         </div>
       </div>
 
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label>Backdrop Image</label>
+          <br/>
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="upload-poster" ng-class="{'update-poster': movie.backdrop_image_src}" ng-model="manualPoster" class="btn btn-primary btn-block btn-lg"
+                   ngf-change="uploadImage($files, 'backdrop_image')" ngf-select ngf-drop ngf-drag-over-class="dragover">
+                <span class="main-text">Upload Backdrop</span>
+                <span class="size-info">600x340 px</span>
+                <span ng-show="imageUpload.percentage">{{imageUpload.percentage}}%</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <img ng-show="movie.backdrop_image_src" ng-src="{{movie.backdrop_image_src}}"/>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

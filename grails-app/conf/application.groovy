@@ -51,6 +51,14 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/tag/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/settings/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/report/save',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/video/markCompleted',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/video/markAsUnviewed',  access :['IS_AUTHENTICATED_REMEMBERED']],
+
+  [pattern:'/subtitles/get',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/subtitles/download',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/subtitles/save',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/subtitles/setDefault',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/subtitles/getVideoSubtitles',  access :['IS_AUTHENTICATED_REMEMBERED']],
 
   [pattern:'/genericVideo/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/genre/**',  access :['ROLE_CONTENT_MANAGER']],
@@ -74,6 +82,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/file/serve',  access :['permitAll']],
   [pattern:'/user/current',  access :['permitAll']],
   [pattern:'/invite/**',  access :['permitAll']],
+  [pattern:'/passwordReset/**',  access :['permitAll']],
   [pattern:'/assets/**',  access :['permitAll']],
   [pattern:'/**/js/**',  access :['permitAll']],
   [pattern:'/**/css/**',  access :['permitAll']],

@@ -34,6 +34,8 @@ class TheMovieDbController {
     def results = json?.results
 
     results.each{ hit ->
+      hit.backdrop_path = "https://image.tmdb.org/t/p/w300" + hit.backdrop_path
+      hit.poster_path = "https://image.tmdb.org/t/p/w300" + hit.poster_path
       hit.genre = theMovieDbService.parseGenres(hit.genre_ids)
     }
 

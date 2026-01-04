@@ -17,10 +17,26 @@
   <i class="ion-android-arrow-back player-back" ng-class="{'visible': controlsVisible}" ng-click="closeVideo()"></i>
 
 
-  <div class="spinner" ng-show="loading">
+  <div class="spinner" ng-show="loading && !isTranscoding">
     <div class="bounce1"></div>
     <div class="bounce2"></div>
     <div class="bounce3"></div>
+  </div>
+
+  <div class="transcoding-overlay" ng-show="isTranscoding">
+    <div class="transcoding-content">
+      <div class="spinner transcoding-spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+      <h3>{{'VIDEO.TRANSCODING_TITLE' | translate}}</h3>
+      <p>{{'VIDEO.TRANSCODING_MESSAGE' | translate}}</p>
+      <div class="transcoding-progress-bar" ng-if="transcodingProgress > 0">
+        <div class="transcoding-progress-fill" ng-style="{width: transcodingProgress + '%'}"></div>
+      </div>
+      <span class="transcoding-progress-text" ng-if="transcodingProgress > 0">{{transcodingProgress}}%</span>
+    </div>
   </div>
 
   <div class="overlay" ng-class="{'visible': overlayVisible}" ng-if="options.videoOverlayEnabled">
@@ -132,6 +148,11 @@
                   <li class="episode" ng-repeat="episode in options.selectedEpisodes"
                       ng-class="{'current': (episode.episode_number == options.currentEpisode.episode && episode.season_number == options.currentEpisode.season), 'no-files': !episode.hasFile}" >
                     <div class="flex-wrapper">
+                      <div class="episode-thumb">
+                        <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w185/{{episode.still_path}}"/>
+                        <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>
+                        <div ng-if="!episode.still_path && !episode.still_image_src" class="fallback-image"></div>
+                      </div>
                       <span class="episode-number">{{episode.episode_number | padnumber:2}}</span>
                       <span class="episode-name" ng-click="visible = !visible">{{episode.name}}</span>
                       <span class="episode-play" ng-if="episode.hasFile" ui-sref="player({videoId: episode.id})"><i class="ion-play"></i></span>
