@@ -134,8 +134,8 @@ class MarshallerService {
       returnArray['backdrop_image_src'] = movie.backdrop_image?.src
       returnArray['genre'] = movie.genre
 
-      returnArray['files'] = movie.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }
-      returnArray['subtitles'] = movie.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }
+      returnArray['files'] = movie.files.findAll { it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt' }
+      returnArray['subtitles'] = movie.files.findAll { it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt' }
 
       returnArray['hasFiles'] = movie.hasFiles()
 
@@ -168,8 +168,8 @@ class MarshallerService {
       returnArray['poster_path'] = genericVideo.getPosterPath()
       returnArray['trailerKey'] = genericVideo.trailerKey
 
-      returnArray['files'] = genericVideo.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }
-      returnArray['subtitles'] = genericVideo.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }
+      returnArray['files'] = genericVideo.files.findAll { it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt' }
+      returnArray['subtitles'] = genericVideo.files.findAll { it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt' }
       returnArray['tags'] = genericVideo.tags
       returnArray['genre'] = genericVideo.genre
       returnArray['hasFiles'] = genericVideo.hasFiles()
@@ -514,8 +514,8 @@ class MarshallerService {
         returnArray['poster_path'] = movie.getPosterPath()
         returnArray['trailerKey'] = movie.trailerKey
 
-        returnArray['files'] = movie.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }
-        returnArray['subtitles'] = movie.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }
+        returnArray['files'] = movie.files.findAll { it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt' }
+        returnArray['subtitles'] = movie.files.findAll { it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt' }
         returnArray['poster_image_src'] = movie.poster_image?.src
         returnArray['backdrop_image_src'] = movie.backdrop_image?.src
 
@@ -618,6 +618,7 @@ class MarshallerService {
         returnArray['videoType'] = 'episode'
         returnArray['still_image_src'] = episode.still_image?.src
         returnArray['videoFiles'] = episode.getVideoFiles()?.collect { it.simpleInstance }
+        returnArray['subtitles'] = episode.getSubtitles()?.collect { it.simpleInstance }
 
         ViewingStatus viewingStatus = episode.getViewingStatus()
         if (viewingStatus) {
@@ -677,8 +678,8 @@ class MarshallerService {
         returnArray['backdrop_image_src'] = genericVideo.backdrop_image?.src
         returnArray['trailerKey'] = genericVideo.trailerKey
 
-        returnArray['files'] = genericVideo.files.findAll { it.extension != '.srt' && it.extension != '.vtt' }
-        returnArray['subtitles'] = genericVideo.files.findAll { it.extension == '.srt' || it.extension == '.vtt' }
+        returnArray['files'] = genericVideo.files.findAll { it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt' }
+        returnArray['subtitles'] = genericVideo.files.findAll { it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt' }
         returnArray['tags'] = genericVideo.tags
         returnArray['genre'] = genericVideo.genre
         returnArray['hasFiles'] = genericVideo.hasFiles()

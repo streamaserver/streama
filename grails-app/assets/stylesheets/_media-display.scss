@@ -318,6 +318,37 @@
     overflow: hidden;
   }
 
+  .episode-languages {
+    margin: 4px 0 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    .lang-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+
+      i {
+        font-size: 10px;
+      }
+
+      &.audio {
+        background: rgba($primary, 0.2);
+        color: $primary;
+      }
+
+      &.subtitle {
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+  }
+
   .media-item{
     max-height: 150px;
     overflow: hidden;

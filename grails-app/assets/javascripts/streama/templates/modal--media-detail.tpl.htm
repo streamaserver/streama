@@ -133,6 +133,14 @@
          </a>
        </h3>
        <h3 class="media-title">{{episode.name}}</h3>
+       <div class="episode-languages" ng-if="episode.videoFiles.length || episode.subtitles.length">
+         <span class="lang-badge audio" ng-repeat="file in episode.videoFiles" ng-if="file.label">
+           <i class="ion-volume-high"></i> Audio: {{file.label}}
+         </span>
+         <span class="lang-badge subtitle" ng-if="episode.subtitles.length">
+           <i class="ion-document-text"></i> Sub: <span ng-repeat="sub in episode.subtitles">{{sub.subtitleLabel || sub.subtitleSrcLang}}{{$last ? '' : ', '}}</span>
+         </span>
+       </div>
        <div class="media-item" >
          <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.still_path}}"/>
          <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>
