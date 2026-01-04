@@ -8,6 +8,28 @@ class UserActivityController {
 
     static responseFormats = ['json', 'xml']
 
+    def springSecurityService
+
+    def lastLogin() {
+      def currentUser = springSecurityService.currentUser
+      if (!currentUser) {
+        render status: 401
+        return
+      }
+
+      def lastLoginActivity = UserActivity.createCriteria().get {
+        eq('user', currentUser)
+        or {
+          eq('type', 'login')
+          isNull('type')
+        }
+        order('dateCreated', 'desc')
+        maxResults(1)
+      }
+
+      respond lastLoginActivity
+    }
+
     def index(Integer max) {
       params.max = Math.min(max ?: 20, 100)
       params.sort = params.sort ?: 'id'
