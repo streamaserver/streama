@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('streama').directive('streamaVideoPlayer', [
-  'uploadService', 'apiService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce', 'modalService',
-  function (uploadService, apiService, localStorageService, $timeout, playerService, $http, $sce, modalService) {
+  'uploadService', 'apiService', 'localStorageService', '$timeout', 'playerService', '$http', '$sce', 'modalService', '$interval',
+  function (uploadService, apiService, localStorageService, $timeout, playerService, $http, $sce, modalService, $interval) {
 
     return {
       restrict: 'AE',
@@ -25,6 +25,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         var skipIntro = true;         //Userflag intro should be skipped
         var minimizeOnOutro = true;   //Userflag skip to next episode on outro
         var videoSrc = $scope.options.videoSrc.toString();
+        var transcodingPollInterval = null;
 
         $scope.showControls = showControls;
         $scope.toggleSelectEpisodes = toggleSelectEpisodes;
@@ -47,19 +48,63 @@ angular.module('streama').directive('streamaVideoPlayer', [
         $scope.isNextVideoShowing = false;
         $scope.loading = true;
         $scope.initialPlay = false;
+        $scope.isTranscoding = false;
+        $scope.transcodingProgress = 0;
 
         if (!$scope.options.isExternalLink) {
-          $http.head(videoSrc)
-            .then(function () {
-              initDirective();
-            },
-              function (data, status) {
-              if (status == 406) {
-                $scope.options.onError('FILE_IN_FS_NOT_FOUND');
-              }
-            });
+          checkVideoAndInit();
         } else {
           initDirective();
+        }
+
+        function checkVideoAndInit() {
+          $http.head(videoSrc)
+            .then(function (response) {
+              initDirective();
+            }, function (response) {
+              if (response.status === 406) {
+                $scope.options.onError('FILE_IN_FS_NOT_FOUND');
+              } else if (response.status === 202) {
+                // Transcoding in progress - show transcoding UI and poll for completion
+                handleTranscodingResponse(response.data);
+              } else {
+                initDirective();
+              }
+            });
+        }
+
+        function handleTranscodingResponse(data) {
+          $scope.isTranscoding = true;
+          $scope.transcodingProgress = (data && data.progress) ? Math.round(data.progress * 100) : 0;
+          $scope.loading = false;
+
+          // Start polling for transcoding status
+          if (!transcodingPollInterval) {
+            var fileId = $scope.options.selectedVideoFile.id;
+            transcodingPollInterval = $interval(function () {
+              apiService.file.transcodingStatus(fileId).then(function (response) {
+                var status = response.data;
+                $scope.transcodingProgress = status.progress ? Math.round(status.progress * 100) : 0;
+
+                if (status.status === 'ready' || status.status === 'completed' || status.hasTranscodedAudio) {
+                  // Transcoding complete - stop polling and init player
+                  $interval.cancel(transcodingPollInterval);
+                  transcodingPollInterval = null;
+                  $scope.isTranscoding = false;
+                  $scope.loading = true;
+                  initDirective();
+                } else if (status.status === 'failed') {
+                  $interval.cancel(transcodingPollInterval);
+                  transcodingPollInterval = null;
+                  $scope.isTranscoding = false;
+                  $scope.options.onError('TRANSCODING_FAILED');
+                }
+              }, function (error) {
+                // On error, keep polling
+                console.warn('Transcoding status check failed:', error);
+              });
+            }, 3000); // Poll every 3 seconds
+          }
         }
 
         function initDirective() {
@@ -286,9 +331,17 @@ angular.module('streama').directive('streamaVideoPlayer', [
           //Disable these shortcut keys for other pages. They are re-initialized when the user opens the player again.
           Mousetrap.reset();
 
+          // Cancel transcoding poll interval if active
+          if (transcodingPollInterval) {
+            $interval.cancel(transcodingPollInterval);
+            transcodingPollInterval = null;
+          }
+
           console.log("destroy");
-          video.pause();
-          video.src = '';
+          if (video) {
+            video.pause();
+            video.src = '';
+          }
           $elem.find('video').children('source').prop('src', '');
           $elem.find('video').remove().length = 0;
         }

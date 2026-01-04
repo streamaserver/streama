@@ -25,6 +25,9 @@
       <li ng-class="{'active': isCurrentState('admin.genres')}" ng-if="$root.currentUser.isContentManager">
         <a ui-sref="admin.genres">Genres</a>
       </li>
+      <li ng-class="{'active': isCurrentState('admin.transcoding')}" ng-if="$root.currentUser.isAdmin">
+        <a ui-sref="admin.transcoding">Audio Transcoding</a>
+      </li>
     </ul>
   </div>
 

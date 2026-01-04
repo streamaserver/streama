@@ -117,6 +117,15 @@ angular.module('streama').config(function ($stateProvider) {
       controller: 'adminGenresCtrl',
       controllerAs: "vm"
     })
+    .state('admin.transcoding', {
+      url: '/transcoding',
+      templateUrl: '/streama/admin-transcoding.htm',
+      controller: 'adminTranscodingCtrl',
+      controllerAs: "vm",
+      resolve: {
+        currentUser: checkPermissionAdmin
+      }
+    })
 
 
 

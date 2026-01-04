@@ -57,7 +57,9 @@ angular.module('streama.translations').config(function ($translateProvider) {
       NO_SUBTITLE: 'No Subtitle',
       SUBTITLE_SIZE: 'Subtitle Sizes',
       VIDEO_FILES: 'Video Sources',
-      UPNEXT: 'Up Next...'
+      UPNEXT: 'Up Next...',
+      TRANSCODING_TITLE: 'Converting Audio',
+      TRANSCODING_MESSAGE: 'The audio in this video needs to be converted for your browser. This only happens once per video.'
     },
 
     MESSAGES: {
@@ -65,7 +67,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       FILE_MISSING: 'There is a problem with this content. It seems you removed the associated video file from it.',
       CODEC_PROBLEM: 'There seems to be a problem adding the video-file to the player. This is most likely due to a codec-problem. Try converting it to a compatible HTML5 codec, remove the currently attached file and re-add it. If the codecs are fine, check the error log of the server and the base URL in the settings.',
       WRONG_BASEPATH: 'Your video get\'s included using the wrong Base Path, but you are browsing the page via "{{basePath}}". Make sure you set the correct Base Path in the settings and that you are using it to browse the application.',
-      FILE_IN_FS_NOT_FOUND: 'Your video cannot be found in any of the locations available to the application. Please check your settings and your file system to make sure that the files are accessible by the application.'
+      FILE_IN_FS_NOT_FOUND: 'Your video cannot be found in any of the locations available to the application. Please check your settings and your file system to make sure that the files are accessible by the application.',
+      TRANSCODING_FAILED: 'Audio transcoding failed for this video. Please check the server logs for more details, or try re-uploading the video file.'
     },
     MANAGE_CONTENT: 'Manage Content',
     MANAGE_SUB_PROFILES: 'Manage profiles',
@@ -105,6 +108,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     PROFIlE: {
       USERNAME: 'Username',
       FULL_NAME: 'Full Name',
+      LAST_LOGIN: 'Last Login',
       LANGUAGE: 'Language',
       PAUSE_ON_CLICK: 'Pause Video on Click',
       FAVORITE_GENRES: 'Favorite Genres',

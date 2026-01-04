@@ -20,6 +20,7 @@ class VideoController {
   def fileService
   def videoService
   def userActivityService
+  def transcodingService
 
 
   def index() {
@@ -127,6 +128,12 @@ class VideoController {
       file.isDefault = videoService.haveSetByDefault(videoInstance, file)
       videoInstance.addToFiles(file)
       videoInstance.save flush: true, failOnError: true
+
+      // Probe audio codec if this is a video file
+      if (fileService.allowedVideoFormats.contains(file.extension)) {
+        videoService.probeFileAudioCodec(file)
+      }
+
       respond file
     } else {
       render status: 415
@@ -178,6 +185,11 @@ class VideoController {
 
     video.addToFiles(file)
     video.save flush: true, failOnError: true
+
+    // Probe audio codec if this is a video file
+    if (fileService.allowedVideoFormats.contains(file.extension)) {
+      videoService.probeFileAudioCodec(file)
+    }
 
     respond status: OK
 

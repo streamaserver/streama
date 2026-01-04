@@ -162,7 +162,7 @@ streama:
       - ^(?<Name>.*?)(?<Episode>\d{1,3})x(?<Season>\d{2}).*                 # example:  "Castle4x06DaemonsWebdl480pOktober242011rC.mkv(jkuzt).mp4"
     subtitles: ^.+\-(.+)\.(?:srt|vtt)$
 
-  opensubtitleUrl: 'https://rest.opensubtitles.org/search'
+  opensubtitleUrl: 'https://api.opensubtitles.com/api/v1'
 
   uploadtypes: ['video/h264', 'video/mp4', 'video/mpeg', 'video/quicktime', 'video/webm', 'video/x-ms-wm', 'video/x-ms-wmv',
               'video/x-msvideo', 'image/bmp', 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/svg+xml',
@@ -177,7 +177,7 @@ grails.controllers.upload.maxRequestSize: 10000000000000 # 10TB
 
 grails.plugin.springsecurity.providerNames:
     - daoAuthenticationProvider
-    - ldapAuthProvider
+    # - ldapAuthProvider  # Uncomment if LDAP is configured
     - anonymousAuthenticationProvider
     - rememberMeAuthenticationProvider
 

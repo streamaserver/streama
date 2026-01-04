@@ -277,16 +277,63 @@ class DefaultDataService {
 //        ],
 
         [
-          settingsKey: 'Credentials for opensubtitles',
-          name: 'credentials_opensubtitles',
-          description: 'Credentials which are used to authenticate the user on the opensubtitles website. Enter username and password, separated by :. Example: username:password. ' +
-            'To use the opensubtitles search, you must activate the User Agent. More information at https://trac.opensubtitles.org/projects/opensubtitles/wiki/DevReadFirst',
+          settingsKey: 'OpenSubtitles API Key',
+          name: 'opensubtitles_api_key',
+          description: 'API key for OpenSubtitles.com. Get your free API key at https://www.opensubtitles.com/consumers (requires account). ' +
+            'The old REST API (rest.opensubtitles.org) was deprecated in 2024. This new API key is required for subtitle search.',
           settingsType: 'string',
           value: '',
           required: false,
-          validationRequired: true
+          validationRequired: false
+        ],
+
+        // Audio Transcoding Settings
+        [
+          settingsKey: 'Enable Audio Transcoding',
+          name: 'transcoding_enabled',
+          description: 'Enable on-the-fly audio transcoding for browser-incompatible codecs (EAC3, AC3, DTS). ' +
+            'Requires FFmpeg to be installed on the server. When enabled, incompatible audio will be ' +
+            'automatically converted to AAC format.',
+          settingsType: 'boolean',
+          value: 'false',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'FFmpeg Path',
+          name: 'ffmpeg_path',
+          description: 'Path to FFmpeg executable. Leave empty for auto-detection. ' +
+            'If FFmpeg is not in your system PATH, specify the full path (e.g., /usr/local/bin/ffmpeg). ' +
+            'Install FFmpeg: Ubuntu/Debian: "sudo apt install ffmpeg", macOS: "brew install ffmpeg", ' +
+            'Windows: download from https://ffmpeg.org/download.html',
+          settingsType: 'string',
+          value: '',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'FFprobe Path',
+          name: 'ffprobe_path',
+          description: 'Path to FFprobe executable (comes with FFmpeg). Leave empty for auto-detection. ' +
+            'Used to detect audio codecs in video files.',
+          settingsType: 'string',
+          value: '',
+          required: false,
+          validationRequired: false
         ],
     ]
+
+    // Migration: Update old OpenSubtitles credentials setting to new API key setting
+    def oldOpenSubtitlesSetting = Settings.findByName('credentials_opensubtitles')
+    if (oldOpenSubtitlesSetting) {
+      oldOpenSubtitlesSetting.settingsKey = 'OpenSubtitles API Key'
+      oldOpenSubtitlesSetting.name = 'opensubtitles_api_key'
+      oldOpenSubtitlesSetting.description = 'API key for OpenSubtitles.com. Get your free API key at https://www.opensubtitles.com/consumers (requires account). ' +
+        'The old REST API (rest.opensubtitles.org) was deprecated in 2024. This new API key is required for subtitle search.'
+      oldOpenSubtitlesSetting.value = '' // Clear old credentials as they won't work with new API
+      oldOpenSubtitlesSetting.save flush: true, failOnError: true
+      log.info("Migrated OpenSubtitles setting from credentials to API key format")
+    }
 
     settings.each{ settingData ->
       if(!Settings.findBySettingsKey(settingData.settingsKey)){

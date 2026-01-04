@@ -63,6 +63,9 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
     userActivity: {
       list: function (params) {
         return $http.get('userActivity.json', {params: params});
+      },
+      lastLogin: function () {
+        return $http.get('userActivity/lastLogin.json');
       }
     },
 
@@ -165,6 +168,45 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
       },
       getURL: function (id) {
         return $http.get('file/getURL.json', {params: {id: id}});
+      },
+      transcodingStatus: function (id) {
+        return $http.get('file/transcodingStatus.json', {params: {id: id}});
+      },
+      triggerTranscoding: function (id) {
+        return $http.post('file/triggerTranscoding.json', {id: id});
+      }
+    },
+
+    transcoding: {
+      status: function () {
+        return $http.get('transcoding/status.json');
+      },
+      pending: function () {
+        return $http.get('transcoding/pending.json');
+      },
+      list: function (params) {
+        return $http.get('transcoding/list.json', {params: params});
+      },
+      transcode: function (id) {
+        return $http.post('transcoding/transcode.json', {id: id});
+      },
+      transcodeAll: function () {
+        return $http.post('transcoding/transcodeAll.json');
+      },
+      clearCache: function (id) {
+        return $http.post('transcoding/clearCache.json', {id: id});
+      },
+      clearAllCache: function () {
+        return $http.post('transcoding/clearAllCache.json');
+      },
+      probe: function (id) {
+        return $http.post('transcoding/probe.json', {id: id});
+      },
+      probeAll: function () {
+        return $http.post('transcoding/probeAll.json');
+      },
+      cacheStats: function () {
+        return $http.get('transcoding/cacheStats.json');
       }
     },
 
