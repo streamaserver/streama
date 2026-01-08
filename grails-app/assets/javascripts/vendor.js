@@ -25,4 +25,4 @@
 //= require ui-select/select
 //= require jquery-mousewheel/jquery.mousewheel
 //= require owl.carousel/owl.carousel
-
+//= require hls.js/dist/hls.min
