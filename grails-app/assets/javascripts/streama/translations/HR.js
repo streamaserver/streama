@@ -7,7 +7,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
         PASSWORD: "Lozinka",
         FIRST_TIME_HINT: "Prva prijava? Pokušajte 'admin' za oba polja.",
         SUBMIT: "Prijavi se",
-        SESSION_EXPIRED: "Vaša je sesija istekla od vaše posljednje aktivnosti. Molimo prijavite se ponovo."
+        SESSION_EXPIRED: "Vaša je sesija istekla od vaše posljednje aktivnosti. Molimo prijavite se ponovo.",
+        FORGOT_PASSWORD: "Zaboravili ste lozinku?"
       },
       DASHBOARD: {
         HOME: "Početna",

@@ -11,7 +11,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       PASSWORD: 'Jelszó',
       FIRST_TIME_HINT: 'Első bejelentkezés? Próbálja meg az \'admin\'-t mindkét mezőbe.',
       SUBMIT: 'Bejelentkezés',
-      SESSION_EXPIRED: 'Az ülése lejárt a legutóbbi aktivitás óta. Jelentkezzen be újra.'
+      SESSION_EXPIRED: 'Az ülése lejárt a legutóbbi aktivitás óta. Jelentkezzen be újra.',
+      FORGOT_PASSWORD: 'Elfelejtette jelszavát?'
     },
     DASHBOARD: {
       TITLE: 'Főoldal',

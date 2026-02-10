@@ -10,7 +10,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       PASSWORD: 'Heslo',
       FIRST_TIME_HINT: 'Ste tu prvýkrát? Skúste \'admin\' pre obe polia.',
       SUBMIT: 'Prihlásiť sa',
-      SESSION_EXPIRED: 'Vaše sedenie expirovalo z dôvodu Vašej neaktivity. Prosím, prihláste sa znovu.'
+      SESSION_EXPIRED: 'Vaše sedenie expirovalo z dôvodu Vašej neaktivity. Prosím, prihláste sa znovu.',
+      FORGOT_PASSWORD: 'Zabudli ste heslo?'
     },
     DASHBOARD: {
       HOME: 'Domov',

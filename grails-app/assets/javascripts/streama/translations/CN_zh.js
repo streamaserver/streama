@@ -10,7 +10,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       PASSWORD: '密码',
       FIRST_TIME_HINT: '第一次使用？ 试试用 \'admin\' 作为用户名和密码登录。',
       SUBMIT: '登录',
-      SESSION_EXPIRED: '你的会话已过期，请重新登录'
+      SESSION_EXPIRED: '你的会话已过期，请重新登录',
+      FORGOT_PASSWORD: '忘记密码？'
     },
     DASHBOARD: {
       HOME: '主页',

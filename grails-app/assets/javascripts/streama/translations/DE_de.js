@@ -11,7 +11,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Passwort',
 			FIRST_TIME_HINT: 'Erstes mal hier? Versuche \'admin\' als Benutzername und Passwort.',
 			SUBMIT: 'Login',
-      SESSION_EXPIRED: 'Deine Sitzung ist abgelaufen. Bitte logge dich erneut ein.'
+      SESSION_EXPIRED: 'Deine Sitzung ist abgelaufen. Bitte logge dich erneut ein.',
+      FORGOT_PASSWORD: 'Passwort vergessen?'
 		},
 		DASHBOARD: {
       HOME: 'Startseite',
