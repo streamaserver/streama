@@ -16,12 +16,12 @@
     <div class="collapse navbar-collapse" id="navbar-collapse-nav">
       <ul class="nav navbar-nav">
         <li><a ng-click="changeDashType('home')" ng-class="{active: (isDashType('home') || isDashType(undefined))}">{{'DASHBOARD.HOME' | translate}}</a></li>
-        <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
+        <!-- <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
           <a ng-click="changeDashType('discover-shows')" ng-class="{active: (isDashType('discover-shows'))}">{{'DASHBOARD.TV_SHOWS' | translate}}</a>
-        </li>
-        <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
+        </li> -->
+        <!-- <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue">
           <a ng-click="changeDashType('discover-movies')" ng-class="{active: (isDashType('discover-movies'))}">{{'DASHBOARD.MOVIES' | translate}}</a>
-        </li>
+        </li> -->
         <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue && $root.getSetting('hide-mylist-button').parsedValue != true">
           <a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'DASHBOARD.MY_LIST' | translate}}</a>
         </li>
@@ -46,19 +46,15 @@
               </li>
             </ul>
           </div>
-
         </li>
       </ul>
     </div>
-
-
 
     <i class="ion-navicon navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-nav"></i>
   </div>
 
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-
       <li ng-if="isCurrentState('dash') && $root.getSetting('hide-dash-search').parsedValue != true">
         <div class="dash-search form-group has-feedback">
           <input type="text" placeholder="Search.." class="form-control input-xs" ng-model="dashSearch"
@@ -67,12 +63,39 @@
           <span class="form-control-feedback ion-android-search" aria-hidden="true"></span>
         </div>
       </li>
-      <sec:ifLoggedIn>
+      <!-- <sec:ifLoggedIn>
         <li ng-if="$root.getSetting('hide-dash-button').parsedValue != true">
           <a ui-sref="dash">{{'DASHBOARD.TITLE' | translate}}</a>
         </li>
+      </sec:ifLoggedIn> -->
+      <sec:ifLoggedIn>
+        <li class="dash-section" ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue && $root.getSetting('hide-mylist-button').parsedValue != true">
+          <a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'DASHBOARD.MY_LIST' | translate}}</a>
+        </li>
+        <li class="browse-genres dash-section">
+          <a ng-class="{active: selectedGenre}" ng-click="toggleGenreMenu()">
+            <span ng-if="selectedGenre">
+              <span>{{'VIDEO.GENRE' | translate}}:</span>
+              <span ng-bind="selectedGenre.name"></span>
+            </span>
+            <span ng-if="!selectedGenre">{{'DASHBOARD.BROWSE_GENRES' | translate}}</span>
+            <i class="ion-android-arrow-dropdown"></i>
+          </a>
+          <div class="toggle-menu-content" ng-show="genreMenuOpen">
+            <i class="ion-close-circled pull-right" ng-click="toggleGenreMenu()"></i>
+            <ul>
+              <li>
+                <a ng-click="changeGenre()"><i class="ion-grid"></i> All</a>
+              </li>
+              <li ng-repeat="genre in ::genres">
+                <a ng-click="changeGenre(genre)" ng-bind="::genre.name"></a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a ui-sref="request" href="https://tosecurityandbeyond.mynetgear.com/2hbd2p59ckzbax6kzswj46s3r39j7/" target="_self">Request Content</a>
+        </li>
       </sec:ifLoggedIn>
-
       <sec:ifAnyGranted roles="ROLE_CONTENT_MANAGER">
         <li><a ui-sref="admin.shows">{{'MANAGE_CONTENT' | translate}}</a></li>
       </sec:ifAnyGranted>
