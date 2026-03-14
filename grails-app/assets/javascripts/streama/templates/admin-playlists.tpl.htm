@@ -1,0 +1,37 @@
+<div>
+  <h1>Playlists
+    <button class="btn btn-primary pull-right" ng-click="vm.createGlobalPlaylist()">
+      <i class="ion-plus-round"></i> New Global Playlist
+    </button>
+  </h1>
+  <p class="text-muted" style="margin-top: -8px;">Global playlists are visible to all users. Users can also create their own private playlists.</p>
+
+  <hr>
+
+  <div class="spinner" ng-show="vm.loading">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+
+  <p ng-if="!vm.loading && !vm.playlists.length" class="no-episodes-yet">No playlists yet</p>
+
+  <div class="media-list">
+    <div class="media-list-item audio-admin-item" ng-repeat="playlist in vm.playlists" ng-click="vm.goToPlaylist(playlist)">
+      <div class="audio-admin-cover">
+        <img ng-src="{{playlist.cover_path}}" ng-if="playlist.cover_path" alt="">
+        <div class="audio-admin-cover-placeholder" ng-if="!playlist.cover_path"><i class="ion-ios-list"></i></div>
+      </div>
+      <div class="audio-admin-info" style="flex: 1;">
+        <div class="audio-admin-title">
+          {{playlist.title}}
+          <span ng-if="playlist.isGlobal" style="font-size: 10px; background: rgba(176, 221, 239, 0.15); color: #B0DDEF; padding: 1px 6px; border-radius: 3px; margin-left: 6px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em;">Global</span>
+        </div>
+        <div class="audio-admin-meta">{{playlist.trackCount || 0}} songs</div>
+      </div>
+      <div style="flex: none;">
+        <button class="btn btn-xs btn-danger" ng-click="$event.stopPropagation(); vm.deletePlaylist(playlist)"><i class="ion-trash-b"></i></button>
+      </div>
+    </div>
+  </div>
+</div>

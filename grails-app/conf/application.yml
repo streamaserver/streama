@@ -17,9 +17,9 @@ environments:
         dataSource:
             dbCreate: update
             driverClassName:  'com.mysql.jdbc.Driver'
-            url: jdbc:mysql://localhost/streama
+            url: jdbc:mysql://localhost:3309/streama
             username: root
-            password:
+            password: planetQuak3
     mysql:
         dataSource:
             dbCreate: update
@@ -167,7 +167,9 @@ streama:
   uploadtypes: ['video/h264', 'video/mp4', 'video/mpeg', 'video/quicktime', 'video/webm', 'video/x-ms-wm', 'video/x-ms-wmv',
               'video/x-msvideo', 'image/bmp', 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/svg+xml',
               'image/x-icon', 'image/x-png', 'application/x-subrip', 'text/plain', 'text/vtt', 'text/plain',
-              'application/octet-stream', 'video/x-matroska', 'image/vnd.microsoft.icon', 'video/mp2t']
+              'application/octet-stream', 'video/x-matroska', 'image/vnd.microsoft.icon', 'video/mp2t',
+              'audio/mpeg', 'audio/mp3', 'audio/mp4', 'audio/aac', 'audio/ogg', 'audio/flac', 'audio/wav',
+              'audio/x-wav', 'audio/webm', 'audio/x-m4a', 'audio/x-flac', 'audio/x-aac', 'audio/vnd.wave']
 
 server:
     use-forward-headers: true

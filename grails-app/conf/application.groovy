@@ -60,6 +60,24 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/subtitles/setDefault',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/subtitles/getVideoSubtitles',  access :['IS_AUTHENTICATED_REMEMBERED']],
 
+  // Audio streaming - user access
+  [pattern:'/audioDash/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/artist/show',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/artist/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/album/show',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/album/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/podcast/show',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/podcast/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/audioTrack/show',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/audioPlaylist/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/profile/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
+
+  // Audio streaming - content manager access
+  [pattern:'/artist/**',  access :['ROLE_CONTENT_MANAGER']],
+  [pattern:'/album/**',  access :['ROLE_CONTENT_MANAGER']],
+  [pattern:'/podcast/**',  access :['ROLE_CONTENT_MANAGER']],
+  [pattern:'/audioTrack/**',  access :['ROLE_CONTENT_MANAGER']],
+
   [pattern:'/genericVideo/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/genre/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/tvShow/**',  access :['ROLE_CONTENT_MANAGER']],
@@ -79,6 +97,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
   [pattern:'/dbconsole/**', access :['ROLE_ADMIN']],
 
+  [pattern:'/setup/**',  access :['permitAll']],
   [pattern:'/file/serve',  access :['permitAll']],
   [pattern:'/user/current',  access :['permitAll']],
   [pattern:'/invite/**',  access :['permitAll']],

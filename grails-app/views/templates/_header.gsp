@@ -1,5 +1,5 @@
 <%@ page import="streama.Settings" %>
-<header class="main navbar-fixed-top" ng-if="!isCurrentState('player')">
+<header class="main navbar-fixed-top" ng-if="!isCurrentState('player') && !isCurrentState('home')">
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
       <g:imgSetting setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>
@@ -24,6 +24,11 @@
         </li>
         <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue && $root.getSetting('hide-mylist-button').parsedValue != true">
           <a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'DASHBOARD.MY_LIST' | translate}}</a>
+        </li>
+        <li>
+          <a ui-sref="audio" ng-class="{active: isCurrentState('audio') || isCurrentState('audioAlbum') || isCurrentState('audioPodcast') || isCurrentState('audioPlaylist')}">
+            <i class="ion-headphone"></i> Audio
+          </a>
         </li>
         <li class="browse-genres" ng-if="isCurrentState('dash') && genres.length && !$root.currentProfile.isChild">
           <a ng-class="{active: selectedGenre}" ng-click="toggleGenreMenu()">

@@ -426,6 +426,106 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
 			}
 		},
 
+    // Audio Streaming API
+    audio: {
+      dash: function () {
+        return $http.get('audioDash.json');
+      },
+      search: function (query) {
+        return $http.get('audioDash/search.json', {params: {query: query}});
+      }
+    },
+
+    artist: {
+      get: function (id) {
+        return $http.get('artist/show.json', {params: {id: id}});
+      },
+      save: function (data) {
+        return $http.post('artist/save.json', data);
+      },
+      delete: function (id) {
+        return $http.delete('artist/delete.json', {params: {id: id}});
+      },
+      list: function (params) {
+        return $http.get('artist.json', {params: params});
+      }
+    },
+
+    album: {
+      get: function (id) {
+        return $http.get('album/show.json', {params: {id: id}});
+      },
+      save: function (data) {
+        return $http.post('album/save.json', data);
+      },
+      delete: function (id) {
+        return $http.delete('album/delete.json', {params: {id: id}});
+      },
+      list: function (params) {
+        return $http.get('album.json', {params: params});
+      }
+    },
+
+    podcast: {
+      get: function (id) {
+        return $http.get('podcast/show.json', {params: {id: id}});
+      },
+      save: function (data) {
+        return $http.post('podcast/save.json', data);
+      },
+      delete: function (id) {
+        return $http.delete('podcast/delete.json', {params: {id: id}});
+      },
+      list: function (params) {
+        return $http.get('podcast.json', {params: params});
+      }
+    },
+
+    audioTrack: {
+      get: function (id) {
+        return $http.get('audioTrack/show.json', {params: {id: id}});
+      },
+      save: function (data) {
+        return $http.post('audioTrack/save.json', data);
+      },
+      delete: function (id) {
+        return $http.delete('audioTrack/delete.json', {params: {id: id}});
+      },
+      addFile: function (trackId, fileId) {
+        return $http.get('audioTrack/addFile.json', {params: {trackId: trackId, fileId: fileId}});
+      },
+      removeFile: function (trackId, fileId) {
+        return $http.get('audioTrack/removeFile.json', {params: {trackId: trackId, fileId: fileId}});
+      },
+      addLocalFile: function (trackId, localFile) {
+        return $http.get('audioTrack/addLocalFile.json', {params: {trackId: trackId, localFile: localFile}});
+      }
+    },
+
+    audioPlaylist: {
+      get: function (id) {
+        return $http.get('audioPlaylist/show.json', {params: {id: id}});
+      },
+      save: function (data) {
+        return $http.post('audioPlaylist/save.json', data);
+      },
+      delete: function (id) {
+        return $http.delete('audioPlaylist/delete.json', {params: {id: id}});
+      },
+      list: function () {
+        return $http.get('audioPlaylist.json');
+      },
+      addTrack: function (playlistId, trackId) {
+        return $http.get('audioPlaylist/addTrack.json', {params: {playlistId: playlistId, trackId: trackId}});
+      },
+      removeTrack: function (entryId) {
+        return $http.get('audioPlaylist/removeTrack.json', {params: {entryId: entryId}});
+      },
+      reorder: function (entries) {
+        return $http.post('audioPlaylist/reorder.json', {entries: entries});
+      }
+    },
+
     profile: {
 		  save: function (params) {
         return $http.post('profile/save',  params);

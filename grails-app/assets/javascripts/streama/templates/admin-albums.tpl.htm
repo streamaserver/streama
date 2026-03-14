@@ -1,0 +1,31 @@
+<div>
+  <h1>Albums
+    <button class="btn btn-primary pull-right" ng-click="vm.createAlbum()">
+      <i class="ion-plus-round"></i> New Album
+    </button>
+  </h1>
+
+  <hr>
+
+  <div class="spinner" ng-show="vm.loading">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+
+  <p ng-if="!vm.loading && !vm.albums.length" class="no-episodes-yet">No albums yet</p>
+
+  <div class="media-list">
+    <div class="media-list-item audio-admin-item" ng-repeat="album in vm.albums" ng-click="vm.goToAlbum(album)">
+      <div class="audio-admin-cover">
+        <img ng-src="{{album.cover_path}}" ng-if="album.cover_path" alt="">
+        <div class="audio-admin-cover-placeholder" ng-if="!album.cover_path"><i class="ion-disc"></i></div>
+      </div>
+      <div class="audio-admin-info">
+        <div class="audio-admin-title">{{album.title}}</div>
+        <div class="audio-admin-subtitle">{{album.artist}} <span ng-if="album.year">&middot; {{album.year}}</span></div>
+        <div class="audio-admin-meta">{{album.trackCount}} tracks</div>
+      </div>
+    </div>
+  </div>
+</div>

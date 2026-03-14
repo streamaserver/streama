@@ -15,14 +15,21 @@ class SubtitlesController {
   def index() {}
 
   def get() {
+    log.info("=== SubtitlesController.get() called ===")
+    log.info("All params: ${params}")
+
     def subtitlesRequest = new SubtitlesRequest()
     subtitlesRequest.setEpisode(params.episode)
     subtitlesRequest.setQuery(params.query)
     subtitlesRequest.setSeason(params.season)
     subtitlesRequest.setSubLanguageId(params.subLanguageId)
 
+    log.info("SubtitlesRequest - query: ${params.query}, language: ${params.subLanguageId}, season: ${params.season}, episode: ${params.episode}")
+
     def videoId = params.videoId
     boolean searchByHash = params.searchByHash?.toBoolean()
+
+    log.info("videoId: ${videoId}, searchByHash: ${searchByHash}")
 
     def responseSubtitle
 
@@ -31,6 +38,10 @@ class SubtitlesController {
     } else {
       responseSubtitle = opensubtitlesService.getSubtitles(subtitlesRequest)
     }
+
+    log.info("Response status: ${responseSubtitle.statusCodeValue}")
+    log.info("Response body: ${responseSubtitle.body}")
+
     if (responseSubtitle.statusCodeValue != 200) {
       response.status = BAD_REQUEST.value()
       def map = [error: true, message: responseSubtitle.body]

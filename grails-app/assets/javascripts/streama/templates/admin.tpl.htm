@@ -1,18 +1,47 @@
 <div class="admin">
-  <div class="nav">
+  <div class="nav admin-nav-grouped">
     <ul>
+      <!-- Genres (shared) -->
+      <li class="admin-nav-section-label" ng-if="$root.currentUser.isContentManager">General</li>
+      <li ng-class="{'active': isCurrentState('admin.genres')}" ng-if="$root.currentUser.isContentManager">
+        <a ui-sref="admin.genres">Genres</a>
+      </li>
+      <li ng-class="{'active': isCurrentState('admin.fileManager')}" ng-if="$root.currentUser.isContentManager">
+        <a ui-sref="admin.fileManager">File Manager</a>
+      </li>
+
+      <!-- Video -->
+      <li class="admin-nav-section-label" ng-if="$root.currentUser.isContentManager">Video</li>
       <li ng-class="{'active': (isCurrentState('admin.shows') || isCurrentState('admin.show'))}" ng-if="$root.currentUser.isContentManager">
         <a ui-sref="admin.shows">TV Shows</a>
       </li>
-      <li ng-class="{'active': isCurrentState('admin.movies')}" ng-if="$root.currentUser.isContentManager">
+      <li ng-class="{'active': (isCurrentState('admin.movies') || isCurrentState('admin.movie'))}" ng-if="$root.currentUser.isContentManager">
         <a ui-sref="admin.movies">Movies</a>
       </li>
       <li ng-class="{'active': isCurrentState('admin.videos')}" ng-if="$root.currentUser.isContentManager">
         <a ui-sref="admin.videos">Other Videos</a>
       </li>
-      <li ng-class="{'active': isCurrentState('admin.fileManager')}" ng-if="$root.currentUser.isContentManager">
-        <a ui-sref="admin.fileManager">File Manager</a>
+      <li ng-class="{'active': isCurrentState('admin.transcoding')}" ng-if="$root.currentUser.isAdmin">
+        <a ui-sref="admin.transcoding">Transcoding</a>
       </li>
+
+      <!-- Audio -->
+      <li class="admin-nav-section-label" ng-if="$root.currentUser.isContentManager">Audio</li>
+      <li ng-class="{'active': (isCurrentState('admin.artists') || isCurrentState('admin.artist'))}" ng-if="$root.currentUser.isContentManager">
+        <a ui-sref="admin.artists">Artists</a>
+      </li>
+      <li ng-class="{'active': (isCurrentState('admin.albums') || isCurrentState('admin.album'))}" ng-if="$root.currentUser.isContentManager">
+        <a ui-sref="admin.albums">Albums</a>
+      </li>
+      <li ng-class="{'active': (isCurrentState('admin.podcasts') || isCurrentState('admin.podcast'))}" ng-if="$root.currentUser.isContentManager">
+        <a ui-sref="admin.podcasts">Podcasts</a>
+      </li>
+      <li ng-class="{'active': isCurrentState('admin.playlists')}" ng-if="$root.currentUser.isContentManager">
+        <a ui-sref="admin.playlists">Playlists</a>
+      </li>
+
+      <!-- Misc -->
+      <li class="admin-nav-section-label" ng-if="$root.currentUser.isAdmin">Misc</li>
       <li ng-class="{'active': isCurrentState('admin.notifications')}" ng-if="$root.currentUser.isAdmin">
         <a ui-sref="admin.notifications">Notifications</a>
       </li>
@@ -21,12 +50,6 @@
       </li>
       <li ng-class="{'active': isCurrentState('admin.reports')}" ng-if="$root.currentUser.isContentManager">
         <a ui-sref="admin.reports">Reports</a>
-      </li>
-      <li ng-class="{'active': isCurrentState('admin.genres')}" ng-if="$root.currentUser.isContentManager">
-        <a ui-sref="admin.genres">Genres</a>
-      </li>
-      <li ng-class="{'active': isCurrentState('admin.transcoding')}" ng-if="$root.currentUser.isAdmin">
-        <a ui-sref="admin.transcoding">Audio Transcoding</a>
       </li>
     </ul>
   </div>

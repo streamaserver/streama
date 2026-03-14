@@ -1,0 +1,91 @@
+<ul class="breadcrumb">
+  <li><a ui-sref="admin.artists">Artists</a></li>
+  <li class="active">{{vm.artist.name}}</li>
+</ul>
+
+<div class="spinner" ng-show="vm.loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<div ng-if="vm.artist">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-11">
+          <h1>{{vm.artist.name}}</h1>
+        </div>
+        <div class="col-md-1">
+          <div class="btn-group pull-right">
+            <span uib-dropdown>
+              <i class="ion-ios-settings icon-xl" uib-dropdown-toggle></i>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li><a ng-click="vm.deleteArtist()">Delete Artist</a></li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" ng-model="vm.artist.name">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button class="btn btn-primary btn-block" ng-click="vm.saveArtist()">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label>Bio</label>
+            <textarea class="form-control" rows="3" ng-model="vm.artist.bio"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3>
+        Albums
+        <button class="btn btn-primary btn-sm" ng-click="vm.createAlbum()"><i class="ion-plus-round"></i> New Album</button>
+      </h3>
+
+      <div ng-if="!vm.artist.albums.length" class="no-episodes-yet">No albums yet</div>
+
+      <div class="media-list">
+        <div class="media-list-item audio-admin-item" ng-repeat="album in vm.artist.albums" ng-click="vm.goToAlbum(album)">
+          <div class="audio-admin-cover">
+            <img ng-src="{{album.cover_path}}" ng-if="album.cover_path" alt="">
+            <div class="audio-admin-cover-placeholder" ng-if="!album.cover_path"><i class="ion-disc"></i></div>
+          </div>
+          <div class="audio-admin-info">
+            <div class="audio-admin-title">{{album.title}}</div>
+            <div class="audio-admin-subtitle">{{album.year}} <span ng-if="album.songCount">&middot; {{album.songCount}} songs</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <img ng-show="vm.artist.image_path" ng-src="{{vm.artist.image_path}}" style="width: 100%; border-radius: 50%;"/>
+      <div class="upload-poster" ng-class="{'update-poster': vm.artist.image_path}" ng-model="artistImage"
+           class="btn btn-primary btn-block btn-lg"
+           ngf-change="vm.uploadImage($files)" ngf-select ngf-drop ngf-drag-over-class="dragover">
+        <span class="main-text">Upload Image</span>
+        <span class="size-info">Square, 500x500 px</span>
+        <span ng-show="vm.imageUpload.percentage">{{vm.imageUpload.percentage}}%</span>
+      </div>
+    </div>
+  </div>
+</div>

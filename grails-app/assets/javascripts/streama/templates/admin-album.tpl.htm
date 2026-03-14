@@ -1,0 +1,106 @@
+<ul class="breadcrumb">
+  <li><a ui-sref="admin.albums">Albums</a></li>
+  <li class="active">{{vm.album.title}}</li>
+</ul>
+
+<div class="spinner" ng-show="vm.loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<div ng-if="vm.album">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-11">
+          <h1>{{vm.album.title}}</h1>
+        </div>
+        <div class="col-md-1">
+          <div class="btn-group pull-right">
+            <span uib-dropdown>
+              <i class="ion-ios-settings icon-xl" uib-dropdown-toggle></i>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li><a ng-click="vm.deleteAlbum()">Delete Album</a></li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" ng-model="vm.album.title">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>Artist</label>
+            <select class="form-control" ng-model="vm.album.artist"
+                    ng-options="artist as artist.name for artist in vm.artists track by artist.id"
+                    ng-change="vm.setArtist(vm.album.artist)">
+              <option value="">-- Select Artist --</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Year</label>
+            <input type="text" class="form-control" ng-model="vm.album.year">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button class="btn btn-primary btn-block" ng-click="vm.saveAlbum()">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label>Overview</label>
+            <textarea class="form-control" rows="3" ng-model="vm.album.overview"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3>
+        Songs
+        <button class="btn btn-primary btn-sm" ng-click="vm.addSong()"><i class="ion-plus-round"></i> Add Song</button>
+      </h3>
+
+      <p class="text-muted" style="font-size: 12px; margin-bottom: 12px;" ng-if="vm.album.songs.length">
+        Drag and drop audio files onto any song to upload, or use the action buttons on hover.
+      </p>
+
+      <div ng-if="!vm.album.songs.length" class="no-episodes-yet">No songs yet</div>
+
+      <div class="admin-song-list">
+        <admin-song ng-repeat="song in vm.album.songs | orderBy:'trackNumber'"
+                    song="song"
+                    on-delete="vm.deleteSong(song)"
+                    on-update="vm.refreshAlbum()">
+        </admin-song>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <img ng-show="vm.album.cover_path" ng-src="{{vm.album.cover_path}}" style="width: 100%; border-radius: 4px;"/>
+      <div class="upload-poster" ng-class="{'update-poster': vm.album.cover_path}" ng-model="albumCover"
+           class="btn btn-primary btn-block btn-lg"
+           ngf-change="vm.uploadCover($files)" ngf-select ngf-drop ngf-drag-over-class="dragover">
+        <span class="main-text">Upload Cover</span>
+        <span class="size-info">500x500 px</span>
+        <span ng-show="vm.imageUpload.percentage">{{vm.imageUpload.percentage}}%</span>
+      </div>
+    </div>
+  </div>
+</div>

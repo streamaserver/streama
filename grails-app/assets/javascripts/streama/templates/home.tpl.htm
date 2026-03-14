@@ -1,0 +1,57 @@
+<div class="home-split" ng-class="{'hover-video': vm.hoverSide === 'video', 'hover-audio': vm.hoverSide === 'audio'}">
+
+  <!-- VIDEO SIDE -->
+  <div class="home-side home-video"
+       ng-mouseenter="vm.setHover('video')"
+       ng-mouseleave="vm.clearHover()"
+       ng-click="vm.goToVideo()">
+
+    <div class="home-side-bg"></div>
+    <div class="home-side-grain"></div>
+    <div class="home-side-overlay"></div>
+
+    <div class="home-side-content">
+      <div class="home-side-icon">
+        <i class="ion-ios-videocam"></i>
+      </div>
+      <h1 class="home-side-title">Watch</h1>
+      <p class="home-side-subtitle">Movies, Shows & More</p>
+      <div class="home-side-cta">
+        <span class="home-cta-arrow"><i class="ion-ios-arrow-right"></i></span>
+      </div>
+    </div>
+
+    <div class="home-side-edge"></div>
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="home-divider">
+    <div class="home-divider-line"></div>
+    <div class="home-divider-or">or</div>
+    <div class="home-divider-line"></div>
+  </div>
+
+  <!-- AUDIO SIDE -->
+  <div class="home-side home-audio"
+       ng-mouseenter="vm.setHover('audio')"
+       ng-mouseleave="vm.clearHover()"
+       ng-click="vm.goToAudio()">
+
+    <div class="home-side-bg"></div>
+    <div class="home-side-overlay"></div>
+
+    <div class="home-side-content">
+      <div class="home-side-icon">
+        <i class="ion-headphone"></i>
+      </div>
+      <h1 class="home-side-title">Listen</h1>
+      <p class="home-side-subtitle">Music, Podcasts & Playlists</p>
+      <div class="home-side-cta">
+        <span class="home-cta-arrow"><i class="ion-ios-arrow-left"></i></span>
+      </div>
+    </div>
+
+    <div class="home-side-edge"></div>
+  </div>
+
+</div>

@@ -1,0 +1,56 @@
+<div class="audio-section">
+
+  <div class="audio-player-bar" ng-if="vm.audioPlayer.state.currentTrack" ng-include="'/streama/audio-player-partial.htm'"></div>
+
+  <div class="audio-detail" ng-class="{'has-player': vm.audioPlayer.state.currentTrack}">
+
+    <div class="spinner" ng-show="vm.loading">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+
+    <div ng-if="vm.artist">
+      <!-- Artist Header -->
+      <div class="audio-detail-header artist-header">
+        <div class="audio-detail-cover artist-cover">
+          <img ng-src="{{vm.artist.image_path}}" ng-if="vm.artist.image_path" alt="">
+          <div class="audio-card-cover-placeholder large" ng-if="!vm.artist.image_path"><i class="ion-person"></i></div>
+        </div>
+        <div class="audio-detail-info">
+          <span class="audio-detail-type">Artist</span>
+          <h1 class="audio-detail-title">{{vm.artist.name}}</h1>
+          <div class="audio-detail-meta">
+            <span>{{vm.artist.albumCount}} albums</span>
+            <span> &middot; {{vm.artist.songCount}} songs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bio -->
+      <div ng-if="vm.artist.bio" class="audio-detail-overview" style="margin-top: 24px;">
+        <p>{{vm.artist.bio}}</p>
+      </div>
+
+      <!-- Albums -->
+      <div ng-if="vm.artist.albums.length" class="audio-browse-section" style="margin-top: 32px;">
+        <h3 class="audio-section-title">Albums</h3>
+        <div class="audio-card-grid">
+          <div class="audio-card" ng-repeat="album in vm.artist.albums" ng-click="vm.goToAlbum(album)">
+            <div class="audio-card-cover">
+              <img ng-src="{{album.cover_path}}" ng-if="album.cover_path" alt="">
+              <div class="audio-card-cover-placeholder" ng-if="!album.cover_path"><i class="ion-disc"></i></div>
+              <button class="audio-card-play-btn" ng-click="$event.stopPropagation(); vm.playAlbum(album)"><i class="ion-ios-play"></i></button>
+            </div>
+            <div class="audio-card-title">{{album.title}}</div>
+            <div class="audio-card-subtitle">{{album.year}} <span ng-if="album.songCount">&middot; {{album.songCount}} songs</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-top: 40px;">
+      <a ui-sref="audio" class="audio-back-link"><i class="ion-arrow-left-c"></i> Back to Audio</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,189 @@
+<div class="audio-section">
+
+  <!-- Audio Player Bar (persistent) -->
+  <div class="audio-player-bar" ng-if="vm.audioPlayer.state.currentTrack" ng-include="'/streama/audio-player-partial.htm'"></div>
+
+  <!-- Main Content -->
+  <div class="audio-browse" ng-class="{'has-player': vm.audioPlayer.state.currentTrack}">
+
+    <!-- Search Bar -->
+    <div class="audio-search-bar">
+      <div class="audio-search-input-wrapper">
+        <i class="ion-android-search"></i>
+        <input type="text" placeholder="Search artists, albums, songs, podcasts..."
+               ng-model="vm.searchQuery" ng-change="vm.search()" ng-model-options="{debounce: 300}">
+        <button ng-if="vm.searchQuery" ng-click="vm.clearSearch()" class="audio-search-clear">
+          <i class="ion-close-round"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search Results -->
+    <div ng-if="vm.searchResults" class="audio-search-results">
+
+      <div ng-if="vm.searchResults.artists.length" class="audio-browse-section">
+        <h3 class="audio-section-title">Artists</h3>
+        <div class="audio-card-grid">
+          <div class="audio-card" ng-repeat="artist in vm.searchResults.artists" ng-click="vm.goToArtist(artist)">
+            <div class="audio-card-cover artist-card-cover">
+              <img ng-src="{{artist.image_path}}" ng-if="artist.image_path" alt="">
+              <div class="audio-card-cover-placeholder" ng-if="!artist.image_path"><i class="ion-person"></i></div>
+            </div>
+            <div class="audio-card-title">{{artist.name}}</div>
+            <div class="audio-card-subtitle">Artist</div>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="vm.searchResults.albums.length" class="audio-browse-section">
+        <h3 class="audio-section-title">Albums</h3>
+        <div class="audio-card-grid">
+          <div class="audio-card" ng-repeat="album in vm.searchResults.albums" ng-click="vm.goToAlbum(album)">
+            <div class="audio-card-cover">
+              <img ng-src="{{album.cover_path}}" ng-if="album.cover_path" alt="">
+              <div class="audio-card-cover-placeholder" ng-if="!album.cover_path"><i class="ion-disc"></i></div>
+              <button class="audio-card-play-btn" ng-click="$event.stopPropagation()"><i class="ion-ios-play"></i></button>
+            </div>
+            <div class="audio-card-title">{{album.title}}</div>
+            <div class="audio-card-subtitle">{{album.artist.name}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="vm.searchResults.songs.length" class="audio-browse-section">
+        <h3 class="audio-section-title">Songs</h3>
+        <div class="audio-tracklist">
+          <div class="audio-track-row" ng-repeat="song in vm.searchResults.songs" ng-click="vm.playSong(song, vm.searchResults.songs)"
+               ng-class="{'is-playing': vm.audioPlayer.state.currentTrack.id === song.id}">
+            <div class="audio-track-number">
+              <span class="track-num">{{$index + 1}}</span>
+              <i class="ion-ios-play track-play-icon"></i>
+            </div>
+            <div class="audio-track-info">
+              <div class="audio-track-name">{{song.title}}</div>
+              <div class="audio-track-artist">{{song.artist.name}}</div>
+            </div>
+            <div class="audio-track-album" ng-if="song.album">{{song.album.title}}</div>
+            <div class="audio-track-duration">{{song.durationDisplay}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Browse Content -->
+    <div ng-if="!vm.searchResults">
+
+      <!-- Filter chips -->
+      <div class="audio-filter-chips">
+        <span class="audio-chip" ng-class="{'active': vm.activeFilter === 'all'}" ng-click="vm.setFilter('all')">All</span>
+        <span class="audio-chip" ng-class="{'active': vm.activeFilter === 'artists'}" ng-click="vm.setFilter('artists')">Artists</span>
+        <span class="audio-chip" ng-class="{'active': vm.activeFilter === 'albums'}" ng-click="vm.setFilter('albums')">Albums</span>
+        <span class="audio-chip" ng-class="{'active': vm.activeFilter === 'podcasts'}" ng-click="vm.setFilter('podcasts')">Podcasts</span>
+        <span class="audio-chip" ng-class="{'active': vm.activeFilter === 'playlists'}" ng-click="vm.setFilter('playlists')">Playlists</span>
+      </div>
+
+      <!-- Loading -->
+      <div class="spinner" ng-show="vm.loading">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+
+      <!-- Recent Songs -->
+      <div ng-if="vm.recentSongs.length && vm.activeFilter === 'all'" class="audio-browse-section">
+        <h3 class="audio-section-title">Recently Added</h3>
+        <div class="audio-card-grid">
+          <div class="audio-card" ng-repeat="song in vm.recentSongs" ng-click="vm.playSong(song)">
+            <div class="audio-card-cover">
+              <img ng-src="{{song.album.cover_path || song.podcast.cover_path}}" ng-if="song.album.cover_path || song.podcast.cover_path" alt="">
+              <div class="audio-card-cover-placeholder" ng-if="!song.album.cover_path && !song.podcast.cover_path"><i class="ion-headphone"></i></div>
+              <button class="audio-card-play-btn" ng-click="$event.stopPropagation(); vm.playSong(song)"><i class="ion-ios-play"></i></button>
+            </div>
+            <div class="audio-card-title">{{song.title}}</div>
+            <div class="audio-card-subtitle">{{song.artist.name}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Artists -->
+      <div ng-if="vm.artists.length && (vm.activeFilter === 'all' || vm.activeFilter === 'artists')" class="audio-browse-section">
+        <h3 class="audio-section-title">Artists</h3>
+        <div class="audio-card-grid">
+          <div class="audio-card" ng-repeat="artist in vm.artists" ng-click="vm.goToArtist(artist)">
+            <div class="audio-card-cover artist-card-cover">
+              <img ng-src="{{artist.image_path}}" ng-if="artist.image_path" alt="">
+              <div class="audio-card-cover-placeholder" ng-if="!artist.image_path"><i class="ion-person"></i></div>
+            </div>
+            <div class="audio-card-title">{{artist.name}}</div>
+            <div class="audio-card-subtitle">Artist</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Albums -->
+      <div ng-if="vm.albums.length && (vm.activeFilter === 'all' || vm.activeFilter === 'albums')" class="audio-browse-section">
+        <h3 class="audio-section-title">Albums</h3>
+        <div class="audio-card-grid">
+          <div class="audio-card" ng-repeat="album in vm.albums" ng-click="vm.goToAlbum(album)">
+            <div class="audio-card-cover">
+              <img ng-src="{{album.cover_path}}" ng-if="album.cover_path" alt="">
+              <div class="audio-card-cover-placeholder" ng-if="!album.cover_path"><i class="ion-disc"></i></div>
+              <button class="audio-card-play-btn" ng-click="$event.stopPropagation()"><i class="ion-ios-play"></i></button>
+            </div>
+            <div class="audio-card-title">{{album.title}}</div>
+            <div class="audio-card-subtitle">{{album.artist.name}} <span ng-if="album.year">&middot; {{album.year}}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Podcasts -->
+      <div ng-if="vm.podcasts.length && (vm.activeFilter === 'all' || vm.activeFilter === 'podcasts')" class="audio-browse-section">
+        <h3 class="audio-section-title">Podcasts</h3>
+        <div class="audio-card-grid">
+          <div class="audio-card podcast-card" ng-repeat="podcast in vm.podcasts" ng-click="vm.goToPodcast(podcast)">
+            <div class="audio-card-cover podcast-cover">
+              <img ng-src="{{podcast.cover_path}}" ng-if="podcast.cover_path" alt="">
+              <div class="audio-card-cover-placeholder" ng-if="!podcast.cover_path"><i class="ion-mic-a"></i></div>
+              <button class="audio-card-play-btn" ng-click="$event.stopPropagation()"><i class="ion-ios-play"></i></button>
+            </div>
+            <div class="audio-card-title">{{podcast.title}}</div>
+            <div class="audio-card-subtitle">{{podcast.host}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Playlists -->
+      <div ng-if="(vm.activeFilter === 'all' || vm.activeFilter === 'playlists')" class="audio-browse-section">
+        <h3 class="audio-section-title">
+          Playlists
+          <button class="btn btn-sm audio-create-btn" ng-click="vm.createPlaylist()">
+            <i class="ion-plus-round"></i> New Playlist
+          </button>
+        </h3>
+        <div class="audio-card-grid" ng-if="vm.playlists.length">
+          <div class="audio-card" ng-repeat="playlist in vm.playlists" ng-click="vm.goToPlaylist(playlist)">
+            <div class="audio-card-cover">
+              <img ng-src="{{playlist.cover_path}}" ng-if="playlist.cover_path" alt="">
+              <div class="audio-card-cover-placeholder" ng-if="!playlist.cover_path"><i class="ion-ios-list"></i></div>
+              <button class="audio-card-play-btn" ng-click="$event.stopPropagation()"><i class="ion-ios-play"></i></button>
+            </div>
+            <div class="audio-card-title">{{playlist.title}}</div>
+            <div class="audio-card-subtitle">
+              <span ng-if="playlist.isGlobal" class="audio-global-badge">Global</span>
+              {{playlist.trackCount || 0}} songs
+            </div>
+          </div>
+        </div>
+        <p ng-if="!vm.playlists.length" class="audio-empty-state">No playlists yet. Create one to get started.</p>
+      </div>
+
+      <!-- Empty state -->
+      <div ng-if="!vm.loading && !vm.artists.length && !vm.albums.length && !vm.podcasts.length && !vm.recentSongs.length" class="audio-empty-state-full">
+        <i class="ion-headphone"></i>
+        <h2>No audio content yet</h2>
+        <p>Content managers can add artists, albums, and podcasts from the admin panel.</p>
+      </div>
+
+    </div>
+  </div>
+</div>

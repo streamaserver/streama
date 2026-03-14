@@ -1,0 +1,77 @@
+<div class="audio-section">
+
+  <div class="audio-player-bar" ng-if="vm.audioPlayer.state.currentTrack" ng-include="'/streama/audio-player-partial.htm'"></div>
+
+  <div class="audio-detail" ng-class="{'has-player': vm.audioPlayer.state.currentTrack}">
+
+    <div class="spinner" ng-show="vm.loading">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+
+    <div ng-if="vm.album">
+      <!-- Album Header -->
+      <div class="audio-detail-header">
+        <div class="audio-detail-cover">
+          <img ng-src="{{vm.album.cover_path}}" ng-if="vm.album.cover_path" alt="">
+          <div class="audio-card-cover-placeholder large" ng-if="!vm.album.cover_path"><i class="ion-disc"></i></div>
+        </div>
+        <div class="audio-detail-info">
+          <span class="audio-detail-type">Album</span>
+          <h1 class="audio-detail-title">{{vm.album.title}}</h1>
+          <div class="audio-detail-meta">
+            <a ng-if="vm.album.artist" ui-sref="audioArtist({artistId: vm.album.artist.id})"><strong>{{vm.album.artist.name}}</strong></a>
+            <span ng-if="vm.album.year"> &middot; {{vm.album.year}}</span>
+            <span> &middot; {{vm.album.songs.length}} songs, {{vm.getTotalDuration()}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Bar -->
+      <div class="audio-action-bar">
+        <button class="audio-play-btn-large" ng-click="vm.playAll()">
+          <i class="ion-ios-play"></i>
+        </button>
+        <button class="audio-action-btn" ng-click="vm.shufflePlay()" title="Shuffle">
+          <i class="ion-shuffle"></i>
+        </button>
+      </div>
+
+      <!-- Song List -->
+      <div class="audio-tracklist">
+        <div class="audio-tracklist-header">
+          <div class="audio-track-number">#</div>
+          <div class="audio-track-info">Title</div>
+          <div class="audio-track-duration"><i class="ion-clock"></i></div>
+        </div>
+        <div class="audio-track-row" ng-repeat="song in vm.album.songs"
+             ng-click="vm.playSong(song)"
+             ng-class="{'is-playing': vm.isCurrentTrack(song)}">
+          <div class="audio-track-number">
+            <span class="track-num" ng-if="!vm.isCurrentTrack(song)">{{song.trackNumber || $index + 1}}</span>
+            <i class="ion-volume-high track-playing-icon" ng-if="vm.isCurrentTrack(song) && vm.audioPlayer.state.isPlaying"></i>
+            <i class="ion-ios-pause track-playing-icon" ng-if="vm.isCurrentTrack(song) && !vm.audioPlayer.state.isPlaying"></i>
+            <i class="ion-ios-play track-play-icon"></i>
+          </div>
+          <div class="audio-track-info">
+            <div class="audio-track-name">{{song.title}}</div>
+            <div class="audio-track-artist" ng-if="song.artist && song.artist.name !== vm.album.artist.name">
+              <a ui-sref="audioArtist({artistId: song.artist.id})" ng-click="$event.stopPropagation()">{{song.artist.name}}</a>
+            </div>
+          </div>
+          <div class="audio-track-duration">{{song.durationDisplay || '--:--'}}</div>
+        </div>
+      </div>
+
+      <!-- Overview -->
+      <div ng-if="vm.album.overview" class="audio-detail-overview">
+        <p>{{vm.album.overview}}</p>
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-top: 40px;">
+      <a ui-sref="audio" class="audio-back-link"><i class="ion-arrow-left-c"></i> Back to Audio</a>
+    </div>
+  </div>
+</div>

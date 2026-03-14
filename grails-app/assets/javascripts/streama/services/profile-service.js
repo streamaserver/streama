@@ -5,7 +5,7 @@ angular.module('streama').factory('profileService', function (localStorageServic
   function setCurrentProfile(profile) {
     localStorageService.set('currentProfile', profile);
     $rootScope.currentProfile = profile;
-    $state.go('dash', {}, {reload: true});
+    $state.go('home', {}, {reload: true});
     $translate.use(_.get($rootScope, 'currentProfile.profileLanguage') || _.get($rootScope, 'currentUser.language') || 'en');
   }
 

@@ -1,0 +1,1347 @@
+// ==========================================================================
+// Streama Audio Section
+// Spotify-inspired UX with Streama's oceanic ice-blue identity
+// ==========================================================================
+
+$audio-bg-base: #0a0e10;
+$audio-bg-surface: #111518;
+$audio-bg-elevated: #161b1f;
+$audio-bg-highlight: #1e2529;
+$audio-bg-hover: #242b30;
+$audio-bg-active: #2d363c;
+$audio-accent: $primary; // #B0DDEF - Streama's ice blue
+$audio-accent-hover: lighten($primary, 8%);
+$audio-accent-dark: darken($primary, 15%);
+$audio-text-primary: #ffffff;
+$audio-text-secondary: #8a9ba8;
+$audio-text-subdued: #506070;
+$audio-border: #1e2529;
+$audio-player-height: 80px;
+$audio-card-radius: 6px;
+
+// ==========================================================================
+// Audio Section Container
+// ==========================================================================
+
+.audio-section {
+  position: relative;
+  min-height: 100vh;
+  background: $audio-bg-base;
+}
+
+.audio-browse,
+.audio-detail {
+  padding: 24px 32px;
+  padding-bottom: 40px;
+
+  &.has-player {
+    padding-bottom: $audio-player-height + 40px;
+  }
+}
+
+// ==========================================================================
+// Search Bar
+// ==========================================================================
+
+.audio-search-bar {
+  margin-bottom: 28px;
+}
+
+.audio-search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: $audio-bg-highlight;
+  border-radius: 500px;
+  padding: 10px 20px;
+  gap: 10px;
+  max-width: 480px;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus-within {
+    background: $audio-bg-hover;
+    box-shadow: 0 0 0 2px rgba($audio-accent, 0.25);
+  }
+
+  i {
+    color: $audio-text-secondary;
+    font-size: 18px;
+  }
+
+  input {
+    border: none;
+    background: none;
+    color: $audio-text-primary;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    font-weight: 300;
+
+    &::placeholder {
+      color: $audio-text-subdued;
+    }
+  }
+}
+
+.audio-search-clear {
+  background: none;
+  border: none;
+  color: $audio-text-secondary;
+  cursor: pointer;
+  padding: 4px;
+
+  &:hover {
+    color: $audio-text-primary;
+  }
+}
+
+// ==========================================================================
+// Filter Chips
+// ==========================================================================
+
+.audio-filter-chips {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.audio-chip {
+  padding: 6px 16px;
+  border-radius: 500px;
+  background: $audio-bg-highlight;
+  color: $audio-text-primary;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+  user-select: none;
+
+  &:hover {
+    background: $audio-bg-active;
+  }
+
+  &.active {
+    background: $audio-accent;
+    color: #0a0e10;
+    font-weight: 600;
+  }
+}
+
+// ==========================================================================
+// Section Titles
+// ==========================================================================
+
+.audio-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: $audio-text-primary;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.audio-browse-section {
+  margin-bottom: 40px;
+}
+
+// ==========================================================================
+// Card Grid
+// ==========================================================================
+
+.audio-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 20px;
+}
+
+.audio-card {
+  background: $audio-bg-elevated;
+  border-radius: $audio-card-radius;
+  padding: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    background: $audio-bg-hover;
+    transform: translateY(-2px);
+
+    .audio-card-play-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.audio-card-cover {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  position: relative;
+  background: $audio-bg-highlight;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.podcast-cover {
+  border-radius: 8px;
+
+  img {
+    border-radius: 8px;
+  }
+}
+
+.audio-card-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $audio-bg-highlight 0%, darken($audio-bg-highlight, 5%) 100%);
+
+  i {
+    font-size: 48px;
+    color: $audio-text-subdued;
+  }
+
+  &.large {
+    i {
+      font-size: 80px;
+    }
+  }
+}
+
+.audio-card-play-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: $audio-accent;
+  border: none;
+  color: #0a0e10;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+
+  &:hover {
+    background: $audio-accent-hover;
+    transform: scale(1.06) translateY(0);
+  }
+
+  i {
+    margin-left: 2px;
+  }
+}
+
+// Artist circular covers
+.artist-card-cover {
+  border-radius: 50%;
+
+  img {
+    border-radius: 50%;
+  }
+
+  .audio-card-cover-placeholder {
+    border-radius: 50%;
+  }
+}
+
+.artist-cover {
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    border-radius: 50%;
+  }
+}
+
+.audio-global-badge {
+  display: inline-block;
+  background: rgba($audio-accent, 0.15);
+  color: $audio-accent;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-right: 4px;
+}
+
+.audio-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: $audio-text-primary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.audio-card-subtitle {
+  font-size: 13px;
+  color: $audio-text-secondary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ==========================================================================
+// Detail Header (Album / Podcast / Playlist)
+// ==========================================================================
+
+.audio-detail-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  padding: 48px 0 28px;
+  background: linear-gradient(180deg, rgba(darken($audio-accent, 30%), 0.4) 0%, transparent 100%);
+  margin: -24px -32px 0;
+  padding-left: 32px;
+  padding-right: 32px;
+  min-height: 280px;
+}
+
+.podcast-header {
+  background: linear-gradient(180deg, rgba(darken($audio-accent, 25%), 0.3) 0%, transparent 100%);
+}
+
+.audio-detail-cover {
+  width: 220px;
+  height: 220px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+  background: $audio-bg-highlight;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.podcast-detail-cover {
+  border-radius: 12px;
+
+  img {
+    border-radius: 12px;
+  }
+}
+
+.audio-detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.audio-detail-type {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $audio-text-secondary;
+}
+
+.audio-detail-title {
+  font-size: 48px; // fluid fallback, scales via media queries
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: $audio-text-primary;
+  margin: 4px 0;
+}
+
+.audio-detail-meta {
+  font-size: 14px;
+  color: $audio-text-secondary;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+
+  strong {
+    color: $audio-text-primary;
+    font-weight: 600;
+  }
+}
+
+.audio-detail-description {
+  font-size: 14px;
+  color: $audio-text-secondary;
+  margin-top: 8px;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.audio-detail-overview {
+  margin-top: 40px;
+  padding: 20px 24px;
+  background: $audio-bg-elevated;
+  border-radius: 8px;
+  max-width: 700px;
+
+  p {
+    color: $audio-text-secondary;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+// ==========================================================================
+// Action Bar
+// ==========================================================================
+
+.audio-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 0;
+}
+
+.audio-play-btn-large {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: $audio-accent;
+  border: none;
+  color: #0a0e10;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease;
+
+  &:hover {
+    transform: scale(1.06);
+    background: $audio-accent-hover;
+  }
+
+  i {
+    margin-left: 2px;
+  }
+}
+
+.audio-action-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: $audio-text-secondary;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $audio-text-primary;
+  }
+}
+
+// ==========================================================================
+// Track List
+// ==========================================================================
+
+.audio-tracklist {
+  max-width: 900px;
+}
+
+.audio-tracklist-header {
+  display: grid;
+  grid-template-columns: 40px 1fr auto auto auto;
+  gap: 16px;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 4px;
+  height: 36px;
+  align-items: center;
+  color: $audio-text-subdued;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.audio-track-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto auto auto;
+  gap: 16px;
+  padding: 6px 16px;
+  border-radius: 4px;
+  align-items: center;
+  height: 52px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+
+    .track-num {
+      display: none;
+    }
+
+    .track-play-icon {
+      display: block;
+    }
+  }
+
+  &.is-playing {
+    .track-num {
+      display: none;
+    }
+
+    .track-playing-icon {
+      display: block;
+      color: $audio-accent;
+    }
+
+    .audio-track-name {
+      color: $audio-accent;
+    }
+  }
+}
+
+.audio-track-number {
+  text-align: center;
+  position: relative;
+  color: $audio-text-secondary;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.track-play-icon {
+  display: none;
+  color: $audio-text-primary;
+  font-size: 18px;
+}
+
+.track-playing-icon {
+  display: none;
+  font-size: 16px;
+}
+
+.audio-track-info {
+  min-width: 0;
+}
+
+.audio-track-name {
+  font-size: 15px;
+  font-weight: 400;
+  color: $audio-text-primary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.audio-track-artist {
+  font-size: 13px;
+  color: $audio-text-secondary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  a {
+    color: $audio-text-secondary;
+
+    &:hover {
+      color: $audio-text-primary;
+      text-decoration: underline;
+    }
+  }
+}
+
+.audio-track-album {
+  font-size: 13px;
+  color: $audio-text-secondary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+
+  a {
+    color: $audio-text-secondary;
+
+    &:hover {
+      color: $audio-text-primary;
+      text-decoration: underline;
+    }
+  }
+}
+
+.audio-track-duration {
+  color: $audio-text-secondary;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  min-width: 40px;
+  text-align: right;
+}
+
+.audio-track-actions {
+  button {
+    background: none;
+    border: none;
+    color: $audio-text-subdued;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      color: $audio-text-primary;
+    }
+  }
+
+  .audio-track-row:hover & button {
+    opacity: 1;
+  }
+}
+
+// ==========================================================================
+// Podcast Episode List
+// ==========================================================================
+
+.audio-podcast-episode {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: background 0.1s ease;
+  border-radius: 4px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  &.is-playing {
+    .audio-podcast-episode-title {
+      color: $audio-accent;
+    }
+  }
+}
+
+.audio-podcast-episode-number {
+  width: 32px;
+  text-align: center;
+  color: $audio-text-secondary;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.audio-podcast-episode-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.audio-podcast-episode-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: $audio-text-primary;
+  margin-bottom: 4px;
+}
+
+.audio-podcast-episode-meta {
+  font-size: 13px;
+  color: $audio-text-secondary;
+}
+
+.audio-podcast-play-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: none;
+  border: 1px solid $audio-text-secondary;
+  color: $audio-text-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    border-color: $audio-text-primary;
+    transform: scale(1.08);
+  }
+
+  i {
+    margin-left: 2px;
+  }
+}
+
+// ==========================================================================
+// Player Bar (Persistent Bottom)
+// ==========================================================================
+
+.audio-player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $audio-player-height;
+  background: linear-gradient(180deg, #111518 0%, #0a0e10 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+}
+
+.audio-player-now-playing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.audio-player-art {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: $audio-bg-highlight;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.audio-player-art-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $audio-bg-highlight;
+
+  i {
+    font-size: 24px;
+    color: $audio-text-subdued;
+  }
+}
+
+.audio-player-track-info {
+  min-width: 0;
+}
+
+.audio-player-track-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: $audio-text-primary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.audio-player-track-artist {
+  font-size: 11px;
+  color: $audio-text-secondary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Player Controls
+
+.audio-player-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.audio-player-buttons {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.audio-player-btn {
+  background: none;
+  border: none;
+  color: $audio-text-secondary;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.1s ease;
+  position: relative;
+
+  &:hover {
+    color: $audio-text-primary;
+  }
+
+  &.active {
+    color: $audio-accent;
+  }
+
+  .repeat-indicator {
+    position: absolute;
+    font-size: 8px;
+    bottom: -4px;
+    right: -2px;
+    font-weight: 700;
+    color: $audio-accent;
+  }
+}
+
+.audio-player-btn-main {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: $audio-text-primary;
+  border: none;
+  color: #0a0e10;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  i {
+    margin-left: 1px;
+  }
+}
+
+// Progress Bar
+
+.audio-player-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.audio-player-time {
+  font-size: 11px;
+  color: $audio-text-secondary;
+  min-width: 35px;
+  font-variant-numeric: tabular-nums;
+
+  &:last-child {
+    text-align: right;
+  }
+}
+
+.audio-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 500px;
+  position: relative;
+  cursor: pointer;
+  transition: height 0.1s ease;
+
+  &:hover {
+    height: 6px;
+
+    .audio-progress-fill {
+      background: $audio-accent;
+    }
+
+    .audio-progress-knob {
+      opacity: 1;
+    }
+  }
+}
+
+.audio-progress-fill {
+  height: 100%;
+  background: $audio-text-primary;
+  border-radius: 500px;
+  position: relative;
+  transition: background 0.1s ease;
+  min-width: 0;
+}
+
+.audio-progress-knob {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: $audio-text-primary;
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+// Volume
+
+.audio-player-extra {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.audio-volume-bar {
+  width: 100px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 500px;
+  cursor: pointer;
+
+  &:hover .audio-volume-fill {
+    background: $audio-accent;
+  }
+}
+
+.audio-volume-fill {
+  height: 100%;
+  background: $audio-text-primary;
+  border-radius: 500px;
+  transition: background 0.1s ease;
+}
+
+// ==========================================================================
+// Empty States
+// ==========================================================================
+
+.audio-empty-state {
+  color: $audio-text-subdued;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+.audio-empty-state-full {
+  text-align: center;
+  padding: 80px 20px;
+
+  i {
+    font-size: 64px;
+    color: $audio-text-subdued;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h2 {
+    color: $audio-text-primary;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: $audio-text-secondary;
+    font-size: 14px;
+  }
+}
+
+// ==========================================================================
+// Back Link
+// ==========================================================================
+
+.audio-back-link {
+  color: $audio-text-secondary;
+  font-size: 14px;
+  text-decoration: none;
+
+  &:hover {
+    color: $audio-text-primary;
+    text-decoration: none;
+  }
+
+  i {
+    margin-right: 6px;
+  }
+}
+
+// ==========================================================================
+// Create Button
+// ==========================================================================
+
+.audio-create-btn {
+  background: $audio-bg-highlight;
+  border: none;
+  color: $audio-text-primary;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 500px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: $audio-bg-active;
+  }
+
+  i {
+    margin-right: 4px;
+  }
+}
+
+// ==========================================================================
+// Admin Audio Styles
+// ==========================================================================
+
+.audio-admin-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  margin-bottom: 4px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.audio-admin-cover {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: $audio-bg-highlight;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.podcast-admin-cover {
+  border-radius: 8px;
+
+  img {
+    border-radius: 8px;
+  }
+}
+
+.audio-admin-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $audio-bg-highlight;
+
+  i {
+    font-size: 24px;
+    color: $audio-text-subdued;
+  }
+}
+
+.audio-admin-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.audio-admin-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: $audio-text-primary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.audio-admin-subtitle {
+  font-size: 13px;
+  color: $audio-text-secondary;
+}
+
+.audio-admin-meta {
+  font-size: 12px;
+  color: $audio-text-subdued;
+  margin-top: 2px;
+}
+
+// ==========================================================================
+// Admin Song Directive (drag & drop upload)
+// ==========================================================================
+
+.admin-song-item {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  margin-bottom: 2px;
+  transition: background 0.15s ease, opacity 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  &.no-files {
+    opacity: 0.55;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  // Drag-over state
+  &.dragover-upload {
+    .upload-overlay {
+      display: flex;
+    }
+  }
+
+  &.uploading {
+    .upload-overlay {
+      display: flex;
+    }
+  }
+
+  .upload-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(darken($audio-accent, 30%), 0.85);
+    border: 2px dashed $audio-accent;
+    border-radius: 4px;
+    z-index: 9;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    .hint,
+    .percentage,
+    .processing {
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: white;
+      text-align: center;
+
+      i {
+        display: block;
+        font-size: 24px;
+        margin-bottom: 4px;
+      }
+
+      .spinner > div {
+        background-color: white;
+      }
+    }
+  }
+}
+
+.admin-song-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  min-height: 48px;
+}
+
+.admin-song-number {
+  width: 30px;
+  text-align: center;
+  color: $audio-text-secondary;
+  font-size: 14px;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-song-info {
+  flex: 1;
+  min-width: 0;
+
+  &.admin-song-edit {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+    }
+  }
+}
+
+.admin-song-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-song-artist {
+  font-size: 12px;
+  color: $audio-text-secondary;
+}
+
+.admin-song-duration {
+  width: 50px;
+  text-align: right;
+  color: $audio-text-secondary;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.admin-song-file-status {
+  width: 70px;
+  flex-shrink: 0;
+  font-size: 12px;
+
+  .file-ok {
+    color: $success;
+  }
+
+  .file-missing {
+    color: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.admin-song-files {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  max-width: 200px;
+}
+
+.admin-song-file-tag {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 8px;
+  border-radius: 3px;
+  color: $audio-text-secondary;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  i {
+    cursor: pointer;
+    font-size: 10px;
+    opacity: 0.5;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+      opacity: 1;
+      color: $danger;
+    }
+  }
+}
+
+.admin-song-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+
+  .admin-song-item:hover & {
+    opacity: 1;
+  }
+
+  .btn {
+    padding: 3px 7px;
+  }
+}
+
+// ==========================================================================
+// Responsive
+// ==========================================================================
+
+@media (min-width: 1200px) {
+  .audio-detail-title {
+    font-size: 64px;
+  }
+}
+
+@media (max-width: 768px) {
+  .audio-detail-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: auto;
+    padding: 32px 16px;
+  }
+
+  .audio-detail-cover {
+    width: 180px;
+    height: 180px;
+  }
+
+  .audio-detail-meta {
+    justify-content: center;
+  }
+
+  .audio-card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+
+  .audio-player-bar {
+    grid-template-columns: 1fr 1fr;
+    height: auto;
+    padding: 10px 16px;
+    gap: 8px;
+
+    .audio-player-extra {
+      display: none;
+    }
+
+    .audio-player-controls {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .audio-browse,
+  .audio-detail {
+    padding: 16px;
+  }
+
+  .audio-tracklist-header {
+    display: none;
+  }
+
+  .audio-track-row {
+    grid-template-columns: 32px 1fr auto;
+
+    .audio-track-album {
+      display: none;
+    }
+  }
+}

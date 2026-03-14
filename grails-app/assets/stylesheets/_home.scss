@@ -1,0 +1,421 @@
+// ==========================================================================
+// Home Split Screen - Video vs Audio
+// Cinematic split-screen landing page
+// ==========================================================================
+
+.home-split {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  overflow: hidden;
+  z-index: 900;
+  cursor: default;
+}
+
+// ==========================================================================
+// Each Side
+// ==========================================================================
+
+.home-side {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+// Hover expansion
+.home-split.hover-video .home-video {
+  flex: 1.35;
+}
+.home-split.hover-video .home-audio {
+  flex: 0.65;
+}
+.home-split.hover-audio .home-audio {
+  flex: 1.35;
+}
+.home-split.hover-audio .home-video {
+  flex: 0.65;
+}
+
+// ==========================================================================
+// VIDEO Side - Cinematic, warm, dark
+// ==========================================================================
+
+.home-video {
+  .home-side-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(180, 80, 20, 0.15) 0%, transparent 70%),
+      radial-gradient(ellipse at 70% 80%, rgba(120, 40, 10, 0.1) 0%, transparent 60%),
+      linear-gradient(160deg, #0d0a08 0%, #1a1410 40%, #0f0c0a 100%);
+  }
+
+  // Film grain overlay
+  .home-side-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+  }
+
+  .home-side-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0.3) 0%, transparent 50%, rgba(0,0,0,0.1) 100%);
+    transition: background 0.5s ease;
+  }
+
+  .home-side-icon i {
+    color: #e8a87c;
+    text-shadow: 0 0 40px rgba(232, 168, 124, 0.3);
+  }
+
+  .home-side-title {
+    background: linear-gradient(180deg, #fff 20%, #e8a87c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .home-side-subtitle {
+    color: rgba(232, 168, 124, 0.6);
+  }
+
+  .home-cta-arrow {
+    background: rgba(232, 168, 124, 0.12);
+    border-color: rgba(232, 168, 124, 0.25);
+    color: #e8a87c;
+  }
+
+  .home-side-edge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 10%, rgba(255,255,255,0.06) 50%, transparent 90%);
+  }
+
+  // Decorative film strip accents
+  &::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 8%;
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(232, 168, 124, 0.06);
+    border-radius: 2px;
+    transform: rotate(12deg);
+    pointer-events: none;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 20%;
+    left: 15%;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(232, 168, 124, 0.04);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+}
+
+// Hover effects for video
+.home-split.hover-video .home-video {
+  .home-side-overlay {
+    background: linear-gradient(90deg, rgba(0,0,0,0.15) 0%, transparent 50%, rgba(0,0,0,0) 100%);
+  }
+
+  .home-side-icon i {
+    text-shadow: 0 0 60px rgba(232, 168, 124, 0.5);
+  }
+
+  .home-cta-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// ==========================================================================
+// AUDIO Side - Oceanic, cool, deep
+// ==========================================================================
+
+.home-audio {
+  .home-side-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 40%, rgba($primary, 0.08) 0%, transparent 65%),
+      radial-gradient(ellipse at 30% 70%, rgba(darken($primary, 20%), 0.06) 0%, transparent 55%),
+      linear-gradient(200deg, #0a0e10 0%, #0c1418 40%, #080c0e 100%);
+  }
+
+  .home-side-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(270deg, rgba(0,0,0,0.3) 0%, transparent 50%, rgba(0,0,0,0.1) 100%);
+    transition: background 0.5s ease;
+  }
+
+  .home-side-icon i {
+    color: $primary;
+    text-shadow: 0 0 40px rgba($primary, 0.3);
+  }
+
+  .home-side-title {
+    background: linear-gradient(180deg, #fff 20%, $primary 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .home-side-subtitle {
+    color: rgba($primary, 0.5);
+  }
+
+  .home-cta-arrow {
+    background: rgba($primary, 0.1);
+    border-color: rgba($primary, 0.2);
+    color: $primary;
+  }
+
+  .home-side-edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 10%, rgba(255,255,255,0.06) 50%, transparent 90%);
+  }
+
+  // Decorative sound wave accents
+  &::before {
+    content: '';
+    position: absolute;
+    top: 18%;
+    right: 10%;
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba($primary, 0.05);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 22%;
+    right: 12%;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba($primary, 0.04);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+}
+
+// Hover effects for audio
+.home-split.hover-audio .home-audio {
+  .home-side-overlay {
+    background: linear-gradient(270deg, rgba(0,0,0,0.15) 0%, transparent 50%, rgba(0,0,0,0) 100%);
+  }
+
+  .home-side-icon i {
+    text-shadow: 0 0 60px rgba($primary, 0.5);
+  }
+
+  .home-cta-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// ==========================================================================
+// Content Elements
+// ==========================================================================
+
+.home-side-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-side:hover .home-side-content {
+  transform: scale(1.03);
+}
+
+.home-side-icon {
+  margin-bottom: 20px;
+
+  i {
+    font-size: 56px;
+    transition: text-shadow 0.5s ease;
+  }
+}
+
+.home-side-title {
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 10px;
+  user-select: none;
+}
+
+.home-side-subtitle {
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  user-select: none;
+}
+
+.home-side-cta {
+  display: flex;
+  justify-content: center;
+}
+
+.home-cta-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s ease;
+
+  .home-audio & {
+    transform: translateX(8px);
+  }
+}
+
+// ==========================================================================
+// Center Divider
+// ==========================================================================
+
+.home-divider {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+// Divider follows the split
+.home-split.hover-video .home-divider {
+  left: 57.5%;
+}
+.home-split.hover-audio .home-divider {
+  left: 42.5%;
+}
+
+.home-divider-line {
+  flex: 1;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 30%, rgba(255,255,255,0.08) 70%, transparent 100%);
+}
+
+.home-divider-or {
+  padding: 12px 0;
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+// ==========================================================================
+// Responsive
+// ==========================================================================
+
+@media (max-width: 768px) {
+  .home-split {
+    flex-direction: column;
+  }
+
+  .home-side-title {
+    font-size: 36px;
+  }
+
+  .home-side-icon i {
+    font-size: 40px;
+  }
+
+  .home-divider {
+    left: 0;
+    right: 0;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+  }
+
+  .home-split.hover-video .home-divider,
+  .home-split.hover-audio .home-divider {
+    left: 0;
+  }
+
+  .home-divider-line {
+    flex: 1;
+    height: 1px;
+    width: auto;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 30%, rgba(255,255,255,0.08) 70%, transparent 100%);
+  }
+
+  .home-divider-or {
+    padding: 0 12px;
+  }
+
+  .home-video .home-side-edge {
+    right: auto;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.06) 50%, transparent 90%);
+  }
+
+  .home-audio .home-side-edge {
+    left: 0;
+    top: 0;
+    bottom: auto;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.06) 50%, transparent 90%);
+  }
+
+  .home-cta-arrow {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,31 @@
+<div>
+  <h1>Podcasts
+    <button class="btn btn-primary pull-right" ng-click="vm.createPodcast()">
+      <i class="ion-plus-round"></i> New Podcast
+    </button>
+  </h1>
+
+  <hr>
+
+  <div class="spinner" ng-show="vm.loading">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+
+  <p ng-if="!vm.loading && !vm.podcasts.length" class="no-episodes-yet">No podcasts yet</p>
+
+  <div class="media-list">
+    <div class="media-list-item audio-admin-item" ng-repeat="podcast in vm.podcasts" ng-click="vm.goToPodcast(podcast)">
+      <div class="audio-admin-cover podcast-admin-cover">
+        <img ng-src="{{podcast.cover_path}}" ng-if="podcast.cover_path" alt="">
+        <div class="audio-admin-cover-placeholder" ng-if="!podcast.cover_path"><i class="ion-mic-a"></i></div>
+      </div>
+      <div class="audio-admin-info">
+        <div class="audio-admin-title">{{podcast.title}}</div>
+        <div class="audio-admin-subtitle" ng-if="podcast.host">by {{podcast.host}}</div>
+        <div class="audio-admin-meta">{{podcast.episodeCount}} episodes</div>
+      </div>
+    </div>
+  </div>
+</div>

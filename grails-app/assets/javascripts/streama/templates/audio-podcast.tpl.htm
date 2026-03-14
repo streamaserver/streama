@@ -1,0 +1,66 @@
+<div class="audio-section">
+
+  <!-- Audio Player Bar -->
+  <div class="audio-player-bar" ng-if="vm.audioPlayer.state.currentTrack" ng-include="'/streama/audio-player-partial.htm'"></div>
+
+  <div class="audio-detail" ng-class="{'has-player': vm.audioPlayer.state.currentTrack}">
+
+    <div class="spinner" ng-show="vm.loading">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+
+    <div ng-if="vm.podcast">
+      <!-- Podcast Header -->
+      <div class="audio-detail-header podcast-header">
+        <div class="audio-detail-cover podcast-detail-cover">
+          <img ng-src="{{vm.podcast.cover_path}}" ng-if="vm.podcast.cover_path" alt="">
+          <div class="audio-card-cover-placeholder large" ng-if="!vm.podcast.cover_path"><i class="ion-mic-a"></i></div>
+        </div>
+        <div class="audio-detail-info">
+          <span class="audio-detail-type">Podcast</span>
+          <h1 class="audio-detail-title">{{vm.podcast.title}}</h1>
+          <div class="audio-detail-meta">
+            <strong ng-if="vm.podcast.host">{{vm.podcast.host}}</strong>
+            <span> &middot; {{vm.podcast.episodes.length}} episodes</span>
+          </div>
+          <p class="audio-detail-description" ng-if="vm.podcast.overview">{{vm.podcast.overview}}</p>
+        </div>
+      </div>
+
+      <!-- Action Bar -->
+      <div class="audio-action-bar">
+        <button class="audio-play-btn-large" ng-click="vm.playLatest()">
+          <i class="ion-ios-play"></i> Latest Episode
+        </button>
+      </div>
+
+      <!-- Episode List -->
+      <div class="audio-tracklist podcast-tracklist">
+        <h3 class="audio-section-title">Episodes</h3>
+        <div class="audio-podcast-episode" ng-repeat="episode in vm.podcast.episodes"
+             ng-click="vm.playEpisode(episode)"
+             ng-class="{'is-playing': vm.isCurrentTrack(episode)}">
+          <div class="audio-podcast-episode-number">
+            <span class="episode-num" ng-if="!vm.isCurrentTrack(episode)">{{episode.trackNumber || $index + 1}}</span>
+            <i class="ion-volume-high" ng-if="vm.isCurrentTrack(episode) && vm.audioPlayer.state.isPlaying"></i>
+          </div>
+          <div class="audio-podcast-episode-info">
+            <div class="audio-podcast-episode-title">{{episode.title}}</div>
+            <div class="audio-podcast-episode-meta">
+              <span ng-if="episode.durationDisplay">{{episode.durationDisplay}}</span>
+            </div>
+          </div>
+          <button class="audio-podcast-play-btn">
+            <i ng-class="vm.isCurrentTrack(episode) && vm.audioPlayer.state.isPlaying ? 'ion-ios-pause' : 'ion-ios-play'"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-top: 40px;">
+      <a ui-sref="audio" class="audio-back-link"><i class="ion-arrow-left-c"></i> Back to Audio</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="audio-player-now-playing">
+  <div class="audio-player-art">
+    <img ng-src="{{vm.audioPlayer.getCoverPath()}}" ng-if="vm.audioPlayer.getCoverPath()" alt="">
+    <div class="audio-player-art-placeholder" ng-if="!vm.audioPlayer.getCoverPath()">
+      <i class="ion-headphone"></i>
+    </div>
+  </div>
+  <div class="audio-player-track-info">
+    <div class="audio-player-track-name">{{vm.audioPlayer.state.currentTrack.title}}</div>
+    <div class="audio-player-track-artist">{{vm.audioPlayer.state.currentTrack.artist}}</div>
+  </div>
+</div>
+
+<div class="audio-player-controls">
+  <div class="audio-player-buttons">
+    <button class="audio-player-btn" ng-class="{'active': vm.audioPlayer.state.isShuffle}" ng-click="vm.audioPlayer.toggleShuffle()">
+      <i class="ion-shuffle"></i>
+    </button>
+    <button class="audio-player-btn" ng-click="vm.audioPlayer.previous()">
+      <i class="ion-ios-skipbackward"></i>
+    </button>
+    <button class="audio-player-btn-main" ng-click="vm.audioPlayer.togglePlay()">
+      <i ng-class="vm.audioPlayer.state.isPlaying ? 'ion-ios-pause' : 'ion-ios-play'"></i>
+    </button>
+    <button class="audio-player-btn" ng-click="vm.audioPlayer.next()">
+      <i class="ion-ios-skipforward"></i>
+    </button>
+    <button class="audio-player-btn" ng-class="{'active': vm.audioPlayer.state.repeatMode !== 'off'}" ng-click="vm.audioPlayer.toggleRepeat()">
+      <i class="ion-loop"></i>
+    </button>
+  </div>
+  <div class="audio-player-progress">
+    <span class="audio-player-time">{{vm.audioPlayer.formatTime(vm.audioPlayer.state.currentTime)}}</span>
+    <div class="audio-progress-bar" ng-click="vm.audioPlayer.seek($event.offsetX / $event.currentTarget.offsetWidth)">
+      <div class="audio-progress-fill" style="width: {{vm.audioPlayer.getProgress()}}%">
+        <div class="audio-progress-knob"></div>
+      </div>
+    </div>
+    <span class="audio-player-time">{{vm.audioPlayer.formatTime(vm.audioPlayer.state.duration)}}</span>
+  </div>
+</div>
+
+<div class="audio-player-extra">
+  <button class="audio-player-btn">
+    <i class="ion-volume-high"></i>
+  </button>
+  <div class="audio-volume-bar" ng-click="vm.audioPlayer.setVolume($event.offsetX / $event.currentTarget.offsetWidth)">
+    <div class="audio-volume-fill" style="width: {{vm.audioPlayer.state.volume * 100}}%"></div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div>
+  <h1>Artists
+    <button class="btn btn-primary pull-right" ng-click="vm.createArtist()">
+      <i class="ion-plus-round"></i> New Artist
+    </button>
+  </h1>
+
+  <hr>
+
+  <div class="spinner" ng-show="vm.loading">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+
+  <p ng-if="!vm.loading && !vm.artists.length" class="no-episodes-yet">No artists yet</p>
+
+  <div class="media-list">
+    <div class="media-list-item audio-admin-item" ng-repeat="artist in vm.artists" ng-click="vm.goToArtist(artist)">
+      <div class="audio-admin-cover" style="border-radius: 50%;">
+        <img ng-src="{{artist.image_path}}" ng-if="artist.image_path" alt="" style="border-radius: 50%;">
+        <div class="audio-admin-cover-placeholder" style="border-radius: 50%;" ng-if="!artist.image_path"><i class="ion-person"></i></div>
+      </div>
+      <div class="audio-admin-info">
+        <div class="audio-admin-title">{{artist.name}}</div>
+        <div class="audio-admin-meta">{{artist.albumCount}} albums &middot; {{artist.songCount}} songs</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<ul class="breadcrumb">
+  <li><a ui-sref="admin.podcasts">Podcasts</a></li>
+  <li class="active">{{vm.podcast.title}}</li>
+</ul>
+
+<div class="spinner" ng-show="vm.loading">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+
+<div ng-if="vm.podcast">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-11">
+          <h1>{{vm.podcast.title}}</h1>
+        </div>
+        <div class="col-md-1">
+          <div class="btn-group pull-right">
+            <span uib-dropdown>
+              <i class="ion-ios-settings icon-xl" uib-dropdown-toggle></i>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li><a ng-click="vm.deletePodcast()">Delete Podcast</a></li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" ng-model="vm.podcast.title">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>Host</label>
+            <input type="text" class="form-control" ng-model="vm.podcast.host">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button class="btn btn-primary btn-block" ng-click="vm.savePodcast()">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" rows="3" ng-model="vm.podcast.overview"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3>
+        Episodes
+        <button class="btn btn-primary btn-sm" ng-click="vm.addEpisode()"><i class="ion-plus-round"></i> Add Episode</button>
+      </h3>
+
+      <p class="text-muted" style="font-size: 12px; margin-bottom: 12px;" ng-if="vm.podcast.episodes.length">
+        Drag and drop audio files onto any episode to upload, or use the action buttons on hover.
+      </p>
+
+      <div ng-if="!vm.podcast.episodes.length" class="no-episodes-yet">No episodes yet</div>
+
+      <div class="admin-song-list">
+        <admin-song ng-repeat="song in vm.podcast.episodes | orderBy:'-trackNumber'"
+                    song="song"
+                    on-delete="vm.deleteEpisode(song)"
+                    on-update="vm.refreshPodcast()">
+        </admin-song>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <img ng-show="vm.podcast.cover_path" ng-src="{{vm.podcast.cover_path}}" style="width: 100%; border-radius: 8px;"/>
+      <div class="upload-poster" ng-class="{'update-poster': vm.podcast.cover_path}" ng-model="podcastCover"
+           class="btn btn-primary btn-block btn-lg"
+           ngf-change="vm.uploadCover($files)" ngf-select ngf-drop ngf-drag-over-class="dragover">
+        <span class="main-text">Upload Cover</span>
+        <span class="size-info">500x500 px</span>
+        <span ng-show="vm.imageUpload.percentage">{{vm.imageUpload.percentage}}%</span>
+      </div>
+    </div>
+  </div>
+</div>

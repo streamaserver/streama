@@ -41,18 +41,29 @@ class OpensubtitlesService {
   }
 
   def getSubtitles(SubtitlesRequest opensubtitlesRequest) {
+    log.info("=== OpenSubtitles Search Request ===")
+    log.info("Query: '${opensubtitlesRequest.getQuery()}'")
+    log.info("Language: '${opensubtitlesRequest.getSubLanguageId()}'")
+    log.info("Season: '${opensubtitlesRequest.getSeason()}'")
+    log.info("Episode: '${opensubtitlesRequest.getEpisode()}'")
+
     String resourceUrl = buildSearchUrl(
       opensubtitlesRequest.getQuery(),
       opensubtitlesRequest.getSubLanguageId(),
       opensubtitlesRequest.getSeason(),
       opensubtitlesRequest.getEpisode()
     )
+    log.info("Search URL: ${resourceUrl}")
+
     def apiKey = settingsService.getValueForName('opensubtitles_api_key')
     if (!apiKey) {
+      log.warn("No API key configured!")
       return ResponseEntity.status(400).body([error: true, message: "OpenSubtitles API key required. The old API was discontinued in 2024. " +
         "Get your free API key at opensubtitles.com/consumers and enter it in Admin → Settings → 'OpenSubtitles API Key'"])
     }
+    log.info("API Key configured: ${apiKey?.take(8)}...")
     def response = sendSearchRequest(resourceUrl, apiKey)
+    log.info("=== Search Complete ===")
     return response
   }
 
@@ -233,11 +244,18 @@ class OpensubtitlesService {
    * Sends search request to OpenSubtitles API v1
    */
   def sendSearchRequest(String url, String apiKey) {
+    log.info("Sending request to: ${url}")
     def headers = createHeaders(apiKey)
     HttpEntity<String> entity = new HttpEntity<String>(headers)
     def response = ResponseEntity.status(400).body([error: true, message: "OpenSubtitles API problems"])
 
     try {
+      // First, make the request with String to see raw response for debugging
+      def rawResponse = restTemplate.exchange(url, HttpMethod.GET, entity, String.class)
+      log.info("Raw API response status: ${rawResponse.statusCodeValue}")
+      log.info("Raw API response body: ${rawResponse.body?.take(2000)}")
+
+      // Now make the typed request
       def apiResponse = restTemplate.exchange(url, HttpMethod.GET, entity, OpenSubtitlesApiResponse.class)
 
       // Handle 301 redirect - OpenSubtitles API reorders query params and returns 301
@@ -256,16 +274,23 @@ class OpensubtitlesService {
         }
       }
 
+      log.info("API Response status: ${apiResponse.statusCodeValue}")
+      log.info("API Response body class: ${apiResponse.body?.getClass()}")
+      log.info("API Response totalCount: ${apiResponse.body?.totalCount}")
+      log.info("API Response totalPages: ${apiResponse.body?.totalPages}")
+      log.info("API Response data size: ${apiResponse.body?.data?.size()}")
+
       if (apiResponse.statusCodeValue == 200) {
         // Convert to legacy format for compatibility with frontend
         def subtitles = apiResponse.body?.data ? convertToLegacyFormat(apiResponse.body.data) : []
+        log.info("Converted ${apiResponse.body?.data?.size()} subtitles to ${subtitles.size()} legacy format entries")
         response = ResponseEntity.status(200).body(subtitles)
       } else {
         log.warn("OpenSubtitles API returned status ${apiResponse.statusCodeValue}")
         response = ResponseEntity.status(apiResponse.statusCodeValue).body([])
       }
     } catch (org.springframework.web.client.HttpClientErrorException e) {
-      log.error("OpenSubtitles API HTTP error: ${e.message}", e)
+      log.error("OpenSubtitles API HTTP error: ${e.statusCode.value()} - ${e.responseBodyAsString}", e)
       if (e.statusCode.value() == 401) {
         response = ResponseEntity.status(401).body([error: true, message: "Invalid OpenSubtitles API key. Please check your API key in admin settings."])
       } else if (e.statusCode.value() == 429) {
@@ -284,9 +309,14 @@ class OpensubtitlesService {
    * Converts new API v1 response format to legacy format for frontend compatibility
    */
   private List<SubtitlesResponse> convertToLegacyFormat(List<OpenSubtitlesSubtitle> subtitles) {
-    return subtitles.collect { sub ->
+    log.info("Converting ${subtitles?.size()} subtitles to legacy format")
+    def converted = subtitles.collect { sub ->
+      log.info("Processing subtitle: id=${sub.id}, type=${sub.type}")
       def attrs = sub.attributes
+      log.info("  Attributes: language=${attrs?.language}, release=${attrs?.release}, format=${attrs?.format}, downloadCount=${attrs?.downloadCount}")
+      log.info("  Files count: ${attrs?.files?.size()}")
       def file = attrs.files?.getAt(0)
+      log.info("  First file: fileId=${file?.fileId}, fileName=${file?.fileName}")
       // Determine format from filename extension if not provided
       def fileName = file?.fileName ?: attrs.release ?: "Unknown"
       def format = attrs.format?.toLowerCase()
@@ -294,6 +324,7 @@ class OpensubtitlesService {
         def ext = fileName.tokenize('.')[-1]?.toLowerCase()
         format = ext ?: "srt"
       }
+      log.info("  Resolved: fileName=${fileName}, format=${format}")
       new SubtitlesResponse(
         subFileName: fileName,
         subDownloadLink: file?.fileId?.toString() ?: "", // Store file_id as download link for the download step
@@ -301,11 +332,19 @@ class OpensubtitlesService {
         subDownloadsCnt: attrs.downloadCount ?: 0,
         subFormat: format ?: "srt"
       )
-    }.findAll { response ->
+    }
+    log.info("After collect: ${converted.size()} items")
+    def filtered = converted.findAll { response ->
       // Filter to only SRT/VTT after conversion (most compatible formats)
       def fmt = response.subFormat?.toLowerCase()
-      fmt == "srt" || fmt == "vtt" || fmt == "sub" || !fmt
+      def keep = fmt == "srt" || fmt == "vtt" || fmt == "sub" || !fmt
+      if (!keep) {
+        log.info("Filtering out subtitle with format: ${fmt}")
+      }
+      return keep
     }.sort { -(it.subDownloadsCnt ?: 0) }
+    log.info("After filtering: ${filtered.size()} items")
+    return filtered
   }
 
   /**

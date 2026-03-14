@@ -14,7 +14,7 @@ buildscript {
     }
 }
 
-version "1.11.1"
+version "2.0"
 group "streama"
 
 
@@ -82,6 +82,8 @@ dependencies {
     compile 'org.grails.plugins:spring-security-core:3.0.4'
     compile "org.grails.plugins:mail:3.0.0"
     compile "org.grails.plugins:grails-spring-websocket:2.4.1"
+    compile "io.projectreactor:reactor-bus:2.0.8.RELEASE"
+    compile "io.projectreactor:reactor-core:2.0.8.RELEASE"
     compile "eu.bitwalker:UserAgentUtils:1.21"
     compile "org.grails.plugins:spring-security-ldap:3.0.2"
 
@@ -152,10 +154,27 @@ assets {
     minifyCss = true
 }
 
+// Fix GSP/GSON precompilation: add compiled domain classes to compiler classpath
+compileGroovyPages {
+    classpath += files("${buildDir}/classes/groovy/main")
+    dependsOn compileGroovy
+}
+compileGsonViews {
+    classpath += files("${buildDir}/classes/groovy/main")
+    dependsOn compileGroovy
+}
+
+
+// Set main class explicitly - findMainClass gets confused by GSON view classes
+springBoot {
+    mainClass = 'streama.Application'
+}
+
 
 bootRun {
     // local.config.location is just a random name. You can use yours.
     jvmArgs = ['-Dlocal.config.location=app-config.yml', '-Dlocal.config.regex=CustomRegex.yml']
+    main = 'streama.Application'
 
     tasks.withType(JavaExec).each { task ->
     	task.systemProperties System.properties

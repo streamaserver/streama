@@ -9,32 +9,57 @@
 
 
   > .nav{
-    width: 300px;
-    background: rgba(0, 0, 0, 0.15);
-    border-right: 1px solid rgba(255, 255, 255, 0.11);
-    margin-top: 0.65em;
+    width: 220px;
+    background: rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 0;
     @include flex(none);
+    overflow-y: auto;
 
     ul{
-      padding: 0;
+      padding: 8px 0;
 
       li{
         list-style: none;
-        font-size: 18px;
-        font-weight: 300;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+        font-size: 14px;
+        font-weight: 400;
 
         a{
-          color: white;
+          color: rgba(255, 255, 255, 0.7);
           display: block;
-          padding: 8px 15px;
+          padding: 7px 18px;
           text-decoration: none;
+          transition: background 0.1s ease, color 0.1s ease;
         }
 
-        &:hover a,
+        &:hover a{
+          background: rgba(255, 255, 255, 0.05);
+          color: white;
+        }
+
         &.active a{
           background: $secondary;
           color: white;
+          font-weight: 500;
+        }
+
+        &.admin-nav-section-label {
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          color: rgba(255, 255, 255, 0.45);
+          padding: 6px 18px;
+          margin-top: 6px;
+          cursor: default;
+          background: rgba(255, 255, 255, 0.03);
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+
+          &:first-child {
+            margin-top: 0;
+            border-top: none;
+          }
         }
 
         ul li{

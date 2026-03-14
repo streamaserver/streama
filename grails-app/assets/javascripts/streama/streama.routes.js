@@ -6,6 +6,15 @@ angular.module('streama').config(function ($stateProvider) {
 	$stateProvider
 
 		//BASE ROUTES
+		.state('home', {
+			url: '/home',
+			templateUrl: '/streama/home.htm',
+			controller: 'homeCtrl as vm',
+			resolve: {
+				currentUser: resolveCurrentUser
+			}
+		})
+
 		.state('dash', {
 			url: '/dash?genreId?mediaModal?mediaType?dashType',
 			templateUrl: '/streama/dash.htm',
@@ -43,6 +52,53 @@ angular.module('streama').config(function ($stateProvider) {
 			url: '/help',
 			templateUrl: '/streama/help.htm',
 			controller: 'helpCtrl'
+		})
+
+
+		// AUDIO ROUTES
+		.state('audio', {
+			url: '/audio',
+			templateUrl: '/streama/audio-browse.htm',
+			controller: 'audioBrowseCtrl as vm',
+			resolve: {
+				currentUser: resolveCurrentUser
+			}
+		})
+
+		.state('audioArtist', {
+			url: '/audio/artist/:artistId',
+			templateUrl: '/streama/audio-artist.htm',
+			controller: 'audioArtistCtrl as vm',
+			resolve: {
+				currentUser: resolveCurrentUser
+			}
+		})
+
+		.state('audioAlbum', {
+			url: '/audio/album/:albumId',
+			templateUrl: '/streama/audio-album.htm',
+			controller: 'audioAlbumCtrl as vm',
+			resolve: {
+				currentUser: resolveCurrentUser
+			}
+		})
+
+		.state('audioPodcast', {
+			url: '/audio/podcast/:podcastId',
+			templateUrl: '/streama/audio-podcast.htm',
+			controller: 'audioPodcastCtrl as vm',
+			resolve: {
+				currentUser: resolveCurrentUser
+			}
+		})
+
+		.state('audioPlaylist', {
+			url: '/audio/playlist/:playlistId',
+			templateUrl: '/streama/audio-playlist.htm',
+			controller: 'audioPlaylistCtrl as vm',
+			resolve: {
+				currentUser: resolveCurrentUser
+			}
 		})
 
 
@@ -116,6 +172,41 @@ angular.module('streama').config(function ($stateProvider) {
       templateUrl: '/streama/admin-genres.htm',
       controller: 'adminGenresCtrl',
       controllerAs: "vm"
+    })
+    .state('admin.artists', {
+      url: '/artists',
+      templateUrl: '/streama/admin-artists.htm',
+      controller: 'adminArtistsCtrl as vm'
+    })
+    .state('admin.artist', {
+      url: '/artist/:artistId',
+      templateUrl: '/streama/admin-artist.htm',
+      controller: 'adminArtistCtrl as vm'
+    })
+    .state('admin.albums', {
+      url: '/albums',
+      templateUrl: '/streama/admin-albums.htm',
+      controller: 'adminAlbumsCtrl as vm'
+    })
+    .state('admin.album', {
+      url: '/album/:albumId',
+      templateUrl: '/streama/admin-album.htm',
+      controller: 'adminAlbumCtrl as vm'
+    })
+    .state('admin.podcasts', {
+      url: '/podcasts',
+      templateUrl: '/streama/admin-podcasts.htm',
+      controller: 'adminPodcastsCtrl as vm'
+    })
+    .state('admin.podcast', {
+      url: '/podcast/:podcastId',
+      templateUrl: '/streama/admin-podcast.htm',
+      controller: 'adminPodcastCtrl as vm'
+    })
+    .state('admin.playlists', {
+      url: '/playlists',
+      templateUrl: '/streama/admin-playlists.htm',
+      controller: 'adminPlaylistsCtrl as vm'
     })
     .state('admin.transcoding', {
       url: '/transcoding',
@@ -194,7 +285,7 @@ angular.module('streama').config(function ($stateProvider) {
 				$rootScope.currentUser = data;
 				return data;
 			} else {
-				$state.go('dash');
+				$state.go('home');
 			}
 		});
 	}
@@ -209,7 +300,7 @@ angular.module('streama').config(function ($stateProvider) {
 				$rootScope.currentUser = data;
 				return data;
 			} else {
-				$state.go('dash');
+				$state.go('home');
 			}
 		});
 	}

@@ -34,7 +34,7 @@ angular.module('streama', [
 
 
 angular.module('streama').config(function ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/dash');
+  $urlRouterProvider.otherwise('/home');
 });
 
 

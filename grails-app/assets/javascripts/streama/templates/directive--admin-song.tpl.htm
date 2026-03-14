@@ -1,0 +1,69 @@
+<div class="admin-song-item"
+     ng-class="{'no-files': !song.hasFiles, 'uploading': uploadStatus.percentage != null}"
+     ngf-drop ngf-drag-over-class="dragover-upload" ngf-change="upload($files)">
+
+  <!-- Upload overlay (drag & drop + progress) -->
+  <div class="upload-overlay" ng-class="{'visible': uploadStatus.percentage != null}">
+    <span class="hint" ng-show="uploadStatus.percentage == null"><i class="ion-upload"></i> Drop audio file here</span>
+    <span class="percentage" ng-show="uploadStatus.percentage != null && uploadStatus.percentage < 100">{{uploadStatus.percentage}}%</span>
+    <span class="processing" ng-show="uploadStatus.percentage == 100">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </span>
+  </div>
+
+  <!-- Song row -->
+  <div class="admin-song-row">
+    <div class="admin-song-number">{{song.trackNumber || '-'}}</div>
+
+    <div class="admin-song-info" ng-if="!editing">
+      <div class="admin-song-title">{{song.title}}</div>
+      <div class="admin-song-artist" ng-if="song.artist">{{song.artist.name}}</div>
+    </div>
+
+    <!-- Inline edit -->
+    <div class="admin-song-info admin-song-edit" ng-if="editing">
+      <input type="text" class="form-control input-sm" ng-model="song.title" placeholder="Title">
+      <input type="number" class="form-control input-sm" ng-model="song.duration" placeholder="Duration (seconds)" style="width: 140px;">
+      <button class="btn btn-success btn-xs" ng-click="saveSong()">Save</button>
+      <button class="btn btn-default btn-xs" ng-click="toggleEdit()">Cancel</button>
+    </div>
+
+    <div class="admin-song-duration">
+      {{song.durationDisplay || '--:--'}}
+    </div>
+
+    <div class="admin-song-file-status">
+      <span ng-if="song.hasFiles" class="file-ok"><i class="ion-checkmark-circled"></i></span>
+      <span ng-if="!song.hasFiles" class="file-missing"><i class="ion-alert-circled"></i> No file</span>
+    </div>
+
+    <div class="admin-song-files" ng-if="song.files.length">
+      <span class="admin-song-file-tag" ng-repeat="file in song.files">
+        {{file.originalFilename || file.extension || 'file'}}
+        <i class="ion-close-round" ng-click="$event.stopPropagation(); removeFile(file)"></i>
+      </span>
+    </div>
+
+    <div class="admin-song-actions">
+      <button class="btn btn-default btn-xs" ngf-select ngf-change="upload($files)" title="Upload file">
+        <i class="ion-upload"></i>
+      </button>
+      <button class="btn btn-default btn-xs" ng-click="openFileBrowser()" title="Browse uploaded files">
+        <i class="ion-folder"></i>
+      </button>
+      <button class="btn btn-default btn-xs" ng-click="addLocalFile()" title="Link local file">
+        <i class="ion-link"></i>
+      </button>
+      <button class="btn btn-default btn-xs" ng-click="toggleEdit()" title="Edit">
+        <i class="ion-edit"></i>
+      </button>
+      <button class="btn btn-danger btn-xs" ng-click="deleteSong()" title="Delete">
+        <i class="ion-trash-b"></i>
+      </button>
+    </div>
+  </div>
+</div>

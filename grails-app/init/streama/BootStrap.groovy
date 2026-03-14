@@ -10,7 +10,7 @@ class BootStrap {
         marshallerService.init()
         if(!Role.findByAuthority("ROLE_ADMIN")){  //this assumes that first-time init is done
           defaultDataService.createDefaultRoles()
-          defaultDataService.createDefaultUsers()
+          // No longer auto-creating default admin - setup page handles initial user creation
         }
 
         migrationService.importMovieDbGenres()
