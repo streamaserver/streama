@@ -13,6 +13,11 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
     $scope.addToWatchlist = addToWatchlist;
     $scope.removeFromWatchlist = removeFromWatchlist;
     $scope.markAsUnviewed = markAsUnviewed;
+    $scope.getShareUrl = function (media) {
+      if (!media) return '#';
+      var baseUrl = window.location.origin + window.contextPath;
+      return baseUrl + '/share/page?mediaType=' + $scope.mediaType + '&id=' + media.id;
+    };
 
     if(config.mediaObject) {
       $scope.media = config.mediaObject;

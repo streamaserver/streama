@@ -37,6 +37,12 @@
     </div>
   </div>
 
+  <div ng-if="!isApiMovie && (mediaType == 'tvShow' || mediaType == 'movie')" style="margin-bottom: 8px;">
+    <a href="{{getShareUrl(media)}}" target="_blank" class="share-link-btn">
+      <i class="ion-android-share-alt"></i> Share
+    </a>
+  </div>
+
   <hr>
 
   <div class="spinner big" ng-show="!media">

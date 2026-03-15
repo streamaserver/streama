@@ -1,3 +1,21 @@
+.share-link-btn {
+  display: inline-block;
+  font-size: 13px;
+  color: $primary;
+  padding: 5px 14px;
+  border: 1px solid rgba($primary, 0.3);
+  border-radius: 4px;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba($primary, 0.1);
+    color: lighten($primary, 10%);
+    text-decoration: none;
+  }
+
+  i { margin-right: 4px; }
+}
+
 .modal-dialog{
   .modal-header{
     border-color: rgba(255, 255, 255, 0.25);

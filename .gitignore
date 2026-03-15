@@ -60,3 +60,4 @@ out
 CLAUDE.md
 *.mv.db
 *.trace.db
+app-config.yml
