@@ -22,7 +22,7 @@ grails.plugin.springsecurity.rememberMe.cookieName = 'streama_remember_me'
 grails.plugin.springsecurity.rememberMe.alwaysRemember = true
 grails.plugin.springsecurity.rememberMe.key = 'streama_Rocks123!!RememberMe'
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = "/user/loginTarget"
-grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
+grails.plugin.springsecurity.successHandler.alwaysUseDefault = false
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
@@ -123,6 +123,9 @@ grails.plugin.springsecurity.filterChain.chainMap = [
   [pattern: '/**/css/**', filters: 'none'],
   [pattern: '/**/images/**', filters: 'none'],
   [pattern: '/**/favicon.ico', filters: 'none'],
+  [pattern: '/share/page', filters: 'none'],
+  [pattern: '/share/page.*', filters: 'none'],
+  [pattern: '/setup/**', filters: 'none'],
   [pattern: '/**', filters: 'JOINED_FILTERS']
 ]
 

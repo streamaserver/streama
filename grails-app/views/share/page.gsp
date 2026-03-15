@@ -312,9 +312,14 @@
 
       var ctaHtml = '';
       if (data.isLoggedIn) {
-        var watchUrl = CONTEXT_PATH + '/#/dash?mediaModal=' + data.id + '&mediaType=' + data.mediaType;
-        ctaHtml = '<a href="' + watchUrl + '" class="share-btn share-btn-primary">' +
-          '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Watch Now</a>';
+        var videoId = isShow ? data.firstEpisodeId : data.id;
+        if (videoId) {
+          var watchUrl = CONTEXT_PATH + '/#!/player/' + videoId;
+          ctaHtml = '<a href="' + watchUrl + '" class="share-btn share-btn-primary">' +
+            '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Watch Now</a>';
+        } else {
+          ctaHtml = '<span class="share-btn share-btn-secondary" style="cursor:default;opacity:0.5">No episodes available yet</span>';
+        }
       } else {
         ctaHtml = '<a href="' + CONTEXT_PATH + '/login/auth" class="share-btn share-btn-primary">' +
           'Log In to Watch</a>' +

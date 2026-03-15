@@ -41,6 +41,7 @@ class ShareController {
           imdb_id: tvShow.imdb_id,
           genre: tvShow.genre?.collect { [name: it.name] },
           original_language: tvShow.original_language,
+          firstEpisodeId: tvShow.getFirstEpisode()?.id,
           seasonCount: seasons.size(),
           episodeCount: episodes.size(),
           seasons: seasons.collect { seasonNum ->
