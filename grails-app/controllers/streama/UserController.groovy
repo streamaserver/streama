@@ -252,7 +252,11 @@ class UserController {
 
   def loginTarget() {
     userActivityService.createActivityEntry(request, 'login')
-    redirect(uri: '/#/home')
+    // Redirect to / which preserves the current Angular hash route.
+    // The Angular app's $urlRouterProvider.otherwise('/home') handles
+    // fresh logins (no hash fragment). This avoids bouncing users away
+    // from their current page on remember-me re-authentication.
+    redirect(uri: '/')
   }
 
 }
