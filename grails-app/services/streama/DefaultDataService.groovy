@@ -312,6 +312,17 @@ class DefaultDataService {
           validationRequired: false
         ],
         [
+          settingsKey: 'Enable Music / Audio Streaming',
+          name: 'music_enabled',
+          description: 'Enable the music and audio streaming section. When enabled, the "Audio" link appears in navigation, ' +
+            'the admin panel shows audio management (Artists, Albums, Podcasts, Playlists), and users see a split-screen ' +
+            'home page to choose between Video and Audio after login. When disabled, Streama works as a video-only platform.',
+          settingsType: 'boolean',
+          value: 'false',
+          required: false,
+          validationRequired: false
+        ],
+        [
           settingsKey: 'FFprobe Path',
           name: 'ffprobe_path',
           description: 'Path to FFprobe executable (comes with FFmpeg). Leave empty for auto-detection. ' +

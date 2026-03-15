@@ -26,17 +26,17 @@
       </li>
 
       <!-- Audio -->
-      <li class="admin-nav-section-label" ng-if="$root.currentUser.isContentManager">Audio</li>
-      <li ng-class="{'active': (isCurrentState('admin.artists') || isCurrentState('admin.artist'))}" ng-if="$root.currentUser.isContentManager">
+      <li class="admin-nav-section-label" ng-if="$root.currentUser.isContentManager && $root.getSetting('music_enabled').parsedValue">Audio</li>
+      <li ng-class="{'active': (isCurrentState('admin.artists') || isCurrentState('admin.artist'))}" ng-if="$root.currentUser.isContentManager && $root.getSetting('music_enabled').parsedValue">
         <a ui-sref="admin.artists">Artists</a>
       </li>
-      <li ng-class="{'active': (isCurrentState('admin.albums') || isCurrentState('admin.album'))}" ng-if="$root.currentUser.isContentManager">
+      <li ng-class="{'active': (isCurrentState('admin.albums') || isCurrentState('admin.album'))}" ng-if="$root.currentUser.isContentManager && $root.getSetting('music_enabled').parsedValue">
         <a ui-sref="admin.albums">Albums</a>
       </li>
-      <li ng-class="{'active': (isCurrentState('admin.podcasts') || isCurrentState('admin.podcast'))}" ng-if="$root.currentUser.isContentManager">
+      <li ng-class="{'active': (isCurrentState('admin.podcasts') || isCurrentState('admin.podcast'))}" ng-if="$root.currentUser.isContentManager && $root.getSetting('music_enabled').parsedValue">
         <a ui-sref="admin.podcasts">Podcasts</a>
       </li>
-      <li ng-class="{'active': isCurrentState('admin.playlists')}" ng-if="$root.currentUser.isContentManager">
+      <li ng-class="{'active': isCurrentState('admin.playlists')}" ng-if="$root.currentUser.isContentManager && $root.getSetting('music_enabled').parsedValue">
         <a ui-sref="admin.playlists">Playlists</a>
       </li>
 

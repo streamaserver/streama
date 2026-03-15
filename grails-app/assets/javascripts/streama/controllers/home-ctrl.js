@@ -1,10 +1,17 @@
 'use strict';
 
 angular.module('streama').controller('homeCtrl',
-  function ($scope, $state, localStorageService) {
+  function ($scope, $state, $rootScope, localStorageService) {
     var vm = this;
 
     vm.hoverSide = null;
+
+    // If music is disabled, skip split screen and go straight to dash
+    var musicSetting = $rootScope.getSetting('music_enabled');
+    if (!musicSetting || !musicSetting.parsedValue) {
+      $state.go('dash');
+      return;
+    }
 
     vm.setHover = function (side) {
       vm.hoverSide = side;
@@ -23,9 +30,4 @@ angular.module('streama').controller('homeCtrl',
       localStorageService.set('lastMode', 'audio');
       $state.go('audio');
     };
-
-    // If user has a preference, could auto-redirect (optional)
-    // var lastMode = localStorageService.get('lastMode');
-    // if (lastMode === 'video') { $state.go('dash'); return; }
-    // if (lastMode === 'audio') { $state.go('audio'); return; }
   });

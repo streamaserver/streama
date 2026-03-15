@@ -25,8 +25,8 @@
         <li ng-if="$root.settings && !$root.getSetting('hide-dash-sections').parsedValue && $root.getSetting('hide-mylist-button').parsedValue != true">
           <a ng-click="changeDashType('watchlist')" ng-class="{active: (isDashType('watchlist'))}">{{'DASHBOARD.MY_LIST' | translate}}</a>
         </li>
-        <li>
-          <a ui-sref="audio" ng-class="{active: isCurrentState('audio') || isCurrentState('audioAlbum') || isCurrentState('audioPodcast') || isCurrentState('audioPlaylist')}">
+        <li ng-if="$root.getSetting('music_enabled').parsedValue">
+          <a ui-sref="audio" ng-class="{active: isCurrentState('audio') || isCurrentState('audioAlbum') || isCurrentState('audioPodcast') || isCurrentState('audioPlaylist') || isCurrentState('audioArtist')}">
             <i class="ion-headphone"></i> Audio
           </a>
         </li>
