@@ -11,8 +11,51 @@ class SubtitlesController {
   static responseFormats = ['json', 'xml']
 
   def opensubtitlesService
+  def embeddedSubtitlesService
 
   def index() {}
+
+  def probeEmbedded() {
+    def video = Video.findById(params.videoId)
+    if (!video) {
+      response.status = NOT_FOUND.value()
+      respond([error: true, message: "Video not found"])
+      return
+    }
+    def result = embeddedSubtitlesService.listEmbeddedStreams(video)
+    if (result.error) {
+      response.status = BAD_REQUEST.value()
+    }
+    respond(result)
+  }
+
+  @Transactional
+  def extractEmbedded() {
+    def video = Video.findById(params.videoId)
+    if (!video) {
+      response.status = NOT_FOUND.value()
+      respond([error: true, message: "Video not found"])
+      return
+    }
+
+    List<Integer> streamIndexes = null
+    def raw = params.list('streamIndexes')
+    if (raw) {
+      try {
+        streamIndexes = raw.collect { Integer.parseInt(it.toString()) }
+      } catch (NumberFormatException e) {
+        response.status = BAD_REQUEST.value()
+        respond([error: true, message: "Invalid streamIndexes"])
+        return
+      }
+    }
+
+    def result = embeddedSubtitlesService.extractFromVideo(video, streamIndexes)
+    if (result.error) {
+      response.status = BAD_REQUEST.value()
+    }
+    respond(result)
+  }
 
   def get() {
     log.info("=== SubtitlesController.get() called ===")

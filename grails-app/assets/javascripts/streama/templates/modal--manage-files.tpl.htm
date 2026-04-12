@@ -123,15 +123,18 @@
       </tbody>
     </table>
 
-    <div ng-show="video.subtitles.length">
+    <div>
       <br/>
       <h4>Subtitles
-        <button class="btn btn-xs btn-info" ng-click="autodetectAllLabels()" title="Autodetect language for all subtitles">
+        <button ng-show="video.subtitles.length" class="btn btn-xs btn-info" ng-click="autodetectAllLabels()" title="Autodetect language for all subtitles">
           <i class="ion-wand"></i> Autodetect All
+        </button>
+        <button ng-show="video.videoFiles.length" class="btn btn-xs btn-primary" ng-click="extractEmbeddedSubtitles()" title="Extract embedded subtitles from the video file">
+          <i class="ion-android-download"></i> Extract from Video
         </button>
       </h4>
 
-      <table class="table table-striped" style="font-size: 14px;">
+      <table class="table table-striped" style="font-size: 14px;" ng-show="video.subtitles.length">
         <thead>
         <tr>
           <th>ID</th>

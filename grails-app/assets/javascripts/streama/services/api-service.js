@@ -223,6 +223,12 @@ angular.module('streama').factory('apiService', function ($http, $rootScope, con
       refreshSubtitles: function (videoId) {
         return $http.get('subtitles/getVideoSubtitles.json', {params: {videoId: videoId}});
       },
+      probeEmbedded: function (videoId) {
+        return $http.get('subtitles/probeEmbedded.json', {params: {videoId: videoId}});
+      },
+      extractEmbedded: function (videoId, streamIndexes) {
+        return $http.get('subtitles/extractEmbedded.json', {params: {videoId: videoId, streamIndexes: streamIndexes}});
+      },
     },
 
     episode: {

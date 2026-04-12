@@ -199,6 +199,17 @@ angular.module('streama').controller('modalFileCtrl', [
       modalService.openSubtitlesManagerModal(video);
     };
 
+    $scope.extractEmbeddedSubtitles = function () {
+      modalService.extractEmbeddedSubtitlesModal($scope.video, function (result) {
+        if (result && result.extracted > 0) {
+          apiService.subtitle.refreshSubtitles($scope.video.id).then(function (res) {
+            $scope.video.subtitles = res.data || [];
+            $scope.video.hasFiles = true;
+          });
+        }
+      });
+    };
+
     function generateDownloadUrl(id) {
       var loc = window.location.origin;
       return loc + '/file/serve/' + id;

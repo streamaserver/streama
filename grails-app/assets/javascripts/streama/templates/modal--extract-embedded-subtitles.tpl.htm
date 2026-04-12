@@ -1,0 +1,72 @@
+<div class="modal-body">
+  <legend>Extract embedded subtitles from "{{video.name || video.title}}"</legend>
+
+  <div ng-if="loading" class="text-center" style="padding: 20px;">
+    <i class="ion-load-c spin icon-xl"></i>
+    <p>Probing video file for embedded subtitle tracks...</p>
+  </div>
+
+  <div ng-if="!loading && loadError" class="alert alert-danger">
+    {{loadError}}
+  </div>
+
+  <div ng-if="!loading && !loadError && streams.length === 0" class="alert alert-info">
+    No embedded subtitle tracks were found in this video file.
+  </div>
+
+  <div ng-if="!loading && !loadError && streams.length > 0">
+    <p class="text-muted">
+      Select which tracks to extract. Each one will be converted to WebVTT and
+      added to the video's downloadable subtitles.
+    </p>
+
+    <div style="margin-bottom: 10px;">
+      <button class="btn btn-xs btn-default" ng-click="selectAll(true)">Select all extractable</button>
+      <button class="btn btn-xs btn-default" ng-click="selectAll(false)">Clear selection</button>
+    </div>
+
+    <table class="table table-striped" style="font-size: 14px;">
+      <thead>
+      <tr>
+        <th style="width: 36px;"></th>
+        <th>#</th>
+        <th>Language</th>
+        <th>Label</th>
+        <th>Codec</th>
+        <th>Flags</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="stream in streams" ng-class="{'text-muted': !stream.extractable}">
+        <td>
+          <input type="checkbox" ng-model="stream._selected" ng-disabled="!stream.extractable"/>
+        </td>
+        <td>{{stream.index}}</td>
+        <td>{{stream.language}}</td>
+        <td>
+          {{stream.label}}
+          <div ng-if="!stream.extractable" class="text-danger" style="font-size: 11px;">
+            {{stream.reason}}
+          </div>
+        </td>
+        <td><code>{{stream.codec}}</code></td>
+        <td>
+          <span ng-if="stream.default_" class="label label-primary">default</span>
+          <span ng-if="stream.forced" class="label label-warning">forced</span>
+          <span ng-if="stream.hearing_impaired" class="label label-info">SDH</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-primary"
+          ng-click="extract()"
+          ng-disabled="extracting || selectedCount() === 0">
+    <i ng-if="extracting" class="ion-load-c spin"></i>
+    {{extracting ? 'Extracting...' : 'Extract ' + selectedCount() + ' track(s)'}}
+  </button>
+</div>

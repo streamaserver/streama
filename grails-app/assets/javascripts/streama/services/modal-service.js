@@ -16,6 +16,7 @@ function modalService($uibModal, $state) {
 		userInviteModal: userInviteModal,
 		fileManagerModal: fileManagerModal,
     openSubtitlesManagerModal: openSubtitlesManagerModal,
+    extractEmbeddedSubtitlesModal: extractEmbeddedSubtitlesModal,
 		newReleaseModal: newReleaseModal,
 		mediaDetailModal: mediaDetailModal,
 		openPlaybackOptions: openPlaybackOptions,
@@ -226,6 +227,25 @@ function modalService($uibModal, $state) {
     modalInstance.result.then(function (data) {
       (callback || angular.noop)(data);
     });
+  }
+
+  function extractEmbeddedSubtitlesModal (video, callback) {
+    var modalInstance = $uibModal.open({
+      templateUrl: '/streama/modal--extract-embedded-subtitles.htm',
+      controller: 'modalExtractEmbeddedSubtitlesCtrl',
+      size: 'lg',
+      backdrop: 'static',
+      keyboard: false,
+      resolve: {
+        video: function () {
+          return video;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (data) {
+      (callback || angular.noop)(data);
+    }, function () {});
   }
 
 	function newReleaseModal (media, type, episodes, callback) {
