@@ -32,7 +32,6 @@ angular.module('streama').controller('adminVideosCtrl', ['$scope', 'apiService',
 	};
 
 	$scope.alreadyAdded = function (movie) {
-		console.log('%c movie', 'color: deeppink; font-weight: bold; text-shadow: 0 0 5px deeppink;', movie);
 		return movie.id && _.find($scope.movies, {apiId: movie.id.toString()});
 	};
 
