@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('streama').controller('modalExtractEmbeddedSubtitlesCtrl', [
-  '$scope', '$uibModalInstance', 'apiService', 'video',
-  function ($scope, $uibModalInstance, apiService, video) {
+  '$scope', '$uibModalInstance', 'apiService', 'video', 'fileId',
+  function ($scope, $uibModalInstance, apiService, video, fileId) {
     $scope.video = video;
     $scope.streams = [];
     $scope.loading = true;
     $scope.loadError = null;
     $scope.extracting = false;
 
-    apiService.subtitle.probeEmbedded(video.id).then(function (response) {
+    apiService.subtitle.probeEmbedded(video.id, fileId).then(function (response) {
       var data = response.data || {};
       $scope.streams = (data.streams || []).map(function (s) {
         s._selected = !!s.extractable;
@@ -44,7 +44,7 @@ angular.module('streama').controller('modalExtractEmbeddedSubtitlesCtrl', [
         return;
       }
       $scope.extracting = true;
-      apiService.subtitle.extractEmbedded(video.id, indexes).then(function (response) {
+      apiService.subtitle.extractEmbedded(video.id, indexes, fileId).then(function (response) {
         var data = response.data || {};
         if (data.extracted > 0) {
           alertify.success('Extracted ' + data.extracted + ' subtitle track(s).');

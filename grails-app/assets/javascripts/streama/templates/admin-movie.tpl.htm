@@ -39,6 +39,7 @@
               <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
                 <li><a ng-click="openMovieModal()">Edit info</a></li>
                 <li><a ng-click="manageFiles(movie)">Manage Files</a></li>
+                <li ng-show="movie.hasFiles"><a ng-click="extractEmbeddedSubtitles(movie)">Extract embedded subtitles</a></li>
                 <li><a ng-click="deleteMovie(movie)">Delete Movie</a></li>
                 <li><a ng-click="addToCurrentNotification()">Add to Email-Notification</a></li>
                 <li><a ng-click="highlightOnDashboard()">Highlight on Dashboard</a></li>

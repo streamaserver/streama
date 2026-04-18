@@ -115,6 +115,7 @@
         </td>
         <td style="padding: 6px;">
           <a ng-if="!isEditing(file)" target="_blank" href="{{file.src}}" class="btn btn-xs btn-primary"><i class="ion-eye"></i></a>
+          <button ng-if="!isEditing(file)" title="Extract embedded subtitles from this file" class="btn btn-xs btn-info" ng-click="extractEmbeddedSubtitles(file.id)"><i class="ion-android-download"></i></button>
           <button ng-if="!isEditing(file)" class="btn btn-xs" ng-click="toggleEdit(file)" ><i class="ion-edit"></i></button>
           <button ng-if="isEditing(file)" title="Delete file" class="btn btn-xs btn-danger" ng-click="removeFile(file)"><i class="ion-trash-a"></i></button>
           <button ng-if="isEditing(file)" title="" class="btn btn-xs btn-success" ng-click="saveChanges(file)" ><i class="ion-checkmark"></i></button>

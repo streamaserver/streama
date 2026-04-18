@@ -22,7 +22,8 @@ class SubtitlesController {
       respond([error: true, message: "Video not found"])
       return
     }
-    def result = embeddedSubtitlesService.listEmbeddedStreams(video)
+    Long fileId = params.fileId ? params.long('fileId') : null
+    def result = embeddedSubtitlesService.listEmbeddedStreams(video, fileId)
     if (result.error) {
       response.status = BAD_REQUEST.value()
     }
@@ -50,7 +51,8 @@ class SubtitlesController {
       }
     }
 
-    def result = embeddedSubtitlesService.extractFromVideo(video, streamIndexes)
+    Long fileId = params.fileId ? params.long('fileId') : null
+    def result = embeddedSubtitlesService.extractFromVideo(video, streamIndexes, fileId)
     if (result.error) {
       response.status = BAD_REQUEST.value()
     }

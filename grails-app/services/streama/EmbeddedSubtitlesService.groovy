@@ -19,11 +19,12 @@ class EmbeddedSubtitlesService {
   ]
 
   /**
-   * Probes the video's default video file for embedded subtitle streams and
-   * returns metadata for each one (without extracting anything).
+   * Probes a video file for embedded subtitle streams and returns metadata
+   * for each one (without extracting anything). If fileId is null the
+   * video's default video file is used.
    */
-  Map listEmbeddedStreams(Video video) {
-    def ctx = resolveVideoContext(video)
+  Map listEmbeddedStreams(Video video, Long fileId = null) {
+    def ctx = resolveVideoContext(video, fileId)
     if (ctx.error) return ctx
 
     def streams = probeSubtitleStreams(ctx.ffprobePath, ctx.sourcePath)
@@ -60,8 +61,8 @@ class EmbeddedSubtitlesService {
    * @param streamIndexes list of stream indexes to extract. If null/empty all
    *                      text-based streams are extracted.
    */
-  Map extractFromVideo(Video video, List<Integer> streamIndexes = null) {
-    def ctx = resolveVideoContext(video)
+  Map extractFromVideo(Video video, List<Integer> streamIndexes = null, Long fileId = null) {
+    def ctx = resolveVideoContext(video, fileId)
     if (ctx.error) return ctx
 
     def streams = probeSubtitleStreams(ctx.ffprobePath, ctx.sourcePath)
@@ -151,11 +152,19 @@ class EmbeddedSubtitlesService {
     return [error: false, extracted: extracted, skipped: skipped, subtitleIds: createdIds]
   }
 
-  private Map resolveVideoContext(Video video) {
+  private Map resolveVideoContext(Video video, Long fileId = null) {
     if (!video) {
       return [error: true, message: 'Video not found']
     }
-    def videoFile = video.getDefaultVideoFile() ?: video.getVideoFiles()?.find { true }
+    def videoFile
+    if (fileId) {
+      videoFile = video.getVideoFiles()?.find { it.id == fileId }
+      if (!videoFile) {
+        return [error: true, message: 'Video file not found on this video']
+      }
+    } else {
+      videoFile = video.getDefaultVideoFile() ?: video.getVideoFiles()?.find { true }
+    }
     if (!videoFile) {
       return [error: true, message: 'No video file associated with this video']
     }

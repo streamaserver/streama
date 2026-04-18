@@ -90,6 +90,16 @@ angular.module('streama').controller('adminMovieCtrl', [
 			});
     };
 
+    $scope.extractEmbeddedSubtitles = function (movie) {
+      modalService.extractEmbeddedSubtitlesModal(movie, function (result) {
+        if (result && result.extracted > 0) {
+          apiService.movie.get($stateParams.movieId).then(function (response) {
+            $scope.movie = response.data;
+          });
+        }
+      });
+    };
+
 
 		$scope.addSimilarMovieToStreama = function(movie, redirect){
       alertify.set({ buttonReverse: true, labels: {ok: "Yes", cancel : "Cancel"}});

@@ -229,7 +229,14 @@ function modalService($uibModal, $state) {
     });
   }
 
-  function extractEmbeddedSubtitlesModal (video, callback) {
+  function extractEmbeddedSubtitlesModal (video, fileIdOrCallback, callback) {
+    var fileId = null;
+    var cb = callback;
+    if (typeof fileIdOrCallback === 'function') {
+      cb = fileIdOrCallback;
+    } else {
+      fileId = fileIdOrCallback;
+    }
     var modalInstance = $uibModal.open({
       templateUrl: '/streama/modal--extract-embedded-subtitles.htm',
       controller: 'modalExtractEmbeddedSubtitlesCtrl',
@@ -239,12 +246,15 @@ function modalService($uibModal, $state) {
       resolve: {
         video: function () {
           return video;
+        },
+        fileId: function () {
+          return fileId;
         }
       }
     });
 
     modalInstance.result.then(function (data) {
-      (callback || angular.noop)(data);
+      (cb || angular.noop)(data);
     }, function () {});
   }
 
