@@ -59,6 +59,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/subtitles/save',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/subtitles/setDefault',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/subtitles/getVideoSubtitles',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/subtitles/probeEmbedded',  access :['ROLE_CONTENT_MANAGER']],
+  [pattern:'/subtitles/extractEmbedded',  access :['ROLE_CONTENT_MANAGER']],
 
   // Audio streaming - user access
   [pattern:'/audioDash/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
