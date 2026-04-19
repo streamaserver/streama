@@ -200,8 +200,7 @@ class EmbeddedSubtitlesService {
       def process = command.execute()
       def stdout = new StringBuilder()
       def stderr = new StringBuilder()
-      process.consumeProcessOutput(stdout, stderr)
-      process.waitFor()
+      process.waitForProcessOutput(stdout, stderr)
 
       if (process.exitValue() != 0) {
         log.warn("ffprobe failed: ${stderr}")
@@ -234,8 +233,7 @@ class EmbeddedSubtitlesService {
 
       def process = command.execute()
       def stderr = new StringBuilder()
-      process.consumeProcessOutput(new StringBuilder(), stderr)
-      process.waitFor()
+      process.waitForProcessOutput(new StringBuilder(), stderr)
 
       if (process.exitValue() != 0) {
         log.warn("ffmpeg subtitle extract failed for stream ${streamIndex}: ${stderr}")
