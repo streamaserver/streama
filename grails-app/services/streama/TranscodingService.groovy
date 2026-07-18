@@ -77,6 +77,8 @@ class TranscodingService {
     }
 
     String codec = ffmpegService.probeAudioCodec(filePath)
+    String videoCodec = ffmpegService.probeVideoCodec(filePath)
+
     if (codec) {
       file.audioCodec = codec
       file.needsTranscoding = ffmpegService.needsTranscoding(codec)
@@ -88,9 +90,15 @@ class TranscodingService {
           file.transcodedAudioPath = cachePath
         }
       }
+    }
 
+    if (videoCodec) {
+      file.videoCodec = videoCodec
+    }
+
+    if (codec || videoCodec) {
       file.save(flush: true)
-      log.info("Updated file ${file.id} codec info: ${codec}, needsTranscoding: ${file.needsTranscoding}")
+      log.info("Updated file ${file.id} codec info: audio=${codec}, video=${videoCodec}, needsTranscoding: ${file.needsTranscoding}")
       return true
     }
     return false

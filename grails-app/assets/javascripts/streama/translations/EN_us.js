@@ -59,7 +59,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       VIDEO_FILES: 'Video Sources',
       UPNEXT: 'Up Next...',
       TRANSCODING_TITLE: 'Converting Audio',
-      TRANSCODING_MESSAGE: 'The audio in this video needs to be converted for your browser. This only happens once per video.'
+      TRANSCODING_MESSAGE: 'The audio in this video needs to be converted for your browser. This only happens once per video.',
+      HEVC_WARNING: 'This video is encoded in HEVC (H.265), which your browser may not be able to play natively. If playback fails, try a different browser (Safari has the best HEVC support) or re-encode the file to H.264.'
     },
 
     MESSAGES: {
@@ -68,7 +69,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
       CODEC_PROBLEM: 'There seems to be a problem adding the video-file to the player. This is most likely due to a codec-problem. Try converting it to a compatible HTML5 codec, remove the currently attached file and re-add it. If the codecs are fine, check the error log of the server and the base URL in the settings.',
       WRONG_BASEPATH: 'Your video get\'s included using the wrong Base Path, but you are browsing the page via "{{basePath}}". Make sure you set the correct Base Path in the settings and that you are using it to browse the application.',
       FILE_IN_FS_NOT_FOUND: 'Your video cannot be found in any of the locations available to the application. Please check your settings and your file system to make sure that the files are accessible by the application.',
-      TRANSCODING_FAILED: 'Audio transcoding failed for this video. Please check the server logs for more details, or try re-uploading the video file.'
+      TRANSCODING_FAILED: 'Audio transcoding failed for this video. Please check the server logs for more details, or try re-uploading the video file.',
+      HEVC_NOT_SUPPORTED: 'This video is encoded in HEVC (H.265), which your browser cannot play natively. Try opening it in Safari, or re-encode the file to H.264 for broad compatibility.'
     },
     MANAGE_CONTENT: 'Manage Content',
     MANAGE_SUB_PROFILES: 'Manage profiles',

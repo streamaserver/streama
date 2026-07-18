@@ -23,6 +23,11 @@
     <div class="bounce3"></div>
   </div>
 
+  <div class="hevc-warning-banner" ng-show="hevcWarningVisible">
+    <span>{{'VIDEO.HEVC_WARNING' | translate}}</span>
+    <i class="ion-close" ng-click="dismissHevcWarning()"></i>
+  </div>
+
   <div class="transcoding-overlay" ng-show="isTranscoding">
     <div class="transcoding-content">
       <div class="spinner transcoding-spinner">

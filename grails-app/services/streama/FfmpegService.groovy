@@ -29,6 +29,12 @@ class FfmpegService {
     'vorbis'
   ]
 
+  // Video codecs with inconsistent/limited native browser support (e.g. HEVC:
+  // Safari with hardware decode only; Chrome/Firefox generally unsupported)
+  static final List<String> LIMITED_SUPPORT_VIDEO_CODECS = [
+    'hevc' // H.265, as reported by ffprobe's codec_name
+  ]
+
   /**
    * Detects if FFmpeg is available and returns its path
    * @return Map with 'found', 'ffmpegPath', 'ffprobePath', 'version'
@@ -185,6 +191,59 @@ class FfmpegService {
   boolean needsTranscoding(String codec) {
     if (!codec) return false
     return INCOMPATIBLE_CODECS.contains(codec.toLowerCase())
+  }
+
+  /**
+   * Probe a video file to get its video codec
+   * @param filePath Full path to the video file
+   * @return The video codec name (e.g., 'h264', 'hevc', 'vp9') or null if detection failed
+   */
+  String probeVideoCodec(String filePath) {
+    String ffprobePath = getFfprobePath()
+    if (!ffprobePath) {
+      log.warn("FFprobe not available, cannot probe video codec")
+      return null
+    }
+
+    try {
+      def command = [
+        ffprobePath,
+        '-v', 'quiet',
+        '-select_streams', 'v:0',  // First video stream
+        '-show_entries', 'stream=codec_name',
+        '-of', 'default=noprint_wrappers=1:nokey=1',
+        filePath
+      ]
+
+      log.debug("Probing video codec: ${command.join(' ')}")
+
+      def process = command.execute()
+      def stdout = new StringBuilder()
+      def stderr = new StringBuilder()
+      process.consumeProcessOutput(stdout, stderr)
+      process.waitFor()
+
+      if (process.exitValue() == 0) {
+        String codec = stdout.toString().trim()
+        log.info("Detected video codec for ${filePath}: ${codec}")
+        return codec
+      } else {
+        log.warn("FFprobe failed for ${filePath}: ${stderr}")
+        return null
+      }
+    } catch (Exception e) {
+      log.error("Error probing video codec: ${e.message}", e)
+      return null
+    }
+  }
+
+  /**
+   * Check if a video codec has limited/inconsistent native browser support
+   * (e.g. HEVC, which only plays natively in a subset of browsers/devices)
+   */
+  boolean hasLimitedBrowserSupport(String videoCodec) {
+    if (!videoCodec) return false
+    return LIMITED_SUPPORT_VIDEO_CODECS.contains(videoCodec.toLowerCase())
   }
 
   /**

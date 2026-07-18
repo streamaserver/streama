@@ -265,5 +265,33 @@ streama-video-player{
       }
     }
   }
+
+  .hevc-warning-banner {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 10px 40px 10px 16px;
+    color: #fff;
+    font-size: 13px;
+    max-width: 90%;
+
+    .ion-close {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #999;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
 }
 
