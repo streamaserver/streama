@@ -110,6 +110,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
         function initDirective() {
           $scope.isInitialized = true;
 
+          checkCodecCompatibility();
+
           $elem.addClass('nocursor');
 
           initMouseWheel();
@@ -384,7 +386,12 @@ angular.module('streama').directive('streamaVideoPlayer', [
 
         function onerror() {
           if (!video.duration && !$scope.initialPlay) {
-            $scope.options.onError();
+            var codec = ($scope.options.videoCodec || '').toLowerCase();
+            if (LIMITED_SUPPORT_VIDEO_CODECS.indexOf(codec) !== -1) {
+              $scope.options.onError('HEVC_NOT_SUPPORTED');
+            } else {
+              $scope.options.onError();
+            }
           }
         }
 
@@ -501,8 +508,39 @@ angular.module('streama').directive('streamaVideoPlayer', [
           $scope.options.videoSrc = $sce.trustAsResourceUrl(videoFile.src || videoFile.externalLink);
           $scope.options.originalFilename = videoFile.originalFilename;
           $scope.options.videoType = videoFile.contentType;
+          $scope.options.videoCodec = videoFile.videoCodec;
           localStorageService.set('selectedVideoFile', videoFile.label);
+          checkCodecCompatibility();
         }
+
+        // Codecs (like HEVC/H.265) that only have limited/inconsistent native <video> support.
+        // Keep in sync with FfmpegService.LIMITED_SUPPORT_VIDEO_CODECS on the server.
+        var LIMITED_SUPPORT_VIDEO_CODECS = ['hevc'];
+
+        // HEVC-in-MP4 probe string used to ask the browser whether it can decode HEVC at all.
+        // A generic Main profile/level is used since we don't know the exact profile of the file -
+        // this only guards against browsers with zero HEVC support (most of Chrome/Firefox).
+        var HEVC_CANPLAYTYPE_PROBE = 'video/mp4; codecs="hvc1.1.6.L93.B0"';
+
+        function checkCodecCompatibility() {
+          $scope.hevcWarningVisible = false;
+
+          var codec = ($scope.options.videoCodec || '').toLowerCase();
+          if (LIMITED_SUPPORT_VIDEO_CODECS.indexOf(codec) === -1) {
+            return;
+          }
+
+          var probeVideo = document.createElement('video');
+          var canPlay = probeVideo.canPlayType && probeVideo.canPlayType(HEVC_CANPLAYTYPE_PROBE);
+
+          if (!canPlay) {
+            $scope.hevcWarningVisible = true;
+          }
+        }
+
+        $scope.dismissHevcWarning = function () {
+          $scope.hevcWarningVisible = false;
+        };
 
         //Changes the video player's volume. Takes the changing amount as a parameter.
         function changeVolume(amount) {

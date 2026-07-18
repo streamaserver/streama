@@ -30,17 +30,21 @@ class File implements SimpleInstance {
   Boolean needsTranscoding       // true if browser-incompatible codec
   String transcodedAudioPath     // path to cached transcoded .aac file
 
+  // Video codec detection (direct-play compatibility, e.g. HEVC/H.265)
+  String videoCodec              // detected video codec (h264, hevc, vp9, etc.)
+
   static constraints = {
     sha256Hex maxSize: 64
     quality inList: ['720p', '480p', '360p']
     audioCodec nullable: true
     needsTranscoding nullable: true
     transcodedAudioPath nullable: true
+    videoCodec nullable: true
   }
   static transients = ['uploadService']
 
   static simpleInstanceFields = ['id', 'src', 'originalFilename', 'contentType', 'subtitleSrcLang', 'subtitleLabel',
-                                 'externalLink', 'label', 'isDefault', 'audioCodec', 'needsTranscoding']
+                                 'externalLink', 'label', 'isDefault', 'audioCodec', 'needsTranscoding', 'videoCodec']
 
   def getImagePath(){
     uploadService.getPath(this)

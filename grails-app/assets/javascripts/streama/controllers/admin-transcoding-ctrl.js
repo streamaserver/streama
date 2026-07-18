@@ -144,7 +144,7 @@ angular.module('streama')
       function probe(file) {
         file.probing = true;
         apiService.transcoding.probe(file.id).then(function (response) {
-          alertify.success('File probed: ' + response.data.audioCodec);
+          alertify.success('File probed: audio=' + response.data.audioCodec + ', video=' + response.data.videoCodec);
           file.probing = false;
           refreshFiles();
         }, function (error) {

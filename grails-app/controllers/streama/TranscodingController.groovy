@@ -81,7 +81,9 @@ class TranscodingController {
           needsTranscoding: file.needsTranscoding,
           hasTranscodedAudio: status.hasTranscodedAudio,
           status: status.status,
-          progress: status.progress
+          progress: status.progress,
+          videoCodec: file.videoCodec,
+          hasLimitedBrowserSupport: ffmpegService.hasLimitedBrowserSupport(file.videoCodec)
         ]
       }
     ]
@@ -195,7 +197,9 @@ class TranscodingController {
         messageCode: 'FILE_PROBED',
         fileId: file.id,
         audioCodec: file.audioCodec,
-        needsTranscoding: file.needsTranscoding
+        needsTranscoding: file.needsTranscoding,
+        videoCodec: file.videoCodec,
+        hasLimitedBrowserSupport: ffmpegService.hasLimitedBrowserSupport(file.videoCodec)
       ] as JSON)
     } else {
       response.setStatus(SERVICE_UNAVAILABLE.value())

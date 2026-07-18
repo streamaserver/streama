@@ -13,6 +13,7 @@ angular.module('streama').factory('playerService',
       videoMetaDescription: '',
       videoSrc: '',
       videoType: '',
+      videoCodec: '',
       videoTrack: '',
       subtitleSize: 'md',
       videoOverlayEnabled: true,
@@ -50,6 +51,7 @@ angular.module('streama').factory('playerService',
         videoOptions.videoSrc = $sce.trustAsResourceUrl(video.defaultVideoFile.src || video.defaultVideoFile.externalLink);
         videoOptions.originalFilename = video.defaultVideoFile.originalFilename;
         videoOptions.videoType = video.defaultVideoFile.contentType;
+        videoOptions.videoCodec = video.defaultVideoFile.videoCodec;
         videoOptions.selectedVideoFile = video.defaultVideoFile;
         videoOptions.showDownloadButton = $rootScope.isDownloadButtonVisible;
 

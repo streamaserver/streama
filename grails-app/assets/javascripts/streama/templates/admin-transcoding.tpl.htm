@@ -119,6 +119,7 @@
             <th>File</th>
             <th>Audio Codec</th>
             <th>Needs Transcoding</th>
+            <th>Video Codec</th>
             <th>Has Cached Audio</th>
             <th>Status</th>
             <th>Actions</th>
@@ -135,6 +136,11 @@
               <span ng-if="file.needsTranscoding" class="label label-warning">Yes</span>
               <span ng-if="file.needsTranscoding === false" class="label label-success">No</span>
               <span ng-if="file.needsTranscoding === null" class="label label-default">Unknown</span>
+            </td>
+            <td>
+              <code ng-if="file.videoCodec">{{file.videoCodec}}</code>
+              <span ng-if="!file.videoCodec" class="text-muted">Not scanned</span>
+              <span ng-if="file.hasLimitedBrowserSupport" class="label label-warning" title="Limited native browser support - not all browsers can play this without a compatible hardware decoder">Limited browser support</span>
             </td>
             <td>
               <span ng-if="file.hasTranscodedAudio" class="label label-success">Yes</span>
