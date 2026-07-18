@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-slim AS build
+FROM eclipse-temurin:8-jdk AS build
 
 WORKDIR /app/streama
 
@@ -11,7 +11,7 @@ RUN ./gradlew assemble -x test --no-daemon && \
     JAR=$(ls build/libs/*.jar | grep -v '\-plain.jar' | head -n1) && \
     cp "$JAR" /app/streama-built.jar
 
-FROM openjdk:8-jre-slim
+FROM eclipse-temurin:8-jre
 
 WORKDIR /app/streama
 
