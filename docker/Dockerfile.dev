@@ -1,0 +1,28 @@
+FROM openjdk:8-jdk-slim AS build
+
+WORKDIR /app/streama
+
+# Grails 3.2.6 / Gradle 3.1 need JDK 8 to build. First build downloads the
+# Gradle 3.1 distribution plus all Maven dependencies - can take several
+# minutes and needs unrestricted internet access from this host.
+COPY . .
+
+RUN ./gradlew assemble -x test --no-daemon && \
+    JAR=$(ls build/libs/*.jar | grep -v '\-plain.jar' | head -n1) && \
+    cp "$JAR" /app/streama-built.jar
+
+FROM openjdk:8-jre-slim
+
+WORKDIR /app/streama
+
+# ffmpeg/ffprobe are required for audio codec + video codec (HEVC) probing.
+RUN apt-get -y update && \
+    apt-get -y install --no-install-recommends ffmpeg && \
+    apt-get -y clean && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/streama-built.jar streama.jar
+
+EXPOSE 8080
+
+ENTRYPOINT [ "java", "-jar", "streama.jar" ]

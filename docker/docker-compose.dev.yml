@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  mysql:
+    platform: linux/x86_64
+    image: mysql:5.7
+    restart: always
+    container_name: streama_test_mysql
+    hostname: mysql
+    networks:
+      - net-backend-test
+    expose:
+      - 3306
+    volumes:
+      - db_data_test:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: streama_root_password
+      MYSQL_USER: streama
+      MYSQL_DATABASE: streama
+      MYSQL_PASSWORD: streama_password
+
+  streama:
+    image: streama-h265-test
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    restart: always
+    container_name: streama_test
+    hostname: streama
+    depends_on:
+      - mysql
+    networks:
+      - net-backend-test
+    ports:
+      - "8080:8080"    # exposed directly, no nginx proxy needed for testing
+    volumes:
+      - ./test-media:/data/streama   # put a sample HEVC file here
+      - app_data_test:/app/streama
+    environment:
+      ACTIVE_PROFILE: mysql
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB: streama
+      MYSQL_USER: streama
+      MYSQL_PASSWORD: streama_password
+
+networks:
+  net-backend-test:
+
+volumes:
+  db_data_test:
+  app_data_test:
