@@ -1,0 +1,97 @@
+# Deployment topology for the live Streama host.
+#
+# This mirrors the stack running at /data/streama on the server. Secrets and
+# host-specific values are read from a .env file sitting next to this file --
+# copy .env.example to .env and fill it in. See deploy/README.md.
+
+services:
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - ./volumes/nginx/conf.d:/etc/nginx/conf.d
+    - ./volumes/nginx/html:/usr/share/nginx/html
+    - ./volumes/nginx/htpasswd:/etc/nginx/htpasswd
+    - ./volumes/nginx/dhparam:/etc/nginx/dhparam
+    - ./volumes/nginx/vhost:/etc/nginx/vhost.d
+    - ./volumes/nginx/certs:/etc/nginx/certs:ro
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+    - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    depends_on:
+    - "nginx-proxy"
+    volumes:
+    - ./volumes/nginx/conf.d:/etc/nginx/conf.d
+    - ./volumes/nginx/vhost:/etc/nginx/vhost.d
+    - ./volumes/nginx/html:/usr/share/nginx/html
+    - ./volumes/nginx/certs:/etc/nginx/certs:rw
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  streama:
+    image: anapsix/alpine-java:8
+    restart: always
+    volumes:
+    - ./streama.jar:/app/app.jar
+    - ./application.yml:/app/application.yml
+    - ./volumes/streama/uploads:/app/uploads
+    - ./volumes/streama/local-files:/app/local-files
+    - ${MEDIA_PATH}:/app/video
+    working_dir: /app
+    command: java -jar app.jar
+    ports:
+    - "127.0.0.1:8080:8080"
+    depends_on:
+    - db
+    environment:
+    - VIRTUAL_HOST=${VIRTUAL_HOST}
+    - VIRTUAL_PORT=8080
+    - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+    - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  db:
+    # Pinned to the 10.11 series on purpose. The previous floating `mariadb:10`
+    # tag rolled the server forward under an existing data directory, which left
+    # the mysql system schema stale (see deploy/README.md).
+    image: mariadb:10.11
+    restart: always
+    volumes:
+    - ./volumes/db:/var/lib/mysql
+    command: --max_allowed_packet=256M --innodb_log_buffer_size=32M --innodb_buffer_pool_size=128M
+    environment:
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    - MYSQL_DATABASE=${MYSQL_DATABASE:-streama}
+    - MYSQL_USER=${MYSQL_USER:-streama}
+    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    # Runs mariadb-upgrade automatically when the data dir predates the server
+    # binary, instead of silently skipping it and erroring on every query.
+    - MARIADB_AUTO_UPGRADE=1
+    ports:
+      - 127.0.0.1:3306:3306
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

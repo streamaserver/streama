@@ -60,3 +60,6 @@ out
 CLAUDE.md
 *.mv.db
 *.trace.db
+
+# Deployment secrets
+deploy/.env
