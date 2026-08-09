@@ -1,8 +1,11 @@
 import streama.ViewingStatus
 
 model {
-  Iterable<ViewingStatus> viewingStatusList
+  Iterable<ViewingStatus> list
+  Long total
 }
 
-
-json tmpl.viewingStatus(viewingStatusList ?: [])
+json {
+  total total
+  list tmpl.viewingStatus(list ?: [])
+}

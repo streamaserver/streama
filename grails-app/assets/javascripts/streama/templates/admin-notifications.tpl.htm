@@ -30,11 +30,11 @@
   <tr ng-repeat="notification in notifications | orderBy: '-dateCreated'" ng-class="{'fade-50': notification.isCompleted}">
     <td>{{notification.dateCreated | date:'short'}}</td>
     <td ng-if="notification.movie">
-      <img ng-if="notification.movie.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{notification.movie.poster_path}}" style="max-width: 50px; margin-right: 10px;"/>
+      <img ng-if="notification.movie.poster_path" ng-src="{{notification.movie.poster_path}}" style="max-width: 50px; margin-right: 10px;"/>
       {{notification.movie.title}} ({{notification.movie.release_date.substring(0,4)}})
     </td>
     <td ng-if="notification.tvShow">
-      <img ng-if="notification.tvShow.poster_path" ng-src="https://image.tmdb.org/t/p/w92/{{notification.tvShow.poster_path}}" style="max-width: 50px; margin-right: 10px;"/>
+      <img ng-if="notification.tvShow.poster_path" ng-src="{{notification.tvShow.poster_path}}" style="max-width: 50px; margin-right: 10px;"/>
       {{notification.tvShow.name}} ({{notification.tvShow.first_air_date.substring(0,4)}})
     </td>
     <td>{{notification.description}}</td>

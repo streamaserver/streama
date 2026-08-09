@@ -12,6 +12,7 @@ import static org.springframework.http.HttpStatus.*
 class FileService {
 
   def allowedVideoFormats = ['.mp4', '.mkv', '.webm', '.ogg', '.m4v']
+  def allowedSubtitleFormats = ['.srt', '.vtt']
 
   def serveVideo(request, response, java.io.File rawFile, File file) {
     def rangeHeader = request.getHeader("Range")
@@ -40,7 +41,8 @@ class FileService {
     response.addHeader("Last-Modified", (file.lastUpdated).format("EEE, dd MMM yyyy hh:MM:ss 'GMT'"))
     response.addHeader("Cache-Control", 'public,max-age=3600,public')
     response.addHeader("Etag", "\"${sha256Hex}\"")
-    response.addHeader("Content-Type", "video/mp4")
+    String contentType = getContentTypeForFile(rawFile.name)
+    response.addHeader("Content-Type", contentType)
 
 
     if(rangeHeader){
@@ -58,7 +60,7 @@ class FileService {
       response.setStatus(PRECONDITION_FAILED.value())
       return [error: true, message: e.message]
     }
-    byte[] buffer = new byte[16000]
+    byte[] buffer = new byte[65536]  // 64KB buffer for high bitrate streams
 
     if(rangeStart){
       fis.skip(rangeStart)
@@ -123,5 +125,22 @@ class FileService {
 
 
     return ResultHelper.generateOkResult()
+  }
+
+  private String getContentTypeForFile(String fileName) {
+    String ext = fileName?.toLowerCase()?.tokenize('.')?.last()
+    switch (ext) {
+      case 'mp4':
+      case 'm4v':
+        return 'video/mp4'
+      case 'mkv':
+        return 'video/x-matroska'
+      case 'webm':
+        return 'video/webm'
+      case 'ogg':
+        return 'video/ogg'
+      default:
+        return 'video/mp4'
+    }
   }
 }

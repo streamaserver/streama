@@ -78,7 +78,7 @@
         <td>{{(activity.lastUpdated || activity.dateCreated) | date:'short'}}</td>
         <td style="width: 185px;">
           <img ng-if="activity.video.poster_path || activity.video.show.poster_path"
-               ng-src="https://image.tmdb.org/t/p/w92/{{activity.video.show.poster_path || activity.video.poster_path}}"
+               ng-src="{{activity.video.show.poster_path || activity.video.poster_path}}"
                style="max-width: 50px; margin-right: 10px; float: left;"/>
             <div>{{activity.video.title || activity.video.name}}</div>
             <div class="text-muted" ng-if="activity.video.canonicalName === 'streama.Episode'">s{{activity.video.season_number| padnumber:2}}e{{activity.video.episode_number | padnumber:2}}</div>

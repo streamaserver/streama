@@ -1,6 +1,5 @@
 package streama.marshallers
 
-
 import grails.converters.JSON
 import grails.transaction.Transactional
 import streama.Episode
@@ -28,7 +27,6 @@ class MarshallerService {
   def init() {
     mediaDetailMarshallerService.init()
     playerMarshallerService.init()
-
 
     JSON.registerObjectMarshaller(Settings) { Settings setting ->
       def returnArray = [:]
@@ -59,16 +57,16 @@ class MarshallerService {
       returnArray['invitationSent'] = user.invitationSent
       returnArray['language'] = user.language
       returnArray['favoriteGenres'] = user.favoriteGenres
-      returnArray['isAdmin'] = (user.authorities.find{it.authority == 'ROLE_ADMIN'} ? true : false)
-      returnArray['isContentManager'] = (user.authorities.find{it.authority == 'ROLE_CONTENT_MANAGER'} ? true : false)
-      returnArray['isTrustedUser'] = (user.authorities.find{it.authority == 'ROLE_TRUSTED_USER'} ? true : false)
+      returnArray['isAdmin'] = (user.authorities.find { it.authority == 'ROLE_ADMIN' } ? true : false)
+      returnArray['isContentManager'] = (user.authorities.find { it.authority == 'ROLE_CONTENT_MANAGER' } ? true : false)
+      returnArray['isTrustedUser'] = (user.authorities.find { it.authority == 'ROLE_TRUSTED_USER' } ? true : false)
       returnArray['pauseVideoOnClick'] = user.pauseVideoOnClick
 
-      if(user.invitationSent && user.uuid){
+      if (user.invitationSent && user.uuid) {
         returnArray['invitationLink'] = settingsService.baseUrl +  "/invite?uuid=${user?.uuid}"
       }
 
-      return returnArray;
+      return returnArray
     }
 
     JSON.registerObjectMarshaller(File) { File file ->
@@ -89,8 +87,7 @@ class MarshallerService {
       returnArray['subtitleLabel'] = file.subtitleLabel
       returnArray['subtitleSrcLang'] = file.subtitleSrcLang
 
-
-      return returnArray;
+      return returnArray
     }
 
     JSON.registerObjectMarshaller(NotificationQueue) { NotificationQueue notificationQueue ->
@@ -98,24 +95,32 @@ class MarshallerService {
 
       returnArray['id'] = notificationQueue.id
       returnArray['dateCreated'] = notificationQueue.dateCreated
-      returnArray['movie'] = notificationQueue.movie
+      returnArray['movie'] = notificationQueue.movie ?: notificationQueue.genericVideo
       returnArray['tvShow'] = notificationQueue.tvShow
-      returnArray['media'] = notificationQueue.tvShow ? notificationQueue.tvShow : notificationQueue.movie
+      if(notificationQueue.tvShow){
+        returnArray['media'] = notificationQueue.tvShow
+      }
+      else if(notificationQueue.movie){
+        returnArray['media'] = notificationQueue.movie
+      }
+      else if(notificationQueue.genericVideo){
+        returnArray['media'] = notificationQueue.genericVideo
+      }
       returnArray['description'] = notificationQueue.description
       returnArray['videoToPlayId'] = notificationQueue.videoToPlay?.id
       returnArray['isCompleted'] = notificationQueue.isCompleted
 
-      return returnArray;
+      return returnArray
     }
 
-    JSON.registerObjectMarshaller(Movie){ Movie movie ->
+    JSON.registerObjectMarshaller(Movie) { Movie movie ->
       def returnArray = [:]
 
       returnArray['id'] = movie.id
       returnArray['mediaType'] = 'movie'
       returnArray['dateCreated'] = movie.dateCreated
       returnArray['lastUpdated'] = movie.lastUpdated
-      returnArray['poster_path'] = movie.poster_path
+      returnArray['poster_path'] = movie.getPosterPath()
       returnArray['release_date'] = movie.release_date
       returnArray['title'] = movie.title
       returnArray['overview'] = movie.overview
@@ -126,20 +131,21 @@ class MarshallerService {
       returnArray['popularity'] = movie.popularity
       returnArray['imdb_id'] = movie.imdb_id
       returnArray['poster_image_src'] = movie.poster_image?.src
+      returnArray['backdrop_image_src'] = movie.backdrop_image?.src
       returnArray['genre'] = movie.genre
 
-      returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
-      returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+      returnArray['files'] = movie.files.findAll { it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt' }
+      returnArray['subtitles'] = movie.files.findAll { it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt' }
 
       returnArray['hasFiles'] = movie.hasFiles()
 
       returnArray['inWatchlist'] = movie.inWatchlist()
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
-      return returnArray;
+      return returnArray
     }
 
-    JSON.registerObjectMarshaller(GenericVideo){ GenericVideo genericVideo ->
+    JSON.registerObjectMarshaller(GenericVideo) { GenericVideo genericVideo ->
       def returnArray = [:]
 
       returnArray['id'] = genericVideo.id
@@ -159,28 +165,28 @@ class MarshallerService {
       returnArray['release_date'] = genericVideo.release_date
       returnArray['poster_image_src'] = genericVideo.poster_image?.src
       returnArray['backdrop_image_src'] = genericVideo.backdrop_image?.src
+      returnArray['poster_path'] = genericVideo.getPosterPath()
       returnArray['trailerKey'] = genericVideo.trailerKey
 
-
-      returnArray['files'] = genericVideo.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
-      returnArray['subtitles'] = genericVideo.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+      returnArray['files'] = genericVideo.files.findAll { it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt' }
+      returnArray['subtitles'] = genericVideo.files.findAll { it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt' }
       returnArray['tags'] = genericVideo.tags
       returnArray['genre'] = genericVideo.genre
       returnArray['hasFiles'] = genericVideo.hasFiles()
 
       returnArray['inWatchlist'] = genericVideo.inWatchlist()
 
-      return returnArray;
+      return returnArray
     }
 
-    JSON.registerObjectMarshaller(TvShow){ TvShow tvShow ->
+    JSON.registerObjectMarshaller(TvShow) { TvShow tvShow ->
       def returnArray = [:]
 
       returnArray['id'] = tvShow.id
       returnArray['mediaType'] = 'tvShow'
       returnArray['dateCreated'] = tvShow.dateCreated
       returnArray['lastUpdated'] = tvShow.lastUpdated
-      returnArray['poster_path'] = tvShow.poster_path
+      returnArray['poster_path'] = tvShow.getPosterPath()
       returnArray['backdrop_path'] = tvShow.backdrop_path
       returnArray['first_air_date'] = tvShow.first_air_date
       returnArray['name'] = tvShow.name
@@ -194,15 +200,17 @@ class MarshallerService {
       returnArray['manualInput'] = tvShow.manualInput
       returnArray['poster_image_src'] = tvShow.poster_image?.src
 
-
       returnArray['hasFiles'] = tvShow.getHasFiles()
       returnArray['firstEpisode'] = mediaService.getFirstEpisode(tvShow)
+      if(settingsService.getValueForName('enable-random-episode-button')){
+        returnArray['randomEpisode'] = mediaService.getRandomEpisode(tvShow)
+      }
 
       returnArray['inWatchlist'] = tvShow.inWatchlist()
 
 //            returnArray['viewedStatus'] = ViewingStatus.findByVideoAndUser(movie, springSecurityService.currentUser)
 
-      return returnArray;
+      return returnArray
     }
 
     JSON.createNamedConfig('fullShow') {  cfg ->
@@ -216,20 +224,20 @@ class MarshallerService {
         returnArray['overview'] = tvShow.overview
         returnArray['apiId'] = tvShow.apiId
         returnArray['backdrop_path'] = tvShow.backdrop_path
-        returnArray['poster_path'] = tvShow.poster_path
+        returnArray['poster_path'] = tvShow.getPosterPath()
         returnArray['first_air_date'] = tvShow.first_air_date
         returnArray['original_language'] = tvShow.original_language
         returnArray['vote_average'] = tvShow.vote_average
         returnArray['vote_count'] = tvShow.vote_count
         returnArray['imdb_id'] = tvShow.imdb_id
         returnArray['popularity'] = tvShow.popularity
-        returnArray['episodesWithFilesCount'] = tvShow.filteredEpisodes.findAll{it.files}.size()
+        returnArray['episodesWithFilesCount'] = tvShow.filteredEpisodes.findAll { it.files }.size()
         returnArray['episodesCount'] = tvShow.filteredEpisodes.size()
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
         returnArray['genre'] = tvShow.genre
 
-        return returnArray;
+        return returnArray
       }
     }
 
@@ -244,7 +252,7 @@ class MarshallerService {
         returnArray['currentPlayTime'] = viewingStatus.currentPlayTime
         returnArray['runtime'] = viewingStatus.runtime
 
-        return returnArray;
+        return returnArray
       }
       cfg.registerObjectMarshaller(Video) { Video  video ->
         def returnArray = [:]
@@ -260,23 +268,24 @@ class MarshallerService {
         returnArray['original_language'] = video.original_language
         returnArray['inWatchlist'] = video.inWatchlist()
 
-        if(video instanceof Movie){
+        if (video instanceof Movie) {
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
-          returnArray['poster_path'] = video.poster_path
+          returnArray['poster_path'] = video.getPosterPath()
           returnArray['mediaType'] = 'movie'
         }
-        if(video instanceof GenericVideo){
+        if (video instanceof GenericVideo) {
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
+          returnArray['poster_path'] = video.getPosterPath()
           returnArray['poster_image_src'] = video.poster_image?.src
           returnArray['mediaType'] = 'genericVideo'
         }
 
-        if(video instanceof Episode){
+        if (video instanceof Episode) {
           returnArray['isEpisode'] = true
           returnArray['title'] = video.show?.name
-          returnArray['poster_path'] = video.show?.poster_path
+          returnArray['poster_path'] = video.getPosterPath()
           returnArray['episodeString'] = video.episodeString
           returnArray['tvShowId'] = video.show?.id
           returnArray['mediaType'] = 'tvShow'
@@ -285,7 +294,7 @@ class MarshallerService {
           returnArray['outro_start'] = video.outro_start
         }
 
-        return returnArray;
+        return returnArray
       }
     }
 
@@ -308,7 +317,7 @@ class MarshallerService {
         returnArray['still_path'] = episode.still_path
         returnArray['status'] = episode.getStatus()
 
-        return returnArray;
+        return returnArray
       }
       cfg.registerObjectMarshaller(TvShow) { TvShow  tvShow ->
         def returnArray = [:]
@@ -324,11 +333,53 @@ class MarshallerService {
         returnArray['vote_count'] = tvShow.vote_count
         returnArray['popularity'] = tvShow.popularity
         returnArray['backdrop_path'] = tvShow.backdrop_path
-        returnArray['poster_path'] = tvShow.poster_path
+        returnArray['poster_path'] = tvShow.getPosterPath()
         returnArray['manualInput'] = tvShow.manualInput
         returnArray['poster_image_src'] = tvShow.poster_image?.src
 
-        return returnArray;
+        return returnArray
+      }
+    }
+
+    JSON.createNamedConfig('randomEpisode') {  cfg ->
+      cfg.registerObjectMarshaller(Episode) { Episode  episode ->
+        def returnArray = [:]
+
+        returnArray['id'] = episode.id
+        returnArray['name'] = episode.name
+        returnArray['dateCreated'] = episode.dateCreated
+        returnArray['lastUpdated'] = episode.lastUpdated
+        returnArray['overview'] = episode.overview
+        returnArray['imdb_id'] = episode.imdb_id
+        returnArray['vote_average'] = episode.vote_average
+        returnArray['vote_count'] = episode.vote_count
+        returnArray['popularity'] = episode.popularity
+        returnArray['show'] = episode.show
+        returnArray['episodeString'] = episode.episodeString
+        returnArray['air_date'] = episode.air_date
+        returnArray['still_path'] = episode.still_path
+
+        return returnArray
+      }
+      cfg.registerObjectMarshaller(TvShow) { TvShow  tvShow ->
+        def returnArray = [:]
+
+        returnArray['id'] = tvShow.id
+        returnArray['name'] = tvShow.name
+        returnArray['dateCreated'] = tvShow.dateCreated
+        returnArray['first_air_date'] = tvShow.first_air_date
+        returnArray['lastUpdated'] = tvShow.lastUpdated
+        returnArray['overview'] = tvShow.overview
+        returnArray['imdb_id'] = tvShow.imdb_id
+        returnArray['vote_average'] = tvShow.vote_average
+        returnArray['vote_count'] = tvShow.vote_count
+        returnArray['popularity'] = tvShow.popularity
+        returnArray['backdrop_path'] = tvShow.backdrop_path
+        returnArray['poster_path'] = tvShow.getPosterPath()
+        returnArray['manualInput'] = tvShow.manualInput
+        returnArray['poster_image_src'] = tvShow.poster_image?.src
+
+        return returnArray
       }
     }
 
@@ -351,21 +402,22 @@ class MarshallerService {
         returnArray['title'] = movie.title
         returnArray['release_date'] = movie.release_date
         returnArray['backdrop_path'] = movie.backdrop_path
-        returnArray['poster_path'] = movie.poster_path
+        returnArray['poster_path'] = movie.getPosterPath(342)
         returnArray['trailerKey'] = movie.trailerKey
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
         returnArray['poster_image_src'] = movie.poster_image?.src
+        returnArray['backdrop_image_src'] = movie.backdrop_image?.src
         returnArray['status'] = movie.getStatus()
 
         returnArray['inWatchlist'] = movie.inWatchlist()
 
-        return returnArray;
+        return returnArray
       }
     }
 
     JSON.createNamedConfig('dashTvShow') {  cfg ->
-      cfg.registerObjectMarshaller(TvShow){ TvShow tvShow ->
+      cfg.registerObjectMarshaller(TvShow) { TvShow tvShow ->
         def returnArray = [:]
 
         returnArray['id'] = tvShow.id
@@ -374,7 +426,7 @@ class MarshallerService {
 
         returnArray['dateCreated'] = tvShow.dateCreated
         returnArray['lastUpdated'] = tvShow.lastUpdated
-        returnArray['poster_path'] = tvShow.poster_path
+        returnArray['poster_path'] = tvShow.getPosterPath()
         returnArray['first_air_date'] = tvShow.first_air_date
         returnArray['name'] = tvShow.name
         returnArray['overview'] = tvShow.overview
@@ -389,12 +441,12 @@ class MarshallerService {
         returnArray['genre'] = tvShow.genre
         returnArray['inWatchlist'] = tvShow.inWatchlist()
 
-        return returnArray;
+        return returnArray
       }
     }
 
     JSON.createNamedConfig('dashGenericVideo') {  cfg ->
-      cfg.registerObjectMarshaller(GenericVideo){ GenericVideo genericVideo ->
+      cfg.registerObjectMarshaller(GenericVideo) { GenericVideo genericVideo ->
         def returnArray = [:]
 
         returnArray['id'] = genericVideo.id
@@ -413,6 +465,7 @@ class MarshallerService {
 
         returnArray['title'] = genericVideo.title
         returnArray['release_date'] = genericVideo.release_date
+        returnArray['poster_path'] = genericVideo.getPosterPath()
         returnArray['poster_image_src'] = genericVideo.poster_image?.src
         returnArray['backdrop_image_src'] = genericVideo.backdrop_image?.src
         returnArray['trailerKey'] = genericVideo.trailerKey
@@ -421,7 +474,7 @@ class MarshallerService {
         returnArray['genre'] = genericVideo.genre
         returnArray['inWatchlist'] = genericVideo.inWatchlist()
 
-        return returnArray;
+        return returnArray
       }
     }
 
@@ -433,17 +486,10 @@ class MarshallerService {
         response['lastUpdated'] = watchlistEntry.lastUpdated
 
         response['tvShow'] = watchlistEntry.tvShow
-        response['video'] = [
-          id: watchlistEntry.video.id,
-          mediaType: watchlistEntry.video.getType(),
-          poster_path: watchlistEntry.video.getPosterPath(),
-          inWatchlist: watchlistEntry.video.inWatchlist(),
-          release_date: watchlistEntry.video.getReleaseDate()
-        ]
+        response['video'] = watchlistEntry.video
 
-        return response;
+        return response
       }
-
     }
 
     JSON.createNamedConfig('fullMovie') {  cfg ->
@@ -465,27 +511,26 @@ class MarshallerService {
         returnArray['title'] = movie.title
         returnArray['release_date'] = movie.release_date
         returnArray['backdrop_path'] = movie.backdrop_path
-        returnArray['poster_path'] = movie.poster_path
+        returnArray['poster_path'] = movie.getPosterPath()
         returnArray['trailerKey'] = movie.trailerKey
 
-
-        returnArray['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
-        returnArray['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+        returnArray['files'] = movie.files.findAll { it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt' }
+        returnArray['subtitles'] = movie.files.findAll { it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt' }
         returnArray['poster_image_src'] = movie.poster_image?.src
+        returnArray['backdrop_image_src'] = movie.backdrop_image?.src
 
-        if(movie.apiId){
+        if (movie.apiId) {
           returnArray['similarMovies'] = movie.similarMovies
         }
         returnArray['tags'] = movie.tags
         returnArray['genre'] = movie.genre
-
 
         returnArray['hasFiles'] = movie.hasFiles()
         returnArray['inWatchlist'] = movie.inWatchlist()
 //        returnArray['externalSubtitleUrl'] = movie.externalSubtitleUrl
 //        returnArray['externalVideoUrl'] = movie.externalVideoUrl
 
-        return returnArray;
+        return returnArray
       }
     }
 
@@ -505,29 +550,31 @@ class MarshallerService {
         returnArray['quality'] = file.quality
         returnArray['fileExists'] = file.fileExists
         returnArray['videos'] = file.associatedVideos
+        returnArray['isDefault'] = file.isDefault
+        returnArray['subtitleSrcLang'] = file.subtitleSrcLang
+        returnArray['subtitleLabel'] = file.subtitleLabel
 
-        return returnArray;
+        return returnArray
       }
-
 
       cfg.registerObjectMarshaller(Video) { Video  video ->
         def returnArray = [:]
 
         returnArray['id'] = video.id
 
-        if(video instanceof Movie){
+        if (video instanceof Movie) {
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
-          returnArray['poster_path'] = video.poster_path
+          returnArray['poster_path'] = video.getPosterPath()
         }
 
-        if(video instanceof Episode){
+        if (video instanceof Episode) {
           returnArray['isEpisode'] = true
           returnArray['title'] = video.show?.name
-          returnArray['poster_path'] = video.show?.poster_path
+          returnArray['poster_path'] = video.getPosterPath()
         }
 
-        return returnArray;
+        return returnArray
       }
     }
 
@@ -550,7 +597,7 @@ class MarshallerService {
         returnArray['videoId'] = report.video.id
         returnArray['videoTitle'] = report.video.title
 
-        return returnArray;
+        return returnArray
       }
     }
 
@@ -570,15 +617,16 @@ class MarshallerService {
         returnArray['outro_start'] = episode.outro_start
         returnArray['videoType'] = 'episode'
         returnArray['still_image_src'] = episode.still_image?.src
-        returnArray['videoFiles'] = episode.getVideoFiles()?.collect{it.simpleInstance}
+        returnArray['videoFiles'] = episode.getVideoFiles()?.collect { it.simpleInstance }
+        returnArray['subtitles'] = episode.getSubtitles()?.collect { it.simpleInstance }
 
         ViewingStatus viewingStatus = episode.getViewingStatus()
-        if(viewingStatus){
+        if (viewingStatus) {
           returnArray['isInProgress'] = true
           returnArray['currentPlayTime'] = viewingStatus.currentPlayTime
           returnArray['runtime'] = viewingStatus.runtime
         }
-        return returnArray;
+        return returnArray
       }
     }
 
@@ -591,9 +639,9 @@ class MarshallerService {
         returnArray['name'] = episode.name
         returnArray['season_number'] = episode.season_number
         returnArray['episode_number'] = episode.episode_number
-        returnArray['files'] = episode.videoFiles?.collect{it.simpleInstance}
-        returnArray['subtitles'] = episode.subtitles?.collect{it.simpleInstance}
-        returnArray['videoFiles'] = episode.getVideoFiles()?.collect{it.simpleInstance}
+        returnArray['files'] = episode.videoFiles?.collect { it.simpleInstance }
+        returnArray['subtitles'] = episode.subtitles?.collect { it.simpleInstance }
+        returnArray['videoFiles'] = episode.getVideoFiles()?.collect { it.simpleInstance }
         returnArray['still_path'] = episode.still_path
         returnArray['intro_start'] = episode.intro_start
         returnArray['intro_end'] = episode.intro_end
@@ -605,12 +653,11 @@ class MarshallerService {
         returnArray['reportCount'] = episode.reportCount
         returnArray['still_image_src'] = episode.still_image?.src
 
-        return returnArray;
+        return returnArray
       }
     }
 
     JSON.createNamedConfig('admin') {  cfg ->
-
       cfg.registerObjectMarshaller(GenericVideo) { GenericVideo  genericVideo ->
         def returnArray = [:]
 
@@ -626,21 +673,20 @@ class MarshallerService {
 
         returnArray['title'] = genericVideo.title
         returnArray['release_date'] = genericVideo.release_date
+        returnArray['poster_path'] = genericVideo.getPosterPath()
         returnArray['poster_image_src'] = genericVideo.poster_image?.src
         returnArray['backdrop_image_src'] = genericVideo.backdrop_image?.src
         returnArray['trailerKey'] = genericVideo.trailerKey
 
-
-        returnArray['files'] = genericVideo.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
-        returnArray['subtitles'] = genericVideo.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+        returnArray['files'] = genericVideo.files.findAll { it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt' }
+        returnArray['subtitles'] = genericVideo.files.findAll { it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt' }
         returnArray['tags'] = genericVideo.tags
         returnArray['genre'] = genericVideo.genre
         returnArray['hasFiles'] = genericVideo.hasFiles()
 
-
-        return returnArray;
+        return returnArray
       }
     }
-
   }
+
 }

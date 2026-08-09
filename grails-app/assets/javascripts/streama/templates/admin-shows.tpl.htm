@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-6">
     <h1>
-      Shows
+      Shows <span class="text-muted text-xs">({{tvShow.total}} items)</span>
       <video-sort-order-dropdown ng-model="tvShow.sorter"  ng-model-options="{getterSetter: true}" dropdown-type="'tvShow'"/>
     </h1>
   </div>
@@ -36,7 +36,7 @@
        ng-repeat="show in tvShow.list"
        ui-sref="admin.show({showId: show.id})">
     <div class="media-item" >
-      <img ng-if="show.poster_path" ng-src="https://image.tmdb.org/t/p/w300/{{show.poster_path}}"/>
+      <img ng-if="show.poster_path" ng-src="{{show.poster_path}}"/>
       <img ng-if="!show.poster_path && !show.manualInput" ng-src="{{basePath}}assets/poster-not-found.png"/>
 
       <img ng-show="show.manualInput && show.poster_image_src" ng-src="{{show.poster_image_src}}">
@@ -69,7 +69,7 @@
         </div>
       </div>
       <div class="media-item" >
-        <img ng-src="https://image.tmdb.org/t/p/w300/{{show.poster_path}}"/>
+        <img ng-src="{{show.poster_path}}"/>
       </div>
       <div class="media-meta">Release: {{::show.release_date.substring(0, 4)}} | <i class="ion-ios-star"></i> {{::show.vote_average}}</div>
     </div>

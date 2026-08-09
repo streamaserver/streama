@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-md-6">
     <h1>
-      Movies <video-sort-order-dropdown ng-model="vm.movie.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'movie'"/>
+      Movies <span class="text-muted text-xs">({{vm.movie.total}} items)</span>
+      <video-sort-order-dropdown ng-model="vm.movie.sorter" ng-model-options="{getterSetter: true}" dropdown-type="'movie'"/>
     </h1>
 
     <input placeholder="{{vm.searchText}}" type="text" ng-model="vm.movie.filter.title" ng-change="vm.doSearch(vm.movie.filter.title)"
@@ -64,7 +65,7 @@
         </div>
       </div>
       <div class="media-item" >
-        <img ng-src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"/>
+        <img ng-src="{{movie.poster_path}}"/>
       </div>
       <div class="media-meta">Release: {{::movie.release_date.substring(0, 4)}} | <i class="ion-ios-star"></i> {{::movie.vote_average}}</div>
     </div>

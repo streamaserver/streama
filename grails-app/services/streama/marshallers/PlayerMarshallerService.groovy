@@ -70,7 +70,7 @@ class PlayerMarshallerService {
           returnArray['title'] = video.title
           returnArray['release_date'] = video.release_date
           returnArray['backdrop_path'] = video.buildImagePath('backdrop_path', "w1280")
-          returnArray['poster_path'] = video.poster_path
+          returnArray['poster_path'] = video.getPosterPath()
           returnArray['trailerKey'] = video.trailerKey
           returnArray['nextVideo'] = video.suggestNextVideo()?.getSimpleInstance()
 

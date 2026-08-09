@@ -10,7 +10,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'الرمز',
 			FIRST_TIME_HINT: 'اول مرة تقوم بتسجيل الدخول؟ حاول ادخال \'admin\' بالفراغيين.',
 			SUBMIT: 'تسجيل الدخول',
-      SESSION_EXPIRED: 'انتهت صلاحية الدخول منذ اخر نشاط. الرجاء تسجيل الدخول مرة اخرى.'
+      SESSION_EXPIRED: 'انتهت صلاحية الدخول منذ اخر نشاط. الرجاء تسجيل الدخول مرة اخرى.',
+      FORGOT_PASSWORD: 'هل نسيت كلمة المرور؟'
 		},
 		DASHBOARD: {
       HOME: 'الصفحة الرئيسية',
@@ -18,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'أفلام',
       MY_LIST:'قائمتي',
 			TITLE: 'الواجهة الرئيسية',
+      TITLE_COUNTER_OF: 'of',
 			RECOMMENDATIONS: 'افضل الافلام',
 			NEW_RELEASES: 'المصدرة حديثا',
 			CONTINUE_WATCHING: 'الاستمرار في المشاهدة',
@@ -93,6 +95,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk/دانماركي',
     LANGUAGE_ar: 'عربى',
 		LANGUAGE_hu: 'Magyar/الهنغارية',
+		LANGUAGE_sk: 'Slovensky/Slovak',
 		PROFIlE: {
 			USERNAME: 'الاسم',
 			FULL_NAME: 'الاسم الكامل',

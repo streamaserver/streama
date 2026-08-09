@@ -1,12 +1,13 @@
 package streama
 
 import streama.traits.SimpleInstance
+import java.security.SecureRandom
+import org.hibernate.Criteria
 
 class TvShow implements SimpleInstance {
 
   transient springSecurityService
   transient theMovieDbService
-
 
   Boolean deleted = false
   Boolean manualInput = false
@@ -29,7 +30,6 @@ class TvShow implements SimpleInstance {
   Double popularity
   static hasMany = [episodes: Episode, genre: Genre]
 
-
   File poster_image
   File backdrop_image
 
@@ -39,13 +39,12 @@ class TvShow implements SimpleInstance {
     overview type: 'text'
   }
 
-
   static constraints = {
-      name nullable: false
-      overview size: 1..5000
+    name nullable: false
+    overview size: 1..5000
   }
 
-  List<Episode> getFilteredEpisodes(){
+  List<Episode> getFilteredEpisodes() {
     List filteredEpisodes = Episode.findAllByShowAndDeletedNotEqual(this, true)
     return filteredEpisodes
   }
@@ -54,28 +53,28 @@ class TvShow implements SimpleInstance {
 //    return this.getFilteredEpisodes()
 //  }
 
-  def getExternalLinks(){
+  def getExternalLinks() {
     theMovieDbService.getExternalLinks(this.apiId)
   }
 
-  def getHasFiles(){
-    return (this.episodes?.find{it.files} ? true : false)
+  def getHasFiles() {
+    return (this.episodes?.find { it.files } ? true : false)
   }
 
-  def getFullTvShowMeta(){
-    try{
+  def getFullTvShowMeta() {
+    try {
       return theMovieDbService.getFullTvShowMeta(this.apiId)
-    }catch (e){
+    }catch (e) {
       log.warn("couldnt get FullTvShowMeta for ${this.apiId}")
       log.warn(e.message)
       return null
     }
   }
 
-  def inWatchlist(){
+  def inWatchlist() {
     User currentUser = springSecurityService.currentUser
     Profile profile = currentUser.getProfileFromRequest()
-    return WatchlistEntry.where{
+    return WatchlistEntry.where {
       user == currentUser
       profile == profile
       tvShow == this
@@ -83,8 +82,26 @@ class TvShow implements SimpleInstance {
     }.count() > 0
   }
 
-
-  def getFirstEpisode(){
-    return this.episodes?.findAll{it.files && it.season_number != "0"}.min{it.seasonEpisodeMerged}
+  List<Episode> listEpisodesWithFiles() {
+    return this.episodes?.findAll { it.files && it.season_number != '0' } as List
   }
+
+  def getFirstEpisode() {
+    return listEpisodesWithFiles().min { it.seasonEpisodeMerged }
+  }
+
+  def getPosterPath(Integer width = 300){
+    if(this.poster_image){
+      return this.poster_image.src
+    }
+    if(!this.poster_path){
+      return
+    }
+    String TMDB_BASE_PATH = "https://image.tmdb.org/t/p/w${width}/"
+    if(this.poster_path?.startsWith('http')){
+      return this.poster_path
+    }
+    return TMDB_BASE_PATH + this.poster_path
+  }
+
 }

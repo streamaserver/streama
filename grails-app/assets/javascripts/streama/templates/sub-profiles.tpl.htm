@@ -10,14 +10,14 @@
         <p class="profile-name">{{subp.profileName}}</p>
       </div>
 
-      <div class="add-profile" ng-click="goToCreateProfile()">
+      <div class="add-profile" ng-click="goToCreateProfile()" ng-if="existingProfiles.length < $root.getSetting('profile-count').value">
         <div class="avatar">
           <p class="add">+</p>
         </div>
         <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
       </div>
     </div>
-    <div class="select-profile-container" ng-if="!existingProfiles.length">
+    <div class="select-profile-container" ng-if="!existingProfiles.length && existingProfiles.length < $root.getSetting('profile-count').value">
       <div class="add-profile" ng-click="goToCreateProfile()">
         <div class="avatar">
           <p class="add">+</p>
@@ -44,14 +44,14 @@
         <p class="profile-name">{{subp.profileName}}</p>
       </div>
 
-      <div class="add-profile" ng-click="goToCreateProfile()">
+      <div class="add-profile" ng-click="goToCreateProfile()" ng-if="existingProfiles.length < $root.getSetting('profile-count').value">
         <div class="avatar">
           <p class="add">+</p>
         </div>
         <p class="profile-name">{{'ADD_SUB_PROFILE' | translate}}</p>
       </div>
     </div>
-    <div class="select-profile-container" ng-if="!existingProfiles.length">
+    <div class="select-profile-container" ng-if="!existingProfiles.length && existingProfiles.length < $root.getSetting('profile-count').value">
       <div class="add-profile" ng-click="goToCreateProfile()">
         <div class="avatar">
           <p class="add">+</p>

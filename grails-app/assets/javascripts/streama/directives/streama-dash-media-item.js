@@ -16,6 +16,7 @@ angular.module('streama').directive('streamaDashMediaItem', function () {
 function controller(apiService, modalService, $rootScope, $state, $scope) {
   var vm = this;
   vm.fetchFirstEpisodeAndPlay = fetchFirstEpisodeAndPlay;
+  vm.fetchRandomEpisodeAndPlay = fetchRandomEpisodeAndPlay;
   vm.showDetails = showDetails;
   vm.handleWatchlistUpdate = handleWatchlistUpdate;
   vm.markCompleted = markCompleted;
@@ -24,6 +25,13 @@ function controller(apiService, modalService, $rootScope, $state, $scope) {
 
   function fetchFirstEpisodeAndPlay(tvShow) {
     apiService.dash.firstEpisodeForShow(tvShow.id).then(function (response) {
+      $state.go('player', {videoId: response.data.id});
+    });
+  }
+
+
+  function fetchRandomEpisodeAndPlay(tvShow) {
+    apiService.dash.randomEpisodeForShow(tvShow.id).then(function (response) {
       $state.go('player', {videoId: response.data.id});
     });
   }

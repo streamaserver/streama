@@ -24,7 +24,7 @@ class MediaDetailMarshallerService {
         result['overview'] = tvShow.overview
         result['apiId'] = tvShow.apiId
         result['backdrop_path'] = tvShow.backdrop_path
-        result['poster_path'] = tvShow.poster_path
+        result['poster_path'] = tvShow.getPosterPath()
         result['first_air_date'] = tvShow.first_air_date
         result['original_language'] = tvShow.original_language
         result['vote_average'] = tvShow.vote_average
@@ -47,7 +47,7 @@ class MediaDetailMarshallerService {
         result['mediaType'] = 'movie'
         result['dateCreated'] = movie.dateCreated
         result['lastUpdated'] = movie.lastUpdated
-        result['poster_path'] = movie.poster_path
+        result['poster_path'] = movie.getPosterPath()
         result['release_date'] = movie.release_date
         result['title'] = movie.title
         result['overview'] = movie.overview
@@ -58,10 +58,11 @@ class MediaDetailMarshallerService {
         result['popularity'] = movie.popularity
         result['imdb_id'] = movie.imdb_id
         result['poster_image_src'] = movie.poster_image?.src
+        result['backdrop_image_src'] = movie.backdrop_image?.src
         result['genre'] = movie.genre
 
-        result['files'] = movie.files.findAll{it.extension != '.srt' && it.extension != '.vtt'}
-        result['subtitles'] = movie.files.findAll{it.extension == '.srt' || it.extension == '.vtt'}
+        result['files'] = movie.files.findAll{it.extension?.toLowerCase() != '.srt' && it.extension?.toLowerCase() != '.vtt'}
+        result['subtitles'] = movie.files.findAll{it.extension?.toLowerCase() == '.srt' || it.extension?.toLowerCase() == '.vtt'}
 
         result['hasFiles'] = movie.hasFiles()
         return result
