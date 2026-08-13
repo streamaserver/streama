@@ -252,6 +252,8 @@ class VideoController {
       return
     }
     viewingStatus.delete()
+    respond status: OK
+  }gStatus.delete()
     render status: 200
   }
 
