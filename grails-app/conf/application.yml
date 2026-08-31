@@ -101,6 +101,12 @@ spring:
     groovy:
         template:
             check-template-location: false
+    security:
+        csrf:
+            enabled: true
+            headerName: 'X-CSRF-TOKEN'
+            filter:
+                enabled: true
 
 ---
 grails:
