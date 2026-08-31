@@ -51,6 +51,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
         $scope.isTranscoding = false;
         $scope.transcodingProgress = 0;
 
+
         if (!$scope.options.isExternalLink) {
           checkVideoAndInit();
         } else {
@@ -122,10 +123,13 @@ angular.module('streama').directive('streamaVideoPlayer', [
           $scope.$on('$stateChangeSuccess', onStateChangeSuccess);
 
           $timeout(function () {
+
             var $video = $elem.find('video');
             $video.bind("contextmenu", function () {
               return false;
+
             });
+
             video = $video[0];
             video.oncanplay = oncanplay;
             video.onwaiting = onwaiting;
@@ -133,6 +137,7 @@ angular.module('streama').directive('streamaVideoPlayer', [
             video.onerror = onerror;
             video.ontimeupdate = ontimeupdate;
             video.addEventListener('ended', onVideoEnded);
+
             $scope.scrubberOptions = generateScrupperOoptions();
             $scope.volumeScrubberOptions = generateVolumeScrubberOptions();
             $scope.volumeLevel = localStorageService.get('volumeLevel') || 5;
@@ -148,6 +153,8 @@ angular.module('streama').directive('streamaVideoPlayer', [
               var selectedVideoFile = _.find($scope.options.videoFiles, {label: savedVideoFileLabel});
               changeVideoFile(selectedVideoFile);
             }
+
+
             //Autoloads sub#0 if the setting is true on Admin>Settings, and if the subtitle exists (by Norwelian)
             var sub_auto_load_value = false;
             apiService.settings.list().then(function(data){
@@ -159,11 +166,18 @@ angular.module('streama').directive('streamaVideoPlayer', [
                     hideSubtitle();
                     changeSubtitle($scope.options.subtitles[0]);
                 }
+
             });
 
             $scope.options.subtitleSize = localStorageService.get('subtitleSize') || 'md';
             $scope.options.hasCustomSubtitleSize = localStorageService.get('hasCustomSubtitleSize') || false;
             $scope.options.customSubtitleSize = localStorageService.get('customSubtitleSize') || null;
+// HLS Support
+            if (Hls.isSupported()) {
+              var hls = new Hls();
+              hls.loadSource(videoSrc);
+              hls.attachMedia(video);
+            }
           });
         }
 

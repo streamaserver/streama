@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "alertify": "~0.3.10",
+    "hls.js": " 0.10.1",
     "angular-ui-router": "~0.*",
     "angular-local-storage": "~0.2.2",
     "bootstrap": "~3.3.5",
