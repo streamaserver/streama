@@ -15,7 +15,7 @@ class Movie extends Video{
   File backdrop_image
 
 
-  static hasMany = [tags: Tag, genre: Genre]
+  static hasMany = [tags: Tag, genre: Genre, actors: Actor]
 
   static constraints = {
   }
