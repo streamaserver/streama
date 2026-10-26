@@ -110,6 +110,12 @@ class FileController {
 
 
     else if(path){
+      if(!PathHelper.isInside(path, uploadService.uploadDirs)){
+        Map result = ResultHelper.generateErrorResult(FORBIDDEN.value(), 'path', 'Only files inside the upload directory can be deleted.')
+        response.setStatus(result.statusCode)
+        render (result as JSON)
+        return
+      }
       java.io.File rawFile = new java.io.File(path)
       rawFile.delete()
       respond status: OK
@@ -268,7 +274,7 @@ class FileController {
       dirPath = localPath.resolve( uploadService.localPath + path).toAbsolutePath()
     }
 
-    if (!dirPath.startsWith(localPath)) {
+    if (!PathHelper.isInside(dirPath.toString(), [uploadService.localPath])) {
       result.code = "FileNotInLocalPath"
       result.message = "The video file must be contained in the Local Video Files setting."
       response.setStatus(NOT_ACCEPTABLE.value)
@@ -331,13 +337,17 @@ class FileController {
   }
 
 
-  def save(File file) {
+  // Only edits existing files. Paths, hashes and visibility are never taken from the client,
+  // otherwise any path on the server could be registered and then read through serve().
+  def save() {
+    File file = File.get(request.JSON.optLong('id'))
 
     if (file == null) {
       render status: NOT_FOUND
       return
     }
 
+    bindData(file, request.JSON, [include: ['label', 'isDefault', 'subtitleLabel', 'subtitleSrcLang']])
     file.validate()
 
     if (file.hasErrors()) {
