@@ -68,14 +68,13 @@ class VideoService {
     }
 
     // Check that the given file path is contained in the local files directory
-    def localPath = Paths.get(uploadService.localPath)
-    def givenPath = Paths.get(params.localFile).toAbsolutePath()
-    if (!givenPath.startsWith(localPath)) {
+    if (!PathHelper.isInside(params.localFile, [uploadService.localPath])) {
       result.message = "The video file must be contained in the Local Video Files setting."
       result.error = true
       result.statusCode = NOT_ACCEPTABLE.value
       return result
     }
+    def givenPath = Paths.get(params.localFile).toAbsolutePath()
 
     // Create the file in database
     File file = File.findOrCreateByLocalFile(params.localFile)
