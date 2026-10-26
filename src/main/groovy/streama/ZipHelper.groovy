@@ -21,18 +21,18 @@ class ZipHelper {
     }
 
     // Sanitize filename as defense-in-depth
-    String sanitizedFileName = new File(originalFileName).getName()
+    String sanitizedFileName = new java.io.File(originalFileName).getName()
     if (sanitizedFileName.isEmpty() || sanitizedFileName.startsWith(".")) {
       throw new SecurityException("Invalid filename: filename cannot be empty or start with a dot")
     }
 
     // Build target path and validate it's within staging directory
-    File stagingDirFile = new File(stagingDir)
-    File targetFile = new File(stagingDirFile, sanitizedFileName)
+    java.io.File stagingDirFile = new java.io.File(stagingDir)
+    java.io.File targetFile = new java.io.File(stagingDirFile, sanitizedFileName)
     String canonicalStagingDir = stagingDirFile.getCanonicalPath()
     String canonicalTargetPath = targetFile.getCanonicalPath()
 
-    if (!canonicalTargetPath.startsWith(canonicalStagingDir + File.separator)) {
+    if (!canonicalTargetPath.startsWith(canonicalStagingDir + java.io.File.separator)) {
       throw new SecurityException("Path traversal attempt detected: file path escapes staging directory")
     }
 
@@ -53,9 +53,9 @@ class ZipHelper {
     String extension = sanitizedFileName[index..-1]
 
     // Validate the new filename is also safe
-    File newFile = new File(stagingDirFile, "$sha256Hex$extension")
+    java.io.File newFile = new java.io.File(stagingDirFile, "$sha256Hex$extension")
     String canonicalNewPath = newFile.getCanonicalPath()
-    if (!canonicalNewPath.startsWith(canonicalStagingDir + File.separator)) {
+    if (!canonicalNewPath.startsWith(canonicalStagingDir + java.io.File.separator)) {
       throw new SecurityException("Path traversal attempt detected in renamed file")
     }
 
