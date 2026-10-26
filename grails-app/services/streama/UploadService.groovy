@@ -34,6 +34,10 @@ class UploadService {
     return Settings.findBySettingsKey('Local Video Files')?.value
   }
 
+  List<String> getUploadDirs() {
+    return storagePaths.collect { it + '/upload' }
+  }
+
   def upload(request, params = [:]) {
     //log.debug(params)
     def rawFile = request.getFile('file')

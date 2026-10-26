@@ -20,7 +20,6 @@ grails.plugin.springsecurity.portMapper.httpPort = 80
 grails.plugin.springsecurity.portMapper.httpsPort = 443
 grails.plugin.springsecurity.rememberMe.cookieName = 'streama_remember_me'
 grails.plugin.springsecurity.rememberMe.alwaysRemember = true
-grails.plugin.springsecurity.rememberMe.key = 'streama_Rocks123!!RememberMe'
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = "/user/loginTarget"
 grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 
@@ -31,7 +30,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/index.gsp',  access :['IS_AUTHENTICATED_REMEMBERED']],
 
   [pattern:'/viewingStatus/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
-  [pattern:'/file/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/file/transcodingStatus',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  [pattern:'/file/triggerTranscoding',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/stomp/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/websocket/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/video/dash',  access :['IS_AUTHENTICATED_REMEMBERED']],
@@ -69,6 +69,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/episode/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/tag/**',  access :['ROLE_CONTENT_MANAGER']],
   [pattern:'/report/**',  access :['ROLE_CONTENT_MANAGER']],
+  [pattern:'/file/**',  access :['ROLE_CONTENT_MANAGER']],
+  [pattern:'/file/upload',  access :['ROLE_CONTENT_MANAGER', 'ROLE_ADMIN']],
+  [pattern:'/file/getURL',  access :['ROLE_CONTENT_MANAGER', 'ROLE_ADMIN']],
 
   [pattern:'/user/**',  access :['ROLE_ADMIN']],
   [pattern:'/userActivity/**',  access :['ROLE_ADMIN']],
