@@ -10,10 +10,10 @@ class ZipHelperSecuritySpec extends Specification {
 
   def setup() {
     // Create a temporary staging directory for tests
-    stagingDir = File.createTempDir("streama-test-", "-staging")
+    stagingDir = java.io.File.createTempDir("streama-test-", "-staging")
 
     // Create a test gzip file
-    testFile = new File(stagingDir, "test.gz")
+    testFile = new java.io.File(stagingDir, "test.gz")
     def content = "test content".bytes
     new java.util.zip.GZIPOutputStream(new FileOutputStream(testFile)).withStream { gz ->
       gz.write(content)
@@ -32,7 +32,7 @@ class ZipHelperSecuritySpec extends Specification {
     then:
     result.endsWith(".srt")
     // File should exist in staging dir
-    new File(stagingDir, result).exists()
+    new java.io.File(stagingDir, result).exists()
   }
 
   def "happy path - filename with spaces works"() {
@@ -41,7 +41,7 @@ class ZipHelperSecuritySpec extends Specification {
 
     then:
     result.endsWith(".srt")
-    new File(stagingDir, result).exists()
+    new java.io.File(stagingDir, result).exists()
   }
 
   @Unroll

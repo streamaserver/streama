@@ -10,7 +10,7 @@ class OpensubtitlesServiceSecuritySpec extends Specification {
   def setup() {
     // Mock dependencies
     service.uploadService = Mock(UploadService) {
-      getDir() >> [uploadDir: File.createTempDir()]
+      getDir() >> [uploadDir: java.io.File.createTempDir()]
     }
   }
 
@@ -76,7 +76,7 @@ class OpensubtitlesServiceSecuritySpec extends Specification {
       getId() >> 1L
     }
     Video.metaClass.static.findById = { id -> video }
-    service.settingsService = Mock(Object) {
+    service.settingsService = Mock(SettingsService) {
       getValueForName('opensubtitles_api_key') >> null
     }
 
