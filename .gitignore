@@ -63,3 +63,4 @@ CLAUDE.md
 
 # Deployment secrets
 deploy/.env
+streama-remember-me.key
