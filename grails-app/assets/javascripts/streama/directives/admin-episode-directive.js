@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('streama').directive('adminEpisode', [
-	'uploadService', 'modalService', 'apiService', '$stateParams', function (uploadService, modalService, apiService, $stateParams) {
+	'uploadService', 'modalService', 'apiService', '$stateParams',
+  function (uploadService, modalService, apiService, $stateParams) {
 	return {
 		restrict: 'AE',
 		templateUrl: '/streama/directive--admin-episode.htm',
 		scope: {
-			episode: '='
+			episode: '=',
+      episodes: '='
 		},
 		link: function ($scope, $elem, $attrs) {
 			$scope.uploadStatus = {};
@@ -40,7 +42,7 @@ angular.module('streama').directive('adminEpisode', [
 
 
 			$scope.manageFiles = function(episode){
-				modalService.fileManagerModal(episode);
+				modalService.fileManagerModal(episode, $scope.episodes);
 			};
 
 

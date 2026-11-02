@@ -1,0 +1,184 @@
+<h1>Audio Transcoding</h1>
+
+<div ng-if="vm.loading" class="text-center">
+  <i class="ion-load-c spin"></i> Loading...
+</div>
+
+<div ng-if="!vm.loading">
+
+  <!-- Status Panel -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">FFmpeg Status</h3>
+    </div>
+    <div class="panel-body">
+      <div ng-if="!vm.status.ffmpegDetected" class="alert alert-warning">
+        <strong>FFmpeg not detected.</strong>
+        Audio transcoding is not available. Please install FFmpeg on your server and configure the paths in Settings.
+      </div>
+
+      <div ng-if="vm.status.ffmpegDetected">
+        <div class="row">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>FFmpeg Path</dt>
+              <dd>{{vm.status.ffmpegPath}}</dd>
+              <dt>FFprobe Path</dt>
+              <dd>{{vm.status.ffprobePath}}</dd>
+              <dt>Version</dt>
+              <dd>{{vm.status.ffmpegVersion || 'Unknown'}}</dd>
+              <dt>Transcoding Enabled</dt>
+              <dd>
+                <span ng-if="vm.status.transcodingEnabled" class="label label-success">Yes</span>
+                <span ng-if="!vm.status.transcodingEnabled" class="label label-default">No</span>
+              </dd>
+            </dl>
+          </div>
+          <div class="col-md-6" ng-if="vm.cacheStats">
+            <dl class="dl-horizontal">
+              <dt>Cache Directory</dt>
+              <dd style="word-break: break-all;">{{vm.cacheStats.cacheDirectory}}</dd>
+              <dt>Cached Files</dt>
+              <dd>{{vm.cacheStats.fileCount}}</dd>
+              <dt>Cache Size</dt>
+              <dd>{{vm.cacheStats.totalSizeMB}} MB</dd>
+              <dt>Pending Transcodes</dt>
+              <dd>{{vm.cacheStats.pendingCount}}</dd>
+              <dt>Active Jobs</dt>
+              <dd>{{vm.cacheStats.activeJobs}}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions Panel -->
+  <div class="panel panel-default" ng-if="vm.status.available">
+    <div class="panel-heading">
+      <h3 class="panel-title">Actions</h3>
+    </div>
+    <div class="panel-body">
+      <button class="btn btn-primary" ng-click="vm.probeAll()">
+        <i class="ion-search"></i> Probe All Unscanned Files
+      </button>
+      <button class="btn btn-success" ng-click="vm.transcodeAll()" ng-disabled="!vm.pendingFiles.length">
+        <i class="ion-refresh"></i> Transcode All Pending ({{vm.pendingFiles.length}})
+      </button>
+      <button class="btn btn-danger" ng-click="vm.clearAllCache()" ng-disabled="!vm.cacheStats || !vm.cacheStats.fileCount">
+        <i class="ion-trash-a"></i> Clear All Cache
+      </button>
+    </div>
+  </div>
+
+  <!-- Pending Files -->
+  <div class="panel panel-warning" ng-if="vm.status.available && vm.pendingFiles.length">
+    <div class="panel-heading">
+      <h3 class="panel-title">Pending Transcoding ({{vm.pendingFiles.length}})</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Audio Codec</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="file in vm.pendingFiles">
+            <td>{{file.originalFilename}}</td>
+            <td><code>{{file.audioCodec}}</code></td>
+            <td>
+              <span ng-if="file.status === 'pending'" class="label label-warning">Pending</span>
+              <span ng-if="file.status === 'transcoding'" class="label label-info">
+                <i class="ion-load-c spin"></i> Transcoding...
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-xs btn-success" ng-click="vm.transcode(file)" ng-disabled="file.transcoding || file.status === 'transcoding'">
+                <i class="ion-refresh"></i> Transcode Now
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- All Video Files -->
+  <div class="panel panel-default" ng-if="vm.status.available">
+    <div class="panel-heading">
+      <h3 class="panel-title">All Video Files</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Audio Codec</th>
+            <th>Needs Transcoding</th>
+            <th>Has Cached Audio</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="file in vm.files">
+            <td>{{file.originalFilename}}</td>
+            <td>
+              <code ng-if="file.audioCodec">{{file.audioCodec}}</code>
+              <span ng-if="!file.audioCodec" class="text-muted">Not scanned</span>
+            </td>
+            <td>
+              <span ng-if="file.needsTranscoding" class="label label-warning">Yes</span>
+              <span ng-if="file.needsTranscoding === false" class="label label-success">No</span>
+              <span ng-if="file.needsTranscoding === null" class="label label-default">Unknown</span>
+            </td>
+            <td>
+              <span ng-if="file.hasTranscodedAudio" class="label label-success">Yes</span>
+              <span ng-if="!file.hasTranscodedAudio" class="label label-default">No</span>
+            </td>
+            <td>
+              <span ng-if="file.status === 'ready'" class="label label-success">Ready</span>
+              <span ng-if="file.status === 'pending'" class="label label-warning">Pending</span>
+              <span ng-if="file.status === 'transcoding'" class="label label-info">
+                <i class="ion-load-c spin"></i> {{file.progress ? (file.progress + '%') : 'Transcoding...'}}
+              </span>
+              <span ng-if="file.status === 'failed'" class="label label-danger">Failed</span>
+            </td>
+            <td>
+              <button class="btn btn-xs btn-default" ng-click="vm.probe(file)" ng-disabled="file.probing" title="Probe audio codec">
+                <i class="ion-search" ng-if="!file.probing"></i>
+                <i class="ion-load-c spin" ng-if="file.probing"></i>
+              </button>
+              <button class="btn btn-xs btn-success" ng-click="vm.transcode(file)"
+                      ng-disabled="file.transcoding || !file.needsTranscoding || file.hasTranscodedAudio"
+                      title="Start transcoding">
+                <i class="ion-refresh"></i>
+              </button>
+              <button class="btn btn-xs btn-danger" ng-click="vm.clearCache(file)"
+                      ng-disabled="!file.hasTranscodedAudio"
+                      title="Clear cached audio">
+                <i class="ion-trash-a"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ul uib-pagination ng-if="vm.totalFiles > vm.maxPerPage"
+          max-size="7" force-ellipses="true"
+          boundary-links="true" total-items="vm.totalFiles"
+          ng-model="vm.pagination.currentPage" items-per-page="vm.maxPerPage" ng-change="vm.pageChanged()"></ul>
+    </div>
+  </div>
+
+  <!-- Not Available Message -->
+  <div ng-if="!vm.status.available && vm.status.ffmpegDetected" class="alert alert-info">
+    <strong>Transcoding is disabled.</strong>
+    Enable it in Settings > Enable Audio Transcoding.
+  </div>
+
+</div>

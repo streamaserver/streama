@@ -28,6 +28,9 @@
       <div ng-if="!media.inWatchlist" class="watchlist-button">
         <i class="add-icon ion-android-add-circle" ng-click="addToWatchlist(media)"></i>
       </div>
+      <div ng-if="media.mediaType === 'tvShow'" class="watchlist-button">
+        <i class="shuffle-icon ion-shuffle" ui-sref="player({videoId: (randomEpisode.id)})"></i>
+      </div>
       <div ng-if="media.inWatchlist" class="watchlist-button">
         <i class="remove-icon ion-android-remove-circle" ng-click="removeFromWatchlist(media)"></i>
       </div>
@@ -93,7 +96,7 @@
          </ul>
        </div>
 
-       <img ng-if="media.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{media.still_path}}"/>
+       <img ng-if="media.still_path" ng-src="{{media.still_path}}"/>
 
        <div ng-if="media.trailerKey">
          <h4>{{'VIDEO.TRAILER' | translate}}</h4>
@@ -102,7 +105,7 @@
        </div>
      </div>
      <div class="col-sm-4">
-       <img ng-if="media.poster_path && !media.poster_image_src" ng-src="https://image.tmdb.org/t/p/w300/{{media.poster_path}}"/>
+       <img ng-if="media.poster_path && !media.poster_image_src" ng-src="{{media.poster_path}}"/>
        <img ng-if="media.poster_image_src" ng-src="{{media.poster_image_src}}"/>
      </div>
    </div>
@@ -130,6 +133,14 @@
          </a>
        </h3>
        <h3 class="media-title">{{episode.name}}</h3>
+       <div class="episode-languages" ng-if="episode.videoFiles.length || episode.subtitles.length">
+         <span class="lang-badge audio" ng-repeat="file in episode.videoFiles" ng-if="file.label">
+           <i class="ion-volume-high"></i> Audio: {{file.label}}
+         </span>
+         <span class="lang-badge subtitle" ng-if="episode.subtitles.length">
+           <i class="ion-document-text"></i> Sub: <span ng-repeat="sub in episode.subtitles">{{sub.subtitleLabel || sub.subtitleSrcLang}}{{$last ? '' : ', '}}</span>
+         </span>
+       </div>
        <div class="media-item" >
          <img ng-if="episode.still_path" ng-src="https://image.tmdb.org/t/p/w300/{{episode.still_path}}"/>
          <img ng-if="!episode.still_path && episode.still_image_src" ng-src="{{episode.still_image_src}}"/>

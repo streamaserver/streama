@@ -432,6 +432,27 @@
     max-height: 300px;
     overflow: auto;
 
+    .episode-thumb{
+      width: 80px;
+      height: 45px;
+      @include flex(none);
+      margin-right: 10px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.3);
+
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .fallback-image{
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+
     .episode-number{
       width: 30px;
       float: left;

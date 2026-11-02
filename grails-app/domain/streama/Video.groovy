@@ -100,10 +100,16 @@ class Video implements SimpleInstance{
   }
 
   Set<File> getVideoFiles(){
-    return this.files?.findAll{it.extension != '.srt' && it.extension != '.vtt'} ?: []
+    return this.files?.findAll{
+      def ext = it.extension?.toLowerCase()
+      ext != '.srt' && ext != '.vtt'
+    } ?: []
   }
   Set<File> getSubtitles(){
-    return this.files?.findAll{it.extension == '.srt' || it.extension == '.vtt'} ?: []
+    return this.files?.findAll{
+      def ext = it.extension?.toLowerCase()
+      ext == '.srt' || ext == '.vtt'
+    } ?: []
   }
 
   def addLocalFile(localFilePath){
@@ -162,12 +168,23 @@ class Video implements SimpleInstance{
   }
 
 
-  def getPosterPath(){
+  def getPosterPath(Integer width = 300){
+    String TMDB_BASE_PATH = "https://image.tmdb.org/t/p/w${width}/"
+
     if(this instanceof Episode){
-      return this.show.poster_path
-    }else{
+      return this.show?.getPosterPath()
+    }else if(this instanceof GenericVideo){
+      return this.poster_image?.getSrc()
+    }
+
+    if(this instanceof Movie && this.poster_image){
+      return this.poster_image?.getSrc()
+    }
+    if(this.poster_path?.startsWith('http')){
       return this.poster_path
     }
+
+    return TMDB_BASE_PATH + this.poster_path
   }
 
 

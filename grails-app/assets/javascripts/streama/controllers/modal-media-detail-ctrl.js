@@ -38,6 +38,10 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
             var firstEpisode = response.data;
             $scope.firstEpisode = firstEpisode;
           });
+          apiService.dash.randomEpisodeForShow($scope.media.id).then(function (response) {
+            var randomEpisode = response.data;
+            $scope.randomEpisode = randomEpisode;
+          });
         }
       });
     }
@@ -63,7 +67,7 @@ angular.module('streama').controller('modalMediaDetailCtrl', [
 			if(media.isGenericVideo){
 				$state.go('admin.video', {videoId: media.id});
 			}
-			if(media.title){
+			else if(media.title){
 				$state.go('admin.movie', {movieId: media.id});
 			}
 			else if(media.name){

@@ -12,17 +12,16 @@ class GenreController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = 999
         respond Genre.list(params), [status: OK]
     }
 
     @Transactional
-    def save(Genre genreInstance) {
-        if (genreInstance == null) {
-            render status: NOT_FOUND
-            return
-        }
+    def save() {
+        def data = request.JSON
+        Genre genreInstance = data.id ? Genre.get(data.id) : new Genre()
 
+        genreInstance.properties = data
         genreInstance.validate()
         if (genreInstance.hasErrors()) {
             render status: NOT_ACCEPTABLE
@@ -55,6 +54,10 @@ class GenreController {
 
         if (genreInstance == null) {
             render status: NOT_FOUND
+            return
+        }
+        if (genreInstance.apiId) {
+            render status: PRECONDITION_FAILED
             return
         }
 

@@ -10,7 +10,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Kodeord',
 			FIRST_TIME_HINT: 'Første gang du logger ind? Prøv \'admin\' i begge felter.',
 			SUBMIT: 'Log Ind',
-      SESSION_EXPIRED: 'Din session er udløbet siden din sidste aktivitet. Venligst log ind igen.'
+      SESSION_EXPIRED: 'Din session er udløbet siden din sidste aktivitet. Venligst log ind igen.',
+      FORGOT_PASSWORD: 'Glemt adgangskode?'
 		},
 		DASHBOARD: {
       HOME: 'Hjemmeside',
@@ -18,6 +19,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Films',
       MY_LIST:'Min liste',
 			TITLE: 'Betjeningspanel',
+      TITLE_COUNTER_OF: 'of',
 			RECOMMENDATIONS: 'Foreslået til dig',
 			NEW_RELEASES: 'Nye Udgivelser',
 			CONTINUE_WATCHING: 'Se videre',
@@ -93,6 +95,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk',
     LANGUAGE_ar: 'عربى/Arabisk',
     LANGUAGE_hu: 'Magyar/Ungarsk',
+		LANGUAGE_sk: 'Slovensky/Slovak',
 		PROFIlE: {
 			USERNAME: 'Brugernavn',
 			FULL_NAME: 'Fulde Navn',

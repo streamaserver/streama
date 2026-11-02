@@ -10,4 +10,6 @@ json g.render(episode, [deep:true, excludes: ['files']]){
 	hasFiles episode.getVideoFiles() ? true : false
 	nextEpisode {id {((Episode)episode.getNextEpisode())?.id}}
 	viewedStatus episode.getViewingStatus()
+
+  poster_path episode.getPosterPath()
 }

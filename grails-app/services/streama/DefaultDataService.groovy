@@ -224,6 +224,15 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+		[
+            settingsKey: 'Enable Random Episode button',
+            name: 'enable-random-episode-button',
+            description: 'Determines whether the shuffle / random play button in the dashboard cards should appear. ',
+            settingsType: 'boolean',
+            value: 'false',
+            required: false,
+            validationRequired: false
+        ],
 		    [
             settingsKey: 'Footer Content',
             name: 'footer-content',
@@ -233,13 +242,98 @@ class DefaultDataService {
             required: false,
             validationRequired: false
         ],
+        [
+          settingsKey: 'Hide \'Dashboard\' button',
+          name: 'hide-dash-button',
+          description: 'Determines whether the the top Dashboard button should be hidden',
+          settingsType: 'boolean',
+          value: 'false',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'Hide \'My List\' button',
+          name: 'hide-mylist-button',
+          description: 'Determines whether the \'My List\' button should be hidden. In contrast to the \'Dashboard Header-links\' setting this will only hide \'My List\'',
+          settingsType: 'boolean',
+          value: 'false',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'Amount of profiles users can create',
+          name: 'profile-count',
+          description: 'Determines how much profiles each individual user can create. Defaults to 4.',
+          settingsType: 'integer',
+          value: '4',
+          required: true,
+          validationRequired: false
+        ],
 //        [
 //            settingsKey: 'Remove Source After Convert',
 //            value: 'yes',
 //            settingsType: 'radio',
 //            description: 'If this is set to "yes", after successful file-conversion the original file will be removed from the Upload Directory. This may be useful in case you have limited disk space.'
 //        ],
+
+        [
+          settingsKey: 'OpenSubtitles API Key',
+          name: 'opensubtitles_api_key',
+          description: 'API key for OpenSubtitles.com. Get your free API key at https://www.opensubtitles.com/consumers (requires account). ' +
+            'The old REST API (rest.opensubtitles.org) was deprecated in 2024. This new API key is required for subtitle search.',
+          settingsType: 'string',
+          value: '',
+          required: false,
+          validationRequired: false
+        ],
+
+        // Audio Transcoding Settings
+        [
+          settingsKey: 'Enable Audio Transcoding',
+          name: 'transcoding_enabled',
+          description: 'Enable on-the-fly audio transcoding for browser-incompatible codecs (EAC3, AC3, DTS). ' +
+            'Requires FFmpeg to be installed on the server. When enabled, incompatible audio will be ' +
+            'automatically converted to AAC format.',
+          settingsType: 'boolean',
+          value: 'false',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'FFmpeg Path',
+          name: 'ffmpeg_path',
+          description: 'Path to FFmpeg executable. Leave empty for auto-detection. ' +
+            'If FFmpeg is not in your system PATH, specify the full path (e.g., /usr/local/bin/ffmpeg). ' +
+            'Install FFmpeg: Ubuntu/Debian: "sudo apt install ffmpeg", macOS: "brew install ffmpeg", ' +
+            'Windows: download from https://ffmpeg.org/download.html',
+          settingsType: 'string',
+          value: '',
+          required: false,
+          validationRequired: false
+        ],
+        [
+          settingsKey: 'FFprobe Path',
+          name: 'ffprobe_path',
+          description: 'Path to FFprobe executable (comes with FFmpeg). Leave empty for auto-detection. ' +
+            'Used to detect audio codecs in video files.',
+          settingsType: 'string',
+          value: '',
+          required: false,
+          validationRequired: false
+        ],
     ]
+
+    // Migration: Update old OpenSubtitles credentials setting to new API key setting
+    def oldOpenSubtitlesSetting = Settings.findByName('credentials_opensubtitles')
+    if (oldOpenSubtitlesSetting) {
+      oldOpenSubtitlesSetting.settingsKey = 'OpenSubtitles API Key'
+      oldOpenSubtitlesSetting.name = 'opensubtitles_api_key'
+      oldOpenSubtitlesSetting.description = 'API key for OpenSubtitles.com. Get your free API key at https://www.opensubtitles.com/consumers (requires account). ' +
+        'The old REST API (rest.opensubtitles.org) was deprecated in 2024. This new API key is required for subtitle search.'
+      oldOpenSubtitlesSetting.value = '' // Clear old credentials as they won't work with new API
+      oldOpenSubtitlesSetting.save flush: true, failOnError: true
+      log.info("Migrated OpenSubtitles setting from credentials to API key format")
+    }
 
     settings.each{ settingData ->
       if(!Settings.findBySettingsKey(settingData.settingsKey)){

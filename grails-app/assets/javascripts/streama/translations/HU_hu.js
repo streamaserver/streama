@@ -11,10 +11,12 @@ angular.module('streama.translations').config(function ($translateProvider) {
       PASSWORD: 'Jelszó',
       FIRST_TIME_HINT: 'Első bejelentkezés? Próbálja meg az \'admin\'-t mindkét mezőbe.',
       SUBMIT: 'Bejelentkezés',
-      SESSION_EXPIRED: 'Az ülése lejárt a legutóbbi aktivitás óta. Jelentkezzen be újra.'
+      SESSION_EXPIRED: 'Az ülése lejárt a legutóbbi aktivitás óta. Jelentkezzen be újra.',
+      FORGOT_PASSWORD: 'Elfelejtette jelszavát?'
     },
     DASHBOARD: {
       TITLE: 'Főoldal',
+      TITLE_COUNTER_OF: 'of',
       RECOMMENDATIONS: 'Ajánlatok',
       NEW_RELEASES: 'Nemrég megjelent',
       CONTINUE_WATCHING: 'Megtekintés folytatása',
@@ -94,6 +96,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dán/Danish',
     LANGUAGE_ar: 'Arab/Arabic',
     LANGUAGE_hu: 'Magyar',
+		LANGUAGE_sk: 'Slovensky/Slovak',
     PROFIlE: {
       USERNAME: 'Felhasználónév',
       FULL_NAME: 'Teljes név',

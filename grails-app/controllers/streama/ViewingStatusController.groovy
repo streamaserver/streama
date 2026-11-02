@@ -16,7 +16,7 @@ class ViewingStatusController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond ViewingStatus.list(params), [status: OK]
+        respond ViewingStatus.findAllByUser(springSecurityService.currentUser, params), [status: OK]
     }
 
     @Transactional
@@ -41,6 +41,14 @@ class ViewingStatusController {
     }
 
     def show(ViewingStatus viewingStatusInstance){
+        if (viewingStatusInstance == null) {
+            render status: NOT_FOUND
+            return
+        }
+        if (!isOwnedByCurrentUser(viewingStatusInstance)) {
+            render status: FORBIDDEN
+            return
+        }
         respond viewingStatusInstance, [status: OK]
     }
 
@@ -50,6 +58,10 @@ class ViewingStatusController {
 
         if (viewingStatusInstance == null) {
             render status: NOT_FOUND
+            return
+        }
+        if (!isOwnedByCurrentUser(viewingStatusInstance)) {
+            render status: FORBIDDEN
             return
         }
 
@@ -63,8 +75,16 @@ class ViewingStatusController {
             render status: NOT_FOUND
             return
         }
+        if (!isOwnedByCurrentUser(viewingStatusInstance)) {
+            render status: FORBIDDEN
+            return
+        }
         viewingStatusInstance.completed = true
         viewingStatusInstance.save flush:true
         respond viewingStatusInstance, [status: OK]
+    }
+
+    private boolean isOwnedByCurrentUser(ViewingStatus viewingStatusInstance) {
+        viewingStatusInstance.user?.id == springSecurityService.currentUser?.id
     }
 }

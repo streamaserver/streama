@@ -11,7 +11,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			PASSWORD: 'Passwort',
 			FIRST_TIME_HINT: 'Erstes mal hier? Versuche \'admin\' als Benutzername und Passwort.',
 			SUBMIT: 'Login',
-      SESSION_EXPIRED: 'Deine Sitzung ist abgelaufen. Bitte logge dich erneut ein.'
+      SESSION_EXPIRED: 'Deine Sitzung ist abgelaufen. Bitte logge dich erneut ein.',
+      FORGOT_PASSWORD: 'Passwort vergessen?'
 		},
 		DASHBOARD: {
       HOME: 'Startseite',
@@ -19,6 +20,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
       MOVIES: 'Filme',
       MY_LIST:'Meine Liste',
 			TITLE: 'Dashboard',
+      TITLE_COUNTER_OF: 'von',
 			NEW_RELEASES: 'Neuerscheinungen',
 			CONTINUE_WATCHING: 'Weiterschauen',
 			DISCOVER_SHOWS: 'Entdecke Serien',
@@ -42,9 +44,9 @@ angular.module('streama.translations').config(function ($translateProvider) {
 			RATING: 'Bewertungen',
       STATUS: 'Status',
       STATUS_VALUE: {
-        'completed': 'Completed',
-        'viewing': 'Viewing',
-        'unviewed': 'Unviewed'
+        'completed': 'Angeschaut',
+        'viewing': 'Weiterschauen',
+        'unviewed': 'Ungesehen'
       },
 			VOTES: 'Stimmen',
 			OVERVIEW: 'Zusammenfassung',
@@ -93,6 +95,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
     LANGUAGE_da: 'Dansk/Dänisch',
     LANGUAGE_ar: 'عربى/Arabisch',
     LANGUAGE_hu: 'Magyar/Ungarisch',
+		LANGUAGE_sk: 'Slovensky/Slovak',
 		PROFIlE: {
 			USERNAME: 'Benutzername',
 			FULL_NAME: 'Echter Name',

@@ -139,14 +139,27 @@ function modalCreateFromFileCtrl($scope, $uibModalInstance, apiService, uploadSe
 		directory.isSelected = !directory.isSelected;
 	  if(directory.isSelected){
       openLocalDirectory(directory, true, function () {
-        _.forEach(directory.localFiles, function (file) {
-          toggleSelection(file);
+        _.forEach(directory.localFiles, function (content) {
+			if(content.path.split('\\').pop().split('.').length > 1){
+				toggleSelection(content);
+			}else{
+				openLocalDirectory(content, true, function () {
+				_.forEach(content.localFiles, function (file) {
+				  toggleSelection(file);
+						});
+					});
+			};
         });
       });
     }else{
       _.forEach(directory.localFiles, function (file) {
         deselect(file);
         directory.showFiles = false;
+		file.showFiles = false;
+		_.forEach(file.localFiles, function (subfile) {
+				deselect(subfile);
+				subfile.showFiles = false;
+				});
       });
     }
 

@@ -1,5 +1,5 @@
 <%@ page import="streama.Settings" %>
-<header class="main navbar-fixed-top" ng-if="!isCurrentState('player')" streama-header-directive>
+<header class="main navbar-fixed-top" ng-if="!isCurrentState('player')">
   <div class="pull-left flex">
     <a class="logo" ui-sref="dash">
       <g:imgSetting setting="${Settings.findByName('logo').value}" alt="${streama.Settings.findByName('title').value} Logo"></g:imgSetting>

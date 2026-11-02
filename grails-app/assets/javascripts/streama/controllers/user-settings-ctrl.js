@@ -6,12 +6,17 @@ angular.module('streama').controller('userSettingsCtrl', function ($scope, apiSe
   $scope.passwordData = {};
   $scope.passwordsInvalid = true;
   $scope.languages = true;
+  $scope.lastLogin = null;
 
 
   apiService.theMovieDb.availableGenres().then(function (response) {
     var data = response.data;
     $scope.availableGenres = data;
     $scope.loading = false;
+  });
+
+  apiService.userActivity.lastLogin().then(function (response) {
+    $scope.lastLogin = response.data;
   });
 
   $scope.toggleSelectGenre = function (genre) {

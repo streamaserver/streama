@@ -20,6 +20,8 @@ class FileController {
   def springSecurityService
   def theMovieDbService
   def bulkCreateService
+  def transcodingService
+  def ffmpegService
 
   def getURL(){
     if (!params.id) {
@@ -108,6 +110,12 @@ class FileController {
 
 
     else if(path){
+      if(!PathHelper.isInside(path, uploadService.uploadDirs)){
+        Map result = ResultHelper.generateErrorResult(FORBIDDEN.value(), 'path', 'Only files inside the upload directory can be deleted.')
+        response.setStatus(result.statusCode)
+        render (result as JSON)
+        return
+      }
       java.io.File rawFile = new java.io.File(path)
       rawFile.delete()
       respond status: OK
@@ -194,6 +202,18 @@ class FileController {
 
 
     if(fileService.allowedVideoFormats.contains(file.extension)){
+      // Check if file needs transcoding and handle accordingly
+      if (file.needsTranscoding && ffmpegService?.isTranscodingAvailable()) {
+        def transcodingResult = handleTranscodedServe(file, rawFile, filePath)
+        if (transcodingResult) {
+          render (transcodingResult as JSON)
+          return
+        }
+        // If handleTranscodedServe returns null, it handled the streaming itself
+        return null
+      }
+
+      // Normal video serving (no transcoding needed or not available)
       def result = fileService.serveVideo(request, response, rawFile, file)
       if(result?.error){
         render (result as JSON)
@@ -254,7 +274,7 @@ class FileController {
       dirPath = localPath.resolve( uploadService.localPath + path).toAbsolutePath()
     }
 
-    if (!dirPath.startsWith(localPath)) {
+    if (!PathHelper.isInside(dirPath.toString(), [uploadService.localPath])) {
       result.code = "FileNotInLocalPath"
       result.message = "The video file must be contained in the Local Video Files setting."
       response.setStatus(NOT_ACCEPTABLE.value)
@@ -317,13 +337,17 @@ class FileController {
   }
 
 
-  def save(File file) {
+  // Only edits existing files. Paths, hashes and visibility are never taken from the client,
+  // otherwise any path on the server could be registered and then read through serve().
+  def save() {
+    File file = File.get(request.JSON.optLong('id'))
 
     if (file == null) {
       render status: NOT_FOUND
       return
     }
 
+    bindData(file, request.JSON, [include: ['label', 'isDefault', 'subtitleLabel', 'subtitleSrcLang']])
     file.validate()
 
     if (file.hasErrors()) {
@@ -333,6 +357,115 @@ class FileController {
 
     file.save flush: true
     respond file, [status: CREATED]
+  }
+
+  /**
+   * Handle serving a video file that needs transcoded audio
+   * Returns null if streaming was handled, or a Map with status/error to render as JSON
+   */
+  private Map handleTranscodedServe(File file, java.io.File rawFile, String filePath) {
+    // Check if we have cached transcoded audio
+    if (transcodingService.hasTranscodedAudio(file)) {
+      // Serve muxed video with transcoded audio
+      try {
+        response.contentType = 'video/mp4'
+        response.addHeader("Accept-Ranges", "bytes")
+        response.addHeader("Cache-Control", 'public,max-age=3600')
+
+        ffmpegService.streamMuxedVideo(
+          response.outputStream,
+          filePath,
+          file.transcodedAudioPath
+        )
+        return null  // Streaming handled
+      } catch (Exception e) {
+        log.error("Error streaming muxed video: ${e.message}", e)
+        response.setStatus(INTERNAL_SERVER_ERROR.value())
+        return [messageCode: 'TRANSCODING_STREAM_ERROR', error: e.message]
+      }
+    }
+
+    // Need to transcode first - check status
+    def status = transcodingService.getTranscodingStatus(file)
+
+    if (status.status == 'transcoding') {
+      // Transcoding in progress - tell client to wait
+      response.setStatus(ACCEPTED.value())
+      return [
+        messageCode: 'TRANSCODING_IN_PROGRESS',
+        status: 'transcoding',
+        progress: status.progress,
+        message: 'Audio is being transcoded. Please wait...'
+      ]
+    }
+
+    // Start transcoding synchronously (block until done)
+    log.info("Starting on-demand transcoding for file ${file.id}")
+
+    // Return status to tell frontend to wait
+    response.setStatus(ACCEPTED.value())
+
+    // Start async transcoding
+    transcodingService.transcodeFileAsync(file)
+
+    return [
+      messageCode: 'TRANSCODING_STARTED',
+      status: 'transcoding',
+      progress: 0,
+      message: 'Audio transcoding started. Please wait...'
+    ]
+  }
+
+  /**
+   * Get transcoding status for a file
+   */
+  def transcodingStatus() {
+    if (!params.id) {
+      render status: BAD_REQUEST
+      return
+    }
+
+    def file = File.get(params.getInt('id'))
+    if (!file) {
+      render status: NOT_FOUND
+      return
+    }
+
+    def status = transcodingService.getTranscodingStatus(file)
+    render (status as JSON)
+  }
+
+  /**
+   * Trigger transcoding for a file
+   */
+  @Transactional
+  def triggerTranscoding() {
+    if (!params.id) {
+      render status: BAD_REQUEST
+      return
+    }
+
+    def file = File.get(params.getInt('id'))
+    if (!file) {
+      render status: NOT_FOUND
+      return
+    }
+
+    if (!file.needsTranscoding) {
+      render ([messageCode: 'NO_TRANSCODING_NEEDED', status: 'ready'] as JSON)
+      return
+    }
+
+    if (transcodingService.hasTranscodedAudio(file)) {
+      render ([messageCode: 'ALREADY_TRANSCODED', status: 'ready'] as JSON)
+      return
+    }
+
+    // Start async transcoding
+    transcodingService.transcodeFileAsync(file)
+
+    response.setStatus(ACCEPTED.value())
+    render ([messageCode: 'TRANSCODING_STARTED', status: 'transcoding', progress: 0] as JSON)
   }
 
 }
