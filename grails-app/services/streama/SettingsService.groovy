@@ -5,9 +5,43 @@ import grails.transaction.Transactional
 @Transactional
 class SettingsService {
 
+  /**
+   * Settings the UI reads for users who are not admins. This is an allowlist on purpose: every other
+   * setting, including the TheMovieDB and OpenSubtitles API keys, stays admin-only, also when new
+   * settings are added later.
+   */
+  static final List<String> VIEWER_SETTING_NAMES = [
+    'player_showDownloadButton',
+    'player_downloadForAllUsers',
+    'subtitle_auto_load',
+    'hidden_dash_sections',
+    'hide_help_faq',
+    'hide-dash-sections',
+    'hide-dash-search',
+    'hide-dash-button',
+    'hide-mylist-button',
+    'enable-random-episode-button',
+    'footer-content',
+    'profile-count'
+  ].asImmutable()
+
+  /** Read by the content-manager file dialog. These settings have no name, only a key. */
+  static final List<String> CONTENT_MANAGER_SETTING_KEYS = ['Local Video Files'].asImmutable()
+
   def theMovieDbService
   def opensubtitlesService
   def grailsApplication
+
+  List<Settings> listVisibleTo(Collection<String> authorities) {
+    List<Settings> settings = Settings.list()
+    if ('ROLE_ADMIN' in authorities) {
+      return settings
+    }
+    boolean contentManager = 'ROLE_CONTENT_MANAGER' in authorities
+    return settings.findAll { Settings setting ->
+      setting.name in VIEWER_SETTING_NAMES || (contentManager && setting.settingsKey in CONTENT_MANAGER_SETTING_KEYS)
+    }
+  }
 
   def getBaseUrl() {
     return Settings.findBySettingsKey('Base URL')?.value
