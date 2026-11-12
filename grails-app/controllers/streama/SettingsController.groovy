@@ -2,6 +2,7 @@ package streama
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -13,8 +14,8 @@ class SettingsController {
   static responseFormats = ['json', 'xml']
   static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-  def index(Integer max) {
-    respond Settings.list(params), [status: OK]
+  def index() {
+    respond settingsService.listVisibleTo(SpringSecurityUtils.principalAuthorities*.authority), [status: OK]
   }
 
   @Transactional

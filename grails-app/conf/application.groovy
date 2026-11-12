@@ -49,6 +49,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   [pattern:'/player/**',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag.json',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/tag/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
+  // Open to every user, but only admins get all settings, see SettingsService.listVisibleTo
   [pattern:'/settings/index',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/report/save',  access :['IS_AUTHENTICATED_REMEMBERED']],
   [pattern:'/video/markCompleted',  access :['IS_AUTHENTICATED_REMEMBERED']],
